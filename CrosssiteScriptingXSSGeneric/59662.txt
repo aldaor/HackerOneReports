@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/59662
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/egix
+ReportedTo:concrete5(concrete5)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.06.2016 18:28:25
+
+Summary:
+
+Concrete5 is vulnerable to some stored Cross Site Scripting (XSS) attacks because certain user input is being used within the output it generates without validating or encoding it.

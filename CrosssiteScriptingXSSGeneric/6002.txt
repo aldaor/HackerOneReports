@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/6002
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/atom
+ReportedTo:Slack(slack)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:09.03.2015 18:52:47
+
+Summary:
+
+Steps: 
+
+Go to your respective URL Mine is https://dezignburg.slack.com/account/photo
+
+now Change your photo using Facebook
+
+But before that create a Album in your Facebook naming it as "><img src=x onerror=alert(document.cookie)>
+
+And you will get this error: http://prntscr.com/37eecd
+
+If you need a video just tell me

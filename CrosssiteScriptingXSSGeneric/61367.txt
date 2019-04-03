@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/61367
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/adrianbelen
+ReportedTo:Udemy(udemy)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2015 23:06:38
+
+Summary:
+
+i have found a XSS on auto search endpoint https://www.udemy.com/autocomplete/search/?cl=EyNkHjsRED4T&displayType=json&cf=ExRONTsRED5COkUCGxAHKV8HaTMPDBFu&count=4&term=%22%3E%3Cimg+src%3D%3E

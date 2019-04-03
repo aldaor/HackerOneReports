@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/62385
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ana
+ReportedTo:jsDelivr(jsdelivr)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.05.2015 13:59:13
+
+Summary:
+
+Hi Team,
+
+Javascript for http://www.jsdelivr.com/#!prettyphoto hosted on the website points to 3.1.5 which is vulnerable to DOMXSS the upstream released an update 3.1.6 7 days back still the CDN is serving vulnerable edition effectively making all the websites vulnerable to DoMXSS
+
+Details about the issue are outlined : http://blog.anantshri.info/forgotten_disclosure_dom_xss_prettyphoto
+
+github issue for the stuff : https://github.com/scaron/prettyphoto/issues/149
+
+Hope this helps.

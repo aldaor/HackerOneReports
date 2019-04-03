@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/60201
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ddworken
+ReportedTo:Mobile Vikings(mobilevikings)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.05.2015 16:18:10
+
+Summary:
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Load this URL: 
+
+```https://vikingco.com/en/home/tttttt</script><script>alert(0)</script>```
+
+Notice the alert(0) box. 
+
+This is caused by allowing for the user to inject ```</script><script>alert(0)</script>``` which will simply close the current script tag (```</script>```) and then create a new one with alert(0) in it (```<script>alert(0)</script>```). 
+
+If you need any more information, please let me know. 
+
+Thanks,
+David Dworken
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJVTL+KAAoJEKvOin0CBBnPpikH/iVG2N1F+IssOJJjL/m8r65E
+pi8AR8irjmD3GqfsZtAmlwbIJ2x5q8+yI9Co0I2Lf82IZPvnBGFsSIkrlf1X8S+g
+1e3Hxvx8qVGnQhBw3EnE3vi1sXPJ0IT42aLJznphovAZCuF2xrf42EyWmJclrbIh
+iZEn0ShsInWuO0KFy2hefpcLACIAmjOoB7RQfECSUGWlINuaekSsIPsE7euOJcmQ
+RpbhbY9GHZ+bNNEl5EgaJkH1qUGYWNIGVyPOsNYcp7xAmOczRccA+GHnP1TQmUfe
+TYVC2mOLeI/ICOuoelA8HsoS0Xv9EOJM1gDKvZh1cHXm7836gdMpMZwHfxvWi9o=
+=Wl0Z
+-----END PGP SIGNATURE-----

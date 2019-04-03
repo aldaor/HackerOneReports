@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/72331
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/mafia
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:25.06.2015 4:12:57
+
+Summary:
+
+Steps to Reproduce:
+
+1.Create a Product with Title and Description as ` "><img src=x onerror=prompt(133)>`
+2. Now goto https://blahblah.myshopify.com/admin/products/inventory
+3. Select the Product created at Step 1 and Click on Edit variants
+
+and XSS will be triggered

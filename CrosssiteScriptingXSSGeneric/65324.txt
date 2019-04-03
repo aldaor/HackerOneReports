@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/65324
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ruisilva
+ReportedTo:VK.com(vkcom)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.06.2015 14:07:55
+
+Summary:
+
+Hi
+
+Steps to reproduce:
+
+First go to :  https://vk.com/video
+Next click on Add a Video
+After add a video from youtube and on title Field Insert TEST XSS
+And click save.
+Next after this go to https://vk.com/video again and you will see video  with the name TEST XSS
+Click above TEST XSS and you will for https://vk.com/video?z=video307088553_171482428%2Falbum307088553 
+Now scroll and you will see word : Added with a right , put mouse above this and create album 
+
+In folder name field insert this xss payload:
+
+"><img src=x onerror=prompt(1)>
+And click save.
+Now video will be added to this album
+Now go with the mouse above added word and click on added word.
+And xss will be executed.
+Ty :)
+
+Works on google chrome :  43.0.2357.81 m

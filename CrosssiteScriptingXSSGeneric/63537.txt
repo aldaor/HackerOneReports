@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/63537
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/enderun07
+ReportedTo:Mavenlink(mavenlink)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:22.06.2015 22:57:42
+
+Summary:
+
+My name of mavelink account causes cross site scripting vulnerability
+
+my name="><img src=x onerror=prompt(31);>
+
+go to  https://app.mavenlink.com/workspaces/8591867/gantt
+
+and click "save snapshot" button  than save it
+
+When You save it you will get javascrip alert from "Can be viewed by ">" area beucae my mavelink name ("><img src=x onerror=prompt(31);>)

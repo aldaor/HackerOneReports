@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/58782
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/zemnmez
+ReportedTo:OkCupid(okcupid)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.06.2015 15:59:41
+
+Summary:
+
+I wasn't notified of the security process, and received no bounty.
+
+
+On Jan 08, 2015 at 01:22AM UTC OkCupid User Feedback  <bounces@mail1.oknotify2.com> wrote:
+
+
+
+<a href="http://youtu.be/7HITef7mIJ8?callback=rate_user_profile.click&" rel="nofollow" target="_blank">don't hover over this</a>
+
+
+
+
+
+if you put this on your profile and they hover over it, they will "like" your profile
+
+
+
+this can be used to execute arbitrary clientside code

@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/6412
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/smiegles
+ReportedTo:Khan Academy(khanacademy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.04.2014 17:06:03
+
+Summary:
+
+Hi,
+
+I created a class called : `</script>"><img src=x onerror=alert(0)>` and it actually worked 0.0.
+
+It worked here for me : https://www.khanacademy.org/coach/reports/grid?force=1
+
+Best regards,
+
+Olivier Beg

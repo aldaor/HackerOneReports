@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/54321
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ragnar
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:13.05.2015 19:26:39
+
+Summary:
+
+Hi,
+
+I found Xss in my website's link.
+
+Steps:
+
+Go to this page https://app.shopify.com/services/partners/account/edit
+In fileld "Website (optional)" add javascript:alert(document.cookie);//http://dgddfgdfgg.ua
+and save
+
+Need registration https://experts.shopify.com/signup
+
+After we can see account. Click link website

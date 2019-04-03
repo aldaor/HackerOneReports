@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/7887
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/nahamsec
+ReportedTo:Localize(localize)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.04.2014 1:07:14
+
+Summary:
+
+If a translator's name is set as “><svg onload="prompt(/xss/);"> and requests to join a project, and the project admin clicks on the review to accept it, it results in an xss.
+
+Screen:
+attacker/translator:
+http://prntscr.com/3ax1ca
+
+contributor/admin:
+http://prntscr.com/3ax1ix

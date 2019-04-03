@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/50554
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ishahriyar
+ReportedTo:concrete5(concrete5)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2015 18:32:13
+
+Summary:
+
+Xss payload saved permanently  on Title of Page List in edit page list
+
+Poc : "><img src=x onerror=alert(1)>

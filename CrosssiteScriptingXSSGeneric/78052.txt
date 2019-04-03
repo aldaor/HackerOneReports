@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/78052
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ashishdhaduk
+ReportedTo:ok.ru(ok)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:10.07.2016 5:35:59
+
+Summary:
+
+step:
+
+payload : "><svg onload=prompt(document.domain) >
+
+1.first create a new group.
+2. now create new post,
+3. now put payload in new topic and than click on add poll.
+4. xss executed.

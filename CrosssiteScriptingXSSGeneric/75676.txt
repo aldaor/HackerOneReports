@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/75676
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ibram
+ReportedTo:Envoy(envoy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:15.07.2015 22:54:46
+
+Summary:
+
+Hello Security Team,
+I Have Found XSS Vulnerability in the [Guest Pre-Registration Page](https://dashboard.envoy.co/onboarding/pre-registration) [*Step #5*] after register as a new user.
+Here is how to reproduce the vulnerability:
+
+1. Go to [Registration Page](https://web.envoy.co/users/sign_up)
+2. Fill The Form With Any Data 
+3. Keep Going With These Steps After Registration ..
+4. but when you arrive at [ step #5 - Guest Pre-Registration Page](https://dashboard.envoy.co/onboarding/pre-registration) ..
+5. Scroll Down To The **Invitation Email** Section .. and click on the **Edit Text** Tap Below It
+6. In This Textarea Write This Payload: `[Dont Click](javascript:alert(document.domain);)`
+7. Now Switch To The Other Tap **Preview** and click on The link with the title **Dont Click** 
+
+The Payload Wil Be Excuted When The Victim Click On The Evil URL ..
+
+Also This Payload Will Be Sent To Visitor's Email ..  When You Are Inviting a Visitor .. 
+
+Thanks,
+Ebram Marzouk

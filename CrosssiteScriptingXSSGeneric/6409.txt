@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/6409
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/smiegles
+ReportedTo:Khan Academy(khanacademy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.04.2014 17:06:12
+
+Summary:
+
+Hi,
+
+I created a class called `"><img src=x onerror=alert(4)>`, I hope that you know how to make a class..
+After that, when you go to https://www.khanacademy.org/coach/reports/activity and select a class it might not load directly but when you reloud the page it will (and persistent).
+
+Best regards,
+
+Olivier Beg

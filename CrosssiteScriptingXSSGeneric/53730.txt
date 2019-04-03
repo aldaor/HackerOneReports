@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/53730
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ehsahil
+ReportedTo:Mapbox(mapbox)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:17.08.2017 22:12:52
+
+Summary:
+On March 28th, 2015 @sahilsaif reported an issue with stored XSS in Mapbox Editor (www.mapbox.com/editor). We deployed a fix for this issue on March 30th, 2015.

@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/67132
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/mafia
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:17.06.2015 15:04:22
+
+Summary:
+
+after following above the steps in #67125 goto  Bulk editing products:
+
+for me the url was:
+ https://img-src-x-onerror-prompt1-24.myshopify.com/admin/bulk?resource_name=Product&edit=variants.sku%2Cvariants.price%2Cvariants.compare_at_price&message=&return_to=%2Fadmin%2Fproducts&ids=1151578433
+
+it is also vulnerable to xss
+(Change the requierd fields in above url according to your shop)

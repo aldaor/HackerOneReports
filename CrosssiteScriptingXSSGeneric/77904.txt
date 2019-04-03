@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/77904
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/cyberboy
+ReportedTo:ok.ru(ok)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:17.04.2017 16:57:09
+
+Summary:
+@cyberboy reported the following issue:
+> Well your domain http://blog.ok.ru/ gets redirected to http://insideok.ru which seems to be your domain as well . I confirmed that by making a whois check up.
+
+> The search parameter has a reflected cross site scripting vulnerability in it
+
+> The direct URL of the bug is as below
+
+> http://insideok.ru/search/dev?q=<svg onload=prompt(0)>

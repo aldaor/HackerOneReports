@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/78003
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/d1pakda5
+ReportedTo:ok.ru(ok)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.02.2016 16:40:16
+
+Summary:
+API request calculator at https://apiok.ru/wiki/pages/viewpage.action?pageId=75989046 did not validate application_secret_key and session_secret_key values, which resulted in XSS.

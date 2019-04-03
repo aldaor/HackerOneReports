@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/52831
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ishahriyar
+ReportedTo:OkCupid(okcupid)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.07.2015 8:11:55
+
+Summary:
+
+Attacker can send XSS Payload through  Message Option .
+
+POC: https://www.dropbox.com/s/ieoeu6bw4bj7dqt/xss.mkv?dl=0

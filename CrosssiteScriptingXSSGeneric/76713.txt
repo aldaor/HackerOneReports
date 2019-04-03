@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/76713
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bugs3ra
+ReportedTo:Zaption(zaption)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:12.08.2015 17:13:16
+
+Summary:
+
+HI.
+If you upload video having title with XSS payload. and search for the video, the dropdown listing will execute the payload.
+
+https://www.zaption.com/gallery/search?q=%3E%3Cimg
+
+I need not to upload the payload, I utilized already uploaded videos.
+
+
+You can also execute the payload by just start typing into the search box with
+"><img
+
+That's it, XSS will be executed.

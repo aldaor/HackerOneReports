@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/67125
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/mafia
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:17.06.2015 15:04:11
+
+Summary:
+
+steps t reproduce:
+
+goto https://blahblah.myshopify.com/admin/products
+
+click on Import Products
+and upload the file in attachment and you will be able to trigger XSS

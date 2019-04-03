@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/7897
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/jackds
+ReportedTo:Localize(localize)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.04.2014 11:20:56
+
+Summary:
+
+It's possible to enter HTML code and/or execute javascript code in the "Discussion" section for review.
+
+To reproduce:
+
+- Enter a new phrase in a project.
+- Login as a different user and provide a new translation for the phrase.
+- Switch back to the user that created the project and check the review phrase.
+- In the discussion section, enter a new message containing HTML/Javascript.
+- Open the link the is shown there and observe that HTML is not filtered and that javascript can be executed.

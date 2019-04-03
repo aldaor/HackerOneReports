@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/75684
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ibram
+ReportedTo:Envoy(envoy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:15.07.2015 22:54:54
+
+Summary:
+
+Hello Security Team,
+I Have Found A Stored XSS Vulnerability in [iPad Settings Page](https://dashboard.envoy.co/settings/ipad) ..
+So .. Here Is How To Reproduce The Vulnerability:
+
+1. Login To Your Account In Envoy 
+2. Change Your Company Name From [Settings Page](https://dashboard.envoy.co/settings/account) .. And Set It To Your Payload Like `<img src=x onerror=alert(document.domain)>`. Or You Can Create A New Account With This Company Name.
+3. Go To [iPad Settings Page](https://dashboard.envoy.co/settings/ipad) .. And Scroll Down To The **Signed Agreements** Section iPad Simulator
+4. In The **Edit** Tap .. Insert The Predefined Variable `::COMPANY::` Which Show The   Company Name
+5. Now .. Switch To The **Preview** Tap .. And Your Payload Will Be Excuted :))
+
+And I Also Think The Payload Will Be Excuted On The iPad .. But I Didn't Test This.
+
+If You Need More Information .. Just Ask.
+
+Hope You Take a Look To My Other Report [#75676](https://hackerone.com/reports/75676) .
+
+Cheers,
+Ebram Marzouk

@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/56760
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/r0x33d
+ReportedTo:Shopify(shopify)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.06.2015 22:04:46
+
+Summary:
+
+Hello! I would like to report about XSS on support.shopify.com domain.
+
+Here is the PoC that gives alert box with "123" content: https://support.shopify.com/?auth_code=,%20alert(123));//&auth_type=phone\
+
+You can change "alert(123)" in URL to any JavaScript code You want to be executed.
+
+Thanks!

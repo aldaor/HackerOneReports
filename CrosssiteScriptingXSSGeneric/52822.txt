@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/52822
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/candux
+ReportedTo:Phabricator(phabricator)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:19.04.2015 21:58:26
+
+Summary:
+
+- Go to your user preferences
+- Put the following into Time-of-Day Format (with the quote): 
+ `'<\i\m\g \s\r\c=x \o\n\e\r\r\o\r=\a\l\e\r\t(\'X\S\S\')\>' `
+- Open a repository (diffusion) -> XSS-Popup
+
+The repository file-overview is the only place where I could see the XSS so far.
+
+Because it's a user own preference, it is not easy to actually do something malicious in a real-world scenario. But it's definitely possible if you think hard enough about it :)
+
+Cheers,
+David
+
+mongoose

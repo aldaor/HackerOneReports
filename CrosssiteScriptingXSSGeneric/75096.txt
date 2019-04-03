@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/75096
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ibram
+ReportedTo:Envoy(envoy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.07.2015 0:09:26
+
+Summary:
+
+Hello,
+I Just Found a Stored XSS Vulnerability in [iPad Settings Page](https://dashboard.envoy.co/settings/ipad) ..
+so im gonna give you a step-by-step to reproduce this vulnerability:
+
+1. Log In To Your Envoy Account.
+2.  Click On **Settings** From  The NavBar Then Choose **iPad** .. [URL](https://dashboard.envoy.co/settings/ipad).
+3. Scroll Down To The **Multiple Visitor Types** Section.
+4. Then You Have To Activate IT By Clicking On That Trigger
+5. A new section will appear called **Meeting Purpose of Visit** .. Click On The **Edit** Button On The Right Beside It ..
+6. Then Go To That Textarea and insert You Payload in it like  `<img src=x onerror='alert(document.domain)'>` ..
+7. Then You Have To Switch To The **Preview** Tap ....
+And Your Payload Will Be Excuted ..
+Every Time You Try To Edit This .. The Javascript Payload Will Be Excuted.
+
+If You Need Any Help To Reproduce The Vulnerability .. OR If You Need a Video, Just Ask :))
+
+I Hope You Take a Look TO My Other Report [#74889](https://hackerone.com/reports/74889).
+
+Thank You, 
+Ebram Marzouk.
+ 

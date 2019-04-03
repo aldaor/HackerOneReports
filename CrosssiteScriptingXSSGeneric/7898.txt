@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/7898
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/smiegles
+ReportedTo:Respondly(respondly)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.04.2014 16:31:16
+
+Summary:
+
+Hello,
+
+I created an account with as group name `"><img src=x onerror=alert(4)>`, after that I went to settings and found a Cross-site scripting vulnerability located at that page.
+
+The url for me : https://app.respond.ly/6sjp/settings/account
+
+I have a proof of concept in the attachment.
+
+best regards
+
+Olivier Beg

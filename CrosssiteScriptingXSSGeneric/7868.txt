@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/7868
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/nahamsec
+ReportedTo:Localize(localize)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.04.2014 0:27:01
+
+Summary:
+
+Visit the following link after logging in:
+http://www.localize.io/pages/create_project/3D
+
+Add a new group with an XSS string (as group name) and you will see the XSS execting.
+
+
+String used:
+<object data=data:text/html;base64,PHN2Zy9vbmxvYWQ9YWxlcnQoNCk+></object>?
+
+Thanks,
+Ben

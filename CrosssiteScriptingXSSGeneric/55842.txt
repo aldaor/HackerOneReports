@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/55842
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/akhil-reni
+ReportedTo:Shopify(shopify)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:01.07.2015 15:35:20
+
+Summary:
+
+**hello**,
+
+Let's say a shop has a checkout button.
+when we click buy now , you will be redirected to https://madamcury.myshopify.com/cart/1188733065:1?channel=buy_button&referer=javascript:alert(document.cookie);
+
+Keep an eye on referer parameter in URL 
+`referer=javascript:alert(document.cookie);`
+
+A customer can set referer to a xss payload, and the admin will see a referer parameter in his control panel, if the admin clicks on the link the xss triggered. (POC ATTACHED)
+
+Steps to reproduce
+==================================
+- create a buy now button
+- when you click buy now button , you will be redirected to https://madamcury.myshopify.com/cart/1188733065:1?channel=buy_button&referer=javascript:alert(document.cookie);
+- set referer parameter in url to javascript:alert(document.cookie);
+- finish the order
+- now from admin account login into admin panel,
+- click the referer link , you will see a xss triggered.
+
+All admins, users of a shop can be targeted with this attack.
+Tell me if you any issues reproducing the issue :)
+
+**regards
+Wesecureapp**

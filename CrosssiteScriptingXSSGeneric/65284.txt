@@ -1,0 +1,68 @@
+ReportLink:https://hackerone.com/reports/65284
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/hussain_0x3c
+ReportedTo:Mapbox(mapbox)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:19.04.2016 21:23:39
+
+Summary:
+In June 2015, @hussain found a stored cross-site scripting (XSS) vulnerability in the share page of our v3 and v4 Mapbox classic maps. This vulnerability did not affect mapbox.js, Mapbox GL JS, or any of our mobile SDKs, it only affected the share page for v3 and v4 maps hosted on *.tiles.mapbox.com. In order to be subject to the XSS attack, a user had to either directly visit the share URL of a malicious map or visit an attacker-controlled web page with a malicious map embedded via an `iframe`. 
+
+Hussain created a [map](https://a.tiles.mapbox.com/v4/ibmsecurity.ma91e43j/page.html?access_token=pk.eyJ1IjoiaWJtc2VjdXJpdHkiLCJhIjoiOWI0NDYxYjVmMjYzNjE2Yjc1ODM5NDgxOTBmMTFkODEifQ.EIBxJM1o7YiuI4pgZ7bsjg) in the online classic map editor and added several XSS payloads to a few map markers.
+
+The payload `&lt;img src=x onerror=alert(1) "` evaded sanitization and executed arbitrary JavaScript immediately. The payload was added to the DOM as part of a list of map marker titles in the top left hand corner of the share page.
+
+The following old code in https://a.tiles.mapbox.com/v3/embed/share.js and https://a.tiles.mapbox.com/v4/embed/share.js was vulnerable:
+
+```
+function stripHTML(html) {
+   var tmp = document.createElement('DIV');
+   tmp.innerHTML = L.mapbox.sanitize(html);
+   return tmp.textContent || tmp.innerText || '';
+}
+```
+
+The `stripHTML` function returned `<img src=x onerror=alert(1) "` due to the use of `textContent`, which converted the `&lt;` HTML entity into the left angle bracket unicode character (`<`). As a result, the payload was added to the share page as `<img src=x onerror=alert(1) "`, executing `alert(1)` on error when loading the image with no source.
+
+We resolved the issue by using underscore's [escape function](http://underscorejs.org/#escape) before returning the `textContent` of the marker. 
+
+```
+function stripHTML(html) {
+   var tmp = document.createElement('DIV');
+   tmp.innerHTML = L.mapbox.sanitize(html);
+   return _.escape(tmp.textContent || tmp.innerText || '');
+}
+```
+
+As seen in [this map](https://a.tiles.mapbox.com/v4/alulsh.pnbm6b4b/page.html?access_token=pk.eyJ1IjoiYWx1bHNoIiwiYSI6ImY0NDBjYTQ1NjU4OGJmMDFiMWQ1Y2RmYjRlMGI1ZjIzIn0.pngboKEPsfuC4j54XDT3VA#3/61.73/41.92), the map marker title is `<img src=x onerror=alert(1)"` now instead of a broken image tag.
+Hi Team Mapbox Security 
+This is Copy From message email ( ‫security@mapbox.com‬ ) 
+
+intro.
+I'm Hussain Adnan Researcher Security,
+Iam Have  Found  Vulnerability *Bug* in form project profile ( Map )
+
+Type Vulnerability : Cross-Site Scripting ( Stored - Reflected ) 
+Affected Domain : Affected Domain : mapbox.com - a.tiles.mapbox.com
+link Demo to execute : Reflected 
+~~~ 
+https://a.tiles.mapbox.com/v4/ibmsecurity.ma91e43j/page.html?access_token=pk.eyJ1IjoiaWJtc2VjdXJpdHkiLCJhIjoiOWI0NDYxYjVmMjYzNjE2Yjc1ODM5NDgxOTBmMTFkODEifQ.EIBxJM1o7YiuI4pgZ7bsjg 
+~~~
+Code javascript  execute   in mapbox.com on form  search map edited.
+and  execute    in a.tiles.mapbox.com on URL 
+
+Steps to reproduce
+-----
+an attacker delete #  from  url  and  get  url  code  execute    Stored  - Reflected 
+http://im54.gulfup.com/0gseLU.gif
+
+----
+POC   : https://youtu.be/N_4mqOtp07c - http://im54.gulfup.com/0gseLU.gif
+
+
+
+
+Be Safe
+Best Regards 

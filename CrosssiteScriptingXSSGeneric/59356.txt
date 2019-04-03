@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/59356
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/missoum1307
+ReportedTo:Dropbox(dropbox)
+BountyAmount:512.0
+Severity:
+State:Closed
+DateOfDisclosure:09.06.2015 0:34:30
+
+Summary:
+
+Video POC: https://www.youtube.com/watch?v=qgeCfWO6VIU 
+
+vuln link: https://www.dropbox.com/restore/xxxx%20Team%20Folder?prev=javascript:aler(1);&_subject_uid=412738972

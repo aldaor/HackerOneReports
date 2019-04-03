@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/78412
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/smit
+ReportedTo:Mail.ru(mailru)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:11.12.2015 10:54:10
+
+Summary:
+
+Hiii Sir,
+Here is XSS at following link:
+http://go.mail.RU/
+Steps to reproduce:
+1. Go to http://go.mail.RU/
+2. Enter in search box <script>alert("XSS by Smit");</script>
+Yeah pop up will display.
+Happy to help
+SMIT

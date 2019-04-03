@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/75727
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/d1pakda5
+ReportedTo:Zendesk(zendesk)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:02.09.2015 21:37:18
+
+Summary:
+
+Here is the steps to produce
+1. go to https://developer.zendesk.com/account and under account information put payload in 
+organization filed payload : "><img src="x" onerror=alert(document.domain)>
+2. and then save the setting and after that again refresh browser and go to the account information and in the organization filed start typing the payload like "> (note dont paste) here the form is autocomplete enabled so 
+its request a call to https://developer.zendesk.com/autocomplete.json?name="> 
+so as we are previously added "><img src="x" onerror=alert(document.domain)> to organization its saved and its search all organization saved previously so the payload executed 
+screenshot attached   

@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/7121
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/mantis
+ReportedTo:IRCCloud(irccloud)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:01.10.2014 13:47:10
+
+Summary:
+
+The HTML within a paste does not get correctly sanitized after an initial new line. So the following code gets executed: \r\n<script>alert(1);</script> 
+
+https://www.irccloud.com/pastebin/FADYQPrO

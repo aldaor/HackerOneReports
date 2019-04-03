@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/6344
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/smiegles
+ReportedTo:Khan Academy(khanacademy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.04.2014 17:00:02
+
+Summary:
+
+Hi,
+
+When you go to http://smarthistory.khanacademy.org/search-results.html (use firefox) and search for `" onclick="alert(1)` and after that click on the search bar a XSS will popup!
+
+Best regards,
+
+Olivier Beg

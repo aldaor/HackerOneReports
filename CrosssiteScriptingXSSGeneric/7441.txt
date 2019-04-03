@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/7441
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/reporter
+ReportedTo:IRCCloud(irccloud)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:13.05.2014 10:20:33
+
+Summary:
+
+If a person is an op in a channel, it is possible to make all the users inside the irc channel execute javascript code.
+Steps to repoduce:
+1.Go to a random channel where you are op.
+2.Enter the following command:
+/ban <script>alert(2)</script>
+3.The script will execute an alert box containing 2 in all the browsers of the users inside the irc channel.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/72526
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/blacksdawn
+ReportedTo:ThisData(thisdata)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.03.2016 23:24:02
+
+Summary:
+ThisData (formerly Revert) provides the ability to backup Dropbox files. File names were rendered within the app in an unescaped manner, meaning if you could get Dropbox to accept a file with a name like `"><img src="x" onerror=alert(cookie)>.png` you could XSS Revert's backup rendering screen.

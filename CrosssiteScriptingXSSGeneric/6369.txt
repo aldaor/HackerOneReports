@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/6369
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/smiegles
+ReportedTo:Khan Academy(khanacademy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.04.2014 17:00:08
+
+Summary:
+
+Hi,
+
+when you go to https://www.khanacademy.org/coach/roster/?listId=allStudents and press on add class you have the possebility to add a class (obvious). when you name it "><img src=x onerror=alert(4)> it will stay persistent.
+
+quite dangerous
+
+Best regards,
+
+Olivier Beg

@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/62861
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/nismo
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:23.07.2015 16:45:06
+
+Summary:
+
+Installing the Bulk Discount App in *.myshopify.com (which requires  a paid basic plan) makes the bulkdiscounts.shopifyapps.com vulnerable to XSS due to non sanitized input in products and collections.
+
+POC:
+
+1. Enter a product name or a collection such as "><img src=x onerror=prompt(document.domain)> and save it.
+2. Install the Shopify BulkDiscounts App
+3. Go to Apps -> Shopify BulkDiscounts
+4. Click on "Create One now" or "New Discount Set"
+
+Due to improper sanitization XSS occurs in the shopifyapps.com domain !!
+
+Thanks

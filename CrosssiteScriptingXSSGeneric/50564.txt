@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/50564
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ishahriyar
+ReportedTo:concrete5(concrete5)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2015 18:33:15
+
+Summary:
+
+In Contact form there is an option to display Message  when completed.
+There I have put the payload
+payload: "><img src=x onerror=alert(1)>
+
+and the payload executed and saved permanently.
+
+ 

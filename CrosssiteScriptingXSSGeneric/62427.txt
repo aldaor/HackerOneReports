@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/62427
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/nismo
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:09.06.2015 20:55:33
+
+Summary:
+
+POC:
+If you create a collection such as "><IMG SRC=x onerror=prompt(7)> and then go to Settings / Taxes and select "Add a tax override" then on the "Add Tax Override for Rest of World" select the previously created collection of "><IMG SRC=x onerror=prompt(7)> you can see it on the screen (addtax.png).
+
+If you press the recycle bin "Delete Entire Override" (delete.png) then  XSS is happening (xss.png)
+
+Thanks

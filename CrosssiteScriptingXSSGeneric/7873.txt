@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/7873
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/daksh
+ReportedTo:Localize(localize)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.04.2014 2:53:31
+
+Summary:
+
+Hey!!
+
+Steps to reproduce :
+
+1) while making account add xss payload in username like : "><img src=a onerror=prompt(1);>
+2) login using this .
+3) Go to settings tab (http://www.localize.io/pages/settings)
+4) XSS ll get executed .
+
+Attached PoC .
+
+Daksh

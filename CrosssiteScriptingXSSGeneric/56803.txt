@@ -1,0 +1,43 @@
+ReportLink:https://hackerone.com/reports/56803
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/haquaman
+ReportedTo:Dropbox(dropbox)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.04.2015 15:40:42
+
+Summary:
+
+Note, the shared folder part of this bug isn't necessary for this exploit, but shows a proof of concept on how you can exploit other users.
+
+This bug is a [cross site scripting vulnerablity](https://www.owasp.org/index.php/Cross-site_Scripting_%28XSS%29) (XSS), which allows arbitrary scripts (commonly javascript) supplied by an attacker to be run within the context of the victims browser.
+
+Steps to reproduce:
+
+1. Create a dropbox account
+2. Create a folder
+3. Invite victim to collaborate with new folder ([instructions](https://www.dropbox.com/en/help/19)).
+4. Create a file called test.html within the folder with the contents below.
+
+    <html><body><script>alert(document.domain);</body></html>
+
+For victim to run the exploit, they need to take the following steps
+
+1. Accept invitation to collaborate
+2. Open shared folder, select the file test.html (not to preview, just to the side of the name, so that you can do next step).
+3. Above file listings, the option "Previous versions" should be available, click on that
+4. Click on the vulnerable version, it should open a URL such as https://dl-web.dropbox.com/get/sharedfoldername/test.html?some unique parameters
+5. Observe XSS alert (would be more malicious in practise). Note that the domain is dl-web.dropbox.domain, which is included in the bounty brief as *.dropbox.com
+
+Note that you don't *need* to share the folder, the original user can see the exploit, but would be considered Self-XSS, so the sharing is needed to make this attack possible on other drop box users.
+
+Note that any filetype that would be rendered by the browser and can run scripts is fine, such as svg, xhtml, etc.
+
+If requested, I can make a screencast and/or screenshots of this vulnerability.
+
+Thank you for your time in reading this report, please let me know if you have any questions or clarifications needed.
+
+Cheers,
+
+Hugh

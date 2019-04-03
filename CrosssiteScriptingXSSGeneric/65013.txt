@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/65013
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/c37hun
+ReportedTo:Mail.ru(mailru)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:20.07.2016 16:11:51
+
+Summary:
+XSS on sanbox domain zipview.attachmail.ru via archived text attachment
+Здравствуйте,
+Я обнаружил HTML инъекцию на e.mail.ru с помощью текстовых файлов формата .txt
+
+Proof of concept:
+>Создаем HTML файл с правильными тегами, то есть html head body... должны присутствовать. Иначе файл не будет воспроизведен как HTML
+Меняем конец файла на .txt
+Далее сжимаем этот файл при помощи RAR и прикрепляем к письму.
+
+При онлайн воспроизведении файла со стороны отправителя и получателя текстовый файл воспроизводится как HTML
+
+После просмотра видео, вам будет все ясно.
+
+С уважением,
+Джейхун Джафаров (c37hun)
+Специалист по кибербезопасности
+c37hun@mail.ru

