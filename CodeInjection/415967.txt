@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/415967
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/qab
+ReportedTo:Brave Software(brave)
+BountyAmount:650.0
+Severity:critical
+State:Closed
+DateOfDisclosure:23.10.2018 19:13:25
+
+Summary:
+
+## Summary:
+
+It's possible to navigate to the infamous 'chrome://brave' (and all other) privileged page from web, requiring only a single click. This is possible by opening popups with the 'noopener' attribute.
+
+## Products affected: 
+
+ 
+Brave: 0.24.0 
+V8: 6.9.427.23 
+rev: f657f15bf7e0e0c50a2b854c6b05edb59bfc556c 
+Muon: 8.1.6 
+OS Release: 10.0.17134 
+Update Channel: Release 
+OS Architecture: x64 
+OS Platform: Microsoft Windows 
+Node.js: 7.9.0 
+Brave Sync: v1.4.2 
+libchromiumcontent: 69.0.3497.100
+
+## Steps To Reproduce:
+
+1. Host attached PoC from web
+2. Click button
+
+## Impact
+
+This is a direct violation of SOP, we can open any URL of which chrome://brave is the worst as it could lead to RCE.

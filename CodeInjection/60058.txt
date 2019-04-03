@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/60058
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/mthirup
+ReportedTo:Udemy(udemy)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:09.06.2015 12:54:36
+
+Summary:
+
+Hello udemy
+
+your site teach.udemy.com has its debug.log publically available consisting of 1 gb of debug logs. The logs don't expose critical information except for some user ip addresses, mail-addresses and other info, but it may lead to remote code execution,since the logs also store user agent values. If an attacker makes a request that makes it to the debug.log file, he can execute arbitrary code through his spoofed user-agent.  To fix this issue, you can turn debugging off in your wp-config.php file
+
+the debug.log is avaiable at https://teach.udemy.com/wp-content/debug.log
+
+If you have any additional questions about this vulnerability, feel free to ask.
+
+Best regards
+Martin Thirup

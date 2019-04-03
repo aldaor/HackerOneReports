@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/99424
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/rohk
+ReportedTo:Uber(uber)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:09.05.2016 22:25:03
+
+Summary:
+
+A driver can change their full name into whatever they want after they are accepted into the Uber driver program. Once the uber driver is accepted, they can "Inspect Element" and change the profiles <ul class="form-fields">...</ul> to contain the following information
+
+<code>
+<li>
+<input type="text" class="text-input" value="Name" name="first_name"></li>
+</code>
+
+Same thing for last name. They will be given the appropriate fields to change their first and last name.
+
+Two possible issues:
+1) During the normal registration for new users, users are REQUIRED to enter a first and last name. When this is used, the user can just ONLY input first name.
+When the user changes their name to something like "=1+1" and that is entered into the CSV after their first ride, they can request Ubers customer support to check out the CSV for some kind of issue. If the driver decided to input a command that will either open a malicious website or some kind of injection, it can effect Ubers computers.
+
+2) Someone with a clean background check can open the account and become a driver but will be able to give the account who did not go through a background check the account. All they have to do is change their first and last name and change the documentation.

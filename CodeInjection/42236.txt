@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/42236
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/missoum1307
+ReportedTo:Twitter(twitter)
+BountyAmount:420.0
+Severity:
+State:Closed
+DateOfDisclosure:01.01.2015 0:07:17
+
+Summary:
+
+hi twitter security team .
+
+This is an urgent issue  the same of report #32825
+Your subdomain users.tweetdeck.com  is pointing to AWS S3, but no bucket was connected to it. an attacker can claim the domain and takeover the full subdomain. 
+
+Please fix it as soon as possible , and let me know if you need any further information .
+
+missoum 
+best regards 

@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/84374
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/imadchabounia
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.09.2015 12:09:59
+
+Summary:
+
+Hello ownCloud Security Team,
+
+i am here to report a critical security vulnerability .
+
+Proof of concept :
+
+https://apps.owncloud.com/CONTENT/content-pre1/171172-1.php5
+
+code source of uploaded file : 
+<?php
+
+phpinfo();
+
+?>

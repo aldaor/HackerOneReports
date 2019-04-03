@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/72243
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/mak
+ReportedTo:Pornhub(pornhub)
+BountyAmount:10000.0
+Severity:
+State:Closed
+DateOfDisclosure:25.06.2016 22:53:22
+
+Summary:
+The researcher accessed a publicly visible .svn repository which enabled him to gave credentials to log into production servers.
+After I found the subversion repository I visited the following location https://netreact.eu/hubtraffic
+
+I could see the usernames in the repo and the following weak credentials gave me access:
+
+stefan:123456
+
+An attacker can commit code to this location which could be mirrored on the main site and result in full remote code execution. This also has all the passwords and keys for the sites listed below and the full source code for the hubxt.pornhub.com domain. This can be seen in the images below.
+
+>redtube.com
+>pornhub.com
+>tube8.com
+>youporn.com
+>keezmovies.com
+>spankwire.com
+>redtube.com
+>extremetube.com
+>gaytube.com

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/58914
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/agarri_fr
+ReportedTo:Zendesk(zendesk)
+BountyAmount:3000.0
+Severity:
+State:Closed
+DateOfDisclosure:16.10.2017 16:45:45
+
+Summary:
+See title.

@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/67161
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/isox
+ReportedTo:Mail.ru(mailru)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:13.09.2015 13:03:37
+
+Summary:
+
+ Ее похоже аффектит https://confluence.atlassian.com/display/DOC/Confluence+Security+Advisory+2014-05-21
+classLoader пролетает, то есть фикса на уровне регулярок нет
+версия в уязвимом скоупе
+Я конечно попробую в выходные реально код исполнить, но по внешним признакам оно там есть
+Все версии меньше 5.5.2 имеют схожий баг в xwork как было с struts

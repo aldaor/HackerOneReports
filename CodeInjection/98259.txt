@@ -1,0 +1,51 @@
+ReportLink:https://hackerone.com/reports/98259
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/brakhane
+ReportedTo:Shopify(shopify)
+BountyAmount:1500.0
+Severity:
+State:Closed
+DateOfDisclosure:10.11.2015 23:17:32
+
+Summary:
+This issue allowed calls to ruby methods that were not intended to be available to the Liquid template.
+Short
+====
+Certain interfaces where a shop owner/administrator is able to utilize Liquid have access to methods and properties of certain Drops. This allows calling all methods of the object and access to all properties. While this sounds bad, it seems to be very limited and seems to be 'only' usable for Information Disclosure.
+
+PoC
+====
+ 1. Go to your shop admin and navigate to the `Notifcation` settings
+ 2. Edit the `New Order Template` and place the following text into the textbox (also shown in the `Malicious Template` screenshot:
+
+    {{ methods | json }}
+    {{ systemu }}
+    {{ class }}
+    {{ to_yaml}}
+
+ 3. Click the `Preview Button` to have your code executed, results are shown in the `Malicious Template Rendered` screenshot.
+
+Affected parts of the system
+====
+Almost all of the Notification Email Templates are affected. It looks like one has access to an `OrderDrop` and `DraftOrderDrop` instance (verifyable throigh {{ class }} or similar methods which expose the class name). Please see the attached `Affected Mail Templates` screenshot, all templates which do have a `Revert to default` button rendered are affected.
+
+The `thank you` page of the checkout is also affected, please see the `Checkout Template` and `Checkout Rendering` screenshots which are attached.
+
+Limitations
+====
+I wasn't able to supply arguments to the methods exposed through this method, but one is still able to call methods which don't accept any. But just because I couldn't find a way doesn't mean there isn't any.
+
+Impact
+====
+ 1. One has (at least) the ability to execute instance methods with no arguments and read access to certain otherwise hidden fields via the `to_yaml` method. Depending on the actual code which is flawed it might be even possible to execute methods with user supplied arguments which would probably result in a server breach (there are very intersting methods like `systemu`, `real_call`, `instance_eval` and `instance_exec`.
+ 2. This bypasses access restrictions to certain hidden/filtered fields, like a hashed user password. For example,  a malicious admin can force the delivery of the  `Real Order Mail Rendered` to an address controlled by him if he does the following:
+
+1. Ensure the last user who touched an order is a desired victim (e.g. the shop owner)
+2. Edit the customers email to an attacker controlled one via the Customer admin interface
+3. Resend an order confirmation mail which is prepared to render like `Real Order Rendering` in an Email, by placing `{{ to_yaml }}` in the template
+
+Final words
+====
+Depending on the real flaw in the code this might be something which needs to be addressed by the Liquid library. I would be very pleased if you could disclose what kind of condition exactly led to this flaw. It might be worth chaning Liquid in a way to guard against this kind of flaw as users expect it to be secure by default.
+
+Please let me know if you need any additional information here, I hope I was clear enough with my explainations. I'm still a little disappointed that I didn't manage to achieve 'real' RCE here, but I'm happy on the other side to report this asap even without 'real' RCE so you could fix this asap. I discovered this approx. 18h ago by accident and couldn't spend that much time on developing a PoC.

@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/67317
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/pisarenko
+ReportedTo:VK.com(vkcom)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:13.02.2017 17:29:10
+
+Summary:
+Отсутствие flood-контроля у api-метода auth.checkPhone.
+

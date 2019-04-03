@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/60573
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/isox
+ReportedTo:Mail.ru(mailru)
+BountyAmount:400.0
+Severity:
+State:Closed
+DateOfDisclosure:13.09.2015 13:04:18
+
+Summary:
+
+http://fitter1.i.mail.ru/browser/
+
+Он тут.
+Если верить: http://fitter1.i.mail.ru/version/ 
+Версия: 0.9.10
+У нее RCE через PICLE.
+
+http://www.rapid7.com/db/modules/exploit/unix/webapp/graphite_pickle_exec
