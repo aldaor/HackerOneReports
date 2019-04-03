@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/120324
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/itly
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.06.2016 16:04:56
+
+Summary:
+
+Hello Team,
+
+I have found multiple vulnerable fields which accepts malicious javascript inputs and reflects on another form which fails to sanitize the malicious javascript input.
+
+Vulnerable Input Form: Edit Group Details
+
+Reflects where: View Rule Book
+
+Payload used: 1) <img src=x onerror=alert(document.domain)>
+
+                         2) <img src=x onerror=alert(document.cookie)>
+
+Browsers used: Mozilla Firefox and Google Chrome (Latest Version)
+
+Steps to Reproduce:
+
+1. Go to Edit Group Details Form.
+2. Inject the above mentioned payload in both the input fields as shown in screenshot.
+3. Submit and Save it.
+4. Go to Rulebook and View it.
+5. Tadaa! XSS Triggers. 
+
+Proof of Concept: Please find the attached screenshots.
+
+Do evaluate it and inform me accordingly.
+
+Best Regards,
+
+Hely H. Shah 

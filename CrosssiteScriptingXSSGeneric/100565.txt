@@ -1,0 +1,54 @@
+ReportLink:https://hackerone.com/reports/100565
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/kamil_hism
+ReportedTo:Slack(slack)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.02.2016 21:02:48
+
+Summary:
+
+## Impact
+
+Although `slack-files.com` is a sandbox domain, there are many ways to gain the victim's trust during phishing attack. For example, an attacker might render a fake log-in form with "You need to sign in to see this file" message and trick users into handing out their passwords.
+
+
+## Steps to reproduce
+
+1) Download attached to report or use the following code snippet to create SVG file:
+
+```js
+<svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" onload="alert('script')">
+  <script type="text/javascript"><![CDATA[
+  // some exploit code here
+  ]]></script>
+
+  <circle cx="50" cy="50" r="50" fill="green" />
+</svg>
+```
+
+A SVG script and other DOM elements is equivalent to the elements in HTML, so in the example above `alert('script')` will be executed on svg load event.
+
+2) Upload constructed SVG file to some channel or dm in Slack.
+
+3) Click on message with just uploaded file.
+
+
+## Observed
+Clicking on message opens a new tab and navigates user to `slack-files.com`. Once SVG loaded the `alert('script')` is executing.
+
+Also this file can be shared via public link. In this case victim should click on image preview to start script execute.
+
+
+## Expected
+Users expect that after clicking on message with file they will see this file or file will be downloaded.
+
+
+## Possible fix
+There are three ways:
+* If you want to continue render SVG files directly in users browsers, you should refuse executing inline scripts by serving attachments with `Content-Security-Policy: default-src 'none';` header. For example GitHub uses this way (open dev console to observe CSP errors for SVG above: https://camo.githubusercontent.com/ce86214c84dcc6c0d85fc268c1c0b1a122fb37a0/687474703a2f2f6b616d696c2e6869736d2e72752f696d672f6578706c6f697461626c652e737667) But you need to be sure that users do not use deprecated browsers (see http://caniuse.com/#feat=contentsecuritypolicy)
+
+* Do not use `image/svg+xml` Content-Type when serving files. Use `text/plain`, so users will see just a raw inner of SVG file.
+
+* Serve SVG files with `Content-Disposition: attachment;` header. So browsers will start downloading attachment instead of render it in the browser.

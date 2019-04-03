@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/115860
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/s_p_q_r
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:23.05.2016 9:10:35
+
+Summary:
+
+The **return_to** parameter is not validated properly, which allows an attacker to execute javascript via the **data:** protocol:
+
+> https://login.newrelic.com/login?return_to=data:text/html%3Bbase64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg%3D%3D
+
+Despite being executed not in the newrelic domain, the script still can be used for some purposes like, for example, redirection to phishing pages.
+
+An example of redirection to google.com:
+
+> https://login.newrelic.com/login?return_to=data:text/html%3Bbase64,PHNjcmlwdD5sb2NhdGlvbi5ocmVmPSJodHRwOi8vZ29vZ2xlLmNvbSI8L3NjcmlwdD4%3D
+
+Tested with Firefox 44.0.1.

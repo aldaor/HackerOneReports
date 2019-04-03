@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/103989
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/benburrill
+ReportedTo:Khan Academy(khanacademy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:29.12.2015 20:46:52
+
+Summary:
+Several variations on an XSS in the CS platform, involving throwing a malformed error that caused the error buddy to interpret user-provided data as HTML.  We now make sure to sanitize all of the messages passed from the iframe before using them.
+You can throw an object with an `html` property to run arbitrary js
+[Here](https://www.khanacademy.org/computer-programming/new-program/5946036004192256) is an example program that modifies a user's profile.  I made the program as private as possible by saving it with nouser and drawing nothing in the hopes that it will be ignored, but if you want me to delete it, I will.  The program will change your bio, so if you don't want that to happen, log out first.

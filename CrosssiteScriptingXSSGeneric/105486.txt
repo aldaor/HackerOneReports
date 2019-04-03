@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/105486
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/zephrfish
+ReportedTo:Pornhub(pornhub)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:22.06.2016 15:41:04
+
+Summary:
+The researcher identified that porniq.com was vulnerable to cross site scripting,
+
+Please note that PornIQ is not included within the scope of the program. At the time this report was submitted the program was in private and the researcher joined by invitation. Since that time the scope has been refined and formally clarified in writing. It is our expectation that researchers participating in the program abide by those rules.

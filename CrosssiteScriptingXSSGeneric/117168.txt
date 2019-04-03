@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/117168
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/cyberpunkych
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.12.2016 12:43:53
+
+Summary:
+Stored XSS via chat message in street-combats.mail.ru project.
+street-combats.mail.ru is out of scope of Mail.Ru bug bounty program.

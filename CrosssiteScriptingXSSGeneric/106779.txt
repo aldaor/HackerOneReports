@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/106779
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/a0xnirudh
+ReportedTo:Zendesk(zendesk)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:01.01.2016 20:09:21
+
+Summary:
+
+Hello,
+
+Here are the steps to reproduce:
+
+1) Go to any help articles or some place where you can comment
+
+2) Type in the comment as: `[click this link](data:text/html;base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4K)`
+
+3) Now click on the text `click this link` on your comments and XSS is executed !
+
+This is quite similar to #82725 but with a slight different payload.

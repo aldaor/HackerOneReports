@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/117068
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/siddiki
+ReportedTo:Uber(uber)
+BountyAmount:3000.0
+Severity:
+State:Closed
+DateOfDisclosure:07.05.2016 4:33:12
+
+Summary:
+
+Hello Team,
+I found a Cross-Site Scripting (XSS) in http://love.uber.com/
+
+> I'm not sure if it is eligible for bounty, as this domain is not listed under scope of the program. still as the issue is an **XSS**, i wanted to bring it to your attention.
+
+please mark this report as **informative** if you're not looking for issues in this domain.
+
+###POC:
+http://love.uber.com/australia/?icl_action=reminder_popup&target=javascript%3aalert%28%2fhello+world%2f%29%3b%2f%2f
+
++ Open this^ link, XSS will be executed!
+
+Looking forward!

@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/119453
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/reactors08
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.04.2016 5:18:49
+
+Summary:
+
+Hi,
+An attacked can execute arbitrary js at your main page 
+https://www.veris.in/?#<img src=x onerror=alert(1)>
+
+vulnerable js source:
+https://www.veris.in/wp-content/plugins/Ultimate_VC_Addons/assets/min-js/ultimate.min.js?ver=7e111f63322706ef9e00ec1e58f2edf4

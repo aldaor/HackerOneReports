@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/114134
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/harry_mg
+ReportedTo:Snapchat(snapchat)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:16.02.2016 19:04:29
+
+Summary:
+harry_mg helped us identify an issue in which support.scan.me's CNAME was pointing to scan.zendesk.com. Normally there would be a Zendesk instance there, but in this case, the Zendesk instance was no longer in use. As such, harry_mg was able to "claim" scan.zendesk.com from Zendesk. As such, any content he decided to put on scan.zendesk.com would be visible at support.scan.me. Since support.scan.me was no longer in use, Snapchat resolved this issue by removing it. Snapchat awarded harry_mg for notifying us of this issue with a $1,000 bounty. Thanks harry_mg!

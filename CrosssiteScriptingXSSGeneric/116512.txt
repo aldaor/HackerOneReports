@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/116512
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ru94mb
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.08.2017 13:28:46
+
+Summary:
+
+Markdown tags and event handlers can be used to load malicious URLs in user's profile statement.
+
+Here is the payload that when entered in user's profile statement leads to the following HTML:
+
+Payload: _www.attacker.com/malicious.exe_
+
+Resulting HTML:  "html": "<p><em><a href=\"http://www.attacker.com/malicious.exe\">www.attacker.com/malicious.exe</a></em></p>\n"
+
+See the following screenshots for more details:
+
+"Profile.jpg"
+"request.jpg"
+"response.jpg"
+
+User can be redirected to malicious URLs and malware can be hosted on gratipay.com using this vulnerability.
+
+Fix:
+
+Disable the functionality for these markdown tags.

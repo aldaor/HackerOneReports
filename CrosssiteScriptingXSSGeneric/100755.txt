@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/100755
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/lalatina
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.07.2017 12:01:27
+
+Summary:
+XSS in  https://hi-tech.mail.ru/
+ https://hi-tech.mail.ru/ is not currently in bug bounty scope.

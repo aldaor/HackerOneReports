@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/121903
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/alyssa_herrera
+ReportedTo:Xero(xero)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:16.07.2016 6:18:09
+
+Summary:
+
+When you make an invoice, the person you make the invoice out to can be an xss vector like "><video/poster/onerror=alert(0)>  then fill out the rest of the invoice and create it. Go to the invoice then when you go the invoice and click add note/expected date it'll trigger 

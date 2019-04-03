@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/112372
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/hogarth45
+ReportedTo:Zaption(zaption)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.10.2017 17:34:20
+
+Summary:
+
+It is possible for a presenter to xss a viewer
+Video attached:
+
+## Recreation steps
+Create publish lesson and start a presentation (join presentation in another browser)
+Select "Quick question"
+Open response
+Insert the question 
+asdf"><img src=x onerror=prompt(1)>
+
+The Javascript will fire on the presenter's side and the viewers side.

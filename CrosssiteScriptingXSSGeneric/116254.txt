@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/116254
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/securitary
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:15.02.2016 17:17:22
+
+Summary:
+
+Quotation marks are not sanitized in one of the HTML tags inside of the profile when dealing with first & last names. It is an <iframe> tag. In the attached PoC screenshot, I included a functional first name that triggers an alert() call. Inside, I pasted the HTML tag where it breaks.
+
+I don't know owncloud inside-out, so I don't know if anybody else is able to see my user profile. If they are, then this would be able to pull anybody else's session cookies. However, even if not, it could still be used to BeEF-hook others if they access your account or you get one-time access to their account, so it should still be fixed.

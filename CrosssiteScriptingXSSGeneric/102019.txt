@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/102019
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/blinkms
+ReportedTo:Sucuri(sucuri)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:13.12.2015 19:32:06
+
+Summary:
+
+Hi , 
+
+As we know , XSS is a security breach that takes advantage of dynamically generated Web pages. In an XSS attack, a Web application is sent with a script that activates when it is read by an unsuspecting user s browser or by an application that has not protected itself against cross-site scripting.
+
+Affected plugin - Sucuri Security - Auditing, Malware Scanner (  https://wordpress.org/plugins/sucuri-scanner/  ) 
+
+A xss vulnerability has been identified that allows an attacker to bypass security scanning process & to redirect some malicious place or simply hijack session cookies .
+
+Proof of concept :--
+[1] Install Sucuri Security - Auditing, Malware Scanner in your WP site
+[2] Make a file <img src=xx onerror=prompt(document.cookie)>.png in root directory of your WordPress site
+[3] Now , go to xyz.tld/wp-admin/admin.php?page=sucuriscan
+[4] Multiple XSS will be triggered with cookie information prompt will be shown ,  confirming the existence of XSS via file name manipulation .
+
+Impact :- 
+[1] Redirect to some malicious place
+[2] Simply hijack session cookies .
+[3] Bypass scanning process 
+
+
+XSS where it is reflected :- 
+
+[1]   <tr class=" sucuriscan-hidden">
+    <td class="check-column">
+        <input type="checkbox" name="sucuriscan_integrity_files[]" value="'""><img src=xx onerror=prompt(0)>.png" />
+
+[2]   <span class="sucuriscan-monospace sucuriscan-wraptext">'""><img src=xx onerror=prompt(0)>.png</span>
+
+All screenshots attached .

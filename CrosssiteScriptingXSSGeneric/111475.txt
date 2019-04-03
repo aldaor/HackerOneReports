@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/111475
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/reactors08
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:01.02.2016 20:39:44
+
+Summary:
+Some pages on shopify.com, as well as some customer storefronts, were vulnerable to cross-site scripting because they pulled in vulnerable Javascript code from a third party via a `<script>` tag. The third party corrected the bug shortly after they were notified.

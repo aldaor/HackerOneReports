@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/104488
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/kxyry
+ReportedTo:QIWI(qiwi)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:01.12.2016 19:34:17
+
+Summary:
+Yui charts.swf XSS

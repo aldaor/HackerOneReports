@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/100931
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/cymtrick
+ReportedTo:Twitter(twitter)
+BountyAmount:560.0
+Severity:
+State:Closed
+DateOfDisclosure:05.07.2016 19:16:40
+
+Summary:
+
+Hi,
+
+1)go link items and select text,tile
+2)enter image and give click url as javascript://%0a%0dalert(document.cookie)
+3)xss pop's up 
+it is not a self xss because admin can invite many people to his inventory and there sessions can be hijacked.
+regards
+prashanth 
+dups team :)

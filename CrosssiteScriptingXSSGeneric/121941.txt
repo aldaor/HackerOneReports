@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/121941
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/jstjohn
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:02.10.2017 14:10:02
+
+Summary:
+The researcher demonstrated that an attacker could exploit an XSS vulnerability on airOS devices by luring a user to attacker-controlled website. For the exploit to work, there must be no previous visits to the device from the same browser (no cookies stored for the device). Fixes have been released with airOS v5.6.15 and airOS v6.0.3.

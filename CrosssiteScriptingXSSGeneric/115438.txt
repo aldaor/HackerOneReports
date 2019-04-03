@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/115438
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ishahriyar
+ReportedTo:Urban Dictionary(urbandictionary)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.04.2016 4:28:34
+
+Summary:
+
+User can upload image for any definition available in urbandictionary.com.
+If anyone upload Invalid image file then you return a message through a url like this
+http://www.urbandictionary.com/cloudinary_cors.html?error=Invalid+image+file
+
+Here the error parameter is vulnerable to xss.
+
+Impact
+When an user navigates to the affected web page in a browser, the XSS payload will be served as part of the web page . This means that victims will inadvertently end-up executing the malicious script once the page is viewed in a browser.
+Possible Attack
+Cookie theft
+Data theft
+Insecure redirect
+
+Steps to reproduce
+Just navigate to theurl given bellow
+
+http://www.urbandictionary.com/cloudinary_cors.html?error=Invalid+image+file">%3Cimg%20src%3Dx%20onerror%3Dalert%28document.cookie%29%3E
+
+Tested on firefox
+
+Thanks.

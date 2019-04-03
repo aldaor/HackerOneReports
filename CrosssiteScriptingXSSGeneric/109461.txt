@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/109461
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/d1pakda5
+ReportedTo:General Motors(gm)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.08.2016 13:26:14
+
+Summary:
+Reflected Cross Site Scripting existed on a page of gmid.gm.com. The vulnerability has been remediated

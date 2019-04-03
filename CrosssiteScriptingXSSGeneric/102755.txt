@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/102755
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/daveysec
+ReportedTo:Algolia(algolia)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:18.06.2016 18:26:15
+
+Summary:
+
+You have a stored XSS vuln when you set your name in your account information.
+
+to reproduce just set your name field to:
+</script><script>alert('xss')</script>
+
+and most pages on your account you will show XSS.

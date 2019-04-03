@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/122469
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/4lemon
+ReportedTo:Xero(xero)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.03.2017 23:28:52
+
+Summary:
+A client-side validation bypass issue was reported, which allowed XSS characters to be used for naming folders in https://go.xero.com. This provided a XSS attack vector against users of an Organization. A malicious, authenticated insider within an organisation may have used this attack vector to target other users within the same organization.  The issue was quickly triaged and resolved, and we do not have any evidence of Xero users being targeted using the reported issue.
+

@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/116570
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/seifelsallamy
+ReportedTo:Mail.ru(mailru)
+BountyAmount:600.0
+Severity:
+State:Closed
+DateOfDisclosure:07.04.2016 10:57:53
+
+Summary:
+
+Hi guys,
+This bug is very dangerous you should fix it as fast as you can 
+######To reproduce:
+Attach xss.eml file to a message and send it
+when a user open the message the javascript will be executed and xss alert box will popup
+this bug affect tel.mail.ru , m.mail.ru and light.mail.ru
+but i couldn't reproduce it on e.mail.ru and touch.mail.ru
+######Notes:
+when a user attach an email (eml file) to a message 
+your website changes the email file name automatically to the subject content in the email file
+Eg:
+if the file name is xss.eml
+and the content is
+Subject: <script>alert("XSS")</script>
+your website will change the file name to
+<script>alert("XSS")</script>.eml
+and the javascript will be executed 
+######POC:
+I uploaded a video
+
+Thank you!!

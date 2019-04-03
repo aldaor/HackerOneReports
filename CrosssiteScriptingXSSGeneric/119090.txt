@@ -1,0 +1,48 @@
+ReportLink:https://hackerone.com/reports/119090
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/itly
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.03.2017 1:38:57
+
+Summary:
+
+Hello Team,
+
+I have found a reflected XSS on Signup Page i.e. on https://newrelic.com/signup. Please find the below details.
+
+Vulnerable URL: https://newrelic.com/signup
+
+Vulnerable Field: Your Email Address
+
+Vulnerable Parameter: email
+
+Parameter Type: POST
+
+Payload used: <img src=x onerror=alert(document.domain)>
+
+Browser used: Mozilla Firefox v44.0.2
+
+Steps to Reproduce:
+
+1. Go to https://newrelic.com/signup
+2. Just fill up the signup form and don't submit.
+3. Open burp suite and configure it to intercept the submit request.
+4. Submit the form.
+5. Change the value of email parameter from a valid email address to <img src=x onerror=alert(document.domain)>
+6. Forward the request and turn intercept off.
+7. Go to browser and Tadaa! XSS Triggers.
+
+Regarding exploitation:
+
+This form throws an error that "[EMAIL ADDRESS]: email doesn't appear to be a valid email address" where [EMAIL ADDRESS] is actually <img src=x onerror=alert(document.domain)>.
+
+I tried the same by changing value of authenticity_token by 1 character and same error occurred. Thus, a pre-populated form can be sent to a victim to exploit this post based XSS.
+
+Proof of Concept: Please find the attached screenshot.
+
+Best Regards,
+
+Hely H. Shah

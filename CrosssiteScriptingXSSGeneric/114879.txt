@@ -1,0 +1,45 @@
+ReportLink:https://hackerone.com/reports/114879
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/pr0tagon1st
+ReportedTo:Zomato(zomato)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.04.2016 4:50:06
+
+Summary:
+
+This vulnerability allows an attacker to add custom html/js code to emails that are then sent to other users of zomato.com. 
+
+This vulnerability can be reproduced by any normal user (ie. unprivileged accounts) by editing their profile's "your full name" field with malicious code. This is not possible during registration as that input is filtered, however, it is possible when editing the user profile as no filtering of the "your full name" field is done at that point.
+
+This vulnerability could be used to inject an img or iframe with an external js source that could expose a user's cookie information.
+
+These are the steps to reproduce it:
+
+1. Register and verify an account with zomato.com
+2. Browse to the "edit user profile" page as a logged in user.
+3. Inject the desired html/js payload into the "Your full name" field.
+4. Save your profile.
+5. Browse to another user's profile.
+6. Click the "Follow" button.
+7. Other user will receive a "<payload> has just followed you!" email within a few minutes that contains the html/js payload in the subject and body.
+
+I have used these payloads to confirm the vulnerability:
+```
+"><"<img src="x">%20%20> "<iframe src=a>%20<iframe>
+```
+```
+<img Src="http://goo.gl/JPx2sV" onload=alert("PENTEST")>%20%20> "<iframe Src=a>%20<iframe>
+```
+
+And this is part of an email message I received that contains one of the payloads:
+```
+      <span style="color: white; font-size: 22px; line-height: 24px; display:block;"><a href="https://www.zomato.com/users/ltimg-srcquothttpgoogljpx2svquot-onloadalertquotpentestquotgt2020gt-quotltiframe-srcagt20ltiframegt-33442340?ref=email_follow_back_follower_link_1" style="text-decoration: none;color: white;">
+<strong><img Src="http://goo.gl/JPx2sV" Onload=alert("PENTEST")>%20%20> "<iframe Src=a>%20<iframe> </strong>
+</a> just followed you.</span>
+```
+
+Which shows the unfiltered payload a victim would receive.
+
+The accounts I have used for this test all use the email *@mattscodecave.com.

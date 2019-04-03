@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/12034
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/shahmeer-amir
+ReportedTo:Cloudflare(cloudflare)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 10:00:30
+
+Summary:
+
+An attacker can launch requests on his victim's behalf on the billing info page. There is a requirement of CSRF token on this page 
+https://www.cloudflare.com/billing-information
+
+Awaiting your reply

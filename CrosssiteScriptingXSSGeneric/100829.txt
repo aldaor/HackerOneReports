@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/100829
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/hazimaslam
+ReportedTo:Coinbase(coinbase)
+BountyAmount:5000.0
+Severity:
+State:Closed
+DateOfDisclosure:07.12.2015 15:10:39
+
+Summary:
+Coinbase was mistakenly allowing developers to set their website or developer URL to a javascript:// or data:// URL.
+
+This link would then be rendered into the OAuth authorization page and leave users vulnerable to XSS if they clicked on it.
+

@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/11927
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/4lemon
+ReportedTo:Mail.ru(mailru)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:10.12.2014 19:09:03
+
+Summary:
+
+Эксперементируя с html редактором на странице отправки открытки http://cards.mail.ru/card/compose.html?cid=7842
+был найден вектор, который проходит проверки и остаётся:
+asdf<br>
+<iframe src=javascript:alert(2) <
+В итоге, хранимый xss на страницах
+http://cards.mail.ru/card/status.html?fcid=acff40d2aad6a1bb49ba650788b0806f
+и 
+http://cards.mail.ru/card/receive.html?tcid=bef7886ed4771bb6de75d026c0105b6f
+Последняя ссылка попадает напрямую в почтовый ящик жертвы.

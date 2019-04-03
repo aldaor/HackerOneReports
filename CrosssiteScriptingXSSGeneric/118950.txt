@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/118950
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/itly
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.06.2016 16:05:39
+
+Summary:
+
+Hello,
+
+I have found XSS on https://sandbox.veris.in/portal/members/
+
+Steps to reproduce:
+
+1.  Sign in your Veris account.
+2. Go to Member Book -> Add new member.
+3. Fill this payload <svg onload=alert(1)>  in "Name" and "Description" field.
+4. Now visit  https://sandbox.veris.in/portal/members/ or go to groups->Add member from member book
+5. Tadaa! XSS Triggers
+
+Proof of Concept: Please find it attached.
+
+Do evaluate it and inform me accordingly.
+
+Best Regards,
+
+Hely H. Shah 
+ 

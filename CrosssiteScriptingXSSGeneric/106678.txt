@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/106678
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/robd4k
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:09.12.2016 10:10:18
+
+Summary:
+
+XSS vulnerability lies on `http://now.informatica.com/launch-next-bigdata-registration-inxpo.html?Source=homepage`
+
+#POC
+
+* Sign up for big data management Virtual launch event
+
+* on parameter `company_name`  inject `'"><img src=x onerror=alert(1)>`

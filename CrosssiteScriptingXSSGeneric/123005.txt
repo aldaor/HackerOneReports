@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/123005
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/murat
+ReportedTo:Zomato(zomato)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.05.2016 8:46:44
+
+Summary:
+
+Hi, 
+
+Its a persistent xss issue on booking or reservation page. 
+
+I am going to add the video which is demonstrate the bug.
+
+Have a nice work!
+
+Here is video:
+
+https://www.youtube.com/watch?v=NBDBnKorF6o

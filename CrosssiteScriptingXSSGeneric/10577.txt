@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/10577
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/atom
+ReportedTo:Localize(localize)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 2:18:24
+
+Summary:
+
+Hello Marco,
+
+Remember this https://github.com/delight-im/Localize/commit/d32d07af0c81c65aa802fe389979f8fea6625e13?
+
+Can you resolved that bug here?
+
+Thanks!

@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/123125
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/virtualhunter
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:09.04.2016 0:03:05
+
+Summary:
+
+This is stored vulnerability for all your users, not only registered or signed in.
+
+Vulnerable parameter: properties[builder_id] at *.shopify.com/cart/add
+The vulnerability is in array levels. When you try something like 
+properties[builder_id][second_parameter]=value,
+you will see many corrupted tags in HTML because 2-level array will return as 
+"builder_id":{"second_parameter ":"value"} instead of "builder_id":"shapp_options_421549285_1455208671885" in cart.js
+
+So you could inject your code in tr,div,a,insert  tags. All you need - is redirect a victim to special url. For example, you cold try this: properties[builder_id][%20onmouseover%3dalert(1)%20]=value 
+Script will strike when victim will move a coursor over product.
+
+Here is a link with your cookies in a harware store for example:
+http://hardware.shopify.com/cart/add?&id=1106494145&iPad%20Stand=1120276481&Cash%20Drawer=1120176153&Receipt%20Printer=1120166789&attributes[cart_exists]=true&properties[builder_id][%20onmouseover%3dalert(document.cookie)%20]=shapp_options_421549285_1455208671885&properties[master_builder][]=1&properties[test]=test&properties[value]=11&add
+
+I recommend you to check incoming parameters for arrays like here:
+http://php.net/manual/en/function.is-array.php

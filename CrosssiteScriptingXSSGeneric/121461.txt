@@ -1,0 +1,54 @@
+ReportLink:https://hackerone.com/reports/121461
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/michiel
+ReportedTo:Bime(bime)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:22.06.2016 21:06:40
+
+Summary:
+
+I noticed BIME is primarily built on Amazon AWS, which spawned my interest. I started looking for DNS entries that were still pointing to S3 buckets that however no longer exist. It appears this was the case for `a2.bime.io`, which points to an Amazon S3 website bucket in the US East region. 
+
+# Steps to Reproduce
+- Resolve `a2.bime.io` and see what is behind it:
+
+```
+michiel@msp ~ $ dig A a2.bime.io @8.8.8.8                                                                                                [2.1.8]
+
+; <<>> DiG 9.9.5-11ubuntu1.2-Ubuntu <<>> A a2.bime.io @8.8.8.8
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 730
+;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+;; QUESTION SECTION:
+;a2.bime.io.			IN	A
+
+;; ANSWER SECTION:
+a2.bime.io.		59	IN	CNAME	bimeio.s3-website-us-east-1.amazonaws.com.
+bimeio.s3-website-us-east-1.amazonaws.com. 59 IN CNAME s3-website-us-east-1.amazonaws.com.
+s3-website-us-east-1.amazonaws.com. 4 IN A	54.231.11.130
+
+;; Query time: 210 msec
+;; SERVER: 8.8.8.8#53(8.8.8.8)
+;; WHEN: Tue Mar 08 15:33:45 EST 2016
+;; MSG SIZE  rcvd: 124
+```
+
+- It points to an Amazon S3 bucket in the S3 US East 1 region. Visiting http://a2.bime.io revealed that the bucket did not exist (a 404 error was shown). Obviously this is not the case any longer, as the bucket is now claimed and serving a fake login page (see "Attack Scenario").
+- I created a bucket with name "a2.bime.io" on my S3 account in the US East 1 region.
+- I enabled static website hosting and pointed "index.html" as the index document.
+- Then I uploaded `index.html` (attached to this report) and clicked "Make public" to make sure it can be served. 
+- Now go to http://a2.bime.io and you will see a BIME login page. Click the Sign In button and you will notice it is a fake login form. 
+
+# Attack Scenario 
+I created a false login page and posted it on http://a2.bime.io. The login page looks just like the normal BIME sign in page, but it is 100% controlled by the attacker. The attacker could harvest logins by convincing their victims to visit the fake login page. Since it is a subdomain of `bime.io`, which BIME customers will recognize, it is likely they will fall for the attack. 
+
+I have attached the fake login page here as `index.html`.
+
+# Remediation
+Remove the `a2.bime.io` DNS entry so it no longer points to an S3 bucket Zendesk Ops doesn't control. If you need me to release `a2.bime.io` as an S3 bucket, let me know and I'll delete the bucket.

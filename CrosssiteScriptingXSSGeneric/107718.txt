@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/107718
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/paresh_parmar
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.02.2016 20:01:07
+
+Summary:
+XSS in out-of-scope project
+Vulnerable URL: https://touch.deti.mail.ru/forum/
+
+Step to repro:
+
+1. https://touch.deti.mail.ru/forum/  go here
+Create new TOPIC .
+in subject use this vector : `'"><img src=x onerror=alert(1)>`
+and create topic.
+now go to your topic. xss will trigged.
+
+
+Thanks

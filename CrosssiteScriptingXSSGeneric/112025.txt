@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/112025
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/manish121
+ReportedTo:Udemy(udemy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.02.2016 23:56:20
+
+Summary:
+
+Hello,
+
+Bug: Stored XSS
+Payload: "><img src=x onerror=prompt(document.domain);>
+Browser Used: Google Chrome
+OS: Windows 7
+
+Steps to Reproduce:
+
+1) Log in to your account
+2) Click on My Courses
+3) Choose any enrolled courses
+4) Click on Add Discussion
+5) Click on Link -> Insert Link
+6) In URL use above Payload
+7) In Text write anything
+8) Click on Insert 
+9) Now click on that Text
+10) Javascript will get executed.
+
+Please check the link of PoC video..
+https://www.dropbox.com/s/i2l5v7av597frj8/Udemy%20XSS.avi?dl=0
+
+Thanks,
+Manish Agrawal.

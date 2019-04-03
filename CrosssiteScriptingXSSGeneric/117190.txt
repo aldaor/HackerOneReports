@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/117190
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/pavanw3b
+ReportedTo:Uber(uber)
+BountyAmount:3000.0
+Severity:
+State:Closed
+DateOfDisclosure:06.04.2016 20:55:49
+
+Summary:
+
+###Location
+www.uber.com/careers/
+
+###Description:
+It is possible for an attacker to inject an arbitrary javascript into city GET parameter. This leads to phishing, defacing from URL, stealing credentials by using a fake login page and many other client side risks.
+
+###POC:
+- Logon to [uber.com/careers/list/?city=...](https://www.uber.com/careers/list/?city=allicg<%2fscript><script>alert('xss by pavanw3b')<%2fscript>fupaiiz&country=all&keywords=&subteam=all&team=all) on firefox.
+- Note the alert *xss by pavanw3b* as the screenshot attached.
+
+Tested on latest firefox: 4.0.2
+
+Please let me know if you need further explanation or details.​
+
+Cheers,
+Pavan
+www.pavanw3b.com | fb/pavanw3b | @pavanw3b

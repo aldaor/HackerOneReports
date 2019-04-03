@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/12389
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/stocktonontees
+ReportedTo:Respondly(respondly)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 10:00:33
+
+Summary:
+
+https://app.respond.ly/create
+once there go to Team Name and input the code ?'"--></style></script><script>alert(1337)</script> and put the email as a valid one and should inject the XSS code even should show when u login all the time.
+
+Thanks,
+Jordan Jones
+@CEHSecurity 

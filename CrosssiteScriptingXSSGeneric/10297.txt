@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/10297
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/uaenajiawgivegqwuyvegqyuwvyefg
+ReportedTo:Slack(slack)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:29.05.2014 19:55:54
+
+Summary:
+
+Hi Slack,
+
+i'm going to report stored xss in slack integrations.
+
+__Attack String (Payload):__
+http://jeroldcamacho.com/%5Ex1s1s/slack.com.txt
+
+__Proof of Concept:__
+[here is the video][Video].
+
+[video]: https://www.dropbox.com/s/3qfo5fdezn6ci2q/slack.com%20xss.avi
+
+__Thanks,__
+Jerold Camacho

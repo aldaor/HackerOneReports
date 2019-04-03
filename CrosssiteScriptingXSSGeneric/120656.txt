@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/120656
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/adrianomarcmont
+ReportedTo:General Motors(gm)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.08.2016 13:18:38
+
+Summary:
+A Mobile chevrolet.com website included a parameter that allowed XSS injection. The vulnerable input parameter has been identified and remediated.

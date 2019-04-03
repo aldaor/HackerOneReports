@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/109832
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/roshanpty
+ReportedTo:Binary.com(binary)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:24.07.2016 4:04:04
+
+Summary:
+roshanpty Discovered an HTML injection. But unfortunately this was  already discovered by another researcher who even managed to bypass and execute a script.

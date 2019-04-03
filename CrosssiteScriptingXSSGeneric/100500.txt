@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/100500
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/s_p_q_r
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:25.05.2016 12:50:57
+
+Summary:
+
+На странице https://tz.mail.ru/ при нажатии кнопки «Войти» вызывается функция **AuthMailRu()**, в которой присутствует следующий код:
+
+> $('#auth_form').append('<input id="mairu_fakeauthpage" type="hidden" name="FakeAuthPage" value="'+window.location.href+'">')
+
+Видно, что значение **window.location.href** подставляется как есть, что даёт злоумышленнику внедрить свой код в случае, когда жертва использует браузеры **Google Chrome** или **Internet Explorer**, т. к. в них не кодируются хеши ссылок:
+
+1. Открываем ссылку https://tz.mail.ru/#"><script>alert($('#mailru').val() + ' : ' + $('#passwd').val())</script><!--
+2. Вводим логин и пароль в блоке «Вход в игру» сверху
+3. Нажимаем «Войти»
+
+Срабатывает скрипт, который выводит введённые логин и пароль.
+
+Моделируется в **Google Chrome 46.0** и **Internet Explorer 11.0**
+
+Формально домен не в скопе, тем не менее атака направлена на получение логина и пароля от **Mail.Ru** в целом.

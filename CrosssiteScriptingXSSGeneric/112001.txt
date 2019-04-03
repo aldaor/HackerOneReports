@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/112001
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/rmashhoon
+ReportedTo:General Motors(gm)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:23.05.2016 20:46:49
+
+Summary:
+A specific page on gmchat.gm.comincluded a parameter that allowed XSS injection.  The vulnerable input parameter has been identified and remediated.

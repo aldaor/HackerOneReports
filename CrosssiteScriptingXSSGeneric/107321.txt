@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/107321
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/krankopwnz
+ReportedTo:WePay(wepay)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:02.06.2016 15:18:34
+
+Summary:
+
+There is an unauthenticated stored XSS in the API Panel of the app administration
+(e.g. https://stage.wepay.com/apps/manage/12873/apikeys )
+
+When an user is created via the API, the call log does not sanitize the output correctly ( see screenshot 1). So it is possible to execute arbitrary scripts in the context of stage.wepay.com without any direct user interaction. This could lead to account takeover 
+
+Steps to reproduce:
+Log In to your account
+Create a new API
+Go to "API Calls" ( e.g. https://stage.wepay.com/apps/manage/196766/apicalls )
+Click on "Make API Calls"
+Enter the values show in screenshot 2, click on "Submit" and click on "Close"
+Refresh the page
+A javascript alert appears ( see screenshot 3 )
+
+This can be done with any API method that accepts a string value as a parameter from outside by embedding the payload in that attribute...
+As soon as the admin visits that panel, the payload is triggered and it is possible to steal CSRF-Tokens, Cookies or stored data from the panel. He could also be redirected to a website that hosts a browser exploit kit or an popup could appear, that tells him to enter his wepay password again, because he was logged off. This can also make this part of the wepay webpage unusable because he is redirected then everytime he tries to view it.
+
+A possible solution for that would be to HTML encode the log, before it is reflected in the browser.
+
+I also made a short PoC video and uploaded it here as "Not listed":
+https://youtu.be/U1ueGg_uDTI

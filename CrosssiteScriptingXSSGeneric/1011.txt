@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/1011
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/kyprizel
+ReportedTo:Verizon Media(verizonmedia)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.08.2015 19:09:43
+
+Summary:
+Thank you for your submission to Yahoo’s Bug Bounty.  While we recognize the effort that you put into the research and writing of a report for us to evaluate, we found this report to be a duplicate of another. We appreciate your adherence to responsible disclosure guidelines and look forward to your future participation in the program.

