@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/230435
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/pabster
+ReportedTo:WordPress(wordpress)
+BountyAmount:275.0
+Severity:medium
+State:Closed
+DateOfDisclosure:14.06.2017 5:23:11
+
+Summary:
+
+Hello,
+There is a DOM XSS in mercantile.wordpress.org in the apparel subcat.
+For example: https://mercantile.wordpress.org/product-category/apparel/?subcat=<html payload>
+
+Steps To Reproduce
+1. Go to https://mercantile.wordpress.org
+2. Click on apparel
+3. In the url bar add :  /?subcat="><img src=x onerror=alert(document.domain)>
+The domain will pop-up.
+
+Or alternatively just click on the link to: https://mercantile.wordpress.org/product-category/apparel/?subcat=%22%3E%3Cimg%20src=x%20onerror=alert(document.domain)%3E
+
+Hope this helps.
+Sincerely,
+Pablo

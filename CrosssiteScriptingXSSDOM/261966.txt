@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/261966
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/pisarenko
+ReportedTo:VK.com(vkcom)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:24.02.2018 19:46:24
+
+Summary:
+Отсутствие фильтрации при выводе ответа от сервера. 

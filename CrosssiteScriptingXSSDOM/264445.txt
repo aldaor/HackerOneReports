@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/264445
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/flyink
+ReportedTo:VK.com(vkcom)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:20.09.2017 17:32:10
+
+Summary:
+XSS в дропдауне выбора сообщества при комментировании. 

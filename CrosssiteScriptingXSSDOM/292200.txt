@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/292200
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/edoverflow
+ReportedTo:Razer US(razer_us)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:24.01.2018 18:13:02
+
+Summary:
+The researcher discovered that deals.razerzone.com was vulnerable to Authenticated DOM-based XSS via the rurl parameter, which could allow account hijacking via session cookies.  The researcher identified the specific code snippet and provided two PoCs with different techniques.
+
+Another great report from edio and we look forward to more in the future.

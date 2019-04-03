@@ -1,0 +1,54 @@
+ReportLink:https://hackerone.com/reports/232432
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/jupenur
+ReportedTo:Keybase(keybase)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:26.07.2017 15:46:45
+
+Summary:
+
+## Description
+
+The Keybase Chrome extension makes heavy use of the insecure `innerHTML` DOM API, resulting in Universal Cross-Site Scripting on all Keybase-supported social networking websites.
+
+## Steps to reproduce the issue
+
+1. Install the [Keybase Chrome extension](https://chrome.google.com/webstore/detail/keybase/ognfafcpbkogffpmmdglhbjboeojlefj)
+2. Navigate to the following URL address: `https://news.ycombinator.com/user?id=jupenur&id=%22%3E%3Ciframe%20src%3D%22javascript:alert(document.domain)%22`
+3. Click on the **Keybase Chat** button
+4. You should see a JavaScript `alert` dialog with the domain name of the affected social networking site (`news.ycombinator.com`) in it
+
+This example targets an HN profile page, but it should be equally possible to trigger the same vulnerability on any other supported website. The websites potentially affected are
+
+* reddit.com
+* twitter.com
+* facebook.com
+* github.com
+* news.ycombinator.com
+* keybase.io
+* keybase.pub
+
+It may also be possible to exploit the vulnerability without requiring the user to click a button.
+
+## Suggested fix
+
+The vulnerable code exploited in the example above is in the file `content.js`
+
+```JavaScript
+// Render the Keybase chat reply widget
+function renderChat(parent, user, nudgeSupported, closeCallback) {
+  const oobNudgeHTML = `
+      <p>
+        You will need to let <a target="_blank" href="${user.href()}" class="external-user">${user.display()}</a> know that they have a Keybase message waiting for them.
+      </p>
+      <p>
+        Share this handy link: <span class="keybase-copy">https://keybase.io/docs/extension</span>
+      </p>
+  `;
+```
+
+The functions `user.href()` and `user.display()` return strings parsed from the URL. These values are used directly in HTML markup (via `innerHTML`) at multiple points in the code.
+
+**It is recommended to avoid the use of `innerHTML` entirely.** Standard DOM methods like `createElement` should be used instead. The code also contains a function, `safeHTML`, which could be used to escape all untrusted input, but this is much more error prone.

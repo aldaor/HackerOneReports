@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/267783
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/ruvlol
+ReportedTo:Mail.ru(mailru)
+BountyAmount:250.0
+Severity:none
+State:Closed
+DateOfDisclosure:27.12.2017 14:26:26
+
+Summary:
+A user with organization administrator privilege can cause XSS on address book entry for the same organization's user via crafted group name in enterprise address book.
+This issue is not considered to have direct security impact, because organization administrator's privileges are required.
+Domain, site, application: biz.mail.ru
+
+Testing environment: Latest chrome
+
+Steps to reproduce
+
+1) go to biz.mail.ru, login
+2) go to "My company"
+3) create a department named as "></div></form></script><script>alert()</script><iframe src="www.google.com" onload="alert()">
+4) add an employee in that department
+5) create a new subdepartment
+6) add the employee from step 4 in our subdepartment
+
+Actual results: 
+
+Payload says for itself
+
+PoC, exploit code, screenshots, video, references, additional resources:
+
+In attachments .gif

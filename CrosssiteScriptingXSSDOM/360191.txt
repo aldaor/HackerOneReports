@@ -1,0 +1,64 @@
+ReportLink:https://hackerone.com/reports/360191
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/s_p_q_r
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:31.07.2018 14:54:26
+
+Summary:
+XSS in account.mail.ru via backUrl GET parameter
+Недостаточная валидация параметра **backUrl** даёт возможность указать javascript-ссылку:
+
+https://account.mail.ru/user/delete?backUrl=javascript:alert(document.domain)
+
+```javascript
+getBackUrl: function (url) {
+	return /^http/.test(url) ? url : (this.urlData.backUrl || this.config.get('backUrl') || 'https://e.mail.ru');
+},
+```
+
+```javascript
+exit: function (url) {
+	window.location.href = this.getBackUrl(url);
+ },
+```
+
+```javascript
+onExit: function (event, ui) {
+	this.unloadHandled = true;
+	this.router.exit();
+},
+```
+
+Domain, site, application
+--
+https://account.mail.ru/user/delete
+
+Testing environment
+--
+Firefox 60.0
+Chrome 66.0
+
+Steps to reproduce
+--
+1. Заходим в аккаунт
+2. Открываем https://account.mail.ru/user/delete?backUrl=javascript:alert(document.domain)
+3. Нажимаем «Отменить»
+
+Actual results
+--
+XSS
+
+Expected results, security impact description and recommendations
+--
+Фильтровать javascript + проверять, что ссылка ведёт на домен mail.ru
+
+PoC, exploit code, screenshots, video, references, additional resources
+--
+{F303613}
+
+## Impact
+
+XSS

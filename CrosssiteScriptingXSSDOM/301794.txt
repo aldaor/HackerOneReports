@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/301794
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/obmi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:11.05.2018 14:57:02
+
+Summary:
+URI Get parameters based XSS in https://e.mail.ru/cgi-bin/login via combination of factors (controllable script name via NUL characters inection, availability of script with known vulnerability within domain).

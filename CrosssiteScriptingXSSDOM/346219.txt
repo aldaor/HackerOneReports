@@ -1,0 +1,44 @@
+ReportLink:https://hackerone.com/reports/346219
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/shafigullin
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:15.08.2018 16:21:21
+
+Summary:
+User assisted XSS via contact name.
+Domain, site, application
+--
+e.mail.ru
+
+Testing environment
+--
+Firefox
+
+Steps to reproduce
+--
+1. send email from `</textarea><img src onerror=alert(1)>`
+2. add sender to contacts on https://e.mail.ru/messages/inbox/
+3. using Firefox go to https://e.mail.ru/compose/
+4. click on `Кому:` to open Contacts
+
+Actual results
+--
+alert message
+
+Expected results, security impact description and recommendations
+--
+fixSpecialSymbols uses `textarea` to decode HTML entities, it's unsafe in Firefox
+`require('mrg-explorer/utils/utils').fixSpecialSymbols('</textarea><img src onerror=alert(1)>')`
+
+PoC, exploit code, screenshots, video, references, additional resources
+--
+Screencast: https://yadi.sk/i/Z9wrUqll3V7iPg
+
+{F292555}
+
+## Impact
+
+XSS

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/299924
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/dutchgraa
+ReportedTo:RBKmoney(rbkmoney)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:07.02.2018 13:23:05
+
+Summary:
+The application was exposed to the XSS vulnerability. The code was injected through the "javascript:" URL schema. If the invoice was successfully paid, the code was executed.

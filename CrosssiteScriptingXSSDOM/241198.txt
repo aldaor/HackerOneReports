@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/241198
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/kenziy
+ReportedTo:Pornhub(pornhub)
+BountyAmount:750.0
+Severity:low
+State:Closed
+DateOfDisclosure:10.07.2017 16:18:00
+
+Summary:
+The researcher discovered a stored XSS in the user's basic info page.

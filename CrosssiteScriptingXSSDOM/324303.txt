@@ -1,0 +1,49 @@
+ReportLink:https://hackerone.com/reports/324303
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/bigshaq
+ReportedTo:MyCrypto(mycrypto)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:18.03.2018 1:11:40
+
+Summary:
+
+##Description & PoC
+The "connected successfully" message is printed out without any output sanitation:
+{F271357}
+This is how it's being printed(this code snippet is taken from mycrypto-master.js, line 4072): 
+{F271359}
+
+An attacker can simply put his payload at the link and it'll be embedded within the page output:
+```
+https://mycrypto.com/#send-transaction<div/class="header__wrap"><a/href=javascript:alert(0)><h1>pwn3d</h1></a><img/src=//unskid.me/dist/jesus.gif></div>
+```
+{F271358}
+
+
+##Notes
+As you can see, I couldn't get any javascript running, that's because the application has an AngularJS XSS protection that goes through ALL the href\src\similiar attributes in the DOM and checks if it has a malicious content/XSS attempts with a tough regex(based on a whitelist). Couldn't bypass that.
+Some screenshots of the "angular-XSS-blocker" from the chrome debugger :
+{F271362}
+{F271361}
+Once it's triggered and see a malicious attempt(isImg==false), the malicious <a> tag:
+```
+<a href="javascript:alert(0)">click here</a>
+```
+turns into:
+```
+<a>click here</a>
+```
+
+## Impact
+
+Although i did not get running javascript i still think that it's worth reporting because, well, still..anyone can inject other HTML code in that part of the application and it should be encoded. It can lead to other things like phishing/content spoofing/clickjacking.
+
+The hacker selected the **Cross-site Scripting (XSS) - DOM** weakness. This vulnerability type requires contextual information from the hacker. They provided the following answers:
+
+**URL**
+https://mycrypto.com/#here
+
+**Verified**
+Yes

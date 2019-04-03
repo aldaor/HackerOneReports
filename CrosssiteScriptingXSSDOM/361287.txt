@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/361287
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/flamezzz
+ReportedTo:Semmle(semmle)
+BountyAmount:750.0
+Severity:high
+State:Closed
+DateOfDisclosure:20.03.2019 12:34:50
+
+Summary:
+
+#Summary
+The **redirect** param can consist of a ``javascript:`` url, which results in XSS. If a victim visits a malicious URL and logs in, the attacker can perform actions on behalf of the victim.
+
+#Steps to reproduce
+1) Logout
+2) Visit `` https://lgtm-com.pentesting.semmle.net/?redirect=javascript:prompt(document.domain)%2f%2f
+ ``
+3) Log in through email
+
+## Impact
+
+If a victim visits a malicious URL and logs in, the attacker can perform actions on behalf of the victim.

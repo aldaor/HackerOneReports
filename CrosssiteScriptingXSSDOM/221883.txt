@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/221883
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/sp1d3rs
+ReportedTo:YouPorn(youporn)
+BountyAmount:250.0
+Severity:high
+State:Closed
+DateOfDisclosure:13.06.2017 20:09:15
+
+Summary:
+The researcher found a DOM-based XSS on the youporn.com main page. The malicious input could be injected into JS comment section (//jscomment<user_input_from_url>). Using CRLF (%0d%0a) in the <user_input_from_url>, it was possible to escape from JS comment section, and execute arbitrary JavaScript. Simple alert box, and crossdomain request with sensitive information to the remote host was demonstrated with possibility of account takeover.

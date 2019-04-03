@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/240989
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/rasi-ras
+ReportedTo:Zomato(zomato)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:30.06.2017 4:51:26
+
+Summary:
+
+while i was testing with your site i found a xss at add the restraunt option
+
+steps to reproduce
+
+1) login to zomato
+2) goto add restraunt
+3) in the name feild add any xss payload
+4)complete it
+ the restraunt will be sent for verification to the verification team and the xss payload will also be sent to there and get executed there
+screen shot added

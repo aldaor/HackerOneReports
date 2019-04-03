@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/227298
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/sergeym
+ReportedTo:Zendesk(zendesk)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:20.12.2017 21:45:28
+
+Summary:
+See title.

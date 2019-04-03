@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/268245
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/ruvlol
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:09.10.2017 12:23:01
+
+Summary:
+
+Hello again! I've found an open redirect issue and possibility to bypass your filters to add direct links in <a href="#user input"> tag
+
+Domain, site, application: biz.mail.ru/error
+
+Testing environment: latest Chrome
+
+Steps to reproduce:
+1) go to https://biz.mail.ru/error/500/?from=%20https://www.google.com
+2) click Refresh
+
+Actual results: you will be redirected to google. And as always, there might be different website that will steal user login credentials or run scripts
+
+Expected results, security impact description and recommendations: redirects are not allowed
+
+PoC, exploit code, screenshots, video, references, additional resources
+
+As i said, go to https://biz.mail.ru/error/500/?from=%20https://www.google.com and click Refresh

