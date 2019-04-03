@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/235642
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/yipman
+ReportedTo:Twitter(twitter)
+BountyAmount:5040.0
+Severity:high
+State:Closed
+DateOfDisclosure:03.11.2017 0:04:28
+
+Summary:
+Reporter discovered a CSRF vulnerability in the linkage between Periscope accounts and Facebook. This vulnerability would potentially allow for account take-over of Periscope accounts.  The problem was resolved and the reporter awarded a bounty.

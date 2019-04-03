@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/191831
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/korprit
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:16.06.2017 16:25:49
+
+Summary:
+A cross-site request forgery vulnerability was found on a Department of Defense website which could trick a web user into posting or changing confidential information, or redirecting sensitive information to the malicious user. @korprit was able to demonstrate this vulnerability by crafting a specially formatted webpage. Thank you!

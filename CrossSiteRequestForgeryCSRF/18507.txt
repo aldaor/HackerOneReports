@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/18507
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/anshuman_bh
+ReportedTo:WePay(wepay)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:19.08.2014 18:32:10
+
+Summary:
+
+After authentication in the WePay application, a user can navigate to the "My Settings" tab and perform operations like make_primary and resend on the email addresses. 
+
+These operations do not have any CSRF tokens present in the request. The only value unknown to an attacker present in the request is a numerical ID which can be easily brute-forced since they are sequential and incremental. There also does not seem to be any sort of throttling controls in place either to limit the number of requests such as resending emails. 
+
+This can lead to CSRF and spamming attacks. 
+
+Although the above operations do not perform anything that might be of significant risk to a WePay user or benefit a motivated attacker, there is another operation "delete" which by default is not enabled in the UI as of now. But, it is still processed successfully by the server if requested. Please see screenshots attached. 
+
+An attacker can potentially use it to exploit a CSRF attack and trick users in deleting multiple email addresses associated with their account. 
+
+Cheers,
+Anshuman

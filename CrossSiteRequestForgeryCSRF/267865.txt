@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/267865
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/darkid
+ReportedTo:delight.im(delight_im)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:03.10.2017 19:06:59
+
+Summary:
+
+Hello,
+I Found Cross-Site Request Forgery (CSRF) while adding new movie or series .
+
+Reproduction:
+- Login by any user. 
+- Add [Name],[YEAR] and [STRING] for the movie in poc .

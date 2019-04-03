@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/262005
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/behzad900
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.08.2017 18:04:46
+
+Summary:
+
+xss fo this page and form type
+https://gratipay.com/apply

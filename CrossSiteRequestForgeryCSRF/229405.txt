@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/229405
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/ashish_r_padelkar
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:17.08.2017 16:18:23
+
+Summary:
+
+Hello,
+
+When you visit any projects from `https://hosted.weblate.org/` , there is a button provided on top-right called `Watch` / `Unwatch` for each projects. when you click on that button, a POST request is sent which contains csrf token.  But this request also works without that token.
+
+Just hit the urls in your browser and you will be able to `Watch` or `Unwatch` the projects
+
+`https://hosted.weblate.org/accounts/watch/androbd/`
+https://hosted.weblate.org/accounts/unwatch/androbd/
+
+where androbd is a project name!
+
+Regrads
+Ashish

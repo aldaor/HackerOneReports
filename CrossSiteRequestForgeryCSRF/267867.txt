@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/267867
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/darkid
+ReportedTo:delight.im(delight_im)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:03.10.2017 19:07:12
+
+Summary:
+
+Hello,
+I Found Cross-Site Request Forgery (CSRF) on logout 
+
+POC:
+"https://www.moviecontentfilter.com/logout"
+
+Reproduction:
+- Login to your account 
+2- Open the link  "https://www.moviecontentfilter.com/logout"

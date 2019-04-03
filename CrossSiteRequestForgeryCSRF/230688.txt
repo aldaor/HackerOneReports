@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/230688
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/lincoln9932
+ReportedTo:VK.com(vkcom)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:09.07.2017 15:55:06
+
+Summary:
+Отсутствие хеша на сброс ключа трансляции. 

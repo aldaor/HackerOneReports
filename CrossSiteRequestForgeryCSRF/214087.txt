@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/214087
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/hckyguy77
+ReportedTo:Yelp(yelp)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:12.05.2017 0:34:44
+
+Summary:
+
+As many companies do, Yelp set its X-Frame-Options to SAME ORIGIN in its HTTP headers; but unfortunately our exploitation proves that not all the pages are protected.
+With the use of iframes in the html document, I was able to discover a clickjacking vulnerabilities on Yelp.com, and this vulnerability could lead to a whole bunch of bad things happening to yelp and its users. Just like every other clickjacking issue, all of the issues I found rely on the ignorance of the user into visiting a link, while they are currently logged into yelp. Technically, an attacker can trick a yelp user to do anything or everything that they normally can do but wouldn't do, so this is like a CSRF attack, but it's worse than CSRF, as usually CSRF only causes one specific issue, but the clickjacking attack I have demonstrated here, can lead to many issues for Yelp users. Due to limited time and resource, I selected three issues to demonstrate and I recorded some videos to demonstrate them, but if needed, I can certainly demonstrate more issues due to this same vulnerability. Here are the introduction of the videos recorded in this report:
+
+Tricking a user into unknowingly;
+No.1: bookmarking unwanted business'
+No.2: adding events to their profile they are interested in attending.
+No. 3: editing their star rating on reviews;
+
+More detailed explanation to each video:
+No.1 trick_user_bookmark : This one is tricking the victim into bookmarking a page that they really may not want to have on their account. Since things like strip clubs are an option on yelps site, it can deface a person's account based on who is seeing the info. Which sharing with friends is very much apart of this site.
+
+No.2 trick_user_into_add_event_to_profile = the victim thinks that they have won something cool and that they need to click on the link to secure the item. Doing so has added the event to their profile.
+
+No.3 trick_user_to_edit_review = This one will rely on multiple clicks, but we can definitely assume that anyone clicking once, will probably keep clicking. Although the review will still sound positive, the rating of the company will not reflect on that.
+
+No.4 trick_user_to_edit_review_withyelp_transparent = shows the vulnerability happening, while the user cannot see the yelp page. This one is pretty much the same as video No.3, but this time I made yelp.com transparent, so it is what would happen in real world attacks. When yelp.com is completely hidden, the user will have no idea.
+
+I added video's to help give a visual representation of what is happening so that you may recreate this issue if you need to with ease.

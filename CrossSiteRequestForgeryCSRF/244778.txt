@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/244778
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/caesar302
+ReportedTo:WakaTime(wakatime)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:29.08.2017 15:12:38
+
+Summary:
+
+Cross-Site Request Forgery (CSRF) logout application
+
+Because of that gap, he updates a man's attack in the middle and is exposed to the agent and all his personal data at risk
+This may cause the web to be compromised
+
+I will send a test script and a video explaining everything about the problem
+
+Resource https://wakatime.com
+Parameter  login
+Method Get
+Detection Type Cross-Site Request Forgery (CSRF) logout application 
+Test Browser  Google Chrome & Internet Explorer
+
+Thanks !!

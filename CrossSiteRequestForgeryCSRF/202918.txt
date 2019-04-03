@@ -1,0 +1,68 @@
+ReportLink:https://hackerone.com/reports/202918
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/mohamedsherif
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:06.04.2017 7:47:24
+
+Summary:
+
+__Hello ,__
+I want to report that your website is using a vulnerable version of WordPress which is 4.7 (Released on 2016-12-06) . This Can be identified from the read me file located [here](https://yaman.olx.ph/wordpress/readme.html) , and that your website contains directory listing of the web-includes located  [here](https://yaman.olx.ph/wordpress/wp-includes/)ز
+# Bugs in this WordPress version
+__[!] Potential Remote Command Execution (RCE) in PHPMailer__
+    Reference: https://wpvulndb.com/vulnerabilities/8714
+[i] Fixed in: 4.7.1
+
+__[!] User Information Disclosure via REST API__
+    Reference: https://wpvulndb.com/vulnerabilities/8715
+[i] Fixed in: 4.7.1
+
+__[!] Authenticated Cross-Site scripting (XSS) in update-core.php__
+    Reference: https://wpvulndb.com/vulnerabilities/8716
+[i] Fixed in: 4.7.1
+
+__[!] Cross-Site Request Forgery (CSRF) via Flash Upload__
+    Reference: https://wpvulndb.com/vulnerabilities/8717
+[i] Fixed in: 4.7.1
+
+__[!] Stored Cross-Site Scripting (XSS) via Theme Name fallback__
+    Reference: https://wpvulndb.com/vulnerabilities/8718
+[i] Fixed in: 4.7.1
+
+__[!] Post via Email Checks mail.example.com by Default__
+    Reference: https://wpvulndb.com/vulnerabilities/8719
+[i] Fixed in: 4.7.1
+
+__[!] Accessibility Mode Cross-Site Request Forgery (CSRF)__
+    Reference: https://wpvulndb.com/vulnerabilities/8720
+[i] Fixed in: 4.7.1
+
+__[!] Cryptographically Weak Pseudo-Random Number Generator (PRNG)__
+    Reference: https://wpvulndb.com/vulnerabilities/8721
+[i] Fixed in: 4.7.1
+
+__[!] Press This UI Available to Unauthorised Users__
+    Reference: https://wpvulndb.com/vulnerabilities/8729
+[i] Fixed in: 4.7.2
+
+__[!] WP_Query SQL Injection__
+    Reference: https://wpvulndb.com/vulnerabilities/8730
+[i] Fixed in: 4.7.2
+
+__[!] Cross-Site Scripting (XSS) in posts list table__
+    Reference: https://wpvulndb.com/vulnerabilities/8731
+[i] Fixed in: 4.7.2
+
+__[!] Unauthenticated Page/Post Content Modification via REST API__
+    Reference: https://wpvulndb.com/vulnerabilities/8734
+    Reference: https://blog.sucuri.net/2017/02/content-injection-vulnerability-wordpress-rest-api.html
+[i] Fixed in: 4.7.2
+
+# Fix
+Updating your blog to the latest version which is 4.7.2 as i believe 
+
+__Thanks ,
+Mohamed Sherif__

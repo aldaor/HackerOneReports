@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/23150
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/coolboss
+ReportedTo:Square(square)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.09.2014 15:27:59
+
+Summary:
+
+Hello,
+
+This is new type of bug in this generation. Here, attacker throws his account access to normal user. Normal user can be monitored later by attacker. This will also deal with money in account.
+
+You are logging user into account from a 'Reset Password Link'. Here, any attacker can request himself a link and send it to victim. And hence, victim will be logged into attacker's account.
+
+Only password should be changed and user should not be logged in from 'Reset Password Link'.
+
+Proof Of Concept :
+================ 
+1. Request a 'Reset Password Link'.
+2. Open it.
+3. It will login you, when you use it.
+
+You can CSRF login anyone from that link. 
+
+I hope you understand the problem. 
+If you need more information, you may ask for. :)
+
+Regards,
+Pranav

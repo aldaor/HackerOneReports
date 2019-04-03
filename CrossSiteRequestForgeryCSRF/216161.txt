@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/216161
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/hdarji
+ReportedTo:Udemy(udemy)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:28.08.2017 23:28:42
+
+Summary:
+Our django site uses their standard CSRF implementation.  The reporter has their own ideas about how CSRF protection should be implemented.

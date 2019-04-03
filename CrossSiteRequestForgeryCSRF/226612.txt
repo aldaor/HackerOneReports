@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/226612
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/leet-boy
+ReportedTo:Mixmax(mixmax)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:01.06.2017 0:02:48
+
+Summary:
+thanks @leet-boy

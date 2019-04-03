@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/2857
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/appsecure_in
+ReportedTo:Phabricator(phabricator)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.06.2014 20:39:32
+
+Summary:
+
+Hi,
+
+To reproduce the issue:
+
+1) Login to your https://secure.phabricator.com account and copy your Anti CSRF token.
+
+2) Now logout and again login after sometime.
+
+3) Open up your burp suite to modify the request and now submit any form with your old CSRF token.
+
+The request will be completed.
+
+So let's suppose i am somehow able to get CSRF token of a particular user then i can use the same token again and again to perform the attack.
+
+The token should be thrown from the db after the session logout.
+
+Please have a look.
+
+Best regards,
+Anand

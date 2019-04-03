@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/223367
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/inhibitor181
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:02.06.2017 19:08:34
+
+Summary:
+
+SUMMARY
+----------
+Hello, I have found a CSRF request via the activation email that will change the full name of the targeted account. This vulnerability exists if the attacker registers a new account and then gives his activation link to someone else. If the victim uses the received activation link while he is logged in his account the attacker's email will be added as a secondary email and the main full name will be changed.
+
+POC
+-------
+I have attached the POC as a video where you can see all the steps.
+
+IMPACT
+------
+Medium - high impact IMO. Changing the name may not be such a big deal, but adding a secondary email identity may turn into something more dangerous.

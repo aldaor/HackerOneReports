@@ -1,0 +1,61 @@
+ReportLink:https://hackerone.com/reports/25128
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/karthik-reddy
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.10.2014 18:41:37
+
+Summary:
+
+Vulnerability description:-
+This alert may be a false positive, manual confirmation is required.
+
+Cross-site request forgery, also known as a one-click attack or session riding and abbreviated as CSRF or XSRF, is a type of malicious exploit of a website whereby unauthorized commands are transmitted from a user that the website trusts.
+
+This vulnerability affects :- http://try.crashlytics.com/enterprise/
+
+Attack details:-
+Form name: <empty>
+Form action: http://try.crashlytics.com/enterprise/
+Form method: GET
+
+Form inputs:-
+name [Text]
+email [Text]
+comment [TextArea]
+
+
+View HTTP headers :-
+Request:-
+GET /enterprise/ HTTP/1.1
+Pragma: no-cache
+Cache-Control: no-cache
+Referer: http://try.crashlytics.com/enterprise/
+Acunetix-Aspect: enabled
+Acunetix-Aspect-Password: 082119f75623eb7abd7bf357698ff66c
+Acunetix-Aspect-Queries: filelist;aspectalerts
+Cookie: PHPSESSID=m021o0dkf7er0ub7d3541dvg43
+Host: try.crashlytics.com
+Connection: Keep-alive
+Accept-Encoding: gzip,deflate
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.63 Safari/537.36
+Accept: */*
+Response:-
+HTTP/1.1 200 OK
+Content-Type: text/html
+Date: Mon, 18 Aug 2014 15:39:22 GMT
+Server: Apache
+Vary: Accept-Encoding
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+Content-Length: 33722
+Connection: keep-alive
+Original-Content-Encoding: gzip
+
+The impact of this vulnerability:-
+An attacker may force the users of a web application to execute actions of the attacker's choosing. A successful CSRF exploit can compromise end user data and operation in case of normal user. If the targeted end user is the administrator account, this can compromise the entire web application.
+
+How to fix this vulnerability:-
+Check if this form requires CSRF protection and implement CSRF countermeasures if necessary.

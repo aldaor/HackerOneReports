@@ -1,0 +1,51 @@
+ReportLink:https://hackerone.com/reports/188692
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/d0rkerdevil
+ReportedTo:Robinhood(robinhood)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:16.04.2017 23:00:12
+
+Summary:
+
+#INFORMATION
+hello,
+i was looking into  and found something interesting , i found that the httponly flag is not set which is really harmful as because httponly flag act as filter to stop client side script attacks like xss or session hijacking.
+so the csrftoken has no httponly flag at http://www.robinhood.com/signup/
+
+#RESPONSE:
+HTTP/1.1 200 OK
+Content-Type: text/html; charset=utf-8
+Date: Tue, 06 Dec 2016 11:21:48 GMT
+Server: nginx
+Set-Cookie: csrftoken=N3sTHOd6HupGyTDBlOUEBS7AkXIVisTrGwoZsO0Zh68FYm4VB7VBocfxkJUTVtP1; expires=Tue, 05-Dec-2017 11:21:48 GMT; Max-Age=31449600; Path=/; secure   <---httponly not set
+Set-Cookie: sessionid=bxdhiy61bt2s9fowjtd7eq64hpq12ngo; expires=Tue, 20-Dec-2016 11:21:48 GMT; httponly; Max-Age=1209600; Path=/; secure 
+Set-Cookie: device_id=febc22d7-8f24-4130-9df1-8078fe6fc577; expires=Tue, 19-Jan-2038 03:14:07 GMT; Max-Age=666460339; Path=/ <-- no httponly flag set
+Strict-Transport-Security: max-age=31536000
+Vary: Cookie
+X-Frame-Options: SAMEORIGIN
+Content-Length: 17396
+Connection: Close
+
+Meanwhile i found that csrftoken is also found in the url here https://www.robinhood.com/signup/?csrfmiddlewaretoken=fUBFxHRaj7CV8eD8BWrSUFlU8sZkPLEZ8nxLiHE3TJlUyH4sRfsPHZtR8ebisMAz
+
+#RESPONSE:
+HTTP/1.1 200 OK
+Content-Type: text/html; charset=utf-8
+Date: Tue, 06 Dec 2016 11:22:49 GMT
+Server: nginx
+Set-Cookie: csrftoken=N3sTHOd6HupGyTDBlOUEBS7AkXIVisTrGwoZsO0Zh68FYm4VB7VBocfxkJUTVtP1; expires=Tue, 05-Dec-2017 11:22:49 GMT; Max-Age=31449600; Path=/; secure <--no htponly flag set
+Set-Cookie: sessionid=co01aslpad3h75004n6l9v8t37rxz8al; expires=Tue, 20-Dec-2016 11:22:49 GMT; httponly; Max-Age=1209600; Path=/; secure
+Strict-Transport-Security: max-age=31536000
+Vary: Cookie
+X-Frame-Options: SAMEORIGIN
+Content-Length: 17481
+Connection: Close
+
+i added  poc exploit for httponly i found , added in the attachment.
+
+
+
+
+

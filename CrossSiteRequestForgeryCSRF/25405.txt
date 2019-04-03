@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/25405
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/coolboss
+ReportedTo:WePay(wepay)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.09.2014 17:31:43
+
+Summary:
+
+Hello,
+
+Make email primary doesn't have a csrf protection.
+
+Proof Of Concept :
+===============
+I copied this form from site.
+
+<form action="/settings/email" method="post" class="ng-pristine ng-valid">
+<input type="hidden" name="id" value="236106">	
+<input type="hidden" name="form" value="primary">									<span class="link make-primary" ng-click="Settings.Email.make_primary(236106)">Make primary</span>
+</form>
+
+You can clearly see there is no csrf protection.
+Hacking a secondary email of user and then doing this csrf attack against the user will result in compromising of user's account.
+
+I hope you resolve this. :)
+
+Regards,
+Pranav

@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/226418
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/whhackersbr
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:30.08.2017 9:33:31
+
+Summary:
+
+**Summary:**
+
+HackerOne reports escalation to JIRA is CSRF vulnerable
+
+**Description (Include Impact):**
+
+An attacker can steal private reports details through a CSRF in HackerOne report escalation to JIRA implementation.
+
+### CSRF
+
+GET https://hackerone.com/reports/[REPORT_NUMBER]/escalate
+
+### Optional: Supporting Material/References (Screenshots)
+
+ * https://youtu.be/N6JSGA_RIV4

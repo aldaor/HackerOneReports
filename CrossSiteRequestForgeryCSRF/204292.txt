@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/204292
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/rz01
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:1400.0
+Severity:critical
+State:Closed
+DateOfDisclosure:24.05.2017 16:58:56
+
+Summary:
+In this report, the researcher found an insecure direct object reference that allowed a malicious user to impersonate another user in the comment section under Newswire articles. This meant that an attacker could leave abusive comments that appeared to have been made by another user, or delete a particular victim's previous comments.
+
+This vulnerability had other adverse side effects as well, including information leakage and CSRF.

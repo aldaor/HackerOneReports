@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/2628
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/appsecure_in
+ReportedTo:Slack(slack)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:26.07.2014 20:43:19
+
+Summary:
+
+Hi,
+
+The CSRF token is not getting expired for a user.This can led to username change and many other account change information as well.
+
+To reproduce the issue:
+
+1) Login into your Slack.com account 
+2) Go to this URl https://sehacure.slack.com/account/settings
+3) Inspect element  Copy your anti CSRF token i.e. crumb.
+4) Now logout from your account.
+5) Login again and visit the same page again i.e. https://sehacure.slack.com/account/settings
+6) Inspect element and change the value of crumb to token you copied.
+7) Change your username now it will be changed.
+
+
+CSRF tokens should expire as soon as the user logs out and we have to assign a new one when a user signs in :-)
+
+Best regards,
+Anand

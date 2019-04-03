@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/269196
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/firestone
+ReportedTo:Blockstack(blockstack)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:10.01.2018 14:23:59
+
+Summary:
+An e-mail signup form does not check CSRF tokens. This would allow the creation of click-able links which perform an e-mail signup. Because the e-mail signup form does not pass any sensitive information, nor perform any state changes on behalf of a user, this is not a vector for attack.

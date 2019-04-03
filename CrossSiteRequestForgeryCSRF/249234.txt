@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/249234
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/kuromatae
+ReportedTo:Zomato(zomato)
+BountyAmount:50.0
+Severity:low
+State:Closed
+DateOfDisclosure:19.08.2017 8:17:00
+
+Summary:
+
+Hi !
+
+This time, i found a CSRF who can lead to arbitrary writing on twitter account of victim if they have added it to zomato :)
+
+Coupled with a stored XSS, it could be very troublesome to you.
+
+In the page, it seems there is no token check at all.
+
+You can see in the video the CSRF working and here is the POC i used:
+
+`https://www.zomato.com/php/post_twitter_authenticate.php?type=posttweet&message=Hello Zomato Team :)`
+
+Cordially,
+
+Kuromatae.

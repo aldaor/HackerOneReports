@@ -1,0 +1,39 @@
+ReportLink:https://hackerone.com/reports/21069
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/mikkz
+ReportedTo:Mavenlink(mavenlink)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:31.07.2014 23:38:35
+
+Summary:
+
+Hi all,
+
+Heres the request on the login page
+
+POST /login HTTP/1.1
+Host: app.mavenlink.com
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Firefox/31.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: https://app.mavenlink.com/login
+Cookie: events_4=BAhJIiN7ImlkZW50aWZpZWQiOm51bGwsInF1ZXVlIjpbXX0GOgZFRg%3D%3D--945de82104a0b277ad6fecf79ec9ad4eeff0b9e1; _marketing_session_4=BAh7B0kiD3Nlc3Npb25faWQGOgZFRkkiJWUyOTIzMTRhZmJlMjg2ODVhNjU5YWY0MjJjNzVmMzM2BjsAVEkiEF9jc3JmX3Rva2VuBjsARkkiMXN4VUw2N2VGR3FQVnhGUE5JbmdqRkVmSkNXekNxbk5pRER6RGczQVpQc2c9BjsARg%3D%3D--505d68c5b86fde45bdd92ecbcecd61b1384e2b97; optimizelySegments=%7B%221501260052%22%3A%22ff%22%2C%221501300006%22%3A%22false%22%2C%221491121214%22%3A%22direct%22%7D; optimizelyEndUserId=oeu1406053715818r0.8487352352118706; optimizelyBuckets=%7B%7D; __utma=121861527.592001326.1406053721.1406053721.1406053721.1; __utmb=121861527.1.10.1406053721; __utmc=121861527; __utmz=121861527.1406053721.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); kvcd=1406053724943; km_ai=ZJuhMKaDKI9XMKp9yH9rravCib8%3D; km_uq=1406053725%20%2Fe%3FURL%3Dhttps%253A%252F%252Fwww.mavenlink.com%252F%26Referrer%3DDirect%26_n%3DVisited%2520Site%26_k%3D3453caa3f9ec803a4408def99387e8b7cc480207%26_p%3DZJuhMKaDKI9XMKp9yH9rravCib8%253D%26_t%3D1406053725%7C1406053725%20%2Fe%3F_n%3DClicked%2520Go%2520Pro%2520-%2520Nav%2520Menu%26_k%3D3453caa3f9ec803a4408def99387e8b7cc480207%26_p%3DZJuhMKaDKI9XMKp9yH9rravCib8%253D%26_t%3D1406053725%7C1406053725%20%2Fe%3F_n%3DClicked%2520%2522Get%2520Started%2520For%2520Free%2522%2520%2520-%2520Nav%2520Menu%26_k%3D3453caa3f9ec803a4408def99387e8b7cc480207%26_p%3DZJuhMKaDKI9XMKp9yH9rravCib8%253D%26_t%3D1406053725%7C1406053725%20%2Fe%3F_n%3DClicked%2520Blog%26_k%3D3453caa3f9ec803a4408def99387e8b7cc480207%26_p%3DZJuhMKaDKI9XMKp9yH9rravCib8%253D%26_t%3D1406053725%7C1406053725%20%2Fe%3F_n%3DClicked%2520Features%26_k%3D3453caa3f9ec803a4408def99387e8b7cc480207%26_p%3DZJuhMKaDKI9XMKp9yH9rravCib8%253D%26_t%3D1406053725%7C1406053725%20%2Fe%3F_n%3DClicked%2520Tour%26_k%3D3453caa3f9ec803a4408def99387e8b7cc480207%26_p%3DZJuhMKaDKI9XMKp9yH9rravCib8%253D%26_t%3D1406053725; km_vs=1; km_lv=1406053725; shared_4=%7B%7D; _mavenlink_session_4=BAh7CEkiD3Nlc3Npb25faWQGOgZFRkkiJTVjYzg5YmU4OWQ1M2E5YmU4YjQ0NTQ2OTdhZmUzYzg2BjsAVEkiEF9jc3JmX3Rva2VuBjsARkkiMXQvNHN4a3N3V01PUFhHQ250SFViTWljNFZsNnhlbDl4bGNUZklmRFY3d289BjsARkkiCmZsYXNoBjsARm86JUFjdGlvbkRpc3BhdGNoOjpGbGFzaDo6Rmxhc2hIYXNoCToKQHVzZWRvOghTZXQGOgpAaGFzaHsAOgxAY2xvc2VkRjoNQGZsYXNoZXN7CDoHanMwOgtub3RpY2UwOgplcnJvcjA6CUBub3cw--c22e6e8e2beaa4aa68e9764952df7cee71b7974b; __utma=247887703.1235266595.1406053731.1406053731.1406053731.1; __utmb=247887703.1.10.1406053731; __utmc=247887703; __utmz=247887703.1406053731.1.1.utmcsr=mavenlink.com|utmccn=(referral)|utmcmd=referral|utmcct=/; mp_ecc092a0756a90581352318884558c95_mixpanel=%7B%22distinct_id%22%3A%20%221475f555f3b2d4-0b3d0cebd94dac-42504136-100200-1475f555f3c31c%22%2C%22%24initial_referrer%22%3A%20%22https%3A%2F%2Fwww.mavenlink.com%2F%22%2C%22%24initial_referring_domain%22%3A%20%22www.mavenlink.com%22%7D; SnapABugRef=https%3A%2F%2Fapp.mavenlink.com%2Flogin%20https%3A%2F%2Fwww.mavenlink.com%2F; SnapABugHistory=1#; SnapABugVisit=1#1406053740; __hstc=15263209.1fd98d2c7a0045b00ee01d2f32432213.1406053741768.1406053741768.1406053741768.1; __hssrc=1; __hssc=15263209.1.1406053741768; hsfirstvisit=https%3A%2F%2Fapp.mavenlink.com%2Flogin|https%3A%2F%2Fwww.mavenlink.com%2F|1406053741766; hubspotutk=1fd98d2c7a0045b00ee01d2f32432213; NRAGENT=tk=7b5c3fc3689b2ed2
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 184
+
+utf8=%E2%9C%93&authenticity_token=t%2F4sxkswWMOPXGCntHUbMic4Vl6xel9xlcTfIfDV7wo%3D&login%5Bemail_address%5D=haxthat_f%40yahoo.com&login%5Bpassword%5D=fatalsky&login%5Bopen_id%5D=&from=
+
+
+I removed the [authenticity_token] parameter and i am still able to login on the site.
+
+See the threat of login CSRF :
+http://andrisatteka.blogspot.nl/2014/01/the-threat-of-login-csrf.html?m=1
+
+Kindly check it
+
+Regards,
+Mikko

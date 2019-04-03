@@ -1,0 +1,50 @@
+ReportLink:https://hackerone.com/reports/208237
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/mr_edwards
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:200.0
+Severity:medium
+State:Closed
+DateOfDisclosure:19.03.2017 2:54:27
+
+Summary:
+##Issue
+
+The reporter found a flaw where it was possible to brute force unsubscribe on one of the apps on viestinta.lahitapiola.fi.
+
+##Fix
+
+The issue was investigated and found to be valid.  The application was fixed.
+
+##Reasoning
+
+Brute force unsubscription does not put any customer data at risk, but poses a real risk for business functions relying on contacting and meeting customers. In real life, unsubscribing does not directly affect participation in events, but makes estimating participation difficult.
+## Basic report information
+**Summary:** 
+CSRF is an attack that tricks the victim into submitting a malicious request. It inherits the identity and privileges of the victim to perform an undesired function on the victim's behalf
+
+**Description:** Any user subscribed to Active Campaign, or admin too, attacker will able to unsubscribe using CSRF attack.
+
+**Domain:** http://viestinta.lahitapiola.fi
+
+## Browsers / Apps Verified In:
+
+  * [Firefox latest version]
+
+## Steps To Reproduce:
+
+1. go to this link : `http://viestinta.lahitapiola.fi/webApp/unsub_sb?id=X2Fi4JiOfQdh0HkKT1xfrvO0vN5UTXiI6kcSQlQgAgA%3D`
+  2. Click on `Bekrafta annullering` and intercept the traffic 
+{F162916}
+  3: intercept the traffic {i am using burpsuite here}, and create CSRF poc
+{F162918}
+4: send that HTML to victim and done, user unsubscribed from the service.
+
+## Additional material
+* Screenshots
+
+Let me know if any further information is required.
+
+Thanks
+Regards
+Neeraj

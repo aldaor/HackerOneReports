@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/277431
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/ajithab
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:15.10.2017 22:20:33
+
+Summary:
+
+1. Go to app.legalrobot.com
+2. Open the browser's javascript console
+3. Type   alert(/xss!/)    and press enter
+4. Profit!

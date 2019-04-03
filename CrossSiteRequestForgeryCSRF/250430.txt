@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/250430
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/aliv3
+ReportedTo:Cuvva(cuvva)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:23.07.2017 8:46:16
+
+Summary:
+
+#Description : cuvva.co allows user to send app download link to his/her mobile number via SMS. But attacker can abuse this system via cross site request forgery and  can send SMS to N number of mobile numbers without  even visiting the cuvva.com/cuvva.insure website.
+
+
+Reproduction Steps :
+----------------------------
+1.  Visit cuvva.com
+2.  Click on Download App.
+3.  You will be redirected to https://cuvva.insure/homepage
+4.  Page will ask for your mobile number to send the one time SMS.
+5.  Enter a Mobile number to get SMS of download link.
+6.  Visit My CSRF script : [CSRF Script] (https://unentitled-cylinder.000webhostapp.com/cuvva/POC-Cuvva.html)  
+7.   Enter Username : cuvva   Password : hellocuvva 
+8.   +91 ████████ is set as default phone parameter in given CSRF script.
+9.    A SMS will be sent automatically once you visit csrf script.
+
+Attack Impact :
+Attacker can abuse the SMS system for SMS bombing and spamming.
+Which may negatively affect the market image of Cuvva and can lead to legal actions because of spamming users.
+Excessive usage of SMS system will eventually increase the operating/marketing cost for Cuvva.
+
+Attachments : CSRF sample script. (POC-Cuvva.html)

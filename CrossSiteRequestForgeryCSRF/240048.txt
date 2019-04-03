@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/240048
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/4cad
+ReportedTo:GoCD(gocd)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:05.12.2018 4:13:54
+
+Summary:
+The /go/admin/restful/configuration/file/POST/xml path is vulnerable to Cross-Site Request Forgery that can result in an unauthorized user adding to the server cruise-config.xml and gaining complete control of the server. Successful exploitation is made difficult by the need for the admin to be served malicious HTML and for the attacker to have a copy of historical config, such as the nearly-empty empty placeholder file that gets initially generated upon install.
+
+

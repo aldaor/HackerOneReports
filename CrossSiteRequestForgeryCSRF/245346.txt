@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/245346
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/sp1d3rs
+ReportedTo:WakaTime(wakatime)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:03.07.2017 9:34:56
+
+Summary:
+Thanks @sp1d3rs!

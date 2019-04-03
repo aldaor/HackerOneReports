@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/251918
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/geekboy
+ReportedTo:Unikrn(unikrn)
+BountyAmount:40.0
+Severity:medium
+State:Closed
+DateOfDisclosure:06.09.2017 6:31:38
+
+Summary:
+
+
+###Description:
+-----------
+Attacker can update the user's Ad Frequency % using flash + 307 redirect trick by making post request to particular endpoint.
+
+###Step To Reproduce: 
+-----------
++ Get logged at: https://cp-ng.pinion.gg
++ Visit: http://geekboy.ninja/poc/freq.swf
++ Ad Frequency should be updated.
+
+*Note: for test i used my account with id `████`, as update request use userid in endpoint, it can be modified as per need.* 
+
+{F205068}
+
+
+
+
+
+Please let me know if any more info needed !
+
+-------------
+
+__*- Geekboy!*__
