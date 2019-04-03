@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/72735
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/mak
+ReportedTo:Pornhub(pornhub)
+BountyAmount:5000.0
+Severity:
+State:Closed
+DateOfDisclosure:26.05.2016 22:57:03
+
+Summary:
+The researcher was able to get access to a CMS without authentication. This was an old server that should have been decommissioned. The issue was resolved and the researcher was awarded a bounty.
+
+Thank you Mak for the submission!

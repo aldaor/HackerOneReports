@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/411270
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/neolead
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:21.09.2018 10:08:29
+
+Summary:
+The researcher was able to complete RCE attack and download sensitive files. We have mitigated it by hardening the machine and port. 

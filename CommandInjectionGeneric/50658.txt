@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/50658
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/rickypaipie
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:16.04.2015 10:21:21
+
+Summary:
+
+Hi hackerone team,
+
+I'm a friend of Peiying and am looking for a position at hackerone. While playing around with your product, I found a serious vulnerability in your application: it allows attackers to craft executables on the hackerone.com domain rather than the sandboxed one on S3.
+
+1. attacker reports a bug titled `hackerone\"||calc||`
+2. attacker can then direct victim to [https://hackerone.com/notifications.bat](https://hackerone.com/notifications.bat)
+3. when downloaded and executed, it will open calculator on victim's windows environment
+
+The potentials of this vector is outlined in [Reflected File Download: A New Web Attack Vector](https://www.trustwave.com/Resources/SpiderLabs-Blog/Reflected-File-Download---A-New-Web-Attack-Vector/), which does not limit to executing commands on victim's machines.
+
+To fix, since hackerone is a Rails deployment, at the rendering step of the notifications action:
+
+instead of:
+
+`render json: notifications`
+
+do:
+
+    respond_to do |format|
+        format.json do
+            render json: notifications
+        end
+    end
+
+so requests of non-json formats would return a 406 Not Acceptable. see [respond_to](http://apidock.com/rails/ActionController/MimeResponds/InstanceMethods/respond_to).
+
+Look forward to hearing back from you soon,
+
+Ricky

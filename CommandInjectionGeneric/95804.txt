@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/95804
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/bigbear_
+ReportedTo:Mail.ru(mailru)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:01.12.2015 13:18:14
+
+Summary:
+api.allodsteam.com had an open public folder with some sensitive information for initial server setup, including sensitive internal documentation and database dumps.

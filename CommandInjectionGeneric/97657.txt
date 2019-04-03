@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/97657
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/hassham
+ReportedTo:Slack(slack)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:11.11.2015 18:03:55
+
+Summary:
+
+The web application supports file uploads and I was able to upload a Java Applet (.class/.jar) file. If a web browser loads a Java applet from a trusted site, the browser provides no security warning. If an attacker can upload a CLASS/JAR file with an applet, the file is executed even if the web page, which embeds the applet is located on a different site. An attacker could use a file upload function to build an XSS attack using active content.
+
+The impact of this vulnerability
+Malicious users may inject JavaScript, VBScript, ActiveX, HTML or Flash into a vulnerable application to fool a user in order to gather data from them. An attacker can steal the session cookie and take over the account, impersonating the user. It is also possible to modify the content of the page presented to the user.
+
+
+Here is the link of the file i was able to upload with class extension:-
+
+Successfully uploaded file Applet3863.class with content type image/jpeg.
+
+The file is available at: http://slackatwork.com/wp-content/uploads/job-manager-uploads/company_logo/2015/11/Applet3863.class. 

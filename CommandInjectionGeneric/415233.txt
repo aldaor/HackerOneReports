@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/415233
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/apox
+ReportedTo:h1-5411-CTF(h1-5411-ctf)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:22.10.2018 16:04:50
+
+Summary:
+
+> NOTE! Thanks for submitting a report! Please replace *all* the [square] sections below with the pertinent details. Remember, the more detail you provide, the easier it is for us to triage and respond quickly, so be sure to take your time filling out the report!
+
+**Summary:** 
+h1-5411-ctf write-up
+
+The CTF contained a Local File inclusion that enabled the attacker to read .php files (among others) from the server and by doing so, it helped to find out PHP serialization bug and the XXE vulnerability that was used as SSRF to exploit the hidden maintenance pages.
+
+Flag: ```flag{cha1n1ng_bugs_f0r_fun_4nd_pr0f1t?_or_rep0rt_an_LF1}```
+
+
+**Description:** 
+See attached .pdf file.
+
+## Steps To Reproduce:
+See attached .pdf file.
+
+## Supporting Material/References:
+See attached .pdf file.
+
+## Impact
+
+Flag was found!

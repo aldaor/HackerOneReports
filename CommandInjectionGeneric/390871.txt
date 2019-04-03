@@ -1,0 +1,59 @@
+ReportLink:https://hackerone.com/reports/390871
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/cris_semmle
+ReportedTo:Node.js third-party modules(nodejs-ecosystem)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:10.08.2018 13:08:53
+
+Summary:
+
+I would like to report a command injection vulnerability in  win-fork and win-spawn packages.
+It allows an attacker to inject multiple commands in exec-like manner.
+
+# Module
+
+**module name:** win-spawn
+**version:** 2.0.0
+**npm page:** `https://www.npmjs.com/package/win-spawn`
+**npm page:** `https://www.npmjs.com/package/win-fork`
+
+## Module Description
+
+Spawn for node.js but in a way that works regardless of which OS you're using. Use this if you want to use spawn with a JavaScript file. It works by explicitly invoking node on windows. It also shims support for environment variable setting by attempting to parse the command with a regex. Since all modification is wrapped in if (os === 'Windows_NT') it can be safely used on non-windows systems and will not break anything.
+
+## Module Stats
+
+
+21,929+36,468 downloads in the last week
+
+# Vulnerability
+
+## Vulnerability Description
+
+Even though this module is advertised to work like spawn, on windows, it works like exec.
+
+## Steps To Reproduce:
+
+To check the params passed to cmd.exe:
+```js
+var os = require('os').type = function() {return "Windows_NT"};
+require("child_process").spawn = function(a, b) { console.log(a); console.log(b)};
+var spawn = require("win-fork");
+spawn('dir C:// && date /T', [], {stdio: 'inherit'});
+```
+It effectively runs "cmd /c 'dir C:// && date /T'" which allow the attacker to run both the commands. Moreover, I believe parameters to win-spawn/win-fork may also be used for injection, but I did not investigate this further.
+
+## Patch
+
+N/A at a minimum, document this behaviour in the package's documentation.
+
+# Wrap up
+
+- I contacted the maintainer to let them know: N
+- I opened an issue in the related repository: N
+
+## Impact
+
+This issue is more a documentation/API issue. The package should state clearly what it does and alert its dependents that on windows, the parameters should be treated as parameters to exec.

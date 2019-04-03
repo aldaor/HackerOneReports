@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/90131
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/alyssa_herrera
+ReportedTo:Zendesk(zendesk)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:02.11.2015 22:43:14
+
+Summary:
+
+Scenario: An attacker creates a name as =AND(2>1)  and creates a ticket. When a team member clicks export  as csv and opens it instead of seeing =AND(2>1)  they see TRUE. This means that the cell is active. An attacker could basically attack makes a ticket, use -2+3+cmd|' /C calc'!E1 and could execute malicious commands through CMD. 
+E1 is the cell it's located in.
+
+  This may cause a warning but the team member would  believe it's a trusted file  so you have high chance of execution.  
+Best way to mitigate this vulnerability is if you append ' to the list of triggers, = , + , - Excel will ignore the ' and just show ='AND(2>1) instead
+
+
+Sources: https://www.owasp.org/index.php/CSV_Excel_Macro_Injection
