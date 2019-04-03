@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/190870
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/coolboss
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:13.12.2016 21:08:22
+
+Summary:
+
+There's a stored xss vulnerability ....
+
+Proof Of Concept :
+===============
+1. Set `name` as an xss payload like `"x><img src=a onerror=alert(1)>`.
+{F143238}
+2. Invite people to single call room.
+3. Xss will execute in IE. (It doesn't support CSP)
+{F143237}
+
+Impact :
+========
+Admin user can be xssed via this method if admin uses browsers like IE.
+
+Let me know if you need help in reproducing

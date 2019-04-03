@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/193462
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/securitythinker
+ReportedTo:Zendesk(zendesk)
+BountyAmount:2000.0
+Severity:high
+State:Closed
+DateOfDisclosure:18.03.2017 16:06:15
+
+Summary:
+The researcher found a stored XSS vulnerability where an end-user was able to execute arbitrary Javascript against the Zendesk agent via the chat integration. 
+
+The researcher participated in the Zendesk 2016 holiday promotion and was awarded the Zendesk promotional bounty.

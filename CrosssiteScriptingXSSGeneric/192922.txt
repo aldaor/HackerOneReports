@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/192922
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/sp1d3rs
+ReportedTo:OWOX, Inc.(owox)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:12.02.2017 6:35:23
+
+Summary:
+XSS on finance.owox.com instance
+
+POC: 
+1) Login to zhe site
+2) Go to the https://finance.owox.com/customer/accountList
+3) You will be XSSed immediately.
+
+Reproduce steps:
+1) Go to the https://finance.owox.com/customer/accountAdd
+Place in the username next payload: "><script>alert(document.cookie);</script>
+3) Go to the https://finance.owox.com/customer/accountList. You will be XSSed since server not escaping quotes and <> entities.

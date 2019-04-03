@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/188972
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ddworken
+ReportedTo:Starbucks(starbucks)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:17.01.2017 21:57:52
+
+Summary:
+
+There is a persistent XSS in 
+
+```
+https://www.starbucks.com/coffee/espresso/latte-macchiato
+```
+
+It is caused by loading scripts from: 
+
+```
+//starbucksmacchiato-prod.elasticbeanstalk.com/scripts/bn-v1.0.0-Release-min.js
+```
+
+Note that ```starbucksmacchiato-prod.elasticbeanstalk.com``` is not registered on elastic beanstalk. You can verify this by looking up the IP address for this subdomain and noting that it does not resolve. Through registering that domain on elastic beanstalk and deploying a webserver that responds to that request with javascript, an attacker could get a persistent XSS on Starbuck's website. 
+
+I have not registered that domain with Elastic Beanstalk since it would give me a large amount of information about the user's of Starbuck's website (and it would incur a large amount of traffic-more than I'd like to pay for on AWS!). If you would like me to do so, let me know but I do not want to go past the bounds of acceptable testing. 
+
+Thanks,
+David Dworken

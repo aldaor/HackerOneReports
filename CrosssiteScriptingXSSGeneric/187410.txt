@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/187410
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/imran_hadid
+ReportedTo:Slack(slack)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:01.01.2017 20:46:32
+
+Summary:
+
+Hello Team.
+
+I found a Store XSS. Where the company name is the vulnerable to XSS. If you give this below XSS script as Company name, you will get the XSS pop up after the login in message option where it'll randomly generated at the message room.
+“><IMG SRC=x onerror=javascript:alert(&quot;XSS-by-Imran&quot;)> 
+
+ Here is the POC:
+https://youtu.be/dqrH2WhIgtk
+
+Thanks

@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/184200
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/korprit
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.06.2017 21:10:13
+
+Summary:
+A cross-site scripting vulnerability was found on a Department of Defense website which may trick a web user into executing a malicious script, potentially revealing a user's web session information or modify web content. @korprit was able to demonstrate this vulnerability by crafting a specially formatted URL.
+

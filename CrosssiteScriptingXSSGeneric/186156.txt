@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/186156
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/korprit
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:11.01.2017 20:54:07
+
+Summary:
+A Department of Defense webserver was vulnerable to a SQL injection attack that could have revealed sensitive financial information. korprit was able to demonstrate this vulnerability by crafting a specially formatted URL. Thanks korprit!

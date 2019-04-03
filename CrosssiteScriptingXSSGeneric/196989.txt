@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/196989
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bogdantcaciuc
+ReportedTo:FormAssembly(formassembly)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:26.04.2017 17:46:00
+
+Summary:
+A XSS vulnerability was found in the username field of one of our sign-up pages (https://www.formassembly.com/partners/salesforce/sign-up.php?plan=PROFESSIONAL). The researcher was able to prompt an alert by posting this code in the field: "><img src=x onerror=alert(document.domain)>
+
+This issue was corrected and we thank the researcher, @bogdantcaciuc for his contributions to our site's security. 

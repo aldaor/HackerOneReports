@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/187380
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/twi0x00tter
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.03.2017 8:28:33
+
+Summary:
+
+visit this https://conference.owncloud.org
+then go to edit profile
+click button which i give in s.jpg
+then go to Biography and paste this code "><script>prompt(1)</script>
+
+proof
+https://conference.owncloud.org/users/949

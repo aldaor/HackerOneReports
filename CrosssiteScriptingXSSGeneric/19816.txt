@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/19816
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/sasi2103
+ReportedTo:Envoy(envoy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.08.2014 8:48:27
+
+Summary:
+
+Hi,
+
+Update visitor from IPAD with fullname of </script><script>alert(1)</script> and save.
+** IGNORE THE POP UP, IT HAS BEEN REPORTED ALREADY **
+Delete this user, XSS will pop up, the fullname is now stored XSS.
+
+Any visitor which using the IPAD application can create stored XSS which will be activate once you clicked on the delete button.
+
+Regards,
+
+Sasi

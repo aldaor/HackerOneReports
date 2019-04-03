@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/187413
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/esmile
+ReportedTo:Trello(trello)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:06.12.2016 16:03:45
+
+Summary:
+
+1) Login 
+2) Create a new private board
+3) Upload the SVG file attached
+4) Grab the file URL
+5) Open a new incognito window and navigate to the URL. Note that you were able to access the SVG file as well as that the script payload executed. 

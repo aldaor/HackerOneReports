@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/188691
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/juliocesar
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:06.01.2017 21:03:47
+
+Summary:
+A cross-site scripting vulnerability was found on a Navy website which may trick a web user into executing a malicious script, potentially revealing a user's web session information or modify web content. juliocesar was able to demonstrate this vulnerability by crafting a specially formatted URL. Thanks juliocesar!

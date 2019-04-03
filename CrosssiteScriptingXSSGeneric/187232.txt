@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/187232
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ahsan
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:16.03.2017 17:53:46
+
+Summary:
+A DoD website was misconfigured in a manner that could have allowed an attacker to inject malicious code into automated emails sent by the server. @ahsantahir was able to demonstrate this vulnerability by posting a specially formatted webform. Thanks @ahsantahir!

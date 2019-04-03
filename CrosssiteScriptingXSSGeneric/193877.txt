@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/193877
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/thalaivarsubu
+ReportedTo:Trello(trello)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.12.2016 20:53:13
+
+Summary:
+
+https://trello.com/contact?nosearch=1&source=from%20helpsite%20beacon
+Save a file name as an XSS payload ;
+"><img src=x onerror=prompt(1)> . jpg
+ It can only be done in linux because you cant rename a file as a payload in windows 
+ Click it and an xss will popup .

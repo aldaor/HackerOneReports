@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/190951
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/prem1807
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:17.12.2016 12:30:41
+
+Summary:
+
+Hello,
+I had found a XSS vulnerability in manually entering postal codes in "Advance Cash On Delivery" option which is newly launched for indians.Below is the screenshot attached.
+Thank You.

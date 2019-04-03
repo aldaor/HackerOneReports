@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/184750
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ramsexy
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:01.06.2017 21:12:34
+
+Summary:
+A cross-site scripting vulnerability was found on a Department of Defense website which may trick a web user into executing a malicious script, potentially revealing a user's web session information or modify web content. @ramsexy was able to demonstrate this vulnerability by crafting a specially formatted URL.
+

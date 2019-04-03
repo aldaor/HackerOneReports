@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/192223
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/alberto__segura
+ReportedTo:Discourse(discourse)
+BountyAmount:256.0
+Severity:high
+State:Closed
+DateOfDisclosure:10.01.2017 10:01:36
+
+Summary:
+
+Just like in the XSS vulnerability on Image parser, there is the same vulnerability on Audio (https://github.com/discourse/onebox/blob/394409ca319cc1a1cd31fefa50c9468c990531a3/lib/onebox/engine/audio_onebox.rb) and Video (https://github.com/discourse/onebox/blob/394409ca319cc1a1cd31fefa50c9468c990531a3/lib/onebox/engine/video_onebox.rb) parsers.
+
+A malicious user can include a "fake" audio or video URL with a ' character, allowing him to execute Javascript code. 
+
+Audio URL example: http://host/path'onerror=alert(1);//k.mp3
+Video URL example: http://host/path'onerror=alert(1);//k.mp4
+
+Ask me if you need more info to reproduce the vulnerability.
+
+Best regards,
+Alberto

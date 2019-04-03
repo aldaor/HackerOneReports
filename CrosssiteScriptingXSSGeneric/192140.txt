@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/192140
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/pappan
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:11.01.2017 16:47:04
+
+Summary:
+
+Hi,
+#190951 is not fully fixed. Scripts can be injected via a csv file and make it execute in the application. Screenshots attached.

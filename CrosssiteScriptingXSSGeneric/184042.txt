@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/184042
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/konduru-jashwanth
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:07.04.2017 18:57:47
+
+Summary:
+A cross-site scripting (XSS) vulnerability was found on a Department of Defense.  XSS vulnerabilities can be used to trick a web user into executing a malicious script, potentially revealing a user's web session information or modify web content. @konduru-jashwanth able to demonstrate this vulnerability by crafting a specially formatted URL. Thanks @konduru-jashwanth!

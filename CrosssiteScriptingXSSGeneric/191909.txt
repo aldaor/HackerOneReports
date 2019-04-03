@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/191909
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/alberto__segura
+ReportedTo:Discourse(discourse)
+BountyAmount:256.0
+Severity:high
+State:Closed
+DateOfDisclosure:10.01.2017 10:01:45
+
+Summary:
+
+I found a XSS (Cross-Site Scripting) vulnerability, and it is present in the markdown parser when it tries to parse an image URL.
+
+To reproduce the vulnerability you need to add a fake image url like:
+
+http://host/path/to/image'onerror=alert(1);//.png
+
+As you can see, we have an invalid image URL which finish with an image extension (PNG). By putting the ' we are able to break the "img" tag in which the image url is included by the parser and add custom code, allowing us to run Javascript code. A malicious user could use the $.getScript function to load a malicious script.
+
+If you need more information about the vulnerability, please, feel free to reply.

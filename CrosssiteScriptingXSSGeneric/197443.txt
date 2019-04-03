@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/197443
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/skavans
+ReportedTo:Discourse(discourse)
+BountyAmount:256.0
+Severity:high
+State:Closed
+DateOfDisclosure:20.01.2017 23:50:12
+
+Summary:
+
+1. Load http://try.discourse.org
+2. Click "New topic"
+3. Enter this payload https://89.223.28.48/bandcamp.com/album/index.html?XSSa2 to field with placeholder "Type title or paste a link here"
+4. Wait for the preview engine to parse the link
+4. XSS will fire
+
+{F151439}
+
+You should sanitize external data in this engine and replace *matches_regexp* from
+`^https?:\/\/.*bandcamp\.com\/album\/`
+to
+`^https?:\/\/.*\.bandcamp\.com\/album\/`
+to fix the issue.

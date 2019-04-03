@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/198907
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/jack898
+ReportedTo:VK.com(vkcom)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:10.02.2017 12:01:31
+
+Summary:
+
+Hello,
+
+I have found an area where it may be possible to run certain HTML/JS scripts.
+
+TO REPRODUCE:
+1. Go to documents
+
+2. Upload anything and edit it
+
+3. On the edit page in tags, enter code without a closing bracket ex. <img src=x
+
+4. Click enter
+
+5. It will be parsed in that area, but after saving it, it won't parse.
+
+POTENTIAL:
+I'm still looking into this, as this could be a possible XSS vuln if I can find vectors without closing brackets that have harmful code.
+
+WHY IT WORKS:
+The reason this works is because your filter only looks for opening AND closing brackets, when it is possible to run code without closing the brackets.
+
+Thanks,
+Kicker

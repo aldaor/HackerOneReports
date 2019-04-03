@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/199804
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/lucasveigaf
+ReportedTo:Harvest(harvest)
+BountyAmount:250.0
+Severity:medium
+State:Closed
+DateOfDisclosure:04.03.2017 18:13:38
+
+Summary:
+
+When adding a new Person, by inserting this in First or Last Name, I've got a persistent XSS:
+
+<sVg/oNloAd=//><sVg/oNloAd=alert("XSS2")//>
+
+The key for this is that the person with the XSS string must appear in one or more dropdown menus. In other words, the Person must be available to be assigned to at least one project.
+
+I can also trigger the alert box by clicking on Expand All and any time slot where the Person with the XSS string is in the dropdown menu.
+
+This is true for all similar dropdown menus. If I create a Client with the same string, I also get the alert box when creating a New Project since there's a dropdown menu that lists the Clients.
+
+If I create a New Project with the XSS string in Project Name, I can trigger the alert box on the Team's tab in the same way as in the Projects' tab.
+
+Also, by going to https://forecastapp.com/000000/projects and clicking on the malicious project, the alert box is also triggered.

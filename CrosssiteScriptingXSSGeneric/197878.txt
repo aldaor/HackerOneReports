@@ -1,0 +1,39 @@
+ReportLink:https://hackerone.com/reports/197878
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/madrobot
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.01.2017 2:43:57
+
+Summary:
+
+Hello __Team__,
+
+__Description__:-
+>Vulnerable code is located at /wp-admin/includes/class-theme-installer-skin.php
+
+__POC__:-
+https://nextcloud.com/readme.html
+
+{F151887}
+
+
+
+__FIX__:-
+Upgrade wordpress to latest
+
+
+__Refer__:-
+>https://wpvulndb.com/vulnerabilities/8718
+>https://www.mehmetince.net/low-severity-wordpress/
+
+__Attack Scenario__:-
+1 – Attacker uploads a theme as a zip file.
+2 – Webmaster who just want to download a theme and then upload, takes a theme file.
+3 – And upload it without verify content of zip file.
+
+
+__Regards__,
+Santhosh

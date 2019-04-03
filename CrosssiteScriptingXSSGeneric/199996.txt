@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/199996
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/paresh_parmar
+ReportedTo:Ian Dunn(iandunn-projects)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:16.10.2017 2:40:10
+
+Summary:
+This report was about the possibility to inject malicious HTML into wp-admin via comments on the `talks` post type. Examples of malicious input were:
+
+* `<a href="http://www.google.com"><img src="http://www.google.com/intl/en_ALL/images/logo.gif"/></a>`
+* `<img src="https://storage.googleapis.com/gweb-uniblog-publish-prod/static/blog/images/google-200x200.7714256da16f.png" width="10000" height="10000" border="0" style="border: 0" />`
+
+The report suggested that those input could be used in phishing attacks, since the images would be displayed in wp-admin, where an administrator might click on the links and be lead to a malicious site.
+
+The report turned out to be invalid, because the comments were left while the user was logged in as an Administrator. [WordPress gives administrators the unfiltered_html capability, allowing them to post any HTML they would like](https://make.wordpress.org/core/handbook/testing/reporting-security-vulnerabilities/#why-are-some-users-allowed-to-post-unfiltered-html).
+

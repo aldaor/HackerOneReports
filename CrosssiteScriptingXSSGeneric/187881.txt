@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/187881
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/spam404
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:11.01.2017 21:23:32
+
+Summary:
+A U.S. Army website was vulnerable to a cross-site scripting attack which may be used to trick a web user into executing a malicious script, potentially revealing a user's browser cookies or modify web content. spam404 was able to demonstrate this vulnerability by crafting a specially formatted URL. Thanks spam404!

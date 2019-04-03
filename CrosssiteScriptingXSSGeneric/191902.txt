@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/191902
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/kunal_khubchandani
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:27.04.2017 20:01:13
+
+Summary:
+An HTML injection vulnerability was found on a Department of Defense website which may have been used to trick a web user into viewing modified web content, potentially revealing a user's web session information, or other sensitive information. @kunal_khubchandani was able to demonstrate this vulnerability by crafting a specially formatted URL.

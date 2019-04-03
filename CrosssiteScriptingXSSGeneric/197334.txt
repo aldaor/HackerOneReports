@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/197334
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Airbnb(airbnb)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:03.04.2018 23:33:58
+
+Summary:
+By corrupting the value of a cookie on the airbnb.com domain, bobrov was able to execute an XSS payload. Because cookies cannot be set cross-domain, this did require another vulnerability to be exploitable. Furthermore, because of CSP, this was only exploitable in Internet Explorer 11. The issue was fixed with enhanced output encoding.
+
+Thanks to bobrov for this well-documented finding!

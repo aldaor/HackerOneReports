@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/191674
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/alberto__segura
+ReportedTo:Pornhub(pornhub)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:14.02.2017 15:42:26
+
+Summary:
+The researcher discovered a way to use the tag parameter when generating a GIF to achieve a stored cross-site scripting.

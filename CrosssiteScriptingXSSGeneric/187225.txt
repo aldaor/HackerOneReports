@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/187225
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/snicker2812
+ReportedTo:Dovecot(dovecot)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:09.02.2017 5:09:36
+
+Summary:
+
+Web Browser XSS Protection is not enabled, or is disabled by the configuration of the 'X-XSS-Protection' HTTP response header on the web server
+
+http://www.dovecot.fi/s=..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5C..%5CWindows%5Csystem.ini&submit=Search
+http://www.dovecot.fi/60/indexd7de.html?full-site=c%3A%2FWindows%2Fsystem.ini
+http://www.dovecot.fi/?s=%2F..%2FWEB-INF%2Fweb.xml&submit=Search
+
+The X-XSS-Protection HTTP response header allows the web server to enable or disable the web browser's XSS protection mechanism. The following values would attempt to enable it: 
+X-XSS-Protection: 1; mode=block
+X-XSS-Protection: 1; report=http://www.example.com/xss
+The following values would disable it:
+X-XSS-Protection: 0
+The X-XSS-Protection HTTP response header is currently supported on Internet Explorer, Chrome and Safari (WebKit).
+Note that this alert is only raised if the response body could potentially contain an XSS payload (with a text-based content type, with a non-zero length).
+
+Ensure that the web browser's XSS filter is enabled, by setting the X-XSS-Protection HTTP response header to '1'.
+
+
+https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
+https://blog.veracode.com/2014/03/guidelines-for-setting-security-headers/

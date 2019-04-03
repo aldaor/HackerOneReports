@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/19603
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/anshuman_bh
+ReportedTo:Envoy(envoy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:16.08.2014 5:57:21
+
+Summary:
+
+1. Authenticate into the application.
+2. Navigate to https://signwithenvoy.com/locations
+3. Click on "Add a new location"
+4. Enter ");</script><script>alert(1)</script>" for Location Name.
+5. Enter some random Location Admin's name, Location admin's email and password.
+6. Click on "Add Location"
+7. Notice that a pop-up appears as soon as the location is created. 
+
+See screenshot. 

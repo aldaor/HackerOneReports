@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/191890
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/babayaga_
+ReportedTo:Discourse(discourse)
+BountyAmount:256.0
+Severity:high
+State:Closed
+DateOfDisclosure:10.01.2017 0:08:01
+
+Summary:
+
+###Steps to Reproduce:
+
+1. Load http://try.discourse.org
+2.Now From Top Right Corner Click on Search Button 
+3. Enter payload their 
+
+###Payload:
+
+@<script>prompt(1337)</script>gmail.com
+
+4: Now in new windows that opens click on advance search and The XSS will Occur :) 
+5: Now copy the link and send to victim there the XSS will Occur To 
+
+Thanks
+Khizer Javed 

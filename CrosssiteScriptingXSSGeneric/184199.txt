@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/184199
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/juliocesar
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.01.2017 15:54:32
+
+Summary:
+A U.S. Army website was vulnerable to a cross-site scripting attack which may be used to trick a web user into executing a malicious script, potentially revealing a user's browser cookies or modify web content. juliocesar was able to demonstrate this vulnerability by crafting a specially formatted URL. Thanks juliocesar!

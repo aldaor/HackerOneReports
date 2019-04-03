@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/197902
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/skavans
+ReportedTo:Discourse(discourse)
+BountyAmount:256.0
+Severity:high
+State:Closed
+DateOfDisclosure:20.01.2017 23:50:19
+
+Summary:
+
+Hello!
+
+**Steps to reproduce:**
+1. Paste this payload URL in the topic: http://89.223.28.48/og_image.html?uncache1234
+2. Save the post and you will see the XSS will fire
+{F151911}
+
+Though you now escape the OpenGraph data, the whitelisted_generic onebox engine decodes variables values back at lines: [202](https://github.com/discourse/onebox/blob/master/lib/onebox/engine/whitelisted_generic_onebox.rb#L202) and [207](https://github.com/discourse/onebox/blob/master/lib/onebox/engine/whitelisted_generic_onebox.rb#L207).
+Then these decoded values are injected in the raw HTML [here](https://github.com/discourse/onebox/blob/master/lib/onebox/engine/whitelisted_generic_onebox.rb#L284) and [here](https://github.com/discourse/onebox/blob/master/lib/onebox/engine/whitelisted_generic_onebox.rb#L289) that leads to XSS attack possibility.
+
+Example post with stored XSS inside is: https://try.discourse.org/t/testing-is-in-progress/620
+Please let me know if you need some extra information to locate and fix the bug. 

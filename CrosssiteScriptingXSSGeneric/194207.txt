@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/194207
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ahsan
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:400.0
+Severity:medium
+State:Closed
+DateOfDisclosure:18.03.2017 20:55:19
+
+Summary:
+##Issue
+
+The reporter found a reflected XSS in verkkopalvelu.lahitapiola.fi but later discovered that the vulnerability also allowed open and unvalidated redirects. 
+
+##Fix
+
+The issue was mitigated.
+
+##Reasoning
+
+An XSS as such is not a huge issue from a risk perspective, although it poses a small risk for stealing of credentials. Open redirects allow for far more sophisticated attack vectors using mass phishing emails and a customized malicious login page.

@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/19585
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/anshuman_bh
+ReportedTo:Envoy(envoy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:16.08.2014 5:57:36
+
+Summary:
+
+Register using ");</script><script>alert(1)</script>" as the full name. 
+As soon as you are logged in after completing the registration, you will see a pop-up.
+See the screenshot attached. 

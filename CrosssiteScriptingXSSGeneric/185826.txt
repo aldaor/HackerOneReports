@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/185826
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/xssa
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:21.07.2017 15:20:57
+
+Summary:
+The researcher observed that product descriptions were not properly sanitized when displayed inside the Buy Button channel.
+Hi security team
+I found XSS in the Buy Button in my.shopify.com
+
+
+Step to reproduce 
+
+1-Go to Product and create Product with these payload <img src="a" onerror="prompt(document.cookie)" />;
+See (Step1)
+
+2- Now Go to Embed on a website  and in the buy bouton page chose the third template and XSS will pop up 
+
+
+Patch it 

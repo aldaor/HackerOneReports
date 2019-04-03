@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/188279
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/hackerhero
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:14.02.2017 13:05:30
+
+Summary:
+
+http://blog.dubizzle.com/uae/ uses outdated Yoast Seo plugin which has following vulnerabilities:
+[!] Title: Yoast SEO <= 3.2.4 - Subscriber Settings Sensitive Data Exposure
+    Reference: https://wpvulndb.com/vulnerabilities/8487
+
+[!] Title: Yoast SEO <= 3.2.5 - Unspecified Cross-Site Scripting (XSS)
+    Reference: https://wpvulndb.com/vulnerabilities/8569
+
+[!] Title: Yoast SEO <= 3.4.0 - Authenticated Stored Cross-Site Scripting (XSS)
+    Reference: https://wpvulndb.com/vulnerabilities/8583
+
+Update the Yoast SEO plugin to fix the issues. 

