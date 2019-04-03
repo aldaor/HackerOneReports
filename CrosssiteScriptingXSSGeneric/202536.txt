@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/202536
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/jon_bottarini
+ReportedTo:Pornhub(pornhub)
+BountyAmount:250.0
+Severity:medium
+State:Closed
+DateOfDisclosure:16.03.2017 21:18:48
+
+Summary:
+The researcher discovered an XSS at the redeem route via the code parameter.

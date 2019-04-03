@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/222506
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/sp1d3rs
+ReportedTo:Pornhub(pornhub)
+BountyAmount:350.0
+Severity:low
+State:Closed
+DateOfDisclosure:12.05.2017 17:05:56
+
+Summary:
+The researcher discovered a temporarily cached stored XSS using the playlist function of the website.

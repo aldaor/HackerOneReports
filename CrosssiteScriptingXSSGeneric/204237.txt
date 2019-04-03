@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/204237
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/irotem2
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:30.10.2017 6:03:06
+
+Summary:
+The researcher was able to find a reflected XSS in informatica.com. 

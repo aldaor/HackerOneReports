@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/200351
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/madrobot
+ReportedTo:Zomato(zomato)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:17.06.2017 17:59:54
+
+Summary:
+
+Hello __Team__
+
+__Description__:-
+ business-blog.zomato.com is vulnerable to reflected XSS that stems from an insecure URL sanitization process performed in the file flashmediaelement.swf
+
+__POC__:-
+https://business-blog.zomato.com/wp-includes/js/mediaelement/flashmediaelement.swf?%#jsinitfunctio%gn=alert%60xss by dem0n%60
+
+{F154224}
+
+__Fix__:-
+
+Update to WordPress to latest
+
+__Regards__:-
+Santhosh

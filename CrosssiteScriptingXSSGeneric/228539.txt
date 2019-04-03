@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/228539
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/panther
+ReportedTo:Quora(quora)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:22.05.2017 22:54:08
+
+Summary:
+
+Hi Quora security team,
+
+there is self XSS vulnerability in https://www.quora.com/profile/Username/
+
+Steps:
+
+copy and paste the link in chrome browser (copy entire link within double quotes
+**"javascript:alert(document.domain)//https://www.quora.com/profile/Username/"**
+
+then XSS payload will trigger
+
+please let me know if you need more information.
+
+best
+
+Panther

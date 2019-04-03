@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/210654
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/a1kmm-
+ReportedTo:Slack(slack)
+BountyAmount:850.0
+Severity:high
+State:Closed
+DateOfDisclosure:21.04.2017 20:53:25
+
+Summary:
+@a1kmm- discovered a bypass to our postMessage origin check, wherein an attacker with existing MITM capabilities could use FTP to bypass validation and view XOXS tokens of victims on the local network. This was related to, and investigated at the same time as, a previous report. This issue is now resolved and was not exploited. Thanks @a1kmm-!

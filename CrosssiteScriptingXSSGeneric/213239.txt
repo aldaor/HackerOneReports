@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/213239
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/sp1d3rs
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:16.06.2017 19:59:09
+
+Summary:
+A Department of Defense webserver was vulnerable to a SQL injection attack that could have revealed sensitive financial information. @sp1d3rs was able to demonstrate this vulnerability by crafting a specially formatted URL. Thank you!
+

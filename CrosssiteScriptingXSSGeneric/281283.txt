@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/281283
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/0x0luke
+ReportedTo:Uber(uber)
+BountyAmount:1000.0
+Severity:low
+State:Closed
+DateOfDisclosure:04.10.2018 21:23:31
+
+Summary:
+The /p3/drivers/vehicles/add endpoint on partners.uber.com was vulnerable to cross site scripting, since the endpoint did not validate the data it received, it did not perform encoding on the data to remove or make harmless HTML-sensitive characters such as <. The page response was not served with a content-type header. While the content-type header was not set, the x-content-type-options header was set to nosniff. Additionally, the endpoint was protected against CSRF attacks, making it difficult for an attacker to submit information on behalf of a victim. Without the proper credentials, nothing was returned from the endpoint, mitigating the risk of this issue. 
+
+We enjoyed working with @0x0luke on this report and look forward to their future submissions to Uber's program. 

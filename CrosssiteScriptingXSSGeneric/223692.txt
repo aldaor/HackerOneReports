@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/223692
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/csanuragjain
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:17.05.2017 16:48:51
+
+Summary:
+
+User input is not sanitized properly at Editor link causing self xss.
+
+**Steps to reproduce**
+1) Navigate to https://demo.weblate.org/accounts/profile/#preferences
+2) Provide Editor link as javaScript:alert(document.cookie);//confirm(1); and click on Save
+3) Navigate to English Translation page of the project at https://demo.weblate.org/translate/hello/master/en_GB/?type=all
+4) Click on the main.c under Source Information
+5) Self XSS executes showing user cookie
+
+Mitigation:
+Proper server side filtering of user input

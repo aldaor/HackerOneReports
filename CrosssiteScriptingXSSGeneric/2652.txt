@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/2652
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/prakharprasad
+ReportedTo:Slack(slack)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:21.05.2014 15:03:41
+
+Summary:
+
+Hi there is a stored XSS in Channel Chat feature. I strong believe this a critical stored XSS
+
+I've made a video as POC and Reproduction steps here: - 
+
+https://www.dropbox.com/s/2opkr6ojsseo1ka/Slack-Chat-Stored-XSS.mov
+
+
+Thanks and Regards
+
+Prakhar Prasad
+

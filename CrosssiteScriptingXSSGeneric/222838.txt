@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/222838
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/lukasreschke
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:06.06.2017 11:53:39
+
+Summary:
+#[Stored XSS in Gallery application (NC-SA-2017-010)](https://nextcloud.com/security/advisory/?id=nc-sa-2017-010)
+
+**Risk level:** Low
+**CVSS v3 Base Score:** 3 (AV:N/AC:H/PR:L/UI:R/S:C/C:L/I:N/A:N)
+**CWE:** Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') (CWE-79)
+
+#Description
+A JavaScript library used by Nextcloud for sanitizing untrusted user-input suffered from a XSS vulnerability caused by a behaviour change in Safari 10.1 and 10.2.
+
+Note that Nextcloud employs a strict Content-Security-Policy preventing exploitation of this XSS issue on modern web browsers.
+
+#Affected Software
+- Nextcloud Server < 11.0.3 (CVE-2017-0893)
+- Nextcloud Server < 10.0.5 (CVE-2017-0893)
+- Nextcloud Server < 9.0.58 (CVE-2017-0893)
+
+#Action Taken
+The vulnerable library has been updated.
+
+#Acknowledgements
+The Nextcloud team thanks the following people for their research and responsible disclosure of the above advisory:
+
+- Lukas Reschke - Nextcloud GmbH (lukas@nextcloud.com) - Vulnerability discovery and disclosure.
+

@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/208622
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/edoverflow
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:07.04.2017 17:03:58
+
+Summary:
+
+Dear Ubiquiti Networks bug bounty team,
+
+# Short Description
+---
+
+scores.ubnt.com is still vulnerable to reflected XSS, a form of client-side code injection wherein one can execute malicious scripts into a page. The fix to https://hackerone.com/reports/158484 does not suffice for some browsers (mainly older versions) since there are `style` attribute XSS vectors.
+
+# Why does this vulnerability exist?
+---
+
+Cross-site scripting exists whenever input can be interpreted as code. Scripts can be injected into the `style` attribute via the `p` parameter as follows:
+
+https://scores.ubnt.com/form.html?uid=259&p=airFiber);xss:expression(alert(1));border-image:url(foobar
+
+Here are a list of payloads:
+
+~~~
+);xss:expression(alert(1));border-image:url(foobar
+);border-image: url(javascript:alert(1));content:url(foobar
+~~~
+
+# What are the exploits?
+---
+
+A cross-site scripting vulnerability allows an attacker to modify the page. This means he/she can inject forms to steal usernames, passwords, cookies (no HttpOnly flag present) and so forth. In short, XSS opens the doors to plenty of phishing techniques.
+
+A very good list of malicious payloads can be found here: http://www.xss-payloads.com/payloads.html

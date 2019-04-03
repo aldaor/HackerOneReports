@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/2639
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/appsecure_in
+ReportedTo:Slack(slack)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.08.2014 7:19:46
+
+Summary:
+
+Hi,
+
+This is a little tricky one.
+
+First of all go to your profile page and change your name to "><img src=x onerror=prompt(12);>
+Save it.
+Wait!!! You will not see a javascript pop up there because there is proper input validation on the profile page.
+
+Now to see the prompt box
+
+1) Go to this link  https://sehacure.slack.com/help/requests/new
+2) Add a new ticket. Now submit it. 
+3) Now view your ticket.You will now be shown a prompt box.
+4) Please have a look at the attached screenshot the inputs are not validated over there.
+
+I have changed my name to }') ">ppp>
+and i am attaching the source code view of the same.No, input encoding is done there.
+
+Please have a check.
+
+Best,
+Anand

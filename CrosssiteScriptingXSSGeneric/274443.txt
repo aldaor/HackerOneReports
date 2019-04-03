@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/274443
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/paresh_parmar
+ReportedTo:Grabtaxi Holdings Pte Ltd(grab)
+BountyAmount:250.0
+Severity:medium
+State:Closed
+DateOfDisclosure:30.11.2017 3:57:10
+
+Summary:
+@paresh_parmar  found a Stored XSS vulnerability in an out-of-scope third party web application use by Grab. We decided to make an exception of our bug bounty policy here and accepted this out-of-scope finding because we believed that the stored-XSS was a real risk for our customers. 
+
+With the researcher's help the third party vendor were able to resolve this vulnerability. We shared the researcher personal information to them in order to be transparent and in case they would like to thanks him directly. 
+
+We would like to thanks Paresh for his great work. We look forward to see more of his reports in the future.

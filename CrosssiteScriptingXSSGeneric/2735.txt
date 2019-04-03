@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/2735
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/melvin
+ReportedTo:RelateIQ(relateiq)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:06.04.2014 19:10:37
+
+Summary:
+
+I was able to edit the contents of the "Invite Collaborators" mail, by using HTML code as my first name. By exploiting this vulnerability, an attacker could send an email with custom text/html code from `notify@relateiq.com` (from the RelateIQ server) to any recipient. This can be used for phishing attacks (see attachment: example.png).
+
+Steps to reproduce:
+
+[1] Register as a new user
+[2] When asked for a name, enter exploit code in first name field (see attachment: step2.png). 
+
+For this demonstration I will use a simple example:
+`You have been hacked. Click <a href="http://phishing-site">here</a> to reset your password.<div style="display:none">`
+
+[3] Go through the final steps
+[4] Go to home and send an invite to the target (see attachment: step4.png)
+
+The target will now receive the phishing email (see attachment: email.png). In this simple example it is obvious that the email is fake, but better exploit code can be easily written. 
+ 

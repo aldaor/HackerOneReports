@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/211643
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/yaworsk
+ReportedTo:Moneybird(moneybird)
+BountyAmount:50.0
+Severity:low
+State:Closed
+DateOfDisclosure:17.03.2017 15:08:36
+
+Summary:
+Researcher found a vulnerability in our contact selector, in which a contact name with HTML would trigger this HTML to be executed. We have improved our contact selector to handle customer names as text instead of HTML.

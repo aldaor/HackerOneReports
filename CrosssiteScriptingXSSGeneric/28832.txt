@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/28832
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/reactors08
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:10.12.2014 18:50:41
+
+Summary:
+
+воспроизводится в IE11
+уязвимы элементы принимающие значение id письма.
+к примеру `https://touch.mail.ru/cgi-bin/msglist#readmsg/14112810510000000915"><img src=x onerror=alert(8)>`

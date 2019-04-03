@@ -1,0 +1,57 @@
+ReportLink:https://hackerone.com/reports/210908
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/billy_blaze
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:18.03.2017 22:45:21
+
+Summary:
+##Issue
+
+The reporter found a reflected XSS in a 3rd party service which is tightly integrated into LocalTapiola. 
+
+##Fix
+
+The application was fixed.
+
+##Reasoning
+
+An XSS as such is not a huge issue from a risk perspective, although it poses a small risk for stealing of credentials. The issue at hand was out of scope, but due to the tight integration we decided to escalate he issue to the third party. We would like to thank the guys at careers.fi for fixing the issue promptly and answering emails in the middle of the night. Great stuff.
+## Basic report information
+**Summary:** Localtapiola is using careers.fi service to job applicants at
+http://www.lahitapiola.fi/tietoa-lahitapiolasta/toihin-meille/avoimet-tyopaikat/haemme-juuri-nyt
+
+**Description:** XSS on 3rd party (careers.fi) job service which may lead loss of personal data for the localtapiola job applicants.
+
+**Domain:** http://www.lahitapiola.fi/tietoa-lahitapiolasta/toihin-meille/avoimet-tyopaikat/haemme-juuri-nyt and https://careers.fi/tapiola/add_application.cgi
+
+## Browsers / Apps Verified In:
+
+  * Chrome
+
+## Steps To Reproduce:
+
+  1. Go to http://www.lahitapiola.fi/tietoa-lahitapiolasta/toihin-meille/avoimet-tyopaikat/haemme-juuri-nyt
+ 2. Click Täytä hakemuslomake
+ 3. Click Rekisteröidy
+ 4. Käyttäjätunnus registration:
+Käyttäjätunnus: test"><B>test
+ Salasana: some
+ Vahvista: some
+ Rekisteröi
+ 
+5. Login
+ käyttäjätunnus: test"><B>test
+ salana: some
+ 
+If redirected to application page, click "keskeytä". Next page you see "käyttäjänimi" field upper right corner and bolded effect. Site seem terrible and put´s Localtapiola´s job applicants personal information in to jeopardy. Other Finnish companies use this site with job applications. If publishing this, please consider to cover all necessary company names, links and pictures to protect job applicants privacy as the site might hold more serious vulnerabilities e.g. SQL injections.
+
+## Additional material
+
+  * pic careers.png
+
+## Related reports, best practices
+
+  * Insist proper web application security tests when using 3rd party services

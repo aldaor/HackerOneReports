@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/28150
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/appsecure_in
+ReportedTo:Twitter(twitter)
+BountyAmount:1400.0
+Severity:
+State:Closed
+DateOfDisclosure:16.10.2014 9:51:19
+
+Summary:
+
+Hi,
+
+Steps to reproduce the issue:
+1) Go to this link https://ads.twitter.com/accounts/XXXX/tweets where is XXXX is your account id.
+
+2) Click on Compose Tweet option and enter "><svg/onload=prompt(123);>
+
+3) Click on "Tweet" Button now.
+
+You will prompt dialog box with "123" in it.
+
+POC video: https://www.dropbox.com/s/64li7wv7gq2brlz/twitterxss.mov?dl=0
+
+Please fix this.
+
+Best Regards,
+Anand Prakash

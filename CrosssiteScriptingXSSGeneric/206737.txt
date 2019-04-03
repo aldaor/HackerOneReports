@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/206737
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/myst404
+ReportedTo:YouPorn(youporn)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:26.06.2017 17:04:33
+
+Summary:
+The researcher discovered a persistent client-side XSS using the session cookie as a vector. The researcher demonstrated a plausible exploit scenario by crafting a link which exploits an unrelated a meta tag injection vulnerability to arbitrarily modify the user's cookie.

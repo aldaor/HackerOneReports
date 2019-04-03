@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/2625
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/prakharprasad
+ReportedTo:Slack(slack)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:07.08.2014 18:20:45
+
+Summary:
+
+Hi 
+
+There is a stored XSS in username.slack.com.
+
+Steps to reproduce:
+
+1. Login to your Slack
+2. Goto "Create Private Group" and with any name and purpose
+3. Goto https://manish.slack.com/messages/group/files/
+4. Upload a file hitting upload icon (^)  filename shall be "><img src=x onerror=alert(1);>.jpeg
+5. After file is uploaded click on the image or file title, JS will execute as the filename is considered as payload
+
+I've attached the image showing XSS.
+
+Thanks!

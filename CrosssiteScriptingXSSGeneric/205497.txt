@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/205497
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ysx
+ReportedTo:GitLab(gitlab)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:15.02.2017 5:29:36
+
+Summary:
+
+Hi,
+
+While experimenting with parser bypass techniques, I discovered that reStructuredText markup can be used to inject a stored JavaScript payload into a project `README.rst` file.
+
+## Steps to Reproduce
+
+1. Create a new GitLab project
+2. Initialise the project by creating a `README` file
+3. Set the file title to `README.rst`
+4. Paste the below Payload into the file
+5. Commit the file to the project and click on the link
+
+## Proof of Concept Payload
+
+```
+`Security test link`__.
+
+__ javascript:alert(document.domain)
+```
+
+Thanks!

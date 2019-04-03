@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/203912
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/fillawful
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:08.04.2017 12:39:29
+
+Summary:
+
+POC
+===
+1.  Under "Your Stuff" choose to "Create a Discussion/Ask a question"
+2. Choose a space to submit your discussion/question. Any space will do.
+3. Title your discussion with the payload `"><img src=x onerror=alert(1)>`
+4. Choose "Post message" to publish.
+5. View the message as any user. Under "Actions" choose to "Send as Email"
+6. Observe XSS poc alert box"
+
+Please let me know if you have any questions.

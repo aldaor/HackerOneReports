@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/203241
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/no_thing
+ReportedTo:Algolia(algolia)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:11.02.2017 14:31:20
+
+Summary:
+XSS triggered by specific search query that needed to be inserted manually into the impacted element.
+
+The issue was detected as part of ongoing penetration test and despite this report being later than the initial disclosure, bounty has been awarded.

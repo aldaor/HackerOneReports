@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/20049
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/melvin
+ReportedTo:RelateIQ(relateiq)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:27.12.2014 13:43:20
+
+Summary:
+
+There appears to be a Cross-site Scripting vulnerability related to [my previous report](https://hackerone.com/reports/2735) in the newsletter mailing. See my attached screenshot.
+
+The steps to exploit and the impact are the same as in the previous report, but to exploit this specific XSS an attacker would have to register an account with someone else's e-mail address. 
+
+Because the previous issue is fixed, this implies that there is no global sanitation for e-mails. I recommend checking all mailing scripts/tools for proper sanitation of variables (like the username).

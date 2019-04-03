@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/27511
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/arbitrarycode
+ReportedTo:Twitter(twitter)
+BountyAmount:1400.0
+Severity:
+State:Closed
+DateOfDisclosure:17.11.2014 14:30:51
+
+Summary:
+
+Cross-Site Scripting vulnerability exists in card[name] parameter when creating/cloning a card via script https://ads.twitter.com/accounts/18ce53wrkma/cards/new?card_type=7. 
+Here is the simple test vector: </title><script>alert(document.cookie)</script><title>
+After the card is created XSS becomes persistent and can be triggered via https://ads.twitter.com/accounts/18ce53wrkma/cards/show?url_id=42qj.

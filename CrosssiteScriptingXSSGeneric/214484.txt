@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/214484
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/t-pwn
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:30.03.2017 14:07:02
+
+Summary:
+Clickjacking and self-XSS in  http://whiskas.ny.mail.ru/.
+This project is not currently in the bug bounty scope.

@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/264832
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/paresh_parmar
+ReportedTo:Automattic(automattic)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:01.10.2017 15:56:17
+
+Summary:
+
+Hi,
+
+previously reported xss https://hackerone.com/reports/107405 which is fixed, but i am able to bypass that fix. 
+
+Payload for bypass : `<a href="javascript&colon;alert&lpar;document&period;domain&rpar;">Click Here</a>` 
+
+# Steps:
+-  Login into Polldaddy account polldaddy.com
+- go to ___POLLS___  and create new poll
+- in answers. enter xss payload `<a href="javascript&colon;alert&lpar;document&period;domain&rpar;">Click Here</a>` 
+
+{F217173}
+
+- Save it 
+-  go here :where you can edit style  https://polldaddy.com/polls/XXXXX/style-edit/  
+{F217170}
+
+scroll down and click on it , xss will trigger.
+{F217172}
+
+Ref: https://hackerone.com/reports/107405
+
+Thanks

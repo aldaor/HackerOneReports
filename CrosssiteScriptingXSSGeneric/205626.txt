@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/205626
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/pain_
+ReportedTo:Coursera(coursera)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:12.01.2018 21:25:20
+
+Summary:
+
+Hi Coursera,
+
+This is AhsanKhan, An Ethical Hacker.
+
+I Have Found Stored XSS In Your Site :)
+
+https://translate-coursera.org/
+
+Now I Am Going To Show You.
+
+1.Create An Account In Your Site. https://www.coursera.org
+2.And Put This Script in First Name.
+"><img src=x onerror=prompt(1337)>
+3.Save it :)
+4.Account Created now Go to this Web https://translate-coursera.org/
+5.Click On Login.
+6.Checkout the Popup ;) XSS Stored popup :)
+
+Checkout Also My POC I Have Explained :)
+
+https://youtu.be/oqCT1n8_FfM
+
+Please Resolve this Issue,This is Very Critical.
+
+Best Regards,
+AhsanKhan
+coderahsan@gmail.com

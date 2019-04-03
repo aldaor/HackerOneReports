@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/207792
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ramsexy
+ReportedTo:Pornhub(pornhub)
+BountyAmount:50.0
+Severity:high
+State:Closed
+DateOfDisclosure:10.07.2017 18:46:19
+
+Summary:
+The researcher discovered a way to include JavaScript content through the CSS editor by leveraging the expression() dynamic property.

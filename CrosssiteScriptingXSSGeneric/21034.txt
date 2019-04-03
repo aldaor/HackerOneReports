@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/21034
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/sasi2103
+ReportedTo:Coinbase(coinbase)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:30.03.2015 0:30:49
+
+Summary:
+
+Hello security team,
+
+I found XSS on pending invocation details. (Tested on Firefox).
+Scenario:
+1. Go to https://coinbase.com/merchant_tools?link_type=email_invoice
+2. Fill in valid email.
+3. Subject; Payment request from "><img src=y onerror=prompt(1)>
+4. Total Bitcoin 1 and for order put a "><img src=y onerror=prompt(1)>
+5. Description and Customer ID as a "><img src=y onerror=prompt(1)>
+6. Send the Invoice.
+7. Go to transaction page and click on the pending transaction.
+8. XSS will be activate on the total field and form field, mine is  From:
+"><img src=y onerror=prompt(1)> (thefishermanhacker@gmail.com)
+
+Attached recording POC.
+Best Regards,
+
+Sasi

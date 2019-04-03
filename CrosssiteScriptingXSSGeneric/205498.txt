@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/205498
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ysx
+ReportedTo:GitLab(gitlab)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:15.02.2017 5:29:05
+
+Summary:
+
+Hi,
+
+Another parser bypass here – I discovered that Textile markup can be used to inject a stored JavaScript payload into a project `README.textile` file :)
+
+## Steps to Reproduce
+
+1. Create a new GitLab project
+2. Initialise the project by creating a `README` file
+3. Set the file title to `README.textile`
+4. Paste the below Payload into the file
+5. Commit the file to the project and click on the link
+
+## Proof of Concept Payload
+
+```
+"Security test link":javascript:alert(document.domain)
+```
+
+Thanks!

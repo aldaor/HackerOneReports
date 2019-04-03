@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/25332
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/banned
+ReportedTo:Square(square)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:17.11.2014 14:30:48
+
+Summary:
+
+Hi there,
+
+I found a Cross Site Scripting in the bookfresh website, what I found it to be significant is, its publicly facing.
+
+Any user who points his browser to : [Proof of Concept XSS](https://www.bookfresh.com/cindex.php/account/reactivate?email=admin@cliffordtrigo.info"><script>confirm(1)</script>). **Use Firefox**
+
+Then will be greeted by a javascript pop up.
+
+Kindly have a look sir.
+
+Cheers,
+Clifford

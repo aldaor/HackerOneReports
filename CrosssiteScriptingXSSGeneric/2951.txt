@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/2951
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/smiegles
+ReportedTo:OkCupid(okcupid)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.04.2014 15:09:29
+
+Summary:
+
+hi,
+
+First, go to :  http://www2.okcupid.com/profile/evstolia/questions?cf=profile
+Then type "><Img src=x onerror=alert(1)> in the serach input (like here: http://prntscr.com/2xlacg).
+
+Here a full screenshot : http://prntscr.com/2xlao0
+
+Best regards,
+
+Olivier Beg

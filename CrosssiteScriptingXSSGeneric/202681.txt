@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/202681
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/kuroi-sh
+ReportedTo:arxius(arxius)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:09.02.2017 21:14:43
+
+Summary:
+
+Hello. First of all I wish you good luck securing your site, as far as I can tell, your site is secured, and this bug is minor.
+It affects the content type header, when a file with an invalid content-type is uploaded, the value of the content-type file header is echoed back without any filtering.
+You can see it here (Screenshot_5.png which I attached).
+In addition, the full request I used to carry the XSS is also attached.
+Any user can tamper with the mime type, it is of course a low servity bug and I doubt someone will ever exploit it, but I just want to make your webapp perfect =)
+Good luck and waiting for further reply. ;)
+Gabriel Kimiaie

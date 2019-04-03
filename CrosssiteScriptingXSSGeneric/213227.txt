@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/213227
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/pain_
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:250.0
+Severity:low
+State:Closed
+DateOfDisclosure:07.06.2017 12:19:31
+
+Summary:
+#[DOM XSS vulnerability in search dialogue (NC-SA-2017-007)](https://nextcloud.com/security/advisory/?id=nc-sa-2017-007)
+**Risk level:** Low
+**CVSS v3 Base Score:** 2.6 (AV:N/AC:H/PR:L/UI:R/S:U/C:L/I:N/A:N)
+**CWE:** Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') (CWE-79)
+
+#Description
+Inadequate escaping lead to XSS vulnerability in the search module. To be exploitable an user has to write or paste malicious content into the search dialogue.
+
+#Affected Software
+- Nextcloud Server < 11.0.3 (CVE-2017-0890)
+
+#Action Taken
+The content is now properly escaped, furthermore for Nextcloud 12 we have [hardened jQuery to prevent such CSP bypasses](https://statuscode.ch/2017/03/CSP-unsafe-eval-and-jquery/).
+
+#Acknowledgements
+The Nextcloud team thanks the following people for their research and responsible disclosure of the above advisory:
+
+- Ahsan Khan - Vulnerability discovery and disclosure.

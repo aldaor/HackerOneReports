@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/27389
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/avlidienbrunn
+ReportedTo:Square(square)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:11.10.2014 6:34:39
+
+Summary:
+
+Hi!
+
+The page at https://connect.squareup.com/sessions/new doesn't properly sanitize the "email" parameter and/or the input field for email. Since the site is built with AngularJS and the email field is a binded field (child of ng-app), we can inject an AngularJS template. Normally, you aren't supposed to be able to execute arbitrary JavaScript from AngularJS templates, but I managed to bypass the AngularJS sandbox (I have contacted them as well). This means we have a reflected XSS. 
+
+PoC: https://connect.squareup.com/sessions/new?return_to=%2Fapps&email={{toString.constructor.prototype.toString=toString.constructor.prototype.call%3b[%22a%22,%22alert(1)%22].sort(toString.constructor)}}
+
+Sincerely,
+Mathias

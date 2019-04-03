@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/293316
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/edoverflow
+ReportedTo:Razer US(razer_us)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:24.01.2018 17:57:29
+
+Summary:
+The researcher discovered a POST based XSS on an administrative login page on our careers.razerzone.com website that would have allowed the execution of scripts in some browsers (e.g. Firefox).  This was fixed on 1/5.
+
+Another great report.  We'd also like to acknowledge the researcher's effort in working with us when we prematurely marked the issue as Fixed when it was still pending for production.

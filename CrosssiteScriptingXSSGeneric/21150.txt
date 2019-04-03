@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/21150
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/panchocosil
+ReportedTo:Mavenlink(mavenlink)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:24.07.2014 17:48:10
+
+Summary:
+
+Hello Security I like to report a XSS that affect all users. This flash XSS can be very dangerous.
+
+Vulnerable URL:
+
+https://app.mavenlink.com/flash/swfupload.swf?movieName="]);}catch(e){}if(!self.a)self.a=!alert(document.domain);//
+
+I attach image of Proof:
+
+Any problem reproducing this bug please let me know.
+
+PS: This Work with all browsers.
+
+Regards.

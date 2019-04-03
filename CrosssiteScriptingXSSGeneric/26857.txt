@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/26857
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/mikkz
+ReportedTo:Square(square)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:23.02.2015 3:35:09
+
+Summary:
+
+Hi,
+
+Xss is triggered on https://www.bookfresh.com/cindex.php/profile/edit/cs/staff_member
+
+###Payload:
+
+%22onmouseover%3Dprompt%281%29%20mik%22
+
+###Steps to reproduce
+
+Create a new staff and put our payload on the name of the staff. Refresh the page
+
+Edit the staff and mouseover to the name of the staff and the javascript will execute.
+
+Regards,
+Mikko

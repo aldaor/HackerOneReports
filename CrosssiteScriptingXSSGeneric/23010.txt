@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/23010
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/yappare
+ReportedTo:Uzbey(uzbey)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.11.2014 19:39:23
+
+Summary:
+
+Uzbey currently using a 3rd party solution from sharethis.com to share user's album.
+
+It is possible to use this function as a medium to attack sharethis.com's users that using Uzbey service.
+
+1- Create album using XSS payload
+2- Share the album using Email function (letter icon)
+3- XSS will execute.

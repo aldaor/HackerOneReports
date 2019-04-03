@@ -1,0 +1,52 @@
+ReportLink:https://hackerone.com/reports/209398
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/billy_blaze
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:264.0
+Severity:low
+State:Closed
+DateOfDisclosure:13.03.2017 15:44:47
+
+Summary:
+##Issue
+
+The reporter found a form which contained an HTML-injection vector. By misusing the form, an attacker could send out legitimate looking emails with a link to a malicious site. The prospect for successful phishing is limited, as the contents of the emails sent out are defined in the application itself, but by playing around with different injections, the possibility of crafting realistic emails was still there.
+
+##Fix
+
+The form was removed.
+
+##Reasoning
+
+The issue was not highly critical, but still posed a valid vector for spoofing.
+
+## Basic report information
+**Summary:** HTML Injection in email from http://www.lahitapiola.fi/henkilo/sivut/tonttutesti
+
+**Description:** Tonttutesti´s kutsu kaverisi feature sends email to friend with a link to Localtapiola´s tonttutesti site. Fields "Nimesi" and "Kaverisi nimi" seem to be vulnerable.
+
+**Domain:** http://www.lahitapiola.fi/henkilo/sivut/tonttutesti
+
+## Browsers / Apps Verified In:
+
+  *Chrome 56
+
+## Steps To Reproduce:
+
+1. Go to http://www.lahitapiola.fi/henkilo/sivut/tonttutesti
+2. To Nimesi and Kaverisi nimi fields insert "><a href="https://google.com">test</a> 
+3. Fill rest of fields with any date and proper emails addresses 
+5. Go to email provided (kaverisi sähköpostiosoite)
+
+## Additional material
+
+  * Received Localtapiolas email in text:
+ Hei b">test
+ Kaverisi a">test kutsui sinut käyttämään vertailukonetta: Mikä tonttu olet?
+ Kaverisi viesti:
+ f">test
+ Osoite: http://www.lahitapiola.fi/henkilo/sivut/tonttutesti
+
+## Related reports, best practices
+
+  * https://hackerone.com/reports/190867

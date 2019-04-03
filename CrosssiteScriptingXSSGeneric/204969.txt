@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/204969
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/irotem2
+ReportedTo:Zendesk(zendesk)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:01.11.2017 20:53:16
+
+Summary:
+The researcher found an XSS issue where an end-user could exploit an agent. 

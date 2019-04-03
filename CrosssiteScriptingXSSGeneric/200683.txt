@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/200683
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/kenan
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:50.0
+Severity:medium
+State:Closed
+DateOfDisclosure:10.03.2017 11:48:02
+
+Summary:
+##Issue
+
+The reporter found an issue in verkkopalvelu.tapiola.fi which led to XSS and CSRF. The issue triggered only on IE, due to CORS implementation. To trigger the issue however, one needed to have a correct ``viewstate`` (which in essence required manual manipulation). This made a potential attack more complex to perform.
+
+##Fix
+
+The issue was investigated and found to be valid, although posing a very limited threat. The vulnerability was mitigated.
+
+##Reasoning
+
+The reported case was valid and within the scope of the bug bounty program. The issue was fixed and the reporter was awarded with a bounty. 

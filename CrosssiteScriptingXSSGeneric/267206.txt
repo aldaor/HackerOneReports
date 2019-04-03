@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/267206
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/panckazzz
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:09.09.2018 8:50:36
+
+Summary:
+Researcher has found Reflected XSS on one of the Informatica's domain, and was resolved by migration of the web application

