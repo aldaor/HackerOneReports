@@ -1,0 +1,10 @@
+ReportID:284807|WeaknessName:Array Index Underflow|WeaknessID:12|Reporter:b6d1c05a07d5e281f83043b|ReportedTo:Gratipay(gratipay)|BountyAmount:|Severity:|State:Closed|DateOfDisclosure:31.10.2017 14:28:01|
+Summary:
+JsonContent:
+vulnerability_information:I am the bug i found a bug in your site here it is
+
+{F234717}
+
+my friend are the greatest hackers
+hackerone.com/s4k16 and smziaurrashid told me u will giv me $$$ for my father
+{F234723}
