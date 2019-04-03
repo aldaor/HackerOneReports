@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/93154
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/pwnisher
+ReportedTo:Imgur(imgur)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.12.2015 17:48:07
+
+Summary:
+
+Hey team i would like to report a real csrf threat which allows attacker to make report abuse to any meme on behalf of the users 
+
+how i found this bug :-
+
+lets visit to any meme example :-
+
+1> http://imgur.com/t/memes/ieTEJEd 
+2> i clicked on post options 
+3> i got an option called report i clicked on it
+4> i selected a option of abusive/offensive 
+5>started my intercept and click on report 
+6> after intercepting i saw the post request having a unique token like ''Sid'' which maybe for form validations
+7>i managed to delete the value of sid and still get a 200 ok status code and it was report abused 
+
+below i will attach the snapshot of the original request edited and response :)
+
+i ve attached images of original request and i have stripped off the formvalidation tokens and session values and passed the request i could still get a 200 ok status which means the vaidations are not properly checked server side  

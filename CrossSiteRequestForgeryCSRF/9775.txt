@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/9775
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/bitquark
+ReportedTo:Cloudflare(cloudflare)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.06.2015 1:09:19
+
+Summary:
+
+The information displayed on the _threat control_ page is retrieved using AJAX calls to the API, however the access token (_atok_) which is sent along with the requests is not checked by the receiving end. In addition, a callback function name can be supplied to the API.
+
+Combined, these factors allow an attacker to retrieve all _threat control_ information from the victim as they pass by any attacker-controlled site.
+
+I've put together a quick proof-of-concept which snarfs and displays the Trust and Block lists:
+
+http://bitquark.co.uk/pentest/poc/cloudflare/threat_control_info_leak.html

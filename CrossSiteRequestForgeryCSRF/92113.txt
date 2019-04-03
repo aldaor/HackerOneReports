@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/92113
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/pisarenko
+ReportedTo:VK.com(vkcom)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:24.06.2018 14:03:11
+
+Summary:
+Отсутствие необходимых проверок при получении списка отметок "Мне нравится". 

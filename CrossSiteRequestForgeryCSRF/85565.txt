@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/85565
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/nait_lamine
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.03.2016 18:37:12
+
+Summary:
+
+Hello owncloud security team ,
+I am a researcher of security, wanted to reveal a security
+vulnerability responsibility (CSRF ) , which is found in the website of your website (apps.owncloud.com).
+
+this bug allow to me to change privacy settings .
+
+POC :
+
+https://www.youtube.com/watch?v=jDllgJ2wWOA 

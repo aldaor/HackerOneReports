@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/8767
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/melvin
+ReportedTo:Cloudflare(cloudflare)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.10.2016 12:37:53
+
+Summary:
+
+I noticed that the login page at `/login` does not prevent CSRF logins. I recommend taking a look at [the risks of not protecting login against CSRF](http://andrisatteka.blogspot.nl/2014/01/the-threat-of-login-csrf.html) and possibly protect the form against attacks like this with a token (just like in the rest of the application).

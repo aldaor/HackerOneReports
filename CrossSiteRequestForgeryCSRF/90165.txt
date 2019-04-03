@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/90165
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/abr1k0s
+ReportedTo:VK.com(vkcom)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:31.05.2017 13:57:44
+
+Summary:
+Отсутствие hash на вывод списка резервных кодов. 

