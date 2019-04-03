@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/3420
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/nahamsec
+ReportedTo:OkCupid(okcupid)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.04.2014 16:00:39
+
+Summary:
+
+So I was browsing the website, looking at users and such and came across the link: "Y'all got some issues" which takes you to the following link:
+http://www.okcupid.com/profile/quadhonk/questions?cf=regular_indirect
+which also has a search function. 
+Giving it the above string will show you the result:
+"><img src=x onerror=prompt(1);>

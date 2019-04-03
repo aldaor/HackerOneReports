@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/4777
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/mkly
+ReportedTo:concrete5(concrete5)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.08.2014 18:37:39
+
+Summary:
+
+https://github.com/concrete5/concrete5/blob/master/web/concrete/tools/themes/preview.php#L7
+
+Note that one of those values near the end is not escaped.

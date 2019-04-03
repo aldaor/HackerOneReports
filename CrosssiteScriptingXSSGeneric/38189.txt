@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/38189
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/defmax
+ReportedTo:Openfolio(openfolio)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:14.01.2015 18:46:53
+
+Summary:
+
+hey guys 
+
+i just found an xss in openfolio
+
+i just created an contact in google with  name as "><img src=x onerror=prompt(1)>  and gave an email as random 
+
+url >> https://www.google.com/contacts/u/0/#contact/new
+
+
+then i synced  openfolio with  google contacts 
+
+then i went here >> https://openfolio.com/browse/contacts/
+
+then i clicked on invite of  "><img src=x onerror=prompt(1)>  , i got the xss popup ~
+
+POC >> http://postimg.org/image/6po3vo89l/

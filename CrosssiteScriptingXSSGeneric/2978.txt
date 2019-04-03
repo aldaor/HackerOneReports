@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/2978
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/hykatza
+ReportedTo:OkCupid(okcupid)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.04.2014 17:41:29
+
+Summary:
+
+Direct XSS vulnerabilities (persistent) in:
+
+http://www.okcupid.com/profile
+
+Prone to stealing cookies and thereby session hijacking

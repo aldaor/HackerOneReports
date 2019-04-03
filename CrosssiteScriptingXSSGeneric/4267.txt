@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/4267
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/insomniac
+ReportedTo:OkCupid(okcupid)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:29.04.2014 19:30:02
+
+Summary:
+
+Hello okcupid 
+my name is hamid ashraf . i find XSS in okcupid.com ...
+first creat  a  account okucpid
+after creat a account go settings chang the email add xss payload "><img src=x onerror=prompt(1)>
+when you add the payload show the alert
+here is the proof in pic
+
+
+note ..
+this bug i am not show public
+Thanks :) :)

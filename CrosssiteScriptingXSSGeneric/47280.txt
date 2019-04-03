@@ -1,0 +1,113 @@
+ReportLink:https://hackerone.com/reports/47280
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/einstein_
+ReportedTo:Ruby on Rails(rails)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:16.06.2015 19:38:34
+
+Summary:
+XSS Vulnerability in ActiveSupport::JSON.encode 
+
+There is an XSS vulnerability in the ActiveSupport::JSON.encode method in Ruby on Rails. 
+This vulnerability has been assigned the CVE identifier CVE-2015-3226. 
+
+Versions Affected:  3.0.x, 3.1.x, 3.2.x, 4.1.x, 4.2.x. 
+Not affected:       4.0.x. 
+Fixed Versions:     4.2.2, 4.1.11 
+
+Impact 
+------ 
+When a `Hash` containing user-controlled data is encode as JSON (either through 
+`Hash#to_json` or `ActiveSupport::JSON.encode`), Rails does not perform adequate 
+escaping that matches the guarantee implied by the `escape_html_entities_in_json` 
+option (which is enabled by default). If this resulting JSON string is subsequently 
+inserted directly into an HTML page, the page will be vulnerable to XSS attacks. 
+
+For example, the following code snippet is vulnerable to this attack: 
+
+    <%= javascript_tag "var data = #{user_supplied_data.to_json};" %> 
+
+Similarly, the following is also vulnerable: 
+
+    <script> 
+      var data = <%= ActiveSupport::JSON.encode(user_supplied_data).html_safe %>; 
+    </script> 
+
+All applications that renders JSON-encoded strings that contains user-controlled 
+data in their views should either upgrade to one of the FIXED versions or use 
+the suggested workaround immediately. 
+
+Releases 
+-------- 
+The FIXED releases are available at the normal locations. 
+
+Workarounds 
+----------- 
+To work around this problem add an initializer with the following code: 
+
+    module ActiveSupport 
+      module JSON 
+        module Encoding 
+          private 
+          class EscapedString 
+            def to_s 
+              self 
+            end 
+          end 
+        end 
+      end 
+    end 
+
+Patches 
+------- 
+To aid users who aren't able to upgrade immediately we have provided patches for the two 
+supported release series.  They are in git-am format and consist of a single changeset. 
+
+* 4-1-to_json_xss.patch - Patch for 4.1 series 
+* 4-2-to_json_xss.patch - Patch for 4.2 series 
+
+Please note that only the 4.1.x and 4.2.x series are supported at present. 
+Users of earlier unsupported releases are advised to upgrade as soon as possible as we cannot 
+guarantee the continued availability of security fixes for unsupported releases. 
+
+Credits 
+------- 
+
+Thanks to Francois Chagnon of Shopify for reporting the vulnerability to us, and working 
+with us on a fix. 
+
+Rails does not escape hash keys properly in `to_json` when generating json.
+
+Values are escaped as expected
+```ruby
+irb(main):001:0> {"a"=>"<>"}.to_json
+=> "{\"a\":\"\\u003c\\u003e\"}"
+```
+
+However keys are not:
+```ruby
+irb(main):002:0> {"<>"=>"a"}.to_json
+=> "{\"<>\":\"a\"}"
+```
+
+This is because the `json` gem calls `.to_s` on the keys [here](https://github.com/flori/json/blob/259dee6c9bdda08ed0c1fc2e69bfbb2d377faba0/ext/json/ext/generator/generator.c#L738) which transforms the `EscapedString` back into a simple `String` so it doesn't go through the escaping process that values go through [here](https://github.com/EiNSTeiN-/rails/blob/3820788e4c2825dd77c779ba5b3bc29689e04e1d/activesupport/lib/active_support/json/encoding.rb#L54-L60).
+
+**Security consideration**: this issue is a vector for XSS when an arbitrary value is used as a key and reflected in a javascript tag. Consider this piece of code:
+```ruby
+javascript_tag "var json=#{params.to_json}"
+```
+When params is something like `{"</script><script>alert(1)//"=>"xss"}` then `<>` are not escaped as they should and the javascript tag looks like this:
+```html
+<script>
+//<![CDATA[
+var json={"</script><script>alert(1)//":"xss"}
+//]]>
+</script>
+```
+The `</script>` inside the json object will terminate the opening script tag because it has precedence over everything else, and `alert(1)` is executed.
+
+I believe this issue also applies to 4.2-stable and master.
+
+Note that I opened a PR for a related issue in the json gem (https://github.com/flori/json/pull/235) which occurs when `ActiveSupport.escape_html_entities_in_json = false` because the forward slash is never escaped (neither in rails nor in the json gem). It might be worth fixing this in rails as well.

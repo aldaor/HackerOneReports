@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/34725
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/adeelimtiaz90
+ReportedTo:Twitter(twitter)
+BountyAmount:280.0
+Severity:
+State:Closed
+DateOfDisclosure:11.07.2016 18:04:28
+
+Summary:
+
+O.S: Windows 8
+Browser: Google Chrome
+
+Steps to reproduce:
+1) Inject This Payload while Signing Up your account at fabrico
+#"><img src=x onerror=alert(2);>
+2) After the Confirmation, Activate your account 
+
+That's it Pop Will indicate XSS vulnerability

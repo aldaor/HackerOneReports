@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/2985
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/smiegles
+ReportedTo:OkCupid(okcupid)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 10:00:29
+
+Summary:
+
+Hello,
+
+I found a persistent Cross-site scripting , you can reproduce him by :
+1.) go to http://www.helloquizzy.com/write-a-test
+2.) name him " onclick="alert(5)  more info :(http://prntscr.com/2xmv8a)
+3.) go to http://www.helloquizzy.com/quizzy/createlist and press on `Edit this test`
+
+Best regards,
+
+Olivier Beg

@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/3317
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/kenb
+ReportedTo:OkCupid(okcupid)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.08.2014 19:00:15
+
+Summary:
+
+The Server does not cleanse the URL data that is sent to it when it gets reported in the 404 page of the error message stating the URL does not exist. it is therefore possible to send javascript in the URL bar and have it execute in the browser. Please see attached screen shots...
+
+Server:
+cdn.okccdn.com

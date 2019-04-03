@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/50358
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/reactors08
+ReportedTo:Adobe(adobe)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.04.2015 22:55:20
+
+Summary:
+
+Description of the sending file vulnerable to xss
+Proof:
+https://files.acrobat.com/a/preview/c9efeb22-75a5-4268-ad57-f8f694aa7a1d
+
+steps to reproduce:
+- go to https://cloud.acrobat.com/send and select file to send
+-  check an option "Create Anonymous Link"
+- input any subject 
+- input payload `<img src=x onerror=alert(1)>` to description
+- click "Create Link" button
+- follow to created link

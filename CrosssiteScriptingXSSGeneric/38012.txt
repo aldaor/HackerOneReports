@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/38012
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/4lemon
+ReportedTo:QIWI(qiwi)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:27.03.2017 6:50:02
+
+Summary:
+Researcher found vulnerability in website agent.qiwi.com. Renaming terminal may lead to stored XSS.

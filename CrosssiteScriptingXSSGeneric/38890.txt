@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/38890
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/yujitounai
+ReportedTo:concrete5(concrete5)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.04.2016 23:28:43
+
+Summary:
+
+Hello.
+
+I found stored XSS in concrete5 5.7.2.1.
+
+If the user have file upload permission
+the user can upload the file named like 
+"><img src=0 onerror=confirm(document.cookie)>.txt
+or 
+change title like below
+<svg onload=confirm(document.cookie)>
+on the properties page.
+
+and when other user access the file manager page,
+and open the delete page or open the properties page,
+Javascript execute.
+
+I reported same issue in 5.7.0.4. and fixed [#30019]
+but this fix is not sufficient.
+
+Regards.

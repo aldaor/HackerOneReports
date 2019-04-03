@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/36319
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/akhil-reni
+ReportedTo:QIWI(qiwi)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:20.12.2014 15:45:06
+
+Summary:
+
+Hey hi,
+
+I have found a XSS in oauth2 
+
+vulnerable link: https://qiwi.com/oauth/confirm.action?redirect=javascript:alert(1);/////&clientId=kav_subscribe
+
+steps to reproduce:
+1) open the following link https://qiwi.com/oauth/confirm.action?redirect=javascript:alert(1);/////&clientId=kav_subscribe
+2) click Вернуться на сайт магазина
+3) you will a alert on the browser.
+
+Vulnerable parameter: redirect=
+payload: javascript:alert(1);/////
+POC: look for attached screenshot.
+
+
+Thanks,
+karthik

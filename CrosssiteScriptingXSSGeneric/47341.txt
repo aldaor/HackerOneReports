@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/47341
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/4lemon
+ReportedTo:Mobile Vikings(mobilevikings)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.03.2015 14:21:29
+
+Summary:
+
+Imagine, that we have user A with name - name<script>alert(1)</script>
+And user B
+User B request a sim card and the Add authorization to user A (of course this is not the common way to exploit).
+As a result we have xss thru user name in flash message thru cookie.
+And (!) we got properly singed cookie with xss payload
+messages="29972147bc558baf382bbeb0b829d4efec82de2f$[[\"__json_message\"\0540\05425\054\"Authorization will be given to name<script>alert(1)</script> once this user confirms.\"]]"; Path=/

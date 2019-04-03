@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/401793
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bagipro
+ReportedTo:Grabtaxi Holdings Pte Ltd(grab)
+BountyAmount:7500.0
+Severity:high
+State:Closed
+DateOfDisclosure:15.03.2019 23:41:10
+
+Summary:
+A deeplink feature was found missing validation that led to sensitive information disclosure. Once triggered, the deeplink would direct users to load any attacker-controlled URL within a webview. The impact was further escalated as the webview contain sensitive information. A temporary patch was distributed shortly after the submission was verified and a permanent patch was released and completely rolled out soon after. 
+
+Grab appreciate @bagipro's contribution to our bug bounty program, @bagipro displayed strong mobile offensive security skills and detailed report which allowed us to quickly reproduce and validate the submission. As a mobile-first company, mobile security is our utmost focus, Grab look forward to seeing more of his creative bug reports to our program.
+

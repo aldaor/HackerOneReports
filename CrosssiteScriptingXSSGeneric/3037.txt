@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/3037
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/nahamsec
+ReportedTo:OkCupid(okcupid)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.04.2014 17:40:14
+
+Summary:
+
+URL: http://www.okcupid.com/profile
+
+The "First thing people usually notice about me" (or any other filed in that page) could be set as an XSS by giving it the following string as a value: <img src=# onerror=alert(document.cookie)>.

@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/3143
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/lalith
+ReportedTo:OkCupid(okcupid)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.04.2014 17:38:29
+
+Summary:
+
+Proof of concept :
+1. Login into okcupid .
+2. Go to profile .
+3.  In About section , Click on any of the edit icons like MY self summary etc..
+4. Enter payload "><img src=x onerror=alert(document.cookie)>
+5. Click on save . 
+6. XSS payload is executed by displaying cookies .

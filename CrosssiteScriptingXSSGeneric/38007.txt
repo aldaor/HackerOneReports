@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/38007
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/fransrosen
+ReportedTo:Greenhouse.io(greenhouse)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:26.02.2015 13:51:15
+
+Summary:
+
+Hi,
+
+Your subdomain blog.greenhouse.io is pointing to the service called Hubspot. However, your account at Hubspot has expired or has been cancelled. This basically means that anyone can claim your subdomain pointing to Hubspot and create their own site at this URL. This is EXTREMELY dangerous as whatever the attacker want can be placed on this domain. This is also a foolproof phishing attack since no one would be able to verify that this is not a legit greenhouse.io-login form.
+
+I have temporarily claimed this domain for PoC. You should immediately remove the DNS-entry for blog.greenhouse.io pointing to Hubspot.
+
+And since I'm able to run javascript at Hubspot, I'm able to do whatever I like on that domain. Creating a login form that would fool anyone, since it's present on a greenhouse.io domain.
+
+```
+$ host blog.greenhouse.io
+blog.greenhouse.io is an alias for san.secure001.hubspot.com.edgekey.net.
+san.secure001.hubspot.com.edgekey.net is an alias for e1395.b.akamaiedge.net.
+```
+
+PoC-link: 
+http://blog.greenhouse.io/
+
+PoC-images attached.
+
+As you might understand, this is really bad. Foolproof phishing. XSS on greenhouse.io. Potential malware spread through a domain you - in this case - do not control. Extremely painful for the company brand.
+
+Please make sure you're always going through your DNS-entries so no subdomains are pointing to external services you do not use.
+
+We've written an advisory about this at Detectify: 
+http://blog.detectify.com/post/100600514143/hostile-subdomain-takeover-using-heroku-github-desk
+
+Where you can read more about this sort of attack.
+
+Regards,
+Frans Rosén

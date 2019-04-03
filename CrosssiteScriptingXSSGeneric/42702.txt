@@ -1,0 +1,52 @@
+ReportLink:https://hackerone.com/reports/42702
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/artem
+ReportedTo:Vimeo(vimeo)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:08.01.2015 21:37:35
+
+Summary:
+
+Hello,
+
+I found Vimeo's bug bounty program on [1]. Please find below details of a security issue I found.
+
+First, APIs for channels [2] allow you to put HTML and javascript to name or description of a channel. For example, an attacker can use a Python script like the following to put javascript to an existing channel:
+
+import httplib, urllib
+server = "api.vimeo.com"
+endpoint = "/channels/855545"
+params = urllib.urlencode({'name': 'my channel<script>alert(document.cookie)</script>', 'description': 'bug bounty', 'privacy': 'anybody'})
+headers = {"Authorization": "Bearer [token]", "Content-Type": "application/x-www-form-urlencoded"}
+conn = httplib.HTTPSConnection(server)
+conn.request("PATCH", endpoint, params, headers)
+resp = conn.getresponse()
+print resp.status, resp.reason
+data = resp.read()
+print data
+conn.close()
+
+I created a channel that contains javascript in description:
+
+https://vimeo.com/channels/855545
+
+Second, most of Vimeo's pages cut or encode HTML entities before they are printed out. For example, the page above doesn't execute the injected code. But I found at least two pages that don't encode HTML entities:
+
+https://vimeo.com/album/create
+https://vimeo.com/channels/<channel_id>/settings/videos
+
+When you create an album you can add videos to this album ("Add videos to this Album" select box on the page above). The select box contains channels you subscribed to or moderate. The page doesn't encode HTML entities when it builds the select box, so the code I injected to name of my channel is successfully executed on this page.
+
+Technically this is a stored XSS vulnerability that allows to inject a javascript code on Vimeo's page. But it might be hard to exploit because an attacker needs to do the following:
+- make a victim subscribe to a malicious channel, or modify an existing channel a vicim has subscribed to
+- make a victim to open https://vimeo.com/album/create page
+Both steps might be not so easy to do, but they are still possible.
+
+I found some other APIs that allow to put HTML entities, but I have not checked all APIs. The problem may be fixed by making APIs encode or cut HTML entities, but it may probably cause some compatibility issues. Another way is to encode or cut HTML entities before channel name is printed out on the page above. This way, other Vimeo's pages need to be checked.
+
+[1] https://bugcrowd.com/list-of-bug-bounty-programs
+[2] https://developer.vimeo.com/api/endpoints/channels#/{channel_id}
+
+Artem

@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/45484
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/niyaax
+ReportedTo:Vimeo(vimeo)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:29.01.2015 0:16:26
+
+Summary:
+
+Poc video:
+XSS on Vimeo: http://youtu.be/w5QgEEcMARY
+
+1. Go to https://vimeo.com/settings/profile
+2. Add a link with the payload on URL: javascript:alert(document.domain+"http://")
+3. Click the link and payload will execute.
+
+Thanks
+@niyaax

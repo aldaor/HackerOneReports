@@ -1,0 +1,49 @@
+ReportLink:https://hackerone.com/reports/328270
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/kaarloh
+ReportedTo:Ruby on Rails(rails)
+BountyAmount:1500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:22.03.2018 19:34:01
+
+Summary:
+Possible XSS vulnerability in rails-html-sanitizer
+
+There is a possible XSS vulnerability in rails-html-sanitizer. This
+vulnerability has been assigned the CVE identifier CVE-2018-3741.
+
+Versions Affected:  1.0.3 or older.
+Not affected:       None.
+Fixed Versions:     1.0.4
+
+Impact
+------
+There is a possible XSS vulnerability in rails-html-sanitizer.  The gem allows non-whitelisted
+attributes to be present in sanitized output when input with specially-crafted HTML fragments,
+and these attributes can lead to an XSS attack on target applications.
+
+This issue is similar to CVE-2018-8048 in Loofah.
+
+All users running an affected release should either upgrade or use one of the
+workarounds immediately.
+
+Releases
+--------
+The FIXED releases are available at the normal locations.
+
+Workarounds
+-----------
+There are no feasible workarounds for this issue.
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for
+the two supported release series. They are in git-am format and consist of a
+single changeset.
+
+* 1-0-sanitize_attributes.patch - Patch for 1.0 series
+
+Credits
+-------
+Thanks to Kaarlo Haikonen for reporting this issue and Mike Dalessio for providing the original fix in the Loofah gem. 

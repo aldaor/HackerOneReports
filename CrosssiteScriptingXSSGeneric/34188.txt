@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/34188
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/sincerehacker
+ReportedTo:Block.io(blockio)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.05.2015 2:23:48
+
+Summary:
+
+1.XSS protection Not Enabled:
+Example URL: https://block.io/js/secure/secrets.js?mtime=1412493238
+
+Web Browser XSS Protection is not enabled, or is disabled by the configuration of the 'X-XSS-Protection' HTTP response header on the web server
+
+The X-XSS-Protection HTTP response header allows the web server to enable or disable the web browser's XSS protection mechanism. The following values would attempt to enable it: 
+X-XSS-Protection: 1; mode=block
+X-XSS-Protection: 1; report=http://www.example.com/xss
+The following values would disable it:
+X-XSS-Protection: 0
+The X-XSS-Protection HTTP response header is currently supported on Internet Explorer, Chrome and Safari (WebKit).
+Note that this alert is only raised if the response body could potentially contain an XSS payload (with a text-based content type, with a non-zero length).
+
+Ensure that the web browser's XSS filter is enabled, by setting the X-XSS-Protection HTTP response header to '1'.
+
+
+2.Cookie set Without HTTPonly flag
+Example URL: https://block.io/users/sign_in
+
+A cookie has been set without the HttpOnly flag, which means that the cookie can be accessed by JavaScript. If a malicious script can be run on this page then the cookie will be accessible and can be transmitted to another site. If this is a session cookie then session hijacking may be possible.Ensure that the HttpOnly flag is set for all cookies.
+
+
+3.Cookie set without secure flag
+Example URL: https://block.io/users/password/new
+
+A cookie has been set without the secure flag, which means that the cookie can be accessed via unencrypted connections.Whenever a cookie contains sensitive information or is a session token, then it should always be passed using an encrypted tunnel. Ensure that the secure flag is set for cookies containing such sensitive information.

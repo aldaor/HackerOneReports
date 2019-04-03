@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/3013
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/gsalazar
+ReportedTo:OkCupid(okcupid)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.04.2014 19:03:22
+
+Summary:
+
+Hello again, I found another bug that doesn't filter out quotes (" or ') at all.
+
+I was able to use that to my advantage to get an automatic payload working.
+
+Here is the Proof of Concept for that
+
+http://www.okcupid.com/profile/808da/questions?search=%22%20AUTOFOCUS%20onfocus=alert%280%29%20%22
+
+I used Firefox to conduct this test, and I believe it will only work in Firefox.
+
+Also, if you input any HTML at all into the questions search, it will parse it without filtering anything at all, which results in DOM XSS. The DOM XSS flaw appears to reside in the questions.js file. It is included from a remote server, so I wasn't able to test any further (cdn). 
+
+Insert this into the search bar to achieve the same results that I am getting with the DOM based XSS - "<script>alert(0)</script>" with the double quotes excluded from the query.
+
+I am attaching an image to demonstrate the DOM XSS bug in action.
+
+The search bar only appears in Firefox, but not on chrome from what I have discovered.
+
+Thank you for reading this.

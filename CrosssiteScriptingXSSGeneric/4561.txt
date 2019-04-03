@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/4561
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/prakharprasad
+ReportedTo:Slack(slack)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:04.05.2014 18:38:21
+
+Summary:
+
+Whenever a new team is created, Slackbot uses automated profile completion by asking a few questions from the user like the first name, last name, skype account etc. But instead of providing the correct details we provide `<javascript:alert(document.cookie);>` as input then Slackbot will cause the data go inside the anchor tag `<a href=javascript:alert(document.cookie);>...</a>` so clicking on the link will trigger XSS.
+
+Video POC: https://www.dropbox.com/s/7fmbe4jnd923pd0/Dumbbot-XSS.mov

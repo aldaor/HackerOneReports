@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/4808
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/smiegles
+ReportedTo:concrete5(concrete5)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.06.2014 18:27:14
+
+Summary:
+
+Hi,
+
+When you go to /index.php/dashboard/sitemap/explore/ and press on blog (I had standing Blog there) and then on properties -> Custom Attributes -> tags and insert "><img src=x onerror=alert(4)> a XSS will popup.
+
+Some screens are in the attachment.
+
+Best regards,
+
+Olivier Beg

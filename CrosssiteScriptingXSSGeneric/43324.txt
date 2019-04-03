@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/43324
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/artem
+ReportedTo:OkCupid(okcupid)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:06.07.2015 11:07:55
+
+Summary:
+
+Hello,
+
+It is possible to inject javascript code to a message for another user. Please see steps to reproduce below:
+
+1. Go to user page
+2. Click "Send a message" button (there are two buttons on the profile page, no matter which one you choose)
+3. Send a message like the following:
+
+test xss <img src="/" onerror="alert(document.cookie)"/>
+
+If a user goes to "Messages" -> "Sent" page and chooses a conversation you created, the code doesn't run. But if a user clicks "Pop out" button, it does.
+
+An attacker can't steal a session id because the application uses HttpOnly cookies:
+
+Set-Cookie: override_session=0; Expires=Mon, 11 Jan 2016 14:38:05 GMT; Path=/; Domain=okcupid.com; HttpOnly
+Set-Cookie: session=15164195640309907921%3a17166043796188890290; Expires=Mon, 11 Jan 2016 14:38:05 GMT; Path=/; Domain=okcupid.com; HttpOnly
+Set-Cookie: guest=; Expires=Sat, 10 Jan 2015 14:38:05 GMT; Path=/; Domain=okcupid.com; HttpOnly
+
+HttpOnly cookies mitigate the impact, but anyway this is a stored XSS.
+
+I see the following ways to fix this issue:
+- encode HTML entities before a message is printed out
+- remove any HTML code before a message is printed out (like it is implemented on "Messages" section)
+
+Artem

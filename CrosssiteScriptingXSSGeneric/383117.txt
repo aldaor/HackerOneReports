@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/383117
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/nickvergessen
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:10.08.2018 9:41:28
+
+Summary:
+
+1. As user1 set your displayname to `<a href="https://nextcloud.com">Name</a>`
+2. As user2 autocomplete the name in the comments input (or Talk chat input)
+3. Click on the user name you just autocompleted
+
+User2 is redirected to `https://nextcloud.com`
+
+Only works with HTML, not with `script`
+
+## Impact
+
+User1 can trick user2 to render any html

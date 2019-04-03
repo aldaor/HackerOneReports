@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/35363
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/smiegles
+ReportedTo:QIWI(qiwi)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:27.12.2014 12:37:20
+
+Summary:
+
+Hi,
+
+https://static.qiwi.com/respond/proxy.html contains a Cross-site scripting. 
+
+```
+      query = getQueryString();
+        css = query["css"];
+        domain = query["url"];
+
+        if (css && domain) {
+            ajax(css, function (response) {
+                window.name = response;
+                window.location.href = domain; // this line here is vulnerable to Cross-site scripting.
+            });
+        }
+```
+As you can see, it looks if two get varables are available (css and url) if they both are it requests the css parameter through ajax and then redirects the user to the ?url variable which is vulnerable for Cross-site scripting.
+
+POC: https://static.qiwi.com/respond/proxy.html?css=http://olivierbeg.nl/xss/xss.php&url=javascript:alert(1)
+
+Best regards,
+
+Olivier Beg

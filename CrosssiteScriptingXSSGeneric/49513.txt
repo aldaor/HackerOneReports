@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/49513
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/hykatza
+ReportedTo:Airbnb(airbnb)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.04.2015 17:28:49
+
+Summary:
+
+The vulnerability is exploited doing an upload of the file (Exploit) attached in this conversation as profile photo.

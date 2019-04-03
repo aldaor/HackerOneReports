@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/321
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/janpaul123
+ReportedTo:HackerOne(security)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:30.11.2013 1:10:30
+
+Summary:
+
+Also thought I'd formally submitted the issue we discussed yesterday, that sometimes the CSP response headers served are missing for browsers that don't support them, but then the page without these headers can be cached by Cloudflare. This makes it easier to mount a XSS attack.

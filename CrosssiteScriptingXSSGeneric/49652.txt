@@ -1,0 +1,62 @@
+ReportLink:https://hackerone.com/reports/49652
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/danlec
+ReportedTo:HackerOne(security)
+BountyAmount:5000.0
+Severity:high
+State:Closed
+DateOfDisclosure:18.03.2015 13:11:50
+
+Summary:
+
+**Note:** I haven't yet investigated the implications of this fully, so this may be more severe than I'm currently aware of.  Right now the only exploits I'm aware of allow a team member to attack other team members.
+
+I've found a couple fields that I'd expect to be limited to string values, but which **actually accept data of arbitrary types**.  So far, I've found that these include:
+
+- The `reference` field on a report triage action
+- The `data` field of a trigger criterion
+
+(There are several other fields that seem to accept an arbitrary type, but appear to be converted into strings.  The above fields also come back from the server as non-strings.)
+
+By manually crafting the JSON used when setting these fields, a malicious person can set them to non-string values, e.g. arrays or simple objects.  
+
+When these fields are rendered, they are assumed to be strings, and passed as the `children` argument when calling `React.createElement`.  Unfortunately, that argument is allowed to be text content **or a React child object**.  Since these fields can in fact be arbitrary objects, we can create an object that appears to be a React element, and which renders as something dangerous.
+
+**Proof of Concept**
+
+Here's how the exploit would work, using the `reference` field on a report:
+
+As an attacker, open up a report and "triage" it, setting the reference field to an object that appears to be a React element.  This can be done from the console using the following command:  
+```
+$.ajax({ 
+  url: "https://hackerone.com/reports/bulk", 
+  method: 'post', 
+  contentType: "application/json", 
+  data: JSON.stringify({ 
+    state: "open", 
+    substate: "triaged", 
+    report_ids: [… id of the report …], 
+    reply_action: "change-state", 
+    reference: {
+      _isReactElement: true,
+      _store: {},
+      type:"body",
+      props: {
+        dangerouslySetInnerHTML: {
+          __html:
+            "<h1>Arbitrary HTML</h1><script>alert('No CSP Support :(')</script>"
+        }
+      }
+    }   
+  }) 
+})
+```  
+
+Now, as a victim, open the report and observe that arbitrary HTML has been inserted.
+
+For the curious, here's what the fields in the fake React element do:
+
+- `_isReactElement` tricks React into thinking it's rendering an element
+- `_store` prevents a javascript error (React tries writing some properties of this field)
+- `type` is the type of element to be rendered
+- `props` is the properties of the spoofed element.  `dangerouslySetInnerHTML` is a [special field](http://facebook.github.io/react/docs/special-non-dom-attributes.html) that lets you manually set the inner HTML for the element.

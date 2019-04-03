@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/3199
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/quistertow
+ReportedTo:OkCupid(okcupid)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.06.2014 19:11:06
+
+Summary:
+
+Go to your profile, and go to upload a photo.
+Add a random description to the photo and upload it.
+Now go to your photos and go to the latest uploaded photo to edit the description, and paste this : <svg/onload=alert(document.domain)>  and click Save and you will see the XSS.
+
+Regards,
+    Florin
