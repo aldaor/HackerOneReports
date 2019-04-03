@@ -1,0 +1,43 @@
+ReportLink:https://hackerone.com/reports/307672
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/edoverflow
+ReportedTo:Keybase(keybase)
+BountyAmount:2000.0
+Severity:
+State:Closed
+DateOfDisclosure:26.01.2018 14:58:19
+
+Summary:
+
+# Description
+
+The following snippet in `js/identities.js` allows all hostnames ending in `twitter.com`, `facebook.com`, [etc.](https://github.com/keybase/client/blob/master/browser/js/identities.js#L24-L66) to display the Keybase message window. The issue stems from the fact that you use `\.` instead of `\\.` in your regular expression.
+
+```js
+{
+    service: "twitter",
+    getUsername: function(loc) { return loc.pathname.split('/')[1]; },
+    locationMatches: new RegExp('\.twitter\.com/([\\w]+)[/]?$'),
+    originAndPathMatches: '\.twitter\.com/[\\w]+[/]?$',
+    css: ['body.ProfilePage']
+  },
+```
+
+# PoC
+
+```
+$ cat /etc/hosts
+IP_HERE totallynottwitter.com
+```
+
+Start up a little server and navigate to IP_HERE/edoverflow. Click on the Keybase extension's icon and the message window will pop up, tying @EdOverflow Twitter's identity to totallynottwitter.com.
+
+{F256084}
+
+# Mitigation
+
+Make sure to use `\\.` in your regular expression.
+
+## Impact
+
+An attacker can create a fake page with any of the white-listed hostnames, and the extension's messaging window will open on the page.

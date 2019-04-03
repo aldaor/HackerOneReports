@@ -1,0 +1,61 @@
+ReportLink:https://hackerone.com/reports/330105
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/orbitlens
+ReportedTo:Stellar.org(stellar)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:14.10.2018 7:51:57
+
+Summary:
+
+Hi,
+
+Last Thursday I discovered the exploitable vulnerability in SDEX. I immediately reported the bug directly to Jed by email and he confirmed it.  
+
+It's all about rounding during trades. You see, I found that orders are always executed if the price matches market, even if the amount is as small as 0.0000001. A minimum traded amount is also 0.0000001, so if we are buying the more valued asset (say, we are buying BTC for XLM), **an asset is traded 1:1 regardless of the price set in MANAGE_ORDER operation**.
+
+It's not a problem if traded assets have roughly equal value (for example, MOBY/XLM rate is 0.34, CNY/XLM - 0.66). Nobody sanely will spend 100 stroops for fees just to trade 0.0000001 CNY with a slightly better rate.  
+
+Now let's consider trading on XLM/BTC pair. Market exchange price is ~ **37,000 XLM/BTC**.  
+
+I create an order selling 0.0000001 XLM with a price, say, 50,000 XLM/BTC and submit it to the network. The price is higher than avg market, so the order is executed immediately. That's it, **I bought 0.0000001 BTC for 0.0000001 XLM**. If I trade back BTC back to lumens at the market price I'll get **0.0037000** XLM, which is much greater than originally spent **0.0000101** XLM.  
+
+## Proof
+
+(examples on Mainnet)  
+
+- ManageOffer: https://horizon.stellar.org/operations/71512944940158977
+- Effects: https://horizon.stellar.org/operations/71512944940158977/effects
+  
+(reproduced on Testnet) 
+
+- ManageOffer: https://horizon-testnet.stellar.org/operations/34556568129245185
+- Account effects: https://horizon-testnet.stellar.org/accounts/GDD7OTUPGR7FMJZLSLYLXTUCPG5IA5UTSPXXZWYRX3HJMGMWWSKCCH65/effects
+- Account balance: https://horizon-testnet.stellar.org/accounts/GDD7OTUPGR7FMJZLSLYLXTUCPG5IA5UTSPXXZWYRX3HJMGMWWSKCCH65
+
+## Attack vector
+
+1. Create 20 accounts and fund with, say, 120 XLM each.
+2. Code a primitive bot that submits a transaction with 100 ManageOffer operations for each account every 4 seconds (roughly 900\*100 =90,000 operations per hour for each account).
+3. Rent a cheap cloud server and launch the bot.
+4. Once in 10 minutes or so bot should sell all traded BTC at market price and send all profits to a master-account.
+5. Repeat until there is at least one open offer. Then switch to another asset (BTC issued by another anchor, or, for example, ETH tokens).
+
+**Attacker hourly profit:**
+
+`(0.0037-0.0000101) * 20 * 90000=6641.82 XLM/hour.`
+
+If the attacker is greedy, he may initially create up to 50 accounts instead of 20. However, it will immediately affect the overall network performance and everybody will be alarmed. A witty attacker may rather run a bot with 20-30 accounts on a Sunday night to gain a maximum profit.&nbsp;
+
+Traders that are selling BTC (or any other pricey asset) are effectively loosing all money, because offers are traded at a fraction (**1/37,000 in case of BTC)** of the market value despite the fact that the initial price was set correctly.
+
+Not sure if this issue is eligible for reward, as Jed mentioned that you are working on something like this. If yes, here is my account address:
+
+`GB3VFWJW7ZSY2VX666SMVQNHAOMTQ6Y2723CU4XL26F455574JNLC54Z`
+
+## Impact
+
+An attack may lead to a loss of a substantial amount of users' funds. It can't be stopped or prevented without the entire Stellar Network upgrade due to the nature of the distributed ledger. 
+
+Once an attacker is blocked, he may change an IP or the target Stellar Core validator node and continue an attack. In such case he can still more than 100,000 XLM (~20,000 USD) during the first day of attack.

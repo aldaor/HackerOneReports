@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/300748
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/vicompany
+ReportedTo:Coinbase(coinbase)
+BountyAmount:10000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:21.03.2018 8:52:55
+
+Summary:
+The researchers noticed an issue with our ETH receiving code when receiving from a contract. This allowed sending of ETH to Coinbase to be credited even if the underlying contract execution failed. The issue was fixed by changing the contract handling logic. Analysis of the issue indicated only accidental loss for Coinbase, and no exploitation attempts.
+
+The Security team thanks @vicompany for the quick disclosure, and also the internal team for pushing a fix within hours. We do appreciate @vicompany's patience as the full communication loop back to HackerOne took significantly longer than the fix deployment cycle.

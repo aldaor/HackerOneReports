@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/162199
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/appsecure_in
+ReportedTo:Uber(uber)
+BountyAmount:5000.0
+Severity:high
+State:Closed
+DateOfDisclosure:20.11.2018 22:20:12
+
+Summary:
+When a rider account had an outstanding account balance, improper validation of the payment method ID provided in the request made it possible to use an invalid payment method. As a result, it was possible to provide a non-existent payment type ID such as `xyz` when requesting a ride and get the trip for free. In addition to this, the vulnerability was trivial to reproduce and could have been easily abused. 
+
+Thanks, @appsecure_in!

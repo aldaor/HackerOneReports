@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/216373
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/temmyscript
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:28.06.2017 0:02:27
+
+Summary:
+Deleting a payment profile for an account that is actively taking a trip results in the trip not being charged, but moves the user's account into arrears and when a payment profile is added back, the account is charged the unpaid amount.

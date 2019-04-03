@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/242964
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/constructor2019
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:01.11.2017 16:27:34
+
+Summary:
+While we previously sent an e-mail to the user when their preferred payout method was modified, we did not send a notification when adding or removing a new non-preferred payout method. This oversight was pointed out by this report.

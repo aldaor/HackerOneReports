@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/230314
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/mohammad_obaid
+ReportedTo:Trello(trello)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:22.05.2017 21:36:28
+
+Summary:
+
+Hope you guys are doing great.  While going through your api documentation on https://developers.trello.com/advanced-reference/card#post-1-cards-card-id-or-shortlink-actions-comments  , an api endpoint `POST /1/cards/[card id or shortlink]/attachments` supposed to be rate-limited after 100 attachment but practically no rate limit is applied to this endpoint allowing attacker to post unlimited amount of attachments to card . 
+As clearly stated there 
+```
+The attachments endpoint should be used to add an attachment to a card. Cards are limited to having 100 attachments. You can only add a single attachment to a card at a time.
+```
+And after 100 attachment we should get 422 Unprocessible entity 
+```
+Errors
+Unprocessable entity (422): This error occurs when an attempt is made to add another attachment to card that already has 100 attachments.
+```
+But actually it returns with normal 200 status code even after 122 attachment as shown in picture `trelloratelimit1.png`
+
+##POC:
+
+1- Go to trello.com
+2- First create a board, list and card.
+3- When card is created there is an option to add attachment as shown in picture `trelloratelimit.png` . 
+4- Click on attachment and either upload any image, doc or attach any link.
+5- Now with the help of burp suite intercept request you will get similar request as shown in `trelloratelimit1.png`
+The request is making a call to api `POST /1/cards/[card id or shortlink]/attachments` to post attachment to that specific card id.
+6- Now send that request to burp intruder and repeat same request more than 100 times.
+You will get 200 ok status everytime and attachment will be uploaded to specific card.
+
+##FIX:
+  This issue can be fixed  by checking number of attachments against specific card and when it exceed limit then return an error.

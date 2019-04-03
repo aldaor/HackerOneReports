@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/315524
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/povargek
+ReportedTo:VK.com(vkcom)
+BountyAmount:300.0
+Severity:medium
+State:Closed
+DateOfDisclosure:06.07.2018 12:03:34
+
+Summary:
+Ошибка в генерации CSRF-токена. 

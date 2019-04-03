@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/245304
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/footstep
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.08.2018 19:06:57
+
+Summary:
+
+Following the fixes: #241608 & #224072. there's still another way round this.
+
+##Reproduction Steps
+1. Register 2 accounts (Preferably using Gmail not third party)
+- Login both accounts on separate browsers
+- In Browser1, navigate to https://demo.weblate.org/accounts/profile/#auth
+- Add a new association with the Google third party link using the registered email address in Browser2
+- Fill the Password and Add the Association
+- Disconnect the email on the account initially
+- Email will be changed to the new one added in (4)
+- Now, both browsers have the same email address i.e 2 accounts with a single email
+- Logging out any of the account and trying to login leads to a server error.
+
+Screenshots are attached below.
+
+Shuaib.

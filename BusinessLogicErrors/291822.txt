@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/291822
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/oneiroi
+ReportedTo:Slack(slack)
+BountyAmount:750.0
+Severity:medium
+State:Closed
+DateOfDisclosure:25.04.2018 23:17:55
+
+Summary:
+@oneiroi discovered a bug in the Shared Channels Beta wherein notifications may still be delivered to an unshared channel (previously shared). This did not affect data not in notifications, and we patched and performed a thorough investigation. Thanks for the report @oneiroi!

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/265701
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/kushal89shah
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:20.11.2017 16:26:44
+
+Summary:
+The researcher found two unused files on airOS firmware. These files were not used by any process and did not create any security threat, but it was decided to remove them to free some device memory.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/260491
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/goodhackonly
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:20.0
+Severity:
+State:Closed
+DateOfDisclosure:14.09.2017 23:05:02
+
+Summary:
+A security researcher discovered that following another change (from report #259415), we used the wrong encoding for the manually entered secret. No sensitive data was exposed and there was no security risk, but users were unable to manually register a new TOTP device for about 12 hours.

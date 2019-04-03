@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/390537
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/hackerone77-222
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:17.09.2018 16:20:44
+
+Summary:
+
+While checking the subdomains i found that the subdomain email.alerts.newrelic.com upon navigating downloads a file saying "Mailgun Magnificent API" And has the following DNS info
+(screenshot attached)
+The problem lies in this issue:
+
+You add the domain email.alerts.newrelic.com to Mailgun
+Mailgun asks you to add a MX record to email.alerts.newrelic.com
+You add that, then Mailgun also tells you that to get tracking you need to add a CNAME from email.alerts.newrelic.com to mailgun.org as well.
+What is missing here, is for you to actually add email.email.alerts.newrelic.com to your account as a separate domain by itself. By not doing this, anyone can add this domain to their account.
+You probably later on remove the MX from email.alerts.newrelic.com again, but the CNAME is still there for email.alerts.newrelic.com
+The problem with missing out on #4 above is how DNS CNAMEs works. If you have a CNAME pointing to another domain, this CNAME will actually inherit the MX-records from the other domain. This basically means that your email.staging.airtable.com is now listed with MX-records from Mailgun:
+
+The Verification process takes upto 24+ Hours but i decided to report the issue as soon as possible so it can be migrated :) let me know I can delete the domain from my account so that you guys can set it up again or maybe U simpel need to delete the DNS info
+
+Report Reference #272357&#174983
+
+## Impact
+
+This is leading to a subdomain takeover and anyone can use it to send mail using your mail

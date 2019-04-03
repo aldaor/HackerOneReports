@@ -1,0 +1,47 @@
+ReportLink:https://hackerone.com/reports/377398
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/edmundedgar
+ReportedTo:Augur(augurproject)
+BountyAmount:5000.0
+Severity:high
+State:Closed
+DateOfDisclosure:05.07.2018 23:39:03
+
+Summary:
+The ETH bond provided during market creation could be manipulated by a malicious miner to become so high that it would be prohibitively expensive for normal market creation.
+
+Since this bond was already just a best effort to subsidize gas costs, but likely wrong much of the time anyway, we took the suggestion made here and removed it altogether.
+(Not entirely confident I've understood this system correctly, apologies if it's wrong and feel free to stop reading if you run into an obvious mistake...)
+
+
+**Summary:** [add summary of the vulnerability]
+
+By creating a market with themselves as designated reporter and setting a very high gas price for their own block at no cost to themselves, miners can manipulate the gas reporting bond 
+
+**Description:** [add more details about this vulnerability]
+
+IIUC the gas reporting bond is set by taking an average of the gasPrice used in reporting in the previous fee window. If the incentive structure is working well, which it will, there will only be one report per market, that of the designated reporter. Since markets have a fairly high gas price, there may be fairly low numbers of markets, so a fairly low total number of reports per fee window. 
+
+Normally it would be expensive to manipulate the gas price of a transaction, as a low value will not be mined, and a high value will have to be paid for. However, if you are mining your own transaction, the gas price is transferred from your own account directly to your own coinbase account, so setting an arbitrarily high gas price for a transaction costs you nothing.
+
+This means the only restriction on injecting a data point into fee window gas price average is the amount of money accessible to the miner in an externally-owned account. This money can be recycled in every block the miner mines, each for a different market.
+
+## Impact: [add why this issue matters]
+
+An attacker can increase the gas reporting bond required to create a market arbitrarily, checked only by 
+([their available funds] * [the number of blocks they mine during a fee window] / the total number of markets ).
+
+This could make the gas reporting bonds too high for honest users to create markets.
+
+They do not need to hold any REP to mount this attack except to post validity bonds for any markets they created.
+
+They could profit from this by speculating on the price of REP, which would be damaged if it was too expensive to create markets. 
+
+Alternatively we know there are well-resourced people who dislike Ethereum, would spend significant resources to damage its most famous working dapp.
+
+
+Proposed fix: Keep it simple and don't do gas reporting bonds.
+
+## Impact
+
+See impact section above

@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/361941
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/keretasenja28
+ReportedTo:Liberapay(liberapay)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:05.06.2018 11:13:32
+
+Summary:
+
+1. Go to page https://liberapay.com/sign-up
+2. Input email address (I tried to register with some email address)
+     * a@a.a
+     * b@b.b
+     * c@c.c
+     * d@d.d
+     * e@e.e
+3. Select the currency you want to use
+4. click "GO" button
+5. Will automatically enter into account without going through the process of verification email address first
+
+
+NOTE:
+* Email addresses can be verified before or after a user enters the system
+
+## Impact
+
+Allows an attacker to flood the database with a fake account that is registered with an invalid email

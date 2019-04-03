@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/426547
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/m00hdi
+ReportedTo:Chaturbate(chaturbate)
+BountyAmount:200.0
+Severity:low
+State:Closed
+DateOfDisclosure:24.11.2018 23:09:33
+
+Summary:
+
+Hello,I discovered that one is able to create an unlimited number of albums Via /photo_videos/photoset/create/
+Steps To Reproduce:
+1.Login And Go to http://fr.chaturbate.co /photo_videos/photoset/create/
+2.Fill the form
+3.Enable a proxy interception tool (e.g Burp Suite)
+4.Click Save
+5.Send the POST request made to /photo_videos/photoset/create to intruder
+6.Set 500 or more custom inputs and Start attack
+
+I've been able to create many albums without restrictions
+
+Reference:
+F364058
+
+## Impact
+
+Create an unlimited number of albums

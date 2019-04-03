@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/260941
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/chilliesssssss7
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.09.2017 23:36:28
+
+Summary:
+
+**steps**
+https://app.legalrobot.com/account
+
+I just signed up to legal robot 
+In my  account settings 
+There is a div that contains 
+
+Password Safety
+To keep your information secure, Legal Robot periodically checks your password against public lists of hacked passwords (**here's how**). Since your account is fairly new, we have not run this check yet.
+
+
+In that **here's how** is displayed in <a> tag without any href associated to it 
+{F213603}

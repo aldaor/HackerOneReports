@@ -1,0 +1,148 @@
+ReportLink:https://hackerone.com/reports/397194
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/michaelx
+ReportedTo:Augur(augurproject)
+BountyAmount:2000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:13.12.2018 4:02:44
+
+Summary:
+
+**Summary:**
+
+The initial reporter stake is determined by the REP balance of the specific InitialReporter contract at the time of initial report. This can be arbitrarily controlled via REP transfers at any time between Market creation and the initial report.
+
+Right off the bat, an attacker with >33.3...% of the market cap of REP (unlikely, I know) could make indisputable initial reports. I discuss other potential impacts in detail below.
+
+**Description:**
+
+This code sets the size of the InitialReporter's stake based on the InitialReporter's current REP balance (which anyone can contribute to at any time): https://github.com/AugurProject/augur-core/blob/0e9aeb32d07151072afb69821b0027f1c48c86a4/source/contracts/reporting/InitialReporter.sol#L51
+
+## Steps To Reproduce:
+
+  1. Create a market
+  2. Transfer any amount of REP to the market's InitialReporter before the end time of the market
+  3. Perform initial reporting
+  4. Verify that the InitialReporter's stake contains the transferred REP
+  5. Validate that any subsequent dispute bonds are 2X the InitialReporter's stake
+
+A trace of an integration test executing the above steps is given below, along with the test code (minus some additions to TestFixture.js).
+
+## Impact:
+
+1. As stated above, only >1/3 of all REP is required to create an indisputable initial outcome.
+2. Allows an attacker to choose an InitialReporter stake (e.g. attacker owns 34% and chooses 33%) such that a successful dispute would tie up 66%, allowing the attacker to choose the fork outcome at will with the remaining 1%).
+3. Amplifies the potential of the attack described in: https://augur.stackexchange.com/questions/679/in-latest-whitepaper-1-18-augur-has-removed-need-for-rep-holder-participation-b
+ - It suddenly becomes much easier for an attacker to tilt timing in their favor
+ - First,  create a market with end time a couple days before a specific fee window cutoff
+ - Next, create an initial report with 1.25% REP on the false (or LIE) outcome right on the cusp of a new fee window
+ - Immediately line up another transaction which places 2.5% REP on the true outcome, initiating a fork and recouping costs via 50% ROI
+ - The attacker has pretty fine grained control over the exact timing of the initial report (albeit not down to the second but within a minute of new fee window is doable)
+ - This makes it difficult for honest whales to squeeze in any contribution towards the TRUE result.
+4. In general, allows attackers to gain a 2X multiplier towards false outcomes
+5. Removes the soft limit of ~10% total REP participation in any market before fork (bouncing disputes between A and B such that the final dispute bound is ~5% REP, introducing a 3rd outcome only reduces the total amount of REP staked before the fork threshold is reached)
+ - we recognize that the 2.5% REP fork threshold wasn't explicitly intended to put a 10% REP limit on participation in a single market pre-fork, but either way this would allow attackers to bypass that limit.
+
+While the above issues (#1 and #2) allow an attacker to nearly take over Augur, they require a ~33% REP ownership which is unlikely (although this could be crowdsourced via a smart contract). 
+Therefore, I marked the severity as LOW.
+
+Arguably, the 3.75% REP fork attack mentioned on augur.stackexchange.com is more likely with potentially higher impact.
+
+NOTE:
+
+I took a good hard look at the whitepaper, code, reddit and augur.stackexchange and didn't really find any solid statements about whether or not the initial stake should be allowed to be arbitrary. From the code, it appears that it was not intended (no specific method for setting the initial reporter's stake amount). If it's intentional, I apologize for wasting your time!
+
+## Remediation:
+
+Fix the initial stake to be equal to the designatedReporterStake, any extra REP token balance should just be reclaimable by the owner of the InitialReporter.
+
+## Supporting Material/References:
+
+### Test Logs - places nearly all REP in the initial report, shows that the dispute bond's size is greater than total REP supply (2x initial report).
+
+```
+initial reporter balance: 0
+big owner balance: 10999999650319417317708333
+initial reporter post-transfer balance: 10999999650319417317708323
+initial reporter pre-report stake: 0
+initial reporter post-report stake: 10999999999999999999999990
+attempting to dispute!
+participation stake: 10999999999999999999999990
+disputeHash: 0x0a44bd954769659b03d5bb9e004b2970d6eed9025c9e19f008727b461f396a73
+crowdsourcerAddress: 0x4eb57c0efaa25901291529e1c304515631f8a0ad
+crowdsourcer size: 21999999999999999999999980
+crowdsourcer stake: 10
+total rep supply: 11000000000000000000000000
+finalizing now!
+finalized: true
+    ✓ #testTradeAndReportWithoutFork (32173ms)
+```
+
+### Test Source Code - boilerplate omitted but available upon request:
+
+```
+        const numberOfOutcomes = await market.getNumberOfOutcomes_();
+        const numTicks = await market.getNumTicks_();
+        const initialReporter = await market.getInitialReporter_();
+        const reputationToken = await fixture.getReputationToken();
+        const preRepBalance = await reputationToken.balanceOf_(initialReporter);
+        console.log("initial reporter balance: " + preRepBalance);
+        const ownerBalance = await reputationToken.balanceOf_(fixture.accountManager.defaultAddress);
+        console.log("big owner balance: " + ownerBalance);
+        await reputationToken.transfer(initialReporter, new BN("" + (ownerBalance.sub(new BN(10)))));
+        const postBalance = await reputationToken.balanceOf_(initialReporter);
+        console.log("initial reporter post-transfer balance: " + postBalance);
+        const initialReporterInterface = await fixture.getInitialReporter(initialReporter);
+        const zerostake = await initialReporterInterface.getStake_();
+        console.log("initial reporter pre-report stake: " + zerostake);
+        let payoutNumerators = new Array(numberOfOutcomes.toNumber()).fill(new BN(0));
+        payoutNumerators[0] = numTicks;
+        await market.doInitialReport(payoutNumerators, false);
+        const finalstake = await initialReporterInterface.getStake_();
+        console.log("initial reporter post-report stake: " + finalstake);
+        const showed = await market.designatedReporterShowed_();
+        chai_1.expect(showed).to.be.true;
+        const isForking = await fixture.isForking();
+        chai_1.expect(isForking).to.be.false;
+        const feeWindow = await fixture.getFeeWindow(market);
+        const feeWindowStartTime = await feeWindow.getStartTime_();
+        const feeWindowEndTime = await feeWindow.getEndTime_();
+        await fixture.setTimestamp(feeWindowStartTime.add(new BN(100)));
+        console.log("attempting to dispute!");
+        const marketParticipationStake = await market.getParticipantStake_();
+        console.log("participation stake: " + marketParticipationStake);
+        // Now, dispute!
+        let disputeNumerators = new Array(numberOfOutcomes.toNumber()).fill(new BN(0));
+        disputeNumerators[1] = numTicks;
+        await market.contribute(disputeNumerators, false, new BN(10));
+        const disputeHash = await market.derivePayoutDistributionHash_(disputeNumerators, false);
+        console.log("disputeHash: " + disputeHash);
+        const crowdsourcerAddress = await market.getCrowdsourcer_(disputeHash);
+        console.log("crowdsourcerAddress: " + crowdsourcerAddress);
+        const crowdsourcerInterface = await fixture.getCrowdsourcer(crowdsourcerAddress);
+        const crowdsourceBondSize = await crowdsourcerInterface.getSize_();
+        const crowdsourceCurrentStake = await crowdsourcerInterface.totalSupply_();
+        console.log("crowdsourcer size: " + crowdsourceBondSize);
+        console.log("crowdsourcer stake: " + crowdsourceCurrentStake);
+        const totalRepSupply = await reputationToken.totalSupply_();
+        console.log("total rep supply: " + totalRepSupply);
+        const finalFeeWindow = await fixture.getFeeWindow(market);
+        const finalFeeWindowEndTime = await finalFeeWindow.getEndTime_();
+        await fixture.setTimestamp(finalFeeWindowEndTime.add(new BN(100)));
+        console.log("finalizing now!");
+        const finalized = await market.finalize();
+        await fixture.setTimestamp(finalFeeWindowEndTime.add(new BN(259300)));
+        let isFinalized = await market.isFinalized_();
+        console.log("finalized: " + isFinalized);
+        chai_1.expect(isFinalized).to.be.true;
+```
+
+## Impact
+
+Impact is detailed above but summarized here:
+
+1 and 2) An attacker with >33.3...% of REP market share can create indisputable initial reports or make it such that a successful dispute would allow them to control the final fork outcome.
+3) An attacker with 3.75% of REP could initiate a series of controlled forks with a high probability of staking 2.5% of REP in the TRUE outcome (recouping the 1.25% lost in the LIE)
+4) Attacker gets first mover's advantage with 2X dispute cost (if participation has been historically low) via initial report
+5) Attacker can potentially cause more than 10% of REP to be involved in a single market

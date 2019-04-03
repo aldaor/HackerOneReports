@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/420163
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/igorpyan
+ReportedTo:QIWI(qiwi)
+BountyAmount:200.0
+Severity:medium
+State:Closed
+DateOfDisclosure:10.12.2018 11:47:32
+
+Summary:
+###Summary
+
+При регистрации на сайте qiwi.com присылается один и тот же код подтверждения в СМС. 
+
+###Impact
+
+Возможность зарегистрироваться под любым новым пользователем за счет перебора кода из СМС.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/387307
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/bugdiscloseguys
+ReportedTo:Vimeo(vimeo)
+BountyAmount:1500.0
+Severity:high
+State:Closed
+DateOfDisclosure:27.08.2018 13:15:21
+
+Summary:
+We thank @bugdiscloseguys for finding this issue. We were only checking \ on-demand to on-demand, but not on-demand to portfolio.

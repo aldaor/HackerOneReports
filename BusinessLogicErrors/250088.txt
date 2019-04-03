@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/250088
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/sunil_yedla
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:20.0
+Severity:none
+State:Closed
+DateOfDisclosure:21.07.2017 17:45:14
+
+Summary:
+A security researcher discovered that the encryption recovery section on the Legal Robot account profile page was shown to all users, even those that were not using the feature. There was no security impact from any user seeing or using the feature - quite the opposite, in fact. However, when advanced security options are shown to users unnecessarily, we increase the risk of security fatigue. For this reason, Legal Robot made a design change to remove the section for users that do not have any encrypted repositories (i.e. users not actually using their encryption keys). Even though there was no security impact, this report caused Legal Robot to initiate a change as a result of the report, so it is fair to award a bounty.

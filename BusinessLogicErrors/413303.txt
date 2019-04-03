@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/413303
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/hack2tools
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:19.10.2018 16:15:44
+
+Summary:
+It was possible to bypass administrative lock for mailbox (e.g. lock set by biz.mail.ru domain administrator) by pre-requesting recovery link.

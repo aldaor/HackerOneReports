@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/249431
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/goodhackonly
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:90.0
+Severity:medium
+State:Closed
+DateOfDisclosure:15.08.2017 0:11:51
+
+Summary:
+While going live with additional 2FA options, a security researcher discovered that during password reset, users that had enabled 2FA were prompted for a second factor. This made the password reset more difficult, and could have allowed enumeration of users that had enabled 2FA. To some degree, 2FA enumeration was mitigated by existing rate-limiting. This also resolves #249467, which had the same root cause.

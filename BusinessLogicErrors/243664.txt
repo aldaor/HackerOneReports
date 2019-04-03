@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/243664
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/blake12356
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:17.08.2017 14:16:45
+
+Summary:
+
+Hello,
+
+## Description:
+
+I have found a bug in your fix other my other report, #243609. I reported this in a new report as this is an error in the error message.
+
+When changing your username that starts with a `.` the error message is:
+`Username may only contain letters, numbers or the following characters: @ . + - _`
+
+A normal user would be confused as it does not state any reason for the `.` not being allowed at the beginning of their username.
+
+## POC:
+
+1. Change your username to a name that starts with a `.`.
+2. You will receive an error message that does not explain why this is not excepted. 
+
+## Mitigation:
+
+I recommend you add a specific error message that states that your username cannot start with a `.`.
+
+Thanks!

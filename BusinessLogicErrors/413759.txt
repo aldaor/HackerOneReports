@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/413759
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/zhurig
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:05.10.2018 4:49:12
+
+Summary:
+@zhurig found a race condition where it was possible to bypass the limit for the number of locations a store can have by submitting multiple requests at once. We have resolved this issue by adding extra transactional locking during store location changes.
+User can bypas restriction and create more ctore location, than maximum depends store plan. Intercept request and send it multiple at once. See screensots
+F350687 - requests
+F350688 - results
+I created 12 store location when 4 possible
+
+## Impact
+
+Bypass the limitations of the billing plan

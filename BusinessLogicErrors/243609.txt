@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/243609
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/blake12356
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:27.07.2017 12:44:47
+
+Summary:
+
+Hello,
+
+## Description:
+
+The username of an account can be set to `..`. This makes it impossible to view the public profile of this account.
+
+## POC:
+
+I have claimed the username `..` on the demo.weblate.org site. It is impossible to view this account's public profile page. 
+Here is the public profile page: https://demo.weblate.org/user/../
+
+## Mitigation
+
+I recommend you filtering usernames to prevent them from starting with `.`.
+
+Thanks!

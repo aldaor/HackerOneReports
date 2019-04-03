@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/302731
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/tolo7010
+ReportedTo:Mavenlink(mavenlink)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:27.04.2018 0:13:08
+
+Summary:
+A user api endpoint that accepts updates for user profile information also accepts an email address field. The researcher found a bug where a previously verified email address could be updated via this endpoint but would not be marked as unverified.
+
+This endpoint still accepts email address changes but now also ensures that any email address record that was previously verified loses its verified status upon update.

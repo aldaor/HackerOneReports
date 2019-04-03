@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/243049
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/al7311
+ReportedTo:Airbnb(airbnb)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.07.2017 21:53:29
+
+Summary:
+
+The issue is with the "Confirm via call functionality" 
+
+While adding mobile number,the application does not verify the number that is being called back. A malicious user can change the number to any premium rate numbers which charge particular amount from the caller.
+
+It was further noticed that there was not limit to number of tries that can be made from the application. Even if the call is answered, same request can be used multiple times and the application still calls back.
+
+The attached screenshot shows that the phone number value can be changed and premium rate numbers can be used. The number used while testing is a test call number for Eurocall24 (premium number provider).
+
+An attacker can thereby steal money by manipulating the request to make call to premium numbers.
+
+Affected functionality:  /phone_numbers/create

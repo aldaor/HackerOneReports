@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/331691
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/d4rk_g1rl
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:18.04.2018 21:32:02
+
+Summary:
+
+###STEPS TO REPRODUCE:
+
+1. I have found a sandboxed team in hackerone,named █████.
+2. The manager of that team sends an invitation to: ██████████ ( which email was not exist on hackerone account)
+3. Now the invitation link receive was ========> ████
+4. I logged in from multiple researcher account and visited the link and accepted the request. 
+5. Now the invitation link was still live.
+
+So, a member  can pass this token to other people and they will be added to the team.I used this token multiple times and it's still live.
+
+## Impact
+
+The invitation token can be use in multiple times.

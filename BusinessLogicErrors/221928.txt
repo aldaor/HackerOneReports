@@ -1,0 +1,48 @@
+ReportLink:https://hackerone.com/reports/221928
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/csanuragjain
+ReportedTo:Trello(trello)
+BountyAmount:128.0
+Severity:
+State:Closed
+DateOfDisclosure:10.07.2017 23:40:35
+
+Summary:
+
+You can upload infected jpeg files to a card. If a user clicks on the attachment image, the infected file will get downloaded instead of showing the image. On opening it, any sort of system calls can be run on the victim.
+
+**Steps to Reproduce**
+
+1) Navigate to https://trello.com/
+2) Click on the Tutorial Board (Start Here!)
+3) Click on the card on the left pane
+4) Click on "Add an Attachment"
+5) Attach the file "YqUxTbEMQaaGk02BDS0N_6 (1).bat" which is attached with this bug
+6) After the file is uploaded, just make the board public
+7) For me the public url is https://trello.com/c/HK9LyFYw/2-trello-basics-click-to-open
+8) Victim opens the public board https://trello.com/c/HK9LyFYw/2-trello-basics-click-to-open
+9) Click on the card on the left pane having bugs bunny image
+10) Navigate to bottom, you would see all the attachment.
+
+**Attack Scenerio 1**
+1) Click on the attachment image of bugs bunny.
+2) Normally user expects that the image would open up enlarged but instead the infected batch file gets downloaded. If user opens the downloaded file then infected file gets executed. In this case only calc, msconfig, services.msc would open up (made it non harmful)
+
+**Attack Scenerio 2**
+1) Click on the cover image of the card
+2) Bugs bunny image would open enlarged
+3) User right clicks and open image in new tab
+4) Infected batch file gets downloaded. On double clicking the infected files gets executed.In this case only calc, msconfig, services.msc would open up (made it non harmful)
+
+**Note:**
+Once verified, please let me know so that i can remove the infected card from public.
+
+**Attachment content**
+Image file has embeded system commands and extension has been made as bat instead of jpeg
+
+**Risk**
+User computer can be hijacked and private information can be stolen.
+
+**Mitigation**
+On clicking the attachment thumbnail, enforce content type to image/jpeg and make sure it does not get downloaded.
+Any file having extension other than valid image extension should not be shown in thumbnail or should not be allowed to be made as cover image.

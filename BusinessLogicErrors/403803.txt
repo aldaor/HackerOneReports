@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/403803
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/keretasenja28
+ReportedTo:Khan Academy(khanacademy)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:05.09.2018 23:16:50
+
+Summary:
+
+Hello KhanAcademy Security Team,
+
+I'm rootbakar, I found an oddity that allows a user to register with Khanacademy using an invalid or fake email.
+
+In this trial I used the email 'rootbakar@rootbakar.rootbakar' and after pressing the **SIGN UP** button it will automatically enter the user dashboard page, not through the account verification process first.
+
+This will enable someone to create multiple accounts at once without verification.
+
+**PoC**
+This is Video Link
+https://youtu.be/mvxF1vQigLI
+(Not Public Video)
+
+Best Regards,
+
+**RootBakar**
+
+## Impact
+
+**This will enable someone to create multiple accounts at once without verification.**

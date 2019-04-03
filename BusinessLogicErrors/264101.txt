@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/264101
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/1dashunderscore
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.08.2017 17:48:02
+
+Summary:
+
+
+
+legalrobot allows an user to set email as password only by resetting password either by logged in and changing it into profile
+
+password changed succesfully 
+
+but the user couldn't log in to the app.legalrobot.com 
+because 
+
+js checks with email and password and it states it couldn't be same 
+
+also not allowing the user to log in 
+
+Design issues 
+
+{F216519}

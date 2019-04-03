@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/250082
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/goodhackonly
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:60.0
+Severity:medium
+State:Closed
+DateOfDisclosure:31.07.2017 5:56:54
+
+Summary:
+While searching for other issues, a security researcher proposed an enhancement to our 2FA account recovery: require email verification for 2FA recovery use. We implemented this change and thank @goodhackonly for an excellent suggestion that makes Legal Robot even more secure.

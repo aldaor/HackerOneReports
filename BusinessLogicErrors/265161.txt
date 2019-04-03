@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/265161
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/axolotl
+ReportedTo:Monero(monero)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:25.04.2018 5:50:37
+
+Summary:
+
+Hi Team,
+
+**Issue**
+The Monero Website are returning 404 not found.
+Please kindly check it [Monero Website ](https://github.com/monero-project/monero-site/blob/master/VULNERABILITY_RESPONSE_PROCESS.md)
+
+**404 response: **
+{F217540}

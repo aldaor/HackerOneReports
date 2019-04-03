@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/329263
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/w2w
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:19.10.2018 16:32:16
+
+Summary:
+m.am.ru had no sufficient protection against bruteforce for SMS OTP.
+
+am.ru is not currently covered by Bug Bounty program.

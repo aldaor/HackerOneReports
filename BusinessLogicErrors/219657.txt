@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/219657
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/zhumarin
+ReportedTo:VK.com(vkcom)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:30.08.2017 13:13:19
+
+Summary:
+Неправильный тип ошибки в ответе API, при котором возвращалась HTML-страница. 

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/407971
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/natetheriver
+ReportedTo:Valve(valve)
+BountyAmount:2500.0
+Severity:high
+State:Closed
+DateOfDisclosure:23.01.2019 0:52:00
+
+Summary:
+Due to a missing protection on a support endpoint, email verification codes could be bruteforced - leading to possible account takeover. The endpoint issue has been corrected.

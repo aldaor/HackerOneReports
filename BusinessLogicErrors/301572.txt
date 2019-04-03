@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/301572
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/povargek
+ReportedTo:VK.com(vkcom)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:06.04.2018 19:43:01
+
+Summary:
+Статичный `hash`, получив который вместе с доступом к аккаунту, можно было посмотреть несколько цифр номера телефона. 

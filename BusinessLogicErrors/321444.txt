@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/321444
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/mishre
+ReportedTo:Keybase(keybase)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:08.04.2018 11:15:52
+
+Summary:
+
+## Description
+In report https://hackerone.com/reports/307670 the reported identified a flow which abuses parsing differences between Keybase and Hackernews. Also the original reports is resolved there appears to be a bypass having the same impact by abusing upper-case letters.
+
+## Steps to reproduce
+1. Browse to: https://news.ycombinator.com/user?iD=rbanffy&id=blaa
+2. Click on the Keybase Extension icon.
+3. Notice that the pop-up shows the username blaa while thehackernews page shows the username: rbanffy (See attached image).
+
+## Root cause
+Keybase only searches for lower-case letters, however thehackernews allows upper-case ones to.
+
+## Impact
+
+Users attempting to send a secure, sensitive message to a Keybase user can be tricked into sending that message to a malicious user instead.

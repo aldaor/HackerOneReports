@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/249339
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/goodhackonly
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:90.0
+Severity:medium
+State:Closed
+DateOfDisclosure:31.07.2017 5:58:05
+
+Summary:
+While going live with additional 2FA options, a security researcher discovered that during TOTP enrollment, only a barcode was displayed to users, no TOTP manual enroll option with a printed base32 secret was provided for non-smartphone users.

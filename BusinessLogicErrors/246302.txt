@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/246302
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/atruba
+ReportedTo:WakaTime(wakatime)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:06.07.2017 5:42:23
+
+Summary:
+
+Hi,
+
+While testing, I found a logic flaw which made me to make two accounts with a single email
+
+Reproduction Steps
+
+1-Create one account with abc@gmail.com
+2-another with abc+1@gmail.com or abc+2@gmail.com etc
+3-Emails of both accounts will come at abc@gmail.com
+
+fix:
+Dont allow "+" in emails.
+
+Thanks,

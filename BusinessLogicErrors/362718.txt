@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/362718
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/zir0x
+ReportedTo:Liberapay(liberapay)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.06.2018 7:41:33
+
+Summary:
+
+Summary :
+---------
+Hi,
+I found an issue that is after signing out from the account and click back button continuously from the browser it will disclose sensitive information in all pages that the user open it when he is using his account like for example ```identity``` page . I believe that this issue may imply a minor threat as it is demand a shared computer but i also love to make open source community a better place!. thx
+
+## Impact
+
+Disclose sensitive information like the identity  page

@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/434202
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/csanuragjain
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:11.12.2018 23:33:19
+
+Summary:
+
+Twitter allows to comment on anyone's tweet. While testing this feature, observed that one can post comment on tweet which will be invisible to the victim whom the reply was posted and would be visible to any other twitter user.
+This can allow an Attacker to abuse victim on a tweet. The catch here is victim cannot even know that attacker posted on his tweet but any other twitter user can see that tweet.
+
+**Steps to reproduce**
+
+1. Attacker login to Twitter
+2. Attacker blocks victim using Block@victim button at https://twitter.com/<victim>
+3. Attacker opens any popular tweet of victim
+4. Attacker abuses victim in the tweet reply
+5. Victim cannot see the tweet reply posted by Attacker but any other user can see that reply.
+
+**Recommendation**
+If a person blocks a twitter user then he/she should not be allowed to post on any of the blocked user tweets.
+
+## Impact
+
+This can allow an Attacker to abuse victim on a tweet. The catch here is victim cannot even know that attacker posted on his tweet but any other twitter user can see that tweet.

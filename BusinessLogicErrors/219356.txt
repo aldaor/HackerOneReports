@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/219356
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/jon_bottarini
+ReportedTo:New Relic(newrelic)
+BountyAmount:600.0
+Severity:medium
+State:Closed
+DateOfDisclosure:02.05.2018 21:46:14
+
+Summary:
+@jon_bottarini discovered an issue with our purchase process validation. This allowed subscription purchases to complete, even when they did not equal the intended price for the service provided.

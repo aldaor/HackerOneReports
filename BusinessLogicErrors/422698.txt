@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/422698
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/yuvraj_dighe
+ReportedTo:Chaturbate(chaturbate)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:18.10.2018 12:34:39
+
+Summary:
+
+##Summary##
+Hi Team,
+I am here again with one interesting issue.
+This issue deals with the fact that according to the policies of chaturbate, a broadcaster cannot modify the option - Chat Allowed By - until and unless he/she has verified his/her age (default choice is set to all).
+This thing could be bypassed and any broadcaster who doesn't have his/her age verified could update this option.
+
+## Steps To Reproduce:
+
+1. First of all, start broadcasting.
+2. Click on the gear icon in the chat options to open broadcaster settings.
+3. Edit any option and intercept the request in Burp Suite.
+4. Now in that request, replace the value of the parameter allowed_chat with any of the following 
+   1. all
+   2. tip_recent
+   3. tip_anytime
+   4. tokens
+5. The value would get updated even though the age has not been verified.
+
+## Impact
+
+Any user who doesn't have his/her age verified can update settings which have been blocked for them.

@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/279935
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/csanuragjain
+ReportedTo:Inflection(inflection)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:03.01.2019 21:06:45
+
+Summary:
+Researcher found that while creating any application in identity, you are required to provide callback url. If you provide a malicious callback url then javascript will stop you from submitting form. But their is no server side validation and we can use an application proxy to bypass the javascript validation.
+

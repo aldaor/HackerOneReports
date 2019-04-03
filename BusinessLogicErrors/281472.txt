@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/281472
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/hk755a
+ReportedTo:Inflection(inflection)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:29.11.2017 1:15:14
+
+Summary:
+Researcher reported that HubSpot's "unsubscribe" feature allows any user to unsubscribe from marketing emails without having to confirm their email address. Inflection does not consider this a vulnerability, as we want to make it as easy as possible for users to stop receiving marketing emails that they don't wish to receive. This has no security impact on users' accounts, and they can always resubscribe to marketing emails if they wish. 

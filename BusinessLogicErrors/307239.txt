@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/307239
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/dawgyg
+ReportedTo:Coinbase(coinbase)
+BountyAmount:10000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:04.04.2018 19:46:04
+
+Summary:
+An issue with the handling of the PayPal transaction states resulted in a user being able to both withdraw money from PayPal, but not have the funds deducted from their account. 

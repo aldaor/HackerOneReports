@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/317388
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/mandeepkapoor
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:13.11.2018 22:44:02
+
+Summary:
+Due to a delay in how Uber prompts accounts that have gone into arrears (having an outstanding balance), it was possible to take rides without paying and without the account being blocked from booking new rides. This delay was a short-term issue, not a security vulnerability, and @djangohack’s account eventually prompted for payment as expected. Since we did not make any code fixes for this and it was a temporary issue, we did not decide to award it with a bounty.

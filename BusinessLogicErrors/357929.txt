@@ -1,0 +1,39 @@
+ReportLink:https://hackerone.com/reports/357929
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/nadino
+ReportedTo:Reverb.com(reverb)
+BountyAmount:200.0
+Severity:high
+State:Closed
+DateOfDisclosure:31.08.2018 12:43:21
+
+Summary:
+
+Hi,
+
+The server fails to check the quantity of the items that are going to be sell. Values <= 0 are accepted as 1.
+
+PoC:
+
+Go here
+https://sandbox.reverb.com/fr/item/139897-fender-2-strap-leather-test-2018-leather
+
+Intercept the response after clicking "Add to cart" and put "quantity: 0"
+
+{F302179}
+
+Proceed to checkout
+
+{F302180}
+
+Place order
+
+{F302181}
+
+{F302182}
+
+I used one of the fake credit cards you provide us.
+
+## Impact
+
+Items are sold gratis

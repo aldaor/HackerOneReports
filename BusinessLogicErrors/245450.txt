@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/245450
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/footstep
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.10.2017 14:44:40
+
+Summary:
+
+Sequel to the fix on #243594, this is still possible.
+
+##Reproduction Steps
+1. Request password reset
+- Load the link in email and set a new password
+- Navigate to https://demo.weblate.org/accounts/reset/
+- Fill the email and captcha
+- You'll be prompted to enter a new password
+
+NOTE: I figured that if action is not performed after a few minutes, then this doesn't work. 
+
+I suggest you make the link expire after use than setting a time frame.
+
+Best!

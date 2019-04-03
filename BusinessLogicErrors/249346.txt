@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/249346
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/goodhackonly
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:90.0
+Severity:medium
+State:Closed
+DateOfDisclosure:15.07.2017 3:13:10
+
+Summary:
+While going live with additional 2FA options, a security researcher discovered that while we provide a TOTP fallback and Recovery code fallback for users that have enabled U2F, we neglected to do this for TOTP-only users. All users that have enabled TOTP or U2F 2FA should have been able to access the recovery code feature.

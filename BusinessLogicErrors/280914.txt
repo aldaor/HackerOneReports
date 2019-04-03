@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/280914
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/zs75
+ReportedTo:Inflection(inflection)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:29.11.2017 1:16:59
+
+Summary:
+Researcher misunderstood the names and permissions assigned to various roles in the GoodHire application - the permissions are working as intended. Nevertheless, the researcher requested for the report to be disclosed. 

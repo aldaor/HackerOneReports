@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/266090
+WeaknessName:Business Logic Errors
+Reporter:https://hackerone.com/tanim__
+ReportedTo:Khan Academy(khanacademy)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:12.10.2017 9:55:07
+
+Summary:
+Students could join a class using only a 6-character class code.  We have increased the codes to 8 characters to make them a bit harder to guess and provide a better balance between security and usability.
