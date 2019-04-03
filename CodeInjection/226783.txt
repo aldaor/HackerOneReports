@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/226783
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/ruisilva
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:22.06.2017 14:13:24
+
+Summary:
+
+Hi
+I found an html injection vulnerability on airlink.ubnt.com
+
+Steps to reproduce:
+
+First go to: https://airlink.ubnt.com/#/ptp
+Next go on Save Simulation button and as simulation name put: "><marquee><h1>HTMLINJECTIONHERE</h1></marquee> and save it
+Now go on Open Simulation button and you will see html being executed :) 
+
+Your team should fix it
+Thanks 

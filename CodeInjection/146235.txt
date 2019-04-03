@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/146235
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/evonide
+ReportedTo:PHP (IBB)(ibb-php)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:28.07.2016 13:17:48
+
+Summary:
+
+https://bugs.php.net/bug.php?id=72434
+This vulnerability was discovered during the auditing of a vendor on Hackerone. Similar to our other submission (on bugs.php.net and here), this vulnerability is remotely exploitable.
+
+Please feel free to ask for more technical details if necessary.
+Thank you for your consideration.

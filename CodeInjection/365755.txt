@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/365755
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/nightwatch-cybersecurity
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:13.11.2018 22:57:09
+
+Summary:
+The link to Uber’s privacy policy was using the unencrypted `http://` scheme, making it possible for an attacker with the ability to Man-in-The-Middle (MiTM) traffic. This would allow them to replace normal responses with malicious content such as a phishing page. The content would then render within the Uber application, making for a credible phishing attack.

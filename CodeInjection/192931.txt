@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/192931
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/jutsuce
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:03.07.2017 18:11:43
+
+Summary:
+A Department of Defense website was vulnerable to a Server-Side Include Injection attack which could have allowed an attacker to inject code into HTML pages or, under some circumstances, perform remote code execution. @jutsuce was as able to demonstrate this vulnerability by crafting a specially formatted URL. Thank you for notifying us!

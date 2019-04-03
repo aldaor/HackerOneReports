@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/189192
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/cyber-guard
+ReportedTo:Pornhub(pornhub)
+BountyAmount:5000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:13.06.2017 19:01:09
+
+Summary:
+The researcher identified vulnerable OrientDB server instances on our infrastructure. The DB servers were found to be vulnerable to script based remote code execution leading to privilege escalation.

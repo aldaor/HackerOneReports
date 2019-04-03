@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/274264
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/tolo7010
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:10.04.2018 14:01:46
+
+Summary:
+In this report, the researcher found that due to our implementation of AngularJS on our Support site, we were susceptible to limited-scope code injection attacks. Particularly, they found that by injecting `<code>...</code>` blocks in the comment body parameter, they were able to cause errors that could be leveraged to carry out either XSS or Denial of Service attacks on individual comment threads. In response to this our team applied the `ng-non-bindable` directive to comment bodies and other user-input entry fields, which resolved the vulnerability and will also prevent other similar attacks from being carried out.

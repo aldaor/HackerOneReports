@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/158192
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/theflofly
+ReportedTo:Trello(trello)
+BountyAmount:1024.0
+Severity:
+State:Closed
+DateOfDisclosure:05.10.2016 12:20:00
+
+Summary:
+While Trello had patched our image libraries to prevent the RCE vulnerability in ImageMagick, we had not applied a patch to prevent arbitrary file reads via `label`s in `mvg` files.
+
+After resolving the issue, we were able to determine that no files had actually been accessed using this vulnerability, beyond the ones in @theflofly's proof of concept.

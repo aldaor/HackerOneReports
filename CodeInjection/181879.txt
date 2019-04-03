@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/181879
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/charliesome
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:18000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:17.12.2016 1:03:22
+
+Summary:
+
+Heya!
+
+I've been poking at mruby a bit more and I've found a vulnerability that allows an attacker to take control of the instruction pointer.
+
+I've attached a proof of concept script that when run in mruby will jump to `0x0000133713371337` and segfault.
+
+While the proof of concept script just jumps to an attacker controlled address and crashes, it would almost certainly be possible to achieve full remote code execution, especially given an arbitrary read/write primitive (which is easily created using the same techniques as in the proof of concept)
+
+The proof of concept script has detailed annotations throughout about how it works, but I'm also happy to clarify anything if need be :)
+
+Cheers,
+
+Charlie

@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/103432
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/harry_mg
+ReportedTo:Urban Dictionary(urbandictionary)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.01.2016 1:23:32
+
+Summary:
+
+Hi. I found out that one of your subdomain which is http://support.urbandictionary.com/ can be taken over or is vulnerable to subdomain takeover. If youre gonna visit the site... you will see saying:
+
+No help desk at support.urbandictionary.com
+
+There is no help desk configured at this address. This means that the address is available and that you can claim it at http://www.zendesk.com/signup/
+
+Which means that the subdomain can be claimed by anyone. Just easy, register and then set it up. Claimed. If claimed, hackers can do something bad about it especially to urbandictionary users.. Please fix Asap.. Thanks
+
+For more info please read this:
+http://labs.detectify.com/post/109964122636/hostile-subdomain-takeover-using

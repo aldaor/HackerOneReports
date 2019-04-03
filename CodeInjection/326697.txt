@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/326697
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/t-pwn
+ReportedTo:MyCrypto(mycrypto)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.04.2018 21:00:27
+
+Summary:
+A vulnerability was reported by t-pwn that allowed arbitrary HTML injection via the notifier functionality. After a keystore file was uploaded, the filename would be shown without first sanitizing it. MyCrypto has since fixed our notification to no longer display the unsanitized filename.

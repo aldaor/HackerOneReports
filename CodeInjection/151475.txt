@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/151475
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/lionheartrox
+ReportedTo:ownCloud(owncloud)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:31.08.2016 18:26:52
+
+Summary:
+
+Summary
+ownCloud contains a DLL hijacking vulnerability that could allow an unauthenticated, remote attacker to execute arbitrary code on the targeted system. The vulnerability exists due to some DLL file is loaded by 'ownCloud-2.2.2.6192-setup.exe' improperly. And it allows an attacker to load this DLL file of the attacker’s choosing that could execute arbitrary code without the user's knowledge.
+
+Affected Product:
+ownCloud 2.2.2.6192
+
+Impact
+Attacker can exploit this vulnerability to load a DLL file of the attacker's choosing that could execute arbitrary code. This may help attacker to Successful exploit the system if user creates shell as a DLL.
+
+Vulnerability Scoring Details
+The vulnerability classification has been performed by using the CVSSv2 scoring system (http://www.first.org/cvss/).
+Base Score: 7.2 (AV:L/AC:L/Au:N/C:C/I:C/A:C)
+
+More Details:
+For software downloaded with a web browser the application directory is typically the user's "Downloads" directory: see <https://insights.sei.cmu.edu/cert/2008/09/carpet-bombing-and-directory-poisoning.html>,
+<http://blog.acrossecurity.com/2012/02/downloads-folder-binary-planting.html>
+and <http://seclists.org/fulldisclosure/2012/Aug/134> for "prior art" about this well-known and well-documented vulnerability.
+
+If an attacker places malicious DLL in the user's "Downloads" directory (for example per "drive-by download" or "social engineering") this vulnerability becomes a remote code execution.
+
+Proof of concept/demonstration:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Create a malicious dwmapi.dll file and save it in your "Downloads" directory.
+
+2. Download 'ownCloud-2.2.2.6192-setup' and save it in your "Downloads" directory.
+
+3. Execute 'ownCloud-2.2.2.6192-setup.exe' from your "Downloads" directory.
+
+4. Malicious dll file gets executed.

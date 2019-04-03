@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/369557
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/danila_xawdxawdx
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:13.11.2018 9:13:17
+
+Summary:
+Shell code upload (RCE) vulnerability in partner service provided as an additional functionality withing mail.ru branded service.
+
+On the moment of reporting, partner services are not covered by bug bounty program, the bounty was awarded due to potential problem criticality.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/184279
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/dawgyg
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:11.01.2017 20:34:01
+
+Summary:
+A misconfigured webserver hosted by the Department of Defense allowed the execution of local shell commands. dawgyg was able to demonstrate this vulnerability by crafting a particularly formatted URL. Thanks dawgyg!

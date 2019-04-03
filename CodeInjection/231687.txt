@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/231687
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/joaomatosf
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:05.07.2017 16:34:27
+
+Summary:
+A remote code execution (RCE) vulnerability was found on a DoD website which could have enabled an attacker to execute remote commands on the web server. Thank you @joaomatosf for notifying us of this vulnerability!
+

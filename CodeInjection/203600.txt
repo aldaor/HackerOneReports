@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/203600
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/mantis
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:23.06.2017 13:16:36
+
+Summary:
+A remote code execution (RCE) vulnerability was found on a DoD website which could have enabled an attacker to execute remote commands on the web server. Thank you @mantis for notifying us of this vulnerability!

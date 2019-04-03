@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/138824
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/nyymi
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:20.09.2016 18:38:15
+
+Summary:
+##Issue
+
+This report contains information about a vulnerability in NovaStor NovaBACKUP DataCenter backup software.
+
+##Fix
+
+There is no immediate fix. LähiTapiola has internal network controls in place for mitigation.
+
+##Reasoning
+
+The report is partially out of scope as the software in question is not directly related to or accessible from to the domains in this bug bounty program. However, due to the nature of this report and the nature of the vulnerability, it was decided to publicly disclose the report and finding. 

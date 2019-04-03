@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/27704
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/adrianbelen
+ReportedTo:Square(square)
+BountyAmount:2000.0
+Severity:
+State:Closed
+DateOfDisclosure:17.11.2014 14:30:51
+
+Summary:
+
+i found my payload on exif header and it works link https://www.bookfresh.com/upload/75084df285f94f6790a250fe516fef04_test.php.jpg

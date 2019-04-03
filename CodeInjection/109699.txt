@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/109699
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/c1231665
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:14.02.2016 23:30:37
+
+Summary:
+
+Hi there,
+
+Its urgent issue about your subdomain http://assets.goubiquiti.com pointing to AWS S3 but no such website configuration is made. This unused subdomain can claim by anyone and fully take over it.
+
+An attacker can fully takeover this subdomain and do whatever he wants. this can cause huge damage to the website's main domain as well as to the company.
+
+I Recommend to remove the Cname and Dns connecting to it. 
+PoC is attached to this report.
+
+You can read about this sort of attacks here : http://labs.detectify.com/post/109964122636/hostile-subdomain-takeover-using
+
+Please Consider my report to Support my study
+
+cheers,
+
+Karl

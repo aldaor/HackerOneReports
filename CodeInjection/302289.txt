@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/302289
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/veggie
+ReportedTo:Cloudflare(cloudflare)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:17.03.2018 22:32:39
+
+Summary:
+
+The following is valid javascript:
+
+    var a = `//`;
+
+So is this:
+
+    var url = `https://hackerone.com`;
+
+However, Cloudflare's auto-minifier removes the parts of both lines including and after the `//`, meaning in production, they look like this:
+
+    var a = `
+    var url = `https:
+
+This can either straight up break or introduce sneaky bugs in production that don't show up in development (development mode turns off minification, and in local dev, this obviously doesn't happen) since those strings never get closed. There's also no way to get around this other than to stop using template literals for strings containing `//`.
+
+Here's a relatively contrived proof of concept of code that behaves differently in dev and production without any errors:
+
+    var subreddit = 'cloudflare';
+    var url = `https://www.reddit.com/r/${subreddit}`;
+    `;console.log('what is up'); // this shouldn't run! `;
+
+Minified, it becomes:
+
+    var subreddit='cloudflare';var url=`https:`;console.log('what is up');
+
+which prints "what is up" to console. It's live here: https://jli.host/cloudflare-bug/
+
+## Impact
+
+This requires either access to the source code, or a really badly misconfigured website that dynamically builds scripts and injects user input. There's hardly a security impact, but there's definitely still a bug that's causing unintended behavior.

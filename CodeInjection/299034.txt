@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/299034
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/arifkhan
+ReportedTo:RBKmoney(rbkmoney)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:29.01.2018 10:41:27
+
+Summary:
+Phishing / social engineering via text manipulation on html form labels.

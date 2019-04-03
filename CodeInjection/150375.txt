@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/150375
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/jamesclyde
+ReportedTo:Uber(uber)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:22.08.2016 21:07:48
+
+Summary:
+Limited disclosure @jamesclyde's request.

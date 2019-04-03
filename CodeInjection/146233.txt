@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/146233
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/evonide
+ReportedTo:PHP (IBB)(ibb-php)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:28.07.2016 13:17:32
+
+Summary:
+
+https://bugs.php.net/bug.php?id=72433
+This vulnerability was discovered during the auditing of a vendor on Hackerone and could be successfully remotely exploited. The required conditions are a normal PHP setup with a PHP version >= 5.3 and < 7. Further, it is enough if the remote side uses code like the following:
+$unserialized = unserialize($user_input);
+print(serialize($unserialized));
+
+Unfortunately, this code pattern is sometimes still used in software making this vulnerability critical.
+
+Please feel free to ask for more technical details if necessary.
+Thank you for your consideration.

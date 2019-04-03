@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/122475
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/sl1m
+ReportedTo:Imgur(imgur)
+BountyAmount:5000.0
+Severity:
+State:Closed
+DateOfDisclosure:16.04.2016 7:37:15
+
+Summary:
+Filepaths were able to traverse up outside of their intended directory when using the /edit/process API endpoint. 

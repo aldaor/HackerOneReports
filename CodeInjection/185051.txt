@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/185051
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/raydot
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:18000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:15.01.2017 20:03:46
+
+Summary:
+
+Decimal can be redefined, causing the Decimal class lookup in wrap_decimal to be invalid. This can lead to memory corruption or arbitrary code execution.
+
+The following snippet results in a native crash in mruby-engine
+    olddecimal = Decimal.new(1)
+    Decimal = Hash
+    a = -olddecimal
+    puts a
+
+I suspect you caught this along with charliesome's similar bug for Struct. If not I'll follow up with a patch and an RCE exploit.

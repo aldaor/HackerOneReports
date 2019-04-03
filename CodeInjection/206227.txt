@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/206227
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/orange
+ReportedTo:Imgur(imgur)
+BountyAmount:2500.0
+Severity:critical
+State:Closed
+DateOfDisclosure:16.04.2017 17:19:46
+
+Summary:
+
+Hi, Imgur Security Team:
+
+I just found that your GitHub Enterprise Server(https://git.imgur-dev.com/) didn't patch to the latest version(2.8.7). And there is a Rails static key leads to RCE vulnerability!
+
+You can see the PoC from my screenshots :)

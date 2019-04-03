@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/271960
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/europa
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:01.05.2018 15:37:55
+
+Summary:
+In this report, the researcher was able to perform [AngularJS Template Injection](https://hackerone.com/redirect?signature=49c7114e65f27ab7700511ac15aaa633cf22a68b&url=http%3A%2F%2Fblog.portswigger.net%2F2016%2F01%2Fxss-without-html-client-side-template.html) on our Support site in order to retrieve data, including email address, userid and tokens. Typically, a user is always able to retrieve this information about themselves and on its own, this is known behavior. However, by utilizing a manipulated Avatar URI value, the researcher was able to demonstrate how an attacker could exfiltrate *another* user's email, userid, and tokens to an external server owned by the attacker. The researcher was further able to demonstrate other types of attacks possible via AngularJS Template Injection, but the most interesting one to us was the data exfiltration POC.
+
+We resolved this issue by updating our version of AngularJS, and by applying the `ng-non-bindable` directive to the vulnerable fields. This directive prevents AngularJS from compiling or binding the contents of the current DOM element, making it effective at preventing XSS and Code Injection attacks.

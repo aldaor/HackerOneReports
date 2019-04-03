@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/213776
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/t-pwn
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.04.2017 19:11:05
+
+Summary:
+A remote command execution (RCE) vulnerability was found on a DoD website which could have enabled an attacker to execute remote commands on the web server. @wrench, and other researchers were able to demonstrate this vulnerability by crafting a specially formatted URL. Thanks to @wrench, and others!

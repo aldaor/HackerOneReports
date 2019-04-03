@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/246663
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/kushal89shah
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:12.02.2019 9:48:02
+
+Summary:
+Amigo browser installer before version 2.0.0.257 was vulnerable to DLL planting vulnerability.
+Amigo browser is not currently in the scope of the Mail.Ru Bug Bounty program.

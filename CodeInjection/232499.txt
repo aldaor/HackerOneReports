@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/232499
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/zuhnny1
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:250.0
+Severity:low
+State:Closed
+DateOfDisclosure:23.06.2017 21:29:08
+
+Summary:
+The researcher found that it was possible to inject the NULL control character (%00) into the Crew Status field. This resulted in a condition in which a user may be unable to further update the Crew Status.

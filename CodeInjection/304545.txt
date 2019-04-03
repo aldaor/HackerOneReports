@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/304545
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/danila_xawdxawdx
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:critical
+State:Closed
+DateOfDisclosure:04.06.2018 9:24:16
+
+Summary:
+It was possible to upload a shell code to widget.operator.mail.ru via file upload feature.
+
+widget.operator.mail.ru is a part of games.mail.ru and is not currently covered by bug bounty program.

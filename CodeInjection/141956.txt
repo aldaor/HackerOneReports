@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/141956
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/static
+ReportedTo:Pornhub(pornhub)
+BountyAmount:20000.0
+Severity:
+State:Closed
+DateOfDisclosure:27.07.2016 17:29:50
+
+Summary:
+The researcher was able to exploit a vulnerable deserialization function in PHP leading to remote shell on a production server.

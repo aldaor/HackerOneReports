@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/114389
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/missoum1307
+ReportedTo:Zomato(zomato)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:06.03.2016 13:06:58
+
+Summary:
+
+hi
+
+https://business-blog.zomato.com installed an outdated MailPoet Plugin which vulnerable to Remote File Upload Vulnerability in WordPress MailPoet Plugin (wysija-newsletters) 
+
+related article: https://blog.sucuri.net/2014/07/remote-file-upload-vulnerability-on-mailpoet-wysija-newsletters.html
+
+https://business-blog.zomato.com/wp-content/plugins/wysija-newsletters/readme.txt

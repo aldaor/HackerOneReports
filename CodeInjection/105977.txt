@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/105977
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/ericlaw
+ReportedTo:GlassWire(glasswire)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:04.02.2016 20:45:45
+
+Summary:
+
+GlasswireSetup.exe is subject to the attack described here: http://textslashplain.com/2015/12/18/dll-hijacking-just-wont-die/
+
+You can get a simple demo with this harmless DLL:
+https://bayden.com/dl/shfolder.dll
+
+See attached image for proof of execution.

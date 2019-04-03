@@ -1,0 +1,43 @@
+ReportLink:https://hackerone.com/reports/14092
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/coolboss
+ReportedTo:Slack(slack)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 10:00:25
+
+Summary:
+
+Hello,
+
+Everysite has a RFI vulnerability.
+Everysite i.e *.slack.com is having this vulnerability.
+
+Proof of concept / Steps to Reproduce :
+=================================
+
+1. Sign in to your account on slack eg. I signed in https://pran3hiva.slack.com
+2. Now, go to 'Change photo'. i.e https://pran3hiva.slack.com/account/photo
+3. Now, select file to upload.
+4. Click on upload image.
+5. You will be redirected to 'Crop Photo'.
+6. Note the url 
+eg.
+https://pran3hiva.slack.com/account/photo?url=https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fslack-files2%2Favatar-temp%2F2014-05-30%2F2364428212.jpg
+
+Note the 'url' parameter.
+
+7. Change it to desired.
+8. I changed it to --> https://pran3hiva.slack.com/account/photo?url=https://www.google.co.in/images/srpr/logo11w.png
+
+Now, image from site will be loaded.
+
+Hence, RFI :D
+I have attached 2 screen-shots. POC.
+Hope, you patch this one. :)
+
+If you have any questions you may ask me.
+
+Thank You,
+Pranav

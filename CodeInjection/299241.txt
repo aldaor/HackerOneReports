@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/299241
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/samengmg
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:02.01.2018 4:10:42
+
+Summary:
+The researcher has identified and reported a "Template Injection" vulnerability in one of Informatica's domain and helped us in resolving the issue.

@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/194564
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/lukasreschke
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:18.02.2017 22:52:31
+
+Summary:
+
+See https://github.com/swiftmailer/swiftmailer/issues/844 for details, research is on-going and this issue will be added more details later.

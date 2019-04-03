@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/177225
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/ak1t4
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:750.0
+Severity:high
+State:Closed
+DateOfDisclosure:13.11.2016 16:09:49
+
+Summary:
+##Issue
+
+The reporter found that the secure email service (secure.lahitapiola.fi) in the LocalTapiola network had some issues. The reporter found a way to tamper with message data before the message was actually sent out. By utilizing this finding, the reporter was able to send out legitimate looking emails (proper sender domain and address as well as proper outgoing servers) which could have lead to some serious email-spoofing from the lähitapiola-domain to any recipient.
+
+##Fix
+
+The issue was investigated and found to be valid although outside of the bug bounty program scope. The service provider responsible for the mail-server issued a fix for the issue.
+
+##Reasoning
+
+Most out of scope reports are closed as informative as they are not part of the bug bounty program but might provide good information (please see the policy for more information). As LocalTapiola does take security seriously, there are cases where actions are warranted also on out of scope reports. In this specific case, the report was very well written, including many screenshots and PoC's on how to exploit the vulnerability. The PoC's were nicely executed without compromising customer data in any way. The report made it very easy for us to to present the issue to the 3:rd party responsible for the service - and to get the issue very promptly fixed. 
+

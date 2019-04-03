@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/116286
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/nedw
+ReportedTo:Python (IBB)(ibb-python)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:20.09.2016 4:01:06
+
+Summary:
+
+See my official writeups here:
+
+http://bugs.python.org/issue25944
+http://bugs.python.org/issue25945
+
+The maintainers merged these bug reports.
+In one case, the type confusion leads to a reliable control of the instruction pointer as calling `repr` on a corrupted partial calls a function pointer that is controlled reliably by the user. I've uploaded that case here as well.

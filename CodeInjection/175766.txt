@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/175766
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/guido
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.12.2016 13:16:26
+
+Summary:
+
+https://guidovranken.wordpress.com/2016/10/13/openssl-1-1-0-remote-client-memory-corruption-in-ssl_add_clienthello_tlsext/
+
+OpenSSL is not treating this as a security vulnerability because 1) session tickets need to be enabled 2) request certificate status from server 3) an unrealistically large ALPN list set.
+
+Reporting this for reputation points.

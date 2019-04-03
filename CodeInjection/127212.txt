@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/127212
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/rewzilla
+ReportedTo:PHP (IBB)(ibb-php)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:01.05.2016 2:14:57
+
+Summary:
+
+PHP <= 7.0.4/5.5.34 contained a format string vulnerability in php_snmp_error() at ext/snmp/snmp.c:533, because snmp_object->snmp_errstr was passed directly to zend_throw_exception_ex() without a "%s".  This issue appears to have been present across all PHP versions.  In testing, I have been able to leverage this vulnerability for full code-execution by abusing PHP's internal "%Z" (zval) format specifier.  In the interest of good ol' PoC, that exploit is attached.  :)
+
+This issue has been patched in PHP v7.0.5
+https://bugs.php.net/bug.php?id=71704
+https://secure.php.net/ChangeLog-7.php#7.0.5

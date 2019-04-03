@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/188284
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/meals
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:12.01.2017 16:22:15
+
+Summary:
+A webserver hosted by the U.S. Army allowed the execution of local shell commands. meals was able to demonstrate this vulnerability by crafting a specially formatted URL. Thanks meals!

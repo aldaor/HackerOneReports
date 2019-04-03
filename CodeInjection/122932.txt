@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/122932
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/isox
+ReportedTo:Mail.ru(mailru)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:20.06.2016 13:31:44
+
+Summary:
+Potential RCE via Java object deserialization in out-of-scope service

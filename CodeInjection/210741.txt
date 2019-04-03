@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/210741
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/someguyfromthepast
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:5000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:13.12.2017 19:05:23
+
+Summary:
+In this report, the researcher was able to demonstrate a method to run arbitrary PHP functions on www.rockstargames.com. Although we had previously disabled most harmful PHP functions, it was still possible to cause serious damage if this were to be exploited by a malicious party. To solve this issue, we secured the user input method that the researcher pointed out to us, and we disabled all PHP functions save for those that are absolutely crucial to maintaining and administering our site.
