@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/140791
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/thezawad
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.07.2016 0:55:27
+
+Summary:
+
+From the HTML source code of http://people.uber.com I came to know that it uses Yoast WordPress SEO plugin v2.1.1
+
+But it is known to suffer from XSS bug.
+
+Check it for more details and steps:
+https://wpvulndb.com/vulnerabilities/8045
+
+Bug can be easily fixed upgrading the plugin.
+
+Thanks.

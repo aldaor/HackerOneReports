@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/131123
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/codequick
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.07.2016 0:34:42
+
+Summary:
+
+I found that xss can be executed if we provide xss payload as a password in Uber during password recovery.
+
+Steps to follow:
+
+1) Goto https://login.uber.com/forgot-password
+2) Enter email and submit
+3) Open the recover link you got
+4) Enter Set password: <script>alert(document.domain);</script> and submit it
+5) Click Show password
+
+ XSS Executed.
+
+Video and screenshot added

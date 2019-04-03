@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/124429
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ancst
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:05.04.2016 12:11:17
+
+Summary:
+
+POC  steps:
+1) Go to the customers page and add a new search group named as "><img src=x onerror=prompt(7) (see img1.png)
+2) Go to the discounts page, create a new discount code and mark the "Free Shipping" option. 
+3) Open a web proxy (i.e. tamper data) and press the "save discount" button.
+4) Through the web proxy (i.e. tamper data) modify the POST request and change the value of "discount%5Bapplies_to_resource%5D" to "customer_saved_search" and the "discount%5Bapplies_to_id%5D" to "1131411463" (the id of the new search group in step 1)(see img2.png).
+5) Xssed (img3.png)
+
+    Click Save

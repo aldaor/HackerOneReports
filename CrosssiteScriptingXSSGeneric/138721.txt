@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/138721
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/jouko
+ReportedTo:Pornhub(pornhub)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:03.10.2016 20:02:37
+
+Summary:
+The researcher discovered a vulnerable WordPress plugin. The plugin suffers from a server-side request forgery vulnerability that can be exploited in several ways. 
+
+The researcher was successful in doing the following:
+* Accessing a private server-status URL exposing a monitoring tool.
+* Running a Flash app in pornhub.com's context to perform an XSS-like attack.

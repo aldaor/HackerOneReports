@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/125386
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/niemand
+ReportedTo:Mapbox(mapbox)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:27.04.2016 22:21:00
+
+Summary:
+On March 23rd, 2016 @niemand reported a DOM-based cross-site scripting (XSS) issue on https://www.mapbox.com/maki. 
+
+The potential attack scenario required a victim visiting an attacker controlled web page with the code from the proof of concept. Mitigating factors that decreased the severity of this potential attack included setting the `httpOnly` flag on the mapbox.com session cookie.
+
+The vulnerability used the JavaScript `window.open()` method to pass in arbitrary JavaScript to the second parameter (`name`). This JavaScript was then executed on https://www.mapbox.com/maki due to the [underscore.js](http://underscorejs.org/) interpolating template `<%=name %>` in [line 28 of index.html](https://github.com/mapbox/maki/blob/b1b399eaac8263d1e0d7c6c206490fe70de1d82c/index.html#L28). This came from a template evaluated in [line 68 of site.js](https://github.com/mapbox/maki/blob/0489b1daf17601597a5b996e98e35dae2bb3180c/www/site.js#L68). The context object that the template was evaluated on did not have a name property, so ordinarily `<%=name %>` would have evaluated to an empty string. Instead, due to [_.template](http://underscorejs.org/#template)'s use of [with](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/with), the resolution of interpolated properties in the template proceeded up the JavaScript context chain, eventually looking for a name property on the window global context.
+
+To mitigate this issue, we converted [interpolating templates to non-interpolating templates](https://github.com/mapbox/maki/commit/15464764a01d03e9b62a6c601c0f28564b0d5fb9) and [explicitly defined the name property in the problematic template](https://github.com/mapbox/maki/commit/58fa3a45d634ecfbbf82d19e940991ca47388832) so that it no longer fell back to the global name. Nevertheless, since the new Maki 2.0 website was slated for release in early April, we decided to [remove the old website code](https://github.com/mapbox/maki/commit/0cfc054f579ad16ead57948da41e025d91643c36) and replace it with a temporary splash page to mitigate any remaining risk. The new Maki website was deployed on Wednesday, April 27th 2016 and is no longer subject to the old XSS vulnerability.
+Hi there,
+
+There is an XSS that allows to inject code throw the variable `window.name`. I had found it two weeks ago but like I told you in the email I was unable to submit you the report.
+
+PoC:
+
+```
+<html>
+<body>
+<script>
+window.open("https://www.mapbox.com/maki/", "<script>alert(document.cookie)<\/script>");
+</script>
+</body>
+</html>
+```
+
+This is due to the print of the value variable raw in the web page. Some attacker could just trigger a victim to open open the page like that and execute the vulnerability.
+
+
+Best,
+Joel

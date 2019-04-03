@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/125849
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/esnard
+ReportedTo:Snapchat(snapchat)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:26.05.2018 10:10:01
+
+Summary:
+
+Hi Snapchat Team,
+
+I've found a reflected XSS vulnerability on this page:
+https://www.snapchat.com/add/snapchat
+
+Example:
+https://www.snapchat.com/add/%22%3E%3Ch1%3EXSS%3C%2Fh1%3E
+
+Note: you should visit the page with a mobile user-agent since the server displays different information based on the User-Agent HTTP header sent by the browser.
+
+There are 6 places where the username isn't protected against XSS attacks:
+- 4 `meta` tags: twitter:title, twitter:image, og:title, og:image
+- 1 `object` tag: snapcode
+- 1 `h2` tag: username
+
+This could lead to JavaScript execution, UI redressing or open redirects.

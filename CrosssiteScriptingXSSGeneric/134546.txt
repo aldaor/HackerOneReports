@@ -1,0 +1,214 @@
+ReportLink:https://hackerone.com/reports/134546
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/cure53
+ReportedTo:Automattic(automattic)
+BountyAmount:1337.0
+Severity:
+State:Closed
+DateOfDisclosure:10.07.2016 12:51:12
+
+Summary:
+
+Intro
+==
+
+WordPress is vulnerable against a reflected XSS that stems from an insecure URL sanitization problem performed in the file *flashmediaelement.swf*. The code in the file attempts to remove *flashVars* [¹](https://helpx.adobe.com/flash/kb/pass-variables-swfs-flashvars.html) in case they have been set GET parameters but fails to do so, enabling XSS via *ExternalInterface* [²](http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/external/ExternalInterface.html).
+
+The attack technique was first described by Soroush Dalili in 2013 [³](https://soroush.secproject.com/blog/2013/10/catch-up-on-flash-xss-exploitation-bypassing-the-guardians-part-1/). The vulnerability in *flashmediaelement.swf* was discovered in April 2016, first identified as SOME[⁴](http://www.benhayak.com/2015/06/same-origin-method-execution-some.html) bug by Kinugawa. Then, after a team review, the XSS potential was discovered and analyzed by Heiderich, Kinugawa and Inführ. Finally, it was discovered, that this file comes packaged with latest WordPress and the issue was reported here by Heiderich et al. 
+
+**PoC:**
+https://example.com/wp-includes/js/mediaelement/flashmediaelement.swf?%#jsinitfunctio%gn=alert`1`
+
+Background
+==
+
+In the browser-world, a Flash file can be fed with parameters in multiple ways.
+
+**Way One:** *flashVars*
+
+```html
+<embed src="myFlashMovie.swf"
+    quality="high"
+    bgcolor="#ffffff"
+    width="550"
+    height="400"
+    name="myFlashMovie"     
+    FlashVars="myVariable=Hello%20World&mySecondVariable=Goodbye"
+    align="middle"
+    allowScriptAccess="sameDomain"
+    allowFullScreen="false"
+    type="application/x-shockwave-flash"
+    pluginspage="http://www.adobe.com/go/getflash"
+/>
+```
+
+**Way Two:** GET parameters
+
+```
+myFlashMovie.swf?myVariable=Hello%20World&mySecondVariable=Goodbye
+```
+
+Quite obviously, *flashVars* via GET give an attacker more leverage, especially in case the Flash file can be opened directly in the browser. No need to embed it, just attach the *flashVars* via GET and the fun begins. 
+
+Not unlike many other Flash files, *flashmediaelement.swf* attempts to protect itself from *flashVars* being set via GET.
+
+Attackers often abuse *flashVars* to exploit Flash XSS bugs originating from insecure handling of `navigateToURL`[⁵](http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/net/package.html), `ExternalInterface.call`[⁶](http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/external/ExternalInterface.html#call%28%29) and other risky methods. So, why not get rid of GET parameters in the first place:
+
+```actionscript
+// get parameters
+// Use only FlashVars, ignore QueryString
+var params:Object, pos:int, query:Object;
+
+params = LoaderInfo(this.root.loaderInfo).parameters;
+pos = root.loaderInfo.url.indexOf('?');
+if (pos !== -1) {
+	query = parseStr(root.loaderInfo.url.substr(pos + 1));
+
+	for (var key:String in params) {
+		if (query.hasOwnProperty(trim(key))) {
+			delete params[key];
+		}
+	}
+}
+
+[...]
+
+private static function parseStr (str:String) : Object {
+	var hash:Object = {},
+		arr1:Array, arr2:Array;
+
+	str = unescape(str).replace(/\+/g, " ");
+
+	arr1 = str.split('&');
+	if (!arr1.length) {
+		return {};
+	}
+
+	for (var i:uint = 0, length:uint = arr1.length; i < length; i++) {
+		arr2 = arr1[i].split('=');
+		if (!arr2.length) {
+			continue;
+		}
+		hash[trim(arr2[0])] = trim(arr2[1]);
+	}
+	return hash;
+}
+```
+
+From: https://github.com/johndyer/mediaelement/blob/master/src/flash/FlashMediaElement.as
+
+The code shown above parses the URL query string and checks, if the GET parameter names spotted in there are also present among the flashVars (or vice versa). If a parameter name appears in both URL and the *flashVars* array, then the parameter must have been set via GET. If not, all is fine - and the parameter must have been set via *flashVars*. 
+
+Let's call this code "The GET Killer"!
+
+This way of "scrubbing" *flashVars* and making sure that no GET parameters can be used is fairly common and assumed to work well. But it can be bypassed using a dirty trick: invalid characters in the name of the GET parameters. Let's have a quick look at our PoC again:  
+
+**PoC:**
+https://example.com/wp-includes/js/mediaelement/flashmediaelement.swf?%#jsinitfunctio%gn=alert`1`
+
+Notice something? We obfuscate the name of our GET parameter a bit.
+
+```
+jsinitfunctio%gn < see the %g?
+```
+
+The Flash player is very tolerant when handling input via GET. Invalid URL escapes for example will simply be stripped! This means, that despite us calling the GET parameter `jsinitfunctio%gn`, the parameter that really arrived in the Flash file is again called `jsinitfunction` because the invalid parts are stripped.
+
+That of course messes up the "The GET Killer". Because now, the label it checks for based on the parsed URL string contains the `%g` but the actual flashVar does not! No match, no scrub. We can submit data by using GET again. 
+
+Just like this: `({'jsinitfunctio%gn':''}).hasOwnProperty('jsinitfunction') // false`
+
+But that's not all. The file *flashmediaelement.swf* ships more defensive mechanisms. One of them if for example a black-list that checks, that the parameter values paired with risky methods don't contain characters like parenthesis. Because that would indicate, that someone tries to smuggle in some executable code, like an `alert(1)` instead of just providing a callback, like `alert`.
+
+```actionscript
+private function isIllegalChar(s:String, isUrl:Boolean):Boolean {
+	var illegals:String = "' \" ( ) { } * + \\ < >";
+	if (isUrl) {
+		illegals = "\" { } \\ < >";
+	}
+	if (Boolean(s)) { // Otherwise exception if parameter null.
+		for each (var illegal:String in illegals.split(' ')) {
+			if (s.indexOf(illegal) >= 0) {
+				return true; // Illegal char found
+			}
+		}
+	}
+	return false;
+}
+```
+
+From: https://github.com/johndyer/mediaelement/blob/master/src/flash/FlashMediaElement.as
+
+As you can see, the method shown above checks the input for malicious characters that indicate executable JavaScript. Parenthesis, curlies, operators and all the nasty characters. From the ECMAScript 5 world. 
+
+What is missing? The new ways of executing code offered by ECMAScript 6 by using back-ticks[⁷](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/template_strings). Let's have a look at the PoC again:
+
+**PoC:**
+https://example.com/wp-includes/js/mediaelement/flashmediaelement.swf?%#jsinitfunctio%gn=alert`1`
+
+Notice something? We don't use parenthesis to execute the alert. We use back-ticks instead. And they are not blacklisted of course.
+
+But we are still not finished, there is yet another security mechanism installed by *flashmediaelement.swf* to make the attacker's life harder. And this is a check for the `ExternalInterface.objectID`[⁸](http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/flash/external/ExternalInterface.html#objectID). This particular member is only present, in case the embedding HTML element (`<embed>` or `<object>`) is applied with an "ID" attribute. Here is the important bit of code:
+
+
+```actionscript
+if (_output != null) {
+	_output.appendText(txt + "\n");
+	if (ExternalInterface.objectID != null && ExternalInterface.objectID.toString() != "") {
+		var pattern:RegExp = /'/g; //'
+		ExternalInterface.call("setTimeout", _jsCallbackFunction + "('" + ExternalInterface.objectID + "','message','" + txt.replace(pattern, "’") + "')", 0);
+	}
+} 
+```
+
+From: https://github.com/johndyer/mediaelement/blob/master/src/flash/FlashMediaElement.as
+
+So, again. If the Flash file wasn't properly embedded but opened directly, the whole thing will not work.
+
+Now, let's have a look how browsers actually embed Flash files when they are supposed to open them "directly" (by requesting the Flash/SWF file from the affected server). Because browers generate quite a bit of markup when opening an SWF directly.
+
+**Firefox does this:**
+```html
+<html><head><meta name="viewport" content="width=device-width; height=device-height;"></head><body marginwidth="0" marginheight="0"><embed height="100%" width="100%" name="plugin" src="test.swf" type="application/x-shockwave-flash"></body></html>
+```
+
+**MSIE does this:**
+```html
+"<html><head><style>@-ms-viewport {width:device-width;}html, body {margin:0;padding:0;width:100%;height:100%;overflow:hidden;}</style></head><body><embed width="100%" height="100%" src="test.swf" type="application/x-shockwave-flash" fullscreen="yes"></body></html>"
+```
+
+**Chrome however dies this:**
+```html
+<html><body style="background-color: rgb(38,38,38); height: 100%; width: 100%; overflow: hidden; margin: 0"><embed width="100%" height="100%" name="plugin" id="plugin" src="test.swf" type="application/x-shockwave-flash"></body></html>
+```
+
+The embed code generated by MSIE and Firefox contains no `id` attribute. But Chrome's does! That means, that without any actual effort from the attacker, Chrome automatically "bypasses" the third layer of protection.
+
+And that makes the attack work. Let's reiterate:
+
+1. We bypass "The GET Killer" using invalid URL escapes
+1. We bypass the blacklist using ES6 backticks
+1. Chrome "bypasses" the check for the `ExternalInterface.objectID`
+
+And that is it. 
+
+Well, not exactly. Maybe also have a look at the other SWF files WordPress ships. They are buggy too. But it's not as bad a s this issue. So we will talk about these later. 
+
+Affected Systems
+==
+
+All WordPress instances that allow to directly call this file. That should be the absolute majority. Google finds a couple of 100k of them but we assume it is actually significantly more[⁹](https://www.google.com/search?q=inurl:/wp-includes/js/mediaelement/flashmediaelement.swf+ext:swf&channel=fs&start=10).
+
+Here is some numbers that other people guesstimate:
+ * https://managewp.com/14-surprising-statistics-about-wordpress-usage
+ * https://www.quora.com/How-many-websites-are-built-on-Wordpress
+ * https://wordpress.com/activity/
+
+Further note, browser-based XSS filters will not detect the attack and hence not protect here.
+
+Mitigation
+==
+
+* Prevent direct access to all Flash files in the WordPress folder (`Content-Disposition` headers might help)
+* Configure your WAF to block direct access to this file
+* Wait for the fix and update Wordpress

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/123905
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bugs3ra
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.05.2016 15:00:04
+
+Summary:
+XSS trigger issue

@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/136396
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/dirtycoder
+ReportedTo:ThisData(thisdata)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:06.05.2016 4:59:27
+
+Summary:
+dirtycoder found an XSS vulnerability which could be executed if a user updated their name or email address to a malicious value. The scope of that XSS would be contained to their account. This was  was reported at 9PM Thursday NZST, and fixed by 3PM Friday the next day. 
+
+I, and ThisData, am super grateful to dirtycoder for their clear and concise write up of this serious issue, and their quick and helpful responses during the incident response.
+
+Thanks for helping to keep ThisData safe!

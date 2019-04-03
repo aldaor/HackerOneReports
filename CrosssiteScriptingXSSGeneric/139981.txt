@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/139981
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/idomin
+ReportedTo:Zomato(zomato)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.08.2016 3:50:59
+
+Summary:
+
+Hi, my first rapport ever so be gentle! 
+
+Found an XSS that can be executed by hoovering over links with Firefox 
+
+https://www.zomato.com/cs/new-york-city/turtle-bay-restaurants/fast-casual/1zqjrw'/onmouseover='alert%281%29'/style='height:200;width:200'/b=
+
+Will add an picture also that proves that it works!
+
+Best regards!

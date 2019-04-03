@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/137905
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/dsopas
+ReportedTo:Zomato(zomato)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.06.2017 8:43:33
+
+Summary:
+
+Hi guys,
+
+I would like to report a reflected XSS on business-blog.zomato.com.
+
+1. Open Chrome and Firefox (latest versions)
+2. Open https://business-blog.zomato.com/wp-includes/js/mediaelement/flashmediaelement.swf?jsinitfunctio%gn=alert`1`
+3. Payload is executed
+
+Check the attached screenshot.
+
+Solution:
+- Update Wordpress to 4.5.2
+- Update flashmediaelement.swf to 2.21.1
+
+Feel free to contact me if you need further assistance.
+
+Best,
+-David Sopas

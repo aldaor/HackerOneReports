@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/134434
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/apok
+ReportedTo:Zendesk(zendesk)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:24.05.2016 15:35:31
+
+Summary:
+
+Hello there,
+I wanted to report a XSS vulnerability in the /zuora/ functionality on the zendesk application.
+Affected URL: 
+- https://anysubdomain.zendesk.com/zuora/callback/callback?id=&tenantId=&timestamp=&token=&responseSignature=&success=false&errorCode=GatewayTransactionError&errorMessage=Transaction%20declined.015%20-%20No%20Such%20Issuertest%3C/script%3E%3Cscript%3Ealert%28%27XSS%27%29%3C/script%3E&field_passthrough2=&field_passthrough1=&field_passthrough3=&signature=
+
+The "anysubdomain" means literally any sub domain except the main one (www).
+
+
+To reproduce:
+1) Open the affected URL.
+
+Please also re-check the report #132049. It shouldn't be closed! is a High Risk CSRF that can delete an entire application. Please re-check it ASAP. Test the PoC provided.
+
+Kind Regards,
+Alex.

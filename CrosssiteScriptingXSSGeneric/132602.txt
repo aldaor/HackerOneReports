@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/132602
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ankitsingh
+ReportedTo:Udemy(udemy)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:27.05.2016 17:33:25
+
+Summary:
+
+Stored XSS at Udemy
+
+Steps:
+1) Make a profile.
+2) visit https://www.udemy.com/user/edit-profile/ and add the following payload in the Website input field. data:html;base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4=
+3) Any user who visits your profile https://www.udemy.com/user/XXXXX/ and selects ''open with" through any browser after clicking the website link button will be victimized. 
+
+POC video is attached.

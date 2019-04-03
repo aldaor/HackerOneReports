@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/141114
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/faisalahmed
+ReportedTo:Pushwoosh(pushwoosh)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.11.2016 15:13:51
+
+Summary:
+Stored XSS at send push form

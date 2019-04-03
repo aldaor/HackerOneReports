@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/134004
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/secdoor
+ReportedTo:General Motors(gm)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.06.2017 18:31:28
+
+Summary:
+GM Careers website contained a parameter that allowed XSS injection. The vulnerable input parameter has been identified and remediated.

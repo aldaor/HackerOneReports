@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/14080
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/reactors08
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:06.07.2014 19:13:05
+
+Summary:
+
+- http://my.mail.ru/video/top
+- добавить видео
+- в описании видео вставить к примеру "><img src=x onerror=alert(document.cookie)>
+- открыть видео из альбома

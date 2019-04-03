@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/128493
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/nehalh13
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.04.2016 5:17:36
+
+Summary:
+
+X-Xss-Protection @https://doc.owncloud.org/ has not been set. 
+
+This header is used to configure the built in reflective XSS protection found in Internet Explorer, Chrome and Safari (Webkit). Valid settings for the header are 0, which disables the protection, 1 which enables the protection and 1; mode=block which tells the browser to block the response if it detects an attack rather than sanitising the script.
+
+ 
+
+NginX: add_header X-Xss-Protection "1; mode=block" always;
+
+Apache: Header always set X-Xss-Protection "1; mode=block"
+
+IIS:

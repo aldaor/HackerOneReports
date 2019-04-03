@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/125027
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/albinowax
+ReportedTo:Uber(uber)
+BountyAmount:3000.0
+Severity:
+State:Closed
+DateOfDisclosure:04.04.2016 22:24:46
+
+Summary:
+
+developer.uber.com is vulnerable to reflected XSS via Angular template injection.
+
+The following url demonstrates the root issue using a trivial payload: https://developer.uber.com/docs/deep-linking?q=wrtz{{7*7}}
+
+If you view the rendered source of the resulting page, you'll find the string 'wrtz49', showing the input has been evaluated.
+
+This URL uses an Angular sandbox escape to obtain arbitrary JavaScript execution and execute alert(1). It's designed to work in Internet Explorer 11, but the technique could probably be used to target other browsers given sufficient effort. I've attached a screenshot of the result.
+`https://developer.uber.com/docs/deep-linking?q=wrtz{{(_="".sub).call.call({}[$="constructor"].getOwnPropertyDescriptor(_.__proto__,$).value,0,"alert(1)")()}}zzzz`
+
+
+Client-side template injection vulnerabilities arise when applications using a client-side template framework dynamically embed user input in web pages. When a web page is rendered, the framework will scan the page for template expressions, and execute any that it encounters. An attacker can exploit this by supplying a malicious template expression that launches a cross-site scripting (XSS) attack. For further information on this technique, please refer to http://blog.portswigger.net/2016/01/xss-without-html-client-side-template.html
+
+If possible, avoid using server-side code to dynamically embed user input into client-side templates. If this is not practical, consider using the ng-non-bindable directive or filtering out { and } from user input. Upgrading Angular may prevent this particular sandbox escape from working, but is not a robust fix as Angular maintain that the sandbox isn't a security feature and can't be trusted.
+
+This vulnerability could be used to hijack developer accounts and associated apps.

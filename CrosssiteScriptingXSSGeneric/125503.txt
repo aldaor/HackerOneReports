@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/125503
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/patrik
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 22:00:42
+
+Summary:
+
+Hey Uber Team, 
+
+although you are excluding self stored XSS i am reporting this one because it could be exploited by someone with more skills then i have :-) :
+
+1. Login to your profile and change the address to : “#><img src=x onerror=prompt(1);>
+2. Go to https://partners.uber.com/fuel_cards/enroll 
+3. The JS will pop up 
+
+best
+
+Patrik 

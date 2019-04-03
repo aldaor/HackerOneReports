@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/133744
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ashish_r_padelkar
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.05.2016 18:30:31
+
+Summary:
+
+Found one XSS iin asset name
+
+**Steps To Reproduce**
+
+1. Create Any member at `https://sandbox.veris.in/portal/members/`
+
+2. Add that member in any group at `https://sandbox.veris.in/portal/groups/`
+
+3. Create an `Asset` named `<script>alert(1);</script>` at `https://sandbox.veris.in/portal/assets/`
+
+4. Now go back to members  `https://sandbox.veris.in/portal/members/` and click on the symbol shown in screen shot for any of the member
+{F88735}
+
+you should see an XSS popup!
+
+Regards
+Ashish

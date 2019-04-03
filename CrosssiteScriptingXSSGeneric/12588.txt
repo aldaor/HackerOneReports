@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/12588
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/reactors08
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:09.07.2014 9:24:50
+
+Summary:
+
+Шаги:
+- создаем в https://cloud.mail.ru/ папку с именем %22%3e%3cimg src=x onerror=alert(1)%3e
+- переходим на страницу https://e.mail.ru/compose
+- жмем прикрепить файлы из облака

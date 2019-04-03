@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/124975
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/exodia_forbidden_one
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:24.03.2016 18:52:24
+
+Summary:
+
+
+Description:
+The website located at https://www.uber.com/ suffers from a generated Cross-site Scripting (XSS) vulnerability in the "find a city" input field. 
+
+Reproduction Steps:
+
+Open the latest Chrome web browser
+
+Navigate to the following URL's "find a city input field":
+https://www.uber.com/
+
+Type in the following:
+<script>alert(1)</script>
+
+Note that the autocomplete result being generated from the server side is raw javascript and payload was fired.
+
+I’ve tested this in the latest Chrome. Attached to this report are screenshots of this issue occurring in chrome.

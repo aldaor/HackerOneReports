@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/134878
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/lalatina
+ReportedTo:Mail.ru(mailru)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:03.07.2017 12:00:51
+
+Summary:
+XSS on sandbox domain via e-mail attachment

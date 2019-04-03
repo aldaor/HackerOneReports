@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/138046
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/clubjk
+ReportedTo:Pornhub(pornhub)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:03.10.2016 20:28:04
+
+Summary:
+The researcher discovered an XSS on the `/incategories` route.

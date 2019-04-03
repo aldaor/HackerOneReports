@@ -1,0 +1,39 @@
+ReportLink:https://hackerone.com/reports/137127
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bogdantcaciuc
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.05.2016 15:04:55
+
+Summary:
+
+Hello I want to report you another xss... but it's stored 
+
+Steps to reproduce it :
+
+1 . First create a group .
+2. Go to https://sandbox.veris.in/portal/members/ and add a member with name "><img src=x onerror=alert(1)> .
+3.  Add this member in a group ( created in step 1 .. ) .
+4. Go to https://sandbox.veris.in/portal/assets/ and create a badge  with 
+Badge name -> "><img src=x onerror=alert(1)>
+Badge description -> "><img src=x onerror=alert(1)>
+Select organization 
+- Add a new key :
+Key display name -> "><img src=x onerror=alert(1)>
+Editable by : User and organization 
+Key type : Name
+Input type : Text only 
+Submit.
+5. Go to members ( https://sandbox.veris.in/portal/members/ )  in Action click ,, Assign a new badge '' , select badge 
+
+In key input write : "><img src=x onerror=alert(1)>
+
+Submit.
+
+Alert was executed , stored xss.
+
+The xss appear cause when member name get a xss payload name.
+
+Thank you

@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/126049
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/djadmin
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:06.05.2016 22:08:13
+
+Summary:
+
+The website located at https://login.uber.com/applications suffers from a stored Cross-site Scripting (XSS) vulnerability.
+
+Reproduction Steps:
+Create a new application with name as the following vector, and try to delete the same app.
+
+*Vector* : "><img src=x onerror=prompt(1)>
+
+Note that the XSS payload has fired.
+
+Possible Scenarios:
+1. Attacker gets added as an admin or developer for an app
+2. Adds an app with an XSS vector as a name
+3. Victim sees the unusual app and attempts to delete it.
+
+
+Or:
+
+1. Attacker creates an app with XSS-y name
+2. Adds victim as an admin
+3. Victim joins the app and attempts to delete it
+
+I’ve tested this in the latest Firefox and Chrome. 
+Attached to this report is the screenshot of this issue occurring in Chrome.

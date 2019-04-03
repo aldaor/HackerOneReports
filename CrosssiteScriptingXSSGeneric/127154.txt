@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/127154
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bains
+ReportedTo:Twitter(twitter)
+BountyAmount:280.0
+Severity:low
+State:Closed
+DateOfDisclosure:28.11.2016 0:38:46
+
+Summary:
+
+I want to report a xss bug.
+On apps.twitter.com I logged in and start with new app.
+In new app there is a feild:
+website: where user has to gave website of app.
+I just put javascript:alert(8007) pay load and popup appears.

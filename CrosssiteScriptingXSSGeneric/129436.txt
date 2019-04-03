@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/129436
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ashish_r_padelkar
+ReportedTo:Twitter(twitter)
+BountyAmount:700.0
+Severity:
+State:Closed
+DateOfDisclosure:22.04.2016 18:08:10
+
+Summary:
+
+hi,
+
+found a xss on twitter
+
+Steps
+
+1. Create a DM group with payload `<script>alert(1);//`
+
+2. Whenever anybody shares a tweet via DM, XSS will popup
+
+POC https://youtu.be/P2Ram2FBAS4

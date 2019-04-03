@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/138622
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/cyber__sec
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.07.2016 0:35:43
+
+Summary:
+
+Hi,
+
+I found a reflected XSS vulnerability in password reset page https://partners.uber.com/reset-password. 
+I have tested this vulnerability in the latest Chrome and Firefox browsers.
+
+Reproduction Steps:
+1- Go to https://login.uber.com/forgot-password and reset password. Then, Click password reset link on your mailbox.
+2- Paste  "><img src=x onerror=prompt(document.domain)>   as your new password and submit.
+3- Wait and see XSS payload fired.
+
+Also I added screenshots.
+
+Thanks,

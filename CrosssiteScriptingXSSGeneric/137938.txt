@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/137938
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/aziose
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:16.06.2016 17:53:02
+
+Summary:
+
+Hi tream,
+
+veris.in is vulnerable  reflected XSS that stems from an insecure URL sanitization process performed in the file flashmediaelement.swf
+
+PoC:
+===
+https://www.veris.in/wp-includes/js/mediaelement/flashmediaelement.swf?jsinitfunctio%gn=alert`1`
+
+Fix:
+===
+Update to WordPress 4.5.2
+
+regards,
+aziose

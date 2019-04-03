@@ -1,0 +1,57 @@
+ReportLink:https://hackerone.com/reports/126539
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/secalert
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:05.04.2016 8:29:48
+
+Summary:
+
+DESCRIPTION
+===========
+It has been identified that the page located at https://app.shopify.com/ is prone to cross-site scripting issues. Cross-site Scripting (XSS) refers to client-side code injection attack wherein an attacker can execute malicious scripts (also commonly referred to as a malicious payload) into a legitimate website or web application. 
+
+IMPACT
+======
+A XSS vulnerability arises when web applications take data from users and dynamically include it in web pages without first properly validating the data. XSS vulnerabilities allow an attacker to execute arbitrary commands and display arbitrary content in a victim user's browser. A successful XSS attack leads to
+an attacker controlling the victim’s browser or account on the vulnerable web application. 
+
+TEST ENVIRONMENT
+=================
+1) Google Chrome 49.0.2623.75 (64-bit) on Mac OS X 10.11.3
+2) Firefox 45.0 on Mac OS X 10.11.3
+
+PROOF OF CONCEPT
+=================
+Steps to reproduce:
+1) Login.
+2) Visit the following page: https://app.shopify.com/services/partners?signup=confirm(document.domain)&signup_action=whitehat_signup
+
+The „signup“ param will execute the passed javascript code and will be rendered like this:
+
+```javascript
+Page(function() {
+Partners.VapSignupFunnel.partnerDashboardPageLoad(confirm(document.domain));
+return {};
+});
+```
+
+SCREENSHOT
+===========
+Screenshots are attached.
+
+REMEDIATION
+===========
+1) All input should be neutralized before being reflected back to client (i.e.
+browser), not just parameters that the user is supposed to specify, but all data
+in the request, including hidden fields, cookies, headers, the URL itself, and
+so forth.
+
+2) Make use of entity encoding in the used context. See also:
+https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
+
+CREDITS
+========
+David Vieira-Kurz aka @secalert (https://hackerone.com/secalert)

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/138226
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/zephrfish
+ReportedTo:Pornhub(pornhub)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:28.06.2016 14:49:38
+
+Summary:
+The researcher discovered a Same-Origin Method Execution (SOME) vulnerability on Pornhub's Insights blog. An insecure URL sanitization process was performed in the file plupload.flash.swf. The code in the file attempts to remove flashVars in case they have been set GET parameters but fails to do so, enabling XSS via ExternalInterface.

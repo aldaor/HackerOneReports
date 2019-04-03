@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/129736
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/jobert
+ReportedTo:GitLab(gitlab)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.05.2016 1:00:34
+
+Summary:
+
+# Details
+A project admin can set up a custom issue tracker integration. This setting misses a check to make sure that it's a real URL and, thus, can use the `javascript` handler to execute arbitrary Javascript. Browsers use this handler to execute inline Javascript. This can lead to an account take over via the leaked API token.
+
+# Proof of concept
+Follow these steps to reproduce:
+
+ - go to `/projects/new`, fill in the form and set the visibility level to **Public**
+ - now click `Settings`, followed by `Services` and `Custom Issue Tracker`
+ - now fill in the form like this:
+
+{F84532}
+
+ - as you can see, the XSS payload is hidden in the `Project URL`:
+
+```
+javascript:alert("Current user its API token: " + window.gon.api_token);
+```
+
+ - go back to the project page and click **Issues**, this triggers the XSS:
+
+{F84533}
+
+# Impact
+GitLab doesn't have a content security policy, which means that clients allow inline Javascript to be executed. This gives, like shown in the proof of concept, access to the current user its API token. The API token can be used to access the user its projects, do actions as the user, give access to potential confidential information, etc. 
+
+# Origin of the issue
+The integration model lacks a validator that makes sure the Project URL matches `/\Ahttps?:\/\//i`. This validator should also be applied to the Issues URL and New issue URL, since those fields are also vulnerable to a persistent XSS (although those are not on the project page).

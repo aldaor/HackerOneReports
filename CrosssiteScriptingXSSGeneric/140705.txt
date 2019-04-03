@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/140705
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Mail.ru(mailru)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:03.10.2016 11:55:46
+
+Summary:
+
+1) Создаем группу и приглашаем в нее пользователей 
+https://my.mail.ru/my/editcommunity
+
+2) Меняем название группы на
+`</a><a href="//blackfan.ru"><img src="//blackfan.ru/fk"></a><!--`
+
+3) Устанавливаем пользователям права модератора или смотрителя
+https://my.mail.ru/community/blahblahgroup/communityaccess
+
+4) Откатываем права и меняем название назад
+
+В результате пользователи получают уведомление "Вас назначили модератором" от myadmin@corp.mail.ru. В теле письма содержится html инъекция через название группы:
+
+```
+Вы назначены модератором группы "[html_inj]"
+```
+
+Пример письма в приложении.

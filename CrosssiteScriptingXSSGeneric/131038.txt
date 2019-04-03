@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/131038
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/hackheaven123
+ReportedTo:Moneybird(moneybird)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 10:15:44
+
+Summary:
+The researcher found a situation in which XSS was possible in the values of certain fields in the settings of an account. We have implemented measurements to prevent XSS in these fields.

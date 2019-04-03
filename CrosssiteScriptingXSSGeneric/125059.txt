@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/125059
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bhavi
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 21:56:44
+
+Summary:
+
+Hello Security Team,
+
+I have found Third Security Vulnerability on your website :- https://partners.uber.com/
+
+Vulnerability :-"XSS vulnerability on password reset time :)" 
+
+My Payload is this :- >'>"><img src=x onmouseover =prompt(document.domain)>
+
+Following This Reproduce Steps :)
+
+1) send password reset link on your email id 
+2) open password reset link
+3) set as password this payload :- >'>"><img src=x onmouseover =prompt(document.domain)>
+4) Continue and click on show password XSS got triaged 
+
+Youtube Video Link :- https://youtu.be/UpUbq58LV9Y
+
+I request to you sir if this is not valid then close as informative please sir, am just reported this issue because this XSS on password reset time please sir:)
+
+If valid then I hope, you will FIX ASAP
+
+Regards,
+Pratik Panchal

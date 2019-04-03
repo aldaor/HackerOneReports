@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/130591
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/4lemon
+ReportedTo:Moneybird(moneybird)
+BountyAmount:25.0
+Severity:
+State:Closed
+DateOfDisclosure:17.03.2017 8:49:30
+
+Summary:
+Researcher found a way to add XSS code to SVG uploads in our software. We have improved our software by preventing SVG and HTML files to be presented in the webbrowser to prevent XSS attacks.

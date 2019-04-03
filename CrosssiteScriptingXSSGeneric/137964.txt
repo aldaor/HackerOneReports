@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/137964
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/strutsonsecurity
+ReportedTo:StopTheHacker(stopthehacker)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.01.2017 13:05:08
+
+Summary:
+
+Hi,  
+
+It appears that the domain stopthehacker.com has an XSS vulnerability, specifically in flashmediaelement.swf.  
+
+
+
+PoC:  
+https://www.stopthehacker.com/wp-includes/js/mediaelement/flashmediaelement.swf?jsinitfunctio%gn=alert`PoC%20PoC%20PoC`  
+
+Please see the attached screen shot for the alert box returned.  
+
+Kind regards! 

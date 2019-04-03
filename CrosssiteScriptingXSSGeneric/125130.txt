@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/125130
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ddworken
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:06.04.2016 21:09:27
+
+Summary:
+
+There is a non-exploitable HTML escaping error in the 404 page on developer.uber.com. When loading ```https://developer.uber.com/docs/test'test```, the following HTML is rendered: 
+
+``` html
+<a href="/docs/test" test'="" require-login="">logging in</a>
+```
+
+Note that the injected ```'``` is rendered in the HTML as a closing ```"``` that closes the href= section. Sadly, I have been unable to find any way of exploiting this because when I inject an ```=``` (in order to inject ```onmouseover=alert(0)```), it is rendered as ```%3d``` which prevents me from obtaining javascript execution. Injecting a ```>``` to close the tag also does not work. 
+
+So I'll admit that this is not a high priority vulnerability, but I still believe that it should be fixed since it allows for the user to inject limited content into a ```<a href```. 
+
+Thanks,
+David Dworken

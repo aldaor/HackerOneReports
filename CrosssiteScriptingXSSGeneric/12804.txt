@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/12804
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bigbear
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:16.09.2014 5:07:44
+
+Summary:
+
+Уязвимость существует на сайтах:
+11x11.mail.ru
+s2.11x11.mail.ru
+
+Злоумышленник может внедрить произвольный User-Agent, содержащий JS код.
+Для примера - ><script>alert(/BigBear/)</script><!--

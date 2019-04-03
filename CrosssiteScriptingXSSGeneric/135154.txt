@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/135154
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/mlitchfield
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:5000.0
+Severity:
+State:Closed
+DateOfDisclosure:13.07.2016 17:50:05
+
+Summary:
+##Issue
+
+The reporter was able to perform a Blind Pervasive XSS against some of the public forms on LocalTapiolas website. The persistent (or stored) XSS vulnerability is a more devastating variant of a cross-site scripting flaw: it occurs when the data provided by the attacker is saved by the server, and then permanently displayed on "normal" pages returned to other users in the course of regular browsing. 
+
+In this case, the users browsing the submitted forms were employees of LocalTapiola located in the internal LocalTapiola network. The reporter was able to inject the attack in such a way that he was able to gather session tokens and potentially other information from the employee sessions (or browsers). The reporter was able to partially identify the employees. 
+
+##Fix
+
+Due to the big amount of different forms available on the LocalTapiola website, scoping and finding the breadth of the bug took a decent amount of time. Once the scope was clear, the vulnerable forms were patched with additional input sanitization put in place. 
+
+In addition to this, past form submissions were checked for potentially malicious injected content and none was found. 
+
+##Reasoning
+
+The flaw in the forms as such was bad but not critical. The fact that the flaw could be exploited to track employees, extract session information and potentially also leak other information made the finding very serious. The reporter provided much needed information during the investigation and also participated in the testing and verification of the fix. 
+
+The reporter was awarded by an additional bonus for writing a detailed case description for LocalTapiola internal use.

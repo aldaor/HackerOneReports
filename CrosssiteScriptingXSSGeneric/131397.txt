@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/131397
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/albinowax
+ReportedTo:Cloudflare(cloudflare)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.10.2016 12:05:48
+
+Summary:
+
+partners.cloudflare.com is vulnerable to reflected XSS because its 404 page reflects the path inside a <script> block without encoding it. This vulnerability could be used to hijack partner accounts. The following URL demonstrates this vulnerability - if you load it in Edge you'll see an alert (screenshot attached):
+http://37.235.54.203:9999/aaa?https://partners.cloudflare.com/loginrva13",x='g',y='f',{['toStrin'+x]:[].join,length:1,0:'java'+'script:alert%2528document.domain%2529',['valueO'+y]:location}-"
+
+If you look at the source you'll see the root of the problem:
+
+```<script type="text/javascript" charset="utf-8"> window.bootstrap = window.bootstrap || {}; bootstrap.data = {"atok":null,"messages":null,"debug":false}; bootstrap.module = "loginrva13",x='g',y='f',{['toStrin'+x]:[].join,length:1,0:'java'+'script:alert%28document.domain%29',['valueO'+y]:location}-"";</script>```
+
+The redirect from my page at http://37.235.54.203:9999 is necessary to prevent Edge from URL-encoding the path. Please ping me if http://37.235.54.203:9999/ goes down before you repro this issue. The reason the payload is so complex is because I've used the technique at http://blog.portswigger.net/2016/04/edge-xss-filter-bypass.html to bypass Edge's XSS filter (although I had to adapt it slightly to avoid slashes). The proof of concept I have provided will only work in Edge, but it could be adapted to work in Internet Explorer given an XSS filter bypass.

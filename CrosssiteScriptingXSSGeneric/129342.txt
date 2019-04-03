@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/129342
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/eboda
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.05.2016 8:28:16
+
+Summary:
+This issue is related to XSS vulnerability in Datatables.

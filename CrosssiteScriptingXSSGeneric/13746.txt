@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/13746
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/uaenajiawgivegqwuyvegqyuwvyefg
+ReportedTo:Automattic(automattic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.08.2014 17:29:42
+
+Summary:
+
+Hello Automattic,
+
+I found xss here simperium.com
+
+__XSS Payload:__
+'"><img src=x onerror=prompt(document.domain);>
+
+__Vulnerable Link:__
+https://simperium.com/help/questions/
+
+__Proof of Concept:__
+http://i.imgur.com/E4CM58A.png
+
+__Thanks,__
+Jerold Camacho

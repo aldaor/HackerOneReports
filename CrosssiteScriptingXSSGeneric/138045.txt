@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/138045
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/clubjk
+ReportedTo:Pornhub(pornhub)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:03.10.2016 20:28:30
+
+Summary:
+The researcher discovered a reflected XSS in the embed_player route.

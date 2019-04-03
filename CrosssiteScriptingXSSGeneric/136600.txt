@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/136600
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/krankopwnz
+ReportedTo:Moneybird(moneybird)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:11.06.2016 12:41:38
+
+Summary:
+
+The backend suffers from a reflected XSS because of missing filtering.
+
+A prerequisite for this vuln is, that you enable the option to view invoices online ( this is just to see the id of the account to craft the payload. Maybe you can also find this number anywhere else... )
+
+Steps to reproduce:
+Login
+Create an invoice
+Enter the string "test" in the details of the invoice ( this is possible to get a search result back. the attacker later knows what is in his invoice and can use any word from within )
+Fill the other required fields with any values
+Send the invoice to a valid email address
+When you receive the invoice, there is a link to view it online, like
+https://moneybird.com/[id]/sales_invoices/29362c563a6eb7bfedad55cc0985d97a77202d65f6089ea54a6718910ce58108/5e5b5ac093069aa9657d87206c38919586b8f235c132175973c3b1a3a86c25fd
+now copy the [id] ( should be your ID of course ) from the link and paste it into that one: 
+https://moneybird.com/[id]/search?search_query=test%22%20onclick%3Dalert%28document.domain%29
+Now call it in any browser
+You will see the search of moneybird with one result
+If you click on that result, a javascript popup showing the current domain appears ( see screenshot 1 )
+
+This is possible, because the searchvalue is not enclosed in Quotes ( see screenshot2 ), so it is possible to inject any eventhandler into the html code.
+
+The worst thing that you can do with this vulnerability, is to redirect a moneybird user to a phishing page where he is prompted to enter his login credentials, or an attacker could even add hisself to the admins of the account and take it over completely. He could also mark his own invoice as paid and so do a financial loss to the victim.

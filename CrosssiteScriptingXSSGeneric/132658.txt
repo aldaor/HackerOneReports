@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/132658
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/fitzpr
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.05.2016 17:13:08
+
+Summary:
+
+It's possible to inject angular expressions into the account settings of a new relic account. This, combined with an angular sandbox escape allows for persistant cross-site scripting which is executed in the browser of any user visiting the affected page. The execution of which could be used to redirect users to a malicious page and potentially hijack their session tokens or other sensitive data.
+
+For example, the accounts usage page.
+
+Steps to reproduce.
+
+1) As an account user with admin priveleges, change the account name e.g. https://rpm.newrelic.com/accounts/1310893/
+
+to the following Angular expression:
+
+{{'a'.constructor.prototype.charAt=[].join;$eval('x=alert(1)');}}
+
+2) Now if we login as a seperate user (alice) we'll have the XSS execute as its stored in the page.
+
+The sandbox did prevent the usae of many potentially dangerous contructors, however the version of Angular has publicized sandbox escapes.
+
+http://stackoverflow.com/questions/32205738/angularjs-template-expression-sandbox-escape
+
+Please let me know if i can provide any more information
+
+Thanks,
+
+M

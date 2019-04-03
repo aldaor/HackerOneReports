@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/124724
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ryhanson
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.05.2016 1:26:42
+
+Summary:
+
+As an Admin of an account, I am able to set the Name of the Account to an Angular expression. This Angular expressions is resolved and executed on the [Insights Welcome Page](https://insights.newrelic.com) for anyone that is apart of the Account.
+
+Due to the ability to invite anyone (even current NewRelic) users to an Account, it opens up the possibility for an attack on another user. This angular expression not only can be escaped and used to execute Javascript, but it can also access anything within the Angular scope on the Insights dashboard.
+
+Here are is the Proof of Concept for the sandbox escape that logs the cookie to the console:
+```
+{{{}[{toString:[].join,length:1,0:'__proto__'}].assign=[].join;
+  'a'.constructor.prototype.charAt=[].join;
+  $eval('x=console[\'log\'](document[\'cookie\'])//');  }}
+```
+
+Here is one with an alert:
+```
+{{{}[{toString:[].join,length:1,0:'__proto__'}].assign=[].join;
+  'a'.constructor.prototype.charAt=[].join;
+  $eval('x=alert(\'New Relic XSS\')//');  }}
+```
+
+This will resolve to the current account ID in the nav. This demonstrates the ability to traverse through the angular scope. These can often be bad when there are API methods available. I didn't look through the Scope enough to gauge the severity of what could be done with just an Angular expression.
+```
+Account ID: {{ this.$$childHead.$$nextSibling.$$nextSibling.$$nextSibling.currentaccountId }}
+```
+
+I have attached screenshots demonstrating these things. If you have any questions or need more details, please let me know!

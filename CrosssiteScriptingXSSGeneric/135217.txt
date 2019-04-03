@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/135217
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/dawgyg
+ReportedTo:Mapbox(mapbox)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:01.06.2016 22:41:25
+
+Summary:
+On April 28th, 2016 @dawgyg reported a reflected cross-site scripting issue in the map embed page of our v4 map API that affected Firefox users only. An attacker could manipulate the `access_token` query string parameter on `api.mapbox.com` or `api.tiles.mapbox.com` to inject arbitrary JavaScript that would then execute in the context of the page. 
+
+The attack exploited an interpolated [underscore template](http://underscorejs.org/#template) (`<%=`) that did not HTML-escape the value. In addition, Firefox does not `encodeURIComponent()` the single quote character (`%27` or `'`) in the address bar. Both of these factors allowed an attacker to add a single quote character to break out of several `meta` HTML elements on our map embed page and add arbitrary `script` elements for Firefox users.
+
+To resolve this issue we switched to HTML-escaped underscore templates (`<%-`). We deployed the fix to our servers and resolved the issue on April 29th, 2016.
+
+This report only affected infrastructure running on `api.mapbox.com` and `api.tiles.mapbox.com` - it did not affect any of Mapbox's open source libraries such as mapbox.js or Mapbox GL JS. In addition, this issue also only affected Firefox users - Chrome, Safari, and Internet Explorer users were not affected.
+There is a reflective XSS vulnerability in the access_token param found in the page.html at api.tiles.mapbox.com
+
+A proof of concept link:
+http://api.tiles.mapbox.com/v4/ctswebrequest.m4ga59jd/page.html?access_token=pk.eyJ1IjoiY3Rzd2VicmVxdWVzdCIsImEiOiJTb19VUHM0In0.muGg6tMDG4NOGrV4qQQ8yw.htaccess.aspx%27%3E%3Cscript%3Ealert%28document.domain%29%3C/script%3E#11/39.9168/-75.1595
