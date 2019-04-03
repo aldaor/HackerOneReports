@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/163815
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/yodha
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.07.2017 10:00:17
+
+Summary:
+
+Description: Gratipay is not validating csrf token at server side for few requests. So csrf protection is not implemented application wide.
+
+Proof of concept (Video):https://drive.google.com/file/d/0B8z7y7DxxQbwUHY4YTduYzMxbnc/view?usp=sharing
+
+Recommended Fix:
+For CSRF Protection:
+1. Each critical operation request must be accompanied with a "token"
+•Token is:
+- Long, Random, not repeated for application lifetime.
+- Unique per session or even per operation
+- Part of URL in GET
+- Hidden Field in POST (forms)
+- Attacker cannot know / predict this token and hence cannot create requests to exploit the operation.

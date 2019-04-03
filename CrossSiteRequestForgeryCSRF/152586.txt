@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/152586
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/pradeepch99
+ReportedTo:Harvest(harvest)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:25.10.2016 5:06:50
+
+Summary:
+
+Hi 
+There is CSRF token fixation in Sign in with Google at https://id.getharvest.com/sessions/new
+
+The state parameter is same for any time login
+https://id.getharvest.com/oauth2/callback?state=%7B%22intent%22:%22sign-in%22%7D&code={code}
+
+Steps to reproduce
+1. Go to https://id.getharvest.com/sessions/new
+2. Click sign in with google, and authorise Harvest
+3. Capture the request in burp
+4. copy the authorization code link https://id.getharvest.com/oauth2/callback?state={"intent":"sign-in"}&code={attackers_code}
+5. Open the link in other browser
+
+Reference: https://hackerone.com/reports/55911

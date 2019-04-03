@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/162809
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/temmyscript
+ReportedTo:Uber(uber)
+BountyAmount:5000.0
+Severity:
+State:Closed
+DateOfDisclosure:15.09.2016 18:59:00
+
+Summary:
+Requests made to the `/proxy-rt/riders/me/pickup` endpoint on https://m.uber.com/ failed to properly validate payment profile UUIDs. If an invalid payment profile UUID was specified, the trip would not be properly charged and would be free. If another user's payment profile UUID was specified, that payment profile would be charged. Payment profile UUID's are random type 4 UUIDs. After an investigation, it does not appear this was exploited. The rider account would go into arrears.

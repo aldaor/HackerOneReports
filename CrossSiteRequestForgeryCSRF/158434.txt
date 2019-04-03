@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/158434
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/jamesclyde
+ReportedTo:Shopify(shopify)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:21.11.2016 13:24:43
+
+Summary:
+
+Hello,
+
+The users can be redirected to some other site which is in control of the attacker from 
+
+Vulnerable parameter: path=
+
+You have a protection here at path= but it bypass the parameter if you add a double slash, like %2F%2F.
+
+Let's say user is attacker asked victim to came to this page: :
+http://supporthiring.shopify.com/apps/locksmith/resource/pages/gauntlet-challenge?&path=%2F%2Fevil.com
+
+Victim will be see a 404 error page and after 2 seconds he will be redirected to: https://evil.com
+
+These can be controlled by the attacker and used in other attacks
+
+Works in all browsers!!

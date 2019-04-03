@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/10829
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/0ctac0der
+ReportedTo:Coinbase(coinbase)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:06.06.2014 4:56:45
+
+Summary:
+
+I would like to report this CSRF vulnerability in coinbase on function "set as primary" for a account in accounts page. 
+
+Steps:
+1) Login to your coinbase account (which atleast has two accounts)
+2) Go to "accounts" page and out of the two accounts click "set as primary" link for one of the accounts which is not primary.
+3) Capturing the request in proxy, you will find that there are no anti CSRF token used for this function. 
+
+Issue: Attacker simply send a link of a page to the victim with a iframe running something like this "https://coinbase.com/accounts/535e52d301c95bda2100005b/set_as_primary". When the victim will click the link of coinbase will get executed in the back without victims consent. 
+
+NOTE: In the POC video attached, i have tried to show that for the delete account function there is an "authenticity token" sent but for set as primary function there is no token used, which might cause a CSRF on this. 

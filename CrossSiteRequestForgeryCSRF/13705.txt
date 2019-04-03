@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/13705
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/uaenajiawgivegqwuyvegqyuwvyefg
+ReportedTo:Automattic(automattic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 10:00:26
+
+Summary:
+
+__Proof of Concept:__
+<img src="https://app.simplenote.com/logout">

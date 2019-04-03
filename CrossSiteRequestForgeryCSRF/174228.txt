@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/174228
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/promx
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:07.12.2016 21:18:09
+
+Summary:
+
+Hi,
+
+Your web application generates CSRF token values inside cookies
+which is not a best practice for web applications as revelation of cookies can reveal CSRF Tokens as well.
+Authenticity tokens should be kept separate from cookies and should be isolated to change operations in the account only.
+
+More description:
+This report tells that the CSRF tokens are present inside of the cookies value which is not a best practice and if the cookie is intercepted and compromised than the CSRF token will also be vulnerable.
+
+This is the Captured request of edit Statement HTTP ,In this request you can see CSRF token is generating in cookies named as csrftoken
+
+HTTP/1.1 200 OK
+Connection: close
+Server: gunicorn
+Date: Wed, 05 Oct 2016 23:09:42 GMT
+Cache-Control: no-cache
+X-Gratipay-Version: 1986
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+Content-Type: text/html; charset=UTF-8
+Set-Cookie: csrf_token=zxRkWnGq3I5bMcXDRUWuWWXjxdsO1JtZ; expires=Wed, 12 Oct 2016 23:09:42 GMT; Path=/; secure
+X-Xss-Protection: 1; mode=block
+Via: 1.1 vegur
+Content-Length: 400168
+
+Regards,
+Promx

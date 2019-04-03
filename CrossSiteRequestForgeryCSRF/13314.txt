@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/13314
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/bigbear
+ReportedTo:Khan Academy(khanacademy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.08.2014 14:13:27
+
+Summary:
+
+Is it possible for a remote attacker to inject custom HTTP headers. For example, an attacker can inject session cookies or HTML code. This may conduct to vulnerabilities like XSS (cross-site scripting) or session fixation.
+
+PoC
+https://crowdin.khanacademy.org/page/in-context-localization?email=%0d%0a%20InjectedBy:BigBear

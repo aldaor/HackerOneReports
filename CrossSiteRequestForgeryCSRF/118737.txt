@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/118737
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/5hivaay
+ReportedTo:ThisData(thisdata)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.03.2016 4:24:08
+
+Summary:
+
+This bug is related to bug report [https://hackerone.com/reports/774] as this bug also allows a user to be logged in as the attacker. 
+
+An attacker could exploit this bug as follows:
+
+Attacker initiates Google OAuth process with thisdata
+Attacker allows access to thisdata app
+Attacker records and drops redirection to thisdata (in order not to consume token)
+Attacker directs victim to /oauth/redirect?state={attacker's state}&code={attacker's code}
+Victim is now logged in as attacker
+
+state parameter is solution for this but in this case state parameter is not getting validated on server side.

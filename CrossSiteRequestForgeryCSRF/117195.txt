@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/117195
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/diffender23
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.08.2017 13:29:29
+
+Summary:
+
+Hi , 
+
+There is no state parameter in bitbucket login request .
+
+https://bitbucket.org/site/oauth1/authorize?oauth_token=ZmCHb7dnyYVYKTYRNt .
+
+As you can see that there is no state parameter in above request there it is possible to exploit login csrf.

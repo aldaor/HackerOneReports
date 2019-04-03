@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/109839
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/c1231665
+ReportedTo:Udemy(udemy)
+BountyAmount:25.0
+Severity:
+State:Closed
+DateOfDisclosure:10.01.2017 23:00:00
+
+Summary:
+The investigator removed cookies that are not used by our site and thought he had found a bypass.  We were greatly delayed in getting this response to him.

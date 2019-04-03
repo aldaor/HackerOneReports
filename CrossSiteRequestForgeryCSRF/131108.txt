@@ -1,0 +1,46 @@
+ReportLink:https://hackerone.com/reports/131108
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/eboda
+ReportedTo:Automattic(automattic)
+BountyAmount:75.0
+Severity:
+State:Closed
+DateOfDisclosure:28.05.2016 9:32:37
+
+Summary:
+
+Summary
+-----------
+
+Akismet is vulnerable to CSRF allowing an attacker to cancel accounts of victims, add sites, remove subscriptions, etc.
+
+
+Steps to reproduce *Account cancelation*
+-----------
+
+1. Login to your Akismet account, which has a subscription activated.
+2. The following POST request will cancel the subscription and the account:
+
+    `https://akismet.com/api/account/1/cancel`
+
+The `1` can be replaced with any number. The userid was originally there, but I noticed that it actually just gets ignored.
+
+
+Steps to reproduce other CSRF
+--------------------
+Basically all actions on Akismet are vulnerable to CSRF. Here are some further examples (`1` can be replaced with 2, 3, etc):
+
+### Adding a site to a subscription:
+
+```
+POST /api/activation/create
+
+subscriptionId=1&site_url=foo.bar
+```
+*foo.bar* is now added to subscription *1*
+
+### Cancel specific subscription:
+
+```POST /api/subscription/1/cancel```
+   
+Subscription *1* is now canceled.

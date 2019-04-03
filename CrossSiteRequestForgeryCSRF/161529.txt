@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/161529
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/vijay_kumar1110
+ReportedTo:Uber(uber)
+BountyAmount:6000.0
+Severity:high
+State:Closed
+DateOfDisclosure:19.12.2018 22:39:06
+
+Summary:
+There was a lack of CSRF protections on `eats.uber.com` which allowed an attacker to add a credit card to another account. Shortly after reporting, @vijay_kumar1110 noticed other endpoints on the same domain which also lacked CSRF protections and added them to his report. Following further investigation, we found that there was a complete lack of any CSRF protections on `eats.uber.com`, allowing an attacker to make requests on behalf of another user arbitrarily. At the time of reporting, this was thought to be a one-time issue but ended up being something that existed across the rest of the service which increased the severity of this issue.
+
+Thanks, @vijay_kumar1110!

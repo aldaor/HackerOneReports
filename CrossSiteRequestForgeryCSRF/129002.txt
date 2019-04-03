@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/129002
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/putsi
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:05.09.2016 18:19:17
+
+Summary:
+##Issue
+
+The reporter found an issue when the user creates a "Vakuutustodistus". The last page of the functionality shows a button "Lataa vakuutustodistus omalle koneellesi tulostusta varten." and contains a hidden form input-field "encodedPdfContent". By changing the "encodedPdfContent"-content, a custom PDF-file could be sent to the server and the custom file would then then be opened on the PdfServlet-page and shown back to the user. This was critical as also a CSRF-request was possible on the vulnerable functionality.
+##Fix
+The issue was investigated and found to be valid. The fix included mitigating the flaw and adding some protective logic to the functionality.
+
+##Reasoning
+
+The reported case was valid and within the scope of the bug bounty program. The issue was fixed and the reporter was awarded with a bounty. 
+

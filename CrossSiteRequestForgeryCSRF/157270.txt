@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/157270
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/martijn
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.12.2016 8:48:08
+
+Summary:
+
+# Vulnerability details
+A (seemingly) minor CSRF vulnerability exists in the endpoint that purges plugin metric data. When an admin visits the Agent overview of its account, it will show a button for each plugin that allows the admin to purge the data. This button links to a `GET` requests that is vulnerable to a CSRF attack.
+
+# Proof of concept
+The attack is not super likely to be successfully pulled off, given the fact that the attacker needs to know the account ID and the plugin ID. However, in theory, it's possible and guessable, since the IDs are auto incrementing. To get the combination of both correct with a brute force attach is pretty low in my mind, but it could be interesting to abuse this in a more targeted attack (for example when a "normal user" tricks another user into visiting a certain link that purges the cache).
+
+To reproduce the issue, sign in as an account admin. Make sure the account has a plugin installed. Now go to https://rpm.newrelic.com/accounts/411552/agents, where `411552` is the account ID. Copy the agent ID from the "Purge metric data" and append it to the agent URL: https://rpm.newrelic.com/accounts/411552/agents/12345. Now prepare the exploit:
+
+```
+<img src="https://rpm.newrelic.com/accounts/411552/agents/12345" />
+```
+
+Store the code example above in a file and serve it to the victim. It'll fire a `GET` request as the person that is currently signed into rpm.newrelic.com. If that user has access to the account and agent ID, it'll purge the metric data for that agent without any interaction (besides visiting the rogue site) of the victim.

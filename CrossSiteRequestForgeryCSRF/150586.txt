@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/150586
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/cablej
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.10.2016 14:08:02
+
+Summary:
+
+Hello,
+
+Although listed as out of scope, this vulnerability presents serious risk that can compromise any account, and hope you consider it as such.
+
+When updating a user in the configuration tab, there is no CSRF token to prevent other pages from updating the user. This allows any third party site to edit the user's email, then able to reset the password.
+
+POC:
+
+1. Visit http://d214mfsab.org/olx.html while logged into your OLX account. This is a demo CSRF page I set up that changes your email to 'example@example.com'.
+2. Click 'Submit'.
+3. The JSON response will be returned, showing that your email was changed. An attacker could then reset your password using the 'Forgot Password' feature and gain access to your account.
+
+Suggested fix:
+
+Require a CSRF token with all sensitive GET and POST requests.

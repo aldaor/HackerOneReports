@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/132049
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/apok
+ReportedTo:Zendesk(zendesk)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:24.05.2016 15:36:00
+
+Summary:
+The reseracher demonstrated a vulnerabilty that allowed an attacker to delete a Zendesk sponsored and trial instance via CSRF attack on a Zendesk owner. 
+
+
+
+

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/149589
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/abdullah
+ReportedTo:WordPress(wordpress)
+BountyAmount:1337.0
+Severity:
+State:Closed
+DateOfDisclosure:30.06.2017 17:49:16
+
+Summary:
+This researcher discovered that WordPress was vulnerable to CSRF attacks when Flash files are uploaded to the application with extensions matching trusted file types, since the Flash plugin will load/run the file in certain cases, regardless of the extension and Content-Type header of that file.
+
+To resolve this issue, WordPress implemented more strict file-type checks on uploaded files to limit the ability for flash files to be uploaded.

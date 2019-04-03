@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/148417
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/introvertmac
+ReportedTo:Instacart(instacart)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.08.2016 7:34:28
+
+Summary:
+This behavior is working as intended. We have a number of fraud prevention mechanisms in place that limit the effects of a single entity abusing this feature.

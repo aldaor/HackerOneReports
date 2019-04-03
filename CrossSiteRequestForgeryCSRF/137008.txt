@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/137008
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/oldc4u53
+ReportedTo:Udemy(udemy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.01.2017 22:58:04
+
+Summary:
+The investigator thought that since there was a CSRF token sent for a request that does not enforce CSRF he was bypassing it.

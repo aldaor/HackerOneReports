@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/15476
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/shubham
+ReportedTo:FanFootage(fanfootage)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.06.2014 17:44:38
+
+Summary:
+
+Dear Team,
+
+Step-by-step instructions on how to reproduce the problem:
+
+It was found the application is vulnerable to CSRF attack.
+To achieve the same,
+
+Session Token is not Verified while changing Account Setting's which Result In account Takeover
+
+Description:-
+
+I have found that while changing Setting Session token is not verified .So an attacker can basically plot a CSRF attack which would change the default email of the user and this would led to account takeover.
+
+POC:-
+
+I have made proof of concept video of the same:-https://www.youtube.com/watch?v=oCpAu18ULQQ
+The Above Video is Unlisted.
+
+Regard :-
+Shubham Gupta

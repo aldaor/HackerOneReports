@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/172707
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/csanuragjain
+ReportedTo:Udemy(udemy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.01.2017 1:36:13
+
+Summary:
+The report was about a staging S3 bucket where we allow any file to be uploaded and then further process it from there.  It was closed as informative because there is no security risk associated with it.

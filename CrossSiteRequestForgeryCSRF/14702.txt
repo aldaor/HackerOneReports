@@ -1,0 +1,54 @@
+ReportLink:https://hackerone.com/reports/14702
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/eronx
+ReportedTo:WePay(wepay)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:25.07.2014 21:02:55
+
+Summary:
+
+Hello, this report is a copy of my previous reports sent to your email ( security@wepay.com) some days ago. Please note that everything written below are copied and pasted from the report. ( Ticket #437212 ):
+
+As part of your responsible disclosure program, I am reporting this leakage ( weak implementation ) of CSRF and Nonce Token.
+
+What is the security risk when the CSRF and or Nonce Token are being leaked? 
+
+Well, the protected features of the CSRF token and Nonce can now be altered by a malicious user easily.
+
+What now is the weak implementation?
+
+You stored the CSRF and Nonce Token in the URL. ( This can be retrieve in the browser, or server logs and other places )
+
+How  is it getting leaked?
+
+1. Go over to https://www.wepay.com/account
+2. Click on your created application
+3. In my case its ( https://www.wepay.com/account/1801912967 ) 
+4. Click on balance. ( Transactions actually, mine is https://www.wepay.com/account/transactions/1801912967 ) 
+5. In the customer email, input anything and hit enter.
+6. As you hit enter, it initiates a get request. The CSRF and Nonce Tokens are now in the URL. 
+
+Its considered a best practice to not store a token in a get request. ( I do not know if you just miss that ).
+
+How can be exploited anyway?
+
+Set up something like the code below:
+
+<form class="clearfix actions add-email" method="post" action="https://www.wepay.com/settings/email">
+				<div>
+					<label>Add New Email</label>
+					<input name="email" type="text" class="mrl" placeholder="Email Address"value="maliciousemail@gmail.com" />
+					<input type="hidden" name="form" value="add" />					<input type="hidden" name="csrf" value="CSRF VALUE HERE" /><input type="hidden" name="nonce" value="NONCE VALUE" />				</div>
+				<button id="invite-user-confirm" type="submit" class="button small pull-right confirm">Add</button>
+			</form>
+
+Email now added in the account. Or any other action in the WePay application that is protected by the CSRF token. :)
+
+However, the impact gets minimal since you have implemented the CSRF and Nonce token to be 1 time / page. Meaning, it only works if the user has stop clicking on links within the page after searching ( step 5 above. )
+
+If you needed more information regarding this, then kindly let me know.
+
+Cheers,
+Clifford Trigo

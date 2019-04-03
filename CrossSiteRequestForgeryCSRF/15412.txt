@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/15412
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/anshuman_bh
+ReportedTo:Coinbase(coinbase)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:16.10.2014 1:53:12
+
+Summary:
+
+1. Start a proxy tool like Burp.
+2. Authenticate to the Coinbase application.
+3. Navigate to the URL https://coinbase.com/docs/api/overview
+4. Under Developer Updates, enter your email address and click "Subscribe".
+5. Notice that this request is sent over HTTP with the CSRF token in the body of the POST request. 
+
+This means that an attacker can easily perform a MiTM attack and gain access to this CSRF token. The attacker can then trick this authenticated Coinbase user to perform CSRF attacks since the attacker now knows the CSRF token associated with this user. This results in bypassing the existing CSRF protection in the Coinbase application. 

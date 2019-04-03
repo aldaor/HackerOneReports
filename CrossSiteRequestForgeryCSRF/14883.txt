@@ -1,0 +1,76 @@
+ReportLink:https://hackerone.com/reports/14883
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.05.2015 16:09:44
+
+Summary:
+
+I shall explain all the steps to create the final PoC in order to be more clear.
+
+Part 1. Cookie Injection via Google Analytics
+
+1) Google Analytics sets the cookie to track user source:
+123456.123456789.11.2.utmcsr=[HOST]|utmccn=(referral)|utmcmd=referral|utmcct=[PATH]
+For example:
+123456.123456789.11.2.utmcsr=blackfan.ru|utmccn=(referral)|utmcmd=referral|utmcct=/path/
+2) User fully controls path in Referer and it is not filtered before being put in __utmz
+
+
+Part 2. Cookie parsing peculiarities by different web servers
+
+1) A typical Cookie sent by a web browser looks like this: 
+Cookie: param1=value1; param2=value2;
+2) Many web servers accept cookies delimited not only by semicolons but also by commas: 
+Cookie: param1=value2, param2=value2 
+Cookie: param1=value2,param2=value2
+3) If there are several cookies with the same name different web servers may use only the first occurrence or the last one
+
+
+Part 3. Cookie handling peculiarities in different web browsers 
+
+1) For all the web browsers except Safari characters of space, comma, and [ \ ] can be used as cookie values (Safari accept cookies delimited by commas)
+2) Chrome handles only a limited number of cookie-attributes, e.g.: 
+Set-Cookie: test=test; domain=.google.com; domain=.google.com; domain=.google.com; domain=.google.com; domain=.google.com; domain=.google.com; domain=.google.com; domain=.google.com; domain=.google.com; domain=.google.com; domain=.google.com; domain=.google.com; domain=.google.com; domain=.google.com; domain=.google.com; domain=blah.blah.blah.google.com;
+will set cookie for .google.com but not for blah.blah.blah.google.com
+
+
+Combining all these facts:
+
+Provided that:
+1) a site uses Google Analytics
+and
+2) this site is hosted by a web server that has some of the aforementioned cookie parsing peculiarities 
+and
+3) this site implements Cookie based CSRF protection (a value in Cookie and some request parameter must be equal)
+
+Then:
+1) We can set new arbitrary cookies or redefine the values of existing ones
+2) This site is vulnerable to CSRF protection bypass
+
+
+The principal problem of __utmz cookie is that it is set for six months and is not refreshed. This problem can be solved in Google Chrome if you find a subdomain with Google Analytics and rewrite attribute «domain» using the peculiarity that has been described in part 3 with the value «.site.com».
+
+In other browsers the vulnerability can be exploited by cookie injection at the moment of __utmz refreshing.
+
+
+Vulnerability exploitation on twitter.com with Google Chrome:
+
+1) A user authenticates on twitter.com
+2) We make him visit the link below assuming that he has not visited translate.twitter.com and he doesn’t have __utmz set on this subdomain: 
+http://blackfan.ru/r/,m5_csrf_tkn=x,;domain=.twitter.com;path=/;path=/;path=/;path=/;path=/;path=/;path=/;path=/;path=/;path=/;path=/;path=/;path=/;path=/;path=/;path=/;?r=http://translate.twitter.com/ 
+Cookie is rewritten with new path and domain, as a result cookie is set for .twitter.com: 
+__utmz=90378079.1401435337.1.1.utmcsr=bf.am|utmccn=(referral)|utmcmd=referral|utmcct=/r/,m5_csrf_tkn=x,
+3) At this moment user of desktop version of the site does not have cookie on mobile.twitter.com, that is why this request to the web server will make it believe that cookie __utmz consists of two cookies and CSRF token equals to «x» 
+4) Submit «compose tweet» form using CSRF-token «x» on mobile.twitter.com
+
+
+PoC:
+Follow @Black2Fan
+http://blackfan.ru/twitterbugbounty/03f75200fdb99239ff35d1d317303857_follow.html
+
+Tweet "wut -.-"
+http://blackfan.ru/twitterbugbounty/485d0a1204ff970e702aabb5f0379d73_tweet.html

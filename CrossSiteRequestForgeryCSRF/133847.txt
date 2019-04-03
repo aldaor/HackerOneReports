@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/133847
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/jfolkins
+ReportedTo:concrete5(concrete5)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.05.2016 23:18:48
+
+Summary:
+# Report
+
+Because the ProBlogs plugin did not validate the anti-csrf token on a POST request. A victim who is logged in could be fooled into clicking a malicious form (styled to look like a link, image, etc) which would create a page in their C5 website.
+
+Because the ProBlogs plugin does not validate the parent cID asserting it is the actual Blog, the attacker could potentially place the page anywhere on the C5 site map tree.
+
+Because C5 discloses the CCM_CID in a set of <script></script> tags on every page, an attacker could also derive which parentID they would like to target. This would allow the attacker to either place the page in a non-obvious spot or place the page in a high traffic area depending on the attacker's use case.
+
+The blogBody form value would include a javascript payload which could potentially harvest data, install malware, or inject another payload for further exploitation of the C5 site or surrounding infrastructure.
+
+A CORS based attack is also a possibility here though it is much more unlikely given the current state of modern browsers.
+
+
+# Resolution
+Change report for v2.6.8 of ProBlog:
+
+* tools file addBlog now sanitizes postID
+* tools file addBlog now utilizes core CSRF\Token
+* tools file addBlog view now generates CSRF\Token
+* Tools file addBlog now validates the parentID is an existing section in addition to the existing permissions check that was there.

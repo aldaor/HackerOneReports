@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/123900
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/kuskumar
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:14.08.2016 18:17:57
+
+Summary:
+As the researcher @kuskumar pointed out, the cookie `csrf_token` doesn't have the `HttpOnly` flag. While it is often seen as bad practice to leave cookies without this flag (since they are likely to be stolen *via* XSS), our session cookie has this flag set, making impersonation harder. Regarding `csrf_token`, the flag is intentionally not set, so that we can pass the cookie automatically with our numerous AJAX calls.
+
+This CSRF mitigation method is often misunderstood and we get a lot of reports regarding it. It has been borrowed from Django, and this subject has been discussed [on their bug tracker](https://code.djangoproject.com/ticket/15808) and on [other various places](https://blog.philipjohnjames.com/django-csrf-httponly/). We suggest taking a look at [our current CSRF implementation](https://github.com/gratipay/gratipay.com/blob/master/gratipay/security/csrf.py), too. Even with the flag, in the case of a XSS (and a CSP bypass), since the attacker will already have access to the context of the current domain, nothing will prevent them from fetching a page with a form and looking for the `csrf_token` in the source.
+
+Furthermore, for hardening purposes, we plan to add a password validation for sensitive actions (it has already been reported—please don't create any duplicate).
+
+If you ever manage to create a full and working PoC demonstrating account takeover without any method related to ~ phishing (self-XSS, developer console…) as a *direct* consequence of the non-presence of the `HttpOnly` flag on `csrf_token` (read here "It would not have been possible with the flag / it's possible only because the flag is set"), open another report and we'll be glad to offer the highest bounty under our policy (and @nashe_ will double it (in Bitcoins) from his pocket 👌).
+
+Thanks for making Gratipay a safer place!

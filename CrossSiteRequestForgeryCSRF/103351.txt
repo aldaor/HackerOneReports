@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/103351
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/zombiehelp54
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:27.07.2016 18:52:19
+
+Summary:
+
+Hi , I have found a CSRF issue in themes.shopify.com when installing premium themes.
+#Details:
+When going to a premium theme page for example: https://themes.shopify.com/themes/editions/styles/light/ there is a button saying `Preview in your store` , clicking that button sends a **POST** request to `https://themes.shopify.com/themes/editions/styles/light/demo` with an **authenticity token** to prevent CSRF , but going to the url `https://themes.shopify.com/themes/editions/styles/light/demo ` directly will get the theme installed without any validation for the authenticity token.
+#Steps to reproduce:
+1. Go to themes.myshopify.com then login with your store
+2. Go to https://themes.shopify.com/themes/editions/styles/light/demo and the theme `editions` will be installed in your shop
+3. To confirm go to `https://<your_store>.myshopify.com/admin/themes` and you'll see the theme installed there.
+
+Thanks

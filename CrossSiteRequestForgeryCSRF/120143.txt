@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/120143
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/itly
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.06.2016 16:04:43
+
+Summary:
+
+Hello Team,
+
+I have found that CSRF Middleware Token is not getting validated at server side in CHANGE PASSWORD request. This request even works without csrfmiddlewaretoken.
+
+Steps to Reproduce:
+
+1. Login to your Veris View Account.
+2. Go to Settings.
+3. Change your password.
+4. Submit the form.
+5. Intercept this request in burp suite.
+6. Remove csrfmiddlewaretoken parameter from the request.
+7. Forward the request.
+8. You'll notice the success message as Password changed Successfully.
+
+Proof of Concept: Please find it attached.
+
+Do evaluate it and inform me accordingly.
+
+Best Regards,
+
+Hely H. Shah

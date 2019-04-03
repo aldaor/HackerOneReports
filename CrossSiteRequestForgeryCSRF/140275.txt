@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/140275
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/daniyal_nasir
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.07.2016 23:15:41
+
+Summary:
+
+Hello,
+There is no CSRF token validation on DELETING "monitor" which we create in synthetics section.
+
+DELETE /accounts/1338635/monitors/de70ee8d-2fa0-416c-8592-47ebde01aa7e.json HTTP/1.1
+Host: synthetics.newrelic.com
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:45.0) Gecko/20100101 Firefox/45.0
+Accept: application/json, text/plain, */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: https://synthetics.newrelic.com/accounts/1338635/monitors/de70ee8d-2fa0-416c-8592-47ebde01aa7e/edit
+Cookie: NRREFL=https://hackerone.com/newrelic; NRREFP=https://hackerone.com/newrelic; optimizelyEndUserId=oeu1457986550335r0.6000279262459117; optimizelySegments={"171941824":"ff","172184284":"false","172242367":"referral","1025373943":"none","1227391094":"Enterprise"}; optimizelyBuckets={}; utag_main=_st:1463912386362$v_id:015376ea7205000abb42db64f25c07048003b00d00978$_sn:3$_ss:0$_pn:28;exp-session$ses_id:1463907761555;exp-session; __ar_v4=DLQZ5QQWIFBZZM5ECJME6X:20160521:2|7QCUSMLEMBHIPPEMTU6A7A:20160521:4|I7ZJI4CQMBCNHGOQ27AYQZ:20160521:6|YCNZVXZ6TJDJ3KMJRVGKFH:20160521:6; _ceg.s=o7ko2m; _ceg.u=o7ko2m; ei_client_id=5741766fa8d65d1100f32f83; hit_signup_confirmation=1; _ga=GA1.2.1405693252.1457986715; _mkto_trk=id:412-MZS-894&token:_mch-newrelic.com-1457986717455-48008; __qca=P0-1982536586-1457989097502; _biz_uid=2c9f1e971b2d4305b0675ec2c71e8b36; _biz_nA=4; _biz_pendingA=[]; ajs_user_id=null; ajs_group_id=null; ajs_anonymous_id="795e29e1-6f05-4413-859f-fe3bd77f88c1"; login_service_login_newrelic_com_tokens={"token":"dybji5gR+3dYd953MO1yowkuPlTG2vI+I+JG/Qmm5t89gtScwndRsgLHXFZV7aD6raf3wUN9XYpYoO4y3uhjy2H/q3dlVfg/YRH5H1xlw4SFN/JeUUdKNw5Jiip9Yw8Ut3YULWycDAc2O3xTwtkHZ2yhw/Vyc8XT+6pTc9Y79ZHQuWOtGxZU3a2TveTW8B1dRoxsGJaxS5D/Rg3GmnZSvK4V42S3Vz4VeQnQXy9grv77CW6Q0PHB+lUXwDJonw2knZWOBwdT1ulzXy3tF/TjghAEhmcIFF2NLCXQMdZHCypDUDrmVvy+Y91xhyBXRK3yyi9bcEuN9TVbXdJUNKBd8Q==","refresh_token":"hB3KMmS+P9u+uOkV5dtNZpOa/68OSlxgH0kB4TA/MHrNEvJuh+D38kDjrLbOl4M/X5SmVT0KEMDIMzlPbhomu0iaawhH8uUJlu1qVwS3YwQ26lXCQjiFFeqXabaVggr9RNNhQtvbinmjHncPrGK1+SAlwtCAL+HIsTPCH4x/h2iqCFWMAvafJmZ02H5WjNHHKF8TlfN8RwCiskJcWeB7QEKLavcqQB27XFc4OZT9b8nxopLT0JSKPvPdiWROr5umAcztDG8RqkwIdYCmaR8jt9MtTZv0OdSxUnKchWN8qlxvvsd05xAAR40rolEHfWI0UQjqwKH8R87VpKqh4g87pA=="}; _biz_flagsA={"Version":1,"Mkto":"1"}; mindsparktb_222250168=true; mindsparktbsupport_222250168=true; mindspark_extension_api_features_222250168=TOOLBAR_CLEANER; mindsparktb_222250168=true; mindsparktbsupport_222250168=true; mindspark_extension_api_features_222250168=TOOLBAR_CLEANER; nr_zd_logged_in=true; last_seen=1463908342940; _gat_ga33=1
+Connection: keep-alive
