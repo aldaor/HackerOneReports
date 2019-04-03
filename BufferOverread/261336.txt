@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/261336
+WeaknessName:Buffer Over-read
+Reporter:https://hackerone.com/cy1337
+ReportedTo:PHP (IBB)(ibb-php)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:27.11.2018 15:59:52
+
+Summary:
+
+The finish_nested_data function in ext/standard/var_unserializer.re in PHP before 5.6.31, 7.0.x before 7.0.21, and 7.1.x before 7.1.7 is prone to a buffer over-read while unserializing untrusted data. Exploitation of this issue can have an unspecified impact on the integrity of PHP.
+
+This has been fixed and assigned CVE-2017-12933 the bug report is here: https://bugs.php.net/bug.php?id=74111

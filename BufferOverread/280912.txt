@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/280912
+WeaknessName:Buffer Over-read
+Reporter:https://hackerone.com/tsug0d
+ReportedTo:QIWI(qiwi)
+BountyAmount:100.0
+Severity:high
+State:Closed
+DateOfDisclosure:05.02.2018 8:08:41
+
+Summary:
+
+#Issue
+access.log is leaked by attacker who trying send many requests.
+
+#Explain:
+Honestly i don't know how the bug is happened, but i guess if the access.log is too large, it will dump some part into the response, and attacker happily get it.
+
+#Reproduce:
+1. Access to https://rapida.ru/search/?q=<many character>
+2. Send it to burp intruder
+3. Make many request into the server
+4. See the response
+
+#Impact
+The access log contains ip address of user, time request, the path of request url, if the page contain many secret paths, like admin private path or make some request with information on GET method, the impact is higher.
+
+#Video PoC
+{F231092}

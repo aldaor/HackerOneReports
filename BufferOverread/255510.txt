@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/255510
+WeaknessName:Buffer Over-read
+Reporter:https://hackerone.com/bytehope
+ReportedTo:Mail.ru(mailru)
+BountyAmount:3500.0
+Severity:high
+State:Closed
+DateOfDisclosure:29.12.2017 8:01:43
+
+Summary:
+Memory leak due to invalid NUL-byte processing (aka "poison NULL byte" problem) on message reading via crafted message id allowed to read a portion of server's heap memory at uncontrolled location. This portion could potentially contain sensitive data.

