@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/316948
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/netfuzzer
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:750.0
+Severity:medium
+State:Closed
+DateOfDisclosure:23.04.2018 14:33:11
+
+Summary:
+In this report, the researcher was able to chain together 3 separate, minor bugs to create an exploit that was greater than the sum of its parts. This exploit could have potentially allowed attackers to steal OAuth tokens from users. The exploit chain involved taking advantage of our SSO between `rockstargames.com` and `rockstarwarehouse.com`, utilizing a Flash-based vulnerability on `rockstargames.com/warehouse`, and taking advantage of the ability to redirect OAuth tokens to any `(socialclub|www).rockstargames.com/`.
+
+We resolved this problem by removing the exploitable Flash player in the second step of the exploit chain. This prevented this attack path from being viable. In addition, we are already in the process of updating our authentication flow to prevent the third bug in the exploit chain from being usable in the future.

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/496260
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/iframe
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:11.03.2019 12:55:29
+
+Summary:
+CSRF vulnerability in Crossfire (cfire.mail.ru) allowed to force user to request game credit.
+
+On the time of reporting, game/business logic vulnerabilities in cfire.mail.ru are not covered by bug bounty program.

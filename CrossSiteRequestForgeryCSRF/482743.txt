@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/482743
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/netfuzzer
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:750.0
+Severity:medium
+State:Closed
+DateOfDisclosure:19.02.2019 18:52:16
+
+Summary:
+In this report, the researcher was able to discover a method to expose and exfiltrate Oauth tokens. This was done by injecting an `<img>` tag containing a payload pointing to the attacker's own domain into replies of Support Community forum threads. Once this was done, users operating under a particular set of conditions who opened the attacker's reply would have their Oauth token extracted by the attacker. This issue has been resolved with the researcher's help.

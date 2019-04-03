@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/395731
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/encrypt
+ReportedTo:Chaturbate(chaturbate)
+BountyAmount:250.0
+Severity:low
+State:Closed
+DateOfDisclosure:27.09.2018 12:18:23
+
+Summary:
+The hacker found that the report emoticon endpoint did not check the csrf token. This was resolved.

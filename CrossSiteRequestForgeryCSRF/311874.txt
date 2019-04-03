@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/311874
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/danila_xawdxawdx
+ReportedTo:Mail.ru(mailru)
+BountyAmount:250.0
+Severity:medium
+State:Closed
+DateOfDisclosure:11.05.2018 15:53:52
+
+Summary:
+CSRF on ICS URI import in calendar.mail.ru

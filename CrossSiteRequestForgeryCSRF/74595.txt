@@ -1,0 +1,60 @@
+ReportLink:https://hackerone.com/reports/74595
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/s_p_q_r
+ReportedTo:DigitalSellz(digitalsellz)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:25.08.2015 21:31:01
+
+Summary:
+
+When we use the "on/off" buttons to set the products to be shown on the [products page](https://www.digitalsellz.com/user/#/products), a POST-request to https://www.digitalsellz.com/product/status is sent with only the product id as a parameter (no other security tokens).
+
+So the idea is to make my rival visit a web page with a code like this:
+
+> <form action="https://www.digitalsellz.com/product/status" method="POST" onload="this.submit ()">
+  <input type="hidden" name="id" value="%PRODUCT_ID%" />
+</form>
+
+where %PRODUCT_ID% is an ID of one of the products shown on his DigitalSellz page. This way me make him hide his product, so the customers will more likely buy mine.
+
+So the purpose is to get a proper product id. Let's find out how it's formed. To do this let's upload a few projects at our page. After this when we check the https://www.digitalsellz.com/product/alllist/1 page we see that every product has both a key and an id, for example:
+
+> {"Id":"__WlojNDgxNSNZVg__","name":"test","currency":"USD","price":"0.90","prwlink":null,"prwtype":"No","createddate":"2015-07-08 12:58:08","key":"__NDgxNQ__","onprofile":"Enable"}
+
+The key is a public identificator: it's contained in the product URL: https://www.digitalsellz.com/p/NDgxNQ, and the id is a private one: it's not shown there. So we need to figure out the connection between the key and the id.
+
+If we take a look at them, we can notice they both look like Base64-encoded. Indeed, if we add "==" at the end and then do the Base64 decoding, __NDgxNQ__ and __WlojNDgxNSNZVg__ will turn into __4815__ and __ZZ#4815#YV__ correspondingly. Thus we see the product key is just its integer number and the id is the same number, just with some random symbols added!
+
+And what if we try to add some other symbols, for example AA, instead? Let's check it: __ZZ#4815#YV__ → __AA#4815#AA__ → __QUEjNDgxNSNBQQ__, and then we send a POST-request to https://www.digitalsellz.com/product/status with "id=QUEjNDgxNSNBQQ" parameters. In response we get {code:1}. Now if we open the [products page](https://www.digitalsellz.com/user/#/products) we can see the product status changed. So it works!
+
+__This way the scenario for the attacker can be as follows:__
+
+1. He goes to his rival's page
+2. He opens the product he's interested in and gets its key from the URL
+3. He decodes it, adds "AA#" and "#AA" at both sides and then encodes it back and thus gets the product id
+4. He creates a web page with such content:
+
+> > <form action="https://www.digitalsellz.com/product/status" method="POST" onload="this.submit ()">
+  <input type="hidden" name="id" value="%PRODUCT_ID%" />
+</form>
+
+where %PRODUCT_ID% is the product id he got, and sends a link to this page to the victim
+
+When the victim visits it, his product gets hidden from his page.
+
+__Proof of concept:__
+
+1. Go to your account and upload a product
+2. Go to your [products page](https://www.digitalsellz.com/user/#/products) and get its key from the url in the "Buy now link" cell. For example, __NDgxNQ__
+3. Add "==" at the end and Base64-decode it: __4815__
+4. Surround it by "AA" symbols: __AA#4815#AA__
+5. Encode it into Base64 and remove the "==" symbols from the end: __QUEjNDgxNSNBQQ__
+6. Send a POST-request to https://www.digitalsellz.com/product/status with the "id=QUEjNDgxNSNBQQ" body
+7. Update your [products page](https://www.digitalsellz.com/user/#/products) — you will see the product status has been successfully changed
+
+__Ways to fix:__
+
+1. Check the id entirely, not only the number
+2. Add another anti-CSRF token

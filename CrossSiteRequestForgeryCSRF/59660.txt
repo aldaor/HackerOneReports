@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/59660
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/egix
+ReportedTo:concrete5(concrete5)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.06.2016 18:28:02
+
+Summary:
+
+Concrete5 implements a Synchronizer Token Pattern in order to provide anti-CSRF capabilities, which is done within the Concrete\Core\Validation\CSRF\Token class. However, the application fails to properly use this feature in every block or dashboard page which makes a system state change, such as settings modification. As a result, the application is vulnerable to some Cross Site Request Forgery (CSRF) attacks.

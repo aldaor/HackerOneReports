@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/7436
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/ashesh
+ReportedTo:IRCCloud(irccloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.05.2014 9:51:59
+
+Summary:
+
+ALL DETAILS INCLUDING FIX IS IN VIDEO

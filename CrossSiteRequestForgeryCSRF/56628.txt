@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/56628
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/ishwar_prasad_bhat
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:27.09.2016 16:02:16
+
+Summary:
+Note: This issue was originally reported to our self-hosted bug bounty program, and was transferred to HackerOne.
+
+One of the third-party payment gateways that can be used with Shopify did not offer a secure means of reporting transaction status to Shopify. As a result, it was possible for an attacker to modify the transaction status displayed to the merchant in the shop's admin area. (The correct transaction status was still visible in the payment gateway's dashboard page.)
+
+We deprecated the gateway while working with the gateway operator to implement a secure means of transferring transaction status. Unfortunately, the gateway operator was not able to resolve the issue to our satisfaction, and so we have asked the small number of customers still using this gateway to switch to another gateway as soon as possible, and modified our application to display a warning on all orders processed through this gateway that transaction status must be verified on the gateway's dashboard page.

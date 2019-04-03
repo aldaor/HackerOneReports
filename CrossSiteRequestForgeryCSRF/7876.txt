@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/7876
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/nahamsec
+ReportedTo:Localize(localize)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.04.2014 1:05:23
+
+Summary:
+
+Link:
+http://www.localize.io/review/3C/languages/3
+
+while approving and reviewing a phrase, you are able to send/set a message. You can XSS that by entering an  XSS string
+
+String used:
+<object data=data:text/html;base64,PHN2Zy9vbmxvYWQ9YWxlcnQoNCk+></object>?
+
+Screenshot:
+http://prntscr.com/3awo2p

@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/7116
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/defmax
+ReportedTo:IRCCloud(irccloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.09.2014 12:13:49
+
+Summary:
+
+Hello Sir 
+
+This is N B Sri Harsha
+
+I Have Found An CSRF to Account take over bug 
+
+effected url :- https://www.irccloud.com/chat/user-settings
+
+I have wrote an html code and uploaded it , please check that out 
+
+u have to fill email address , there , and click on update settings 
+
+U will get output as  {"_reqid":0,"success":true}
+
+Thats It   , the victims email address will be changed 
+
+after  that he goes to forgot password and changes the password
+
+hope this security issue will be fixed soon

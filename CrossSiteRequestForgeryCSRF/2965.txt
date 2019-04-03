@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/2965
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/fin1te
+ReportedTo:OkCupid(okcupid)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.03.2014 21:00:48
+
+Summary:
+
+Hello,
+
+On OkCupid, you have the ability to connect your Instagram account. This will sync any photos from your account onto your profile.
+
+This is performed by browsing to `https://www.okcupid.com/okphotos/okinstagram.html`, which will redirect to Instagram for the user to authorise the request. Once done, you're redirected back to `https://www.okcupid.com/okphotos/okinstagram.html#access_token=[access_token]`, with the Instagram access token in the URL. This then performed an AJAX request to `/okphotos/apisync` to store the token (and to sync the photos).
+
+The issue with this is that no token is passed along, meaning we can send the `https://www.okcupid.com/okphotos/okinstagram.html#access_token=[access_token]` URL to another user (maybe via the message function), and therefore load our photos onto their account.
+
+### Proof-of-Concept
+1. Using account 1, browse to `https://www.okcupid.com/okphotos/okinstagram.html`, login to Instagram and authorise the application
+2. Copy and paste the redirected URL (`https://www.okcupid.com/okphotos/okinstagram.html#access_token=[access_token]`) and browse to it whilst logged in to account 2
+3. Browse to account 2's photos
+4. You should see the Instagram album has been added
+
+### Mitigation
+The Instagram API provides a way of passing along a `state` parameter with the first request, which will then return it with the callback (see here http://instagram.com/developer/authentication/ for more details). I noticed that some requests send a `authcode` parameter (presumably for CSRF protection). This could be embedded in the `https://www.okcupid.com/okphotos/okinstagram.html` page, sent along with the auth request, then picked up from the URL fragment and sent with the AJAX request. This should prevent a CSRF attack.
+
+If you need anymore info just shout,
+Thank you,
+Jack

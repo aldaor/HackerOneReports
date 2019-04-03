@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/301631
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/povargek
+ReportedTo:VK.com(vkcom)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:26.04.2018 5:20:38
+
+Summary:
+CSRF в аудио. 

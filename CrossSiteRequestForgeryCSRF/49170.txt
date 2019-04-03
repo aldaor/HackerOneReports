@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/49170
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/quistertow
+ReportedTo:Yelp(yelp)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:11.05.2017 11:32:43
+
+Summary:
+
+Hello,
+I found a  info disclosure vulnerability. We can enumerate emails via user_id parameter from Manage users.
+
+And I found that :
+
+>ID 1 is webmaster@seatme.com
+ID 514755 is troy@yelp.com
+ID 514775 is mr.trizaeron@gmail.com
+ID 514764 is exists@exists.com
+
+I attached photos from burp repeater to be more explicit.
+
+We can easily bruteforce user_id parameter with ids to harvest user's emails.
+
+
+Regards,
+  Florin

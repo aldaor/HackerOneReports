@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/360834
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/albatraoz
+ReportedTo:Liberapay(liberapay)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:02.06.2018 13:03:20
+
+Summary:
+
+#Description:
+The victim can be tricked into accepting the invite as a normal GET request is sent while accepting the request.
+
+#Steps to reproduce
+Make an html page using the following code:
+```
+<a href="https://liberapay.com/test/membership/accept">click here</a>
+```
+Change" test" with your team mate.
+
+## Impact
+
+The impact is low but still it can make a user to accept the request even if he wanted not to.

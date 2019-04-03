@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/408289
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/pisarenko
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:03.10.2018 11:38:00
+
+Summary:
+Reporter pointed to possibility to mark scheduled meeting request sent via ICS file as accepted in calendar via CSRF by bruteforcing attachment id. Currently, this behavior is not believed to introduce real additional security risks, because meeting can be added anyway without user's intervention and this behavior is currently considered as a reasonable accepted risk in exchange for useful functionality.

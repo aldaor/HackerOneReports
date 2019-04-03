@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/450796
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/alexbirsan
+ReportedTo:PayPal(paypal)
+BountyAmount:3500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:07.02.2019 23:25:32
+
+Summary:
+Due to a cross-origin configuration, the application at refer.xoom.com could be embedded in script tags on other websites. If a malicious site were open in the same browser as refer.xoom.com, the malicious site could see and extract data from the referral page. This included the email addresses being used and, in extreme cases, tokens allowing Xoom access to post on a user’s Twitter. Any Twitter activity was limited, clearly marked as posted by Xoom, and could be mitigated by the user at any time by deauthorizing access. This did not affect any session or financial data and was limited to the referral page.

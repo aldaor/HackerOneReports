@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/50703
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/shubham
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:20.06.2016 13:57:18
+
+Summary:
+This researcher was able to demonstrate an CSRF  attack against  a now decommissioned we service.
+

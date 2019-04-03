@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/71006
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/alokmenghrajani
+ReportedTo:Airbnb(airbnb)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.08.2015 23:20:44
+
+Summary:
+
+In order to protect against the Breach attack, the authenticity token needs to be unique on every page load.
+
+A simple fix is to mask the token with some random bytes, which is what ruby on rails did in version 4.2.0 (the exact patch is here: https://github.com/rails/rails/pull/16570/files).
+
+airbnb.com seems vulnerable to this issue because I fetched the following random page multiple times:
+https://www.airbnb.com/rooms/1931946?checkin=06%2F16%2F2015&checkout=06%2F18%2F2015&s=ghzz
+
+and I got the same token value each time (V4$.airbnb.com$oUioAIJPa2w$X2TbhzBK2YeqJ_qslG6OAwiCVxcSjVzCD2-7LFNHuSs=).
+
+My exact curl request was:
+`curl 'https://www.airbnb.com/rooms/1931946?checkin=06%2F16%2F2015&checkout=06%2F18%2F2015&s=ghzz' -H 'If-None-Match: W/"d60ad9aa4e89657f0447a804518c1a29"' -H 'Accept-Encoding: gzip, deflate, sdch' -H 'Accept-Language: en-US,en;q=0.8,fr;q=0.6' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.124 Safari/537.36' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'Referer: https://www.airbnb.com/s/San-Francisco--CA--United-States?checkin=06%2F16%2F2015&checkout=06%2F18%2F2015&source=bb&ss_id=gkjsa763' -H 'Cookie: mdr_browser=desktop; _gat=1; _csrf_token=V4%24.airbnb.com%24oUioAIJPa2w%24X2TbhzBK2YeqJ_qslG6OAwiCVxcSjVzCD2-7LFNHuSs%3D; li=1; roles=0; _airbed_session_id=cd371d2a26ad4577194a9bbc739724dc; __ssid=ad7458b1-5d5c-4cbe-acda-80f1f9a45f1b; _user_attributes=%7B%22curr%22%3A%22USD%22%2C%22guest_exchange%22%3A1%2C%22id%22%3A35902910%2C%22hash_user_id%22%3A%225579d181d8a70998cabac2dffa30357f276c2b7b%22%2C%22eid%22%3A%22TbtlRjB_yMfScyo6T2_3iBW8nitm7S3r_KddwmpQ4QsRRf9Hm9E8qxM2ArXBhoeW%22%2C%22num_msg%22%3A0%2C%22num_notif%22%3A1%2C%22num_h%22%3A0%2C%22name%22%3A%22%22%2C%22is_admin%22%3Afalse%2C%22can_access_photography%22%3Afalse%2C%22can_see_notifications%22%3Atrue%7D; flags=268439552; _pt=1--WyI1NTc5ZDE4MWQ4YTcwOTk4Y2FiYWMyZGZmYTMwMzU3ZjI3NmMyYjdiIl0%3D--6664eba4c9b01b58021e3e7ae2bde26168bb07c1; _ga=GA1.2.1614844616.1434404924; bev=1434404923_Iq4GK%2FBpvT8K5KAg; EPISODES=s=1434405205163&r=https%3A%2F%2Fwww.airbnb.com%2Frooms%2F1931946%3Fcheckin%3D06%252F16%252F2015%26checkout%3D06%252F18%252F2015%26s%3Dghzz' -H 'Connection: keep-alive' -H 'Cache-Control: max-age=0' --compressed`

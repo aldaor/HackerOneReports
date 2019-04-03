@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/307382
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/lincoln9932
+ReportedTo:VK.com(vkcom)
+BountyAmount:100.0
+Severity:none
+State:Closed
+DateOfDisclosure:04.03.2018 12:56:37
+
+Summary:
+Отсутствие хеша в запросе на редактирование рекламной карусели. 

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/547
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/andrisatteka
+ReportedTo:HackerOne(security)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:13.01.2014 16:42:18
+
+Summary:
+
+1) Attacker creates a fake account and changes e-mail
+2) The e-mail confirmation link can now be used to CSRF login someone into the fake account, then monitor actions performed by the victim or even interact with him.

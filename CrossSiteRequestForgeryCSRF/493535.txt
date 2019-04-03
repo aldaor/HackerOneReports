@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/493535
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/mik317
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:28.02.2019 0:07:06
+
+Summary:
+The researcher discovered that Niche’s CSRF protection was broken and that an attacker could trick a logged-in user into changing account information under the /account endpoint, including email address. This would not have enabled account takeover, however, since Niche does not handle account credentials independently of Twitter.

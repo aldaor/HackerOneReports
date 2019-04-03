@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/388531
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/haythamnaamane
+ReportedTo:Redtube(redtube)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:27.09.2018 13:34:22
+
+Summary:
+The researcher was able to account takeover by exploiting a vulnerability within 'User Settings' where the form was not authenticated by CSRF token.

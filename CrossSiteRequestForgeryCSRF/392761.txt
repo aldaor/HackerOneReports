@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/392761
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/niteshpande
+ReportedTo:MariaDB(mariadb)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:12.10.2018 11:41:01
+
+Summary:
+Vulnerabilities in our publicly available issue and bug tracking Jira instance have been reported and resolved to the best of our abilities by upgrading to the latest available Jira software from Atlassian.

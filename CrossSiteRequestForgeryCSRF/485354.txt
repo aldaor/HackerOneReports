@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/485354
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/xalerafera
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:11.03.2019 13:03:35
+
+Summary:
+CSRF vulnerability in pandao.ru allowed to apply a promo code for user.
+
+On the time of reportting, clientside vulnerabilities in pandao.ru are not covered by bug bounty program.
+

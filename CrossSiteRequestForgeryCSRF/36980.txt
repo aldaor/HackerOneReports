@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/36980
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/batuhan
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.01.2015 1:29:25
+
+Summary:
+
+<script src="https://twitter.com/i/notifications"></script>
+
+If a website use this code, visitor's Twitter notifications will be marked as read.
+
+You can easily check it locally, I'm not uploading any proof or file.

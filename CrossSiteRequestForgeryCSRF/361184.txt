@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/361184
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/keretasenja28
+ReportedTo:Liberapay(liberapay)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:04.06.2018 11:49:17
+
+Summary:
+This only works if you run the attack on the same browser session. Liberapay is not currently interested in attacks that require physical access to the victim's machine.
+Allows an attacker to change one's account information in this case ie information from "Name (Optional)". Attackers can change the information without having to login to victim account or without having to login but only by using CSRF technique. I tried changing the "Name (Optional)" information to "YOU HAVE BEEN HACKED".
+
+For reproduce stages I attach in the url https://www.youtube.com/watch?v=aDMd5cjAHZI
+
+potential url with csrf attack https://liberapay.com/talaohu28/edit/username
+
+
+Regards,
+LahatalePutih
+
+## Impact
+
+Change other people's information without having to login

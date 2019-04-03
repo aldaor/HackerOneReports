@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/423602
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/dhananjaygarg19
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:150.0
+Severity:low
+State:Closed
+DateOfDisclosure:16.10.2018 19:57:59
+
+Summary:
+In this report, the researcher found a CSRF vulnerability that potentially allowed an attacker to spam false support requests. This issue was resolved in a site update.

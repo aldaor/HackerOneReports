@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/54610
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/oldusername
+ReportedTo:Slack(slack)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:05.05.2015 5:59:54
+
+Summary:
+
+It is possible for a user to logout other member of same team even if they had selected *Keep me signed in* option.
+
+**Steps to Verify:**
+1. Login to your team i.e [https://yourteamname.slack.com](https://yourteamname.slack.com).
+2. On new tab on the same browser request a url which would be like [https://yourteamname.slack.reset/youareloggedout](https://yourteamname.slack.reset/youareloggedout)
+3. You will be automatically logged out of your account even if you have selected **Keep me signed in** option.
+
+Attacker can embed the invalid password reset link in a image tag in a website of his/her control and when users visists the page they will be logged out.
+
+`<html>
+<head>
+	<title>I Logged You Out</title>
+</head>
+<body>
+<img src='https://yourteamname.slack.com/reset/youareloggedout'>
+</body>
+</html>`
+
+You should not logout a user when an invalid password reset link is accessed rather than you should redirect a user to homepage whenever a password reset link is accessed when user is allready logged in.
+
+Thanks
+**Uttam Soren**

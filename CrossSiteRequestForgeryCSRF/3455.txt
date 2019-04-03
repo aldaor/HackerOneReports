@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/3455
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/netfuzzer
+ReportedTo:Slack(slack)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:08.04.2014 23:56:03
+
+Summary:
+
+Hi,
+
+I have found a flash content type sniff vulnerability could allow attackers get user's team auth2 tokens. As the page lists user's teams and its security tokens, this could allow attackers to do csrf attacks.
+
+Steps to reproduce:
+1. Log in api.slack.com
+2. after go to http://netfuzzer.com/api-slack-vuln2.html
+3. wait 5 seconds until the page finish load
+4. see your team's security tokens.
+
+Cheers,
+Mario

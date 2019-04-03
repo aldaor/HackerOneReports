@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/361131
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/cryptographer
+ReportedTo:Liberapay(liberapay)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:04.06.2018 12:01:55
+
+Summary:
+
+hello team, 
+your csrf token did not expired and after login and logout many times , i found that your csrf token is generated same as last one.
+
+## Impact
+
+if an attacker found an xss on your domain and you fixed it but attacker still has csrf token of user, attacker can use it to perform any action.

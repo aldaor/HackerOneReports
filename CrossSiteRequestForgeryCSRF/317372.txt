@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/317372
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/danila_xawdxawdx
+ReportedTo:Mail.ru(mailru)
+BountyAmount:100.0
+Severity:high
+State:Closed
+DateOfDisclosure:12.11.2018 17:39:41
+
+Summary:
+CSRF vulnerability for item buy action.
+
+On the time of reporting, lootdog.io clientside vulnerabilities were not covered with bug bounty.

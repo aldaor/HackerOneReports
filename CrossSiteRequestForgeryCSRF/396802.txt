@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/396802
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/encrypt
+ReportedTo:Chaturbate(chaturbate)
+BountyAmount:150.0
+Severity:low
+State:Closed
+DateOfDisclosure:27.09.2018 12:22:06
+
+Summary:
+The hacker found that the "send an email and browser notification" feature was a GET call and did not check for csrf tokens, this was resolved.

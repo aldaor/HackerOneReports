@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/71337
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/pisarenko
+ReportedTo:VK.com(vkcom)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:04.04.2016 21:59:06
+
+Summary:
+Отсутствовал csrf-token для /edit?act=set_twitter_oauth, что позволяло запросом изменять привязанный твиттер аккаунт.
+http://vk.com/edit?act=set_twitter_oauth&oauth_token=XXX&oauth_verifier=XXX

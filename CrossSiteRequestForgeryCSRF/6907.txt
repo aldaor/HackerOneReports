@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/6907
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/exploitprotocol
+ReportedTo:IRCCloud(irccloud)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:23.04.2014 11:16:00
+
+Summary:
+
+Hello IrcCloud Security Team,
+#Vulnerability Detail's:-
+Session Token is not Verified while changing Account Setting's which Result In account Takeover
+#Description:-
+I have found that while changing Setting Session token is not verified .So an attacker can basically plot a CSRF attack which would change the default email of the user and this would led to account takeover.
+
+#POC:-
+I have made proof of concept video of the same:-https://www.youtube.com/watch?v=YvlYElGb40A
+The Above Video is Unlisted.
+
+With Regard's
+Aditya Agrawal

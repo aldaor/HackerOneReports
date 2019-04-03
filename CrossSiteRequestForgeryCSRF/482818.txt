@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/482818
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/xalerafera
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:11.03.2019 13:06:32
+
+Summary:
+CSRF vulnerability in pandao.ru allowed to force user to "like" the user's comment.
+
+On the time of reportting, clientside vulnerabilities in pandao.ru are not covered by bug bounty program.
+

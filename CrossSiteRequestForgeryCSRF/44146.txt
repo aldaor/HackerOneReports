@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/44146
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/avlidienbrunn
+ReportedTo:Vimeo(vimeo)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:22.01.2015 22:47:26
+
+Summary:
+
+Hi!
+
+**Brief**
+I have discovered a way to issue API calls on behalf of other users. The problem stems from the fact that the API playground at https://developer.vimeo.com/api/playground/me has a very weak CSRF protection. The only thing protecting this resource from CSRF attacks is the demand that the "X-Requested-With: XMLHttpRequest" request header is present on the call.
+
+At first sight, this seems impossible to circumvent because sending AJAX requests cross-domain is blocked by CORS, but there is a way to spoof the "X-Requested-With" request header in Flash.
+
+I have only created a proof-of-concept for Safari (tested on newest version on OSX), but there is a big chance that this is possible from other browsers (and other plugins) too.
+
+**PoC**
+1. Log in to Vimeo in Safari
+2. Visit https://s3.amazonaws.com/avlidienbrunn/vimeo_pwn.swf
+3. Your profile biography now says "avlidienbrunn+was+here"
+
+**Video demonstration**
+I have made a Video explaining the issue, but at the time of writing this I am still uploading it to Vimeo (I will put a password on it and attach it to a comment).
+
+**Technical details**
+It's possible to send the "X-Requested-With" header with Flash, but we can't send it cross-domain due to the SOP implementation with Adobe's crossdomain.xml files. However, we can trick Flash into sending the request anyway by issuing the request to a domain that *does* allow it, which in turn sends a HTTP 307 redirect to the resource that we want to target. Flash will send the request to the new resource *before* requesting crossdomain.xml on the new domain.
+
+1. Safari requests https://s3.amazonaws.com/avlidienbrunn/vimeo_pwn.swf
+2. SWF requests https://avlidienbrunn.se/crossdomain.xml
+3. SWF requests https://avlidienbrunn.se/vimeo_pwn.php (issues 307 redirect to Vimeo API playground)
+4. SWF requests https://developer.vimeo.com/api/playground/me (including the X-Requested-With header)
+5. SWF requests https://developer.vimeo.com/crossdomain.xml
+
+Since it's step #4 that issues the API call, we can make the currently logged in user issue the call regardless of the crossdomain.xml file. We can, however, not read the response from the API call.
+
+Mathias

@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/493552
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/mik317
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:02.03.2019 0:42:12
+
+Summary:
+The researcher discovered that Niche’s CSRF protection was broken and that an attacker could trick a logged-in user into deleting existing network connections under the network/ endpoint.
+

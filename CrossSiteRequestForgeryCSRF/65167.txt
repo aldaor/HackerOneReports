@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/65167
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/paramdham
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:20.0
+Severity:
+State:Closed
+DateOfDisclosure:09.09.2016 2:22:22
+
+Summary:
+Security researcher identified a logout CSRF attack, which was later patched.

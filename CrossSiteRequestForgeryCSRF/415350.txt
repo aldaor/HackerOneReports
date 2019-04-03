@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/415350
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/kaustubh
+ReportedTo:Chaturbate(chaturbate)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:09.10.2018 0:14:14
+
+Summary:
+
+##EndPoint /affiliates/stats. doesnot verify the CSRF Tokens##
+
+
+## Steps To Reproduce:
+
+ 1. Login with the your account 
+ 2. Navigate to the URL https://chaturbate.com/affiliates/stats.. 
+ 3. Check the stats in default its todays date or this week in select period.
+4. Intercept the request and change the parameter to whatever you want to set.
+5. generate the POC And open it in browser
+6. You can see the changes in the form.
+
+## Supporting Material/References:
+Please find attached for the CSRF POC and CSRF_1 for PreCSRF And CSRF_2 For Post CSRF.
+
+## Impact
+
+Attacker may change the parameters in stat or may force user to download the malicious .
