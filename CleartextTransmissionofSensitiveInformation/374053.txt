@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/374053
+WeaknessName:Cleartext Transmission of Sensitive Information
+Reporter:https://hackerone.com/iheb_hamad0x
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.07.2018 9:31:02
+
+Summary:
+
+Hi team ,
+##Summary
+I found that when I can access from original ip to the web site ,.This disable Https secure connection.
+##Description
+First I make DNS Lookup to find the ip adress 
+`download.nextcloud.com has address 88.198.160.133`
+{F313820}
+Now When I open The website from download.nextcloud.com I see it's over ssl so Can download securily .
+{F313821}
+But when I Enter  88.198.160.133 I also access the site so It's not secure to download .
+{F313822}
+Also this disable many protection when downloading .
+
+## Impact
+
+The user download your app over insecure connection.

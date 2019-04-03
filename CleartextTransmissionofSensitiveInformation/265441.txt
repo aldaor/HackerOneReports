@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/265441
+WeaknessName:Cleartext Transmission of Sensitive Information
+Reporter:https://hackerone.com/nihadx95
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.09.2017 16:43:28
+
+Summary:
+
+Hi team ..
+I found bug on your site i register with already e-mail your site show me this message ( please verify your e-mail click to resend verification email ) please fixed it soon change the message to ( this e-mail already sign up with other user ..
+
+PoC .. screenshow 
