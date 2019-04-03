@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/409512
+WeaknessName:CRLF Injection
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Apache httpd (IBB)(ibb-apache)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:02.10.2018 5:49:43
+
+Summary:
+
+Possible CRLF injection allowing HTTP response splitting attacks for sites which use mod_userdir. This issue was mitigated by changes made in 2.4.25 and 2.2.32 which prohibit CR or LF injection into the "Location" or other outbound header key or value.
+
+Reported to security team	24th July 2016
+Issue public	14th August 2018
+Update Released	20th December 2016
+Affects	2.4.23, 2.4.20, 2.4.18, 2.4.17, 2.4.16, 2.4.12, 2.4.10, 2.4.9, 2.4.7, 2.4.6, 2.4.4, 2.4.3, 2.4.2, 2.4.1
+
+https://httpd.apache.org/security/vulnerabilities_24.html#CVE-2016-4975
+https://httpd.apache.org/security/vulnerabilities_22.html#CVE-2016-4975
+
+## Impact
+
+CRLF Injection

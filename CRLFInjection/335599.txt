@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/335599
+WeaknessName:CRLF Injection
+Reporter:https://hackerone.com/w2w
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:19.06.2018 9:41:22
+
+Summary:
+Reflected XSS on mcs.mail.ru subdomain due to CRLF injection.
+
+mcs.mail.ru is not covered by bug bounty scope on the time of report.
+#Description:
+Я репортил уязвимость open redirect #335521 , которая позволяет украсть токены админа для входа. В redirect_uri присутствует crlf инъекция. Даже если вы исправите репорт #335521 , то crlf injection всё равно будет существовать, потому что валидация url для редиректа не повлияет на эту уязвимость.
+Уязвимость не работает в mozilla firefox, тк браузер думает, что это бесконечный редирект. Во всех остальных браузерах работает (правда для хрома и оперы нужен auditor bypass, если мы хотим выполнить js).
+#PoC:
+https://mcs.mail.ru/auth/oidc/login?response_type=code&scope=userinfo&client_id=iaas.mail.ru&state=k1qOT59-VhrTIe177aP0PXOouig&redirect_uri=%0d%0aContent-Length:%200%0d%0a%0d%0a9%0d%0a%0d%0a%3Chtml%3E%3Cmarquee%3E%3Cb%3ETEST%3C/b%3E%3C/marquee%3E%3C/html%3E&nonce=ENHHnrgXnfxv0oBAGRKfaXSQOk5VMyA2MT9KCcZSlCM
+
+## Impact
+
+Перенос строки ---> XSS

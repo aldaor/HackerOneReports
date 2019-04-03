@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/242408
+WeaknessName:CRLF Injection
+Reporter:https://hackerone.com/pisarenko
+ReportedTo:VK.com(vkcom)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:23.07.2017 13:48:30
+
+Summary:
+Отсутствие хеша на добавление аудиозаписи в плейлист. 

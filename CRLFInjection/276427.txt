@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/276427
+WeaknessName:CRLF Injection
+Reporter:https://hackerone.com/miftahabdul2307
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:21.10.2017 23:19:30
+
+Summary:
+
+well i m hacker in the messag you secktor in your fuckingt

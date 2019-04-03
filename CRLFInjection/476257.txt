@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/476257
+WeaknessName:CRLF Injection
+Reporter:https://hackerone.com/sergeybelove
+ReportedTo:MariaDB(mariadb)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:21.02.2019 11:00:08
+
+Summary:
+A CRLF injection vulnerability was discovered on our website that could lead to attacks such as client side cookie injection. This has been resolved by adjusting the offending rewrite rule in our web server configuration.

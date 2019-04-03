@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/300622
+WeaknessName:CRLF Injection
+Reporter:https://hackerone.com/pisarenko
+ReportedTo:VK.com(vkcom)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:09.02.2018 15:41:44
+
+Summary:
+Отсутствовал `hash` в запросах при изменении настроек стикеров. 

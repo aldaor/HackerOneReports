@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/481512
+WeaknessName:CRLF Injection
+Reporter:https://hackerone.com/mik317
+ReportedTo:MariaDB(mariadb)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:04.02.2019 11:32:11
+
+Summary:
+A CRLF (new line) injection vulnerability has been discovered in the Buildbot.net software and reported to us. We have forwarded this to the Buildbot developers which coordinated a fix release and public disclosure. This vulnerability has been assigned [CVE-2019-7313](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-7313). More details in the [advisory](https://github.com/buildbot/buildbot/wiki/CRLF-injection-in-Buildbot-login-and-logout-redirect-code) text.

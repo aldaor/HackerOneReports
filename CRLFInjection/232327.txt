@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/232327
+WeaknessName:CRLF Injection
+Reporter:https://hackerone.com/0x0luke
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:04.07.2017 11:21:25
+
+Summary:
+The researcher reported the vulnerability CVE-2017-5868 in one of our server, it got promptly mitigated, once no oficial patch was available at the time of submit.

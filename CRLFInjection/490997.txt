@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/490997
+WeaknessName:CRLF Injection
+Reporter:https://hackerone.com/s_p_q_r
+ReportedTo:MariaDB(mariadb)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:14.02.2019 14:39:59
+
+Summary:
+A CRLF injection vulnerability was reported and fixed for our downloads.mariadb.org website. The attack could lead to cookie injection, HTTP response splitting and session fixation attacks, amongst other things, across mariadb domains.
