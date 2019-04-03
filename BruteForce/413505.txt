@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/413505
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/chilliesssssss7
+ReportedTo:Chaturbate(chaturbate)
+BountyAmount:150.0
+Severity:low
+State:Closed
+DateOfDisclosure:19.10.2018 17:41:26
+
+Summary:
+
+##Brute force at affiliate statsapi##
+
+
+## Steps To Reproduce:
+
+  1. The affiliate stats api link is vulnerable to brute force
+
+ https:// chaturbate.com/affiliates/apistats/?username=hackeronetestchat&token=**vulnerable**
+I've used my profile and and my token to check brute force
+
+The correct token returned with 200 ok status
+
+## Impact
+
+An attacker could view the  affiliates stats of an user

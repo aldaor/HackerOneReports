@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/385381
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/lucky_sen
+ReportedTo:Chaturbate(chaturbate)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:30.09.2018 7:42:38
+
+Summary:
+
+Hello there,
+
+User are able to protect there broadcasting with password, so only password granted visitor can login to broadcast room. I notice that rate limit are missing at the endpoint `/roomlogin/user/` which enable me to brute force on password field.
+
+I made 1k+ request but still server not block my request.
+
+##Steps to reproduce:-
+
+1. Create two account A and B. protect A's room with password.
+2. Login to B's account and access A's room with random password.
+3. Send the request to intruder and run till you get right password
+
+  *  {F323575}
+
+## Impact
+
+Attacker are able to access some one private room.
+
+***Thanks!***

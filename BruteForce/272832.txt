@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/272832
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/chrisnagora
+ReportedTo:Boozt Fashion AB(boozt)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:04.10.2017 19:08:33
+
+Summary:
+
+Hi team,
+
+This is my first ever report. So, thank you for your patience!
+
+
+URL: https://www.boozt.com/login
+Browser: Mozilla Firefox 55.0.2 (64-bit) on Ubuntu
+Tool: Burp Intruder
+Boozt account created for testing purposes only.
+
+I noticed that on your login page, an attacker can Brute force a login because there is no set limit of failed login tries.
+
+Somebody can iterate passwords a vast number of times and brute force to login as other users.
+
+No stop, temporary block is enforced. The victim's account is not alerted if any given number of consecutive failed  authentications is performed.
+
+The error "CSRF token invalid" is displayed (this is another issue - I think you should never display such a message to an attacker). 
+
+But, even with the CSRF token issue, by starting the browser again and submitting the login with the newly found password, the login is successful.
+
+I used Burp Intruder and the total number of consecutive requests were 200. 
+
+Delay between requests: 3 seconds.
+
+
+Thank you!
+Regards,
+Chris
+

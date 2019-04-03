@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/231813
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/bhumish
+ReportedTo:Cuvva(cuvva)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:27.05.2017 18:53:50
+
+Summary:
+
+Hi Cuvva,
+
+On the page of Underwriter dashboard (https://underwriter.partner.cuvva.com/login/verify), the first option is to enter the email address of the person having the access to dashboard. I entered the email address of (the guy whose email address was getting displayed in the bug: https://hackerone.com/reports/231749, I had seen the same email address today morning, but didnt click on my mind to report).
+
+Earlier when I tried my gmail address, I was given the error that the I am not authorized to access the dashboard. Now with the email ****@cuvva.com, I was able to move to the next step. Now the verification code was sent to the email address, and option came to enter the 6 character code.
+
+The attacker can brute force the 6 character code very easily. There is no restriction on the times the code is entered.
+
+1. You need to change the email address used to access the dashboard - the current email is easily accessible.
+2. Put restriction on the number of times the verified code can be entered.

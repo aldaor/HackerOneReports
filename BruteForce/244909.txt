@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/244909
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/paxtammy
+ReportedTo:WakaTime(wakatime)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:01.07.2017 23:04:36
+
+Summary:
+
+No account lock out after a certain number of failed login attempts
+
+Steps to reproduce:
+navigate to 
+https://wakatime.com/
+and enter email address and false password
+
+make more than attempts and account does not get locked out
+
+After failed attempts, I was still able to login in with my password

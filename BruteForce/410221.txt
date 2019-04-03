@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/410221
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/manshum
+ReportedTo:Valve(valve)
+BountyAmount:900.0
+Severity:medium
+State:Closed
+DateOfDisclosure:23.01.2019 0:56:03
+
+Summary:
+Due to a missing protection on the self account unlock feature, self unlock codes could be bruteforced - leading to unrestricted access to the account. The endpoint issue has been corrected.

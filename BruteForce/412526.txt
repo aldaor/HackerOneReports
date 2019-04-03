@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/412526
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/chilliesssssss7
+ReportedTo:Chaturbate(chaturbate)
+BountyAmount:150.0
+Severity:low
+State:Closed
+DateOfDisclosure:19.10.2018 17:41:22
+
+Summary:
+
+##Brute force on statsapi endpoint to view stats of an user##
+
+
+## Steps To Reproduce:
+
+  1.  Stats api token can be generated at https://chaturbate.com/statsapi/authtoken/
+https://chaturbate.com/statsapi/?username=hackeronetestchat&token=**vulnerable**
+
+ I've used my profile and and my token to check brute force
+
+The  correct token returned with 200 ok status
+
+## Impact
+
+An attacker could view the stats of an user

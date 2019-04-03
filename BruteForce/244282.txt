@@ -1,0 +1,53 @@
+ReportLink:https://hackerone.com/reports/244282
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/pavanw3b
+ReportedTo:arxius(arxius)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.07.2017 20:01:04
+
+Summary:
+
+### Description
+The password reset verification do not seem to contain rate limit which is implemented in the email verification on sign up.
+
+The password reset link looks like this:
+`https://arxius.io/password/EMAIL%40DOMAIN.COM/REST_TOKEN`
+
+On clicking the link, it prompts to enter a new password. When the form is submitted with an invalid token, it says *`That code isn't valid :/`*
+
+But it is still allowed to change the password with a valid token even after many failed attempts. This let's an attacker to bruteforce the token and reset password.
+
+### Impact
+This leads an attacker to reset a password of any Arxius user with the knowledge of the Username - which is visible on a uploaded post and the email address.
+
+### Steps to reproduce
+Send a brute force request with the below HTTP POST Request. Burp Suite Intruder is very handy with this kind of tests.
+
+`POST /api/account/password HTTP/1.1
+Host: arxius.io
+..
+Cookie: PHPSESSID=778516agab24buvq3mfb9q64j6`
+
+`arxius_password=NEW_PASSWORD&arxius_code=RESET_CODE&arxius_email=EMAIL%40DOMAIN.com&token=6b556b7ad40026b0a29857b446207272`
+
+During my tests, I saw that `token` and `PHPSESSID` Cookie values can by anything. However as this is a public page, validation of these values shouldn't block us.
+
+#### Testing with Burp Intruder:
+1. Request for the password reset. Open the link on the browser configured with Burp Suite
+2. Turn on the Interception. Enter password. Intercept the HTTP POST and change the token to something invalid. This is important. Otherwise the password will be changed in the first attempt itself. Send it to Intruder. Do not Forward the request.
+3. Clear the $. Add $ only to the RESET_TOKEN.
+4. Configure the intruder to use Bruteforce with min and max 8 characters.
+5. Click Start Attack.
+6. Wait for a hundreds of failed attacks and stop the intruder.
+7. Now open the valid reset token. Change the password in the same browser. Note that it is still allowed to change.
+
+### Test Details
+* I was able to change the password from the same browser after more than 300 failed attempts. Didn't test for higher number as you requested for not to use automated scanners. :)
+* The same didn't work for Sign up email verification. It said too many failed attempts after about 100 tries.
+
+Hope these details are sufficient.
+
+Regards,
+Pavan

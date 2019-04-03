@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/238041
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/0xradi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:04.09.2017 13:39:44
+
+Summary:
+CAPTCHA entered on account.my.com was not actually checked.
+account.my.com has no relation to My.Com's MyMail and is not currently covered by regular Mail.Ru bug bounty program.

@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/319036
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/sonicnik
+ReportedTo:Brave Software(brave)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:19.02.2019 19:43:18
+
+Summary:
+
+> NOTE! Thanks for submitting a report! Please fill all sections below with the pertinent details. Remember, the more detail you provide, the easier it is for us to verify and then potentially issue a bounty.
+
+## Summary:
+
+[add summary of the vulnerability]
+
+## Products affected: 
+
+ * operating system, Brave version or Brave website page, etc.
+
+## Steps To Reproduce:
+
+ * List the steps needed to reproduce the vulnerability
+
+## Supporting Material/References:
+
+  * List any additional material (e.g. screenshots, logs, etc.)
+
+## Impact
+
+THIS HACKER CAN TACK ALL THE MONEY PLZ HELP CLEAR THIS PROBLEM

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/233376
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/konkakarthik
+ReportedTo:Mixmax(mixmax)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:16.07.2017 21:01:04
+
+Summary:
+We didn't rate-limit our API to invite users to Mixmax, leading to potential spamming.

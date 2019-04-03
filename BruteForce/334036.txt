@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/334036
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/wiardvanrij
+ReportedTo:Razer US(razer_us)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:10.08.2018 23:12:03
+
+Summary:
+A login page's text upon a failed login could have been used to determine valid user names.  The text was adjusted to avoid this.

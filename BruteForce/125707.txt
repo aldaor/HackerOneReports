@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/125707
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/r0t
+ReportedTo:Uber(uber)
+BountyAmount:3000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:20.11.2018 22:25:44
+
+Summary:
+Due to the lack of rate limiting on the promo code redemption endpoint, it was possible to enumerate promo codes. The response also leaked metadata about the user, including the country of the user, their name and profile photo.
+
+Thanks, @r0t!

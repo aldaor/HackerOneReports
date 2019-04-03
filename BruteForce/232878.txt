@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/232878
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/introvertmac
+ReportedTo:Cuvva(cuvva)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:02.06.2017 12:38:25
+
+Summary:
+This is similar to #230674, but it turns out we missed out a key endpoint while fixing that one - the legacy `POST /1/verification_token_send` used by older apps on our system. This has now been resolved :) Thanks to @introvertmac for flagging this!

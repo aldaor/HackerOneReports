@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/337181
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/muon4
+ReportedTo:Passit(passit)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.08.2018 14:19:59
+
+Summary:
+
+**Summary:**
+app.passit.io is vulnerable against Brute Force password quessing attack
+
+**Description:**
+Hello!
+
+I have found out that your login functionality is vulnerable against brute force attack.
+This is especially dangerous in your case because an attacker can get all of users passwords if they brute correctly password! And the because the "master password" requirements are not very toughs.
+
+
+## Steps To Reproduce:
+
+  1. Try to "guess" your own password like 50 times in very short time perioid and see that you can still successfull log in!
+
+### How to fix?
+- Atleast add captcha <-- This is optional and makes brute force attacks a way more harder
+- Set rate limit which temporary block the IP/user <-- This is recommended
+
+As a reference you can see almost every login is configured against this :)
+
+If you need any information please let me know.
+
+Cheers!
+
+## Impact
+
+An attacker could get access to users/victims accounts by brute forcing passwords.

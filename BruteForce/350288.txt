@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/350288
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/amans
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:16.07.2018 11:29:43
+
+Summary:
+The researcher found a method to brute-force the 2FA code request in the www.ubnt.com login page. This method still requires the username/password from the account.
