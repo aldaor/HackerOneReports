@@ -1,0 +1,129 @@
+ReportLink:https://hackerone.com/reports/356763
+WeaknessName:Classic Buffer Overflow
+Reporter:https://hackerone.com/knk
+ReportedTo:Dovecot(dovecot)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:27.05.2018 6:37:48
+
+Summary:
+
+Quick Overview
+
+ 
+
+I have found a Buffer Overflow OutOfBand vulnerability in the code where a buffer used is not properly verified before writing data to the buffer.
+
+ 
+
+Introduction
+
+ 
+
+Buffer overflow attacks, in their various forms, could allow an attacker to control certain areas of memory. Typically, this is used to overwrite data on the stack necessary for the program to function properly, such as code and memory addresses, though other forms of this attack exist. Exploiting this vulnerability can generally lead to system crashes, infinite loops, or even execution of arbitrary code.  
+
+ 
+
+Severity : High
+
+ 
+
+Vulnerable Parameter : Server
+
+ 
+
+PoC
+
+ 
+
+Page1: core-master\src\lib\sha3.c
+
+ 
+
+Line no. : 73        static void
+
+keccakf(uint64_t s[25])
+
+{
+
+                                int i, j, round;
+
+                                uint64_t t, bc[5];
+
+#define KECCAK_ROUNDS 24
+
+                                for(round = 0; round < KECCAK_ROUNDS; round++) {
+
+                                /* Theta */
+
+                                for(i = 0; i < 5; i++)
+
+                                bc[i] = s[i] ^ s[i + 5] ^ s[i + 10] ^ s[i + 15] ^ s[i + 20];
+
+                                for(i = 0; i < 5; i++) {
+
+                                t = bc[(i + 4) % 5] ^ SHA3_ROTL64(bc[(i + 1) % 5], 1);
+
+                                for(j = 0; j < 25; j += 5)
+
+                                s[j + i] ^= t;
+
+                                }
+
+                                /* Rho Pi */
+
+                                t = s[1];
+
+                                for(i = 0; i < 24; i++) {
+
+                                j = keccakf_piln[i];
+
+                                bc[0] = s[j];
+
+                                s[j] = SHA3_ROTL64(t, keccakf_rotc[i]);
+
+                                t = bc[0];
+
+                                }
+
+                                /* Chi */
+
+                                for(j = 0; j < 25; j += 5) {
+
+                                for(i = 0; i < 5; i++)
+
+                                bc[i] = s[j + i];
+
+                                for(i = 0; i < 5; i++)
+
+                                s[j + i] ^= (~bc[(i + 1) % 5]) & bc[(i + 2) % 5];
+
+                                }
+
+                                /* Iota */
+
+                                s[0] ^= keccakf_rndc[round];
+
+                                }
+
+}
+
+ 
+
+In the above code, the size of the buffer used by keccakf in j, at line 73 of core-master\src\lib\sha3.c, is not properly verified before writing data to the buffer. This can enable a buffer overflow attack, using the source buffer that keccakf passes to bc, at line 73 of core-master\src\lib\sha3.c, to overwrite the target buffer. 
+ 
+
+Alternatively, the vulnerability could be the result of improper bounds checking; exposing internal memory addresses outside of their valid scope; allowing the attacker to control the size of the target buffer; or various other forms. 
+
+ 
+
+Kindly confirm and revert in case of any queries.
+
+## Impact
+
+Impact:
+
+ 
+
+Buffer Overflows can manifest in numerous different variations. In its most basic form, the attack controls a buffer, which is then copied to a smaller buffer without size verification. Because the attacker's source buffer is larger than the program's target buffer, the attacker's data overwrites whatever is next on the stack, allowing the attacker to control program structures.

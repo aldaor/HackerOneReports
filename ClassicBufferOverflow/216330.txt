@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/216330
+WeaknessName:Classic Buffer Overflow
+Reporter:https://hackerone.com/da_k1ng
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:30.07.2017 22:20:37
+
+Summary:
+@3xp1r3_pr1nc3 was banned for this report.
+Here you can see that XSS but which is openly redirectable.. Plz fix it and pay me bounty..

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/350119
+WeaknessName:Classic Buffer Overflow
+Reporter:https://hackerone.com/yalter
+ReportedTo:Valve(valve)
+BountyAmount:750.0
+Severity:medium
+State:Closed
+DateOfDisclosure:28.08.2018 23:45:30
+
+Summary:
+This was originally reported by @yalter at https://github.com/ValveSoftware/halflife/issues/1654

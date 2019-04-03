@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/351014
+WeaknessName:Classic Buffer Overflow
+Reporter:https://hackerone.com/chippy
+ReportedTo:Valve(valve)
+BountyAmount:12500.0
+Severity:critical
+State:Closed
+DateOfDisclosure:19.07.2018 21:55:29
+
+Summary:
+
+A malformed .BSP can trigger an Access Violation on CS:GO that can lead to arbitrary code execution on a remote computer. I have attached a copy of the malformed .BSP which reliably triggers an Access Violation on CS:GO.
+
+## Impact
+
+An attacker hosting a malicious server could compromise a remote client by having them download a custom map, triggering remote code execution on the victim's computer.

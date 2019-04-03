@@ -1,0 +1,81 @@
+ReportLink:https://hackerone.com/reports/391097
+WeaknessName:Classic Buffer Overflow
+Reporter:https://hackerone.com/kushal89shah
+ReportedTo:Block.one(eosio)
+BountyAmount:250.0
+Severity:low
+State:Closed
+DateOfDisclosure:19.02.2019 9:17:00
+
+Summary:
+
+Hello Block.One / EOS Product Security Team,
+
+Good Afternoon.
+
+There exists a Memory Corruption vulnerability in the latest EOS WASMSDK Library. The PoC.wasm file is attached along with this report.
+
+Reproduction Steps: -
+
+1) Fetch latest EOS WASMSDK repsository from https://github.com/eosio/eosio.wasmsdk.
+2) Compile and Build WASMSDK using default compiler.
+OR 
+2) Compile and Build WASMSDK using afl-clang-fast and afl-clang-fast++ compilers from AFL fuzzer.
+3) Run the attached PoC.wasm file with the eosio-readelf binary.
+
+Below is the Buffer Overflow Crash GDB output of the eosio-readelf tool with the PoC.wasm file.
+
+Starting program: /usr/local/bin/eosio-readelf PoC.wasm
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Program received signal SIGSEGV, Segmentation fault.
+llvm::decodeULEB128 (p=<optimized out>, end=<optimized out>, n=<optimized out>, error=<optimized out>) at /home/h4ck3r/Documents/eosio.wasmsdk/eosio_llvm/include/llvm/Support/LEB128.h:145
+145	    uint64_t Slice = *p & 0x7f;
+#0  llvm::decodeULEB128 (p=<optimized out>, end=<optimized out>, n=<optimized out>, error=<optimized out>) at /home/h4ck3r/Documents/eosio.wasmsdk/eosio_llvm/include/llvm/Support/LEB128.h:145
+#1  readULEB128 (Ctx=...) at /home/h4ck3r/Documents/eosio.wasmsdk/eosio_llvm/lib/Object/WasmObjectFile.cpp:101
+#2  readVaruint32 (Ctx=...) at /home/h4ck3r/Documents/eosio.wasmsdk/eosio_llvm/lib/Object/WasmObjectFile.cpp:143
+#3  llvm::object::WasmObjectFile::parseCodeSection (this=<optimized out>, Ctx=...) at /home/h4ck3r/Documents/eosio.wasmsdk/eosio_llvm/lib/Object/WasmObjectFile.cpp:913
+#4  0x000000000073c177 in llvm::object::WasmObjectFile::parseSection (this=0xf0b030, Sec=...) at /home/h4ck3r/Documents/eosio.wasmsdk/eosio_llvm/lib/Object/WasmObjectFile.cpp:294
+#5  0x000000000073baf9 in llvm::object::WasmObjectFile::WasmObjectFile (this=<optimized out>, Buffer=..., Err=...) at /home/h4ck3r/Documents/eosio.wasmsdk/eosio_llvm/lib/Object/WasmObjectFile.cpp:260
+#6  0x000000000073b072 in llvm::make_unique<llvm::object::WasmObjectFile, llvm::MemoryBufferRef&, llvm::Error&> (args=..., args=...)
+    at /home/h4ck3r/Documents/eosio.wasmsdk/eosio_llvm/include/llvm/ADT/STLExtras.h:1057
+#7  llvm::object::ObjectFile::createWasmObjectFile (Buffer=...) at /home/h4ck3r/Documents/eosio.wasmsdk/eosio_llvm/lib/Object/WasmObjectFile.cpp:58
+#8  0x0000000000739e49 in llvm::object::ObjectFile::createObjectFile (Object=..., Type=...) at /home/h4ck3r/Documents/eosio.wasmsdk/eosio_llvm/lib/Object/ObjectFile.cpp:147
+#9  0x000000000073a1d1 in llvm::object::SymbolicFile::createSymbolicFile (Object=..., Type=..., Context=0x0) at /home/h4ck3r/Documents/eosio.wasmsdk/eosio_llvm/lib/Object/SymbolicFile.cpp:73
+#10 0x00000000006a4723 in llvm::object::createBinary (Buffer=..., Context=0x0) at /home/h4ck3r/Documents/eosio.wasmsdk/eosio_llvm/lib/Object/Binary.cpp:73
+#11 0x00000000006a4ccf in llvm::object::createBinary (Path=...) at /home/h4ck3r/Documents/eosio.wasmsdk/eosio_llvm/lib/Object/Binary.cpp:97
+#12 0x00000000005d511d in dumpInput (File=...) at /home/h4ck3r/Documents/eosio.wasmsdk/eosio_llvm/tools/llvm-readobj/llvm-readobj.cpp:550
+#13 std::for_each<__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, void (*)(llvm::StringRef)> (__first=..., __last=..., __f=<optimized out>)
+    at /usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h:3767
+#14 llvm::for_each<llvm::cl::list<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, bool, llvm::cl::parser<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&, void (*)(llvm::StringRef)> (Range=..., P=<optimized out>) at /home/h4ck3r/Documents/eosio.wasmsdk/eosio_llvm/include/llvm/ADT/STLExtras.h:902
+#15 main (argc=<optimized out>, argv=<optimized out>) at /home/h4ck3r/Documents/eosio.wasmsdk/eosio_llvm/tools/llvm-readobj/llvm-readobj.cpp:587
+
+Also you can find the attached Valgrind output for this Vulnerability.
+
+The Git log as seen below shows that this is the latest version available as of this report.
+
+h4ck3r@h4ck3r-VirtualBox:~/Documents/eosio.wasmsdk$ git log -1
+commit 34ea7717dc918b32a09d3cba953c879d2014db72
+Merge: 4a8eb03 d220a0b
+Author: Bucky Kittinger <larrykittinger@gmail.com>
+Date:   Wed Aug 1 19:15:39 2018 -0400
+
+    Merge pull request #29 from EOSIO/develop
+    
+    Merge develop into master
+h4ck3r@h4ck3r-VirtualBox:~/Documents/eosio.wasmsdk$ 
+
+Eagerly awaiting your response.
+
+Thanking You,
+
+Yours Sincerely,
+Kushal Arvind Shah.
+Senior Security Researcher | Fortinet's FortiGuard Labs.
+
+NOTE: This Bug Report Submission does not provide the option to select the target i.e. EOSIO WASMSDK Repository/Source Code, due to which the researcher had to select EOS source code. Please update the Bug Submission Options for the same. Thankyou.
+
+## Impact
+
+Memory Corruption and Potential Information Disclosure & Arbitrary Code Execution.

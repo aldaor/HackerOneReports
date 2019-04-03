@@ -1,0 +1,333 @@
+ReportLink:https://hackerone.com/reports/363209
+WeaknessName:Classic Buffer Overflow
+Reporter:https://hackerone.com/kushal89shah
+ReportedTo:Block.one(eosio)
+BountyAmount:2500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:19.02.2019 9:16:48
+
+Summary:
+
+Hello Block.One / EOS Product Security Team,
+
+Good Afternoon.
+
+There exists a Memory Corruption vulnerability in the latest WAVM Library and also in the EOS code for WAVM Library. The PoC.wast file is attached along with this report.
+
+Reproduction Steps: -
+
+1) Fetch latest WAVM library from the WAVM repository available at https://github.com/AndrewScheidecker/WAVM/
+
+2) Compile and Build WAVM using the afl fuzz option. 
+
+    2a => For this traverse to the WAVM directory and then to the afl directory. Here, modify the run-afl-fuzz file and remove the option "-DENABLE_ASAN=1" and also comment the "export ASAN_OPTIONS=handle_segv=0:detect_leaks=0:abort_on_error=1" line.
+
+    2b => Make a directory named afl_non_asan_build inside the afl folder and then follow the instructions in the afl/readme file to build WAVM successfully.
+
+3) Run the attached PoC.wast file with the Assemble tool.
+
+Below are the Out Of Bound Read crash outputs of the Assemble tool with the PoC.wast file.
+
+a) Regular run with SegFault output: -
+
+root@kali:~/Documents/WAVM_Test2# WAVM/afl/afl_non_asan_build/bin/Assemble PoC.wast test_output.wasm
+Segmentation fault
+
+b) GDB Output: -
+
+root@kali:~/Documents/WAVM_Test2# gdb --args WAVM/afl/afl_non_asan_build/bin/Assemble PoC.wast test_output.wasm
+GNU gdb (Debian 7.12-6+b1) 7.12.0.20161007-git
+Copyright (C) 2016 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from WAVM/afl/afl_non_asan_build/bin/Assemble...done.
+(gdb) r
+Starting program: /root/Documents/WAVM_Test2/WAVM/afl/afl_non_asan_build/bin/Assemble PoC.wast test_output.wasm
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Program received signal SIGSEGV, Segmentation fault.
+0x00007ffff7ae2833 in parseControlImm (cursor=<optimized out>, outBranchTargetName=..., imm=...) at /root/Documents/WAVM_Test2/WAVM/Source/WAST/ParseFunction.cpp:385
+385				functionType = unresolvedFunctionType.explicitType;
+(gdb) bt
+#0  0x00007ffff7ae2833 in parseControlImm (cursor=<optimized out>, outBranchTargetName=..., imm=...) at /root/Documents/WAVM_Test2/WAVM/Source/WAST/ParseFunction.cpp:385
+#1  0x00007ffff7ae07ea in parseBlock (cursor=0x7fffffffd910, isExpr=<error reading variable: access outside bounds of object referenced via synthetic pointer>)
+    at /root/Documents/WAVM_Test2/WAVM/Source/WAST/ParseFunction.cpp:421
+#2  0x00007ffff7b0237f in parseExpr(WAST::CursorState*)::$_1::operator()() const (this=0x7fffffffd790) at /root/Documents/WAVM_Test2/WAVM/Source/WAST/ParseFunction.cpp:488
+#3  0x00007ffff7ae56bc in WAST::parseParenthesized<parseExpr(WAST::CursorState*)::$_1>(WAST::CursorState*, parseExpr(WAST::CursorState*)::$_1) (cursor=0x7fffffffd910, parseInner=...)
+    at /root/Documents/WAVM_Test2/WAVM/Source/WAST/Parse.h:215
+#4  0x00007ffff7ac218b in parseExpr (cursor=0x7fffffffd910) at /root/Documents/WAVM_Test2/WAVM/Source/WAST/ParseFunction.cpp:478
+#5  parseInstrSequence (cursor=0x7fffffffd910) at /root/Documents/WAVM_Test2/WAVM/Source/WAST/ParseFunction.cpp:577
+#6  0x00007ffff7abf54c in WAST::parseFunctionDef(WAST::CursorState*, WAST::Token const*)::$_0::operator()(WAST::ModuleState*) const::{lambda(WAST::ModuleState*)#1}::operator()(WAST::ModuleState*) const (
+    this=<optimized out>, moduleState=<optimized out>) at /root/Documents/WAVM_Test2/WAVM/Source/WAST/ParseFunction.cpp:755
+#7  std::_Function_handler<void (WAST::ModuleState*), WAST::parseFunctionDef(WAST::CursorState*, WAST::Token const*)::$_0::operator()(WAST::ModuleState*) const::{lambda(WAST::ModuleState*)#1}>::_M_invoke(std::_Any_data const&, WAST::ModuleState*&&) (__functor=..., __args=<optimized out>) at /usr/bin/../lib/gcc/x86_64-linux-gnu/7.3.0/../../../../include/c++/7.3.0/bits/std_function.h:316
+#8  0x00007ffff7b43fa5 in std::function<void (WAST::ModuleState*)>::operator()(WAST::ModuleState*) const (__args=0x7fffffffdaf8, this=<optimized out>)
+    at /usr/bin/../lib/gcc/x86_64-linux-gnu/7.3.0/../../../../include/c++/7.3.0/bits/std_function.h:706
+#9  WAST::parseModuleBody (cursor=<optimized out>, outModule=...) at /root/Documents/WAVM_Test2/WAVM/Source/WAST/ParseModule.cpp:760
+#10 0x00007ffff7b45a26 in WAST::parseModule(char const*, unsigned long, IR::Module&, std::vector<WAST::Error, std::allocator<WAST::Error> >&)::$_0::operator()() const (this=<optimized out>)
+    at /root/Documents/WAVM_Test2/WAVM/Source/WAST/ParseModule.cpp:817
+#11 WAST::parseParenthesized<WAST::parseModule(char const*, unsigned long, IR::Module&, std::vector<WAST::Error, std::allocator<WAST::Error> >&)::$_0>(WAST::CursorState*, WAST::parseModule(char const*, unsigned long, IR::Module&, std::vector<WAST::Error, std::allocator<WAST::Error> >&)::$_0) (cursor=<optimized out>, parseInner=...) at /root/Documents/WAVM_Test2/WAVM/Source/WAST/Parse.h:215
+#12 WAST::parseModule (string=<optimized out>, stringLength=<optimized out>, outModule=..., outErrors=...) at /root/Documents/WAVM_Test2/WAVM/Source/WAST/ParseModule.cpp:814
+Python Exception <class 'gdb.error'> There is no member named _M_dataplus.: 
+#13 0x00000000004067e8 in loadTextModule (filename=0x7fffffffe537 "PoC.wast", wastString=, outModule=...) at /root/Documents/WAVM_Test2/WAVM/Source/Programs/CLI.h:39
+#14 0x0000000000403b46 in loadTextModule (filename=0x7fffffffe537 "PoC.wast", outModule=...) at /root/Documents/WAVM_Test2/WAVM/Source/Programs/CLI.h:62
+#15 0x0000000000403014 in main (argc=<optimized out>, argv=<optimized out>) at /root/Documents/WAVM_Test2/WAVM/Source/Programs/Assemble.cpp:43
+(gdb) exploitable 
+__main__:99: UserWarning: GDB v7.12 may not support required Python API
+Description: Access violation on source operand
+Short description: SourceAv (19/22)
+Hash: 5946a7756d51bd33457b8a20aa496584.a49c6fd717623beb290e229b6fe163dd
+Exploitability Classification: UNKNOWN
+Explanation: The target crashed on an access violation at an address matching the source operand of the current instruction. This likely indicates a read access violation.
+Other tags: AccessViolation (21/22)
+(gdb) q
+A debugging session is active.
+
+	Inferior 1 [process 6342] will be killed.
+
+Quit anyway? (y or n) y
+
+c) Valgrind Output: -
+
+root@kali:~/Documents/WAVM_Test2# valgrind --verbose --keep-stacktraces=alloc-and-free --leak-check=full --leak-resolution=high WAVM/afl/afl_non_asan_build/bin/Assemble PoC.wast test_output2.wasm
+==10980== Memcheck, a memory error detector
+==10980== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==10980== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==10980== Command: WAVM/afl/afl_non_asan_build/bin/Assemble PoC.wast test_output2.wasm
+==10980== 
+--10980-- Valgrind options:
+--10980--    --verbose
+--10980--    --keep-stacktraces=alloc-and-free
+--10980--    --leak-check=full
+--10980--    --leak-resolution=high
+--10980-- Contents of /proc/version:
+--10980--   Linux version 4.9.0-kali3-amd64 (devel@kali.org) (gcc version 6.3.0 20170321 (Debian 6.3.0-11) ) #1 SMP Debian 4.9.18-1kali1 (2017-04-04)
+--10980-- 
+--10980-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-avx
+--10980-- Page sizes: currently 4096, max supported 4096
+--10980-- Valgrind library directory: /usr/lib/valgrind
+--10980-- Reading syms from /root/Documents/WAVM_Test2/WAVM/afl/afl_non_asan_build/bin/Assemble
+--10980-- Reading syms from /lib/x86_64-linux-gnu/ld-2.27.so
+--10980--   Considering /usr/lib/debug/.build-id/38/ad01dd7428fa1d0976f1576f262638314565f7.debug ..
+--10980--   .. build-id is valid
+--10980-- Reading syms from /usr/lib/valgrind/memcheck-amd64-linux
+--10980--   Considering /usr/lib/valgrind/memcheck-amd64-linux ..
+--10980--   .. CRC mismatch (computed a84b1904 wanted aa815c07)
+--10980--   Considering /usr/lib/debug/usr/lib/valgrind/memcheck-amd64-linux ..
+--10980--   .. CRC is valid
+--10980--    object doesn't have a dynamic symbol table
+--10980-- Scheduler: using generic scheduler lock implementation.
+--10980-- Reading suppressions file: /usr/lib/valgrind/default.supp
+==10980== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-10980-by-root-on-???
+==10980== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-10980-by-root-on-???
+==10980== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-10980-by-root-on-???
+==10980== 
+==10980== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==10980== don't want to do, unless you know exactly what you're doing,
+==10980== or are doing some strange experiment):
+==10980==   /usr/lib/valgrind/../../bin/vgdb --pid=10980 ...command...
+==10980== 
+==10980== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==10980==   /path/to/gdb WAVM/afl/afl_non_asan_build/bin/Assemble
+==10980== and then give GDB the following command
+==10980==   target remote | /usr/lib/valgrind/../../bin/vgdb --pid=10980
+==10980== --pid is optional if only one valgrind process is running
+==10980== 
+--10980-- REDIR: 0x401c850 (ld-linux-x86-64.so.2:strlen) redirected to 0x58060901 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--10980-- REDIR: 0x401c630 (ld-linux-x86-64.so.2:index) redirected to 0x5806091b (vgPlain_amd64_linux_REDIR_FOR_index)
+--10980-- Reading syms from /usr/lib/valgrind/vgpreload_core-amd64-linux.so
+--10980--   Considering /usr/lib/valgrind/vgpreload_core-amd64-linux.so ..
+--10980--   .. CRC mismatch (computed e711b875 wanted b0d90401)
+--10980--   Considering /usr/lib/debug/usr/lib/valgrind/vgpreload_core-amd64-linux.so ..
+--10980--   .. CRC is valid
+--10980-- Reading syms from /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+--10980--   Considering /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so ..
+--10980--   .. CRC mismatch (computed eb84f04c wanted 93455f46)
+--10980--   Considering /usr/lib/debug/usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so ..
+--10980--   .. CRC is valid
+==10980== WARNING: new redirection conflicts with existing -- ignoring it
+--10980--     old: 0x0401c850 (strlen              ) R-> (0000.0) 0x58060901 vgPlain_amd64_linux_REDIR_FOR_strlen
+--10980--     new: 0x0401c850 (strlen              ) R-> (2007.0) 0x04c2fe30 strlen
+--10980-- REDIR: 0x401a8c0 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4c30f60 (strcmp)
+--10980-- REDIR: 0x401cd90 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4c34570 (mempcpy)
+--10980-- Reading syms from /root/Documents/WAVM_Test2/WAVM/afl/afl_non_asan_build/Source/WAST/libWAST.so
+--10980-- Reading syms from /root/Documents/WAVM_Test2/WAVM/afl/afl_non_asan_build/Source/WASM/libWASM.so
+--10980-- Reading syms from /root/Documents/WAVM_Test2/WAVM/afl/afl_non_asan_build/Source/IR/libIR.so
+--10980-- Reading syms from /root/Documents/WAVM_Test2/WAVM/afl/afl_non_asan_build/Source/Logging/libLogging.so
+--10980-- Reading syms from /root/Documents/WAVM_Test2/WAVM/afl/afl_non_asan_build/Source/Platform/libPlatform.so
+--10980-- Reading syms from /lib/x86_64-linux-gnu/librt-2.27.so
+--10980--   Considering /usr/lib/debug/.build-id/3a/e748e8e4aadc7614e067c985e3a90cd320e1da.debug ..
+--10980--   .. build-id is valid
+--10980-- Reading syms from /root/Documents/WAVM_Test2/WAVM/afl/afl_non_asan_build/Source/ThirdParty/libunwind/libWAVMUnwind.so
+--10980-- Reading syms from /lib/x86_64-linux-gnu/libdl-2.27.so
+--10980--   Considering /usr/lib/debug/.build-id/0d/56f8dae8263645f473631687b7314d53f8ab75.debug ..
+--10980--   .. build-id is valid
+--10980-- Reading syms from /lib/x86_64-linux-gnu/libpthread-2.27.so
+--10980--   Considering /usr/lib/debug/.build-id/53/507a22287a763a2b5c375da01d4d641d369fca.debug ..
+--10980--   .. build-id is valid
+--10980-- Reading syms from /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.25
+--10980--    object doesn't have a symbol table
+--10980-- Reading syms from /lib/x86_64-linux-gnu/libm-2.27.so
+--10980--   Considering /usr/lib/debug/.build-id/25/c38518e0bc4b5153478d96bfe1adbc6ac8f80f.debug ..
+--10980--   .. build-id is valid
+--10980-- Reading syms from /lib/x86_64-linux-gnu/libgcc_s.so.1
+--10980--    object doesn't have a symbol table
+--10980-- Reading syms from /lib/x86_64-linux-gnu/libc-2.27.so
+--10980--   Considering /usr/lib/debug/.build-id/43/5353243725565647dab72945c7c58142a4fae7.debug ..
+--10980--   .. build-id is valid
+--10980-- REDIR: 0x6d99fa0 (libc.so.6:memmove) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d991d0 (libc.so.6:strncpy) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d9a280 (libc.so.6:strcasecmp) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d98c20 (libc.so.6:strcat) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d99200 (libc.so.6:rindex) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d9b850 (libc.so.6:rawmemchr) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d9a110 (libc.so.6:mempcpy) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d99f40 (libc.so.6:bcmp) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d99190 (libc.so.6:strncmp) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d98c90 (libc.so.6:strcmp) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d9a070 (libc.so.6:memset) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6db3ab0 (libc.so.6:wcschr) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d99130 (libc.so.6:strnlen) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d98d00 (libc.so.6:strcspn) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d9a2d0 (libc.so.6:strncasecmp) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d98cd0 (libc.so.6:strcpy) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d9a410 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d99230 (libc.so.6:strpbrk) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d98c50 (libc.so.6:index) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d99100 (libc.so.6:strlen) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6da0100 (libc.so.6:memrchr) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d9a320 (libc.so.6:strcasecmp_l) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d99f10 (libc.so.6:memchr) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6db4870 (libc.so.6:wcslen) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d994e0 (libc.so.6:strspn) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d9a250 (libc.so.6:stpncpy) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d9a220 (libc.so.6:stpcpy) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d9b880 (libc.so.6:strchrnul) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6d9a370 (libc.so.6:strncasecmp_l) redirected to 0x4a276e0 (_vgnU_ifunc_wrapper)
+--10980-- REDIR: 0x6da8d70 (libc.so.6:__strrchr_sse2) redirected to 0x4c2f810 (__strrchr_sse2)
+--10980-- REDIR: 0x6d95510 (libc.so.6:malloc) redirected to 0x4c2cb20 (malloc)
+--10980-- REDIR: 0x6da9060 (libc.so.6:__strlen_sse2) redirected to 0x4c2fdb0 (__strlen_sse2)
+--10980-- REDIR: 0x6e6dfe0 (libc.so.6:__memcmp_sse4_1) redirected to 0x4c32dd0 (__memcmp_sse4_1)
+--10980-- REDIR: 0x6da18b0 (libc.so.6:__strcmp_sse2_unaligned) redirected to 0x4c30e20 (strcmp)
+--10980-- REDIR: 0x6db32b0 (libc.so.6:__memset_sse2_unaligned) redirected to 0x4c33650 (memset)
+--10980-- REDIR: 0x6d999c0 (libc.so.6:__GI_strstr) redirected to 0x4c347e0 (__strstr_sse2)
+--10980-- REDIR: 0x6476010 (libstdc++.so.6:operator new[](unsigned long)) redirected to 0x4c2d8b0 (operator new[](unsigned long))
+--10980-- REDIR: 0x6475f50 (libstdc++.so.6:operator new(unsigned long)) redirected to 0x4c2d190 (operator new(unsigned long))
+--10980-- REDIR: 0x6474140 (libstdc++.so.6:operator delete[](void*)) redirected to 0x4c2e750 (operator delete[](void*))
+--10980-- REDIR: 0x6d95ba0 (libc.so.6:free) redirected to 0x4c2dd50 (free)
+--10980-- REDIR: 0x6474110 (libstdc++.so.6:operator delete(void*)) redirected to 0x4c2e250 (operator delete(void*))
+--10980-- REDIR: 0x6db2ea0 (libc.so.6:memcpy@GLIBC_2.2.5) redirected to 0x4c310e0 (memcpy@GLIBC_2.2.5)
+--10980-- REDIR: 0x6d95cb0 (libc.so.6:realloc) redirected to 0x4c2ed30 (realloc)
+--10980-- REDIR: 0x6da8b60 (libc.so.6:__strchrnul_sse2) redirected to 0x4c340a0 (strchrnul)
+==10980== Invalid read of size 8
+==10980==    at 0x4EAE833: parseControlImm(WAST::CursorState*, WAST::Name&, IR::ControlStructureImm&) (ParseFunction.cpp:0)
+==10980==    by 0x4EAC7E9: parseBlock(WAST::CursorState*, bool) (ParseFunction.cpp:421)
+==10980==    by 0x4ECE37E: parseExpr(WAST::CursorState*)::$_1::operator()() const (ParseFunction.cpp:488)
+==10980==    by 0x4EB16BB: void WAST::parseParenthesized<parseExpr(WAST::CursorState*)::$_1>(WAST::CursorState*, parseExpr(WAST::CursorState*)::$_1) (Parse.h:215)
+==10980==    by 0x4E8E18A: parseExpr (ParseFunction.cpp:478)
+==10980==    by 0x4E8E18A: parseInstrSequence(WAST::CursorState*) (ParseFunction.cpp:577)
+==10980==    by 0x4E8B54B: operator() (ParseFunction.cpp:755)
+==10980==    by 0x4E8B54B: std::_Function_handler<void (WAST::ModuleState*), WAST::parseFunctionDef(WAST::CursorState*, WAST::Token const*)::$_0::operator()(WAST::ModuleState*) const::{lambda(WAST::ModuleState*)#1}>::_M_invoke(std::_Any_data const&, WAST::ModuleState*&&) (std_function.h:316)
+==10980==    by 0x4F0FFA4: operator() (std_function.h:706)
+==10980==    by 0x4F0FFA4: WAST::parseModuleBody(WAST::CursorState*, IR::Module&) (ParseModule.cpp:760)
+==10980==    by 0x4F11A25: operator() (ParseModule.cpp:817)
+==10980==    by 0x4F11A25: parseParenthesized<(lambda at /root/Documents/WAVM_Test2/WAVM/Source/WAST/ParseModule.cpp:814:31)> (Parse.h:215)
+==10980==    by 0x4F11A25: WAST::parseModule(char const*, unsigned long, IR::Module&, std::vector<WAST::Error, std::allocator<WAST::Error> >&) (ParseModule.cpp:814)
+==10980==    by 0x4067E7: loadTextModule(char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, IR::Module&) (CLI.h:39)
+==10980==    by 0x403B45: loadTextModule(char const*, IR::Module&) (CLI.h:62)
+==10980==    by 0x403013: main (Assemble.cpp:43)
+==10980==  Address 0x807872b28 is not stack'd, malloc'd or (recently) free'd
+==10980== 
+==10980== 
+==10980== Process terminating with default action of signal 11 (SIGSEGV)
+==10980==  Access not within mapped region at address 0x807872B28
+==10980==    at 0x4EAE833: parseControlImm(WAST::CursorState*, WAST::Name&, IR::ControlStructureImm&) (ParseFunction.cpp:0)
+==10980==    by 0x4EAC7E9: parseBlock(WAST::CursorState*, bool) (ParseFunction.cpp:421)
+==10980==    by 0x4ECE37E: parseExpr(WAST::CursorState*)::$_1::operator()() const (ParseFunction.cpp:488)
+==10980==    by 0x4EB16BB: void WAST::parseParenthesized<parseExpr(WAST::CursorState*)::$_1>(WAST::CursorState*, parseExpr(WAST::CursorState*)::$_1) (Parse.h:215)
+==10980==    by 0x4E8E18A: parseExpr (ParseFunction.cpp:478)
+==10980==    by 0x4E8E18A: parseInstrSequence(WAST::CursorState*) (ParseFunction.cpp:577)
+==10980==    by 0x4E8B54B: operator() (ParseFunction.cpp:755)
+==10980==    by 0x4E8B54B: std::_Function_handler<void (WAST::ModuleState*), WAST::parseFunctionDef(WAST::CursorState*, WAST::Token const*)::$_0::operator()(WAST::ModuleState*) const::{lambda(WAST::ModuleState*)#1}>::_M_invoke(std::_Any_data const&, WAST::ModuleState*&&) (std_function.h:316)
+==10980==    by 0x4F0FFA4: operator() (std_function.h:706)
+==10980==    by 0x4F0FFA4: WAST::parseModuleBody(WAST::CursorState*, IR::Module&) (ParseModule.cpp:760)
+==10980==    by 0x4F11A25: operator() (ParseModule.cpp:817)
+==10980==    by 0x4F11A25: parseParenthesized<(lambda at /root/Documents/WAVM_Test2/WAVM/Source/WAST/ParseModule.cpp:814:31)> (Parse.h:215)
+==10980==    by 0x4F11A25: WAST::parseModule(char const*, unsigned long, IR::Module&, std::vector<WAST::Error, std::allocator<WAST::Error> >&) (ParseModule.cpp:814)
+==10980==    by 0x4067E7: loadTextModule(char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, IR::Module&) (CLI.h:39)
+==10980==    by 0x403B45: loadTextModule(char const*, IR::Module&) (CLI.h:62)
+==10980==    by 0x403013: main (Assemble.cpp:43)
+==10980==  If you believe this happened as a result of a stack
+==10980==  overflow in your program's main thread (unlikely but
+==10980==  possible), you can try to increase the size of the
+==10980==  main thread stack using the --main-stacksize= flag.
+==10980==  The main thread stack size used in this run was 8388608.
+==10980== 
+==10980== HEAP SUMMARY:
+==10980==     in use at exit: 275,741 bytes in 167 blocks
+==10980==   total heap usage: 32,046 allocs, 31,879 frees, 5,643,846 bytes allocated
+==10980== 
+==10980== Searching for pointers to 167 not-freed blocks
+==10980== Checked 527,664 bytes
+==10980== 
+==10980== LEAK SUMMARY:
+==10980==    definitely lost: 0 bytes in 0 blocks
+==10980==    indirectly lost: 0 bytes in 0 blocks
+==10980==      possibly lost: 0 bytes in 0 blocks
+==10980==    still reachable: 275,741 bytes in 167 blocks
+==10980==                       of which reachable via heuristic:
+==10980==                         newarray           : 2,272 bytes in 12 blocks
+==10980==         suppressed: 0 bytes in 0 blocks
+==10980== Reachable blocks (those to which a pointer was found) are not shown.
+==10980== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==10980== 
+==10980== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==10980== 
+==10980== 1 errors in context 1 of 1:
+==10980== Invalid read of size 8
+==10980==    at 0x4EAE833: parseControlImm(WAST::CursorState*, WAST::Name&, IR::ControlStructureImm&) (ParseFunction.cpp:0)
+==10980==    by 0x4EAC7E9: parseBlock(WAST::CursorState*, bool) (ParseFunction.cpp:421)
+==10980==    by 0x4ECE37E: parseExpr(WAST::CursorState*)::$_1::operator()() const (ParseFunction.cpp:488)
+==10980==    by 0x4EB16BB: void WAST::parseParenthesized<parseExpr(WAST::CursorState*)::$_1>(WAST::CursorState*, parseExpr(WAST::CursorState*)::$_1) (Parse.h:215)
+==10980==    by 0x4E8E18A: parseExpr (ParseFunction.cpp:478)
+==10980==    by 0x4E8E18A: parseInstrSequence(WAST::CursorState*) (ParseFunction.cpp:577)
+==10980==    by 0x4E8B54B: operator() (ParseFunction.cpp:755)
+==10980==    by 0x4E8B54B: std::_Function_handler<void (WAST::ModuleState*), WAST::parseFunctionDef(WAST::CursorState*, WAST::Token const*)::$_0::operator()(WAST::ModuleState*) const::{lambda(WAST::ModuleState*)#1}>::_M_invoke(std::_Any_data const&, WAST::ModuleState*&&) (std_function.h:316)
+==10980==    by 0x4F0FFA4: operator() (std_function.h:706)
+==10980==    by 0x4F0FFA4: WAST::parseModuleBody(WAST::CursorState*, IR::Module&) (ParseModule.cpp:760)
+==10980==    by 0x4F11A25: operator() (ParseModule.cpp:817)
+==10980==    by 0x4F11A25: parseParenthesized<(lambda at /root/Documents/WAVM_Test2/WAVM/Source/WAST/ParseModule.cpp:814:31)> (Parse.h:215)
+==10980==    by 0x4F11A25: WAST::parseModule(char const*, unsigned long, IR::Module&, std::vector<WAST::Error, std::allocator<WAST::Error> >&) (ParseModule.cpp:814)
+==10980==    by 0x4067E7: loadTextModule(char const*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, IR::Module&) (CLI.h:39)
+==10980==    by 0x403B45: loadTextModule(char const*, IR::Module&) (CLI.h:62)
+==10980==    by 0x403013: main (Assemble.cpp:43)
+==10980==  Address 0x807872b28 is not stack'd, malloc'd or (recently) free'd
+==10980== 
+==10980== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+Segmentation fault
+root@kali:~/Documents/WAVM_Test2# 
+
+GitLog Details: -
+
+root@kali:~/Documents/WAVM_Test2/WAVM# git log -1
+commit 60ed611c33467a0d27907dbc6bf35315c5db2381 (HEAD -> master, origin/master, origin/HEAD)
+Author: Andrew Scheidecker <andrew@scheidecker.net>
+Date:   Tue Jun 5 21:00:55 2018 -0400
+
+    Hacked implementation of wavix tkill syscall
+root@kali:~/Documents/WAVM_Test2/WAVM#
+
+## Impact
+
+Memory Corruption & Information Disclosure.

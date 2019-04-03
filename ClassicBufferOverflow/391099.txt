@@ -1,0 +1,72 @@
+ReportLink:https://hackerone.com/reports/391099
+WeaknessName:Classic Buffer Overflow
+Reporter:https://hackerone.com/kushal89shah
+ReportedTo:Block.one(eosio)
+BountyAmount:250.0
+Severity:low
+State:Closed
+DateOfDisclosure:19.02.2019 9:17:09
+
+Summary:
+
+Hello Block.One / EOS Product Security Team,
+
+Good Afternoon.
+
+There exists a Memory Corruption vulnerability in the latest EOS WASMSDK Library. The PoC.wasm file is attached along with this report.
+
+Reproduction Steps: -
+
+1) Fetch latest EOS WASMSDK repsository from https://github.com/eosio/eosio.wasmsdk.
+2) Compile and Build WASMSDK using default compiler.
+OR 
+2) Compile and Build WASMSDK using afl-clang-fast and afl-clang-fast++ compilers from AFL fuzzer.
+3) Run the attached PoC.wasm file with eosio-objdump using the "-s" flag.
+
+Exact command to reproduce the Vulnerability is "eosio-objdump -s PoC.wasm" without the double quotes.
+
+Below is the Buffer Overflow Crash GDB output of the eosio-objdump tool with the PoC.wasm file.
+
+Starting program: /usr/local/bin/eosio-objdump -s PoC.wasm
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Program received signal SIGSEGV, Segmentation fault.
+llvm::PrintSectionContents (Obj=<optimized out>) at /home/h4ck3r/Documents/eosio.wasmsdk/eosio_llvm/tools/llvm-objdump/llvm-objdump.cpp:1829
+1829	          outs() << hexdigit((Contents[addr + i] >> 4) & 0xF, true)
+#0  llvm::PrintSectionContents (Obj=<optimized out>) at /home/h4ck3r/Documents/eosio.wasmsdk/eosio_llvm/tools/llvm-objdump/llvm-objdump.cpp:1829
+#1  0x0000000000431cac in DumpObject (o=0xf0bee0, a=<optimized out>) at /home/h4ck3r/Documents/eosio.wasmsdk/eosio_llvm/tools/llvm-objdump/llvm-objdump.cpp:2127
+#2  0x0000000000420d37 in DumpInput (file=...) at /home/h4ck3r/Documents/eosio.wasmsdk/eosio_llvm/tools/llvm-objdump/llvm-objdump.cpp:2212
+#3  std::for_each<__gnu_cxx::__normal_iterator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >*, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >, void (*)(llvm::StringRef)> (__first=..., __last=..., __f=<optimized out>)
+    at /usr/bin/../lib/gcc/x86_64-linux-gnu/5.4.0/../../../../include/c++/5.4.0/bits/stl_algo.h:3767
+#4  llvm::for_each<llvm::cl::list<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, bool, llvm::cl::parser<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >&, void (*)(llvm::StringRef)> (Range=..., P=<optimized out>) at /home/h4ck3r/Documents/eosio.wasmsdk/eosio_llvm/include/llvm/ADT/STLExtras.h:902
+#5  main (argc=<optimized out>, argv=<optimized out>) at /home/h4ck3r/Documents/eosio.wasmsdk/eosio_llvm/tools/llvm-objdump/llvm-objdump.cpp:2273
+
+Also you can find the attached Valgrind output for this Vulnerability.
+
+The Git log as seen below shows that this is the latest version available as of this report.
+
+h4ck3r@h4ck3r-VirtualBox:~/Documents/eosio.wasmsdk$ git log -1
+commit 34ea7717dc918b32a09d3cba953c879d2014db72
+Merge: 4a8eb03 d220a0b
+Author: Bucky Kittinger <larrykittinger@gmail.com>
+Date:   Wed Aug 1 19:15:39 2018 -0400
+
+    Merge pull request #29 from EOSIO/develop
+    
+    Merge develop into master
+h4ck3r@h4ck3r-VirtualBox:~/Documents/eosio.wasmsdk$ 
+
+Eagerly awaiting your response.
+
+Thanking You,
+
+Yours Sincerely,
+Kushal Arvind Shah.
+Senior Security Researcher | Fortinet's FortiGuard Labs.
+
+NOTE: This Bug Report Submission does not provide the option to select the target i.e. EOSIO WASMSDK Repository/Source Code, due to which the researcher had to select EOS source code. Please update the Bug Submission Options for the same. Thankyou.
+
+## Impact
+
+Memory Corruption and Potential Information Disclosure & Arbitrary Code Execution.
