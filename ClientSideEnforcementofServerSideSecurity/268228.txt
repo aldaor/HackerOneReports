@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/268228
+WeaknessName:Client-Side Enforcement of Server-Side Security
+Reporter:https://hackerone.com/ruvlol
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:27.12.2017 14:26:13
+
+Summary:
+Privilege escalation bug in biz.mail.ru web interface allowed user with group manager rights to manage users from different groups of the same organization due to missed server side check.
+Domain, site, application: biz.mail.ru
+
+Testing environment: Lastest Chrome
+
+Steps to reproduce:
+
+Ok, this one is pretty much depending on scenario, so lets assume that there is the Evil Manager exists with network knowledge on higher than medium level.
+At first lets say that there is such role as "Group administrator" which is granted to us by Superadministrator. Same with this permission there are defined groups of users that this particular administrator able to administrate. 
+Lets assume that the Evil Manager got invite from our superviser to administrate group "Cats" and group "Doggies". There are users in each group with Id written directly in html-page (example in attachments below), so we can collect all the id's of all users from page code. Then after some time he got demoted and can not administrate group "Doggies" anymore. All users of "Doggies" group changed their passwords so the Evil Manager can not login with password that he set up for them when he was adding them to group as Group administrator. But the Evil Manager can still get access to user accounts from group "Doggies" by completing following steps:
+1. Go to Users 
+2. Choose any user you can administrate
+3. Change his password via e-mail link, in "email" type your own mailbox.
+4. Modify POST request: in URI change userId(7-digit number goes after /users/) to userId from group that you do not administrate anymore;
+In body Delete everything but "id" and "email", set "Id" to userId from step 4, set "email" to your own mailbox, send it to server.
+
+Actual results
+--
+On your own mailbox you will get link to choose new password for user that you dont have access to administrate. 
+
+Expected results, security impact description and recommendations
+--
+I expected some error like "Not Allowed" which happens when you trying to edit data of Domain administrator when you are just a Group administrator.
+
+PoC, exploit code, screenshots, video, references, additional resources
+--
+there is a large .gif in attachments that shows everything (little delay between sending a request and receiving a message to email box, sorry for that)

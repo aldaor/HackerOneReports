@@ -1,0 +1,45 @@
+ReportLink:https://hackerone.com/reports/386587
+WeaknessName:Client-Side Enforcement of Server-Side Security
+Reporter:https://hackerone.com/droblin
+ReportedTo:Augur(augurproject)
+BountyAmount:5000.0
+Severity:high
+State:Closed
+DateOfDisclosure:04.08.2018 17:43:46
+
+Summary:
+
+**Summary:** A third party attacking site can fake UI data - markets, categories and other
+
+**Description:** A third party site can include a hidden iframe which can override "augur-node" configuration variable of a running augur application. This variable is persisted in localStorage. In the case of browser page reload (user action or browser/OS crash), the normal "augur-node" websockets endpoint will be replaced with the provided by attacker so that all the markets data, addresses and transactions can be masqueraded. 
+
+## Steps To Reproduce:
+
+  1. Start Augur application
+  1. Open application
+  1. Click on "markets" tab
+  1. Start web socket server on port 8081 (different from the Augur one)
+  1. Open HTML page with iframe which loads Augur's initial page with "augur-node" parameter overwritten by new value, for example 192.168.31.204:8081 in my test case
+  1. Observe "Application" data tab in developer tools, the augur-node variable is set to new value: 192.168.31.204:8081
+  1. Reload opened application (simulating user occasional reload or browser crash, or a user opening Augur app form bookmarks )
+  1. Observe the log console of the web sockets server: you can see requests for categories, market data etc
+  1. Observe the Augur application UI - no data is provided as the fake web sockets server has been called, we only need to add implementation and return fake data there to get user misdirected
+
+## Impact: Can lead to fund and reputation loss
+
+I also mentioned the danger of it in https://hackerone.com/bugs?subject=user&report_id=385125
+
+Augur application should not be possible to load in an iframe and manipulate user's settings. For example, Gmail doesn't allow this.
+
+Also, storing important configuration data in localStorage is a very bad practice
+
+## Supporting Material/References:
+
+  * HTML page implementing iframe which sets wrong data
+  * server.js Simple web socket in node
+
+## Impact
+
+Can lead to fund and reputation loss
+
+I also mentioned the danger of it in https://hackerone.com/bugs?subject=user&report_id=385125
