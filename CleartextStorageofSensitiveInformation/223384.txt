@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/223384
+WeaknessName:Cleartext Storage of Sensitive Information
+Reporter:https://hackerone.com/haxor_kiddie
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:16.06.2017 14:13:47
+
+Summary:
+
+#Proof Of Concept
+
+Navigate this domain:
+
+     https://hg.weblate.org
+
+Some information Disclosure:
+
+https://hg.weblate.org/sumwars/Changelog.txt
+https://hg.weblate.org/kallithea-stable/Apache-License-2.0.txt
+Some software verison
+
+Thanks,

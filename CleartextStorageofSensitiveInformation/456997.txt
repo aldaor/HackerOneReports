@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/456997
+WeaknessName:Cleartext Storage of Sensitive Information
+Reporter:https://hackerone.com/phreak
+ReportedTo:Grabtaxi Holdings Pte Ltd(grab)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:08.01.2019 7:55:23
+
+Summary:
+We have recently received a lot of duplicate reports related to keys specified in the following URL:
+
+`https://github.com/grab/blogs/blob/master/2017-01-29-deep-dive-into-database-timeouts-in-rails/config/secrets.yml`
+
+The given keys are demo boilerplate that has been used to explain *Database Timeouts in Rails* blog post at our Grab Engineering blog and is not used any where in production.
+**Summary:** 
+Production secret key leak in config/secrets.yml
+
+**Description:** 
+In Github, http://engineering.grab.com/ secret_key_base is leaked which is present in the config/secrets.yml
+
+## Steps To Reproduce:
+
+  1. Go to the below GitHub URL and we can verify that secret_key_base is present.
+```
+https://github.com/grab/blogs/blob/master/2017-01-29-deep-dive-into-database-timeouts-in-rails/config/secrets.yml
+```
+
+Mitigation:-
+```
+https://medium.com/@thejasonfile/hide-your-api-keys-hide-your-skype-api-keys-884427746f9c
+```
+
+## Impact
+
+Proper Impact is explained here:-
+https://stackoverflow.com/questions/44220691/rails-what-are-the-consequences-of-a-leaked-secret-key-base

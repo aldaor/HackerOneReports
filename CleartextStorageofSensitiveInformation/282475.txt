@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/282475
+WeaknessName:Cleartext Storage of Sensitive Information
+Reporter:https://hackerone.com/romanshyadav
+ReportedTo:Infogram(infogram)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:31.10.2017 13:06:19
+
+Summary:
+
+During the analysis it was found that some sensitive information like ip is available on this url .https://infogram.com/ip/ 

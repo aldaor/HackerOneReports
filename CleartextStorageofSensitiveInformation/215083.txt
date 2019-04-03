@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/215083
+WeaknessName:Cleartext Storage of Sensitive Information
+Reporter:https://hackerone.com/ryudox
+ReportedTo:Pushwoosh(pushwoosh)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:04.03.2018 6:36:23
+
+Summary:
+
+Password was returned in the JSON response (For changing of password), which could be recovered by accessing the firefox.exe memory dump. The password string is persistent in the RAM (even after restarting Firefox application) until you restart the computer.
+
+Refer to the .docx for more information
