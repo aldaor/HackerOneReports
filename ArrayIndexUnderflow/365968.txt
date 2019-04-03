@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/365968
+WeaknessName:Array Index Underflow
+Reporter:https://hackerone.com/joy261
+ReportedTo:Node.js(nodejs)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:15.07.2018 19:34:10
+
+Summary:
+This report was not deemed to be a security vulnerability and the reporter was asked to open an issue upstream to fix publicly.
