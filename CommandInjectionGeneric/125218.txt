@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/125218
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/razeeb
+ReportedTo:Uber(uber)
+BountyAmount:2000.0
+Severity:
+State:Closed
+DateOfDisclosure:26.05.2016 23:03:44
+
+Summary:
+The Uber Partner app was supposed to log you out of the app if you cancel three requests in a row, temporarily denying the Partner the ability to go online. This report detailed the ability to bypass that limitation. 
+

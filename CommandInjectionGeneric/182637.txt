@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/182637
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/ameerpornillos
+ReportedTo:Pushwoosh(pushwoosh)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:17.11.2016 5:20:13
+
+Summary:
+Malicious user had the administrator access to RabbitMQ

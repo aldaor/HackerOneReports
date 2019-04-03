@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/149442
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/meena_hack
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.07.2016 23:03:06
+
+Summary:
+Given that [our previous disclosures were highlighted by popular Twitter account SwiftOnSecurity](https://twitter.com/SwiftOnSecurity/status/750441817733074944) shortly before this report arrived, we believe this is a troll post.
+Helo,hop yu doing Well ,
+
+Am i Meena boy her found a Server issue which disclosing sensitive information , Fix thits Asap , Hope u give $i$$ .-
+
+Prooff :-
+
+sir your site This site works only in browsers with SNI support.. so please fix it asap , cuz my browser don't hav sni support which causing strange some problem.
+
+{F103437}
+
+proof original:
+
+https://www.ssllabs.com/ssltest/analyze.html?d=paragonie.com&s=2400%3acb00%3a2048%3a1%3a0%3a0%3a681f%3a520d&latest
+
+{F103436}
+
+Thankw,
+security researcher , 
+Bhainsa,
+Follow: https://twitter.com/meenaboyswag

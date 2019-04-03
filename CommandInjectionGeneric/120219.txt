@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/120219
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/4lemon
+ReportedTo:Bime(bime)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:18.03.2017 16:11:27
+
+Summary:
+The researcher found multiple endpoints where the product was vulnerable to internal SSRF. 

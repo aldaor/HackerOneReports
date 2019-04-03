@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/244292
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/poison
+ReportedTo:Grabtaxi Holdings Pte Ltd(grab)
+BountyAmount:251.0
+Severity:medium
+State:Closed
+DateOfDisclosure:27.10.2017 6:19:10
+
+Summary:
+@Poison had pointed out that it was possible to perform CSV Injection on `hub.grab.com` which was tested on Microsoft Excel 2016. Injection occurred by adding the payload in customer name field in Grab mobile application. The payload used was `=cmd|' /C calc'!A0`. We fixed this issue by properly sanitizing user input.
+
+On further investigation, we believe that client-side CSV injection should mitigated by the application which would be importing/interpreting data from an external source, as Microsoft Excel does (for example) by showing a warning. In other words, the proper fix should be applied when opening the CSV files, rather then when creating them. Therefore, `CSV injection` is not in scope of our bug bounty program.
+
+We would like to thank @poison again for reporting this to us and allowing us to fix this issue. we appreciate your help in keeping Grab and our customers safe and secure.

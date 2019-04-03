@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/269066
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/hassham
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:5000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:29.11.2017 15:01:21
+
+Summary:
+The researcher found a Command Injection in tw.corp.ubnt.com.

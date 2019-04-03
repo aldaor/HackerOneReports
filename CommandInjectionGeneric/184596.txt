@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/184596
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/hogarth45
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:22.12.2016 22:42:01
+
+Summary:
+A Navy system had a file upload tool accessible from the Internet. This would have permitted an attacker to upload malicious files and potentially execute code on the server. Thanks to @hogarth45 for reporting it.

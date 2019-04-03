@@ -1,0 +1,52 @@
+ReportLink:https://hackerone.com/reports/274267
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/claudijd
+ReportedTo:RubyGems(rubygems)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:08.12.2018 20:06:30
+
+Summary:
+
+We received this report via security@ from david@bamsoftware.com, I'm filing here for tracking and visibility purposes...
+
+"I was looking at commit 8d91516fb7037ecfb27622f605dc40245e0f8d32, which
+was the fix for the DNS hijacking issue CVE-2017-0902. The function
+still handles the DNS response in a potentially unsafe way. I did not
+find any actual vulnerabilities in the current code; the code that uses
+the result of api_endpoint (perhaps coincidentally) discards the
+potentially malicious components of the URI that api_endpoint returns.
+But future code may be vulnerable. I'm sending this to the security list
+because my checks for vulnerability may be incomplete.
+
+The problem is that api_endpoint allows the DNS SRV response to contain
+URI-like syntax (which was the cause of CVE-2017-0902). The fix was to
+parse the syntax as if it were a URI, extract the host component, and
+only do a comparison using the host component, rather than the entire
+string. However, the entire string is still pasted into the return
+value, assuming the comparison succeeds. It can contain URI syntax
+characters like '?' and '#' that change the interpretation of what
+follows them.
+
+I'm attaching a patch that adds a new test and changes api_endpoint to
+discard everything but the host after parsing the DNS SRV response as a
+URI. It would probably be even better simply to disallow any syntax
+other than hostname literals.
+
+The lines that I initially thought was vulnerable, but appear not to be,
+are in lib/rubygems/source.rb:
+   bundler_api_uri = api_uri + './api/v1/dependencies'
+   uri = api_uri + "#{Gem::MARSHAL_SPEC_DIR}#{spec_file_name}"
+   spec_path  = api_uri + "#{file_name}.gz"
+The reason they are not vulnerable is that api_url is a URI object
+rather than a string, so the + operator is actually the merge method
+rather than string concatenation. The merge operator replaces any
+existing path, query, and fragment components, it seems. (It would not
+help if the attacker-provided string changed the URI's host, pass, or
+port components, but I could not think of a realistic path to
+exploitation using only those components.) However if api_uri had been
+coerced into a string, then the code would be vulnerable. An attacker
+could cause the client to download some other path, which could possibly
+lead to a downgrade attack or replacing one gem with another.
+<0001-Have-api_endpoint-replace-only-host-not-port-user-pa.patch>"

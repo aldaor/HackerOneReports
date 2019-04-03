@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/224291
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/amsda
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:17.05.2017 14:19:37
+
+Summary:
+
+Hi,
+
+The "Download as a CSV" feature of Weblate does not properly "escape" fields. Here is more information about this issue: http://www.contextis.com/resources/blog/comma-separated-vulnerabilities/
+
+Here is one method to reproduce this issue:
+
+1) I can add new information in Glossary with a name starting with "=1+1;" or "-2+3+cmd|' /C calc'!G2;"
+2) I choose to export all Glossary to CSV containing the issue in (1)
+3) I now open this CSV file in excel or another spreadsheet program
+4) You can see the cell containing the issue name in (1) is displayed as "2" (=1+1;) which means the code is executed.

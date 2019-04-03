@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/100667
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/zombiehelp54
+ReportedTo:Shopify(shopify)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.12.2015 21:06:58
+
+Summary:
+A CSV formula injection issue when a Partner export the list of current users for one of their application.
+Hi , I have found that when a user tries to Export list of current users who installed his apps through: `https://app.shopify.com/services/partners/api_clients/<app_id>/export_installed_users`  the fields of the CSV file are not properly escaped. which makes them vulnerable to CSV Excel Macro Injection. 
+#Scenario:
+An attacker could change his shop name to a malicious function that executes malware on the user's PC. Since functions aren't escaped, the possibilities of using this can be limitless and can cause a severe impact. One example is having it execute malware on the user computer.
+#Steps to reproduce:
+1. Login to your partner account then go to https://app.shopify.com/services/partners/api_clients and create a new app.
+2. Go to `<your_store>.myshopify.com/admin/oauth/authorize?client_id=<app_api_key>&redirect_uri=<app_redirect_uri>&response_type=code&scope=read_products%2Cwrite_products`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+**where The `<app_api_key>` is the api key of the app you have created through the partner account and the `<app_redirect_uri>` is the redirect url of it.**
+3. Now click `Install app` 
+4. Go to `<your_store>.myshopify.com/admin/settings` and change the store name to `-2+3+cmd|' /C calc'!D2` 
+5. Go to `https://app.shopify.com/services/partners/api_clients/<app_id>/` then scroll down and click the `Export list of current users` button . then A CSV file will be sent to your email , open that file and you'll see that the cell is active and the command will be executed.
+
+####References: 
+- https://www.owasp.org/index.php/CSV_Excel_Macro_Injection
+- https://hackerone.com/reports/72785
+- https://hackerone.com/reports/90415
+
+Thanks

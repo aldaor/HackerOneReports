@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/161290
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/superngorksky
+ReportedTo:Ian Dunn(iandunn-projects)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.09.2016 21:45:51
+
+Summary:
+
+Hi Ian,
+I would like to add payload to this report #151516.  
+payload used:
+http://google.com?,=2+2-2+3+cmd|' /C calc'!G2
+
+When injecting https://google.com? it will be rendered as a link but when comma (,) it will be rendered in a new cell which will execute the command.
+
+Thanks,

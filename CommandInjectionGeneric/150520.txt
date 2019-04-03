@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/150520
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/strukt
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:30.04.2018 6:17:40
+
+Summary:
+Researcher has identified and reported an XXE in one of our domain and helped us in resolving the issue.

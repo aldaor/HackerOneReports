@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/31554
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/abhishek_me
+ReportedTo:Twitter(twitter)
+BountyAmount:140.0
+Severity:
+State:Closed
+DateOfDisclosure:22.03.2015 14:19:25
+
+Summary:
+
+**Information** 
+There's an HTML Injection Vulnerability exists in Twitter main signup page which can be used by attackers to display personally crafted messages to twitter users for different malicious purposes. Affected parameters ```invite_code=``` & ```invite_name=```.
+
+**Steps to reproduce:**
+1. Refer to the main [singup page](https://twitter.com/signup).
+2. add ```invite_code=``` parameter along with any random value. I have used ```[]``` in my below POC.
+3. Now, put your personally crafted messages under ```invite_name=``` parameter. A user may even be prompted to visit a malicious link. Refer the final POC link. (**Please Note**: The reported vulnerability successfully works only when both parameters are used in conjunction with each other.)
+
+**Screenshot**
+Attached to this report
+
+**Final POC** 
+[Refer this link](https://twitter.com/signup?invite_name=, it's official. Twitter will start charging USD 4 per month from January 2015. However if you donate a one time amount of USD 10 to Twitter then your account will be considered as verified and twitter will be free for you. You can donate the amount directly to Twitter paypal address (scamemail@xxx.com). However if you wish to proceed without making donation then a monthly amount of USD 4 will be charged to your account beginning January 2015. [Read More: http://t.co/rdj3TZV])
+
+Let me know if i missed anything or any further information is required.

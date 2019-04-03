@@ -1,0 +1,111 @@
+ReportLink:https://hackerone.com/reports/315773
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/lirantal
+ReportedTo:Node.js third-party modules(nodejs-ecosystem)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:14.06.2018 19:51:02
+
+Summary:
+
+I would like to report Remote Command Execution vulnerability in pullit
+It allows remote command execution such as reading or writing to the file system, and executing other programs under the current user running the pullit node executable.
+
+## Module
+
+pullit
+
+https://www.npmjs.com/package/pullit
+
+version: 1.3.0
+
+### Description
+
+Display and pull branches from GitHub pull requests
+
+### Module Stats
+
+Stats
+1 downloads in the last day
+26 downloads in the last week
+64 downloads in the last month
+
+~768 estimated downloads per year
+
+## Description
+
+The pullit npm package makes insecure use of shell execution API (i.e: `exec()` or `execSync()`) which is vulnerable to a malicious user input based on a remote branch name on the GitHub platform, that can be set by a 3rd party, hence luring an innocent user to use the pullit module on the target branch and result in remote command execution exploit.
+
+## Steps To Reproduce:
+
+The pullit project has a set of exec() calls to git commands which may end up in originating from user input in terms of a carefully created remote branch name on GitHub, which pullit pulls branch names from.
+
+Re-construct of a flow that results in a remote command execution on the user running pullit: 
+1. Create a branch that could potentially terminate an exec() command and concatenate to it a new command:
+    1. `git checkout -b ";{echo,hello,world}>/tmp/c”`
+2. Push it to GitHub and create a pull request with this branch name
+3. Run pullit from command line, select the relevant pull request to checkout locally
+4. Read the contents of `/tmp/c`
+
+## Patch
+
+See below for patch to fix the problem:
+
+pullit-security-rce.patch:
+
+```
+diff --git a/src/index.js b/src/index.js
+index 3a34831..9bffd0d 100644
+--- a/src/index.js
++++ b/src/index.js
+@@ -1,7 +1,7 @@
+ const GitHubApi = require('github');
+ const Menu = require('terminal-menu');
+ const {
+-  execSync
++  execFileSync
+ } = require('child_process');
+ const parse = require('parse-github-repo-url');
+ 
+@@ -12,7 +12,7 @@ class Pullit {
+   }
+ 
+   init() {
+-    const url = execSync(`git config --get remote.origin.url`, {
++    const url = execFileSync('git', ['config', '--get', 'remote.origin.url'], {
+       encoding: 'utf8'
+     }).trim();
+ 
+@@ -34,8 +34,11 @@ class Pullit {
+       })
+       .then(res => {
+         const branch = res.data.head.ref;
+-        execSync(
+-          `git fetch origin pull/${id}/head:${branch} && git checkout ${branch}`
++        execFileSync(
++          'git', ['fetch', 'origin', `pull/${id}/head:${branch}`]
++        );
++        execFileSync(
++          'git', ['checkout', branch]
+         );
+       })
+       .catch(err => {
+```
+
+## Supporting Material/References:
+
+- MacOS Sierra 10.12.6 
+- Node.js 8.9.4
+- npm 5.6.0
+
+## Wrap up
+
+> Select Y or N for the following statements:
+
+- [Y] I contacted the maintainer to let him know
+- [N] I opened an issue in the related repository
+
+## Impact
+
+-

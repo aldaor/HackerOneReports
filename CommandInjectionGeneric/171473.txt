@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/171473
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/quistertow
+ReportedTo:OWOX, Inc.(owox)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.12.2016 20:35:20
+
+Summary:
+
+Hello,
+I found a CRLF injection vulnerability in bi.owox.com
+> More about HTTP response splitting https://www.owasp.org/index.php/Testing_for_HTTP_Splitting/Smuggling_(OTG-INPVAL-016)
+
+**POC (Burp)** > Adding a new header with ```%0d%0a```
+
+{F122461}
+
+
+Regards,
+ Florin

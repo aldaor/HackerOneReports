@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/127032
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/cisplatin
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.08.2016 16:14:33
+
+Summary:
+
+As an admin of a company, I can set my company name to be something like "=1+1", which, when downloaded by me or anyone else with permission to access that file, will execute and show "2" in the excel file.
+
+While this may seem safe, I am able to make the name something more malicious, such as "-2+3+cmd|' /C calc'!D2", which can be used to execute arbitrary commands in Excel.
+
+A recommended fix for this is to escape special excel "trigger" characters that cause commands to be executed.

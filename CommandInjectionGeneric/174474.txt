@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/174474
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/zuh4n
+ReportedTo:Harvest(harvest)
+BountyAmount:300.0
+Severity:low
+State:Closed
+DateOfDisclosure:24.03.2017 11:03:01
+
+Summary:
+
+Hello guys,
+
+**_Details:_**
+Well, initially I was testing for CRLF (Carriage Return Line Feed) Injection, but how turned out, I was able to inject cookie without CRLF, just via # value at HTTP Request.
+
+**_PoC:_**
+Attacker able to inject new cookie from any application place, e.g.
+`https://testerovusera.harvestapp.com/people/1412277/edit#NewLocalCookieKey=NewLocalCookieValue`
+in this case cookie will be created to following path, and will be valid only there: _/people/1412277/_
+**but**, it could be bypassed, if append root application path, e.g.
+`https://testerovusera.harvestapp.com/people/1412277/edit#NewGlobalCookieKey=NewGlobalCookieValue;path=/;/`
+{F126502}
+
+**_Attacking scenario:_**
+This vulnerability perfectly could be used in combination with other vulnerabilities:
+- XSS thru Cookie;
+- Session Fixation;
+- CSRF protection bypass
+
+**_Recommendation:_**
+Properly validate what is going to cookie jar
+
+Thank you,
+Stas

@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/17225
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/bitquark
+ReportedTo:Uzbey(uzbey)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.08.2014 18:50:00
+
+Summary:
+
+The tile ID parameter to the tile image script is vulnerable to SQL injection.
+
+The following will cause the script to run a benchmark, returning 8-10 seconds later:
+
+https://staging.uzbey.com/tiles1600/693/sleep(10)

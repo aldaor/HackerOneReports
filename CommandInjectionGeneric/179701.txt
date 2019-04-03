@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/179701
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/twi0x00tter
+ReportedTo:Blockchain(blockchain)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.03.2017 21:03:45
+
+Summary:
+wordpress username enumeration

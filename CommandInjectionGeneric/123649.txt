@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/123649
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/mg94
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:25.04.2016 17:34:31
+
+Summary:
+
+Hello New Relic Team ,
+
+i have just found that i can add html code and it will be executed .
+the issue in https://synthetics.newrelic.com
+if you added a new monitor with the html code , for example [ "><img src="http://i.imgur.com/0DSbAs4.gif"> ]
+
+when you go to [ https://synthetics.newrelic.com/accounts/"account_number"/synthetics ] 
+and search for it with < 
+the code will run and the image will be loaded
+
+thanks
+Muhammed

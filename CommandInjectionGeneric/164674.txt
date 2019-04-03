@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/164674
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/grande
+ReportedTo:Ian Dunn(iandunn-projects)
+BountyAmount:50.0
+Severity:low
+State:Closed
+DateOfDisclosure:12.10.2016 7:49:59
+
+Summary:
+
+Hello, Ian!
+
+I see you tried to escape "=, -, +, @" in your code ([#151516](https://hackerone.com/reports/151516)), but let me show simple workaround.
+
+I've made CSV injection by using this string ";=cmd|' /C calc'!A5" without doublequotes.
+
+";" will bypass your trying to set the quote in the beginning of the string.
+
+";" acts as a new cell separator.
+
+Tested in the Excel 2016

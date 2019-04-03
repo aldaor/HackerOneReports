@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/197958
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/phenix
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:2000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:21.07.2017 9:51:32
+
+Summary:
+The researcher found a privilege escalation in the EdgeSwitch prior to version `1.7.1`, an CGI script don't fully sanitize the user input resulting in local commands execution, allowing an operator user (`Privilege-1`)  to escalate privileges and became administrator (`Privilege-15`).

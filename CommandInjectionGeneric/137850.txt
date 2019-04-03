@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/137850
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/awake
+ReportedTo:Pornhub(pornhub)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:22.06.2016 15:50:31
+
+Summary:
+Missing character escaping in video title delivery of an executable CSV payload to when exporting stats to file.

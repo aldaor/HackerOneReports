@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/124223
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/stewie
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:25.04.2016 10:37:54
+
+Summary:
+
+I've bypassed #111192 by using this string ";=cmd|' /C calc'!A0" without doublequotes. Steps to reproduce are as in #111192. Tested in excel 2003-2013

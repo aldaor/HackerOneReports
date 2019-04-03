@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/147188
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/only1
+ReportedTo:FantasyTote(fantasytote)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.06.2016 9:59:14
+
+Summary:
+
+Hi, i have found a cache issue that your system store the number of clicks at the  Deposits button.
+
+You can click the   Deposits button more than one time and the amount will by multiplied by the number of clicks .
+
+I have attacked the poc .
+
+Thanks .

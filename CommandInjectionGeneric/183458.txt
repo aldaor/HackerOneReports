@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/183458
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/dblack
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:11.12.2017 11:58:31
+
+Summary:
+In UniFi Cloud Key versions prior to `5.3.12`, `5.4.9` and `5.5.2`, the firmware is downloaded in a unprotected channel, with allow an attacker in an MitM scenario to interfere with the communication, and possibly modifying the firmware during an update. The versions `5.3.12`, `5.4.9` and `5.5.2` fix this problem by utilizing encrypted channel to download the firmware.

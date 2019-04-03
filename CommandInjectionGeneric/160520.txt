@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/160520
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/lalatina
+ReportedTo:Ian Dunn(iandunn-projects)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:12.10.2016 4:04:29
+
+Summary:
+
+Hi.
+
+**Steps to reproduce:**
+
+1. The same in previous https://hackerone.com/reports/151516 report.
+2. But payload to bypass your fix would be like this: `;=cmd|' /C calc'!A0`
+
+**Solution:**
+
+1. Add `;` in your escape function esc_csv() on line 2858 of camptix.php
+
+**References:**
+
+1. https://www.owasp.org/index.php/CSV_Excel_Macro_Injection
+
+Tested on Windows 7 64 + Microsoft Office Exel 2003(think will work and on later versions)
+
+Regards.

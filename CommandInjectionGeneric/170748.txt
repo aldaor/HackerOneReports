@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/170748
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/exploit_in
+ReportedTo:RubyGems(rubygems)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.02.2018 23:22:42
+
+Summary:
+
+http://m.rubygems.org is this site under the scope for this bounty?

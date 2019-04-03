@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/335761
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/khaledibnalwalid
+ReportedTo:ExpressionEngine(expressionengine)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:20.04.2018 15:17:39
+
+Summary:
+The reporter determined that a malicious Channel Set could be used to allow an administrator to upload a PHP file that they might otherwise not have permission to upload. Combined with the temporary folder name algorithm being available in the source code, the malicious administrator could potentially guess its location, and if the site were running with a web-accessible system folder, could allow them to run arbitrary code.
+
+The issue was resolved to prevent potential discovery of the temporary folder, and decreased the TTL of that folder to further prevent from any brute-force guessing of the folder name.
+
+It should be noted that post-installation best-practices is to [move the system folder above web-root](https://docs.expressionengine.com/latest/installation/best_practices.html), which by itself would make such an attack impossible even for a CMS administrator.

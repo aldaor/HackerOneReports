@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/130338
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/trabajoduro
+ReportedTo:Moneybird(moneybird)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 7:57:11
+
+Summary:
+This researcher pointed at that is was possible to include formulas in the CSV export of Moneybird. Because these CSV files are interpreted by Excel, the formulas are executed on the clients computer. We are now filtering the input into the CSV export to prevent this behaviour.

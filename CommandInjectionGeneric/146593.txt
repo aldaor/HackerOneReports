@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/146593
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/zephrfish
+ReportedTo:Pornhub(pornhub)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:04.07.2016 18:00:25
+
+Summary:
+The researcher identified that it was possible to inject arbitrary characters into video titles, that when exported via video manager would result in client-side code execution. The researcher was successful in getting a pingback from a meterpreter shell on the victim's machine.

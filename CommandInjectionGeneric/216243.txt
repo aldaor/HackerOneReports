@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/216243
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/edoverflow
+ReportedTo:GitLab(gitlab)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:21.07.2017 6:14:48
+
+Summary:
+
+Dear GitLab bug bounty team,
+
+# Summary
+---
+
+GitLab allows users to export issues as a .csv file. By injecting a payload into an issue title an attacker could exfiltrate data or execute code on the target machine. For instance, by naming an issue `=cmd|' /C calc'!A0` I am able to open up calc.exe on Windows.
+
+# Steps to reproduce
+---
+
+1) Create an issue with `=cmd|' /C calc'!A0` as the title;
+2) Export all issues (The file is sent as an email attachment);
+3) Open the .csv file on a Windows machine.
+
+**Result:** calc.exe pops up.
+
+# Fix
+---
+
+Prefix `=`, `+`, `-` and `@` symbols with a `'` in issues when exporting them to a .csv file.
+
+If you require any further information, feel free to contact me.
+
+Best regards,
+Ed

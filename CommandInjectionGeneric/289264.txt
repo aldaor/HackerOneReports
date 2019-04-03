@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/289264
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/maxpl0it
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:19.06.2018 12:17:04
+
+Summary:
+In AirOS 6.1.5 and prior, due to lack of validation is possible to bypass the CSRF in certain web pages. If an authenticated user access an attacker controlled web page, it could trigger the CSRF and the resulting request could modify the device configuration and creating stored-XSS, with the XSS content is possible to bypass the CSRF completely and finally trigger the RCE.

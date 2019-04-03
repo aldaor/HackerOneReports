@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/147220
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/tayyab-qadir
+ReportedTo:FantasyTote(fantasytote)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:25.06.2016 16:18:05
+
+Summary:
+
+Hi 
+
+check this Video POC 
+i am able to bypass the Limit of deposite balnce 
+the limit is 150 but i can put 2000 
+
+https://drive.google.com/file/d/0B-HtZBO84sdSMkFEQ21vZW5Uak0/view
+
+Thanks
+Regards
+Tayyab Qadir 

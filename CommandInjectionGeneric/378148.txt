@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/378148
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/nyangawa
+ReportedTo:GitLab(gitlab)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:22.08.2018 9:56:02
+
+Summary:
+
+**Summary:** 
+A filename regular expression could be bypassed and enable the attacker to create a symbolic link in Gitlab upload directory by importing a specially crafted Gitlab export. Further more, Gitlab is designed to not delete project upload directory currently. So, the attacker could delete the imported project and then upload another specially crafted Gitlab export to a project with the same name, which leads to path traversal/arbitrary file upload and finally enables the attacker to be able to get a shell with the permission of the system gitlab user.
+
+**Description:**
+1. how to create a symbolic link in the upload directory
+code in `file_importer.rb` uses `%r{.*/\.{1,2}$}` to except `.` and `..` in the extracted project import directory tree, and check everything else that does not match this regex and delete all symlinks. However, we can easily construct a symlink with the name `.\nevil` in the tarball that matches this regex perfectly. Therefore, it will not be removed by function `remove_symlinks!` in the same file, and finally uploaded to `/var/opt/gitlab/gitlab-rails/uploads/nyangawa/myrepo/.\nevil -> /var/opt/gitlab` (assume we import the project to `nyangawa/myrepo` and the symlink points to `/var/opt/gitlab`)
+
+2. how to use the uploaded symbolic link to get shell access
+First delete the `nyangawa/myrepo` project we just created. For some reasons the upload directory of this project does not get purged. Then we import another tarball which has, for example, `uploads/.\neviil/.ssh/authorized_keys` in it. And the content of this file is my ssh public key. Then import this tarball to create project `nyangawa/myrepo` again.
+
+3. after all
+the uploaded `authorized_keys` is copied to `/var/opt/gitlab/gitlab-rails/uploads/nyangawa/myrepo/.\nevil/.ssh/authorized_keys` of the victim's filesystem but unfortunately, this path redirects to `/var/opt/gitlab/.ssh/authorized_keys`. Then I can login to the victim server by ssh with Gitlab's system username.
+
+
+For step 2 and 3, there're some other approaches to get command executed since we can already upload any file to the victim's file system controlled by Gitlab.
+
+
+## Steps To Reproduce:
+
+As I stated in description. I can upload the 2 PoC tarballs if you ask.
+
+## Impact
+
+1. An attacker can upload arbitrary file to the victim's file system
+1. Data of other users could be override
+1. An attacker can get a system shell by overwrite specific files.

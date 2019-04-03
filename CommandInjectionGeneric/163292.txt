@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/163292
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/fbogner
+ReportedTo:Dropbox(dropbox)
+BountyAmount:1458.0
+Severity:
+State:Closed
+DateOfDisclosure:03.12.2016 19:16:13
+
+Summary:
+A mistake in our compilation meant that one of our Qt libraries was unintentionally loading a openssl.cnf from another user on Windows. The config file allowed the other user to specify a DLL to load, which meant that a user with this specific username could escalate privileges and execute code as another user running Dropbox. @fbogner was extremely helpful and also gave us scripts to detect it.

