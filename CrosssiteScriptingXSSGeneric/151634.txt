@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/151634
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/pradeepch99
+ReportedTo:GoCD(gocd)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.11.2018 13:02:46
+
+Summary:
+Possible XSS when updating server configuration.

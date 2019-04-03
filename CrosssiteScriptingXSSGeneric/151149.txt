@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/151149
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/thezawad
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:15.08.2016 8:56:08
+
+Summary:
+
+Hello,
+Another report here.
+
+**Description**
+I found that www.joinolx.com has an option to do subscription for vacancy alert. So I took a look at that.
+I was able to include my HTML codes to manipulate emails sent to my address.
+The *Name* field in the subscription form doesn't validate the name to strip html tags.
+
+**Steps to Reproduce**
+1. Go to any job link ( *eg. http://www.joinolx.com/careers/job/166318* )
+2. Now from the left side Click on *Subscribe to our job alert*
+3. In the Name field enter `<h1><font color="red">Subscription service Hacked by Zawad</font></h1>`
+4. Enter your email, select random country and job position and click *Send*
+Check your email and you will see the manipulated email.
+
+**Risk**
+An attacker can deliberately send malicious email from this service to make victim believe it was actually sent by OLX (and when it comes to Job service everyone would believe everything LOL)
+
+The fix can be pretty simple to remove the tags or disallowing the html tags in the Name field. (it is never expected that a Name field will contain HTML tags).
+
+Hope you resolve and reward.
+
+Thanks.
+
+-----
+Zawad

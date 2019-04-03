@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/150837
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/nileshsapariya
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.10.2016 11:49:47
+
+Summary:
+
+Hi Team,
+
+Vulnerable URL :-
+https://olx.qa/en/account/confirm/?email=&hash=26d7e919ff37300d2f363c9066dd5b9d&ts=14682640390036a<script>alert(1)<%2fscript>261db&p=0674cd7dFl22cq3mM5jZfwjNxZ7slA==&vk=0&utm_source=test&utm_medium=email&utm_campaign=link
+
+XSS will be trigger.
+
+Well as you guys mentioned in the report #150735 that .qa might not be in scope Nevertheless reporting here to making the platform secure.  And in a hope to get HOF ;) 
+
+Regards,
+Nilesh S 

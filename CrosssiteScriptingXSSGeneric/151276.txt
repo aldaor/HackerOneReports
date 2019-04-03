@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/151276
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/nahamsec
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:650.0
+Severity:medium
+State:Closed
+DateOfDisclosure:25.09.2017 19:07:43
+
+Summary:
+The researcher found a Reflected XSS vulnerability in our video player service that seemed to be reproducible in multiple areas of the site. In recognition of how widespread the issue was, we opted to award a bonus.

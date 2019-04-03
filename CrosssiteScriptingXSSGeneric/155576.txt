@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/155576
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bogdantcaciuc
+ReportedTo:Algolia(algolia)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.09.2016 11:32:23
+
+Summary:
+
+Hello , i found a Cross-Site-Scripting in your github subdomain.
+All you have to do is to search in this input ( i attached input.PNG )
+
+Search about ,,document domain'' 
+Alert was executed , because you don't sanitize the query which comes from github 
+
+Search about ,,svg onload'' -> github.algolia.com
+
+
+Thanks.

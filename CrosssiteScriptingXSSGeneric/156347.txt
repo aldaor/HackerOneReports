@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/156347
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ctee
+ReportedTo:Algolia(algolia)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:07.09.2016 8:34:02
+
+Summary:
+
+Stored XSS is triggred from **Indices** -> **Generate a UI Demo**. Typing anything in the **Primary, Secondary, Tertiary, Image or URL attributes** for **User Interface** section. These text box have a drop down which displays the json keys during which XSS is triggered. 
+
+Sample json for XSS would be 
+``{
+  "<img src=1 onerror=alert(document.domain)>": "hello",
+}``
+
+Attached: screen shot

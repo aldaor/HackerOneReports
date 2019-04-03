@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/145355
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/fransrosen
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:750.0
+Severity:
+State:Closed
+DateOfDisclosure:19.07.2016 12:51:26
+
+Summary:
+Due to a recent migration of the Gallery app to the new sharing endpoint a parameter changed from an integer to a string value. This value wasn't sanitized before and was thus now vulnerable to a Cross-Site-Scripting attack.
+
+To exploit this vulnerability an authenticated attacker has to share a folder with someone else, get them to open the shared folder in the Gallery app and open the sharing window there.
+
+Since Nextcloud employes a strict Content-Security-Policy this vulnerability is only exploitable in browsers not supporting Content-Security-Policy. You can check at caniuse.com whether your browser supports CSP.
+
+A detailed advisory can be found at https://nextcloud.com/security/advisory/?id=nc-sa-2016-001.
+
+------
+Thanks a lot, @fransrosen for pointing out this regression!
+Hi,
+Nice with the program launch! Congrats!
+
+I noticed that there was a Share-icon when toggling to the Gallery-view of a directory under "Nextcloud Files":
+{F99938}
+
+If your directory has a malicious name such as a HTML-payload: `<img src=x onerror=alert(1)>`, this HTML will run when clicking on the Share-icon:
+{F99937}
+
+I see that you have a proper CSP in place, but remember that Internet Explorer is not there yet:
+{F99939}
+
+Also, since any user could create files, a user could potentially execute this for an admin (if that admin is not using a CSP-supported browser that is).
+
+Let me know if you need more information.
+
+Regards,
+Frans

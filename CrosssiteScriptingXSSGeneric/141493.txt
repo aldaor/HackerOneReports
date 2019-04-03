@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/141493
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/zephrfish
+ReportedTo:Pornhub(pornhub)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:28.06.2016 20:56:18
+
+Summary:
+The researcher identified a path which exposed a vulnerable jQuery sinkhole allowing XSS. Additionally, the researcher was able to demonstrate a variety of attacks possible by way of arbitrary Javascript execution. Depending on the OS and browser implementation, the researcher demonstrated that he was able to run arbitrary commands on the client.

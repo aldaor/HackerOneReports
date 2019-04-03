@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/143294
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/spam404
+ReportedTo:Zomato(zomato)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.08.2016 11:31:47
+
+Summary:
+
+I found an XSS on zomato.com
+
+Here's a POC (works even on Chrome) - https://www.zomato.com/doha/drinks-and-nightlife-in-al-ghanim?metro='-prompt('XSS')-'
+
+I hope this helps :)

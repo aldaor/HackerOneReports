@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/150746
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/kasperkarlsson
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.10.2016 9:19:48
+
+Summary:
+
+Summary
+===
+The www.olx.ph domain is vulnerable to reflected XSS through the search function.
+
+Proof of concept
+===
+The following URL contains a (harmless) XSS vector, which causes an alert box to appear
+https://www.olx.ph/real-estate/ph-bul/?search[order]=filter_float_price%3A%22%3E%3Cscript%3Ealert(document.domain)%3C/script%3E
+
+This test was performed using Mozilla Firefox 47.0.1. A print screen of this PoC XSS vector in action is attached to this report.
+
+Recommended solution
+===
+All GET parameters should be properly escaped before being printed to the page.

@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/151034
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/nstikhomirov
+ReportedTo:QIWI(qiwi)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2017 8:22:50
+
+Summary:
+
+При нажатии "Вернуться на сайт" вызывается javascript:alert (F104691 - href vulnerable)
+https://bill.qiwi.com/order/external/success.action?comm=test&from=6045&to=&successUrl=javascript%3Aalert(1)//&order=747156761&phone=79051564213
+
+Уязвимое поля: successUrl, failUrl
+
+Как пофиксить: 
+Сделать фильтр и разрешать http и https...

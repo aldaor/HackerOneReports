@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/150668
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/lucasm
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.12.2016 14:15:09
+
+Summary:
+
+Hello,
+
+The OLX.PL is vulnerable to stored XSS attack.
+When adding new advertisement, it is possible to put a payload in its title (here I used Title<script>alert(1)</script>
+
+I see ads are being pre-moderated, however it can remain uncaught also the length limit in title field is enough to insert into it e.g. a BeEF hook so it will invisible hack moderator's browser. 
+Assuming there are unsolved session fixation issues this may lead to takeover of moderator's cookie and impersonating him
+
+This input should be validated properly, e.g. a whitelist of chracters that can be used - aplhanum + some chars like .,!? but no html 
+
+Please see screenshots as a PoC
+
+Cheers
+Lukasz

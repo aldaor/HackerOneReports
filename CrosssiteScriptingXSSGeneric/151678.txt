@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/151678
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/kiraak-boy
+ReportedTo:GoCD(gocd)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.11.2018 13:36:41
+
+Summary:
+Possible XSS vulnerability when creating a new package repository on GoCD.

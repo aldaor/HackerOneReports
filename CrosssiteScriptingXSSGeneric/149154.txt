@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/149154
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/sysecure
+ReportedTo:Algolia(algolia)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:03.08.2016 14:55:35
+
+Summary:
+
+Hi ,i have found an xss issue here : https://www.algolia.com/explorer#?index=test&tab=ranking
+Steps to reproduce :
+1-Go to : https://www.algolia.com/explorer#?index=test&tab=ranking
+2-At the Attributes to index add this script  :`"><img src=x onerror=prompt('XSS');> ` and press enter .
+3-Click save 
+You will see that the xss has been fired .
+You can go to https://www.algolia.com/explorer#?index=test&tab=ranking again you will see that xss is fired again .
+
+Thanks ,
+Saleh

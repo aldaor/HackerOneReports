@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/149287
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/shubham
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:185.0
+Severity:
+State:Closed
+DateOfDisclosure:12.12.2016 20:36:13
+
+Summary:
+
+Dear James,
+
+I've found a reflected xss in nanostation Loco M2.
+
+just open this link and xss will execute.
+http://172.98.67.89:22057/survey.cgi?iface=%22%3E%3Cimg%20src=x%20onerror=prompt(document.cookie)%3E
+
+{F103333}
+
+Best Regard
+Shubham

@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/157958
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/s44mux
+ReportedTo:Instacart(instacart)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:09.09.2016 0:14:59
+
+Summary:
+
+First log in account.
+
+We headed to the "lists and recipes" option
+
+https://www.instacart.com/store/demo/lists
+
+
+create a new list "add list"
+
+Payload
+"></script></title><script>alert(document.domain)</script>
+
+
+URL pwned.
+
+https://www.instacart.com/lists/izy0w6Q?preview=true
+
+attached a screenshot

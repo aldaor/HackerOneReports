@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/157813
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/yappare
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.01.2017 9:25:27
+
+Summary:
+
+Hi,
+
+There is improper validation at q parameter on https://m.olx.ph/ where it can be manipulated by an attacker to include his/her XSS payload to execute javascript code.
+
+As example:
+
+``https://m.olx.ph/all-results?q=0;url=data:text/html;base64,PHNjcmlwdD5hbGVydCgndGVzdDMnKTwvc2NyaXB0Pg" HTTP-EQUIV="refresh" a="a``
+
+Where once opened the above URL, once refreshed, a Javascript popup will appear.
+This is because, from the XSS payload used, the Meta tag was properly closed with " character and then it was supplied with a redirect script which already encoded in Base64 format. Where if decoded, it is actually 
+``<script>alert('test3')</script>``

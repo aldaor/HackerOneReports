@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/142946
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/netfuzzer
+ReportedTo:Uber(uber)
+BountyAmount:750.0
+Severity:
+State:Closed
+DateOfDisclosure:21.07.2016 21:33:34
+
+Summary:
+
+Hey,
+
+there's a xss vulnerability affecting http://ubermovement.com/community/daniel that may lead to phishing attacks and CSRF attacks.
+
+Steps to reproduce:
+1. Visit http://ubermovement.com/community/daniel?citySource=javascript:alert(%27XSSED%27);//
+2. Click in "Back to community"
+3. See the xss alert.
+
+See the attached screenshot.
+
+Wonder if this would be eligible for a bug bounty?
+
+Cheers,
+Mario.

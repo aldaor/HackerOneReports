@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/141244
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/virtualhunter
+ReportedTo:Zendesk(zendesk)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:15.12.2016 0:56:43
+
+Summary:
+
+Vulnerable urls:
+https://www.zendesk.com/product/tour/
+https://www.zendesk.com/product/pricing/
+or just https://www.zendesk.com/product/
+
+Vulnerable parameter is a **cvo_sid1**, used in **live.js**  to call convertro code (without sanitizing). This leads to generating malformed javascript answer with XSS injection ability. (See screenshots below).
+There is a restriction on a semicolon use, so i replaced it with %3b.
+
+To reproduce vulnerability, you could try this safe example:
+`https://www.zendesk.com/product/tour/#?cvo_sid1=1")%3balert(document.cookie%2b"`
+
+This vulnerability provides a great opportunity for victim to lose not only cookies, but also control over the account after stealth forwarding to porposely generated link like this :))
+

@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/146196
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/fiseha_-
+ReportedTo:Trello(trello)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.06.2016 15:26:16
+
+Summary:
+A new version of the jetpack plugin became available that resolved a security issue.  The availability of this new version was reported to us by multiple researchers, however by the time we received these reports we'd already been automatically updated to the most recent (fixed) version.
+
+Please note that our program description now asks researchers not to report new versions of third-party libraries until the new version has been available for more than 48 hours.
+Hey 
+I saw that u guys upgraded the jetpack plugin 
+And today jetpack has relased that plugins greater 4.0.2 & 4.0.3 have multiple bugs 
+Here is the jetpack blog 
+
+https://jetpack.com/2016/06/20/jetpack-4-0-4-bug-fixes/

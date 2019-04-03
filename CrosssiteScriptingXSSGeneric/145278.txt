@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/145278
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/netfuzzer
+ReportedTo:Uber(uber)
+BountyAmount:7000.0
+Severity:
+State:Closed
+DateOfDisclosure:25.07.2016 17:43:50
+
+Summary:
+
+Hey,
+
+this vulnerability is essentially the same as bug 145276, i'm reporting it again just in case.
+
+there's a cross site scripting vulnerability in https://www.uber.com/.
+
+steps to reproduce:
+
+1.visit https://www.uber.com/?kxsrc=https%3A//beacon.krxd.net/optout_check%3Fcallback%3Dalert%28/XSSED/.source%29
+2. wait until the page finishes loading
+3.see the xss alert.
+
+wonder it would be eligible for a bounty?
+
+Cheers,
+Mario

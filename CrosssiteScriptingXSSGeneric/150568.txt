@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/150568
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/konduru-jashwanth
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.07.2018 6:04:28
+
+Summary:
+
+Steps:-
+1. Go to http://www.olx.ba/pretraga?trazilica="PAYLOAD"
+2.Payload :- "onmousemove=alert("XSS_BY_JASHWANTH") "
+3. You will get Pop up 
+4. If the script should be trusted or not, it will execute the script in the user context allowing the attacker to access any cookies or session tokens retained by the browser.
+
+Impact 
+Attacker can make use of this to conduct attacks like phishing, temporary defacements, user session hijacking, possible introduction of worms etc.
+
+Poc : Attached Screenshot 
+
+Recommendation 
+•	Revisit the entire application and validate the user input at server side. 
+•	Apply white listing technique to filter out unexpected input. 
+•	Sanitize the data collected from input fields before further processing. 
+•	Filter out special and meta-characters from user input. 
+•	HTML encode the output that is echoed back to the user.

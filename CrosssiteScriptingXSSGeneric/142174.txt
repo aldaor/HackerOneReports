@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/142174
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/thezawad
+ReportedTo:Trello(trello)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.06.2016 16:33:24
+
+Summary:
+
+Hey,
+It seems like you are using an unpatched Jetpack version.
+Your changelog says so
+http://blog.trello.com/wp-content/plugins/jetpack/changelog.txt
+
+It is known to be vulnerable to XSS
+Check it https://jetpack.com/2016/05/27/jetpack-4-0-3-critical-security-update/
+
+Please update your plugin.
+
+Thanks. 

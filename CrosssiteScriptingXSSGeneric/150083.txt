@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/150083
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/rohitdua
+ReportedTo:IRCCloud(irccloud)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2016 23:50:49
+
+Summary:
+
+I. Vulnerability
+---------------------
+IRCCloud is affected by Cross Site Scripting vulnerability in its badges page. (www.irccloud.com/badges)
+
+II. Description
+---------------------
+IRCCloud is open to parameter pollution attacks ie. a parameter passed more than once with different values results in varying different results.
+This bug is used to leverage an XSS in the badges page.
+
+####POC link:
+```
+www.irccloud.com/badges?hostname=hostname" type="text/javascript"> /*&hostname=*/alert('XSS\n-Rohit Dua'); //
+```
+If  you visit the link a javascript pops up showing the message 'XSS - Rohit Dua'. (screenshot_irccloud.png)
+
+Even after parameter pollution, the attack is ineffective due to strong XSS filters(possibly firewall)
+The _filter evasion_ is possible due a certain combination of javascript comments in the url that combine and comment out the unneeded part.
+
+#####[Attached]
+POC source code screenshot
+POC alert box screenshot
+
+Please verify and fix the same.

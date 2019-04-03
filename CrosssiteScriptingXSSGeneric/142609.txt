@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/142609
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/rojansec
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:31.08.2016 13:39:23
+
+Summary:
+##Issue
+
+A previous report (https://hackerone.com/reports/127077) led the reporter to do some further investigation. During the investigation, a DOM XSS was found in one of the javascript libraries used on www.lahitapiola.fi. The report contained a brief PoC and a screenshot as proof.
+
+##Fix
+
+The issue was investigated and found to be valid. The vulnerability was fixed and the fix was deployed to production. The reporter verified the fix as working.
+
+##Reasoning
+
+The reported case was valid and within the scope of the bug bounty program. The issue was fixed and the reporter was awarded with a bounty. The report was publicly disclosed.
+

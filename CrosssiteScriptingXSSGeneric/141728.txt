@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/141728
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/mugeesahmed
+ReportedTo:drchrono(drchrono)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 19:02:41
+
+Summary:
+
+
+information Discloser :-
+
+Information Discloser in your Blog www.drchrono.com/blog/readme.html.
+
+Latex HTML Element XSS :-
+
+LaTeX HTML Element XSS on Jetpack 3.9.1. your Blog is currently running an
+out dated version 3.9.1 of Jetpack prove https://www.drchrono.com/blog/wp-content/plugins/jetpack/readme.txt
+you can fix this issue ay updating the plugin

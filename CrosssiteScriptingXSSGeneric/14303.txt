@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/14303
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/smiegles
+ReportedTo:Automattic(automattic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 10:00:24
+
+Summary:
+
+Hi there :)
+
+I found a self XSS located at the front page of http://jetpack.me/, To reproduce this you have to scroll to the `Every feature!` part and search for `<img src=x onerror=alert(1)>` in the search engine.
+
+Best regards,
+
+Olivier Beg

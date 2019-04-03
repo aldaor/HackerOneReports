@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/152368
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/sinkmanu
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.03.2017 1:41:41
+
+Summary:
+
+Hello,
+
+I found a XSS vulnerability that could be used by an attacker to execute javascript in the client, for example, an attacker could steal the cookie of the user or an attacker could redirect the client to an attacker site and try to exploit vulnerabilities against the browser.
+
+Here you can find information about this vulnerability and how it should be fixed. https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
+
+
+PoC (Proof of Concept):
+
+https://learn.newrelic.com/search/node/<svg onload=alert(document.domain)>asdasd
+
+
+It could be possible because the version of Drupal is outdated.
+
+
+Regards,

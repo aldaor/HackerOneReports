@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/149571
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/huntingforbugs
+ReportedTo:Whisper(whisper)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:16.10.2016 7:14:47
+
+Summary:
+
+Hi,
+
+I detected a Stored XSS in wis.pr. These are the steps to reproduce the bug:
+
+1. Create a new group named: Test>"<script>alert('test');</script>
+2. Copy the sharing URL (http://wis.pr/*****).
+3. Open this URL in a browser.
+
+Please find the attached screenshots.
+
+Fix: Sanitize the output in twitter:description meta. Please find attached the screenshot named "fix.jpg".
+
+Don't hesitate to contact me if you need further details.

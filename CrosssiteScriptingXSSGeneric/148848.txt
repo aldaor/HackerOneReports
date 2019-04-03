@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/148848
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/securitythinker
+ReportedTo:Slack(slack)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:25.06.2017 0:03:46
+
+Summary:
+
+good day:
+
+when a team mate named an xss  payload:
+ex: "><img src=x onerror=alert(1)>
+     "><img src=x onerror=alert(1)>
+that xss payload will execute when making a post then share it, to a team that has an xss payload named.  that shared as a direct message please see screenshot 
+
+when making post here:
+https://hunter22.slack.com/files/create/space

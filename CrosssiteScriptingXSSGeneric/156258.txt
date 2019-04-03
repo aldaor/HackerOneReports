@@ -1,0 +1,118 @@
+ReportLink:https://hackerone.com/reports/156258
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/dejavuln
+ReportedTo:OX App Suite(appsuite)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:27.10.2016 10:47:29
+
+Summary:
+
+## Summary
+
+"OX Guard" introduces a Stored Cross-Site Scripting (XSS) vulnerability to the frontend. 
+
+HTML/JS code can be injected into the frontend through an incoming email. 
+
+Injected code will be executed (= become part of the DOM) the moment the victim opens the email. 
+
+The vulnerability allows for various serious attacks, such as the exfiltration of potentially sensitive information related to emails, contacts, calendar and other modules.
+
+{F109325}
+{F109322}
+{F109323}
+
+## Vulnerability Details
+
+1. _**The attacker**_ crafts a text-only email containing malicious code and
+2. signs it with an inline PGP signature and
+3. sends it to the victim, who is using OX with OX Guard.
+4. _**The victim**_ opens the email in OX (portal, email module, possibly other locations).
+5. OX (Guard) automatically verifies the PGP signature and, if successful, 
+6. displays the email body without the inline signature. 
+
+Step 6 is where the frontend becomes vulnerable: the displayed email body is not sanitized. 
+
+As mentioned in step 5, the signature needs to be recognized as valid. In other words, OX (Guard) must have access to the attacker's public key. 
+
+
+While this may initially appear to be a mitigating factor, OX (Guard) is capable of fetching public keys automatically if the key can be found either locally ("on the same OX Guard system") or remotely ("Guard will use public PGP Key servers if configured to find PGP Public keys. In addition, Guard will also look up SRV records for PGP Key servers for a recipients domain"). (Source: [OX Guard documentation](https://oxpedia.org/wiki/index.php?title=AppSuite:OX_Guard#Recipient_key_detection))
+
+The attacker can abuse this "key import"  feature either by creating a key pair on the same OX (Guard) system, or by making his public key accessible via a public key server or SRV record. 
+
+I have been able to confirm this behavior by observing the OX installation of a commercial, privacy-focused email provider. **The only thing required to use this vulnerability against any of their webmail users is the victim's email address**.
+
+
+## Proof of Concept
+
+Simple payload:
+```aaa <img src=x onerror="alert(1)"> bbb <u>uuu</u> ccc```
+
+Slightly more interesting payload; shows access to sensitive data:
+```aaa <img src=x onerror="alert('XSS@'+document.domain+'\n\n'+document.getElementsByTagName('html')[0].innerText)"> bbb <u>uuu</u> ccc```
+
+Keep in mind the code has to be placed in the body of a plain-text email and signed (not encrypted) inline (not MIME). I don't think it's possible to send such an email from within OX; I used a standalone client to craft these emails. 
+
+Anyway, I'm attaching an email as a template for your own testing. If you're going to use it, you'll need my PGP key, which is referenced in the email's header: F109324 
+
+If you can't get it to work at all, let me know and I'll send you the email myself.
+
+
+## Relevant Code (Frontend, Backend)
+
+I've had a _**quick**_ look at your code; below are some snippets that seemed relevant. I hope this will make it easier for you to assign the issue to the right developer. 
+
+This is where the unsanitized email body is inserted into the frontend:
+
+```
+./oxguard-ui/apps/oxguard/pgp/checker.js:84:
+    // Verify signature
+    function verify (index, baton, isinline, location) {
+    [...]
+        http.get(ox.apiRoot + '/oxguard/pgpmail?action=verify', params)
+        .done(function (data) {
+        [...]    
+            if (result.verified === true) {
+                signedicon = $('<i class="oxguard_icon_fa fa-pencil-square-o fa guard_signed" aria-hidden="true" title="' + gt('This Email was signed and verified.') + '"/>');
+                if (isinline) {
+                    var newbody = $('<section class="body user-select-text">').append(result.content);
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^
+```
+
+jQuery documentation [http://api.jquery.com/append/](http://api.jquery.com/append/) on append():
+
+> Do not use these methods to insert strings obtained from untrusted sources. [...]
+> Doing so can introduce cross-site-scripting (XSS) vulnerabilities. 
+> Remove or escape any user input before adding content to the document. 
+
+
+I believe the "content" originates from the following part of the backend code, where it becomes part of the JSON that will later be processed by the previously mentioned frontend code:
+
+```
+./com.openexchange.guard/src/com/openexchange/guard/pgp/PGPResult.java:87
+
+    public String getJsonString() {
+        JsonObject result = new JsonObject();
+        result.add("signature", new JsonPrimitive(signature));
+        result.add("verified", new JsonPrimitive(verified));
+        result.add("missingPublicKey", new JsonPrimitive(missingPublicKey));
+        if (Strings.isNotEmpty(this.error)) {
+            result.addProperty("error", error);
+        }
+        if (Strings.isNotEmpty(this.content)) {
+            result.add("content", new JsonPrimitive(this.content));	// <=====
+        }
+        if (source != null) {
+        	result.add("source", new JsonPrimitive(source.getName()));
+        }
+        return result.toString();
+    }
+```
+
+*NB: Code snippets were taken from the most recent commit to [https://code.open-xchange.com/git/guard](https://code.open-xchange.com/git/guard):*
+
+```
+commit b6ebea2ca5f02dd739f37ca4b6592528cb6ca8bd
+Date:   Thu Jul 14 17:48:20 2016 +0200
+```

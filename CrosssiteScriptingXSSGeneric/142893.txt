@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/142893
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bogdantcaciuc
+ReportedTo:Moneybird(moneybird)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:06.07.2016 14:56:45
+
+Summary:
+The researcher found a stored XSS vulnerability inside the debtor report. We have taken measurements to prevent this XSS problem in the future.

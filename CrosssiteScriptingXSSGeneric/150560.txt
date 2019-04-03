@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/150560
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/thezawad
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.07.2016 14:46:05
+
+Summary:
+
+Hi,
+I see you have just launched the program on HackerOne.
+And I have visited your site olx.com.ar and found an interesting XSS.
+
+Let's see.
+**Summary**
+The bug lies in the 'description' of any posting. It seems you're removing and `<` and `>` sign to prevent including any html tags but there are some other ways ;-). I found that the `<meta>` tag is including everything from description.
+
+**Steps to reproduce**
+Go to https://www.olx.com.ar/posting
+Now create an ad with everything you want.
+In description put the following `;url=data:text/html;base64,PHNjcmlwdD5hbGVydCgneHNzIGJ5IHphd2FkJyk8L3NjcmlwdD4="HTTP-EQUIV="refresh" blah="`
+Now Publish the ad.
+and Visit the ad. You will see XSS being triggered.
+
+**PoC**
+https://adolfogonzaleschaves.olx.com.ar/xss-poc-for-hackerone-iid-891023785
+
+Hope you fix it  and offer some rewards :-)

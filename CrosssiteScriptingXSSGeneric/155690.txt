@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/155690
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bastianwelfrid
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.10.2016 12:34:55
+
+Summary:
+
+Hi team
+
+First I think this vulnerability doesn't fall at your bug bounty program but this is a bad design that should fix right now cause if an attacker get admin access he still can upload a malicious file in client server side.
+
+I saw that Logo & Log in image allow to upload other files type example *.html and it'll execute in client server.
+Other case,I created an html code and saved it as image file,server still executed it as html file.
+The Logo & Log in image will upload it into ../data/themedinstancelogo & ../data/themedbackgroundlogo
+
+Good news,I tried to upload an php file but server executed that file as text.
+
+PoC:
+Upload an html file through logo upload and Log in image and you will see that file will execute.
+
+http://example.com/nextcloud/data/themedinstancelogo
+http://example.com/nextcloud/data/themedbackgroundlogo
+
+Regards,

@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/15250
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/quistertow
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.10.2014 17:11:27
+
+Summary:
+
+Hello,
+I found a flash based xss in http://lingvo.mail.ru
+Video (private) : https://www.youtube.com/watch?v=Z02B9nvsBYs
+Tested on Google Chrome and Opera.
+Regards,
+  Florin

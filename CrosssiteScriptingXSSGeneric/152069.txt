@@ -1,0 +1,39 @@
+ReportLink:https://hackerone.com/reports/152069
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/dsopas
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.10.2016 11:49:36
+
+Summary:
+
+Hi guys,
+
+I found a stored XSS in olx.pt. I didn't tested on other domains so feel free to update this report if other domains are also affected.
+
+When submiting a new ad, I added my XSS payload on data[person]. 
+The ad got approved and no reflecting on this field. The output was sanitized.
+
+One thing that I know of was that the input wasn't, because if I edited the ad, the payload was launched so the input wasn't sanitized when added to the database. 
+
+Then I remembered to check the "other ads from this person" and guess what? Stored XSS payload was launched and reflected on the page twice:
+
+<meta property="og:title" content="Todos os anúncios do utilizador Tomás Foz"><img src=x onerror=prompt(1)>"/>
+
+And:
+
+<h3 class="xxx-large fbold lheight24 c000">Tomás Foz"><img src=x onerror=prompt(1)></h3>
+
+Check my attached screenshot.
+This is very dangerous because it runs automatically when the victim visits the page:
+https://olx.pt/ads/user/GGSl/
+
+Meanwhile I deleted the add to prevent any damage to your users.
+
+Hope it helps.
+
+Best,
+David Sopas
+@dsopas

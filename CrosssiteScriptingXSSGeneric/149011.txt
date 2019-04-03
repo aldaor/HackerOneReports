@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/149011
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/securitythinker
+ReportedTo:Slack(slack)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:25.06.2017 0:03:08
+
+Summary:
+
+when making  a BoxNote snippet with this xss payload:
+XSS") ;</script> <img src="<img src=search"/onerror=alert(document.domain)//"> "><marquee>
+
+when snippet made: and use the "view raw"  xss payload will be executed
+
+my ex: link where xss payload executed:
+https://files.slack.com/files-pri/T027N7MK3-F1NCA92JF/XSS______script___img_src___img_src_search__onerror_alert__Xss__________marquee__boxnote.boxnote
+
+that link will be executed in entire team mate  that could probably used in exploitation.

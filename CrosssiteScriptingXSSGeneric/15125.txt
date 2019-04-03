@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/15125
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/guido
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.08.2014 19:02:26
+
+Summary:
+
+Hello,
+
+I found a XSS vulnerability in your site. Try this:
+
+https://amp.twimg.com/amplify-web-player/prod/source.html?url=https%3A%2F%2Famp.twimg.com%2Fprod%2Fjson%2F2014%2F04%2F26%2F01%2F14b09302-2e2d-458d-9ffe-e8f665bcaac7%2Fe569bfc3-9e61-498d-812e-cc6b58fa1494.json&image_src=data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw%27onload%3D%27alert(1000)
+
+In browsers which do not adequately support the Content Security Policy header, this will execute alert(1000).
+
+According to this page not all browsers are supporting this yet: http://caniuse.com/contentsecuritypolicy, for instance my own Android phone seems to be vulnerable as I receive the alert when opening that URL.
+
+It happens because of this in amplify-web-player.min.js:
+
+`this._$poster = $("<div class='poster-image-container'><img class='poster-image' src='" + h + "'><span class='glyphicon glyphicon-media-play' style='display:none'></span></div>"), this._$allControls = $("<div class='all-controls'></div>"), g.impression && g.impression(), e.container ? (this._$container = $(e.container), this._$container.addClass("amplify-container")) : (this._$container = $("<div id='container' class='amplify-container'></div>"), $("body").append(this._$container)), this.resize(e.width, e.height), this._$allControls.append(l), this._$allControls.append(f), this._$allControls.append(c), this._$allControls.show();`
+
+(The variable 'h' is loaded with the value of the image_src parameter in the URL).
+
+I hope this was helpful to you.
+
+Guido

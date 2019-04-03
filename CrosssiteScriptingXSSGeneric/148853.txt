@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/148853
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/abdullah
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:02.07.2016 18:01:30
+
+Summary:
+The way browsers handle SVG files is terrible. If you're serving SVG files that your users can upload, **only allow them to be served as `text/plain`**.
+Hi , 
+
+Background 
+------------------------------------
+
+I had problem in setup the airship at ubuntu so I tested on your site .  
+If you uploads any file thet can use for XSS (HTML,SWF,etc) the content type will change to "text/plain; charset=us-ascii" . But for images it will stay the same . so if you upload SVG with JS content it will work fine ! 
+
+The "Content-Type: image/svg+xml; charset=us-ascii" header will make this attack works . 
+
+Just upload the svg file to the site . 
+
+PoC
+---------------
+
+{F102954}
+
+
+SVG's  is not good sometimes to view as image and it will be stored in users accounts.
+
+Thanks 

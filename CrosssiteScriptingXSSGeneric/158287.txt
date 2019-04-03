@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/158287
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/grampae
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:02.10.2017 12:41:48
+
+Summary:
+The researcher demonstrated that an unauthenticated POST request with crafted parameters could cause reflected-XSS due to lack of input sanitization on airOS v5.6.8. Fixes have been released with airOS v5.6.15 and airOS v6.0.1.

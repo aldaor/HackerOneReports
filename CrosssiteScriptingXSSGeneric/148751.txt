@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/148751
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/kelunik
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:25.0
+Severity:
+State:Closed
+DateOfDisclosure:01.07.2016 22:18:55
+
+Summary:
+This one was a grey area. One one hand, it's literally stored and it's literally a Javascript payload that a user could accidentally execute. On the other hand, it pushes the envelope of what counts as a vulnerability or not. (We decided to award a bounty as per our stated policy to err on the side of generosity when in doubt.) That being said, there's no real world use-case for a guest to share a non-HTTP(S) URL in their attribution for blog comments.
+Comments can contain an author's website. This website is used in the href attribute of link elements and isn't filtered. Thus it allows URLs like `javascript:alert(1)` to be used. These URLs must be filtered by protocol, e.g. only allow http and https.
+
+These attacks are blocked by the default CSP, but clients not supporting CSP or changed CSPs may be affected.
+
+This issue affects [Airship](https://github.com/paragonie/airship) Version 1.1.2 and lower.

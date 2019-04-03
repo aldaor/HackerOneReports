@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/153666
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/kenan
+ReportedTo:Twitter(twitter)
+BountyAmount:1120.0
+Severity:
+State:Closed
+DateOfDisclosure:05.07.2017 23:53:00
+
+Summary:
+
+Hi,
+
+On my previous report (number 126464) I've mentioned that 
+analytics.twitter.com has a CSP bypass which I couldn't exploit that time.
+
+Now, I've found a reflected XSS on careers.twitter.com which again I couldn't exploit by itself. Because you have CSP, and I've combined two of them to successfully trigger XSS.
+
+If you visit the url:
+https://careers.twitter.com/en/jobs-search.html?location=1%22%3E%3Cscript%20src=//analytics.twitter.com/tpm?tpm_cb=alert%28document.domain%29%3E//
+
+you will see xss triggered. 
+
+Regards.

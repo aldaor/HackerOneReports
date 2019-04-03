@@ -1,0 +1,74 @@
+ReportLink:https://hackerone.com/reports/151231
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/lukasreschke
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.07.2016 0:40:34
+
+Summary:
+
+# Description
+Internet Explorer has the nasty habit to perform Content-Type sniffing on delivered resources if the content-type is not known to it. Since the software isn't instructing Internet Explorer to disable content-type sniffing this leads to a stored XSS.  
+
+In a nutshell, it is possible to trick Internet Explorer in executing arbitrary files. A more in-detail description about Internet Explorers' mimetype handling can be found at https://msdn.microsoft.com/en-us/library/ms775147(v=vs.85).aspx. Let's just phrase it as: The length to what Microsoft goes to guess the file content is insane.
+
+# Exploitation
+To exploit this in this case we need to:
+
+- Craft the file in a way that Internet Explorer sniffs it's content
+- Control the file name delivered to Internet Explorer
+
+This is actually a pretty easy thing to achieve, I've attached {F104817} which is a file with ZIP header that then contains a malicious HTML payload:
+
+{F104818}
+
+It is now sufficient to upload the file as authenticated user and make another person using Internet Explorer make open the URL to said file. This will even work in IE 11 on Windows 8.1:
+
+{F104815}
+
+# Mitigation
+The most reliable mitigation would be to use a sandboxed domain for user-uploaded content. So files would only be served from that origin and the Same-Origin-Policy would prevent this problem. 
+
+Since this may not be possible in every case to enforce to users, setting the following headers in combination will mitigate content-type sniffing related problems:
+
+- `X-Content-Type-Options: nosniff` 
+- `X-Download-Options: noopen` 
+- `Content-Disposition: attachment; filename="filename.ext"'`
+
+One patch for [/src/Cabin/Hull/Landing/PublicFiles.php](https://github.com/paragonie/airship/blob/316a90803e6666befbee04c0a81d75abd0fc5319/src/Cabin/Hull/Landing/PublicFiles.php#L90) could look like the following:
+
+```
+From 42bc1760453fbfed004072929d99d9c397ab3f77 Mon Sep 17 00:00:00 2001
+From: Lukas Reschke <lukas@statuscode.ch>
+Date: Thu, 14 Jul 2016 00:57:26 +0200
+Subject: [PATCH] Prevent Mime Sniffing in Internet Explorer
+
+---
+ src/Cabin/Hull/Landing/PublicFiles.php | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/src/Cabin/Hull/Landing/PublicFiles.php b/src/Cabin/Hull/Landing/PublicFiles.php
+index 9fc9b1b..80ba6fa 100755
+--- a/src/Cabin/Hull/Landing/PublicFiles.php
++++ b/src/Cabin/Hull/Landing/PublicFiles.php
+@@ -92,6 +92,9 @@ class PublicFiles extends LandingGear
+             }
+
+             // Serve the file
++            \header('Content-Disposition: attachment; filename="'.urlencode($fileData['filename']).'"');
++            \header('X-Content-Type-Options: nosniff');
++            \header('X-Download-Options: noopen');
+             \header('Content-Type: ' . $fileData['type']);
+             $this->airship_lens_object->sendStandardHeaders($fileData['type']);
+             \readfile($realPath);
+--
+2.7.4 (Apple Git-66)
+```
+
+There may be other occurrences in the code that have the same issue. Generally speaking. There is no harm in adding the `X-Content-Type-Options: nosniff` header globally over the whole web application.
+
+---
+
+In case you need testing VMs from Microsoft, you can get them from free at http://modern.ie

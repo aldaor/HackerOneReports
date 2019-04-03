@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/141463
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/yaworsk
+ReportedTo:drchrono(drchrono)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 19:02:06
+
+Summary:
+
+Hi All,
+I've found a stored XSS vulnerability via an Angular Template Injection in the messages referral address field.
+
+##Description
+After visiting ``https://1337test.drchrono.com/messages/referrals/contacts/```, you can enter new contact information. In the field for the address, if enter [[5*5]], when the referrals contact overview will show the address as 25. This indicates an injection. 
+
+Opening the browser console and using the command angular.version, we can see you are using 1.1.5. So, entering the address for a contact as ```[[constructor.constructor('alert(document.cookie)')()]]```, saving and reloading the page, an stored XSS is executed {F96481}
+
+##Steps to reproduce
+1. Create a doctors account
+2. Visit ```https://1337test.drchrono.com/messages/referrals/contacts/```
+3. Add a new contact
+4. In the address field, enter ```[[constructor.constructor('alert(1)')()]]```
+
+Confirm the alert pop up with **1** in it.
+
+##Vulnerability
+The stored xss could be used for a complete account take over if an admin visited this contact page. An attacker only needs permission to create a referral contact to store the payload. In the example image, I've printed all cookies to the screen but this could easily be sent to a remote endpoint.
+
+Please let me know if you have any questions.
+Pete

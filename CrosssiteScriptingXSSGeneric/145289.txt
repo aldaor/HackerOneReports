@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/145289
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/s0nk3y
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.07.2016 23:12:07
+
+Summary:
+
+Hi , I have found an XSS stored vulnerability in the page paterns uber profile edit. the vulnerability in the vat number. Steps to reproduce:
+1. Login to partners.uber.com
+2. Go to a page https://partners.uber.com/profile/
+3. In the vat number enter a payload xss :  "><img src=x onerror=alert(0)> "><img src=x onerror=alert(0)> <script>alert(0)</script>
+4. save
+
+thank you, please tell me if the bug has been fixed.

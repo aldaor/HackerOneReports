@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/152958
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/thezawad
+ReportedTo:Ian Dunn(iandunn-projects)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:18.08.2016 16:39:13
+
+Summary:
+
+Hi,
+As discussed in #151561 submitting the report here.
+
+I have got some more bugs in Camptix Event Ticketing plugin.
+
+Well, the first one is a ticket page xss caused by the **Ticket Title**
+And the second one is kind of self-xss, caused by also the **Ticket title** of the plugin but in the coupons page.
+I have added a video *PoC* for your clarification with step by step reproduction.
+As I have seen in #9391 you've fixed self-xss, I have created this report.
+
+I think both of the bugs should be fixed.
+
+I expect you fix both of them.
+
+
+https://drive.google.com/open?id=0B0Ah8VhxGMynZXUwbGlaMm5iVDQ
+
+
+--------
+Zawad

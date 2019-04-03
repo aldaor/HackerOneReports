@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/148300
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/rtyler
+ReportedTo:concrete5(concrete5)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.04.2017 20:23:48
+
+Summary:
+
+##Configuration
+
+A concrete5 site running over https on a dedicated IP address. Or any situation where you're not doing name-based virtual hosting and the web server will answer to any hostname.
+- You have full page caching enabled (likely just block output caching too).
+- Doesn't matter if you have Canonical URLs set or not.
+- In 5.7x you couldn't set [x] always render at canonical url if you want the site to always run over https (Seems that might be fixed in version 8).
+
+##Exploit
+
+To exploit it, the attacker just overrides their hosts file to point your desired url ex:
+
+11.22.33.44 fake-site.com # with the ip of the real site that's running concrete5
+
+Then run a link spider through the site. The result is every page cache file that's generated gets stored with that fake fake-site.com url in any local links allowing the page to be rendered to subsequent visitors with the fake-site.com value as the BASE_URL.
+
+I believe you can farther exploit this by writing code to detect the expiration time and verify that full page caching is enabled by reading the " Expires" http response header, to get the expiration time of the cache file, then hit that page again at the appropriate time.
+
+##Fix
+
+We should be able to fix it by requiring that a canonical url is set when certain caching options are enabled. Then make sure only that value is written when generating the cache files. Another option would be to write internal links as relative links to the cache files.  Another option would be to just give up and melt crayons on the server's cpu.
+
+##Existing Installs
+
+Recommend that either full-page caching is not used on SSL or non name-based virtual hosting setups that would not restrict rendering of the site based on the hostname headers.

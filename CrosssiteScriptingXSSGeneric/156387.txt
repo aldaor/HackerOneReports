@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/156387
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ctee
+ReportedTo:Algolia(algolia)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:07.09.2016 8:34:23
+
+Summary:
+
+Here are the steps to trigger the XSS:
+
+1. Create a JSON record that will contain the following attribute:
+     **{"<img src=1 onerror=alert(document.domain)>": "XSS attribute"}**
+
+2. Go to  **Indices -> Display** and select the attribute **<img src=1 onerror=alert(document.domain)>** under **Attributes for Faceting** and click save. 
+
+3. Note that XSS is triggered multiple times on that page.
+
+4. XSS  is now triggered on **https://www.algolia.com/explorer#?index=index_name** as it also shows the attribute.
+
+5. Create a public UI Demo and to the public url, xss is triggered. I've created a demo url:  https://www.algolia.com/realtime-search-demo/xsstest

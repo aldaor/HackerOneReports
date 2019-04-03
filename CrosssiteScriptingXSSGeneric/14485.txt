@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/14485
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/quistertow
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.07.2014 11:40:27
+
+Summary:
+
+Hello,
+I found a Flash based XSS in http://hi-tech.mail.ru/
+Vulnerable link : http://hi-tech.mail.ru/img/flash/audio-player.swf?playerID=a\"))}catch(e){alert(document.domain)}//
+
+Tested on Mozilla Firefox and Google Chrome.
+Regards, 
+   Florin

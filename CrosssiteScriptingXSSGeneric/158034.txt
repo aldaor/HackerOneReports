@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/158034
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/mefkan
+ReportedTo:Trello(trello)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.08.2016 18:22:01
+
+Summary:
+
+Hi Trello,
+
+When I was uploading image attachments from my computer,I've realized that I can upload SVG files and then I've tried to look SVG file that I attached,and I understood you execute SVG files which is can be malicious redirecting to a website  or executing javascript codes for members.
+Steps to reproduce
+
+PoC:
+
+1-Go to your Trello account
+2-Click any activity
+3-From attachments click on "Upload File" then click "Computer"
+4-Then upload svg files that I gave you
+5-From activities click on svg files
+6-You'll be redirected to example.com or XSS will execute
+
+And if you want you can watch my poc video that can be helpful for you
+
+How To Fox:
+
+You should stop executing svg files and display its's code like HTML,as you know SVG files can be used like HTML codes which is dangerous.
+
+Thanks Trello,
+Have a nice day !

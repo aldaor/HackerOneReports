@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/152591
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/eboda
+ReportedTo:Harvest(harvest)
+BountyAmount:350.0
+Severity:
+State:Closed
+DateOfDisclosure:10.09.2016 22:00:18
+
+Summary:
+
+Summary
+-----------
+
+There is a stored XSS vulnerability, which can execute on any subdomain as the vulnerability lies in an invoice. You are filtering HTML and js, but you neglect to filter out Flash objects, which can execute javascript.
+
+Steps to reproduce
+-------------
+
+1. Create an invoice and add a flash file which executes javascript as an attachment. 
+
+    You can use F106128, it is from this site: https://soroush.secproject.com/blog/2012/11/xss-by-uploadingincluding-a-swf-file/ . It will execute whatever javascript you provide in the `js` parameter.
+
+2. Now share the link to your report and the XSS will execute. You can use any subdomain you like. Here are some examples which will execute `alert(document.domain)`:
+
+    https://asdf.harvestapp.com/attachments/171020?client_key=a143393e99114b677ce6450cf9861c3bde60f817&js=alert%28document.domain%29
+
+    https://abcdefghijklmnopqrstuvwxyz.harvestapp.com/attachments/171020?client_key=a143393e99114b677ce6450cf9861c3bde60f817&js=alert%28document.domain%29
+
+Impact
+--------------
+
+This is a stored XSS effecting all applications/subdomains on harvest. Notice that of course you can create a flash file which directly executes a payload, without the need for the `js` parameter like in my proof of concept.

@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/151305
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/123456789100
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.12.2016 10:24:05
+
+Summary:
+
+Hi OLX Security Team,
+
+I found a XSS Vulnerability at https://www.olx.ph/myaccount/answers/?title=%22%3E%3Cscript%3Ealert(%22CLARCK%22)%3C%2Fscript%3E
+
+Regards,
+Clarck

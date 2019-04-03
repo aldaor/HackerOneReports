@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/142084
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/shubham
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:125.0
+Severity:
+State:Closed
+DateOfDisclosure:26.11.2016 19:37:56
+
+Summary:
+
+Dear @ubnt-matt,
+
+I've found a stored xss in unifi.ubnt.com
+
+##Step to reproduce :##
+```
+Step 1: Login to unifi.ubnt.com
+Step 2: Connect latest unifi controller with unifi.ubnt.com via cloud access.
+Step 3: Create site with any name in that controller.
+Step 4: Click on launch site in unifi.ubnt.com then you will again redirect to unifi.ubnt.com with controls.
+Step 5: Create Network with xss payload "><img src=x onerror=prompt(document.cookie)>
+Step 6: XSS will execute.
+```
+
+**Note : ** force WebRTC should we enable.
+
+I've attached screenshot of the same.
+let me know if you need more info.
+
+Best Regard
+Shubham

@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/148897
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ayid
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:02.11.2016 16:08:07
+
+Summary:
+
+I found stored XSS vulnerability in nextcloud server's chat module
+
+Nextcloud Server version - 9.0.51
+OS - Ubuntu 14.0.4
+Browser - Internet Explorer 11
+
+Steps:
+1) Login as non-admin user(attacker) and change full name containing XSS payload - elamaran\'>\"><script>alert(document.domain)</script>
+2) Login as admin/non-admin(victim) and go to chat module
+3) Click "Show information" of the attacker
+4) Then the stored XSS payload in attacker's name will get execute in nextcloud domain
+
+POC Video URL - https://youtu.be/UU60IthJWxI

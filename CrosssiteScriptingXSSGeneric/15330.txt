@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/15330
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/quistertow
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.08.2014 15:58:58
+
+Summary:
+
+Hi,
+I found a Flash XSS in go.mail.ru
+Video (private) : https://www.youtube.com/watch?v=BnxxZLGaJ0k
+
+Tested on Mozilla Firefox.
+Regards,
+  Florin

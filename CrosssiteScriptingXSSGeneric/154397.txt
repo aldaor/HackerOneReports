@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/154397
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bogdantcaciuc
+ReportedTo:Moneybird(moneybird)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:05.08.2016 7:43:49
+
+Summary:
+Reporter found a XSS vulnerability in a JavaScript module in our application. We have implemented counter measures to prevent such vulnerabilities in the future.

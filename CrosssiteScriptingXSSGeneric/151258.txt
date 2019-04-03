@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/151258
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/oldc4u53
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.07.2016 10:16:16
+
+Summary:
+
+Description of the Vulnerability 
+====================
+Cross-Site Scripting (XSS) attacks are a type of injection, in which malicious scripts are injected into otherwise benign and trusted web sites.
+
+
+Vulnerable endpoint with Payload
+--------------------------------
+```
+http://yaman.olx.ph/wp-content/themes/twentyfifteen/genericons/example.html#<img/src/onerror=alert(123)>
+```
+
+Recommended Fix
+------------------------------------
+Upgrade to the latest Wordpress Version or simply delete example.html from twentyfifteen theme.

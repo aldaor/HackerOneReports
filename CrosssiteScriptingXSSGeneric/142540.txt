@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/142540
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/hussain_0x3c
+ReportedTo:Pushwoosh(pushwoosh)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.11.2016 9:26:40
+
+Summary:
+
+**Hi Team Security Pushwoosh**
+
+I'm Found Bug Cross-site Scripting Stored in On Rich Media . 
+
+Steps to verify
+---
+* . Login as  **Attacker**
+* . Go To **Rich Media** and Create New  Media 
+* . Fill Name and Choose Zip Upload  
+* . Upload **index.zip** in **Attachments**
+* . Cick  Save and  Enter to  Media 
+ 
+Waiting Page to Reload Payloads .. 
+
+**XSS execute  !!**
+
+POC
+---
+PIC :- http://i.imgur.com/cOlh88C.png
+
+**Testing :- Firefox**
+
+**Regards**
+@Hussain
