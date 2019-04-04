@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/250253
+WeaknessName:Weak Cryptography for Passwords
+Reporter:https://hackerone.com/rpkumar
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:20.0
+Severity:none
+State:Closed
+DateOfDisclosure:26.08.2017 23:37:52
+
+Summary:
+A security researcher discovered that spaces were not counted in our password complexity formula, so a user could enter a password of 8 consecutive spaces and create an account. While the password is ultimately the user's responsibility, this was a clear flaw in our complexity formula.

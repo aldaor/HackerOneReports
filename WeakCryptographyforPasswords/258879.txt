@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/258879
+WeaknessName:Weak Cryptography for Passwords
+Reporter:https://hackerone.com/alirazzaq4
+ReportedTo:Udemy(udemy)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:28.08.2017 23:19:18
+
+Summary:
+The reporter thought that we did not limit password length, but we do, we just don't feed back an error for it.

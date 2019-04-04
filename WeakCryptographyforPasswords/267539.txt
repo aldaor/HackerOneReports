@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/267539
+WeaknessName:Weak Cryptography for Passwords
+Reporter:https://hackerone.com/firestone
+ReportedTo:Maximum(maximum)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.01.2018 14:20:24
+
+Summary:
+Reporter thinks that our password rules should be different
+It takes ash123456789123456789 as a password,which is not secure.It can be cracked using Dictionary,brute force etc attacks.
+
+Impact:
+If password complexity is not enforced people may tend to put  easily guessable password which may be exploitable for a malicious user.
+
+Solution-To make it more secure,you should use more secure password such as use of upper case,Special Characters,etc.
+
+Steps to reproduce:
+
+1.First goto https://mijn.werkenbijdefensie.nl/profiel_aanmaken/
+2.type necessary details
+3.Type password-ash123456789123456789
+4.Click on create account
+
+Chrome latest
+Windows 10 Enterprise Edition

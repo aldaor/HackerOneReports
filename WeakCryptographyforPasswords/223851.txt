@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/223851
+WeaknessName:Weak Cryptography for Passwords
+Reporter:https://hackerone.com/footstep
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:18.05.2017 7:58:16
+
+Summary:
+
+Hi!,
+
+Following my previous report, #223618, I could see that you made a change to the site which https://demo.weblate.org/accounts/password/ says
+
+>Your password can't be too similar to your other personal information.
+>Your password must contain at least 6 characters.
+>Your password can't be a commonly used password.
+>Your password can't be entirely numeric.
+>**Your password can't consist of single character or whitespace only.**
+
+I found that it is possible to create a password with a single character
+
+###Reproduction Steps
+- Create a new account
+- Load the link sent to your mail
+- Now, set password to six spaces(tapping the space bar 6 times) and a letter included
+- You'll get a success message.
+
+##Screenshot
+{F179412}
+{F179413}
+
+Regards,
+Shuaib

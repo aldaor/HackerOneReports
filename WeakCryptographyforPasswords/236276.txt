@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/236276
+WeaknessName:Weak Cryptography for Passwords
+Reporter:https://hackerone.com/ashishag29
+ReportedTo:Starbucks(starbucks)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:15.08.2017 0:36:08
+
+Summary:
+
+Unable to register in starbucks India app due to weak crypography of passwords
