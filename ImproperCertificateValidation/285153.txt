@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/285153
+WeaknessName:Improper Certificate Validation
+Reporter:https://hackerone.com/asad_anwar
+ReportedTo:Infogram(infogram)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:03.11.2017 14:13:32
+
+Summary:
+
+There should be an email verification when creating a new user. B/c i can make an account from others email address 
+for example:
+az****@gmail.com
+
+Now when the real person, how own this email address cant make an account with his email address. 

@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/294891
+WeaknessName:Improper Certificate Validation
+Reporter:https://hackerone.com/srssingh
+ReportedTo:PortSwigger Web Security(portswigger)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:02.01.2018 9:02:23
+
+Summary:
+
+1) Obtained a key from PortSwigger official site.
+
+2) Downloaded latest version of burp 1.7.29 from PortSwigger and activated license.
+
+3) Downloaded previous version of burp v1.7.17 and used same key for the activation.
+
+And, I was able to activate license on the old version of BurpSuite.
+
+## Impact
+
+Single license can be used for multiple users.
