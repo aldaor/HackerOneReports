@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/275274
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/luigigubello
+ReportedTo:Mail.ru(mailru)
+BountyAmount:750.0
+Severity:high
+State:Closed
+DateOfDisclosure:27.12.2017 14:50:08
+
+Summary:
+XSS in touch.mail.ru image preview feature via crafted attachment filename.

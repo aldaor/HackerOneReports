@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/275668
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/whitesector
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:01.12.2017 13:08:00
+
+Summary:
+It was possible to execute the script in the context of
+https://infra.mail.ru:8080/
+by publishing static script-containing file (such as SVG or XML) in "Infra" service. 
+This context doesn't use cookies for authentication, but XSS could allow phishing / content spoofing.
+
+This problem was addressed by moving user's content to different sandbox domain (https://infra.smailru.net:8080/).
+
+infra.mail.ru is not currently covered by Bug Bounty program.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/231389
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/alexbirsan
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:1000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:05.09.2017 20:22:03
+
+Summary:
+In this report, the researcher found that we were not filtering ＜ and ＞ characters the same as < and >. This allowed the researcher to craft XSS POCs that bypassed our filters, particularly on UGC comments. We have updated our filters to amend this oversight.

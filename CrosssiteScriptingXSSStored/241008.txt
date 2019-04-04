@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/241008
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/jamesclyde
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:27.06.2017 13:33:49
+
+Summary:
+The researcher reported an issue where any html typed in a input field in the Theme Editor would be instantiated in the document's DOM. We traced the issue to some creative sanitization code that attempted to fix unclosed html tags by doing something like `document.createElement('div').innerHTML = value` any time a onblur or onchange event was triggered on a input field in the Theme Editor. We've changed the offending code to run in a sandboxed iframe without script execution privileges.
+Hello,
+
+First of all in noticed that this is out of scope "Any issue related to the storefront area being displayed in a <iframe> element in the admin area, for example in the Theme Editor." 
+
+This is not in the store front and this will be set in an XSS payload.
+
+1. Go to https://(YOUR SHOP).myshopify.com/admin/themes/THEME id)/editor
+2. Select header and scroll down to "annoucement text".
+3. Fill there as payload: "&gt;<img src="x" onerror="alert(document.cookie)">
+4. Click save and the XSS will be popped up.
+
+I have checked it twice and it is not gonna reflect on the store front. This XSS is in the myshopify/admin section.
+
+POC screen:
+https://snag.gy/FImTKd.jpg

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/277259
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/jubabaghdad
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:15.12.2017 5:14:31
+
+Summary:
+The researcher has identified and reported a Stored XSS in Informatica website and helped us in resolving the issue.
