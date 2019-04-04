@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/343752
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/lincoln9932
+ReportedTo:Mail.ru(mailru)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:04.06.2018 9:26:07
+
+Summary:
+
+В данной ссылке можно наблюдать опенредирект:
+
+1. https://lootdog.io/register?next=http://mail.ru?https%3A%2F%2Flootdog.io%2F
+
+Заполняем эту форму, подтверждаем номер:
+{F290679}
+
+Нас перекидывает на http://mail.ru
+
+## Impact
+
+open redirect

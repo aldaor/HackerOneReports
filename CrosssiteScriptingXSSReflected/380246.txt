@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/380246
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/jtjisgod
+ReportedTo:Redtube(redtube)
+BountyAmount:250.0
+Severity:low
+State:Closed
+DateOfDisclosure:11.03.2019 18:36:40
+
+Summary:
+The user was able to exploit the 'search' parameter being reflected in the page body in order to execute reflected XSS within the context of Redtube.

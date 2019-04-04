@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/360797
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/techguynoob
+ReportedTo:Liberapay(liberapay)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:02.06.2018 13:18:47
+
+Summary:
+
+###Poc :
+
+<https://en.liberapay.com/jio/membership/leave?back_to=http://example.com/>
+
+Click the cancel button its redirect to 3rd party site.
+
+
+Regards,
+techguy
+
+## Impact
+
+This vulnerability could redirect users to the attackers websites for phishing attacks.

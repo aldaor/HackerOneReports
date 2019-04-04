@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/344429
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/lincoln9932
+ReportedTo:Avito(avito)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:06.12.2018 9:45:27
+
+Summary:
+
+Привет, авито) 
+
+Я нашел у вас хсс.
+
+1. Переходим по этой ссылке https://www.avito.ru/sankt-peterburg?verifyUserLocation=1#login?next=javascript:alert();//
+2. Логинимся через ОК, ВК и т.д.
+3. XSS выполнена.
+
+## Impact
+
+XSS

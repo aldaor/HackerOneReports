@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/97153
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/bigbear_
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.04.2018 15:26:10
+
+Summary:
+Browser-specific reflected XSS via URI parameters in sf.my.com.
+sf.my.com is not covered by bug bounty scope.

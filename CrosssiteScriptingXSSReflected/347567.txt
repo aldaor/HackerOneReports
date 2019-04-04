@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/347567
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/gcurtiss_
+ReportedTo:Zomato(zomato)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:09.05.2018 18:06:18
+
+Summary:
+
+It seems that people have exploited this vulnerability before on this website, however, it remains unpatched, so here I am reporting the vulnerability.
+
+A XSS vulnerability exists when a restaurant or dish is created with a malicious name. The title of the dish or restaurant is not properly filtered by the web application. Any code in the dish or restaurant name is executed on the client.
+
+DEMO: https://www.zomato.com/kingman-ks/restaurants, search for: single quote, double quote, GT angle bracket. '">
+
+## Impact
+
+An attacker could achieve XSS and inject hooks into the web browser (e.g. BeEF)

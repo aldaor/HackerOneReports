@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/384872
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:06.11.2018 15:38:43
+
+Summary:
+CRLF injection via GET paramaters in target.my.com
+
+target.my.com is not currently covered by Bug Bounty program.

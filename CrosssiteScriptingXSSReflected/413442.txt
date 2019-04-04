@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/413442
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/kazan71p
+ReportedTo:Chaturbate(chaturbate)
+BountyAmount:350.0
+Severity:medium
+State:Closed
+DateOfDisclosure:26.09.2018 12:15:35
+
+Summary:
+
+Hi Team,
+
+Found that `chatws25.stream.highwebmedia.com` is vulnerable to reflected XSS in `c` parameter, we can verify it with following URL, it is also a Cloudflare filter bypass:
+
+https://chatws25.stream.highwebmedia.com/ws/007/tgpraolp/htmlfile?c=███
+
+```
+https://chatws25.stream.highwebmedia.com/ws/007/tgpraolp/htmlfile?c=███████
+```
+
+{F350412}
+
+## Impact
+
+One of the most common XSS attack vectors is to hijack legitimate user accounts by stealing their session cookies.

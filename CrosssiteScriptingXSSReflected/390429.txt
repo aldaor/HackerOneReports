@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/390429
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/xpaw
+ReportedTo:Valve(valve)
+BountyAmount:750.0
+Severity:medium
+State:Closed
+DateOfDisclosure:07.01.2019 20:14:15
+
+Summary:
+
+URL: https://help.steampowered.com/en/wizard/HelpWithGameIssue/?appid=704740&issueid=125&option=%3Ch1%3Eunfiltered
+
+It puts `option` option into a translation token `<div class="help_page_title">#Help_Game_MissingItemsTitle{user controlled string here}`
+
+And if there's no such translation token, it just prints out the entire user input unescaped.
+
+## Impact
+
+XSS.

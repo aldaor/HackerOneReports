@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/98512
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/bigbear_
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.04.2018 15:44:26
+
+Summary:
+Browser-specific reflected XSS via URI parameters in maps.me project.
+maps.me is not currently in bug bounty scope.

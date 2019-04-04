@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/97268
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/bigbear_
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.04.2018 15:24:59
+
+Summary:
+Browser-specific reflected XSS via POST parameters in evo2.my.com.
+evo2.my.com is not covered by bug bounty scope.

@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/415139
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/base_64
+ReportedTo:Upserve (upserve)
+BountyAmount:250.0
+Severity:low
+State:Closed
+DateOfDisclosure:28.09.2018 22:14:13
+
+Summary:
+
+**Vulnerabilty**
+*Reflected xss* in (https://theacademy.upserve.com).
+
+**STEPS TO REPRODUCE**
+1. Go to (https://theacademy.upserve.com/playlists/all-videos/).
+2. Click on any video to watch from the playlist and capture the request in burp.
+3. you have to capture the request to (https://theacademy.upserve.com/wp-admin/admin-ajax.php?action=load_player&video_id=5742677405001&player_id=B14h0D4OM&type=pc&post_id=2712)
+4. then replace the video_id with this payload = r"><BODY%20ONLOAD=alert(1)>.
+5. Then see the response in browser and the popup will appear.
+
+**NOTE**: *I also attached a video POC*
+
+## Impact
+
+With the help of *xss* a hacker or attacker can perform social engineering on users by redirecting them from real website to fake one. hacker can steal their *cookies* and download a **malware** on their system, and there are many more attacking scenarios a skilled attacker can perform with **xss**.

@@ -1,0 +1,44 @@
+ReportLink:https://hackerone.com/reports/361647
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/ibrahimd
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:23.09.2018 10:02:18
+
+Summary:
+
+Hello,
+
+I would like to report a reflective  XSS  at [https://www.olx.ph](https://www.olx.ph).
+
+## Steps to reproduce
+* Visit the following link: [https://www.olx.ph/all-results?q=car&utm_source=Opt_Homepage_Var_0&utm_medium=Search&utm_campaign=toto%27-alert(document.domain)-%27](https://www.olx.ph/all-results?q=car&utm_source=Opt_Homepage_Var_0&utm_medium=Search&utm_campaign=toto%27-alert(document.domain)-%27)
+* An XSS should pop-up
+
+{F305078}
+
+## Technical Details
+The paramter ```utm_campaign``` don't escape single quote ```'``` that's why the following payload to work: 
+```
+'-alert(document.domain)-'
+```
+Please note that the parameter value is  reflected  29 times, 4 times inside JS code, variables were using single quotes.
+
+{F305079}
+{F305080}
+
+## Mitigation
+Correctly escape and sanitize user input.
+
+## Impact
+
+Session Hijacking and everything related / controlled by JS that could lead to account takeover...
+
+## XSS with cookie:
+
+{F305082}
+
+Best,
+Taha Ibrahim DRAIDIA

@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/470206
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/ishahriyar
+ReportedTo:Shopify(shopify)
+BountyAmount:1500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:12.03.2019 16:21:08
+
+Summary:
+@ishahriyar noticed the default customer registration form for shops would return an error when the first or last name included HTML but the value would be reflected unescaped in the registration form. Since there is no CSRF protection on the form, this resulted in a reflected XSS vulnerability despite the POST request. We addressed this by sanitizing the values when returned for errors and awarded $1500 since it would have given access to `/admin` if visited by an authenticated staff user but was partially mitigated by our captcha check.
+Shopify allows shop admin to enable customer registration. When a customer registers with a short password and HTML content as the first name and last name then customer redirects to *.myshopify.com/account/register with error messages and the provided data. As there is no Cross-site Scripting validation and CSRF protection anyone can force the customers to execute  XSS on that page.
+
+{F394911}
+
+## Impact
+
+By exploiting this Vulnerability
+An attacker can force the customer to execute XSS and 
+1. Steal user's cookie.
+2. Launch advanced phishing attacks by rendering arbitrary HTML forms.
+3. Force users to download malware/viruses.
+4. Execute browser-based attacks etc.

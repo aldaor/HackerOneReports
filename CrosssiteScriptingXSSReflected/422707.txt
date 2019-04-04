@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/422707
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/dr_dragon
+ReportedTo:Shopify(shopify)
+BountyAmount:1500.0
+Severity:high
+State:Closed
+DateOfDisclosure:13.11.2018 10:16:42
+
+Summary:
+
+# Description :
+Hi,
+I have found a reflected cross site scripting vulnerability in <any>.myshopify.com/admin through return_url parameter .
+
+# Step to reproduce :
+1-Go to https://<Any>.myshopify.com/admin/authenticate?return_url=javascript:alert(100)//
+2-Click on reload this page
+3-Xss alert message
+
+## Impact
+
+Xss attack in <Any>.myshopify.com/admin

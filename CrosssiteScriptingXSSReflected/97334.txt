@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/97334
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/bigbear_
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.04.2018 15:25:27
+
+Summary:
+Reflected XSS via POST parameters in support.my.com.
+support.my.com is not covered by bug bounty scope.

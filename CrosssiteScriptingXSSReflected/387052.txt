@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/387052
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:06.11.2018 15:51:30
+
+Summary:
+Browser specific XSS via GET parameters in evo2.my.com.
+
+evo2.my.com is not currentl covered by bug bounty program
