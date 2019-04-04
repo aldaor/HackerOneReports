@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/337680
+WeaknessName:Man-in-the-Middle
+Reporter:https://hackerone.com/morisson
+ReportedTo:PortSwigger Web Security(portswigger)
+BountyAmount:1500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:13.06.2018 16:14:32
+
+Summary:
+
+Burp is not validating correctly if the presented certificate in collaborator server. It warns if it is a self signed one, but if it is a legitimate one (any valid CA), it appears not to be checking the CN.
+
+
+This is an issue for the polling service, since it allows for the connection to be intercepted and burp will happily send through the polling request.
+
+For PoC, just use a valid certificate for a completely different domain than the one used on the burp collaborator server, and connect to it. All checks will be ok, and when polling the server (using the scanner for instance), there's no warning or failure, and burp connects.
+I haven't extensively tested all possible options, but using a valid wildcard certificate from a totally different domain works.
+
+(note: there's also the functional bug of burp stating the connections are ok, but the target being tested will then fail to connect to any TLS service on the collaborator)
+
+## Impact
+
+If the attacker is able to perform a MITM on the tester (either adjacent to him, or to the collaborator server, or somewhere along the path), he will be able to intercept the HTTPS polling connection to the collaborator server, and potentially obtain the records.

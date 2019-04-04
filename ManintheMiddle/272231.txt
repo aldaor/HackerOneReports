@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/272231
+WeaknessName:Man-in-the-Middle
+Reporter:https://hackerone.com/skanthak
+ReportedTo:Brave Software(brave)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:09.07.2018 21:37:45
+
+Summary:
+
+> NOTE! Thanks for submitting a report! Please fill all sections below with the pertinent details. Remember, the more detail you provide, the easier it is for us to verify and then potentially issue a bounty.
+
+## Summary:
+
+Execution of file NDP-KB2901954-Web.exe fetched via http://go.microsoft.com/fwlink/?LinkId=397707
+
+On Windows installations without .NET Framework 4.5.2 or later, the executable installers BraveSetup-x64.exeand BraveSetup-ia32.exe offer to download and install this component.
+They but start the download from http://go.microsoft.com/fwlink/?LinkId=397707 (redirected to http://download.microsoft.com/download/9/A/7/9A78F13F-FD62-4F6D-AB6B-1803508A9F56/51209.34209.03/web/NDP452-KB2901954-Web.exe), i.e. over an insecure channel: a MITM can intercept both HTTP requests and deliver an arbitrary executable.
+
+## Products affected: 
+
+All versions of Windows without .NET Framework 4.5.2 or newer
+
+## Steps To Reproduce:
+Run the executable installer
+
+## Supporting Material/References:
+
+See https://insights.sei.cmu.edu/cert/2017/06/the-consequences-of-insecure-software-updates.html

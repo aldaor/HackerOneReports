@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/238344
+WeaknessName:Man-in-the-Middle
+Reporter:https://hackerone.com/no_body_cares
+ReportedTo:Parrot Sec(parrot_sec)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:28.06.2017 11:15:39
+
+Summary:
+Thanks @no_body_cares 

@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/263553
+WeaknessName:Man-in-the-Middle
+Reporter:https://hackerone.com/r0p3
+ReportedTo:TTS Bug Bounty(tts)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:05.09.2017 22:42:44
+
+Summary:
+The researcher noted that federalist.18f.gov allows use of the TLS_RSA_WITH_3DES_EDE_CBC_SHA cipher, which is now marked as "weak" in SSL labs because of risks of MitM attacks given this vulnerability: https://sweet32.info/, which requires monitoring of a long lived HTTPS connection.
+
+We inherit this cipher from the cloud.gov PaaS (its required to serve specific browser/OS combinations) and have been working to migrate away from it since May 2017: https://github.com/18F/cg-provision/issues/244
+
+Because we were already aware of the concern with this cipher, but there was no existing H1 ticket open on this matter, we closed the ticket as informative.
