@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/216389
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/jamesclyde
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:28.03.2017 20:45:58
+
+Summary:
+A Security Monkey instance was left accessible to the public. Even though this is outside of our usual scope, we fixed and rewarded this issue due to the nature of the information contained in this instance.

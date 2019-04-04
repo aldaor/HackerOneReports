@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/226756
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/neex
+ReportedTo:VK.com(vkcom)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:24.06.2017 1:35:53
+
+Summary:
+Vulnerability in FFmpeg. 

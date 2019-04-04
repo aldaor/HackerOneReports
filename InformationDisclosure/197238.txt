@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/197238
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/jaypogzz
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:20.06.2017 13:07:19
+
+Summary:
+
+i see a server version of your website that have link:
+https://www.olx.ph/.htaccess
+
+The impact of this vulnerability
+
+Consult Web References for more information.
+
+This is a proof.
+*http://prnt.sc/dtsjmo
+
+--
+jaypogzz.

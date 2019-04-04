@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/198012
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/rbcafe
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.01.2017 10:33:54
+
+Summary:
+@rbcafe reported the following issue, since it contains references to internal data we've decided to disclose this issue only limitedly.
+
+-------
+
+
+Greetings,
+
+Description : 
+----------------
+
+Since the update of the website to wordpress 4.7 the JSON discloses administrators :
+
+POC :
+----------------
+
+https://nextcloud.com/wp-json/wp/v2/users
+
+Best regards
+@Rbcafe
+

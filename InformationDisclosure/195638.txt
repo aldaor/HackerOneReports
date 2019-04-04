@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/195638
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/sp1d3rs
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:16.06.2017 19:50:39
+
+Summary:
+A Department of Defense website was misconfigured in a manner that could have exposed sensitive information. Thank you @sp1d3rs for notifying us of this!
+

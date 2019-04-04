@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/201948
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/rbcafe
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.02.2017 13:24:28
+
+Summary:
+
+
+Greeting, I discovered a server with disclosure of information:
+
+http://static.dl.mail.ru/
+
+{F155883}
+
+With this /webstat/ , we can access various information from the server like paths, name of files and other precious information.
+
+http://static.dl.mail.ru/webstat/
+
+{F155884}
+{F155885}
+{F155887}
+
+We also access information from nst,nstats,nstrees
+
+http://static.dl.mail.ru/nst
+http://static.dl.mail.ru/nstats
+http://static.dl.mail.ru/nstrees 
+
+Best regards
+@Rbcafe

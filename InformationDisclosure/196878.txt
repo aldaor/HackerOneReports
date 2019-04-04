@@ -1,0 +1,67 @@
+ReportLink:https://hackerone.com/reports/196878
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/hanno
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:19.04.2017 8:10:18
+
+Summary:
+@hanno reported an issue within the Nextcloud bug reporting template on GitHub, the original template asked persons to paste their configuration file and had a notice that sensitive content such as the database password should be removed. The reporter argued that this was not good enough and that he discovered issues containing user credentials.
+
+We've checked all reported issues and found **a total of 23 occurrences** of passwords within tickets. Those have been redacted. Also, we've adjusted the issue template to make this more clear and are offering an issue template application which automatically fills out and sanitizes sensitive information.
+
+We want to thank @hanno for reporting this back to us and help protecting our millions of users. We want however to note, that this affected an absolute minimum of users.
+
+----
+Press article (German): https://www.golem.de/news/owncloud-nextcloud-passwoerter-im-bugtracker-1704-127346.html
+Personal blog (English):  https://blog.hboeck.de/archives/885-Passwords-in-the-Bug-Reports-OwncloudNextcloud.html
+Tweet: https://twitter.com/hanno/status/848832642653073412
+The dangerous bug reporting template
+=============================
+
+The github bug reporting template for nextcloud's server and some apps contains this:
+
+**The content of config/config.php:**
+
+```
+If you have access to your command line run e.g.:
+sudo -u www-data php occ config:list system
+from within your instance's installation folder
+
+or 
+
+Insert your config.php content here
+(Without the database password, passwordsalt and secret)
+```
+
+This is obviously very problematic. From the wording and instructions it is very likely that users will do the wrong thing: Paste the config.php without removing all passwords, for various reasons:
+* It's likely to assume that many users won't read the detailed instructions and will just do the first thing they're told: Insert the content of config/config.php.
+* The instruction with sudo and www-data is specific to certain server configurations and may not work everywhere, thus it will fail for some users who will try the next option, namely inserting config.php directly.
+* The instruction "Without the database password, passwordsalt and secret" is incomplete. There can be more sensitive fields in the config file, e.g. "mail_smtppassword".
+
+Not surprisingly users misread these instructions and paste sensitive passwords. See e.g.:
+https://github.com/nextcloud/calendar/issues/151
+https://github.com/nextcloud/calendar/issues/155
+
+Proposed remediation
+=================
+
+I think it's necessary that you search all existing bug reports that have been created with this template for sensitive passwords and remove them. It is probably also appropriate to inform the affected users.
+
+I also believe encouraging users to paste a config file with passwords is inherently dangerous and no amount of warnings will prevent all users from making mistakes. In general I think it should always be a guiding principle of software design to make it hard for users to make security mistakes.
+
+There are various ways the situation could be improved, this is what I could think of:
+* Provide a way in the webinterface to let users view a version of the config file where all sensitive values are removed (like the command line instruction, but more accessible).
+* Change the instruction and avoid all references to pasting the raw config file content. If there's a need to get the config file in rare circumstances a developer could ask a bug reporter for it, ideally via private channels and only post a manually vetted version to the bug report.
+
+Leakage of instanceid
+=================
+
+One additional observation: The "occ config:list" command removes dbpassword, secret and mail_smtppassword, but it leaves instanceid intact. I'm not familiar enough to judge how sensitive this value is, but it seems to be an unique identifier for each owncloud installation. It would probably be wise to remove that, too.
+
+Affects owncloud and nextcloud
+========================
+
+This issue affects the development of both owncloud and nextcloud in the same way. Thus I will report it to both projects.

@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/195205
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/filedescryptor
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:19.12.2018 22:36:33
+
+Summary:
+There were a few default folders/files of the AURA Framework accessible on `lert.uber.com`. The specified files/folders in the AURA framework were supposed to be accessible, so we did not make any changes here. However, we do appreciate the time taken to submit this report and are disclosing per the request of the researcher.
+

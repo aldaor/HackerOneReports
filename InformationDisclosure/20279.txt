@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/20279
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bitquark
+ReportedTo:DigitalSellz(digitalsellz)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.08.2014 20:30:20
+
+Summary:
+
+When an SQL error occurs, a verbose error is displayed showing the full query and the path of the include file on the server. This is valuable information, revealing the structure of the database and the layout of files on the server.

@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/2429
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/eronx
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.06.2016 23:45:16
+
+Summary:
+
+Enumeration of email addresses of already registered users is possible, and or, checking if a user with specific email address is registered in the website  and will then be used for phising attacks or any malicious intent.
+
+In the "Forgot Password" section, there is an implemented security measure regarding this specific flaw.
+
+The page does not disclose anything to someone who does not own that email address..
+
+See attached ( hackerone1.jpg )
+
+But, in the registration form. It defeats the implementation against "email address enumeration," since it currently displays, "email has already taken" when an attacker tried to register of an already registered email address.
+
+See attached ( hackerone2.jpg )
+
+I have read this workaround in a post by sir Troy Hunt,  sending an email, a notification that the user is already registered ( if registered ) or a link to continue the registration process ( if still not registered ).
+
+I believe, security weighs more than usability here and it does not hamper again, hackerone's usability.
+
+Thank you very much.
+
+Cheers,
+Clifford Trigo

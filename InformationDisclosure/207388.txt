@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/207388
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/kothari
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.10.2017 22:18:55
+
+Summary:
+
+I am able to download ciritcal files which include newrelic environment setup, setting uo of database which also says which database is used etc.
+
+I am able to access this information using a google dork
+
+Google dork:site:newrelic.com ext:doc | ext:docx | ext:odt | ext:pdf | ext:rtf | ext:sxw | ext:psw | ext:ppt | ext:pptx | ext:pps | ext:csv
+
+Real proof:
+
+https://www.google.co.in/search?q=site:newrelic.com+ext:doc+%7C+ext:docx+%7C+ext:odt+%7C+ext:pdf+%7C+ext:rtf+%7C+ext:sxw+%7C+ext:psw+%7C+ext:ppt+%7C+ext:pptx+%7C+ext:pps+%7C+ext:csv&gws_rd=cr&ei=u5OoWMW7Ncf3vASMx6JA
+
+Such information should not be available publically.
+
+Please find attached documents which i was able to download, there are more documents with juicy information.
+
+Please feel free to reach me in case you need any help for mitigation.
+
+Thanks.

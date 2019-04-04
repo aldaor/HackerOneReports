@@ -1,0 +1,43 @@
+ReportLink:https://hackerone.com/reports/201901
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/yonm13
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:50.0
+Severity:low
+State:Closed
+DateOfDisclosure:27.02.2018 11:30:18
+
+Summary:
+##Issue
+
+The reporter found a small infoleak on a test-page. The page is a vendor default.
+
+##Fix
+
+The page was forbidden in the webserver configuration.
+
+##Reasoning
+
+The reported case was valid and within the scope of the bug bounty program. The information leak was not critical, but as the issue was mitigated the reporter was awarded with a bounty.
+
+## Basic report information
+**Summary:** The default test page http://viestinta.lahitapiola.fi/r/test is accessible and presents the Adobe Campaign build info (8705) - not the latest version, and the installed instance name 'ac61_tapiola'.
+
+**Description:** Self explanatory.
+
+**Domain:** viestinta.lahitapiola.fi
+## Browsers / Apps Verified In:
+
+Irrelevant
+
+## Steps To Reproduce:
+
+Surf to http://viestinta.lahitapiola.fi/r/test
+
+## Additional material
+
+  POC Screenshot
+
+## Related reports, best practices
+
+  * [OWASP-recommendations]

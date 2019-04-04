@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/225537
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/apapedulimu
+ReportedTo:Mapbox(mapbox)
+BountyAmount:300.0
+Severity:low
+State:Closed
+DateOfDisclosure:11.07.2017 15:26:17
+
+Summary:
+On May 2nd, 2017 @apapedulimu reported an issue where changing a POST request to a GET request on one of our integration servers returned a full error stack trace rather than an HTTP 404 error. The full error stack trace revealed the full path of the Node.js modules directory on the integration server. We deployed a fix to this issue whereby an HTTP 404 was returned instead.

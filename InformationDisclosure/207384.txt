@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/207384
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/cj862530
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.10.2017 22:19:06
+
+Summary:
+
+While playing around to access some private information on newrelic.com i was able to get access to critical files which are not supposed disclose publically. i am able to download all archived files. 
+
+Google Dork:site:newrelic.com intitle:index.of
+
+Real Proof:
+https://www.google.co.in/search?q=site:newrelic.com+intitle:index.of&gws_rd=cr&ei=Vo-oWLSvLMf0vASn_Z2gDg
+
+Such important files are getting indexed by google bots.
+
+To mitigate this add below meta character so pages won't be indexed by bots.
+<html>
+<head>
+<title>...</title>
+<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
+</head>
+
+Also you can disallow /php_agent/ in robots.txt.
+
+Hope you fix this soon.
+
+Thanks.

@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/244781
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/hackedbrain
+ReportedTo:WakaTime(wakatime)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:25.09.2017 22:14:41
+
+Summary:
+
+**Description:** According to the rules of Leaderboard Teams only Owners and admins have access to other team members' personal information like email address, roles etc.
+
+Users whose role set as "Member" can't see other users' details.
+
+But through API it is possible for a user with member role to reveal personal information of all team members.
+
+**Vulnerable URL: `https://wakatime.com/api/v1/users/current/leaderboards/<team_id>/members`**
+
+**Steps to reproduce:**
+
+1. Join a Leaderboard team as a member.
+2. Copy the team id.
+3. Visit the vulnerable url.
+
+You'll find that emails of all members being disclosed.

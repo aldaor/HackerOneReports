@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/196482
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/joshualaurencio
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:27.04.2017 19:34:50
+
+Summary:
+A misconfigured Department of Defense webserver improperly disclosed application information. @joshualaurencio was able to demonstrate this vulnerability by crafting specially formatted URLs.

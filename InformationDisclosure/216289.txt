@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/216289
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/trainzment
+ReportedTo:VK.com(vkcom)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:12.05.2018 5:42:05
+
+Summary:
+Просмотр названия и аватарки частной группы. 

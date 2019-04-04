@@ -1,0 +1,44 @@
+ReportLink:https://hackerone.com/reports/221989
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/neutrinoguy
+ReportedTo:Homebrew(homebrew)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:19.04.2017 14:36:48
+
+Summary:
+
+Hello Homebrew security team,
+
+I know this is a low severity issue but I thought to get you in notice will be best. The site
+**jenkins.brew.sh** discloses the Nginx server version.
+
+**Impact**
+The information is can be used by attacker for further finding of exploits and information gathering.
+
+```
+curl -i jenkins.brew.sh
+HTTP/1.1 301 Moved Permanently
+Server: nginx/1.6.2
+Date: Tue, 18 Apr 2017 18:59:21 GMT
+Content-Type: text/html
+Content-Length: 184
+Connection: keep-alive
+Location: https://jenkins.brew.sh/
+
+<html>
+<head><title>301 Moved Permanently</title></head>
+<body bgcolor="white">
+<center><h1>301 Moved Permanently</h1></center>
+<hr><center>nginx/1.6.2</center>
+</body>
+</html>
+```
+
+**Fix**
+In Ngnix configuration set:
+
+```server_tokens off;```
+
+Thanks

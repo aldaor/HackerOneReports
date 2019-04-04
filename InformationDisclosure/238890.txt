@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/238890
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/an0n-j
+ReportedTo:Algolia(algolia)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:12.07.2017 15:47:02
+
+Summary:
+
+hello algolia team,
+I founded the SAUCE Access_Key and User_name was leaked in Travis CI build logs of instantsearch.js product [#Line-249-&-250](https://travis-ci.org/algolia/instantsearch.js/builds/225176027#L249).
+This can be used to perform every API calls of sauce-lab.(e.g Creating a Sub account. I created a test account for testing. sorry for this ;) ).
+
+You should revoke the access_key and secure the key in Travis Cl build logs.

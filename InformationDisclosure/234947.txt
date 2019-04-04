@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/234947
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/h33t
+ReportedTo:Cuvva(cuvva)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:02.06.2017 11:36:10
+
+Summary:
+An issue with our handling of Intercom sessions existed in one of our partner dashboards. Exact details being kept under wraps for now, as it's an issue which exists in a large number of Intercom installations.

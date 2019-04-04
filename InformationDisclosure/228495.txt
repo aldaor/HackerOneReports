@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/228495
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/sp1d3rs
+ReportedTo:Pornhub(pornhub)
+BountyAmount:250.0
+Severity:medium
+State:Closed
+DateOfDisclosure:06.07.2017 18:15:48
+
+Summary:
+The researcher discovered a bug where the direct urls of private video thumbnails were leaked in the data-mediabook attribute of the cover image.

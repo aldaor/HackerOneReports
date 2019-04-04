@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/242831
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/cdl
+ReportedTo:arxius(arxius)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:25.06.2017 13:52:32
+
+Summary:
+
+## Summary
+ffmpeg is a video and audio software that is used for generating previews and for converting videos. Your current installation allows HLS playlists that contain references to external files, which leads to local file disclosure.
+
+## Reproduction 
+1.) Download this script `https://github.com/neex/ffmpeg-avi-m3u-xbin/blob/master/gen_xbin_avi.py` by @neex
+2.) run the script `python3 gen_xbin_avi.py file:///etc/passwd sxcurity.avi`
+3.) Now visit `https://arxius.io` and upload `sxcurity.avi`
+4.) You will now be redirected to your upload and let the video finish processing
+5.) Once the video is done processing, click play and you will see the contents of `/etc/passwd` ;)
+
+### Examples:
+Contents of /etc/passwd : `https://arxius.io/v/6c7d9a96`
+Contents of /etc/issue: `https://arxius.io/v/5471dfe6`
+
+
+Thanks!
+-Corben Douglas (@sxcurity)
+
+ps: I've attached my proof of concept avi file, just in case you are having trouble with that script!

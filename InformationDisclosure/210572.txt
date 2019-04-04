@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/210572
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/pappan
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:150.0
+Severity:low
+State:Closed
+DateOfDisclosure:28.04.2017 3:42:26
+
+Summary:
+
+Browsing this link http://www.rockstargames.com██████ gives forbidden error. Its good but also it displays the full path of the current directory . Refer screenshot attached.

@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/208566
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ak_1337
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.03.2017 8:26:41
+
+Summary:
+
+###Summary: 
+The target OwnCloud's server is running an outdated version of _Jenkins server_ which is vulnerable to various attacks.
+
+Server Location: `https://ci.owncloud.org`
+
+Vulnerable Software: `Jenkins ver. 2.27`
+
+###Proof of Exploitability
+
+CVE-2016-3727
+**POC URL:** `https://ci.owncloud.org/computer/(master)/api/xml`
+
+>Details:
+
+> The API URL /computer/(master)/api/xml allowed users with the extended read permission for the master node to see some global Jenkins configuration, including the configuration of the security realm.
+
+> Source: https://jenkins.io/security/advisory/2016-05-11/
+
+
+Additionally, the current software version is also vulnerable to RCE.
+>CVE-2017-2608
+
+>XStream remote code execution vulnerability
+
+>Affected Versions:  < 2.43
+
+> Source: https://jenkins.io/security/advisory/2017-02-01/
+
+###Recommended Fix
+Update Jenkins server to latest version 2.47

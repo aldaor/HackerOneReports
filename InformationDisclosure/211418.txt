@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/211418
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/cyberunit
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:150.0
+Severity:medium
+State:Closed
+DateOfDisclosure:17.03.2017 15:08:26
+
+Summary:
+
+Hello guys.
+I would like to share with you my discovery.
+The fact is that at: 
+
+> https://www.rockstargames.com/gta/game/highscores.cgi
+
+Anyone can see the source code of the script
+
+{F166966}
+
+check please
+
+Regards @d1v3r

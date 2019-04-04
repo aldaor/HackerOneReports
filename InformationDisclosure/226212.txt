@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/226212
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/pahan1234
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.05.2017 6:01:49
+
+Summary:
+
+step: 
+1. goto https://bridge.cspr.ng/my/files/Hull with your login id 
+2. upload a file 
+3. click on "File info"
+and see full path of file is disclose

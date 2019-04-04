@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/226514
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ruisilva
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:07.05.2017 1:41:36
+
+Summary:
+
+Hi , i found an full path disclousure vulnerability on https://airship.paragonie.com
+
+For reproduce this vulnerability go to: https://airship.paragonie.com/my/cabins
+You will see something like this : Class '\ParagonIE\Airship\Cabins' not found #0 /var/www/paragonie/framework/Router.php(236): ParagonIE\Tuner\Router::passArgs(Array, Array, Array) #1 /var/www/paragonie/framework/Router.php(150): ParagonIE\Tuner\Router::serve(Array, Array, Array) #2 /var/www/paragonie/framework/Router.php(107): ParagonIE\Tuner\Router::site(Array) #3 /var/www/paragonie/public_html/index.php(26): ParagonIE\Tuner\Router::route(Array) #4 {main}
+
+See attached file 
+Thanks 

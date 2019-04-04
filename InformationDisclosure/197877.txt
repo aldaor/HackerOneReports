@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/197877
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/raunak2002
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.02.2017 22:09:05
+
+Summary:
+
+Hello, I found out that you are using WP 4.6.2 on your domain which is outdated.
+>https://nextcloud.com/readme.html
+
+_Description_:-
+WordPress versions 4.7 and earlier are affected by multiple security issues. Kindly check https://wpvulndb.com/wordpresses/462 for the vulnerabilities and in detailed Proof of concept .
+
+**Fix:**
+Upgrade WORDPRESS to 4.7.1
+>https://nextcloud.com/readme.html
+
+_Refer_:-
+>https://wpvulndb.com/wordpresses/462
+
+I hope this is fixed soon.
+_Regards_,
+Raunak

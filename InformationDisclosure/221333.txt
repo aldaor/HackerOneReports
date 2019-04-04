@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/221333
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/secure_world
+ReportedTo:GlobaLeaks(globaleaks)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:19.04.2017 13:03:31
+
+Summary:
+
+I have observed that the application is leaking information while accessing "https://demo.globaleaks.org/l10n/en". It does not restrict access to file, which can possibly provide an attacker with information such as default credentials (test:test), username for accessing administrative functions, application functionalities available to admin user.
+
+At this point I am not able to validate default credentials, whether these are credentials for login to globalleaks servers, application, functionalities. 
+Information contained in the location can be possibly be combined with other approaches to perform targeted attack against globalleaks.
+
+Recommendation:
+Restrict access to the file.
+

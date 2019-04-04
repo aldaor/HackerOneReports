@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/203594
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/juliushaertl
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:183.0
+Severity:low
+State:Closed
+DateOfDisclosure:08.05.2017 13:51:25
+
+Summary:
+#[Calendar and addressbook names disclosed (NC-SA-2017-012)](https://nextcloud.com/security/advisory/?id=nc-sa-2017-012)
+
+**Risk level:** Low
+**CVSS v3 Base Score:** 3.5 (AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:N/A:N)
+**CWE:** Information Exposure Through Directory Listing (CWE-548)
+
+#Description
+A logical error caused disclosure of calendar and addressbook names to other logged-in users. Note that no actual content of the calendar and adressbook has been disclosed.
+
+#Affected Software
+- Nextcloud Server < 11.0.2 (CVE-2017-0895)
+- Nextcloud Server < 10.0.4 (CVE-2017-0895)
+
+#Action Taken
+The error has been fixed and regression tests been added.
+
+#Acknowledgements
+The Nextcloud team thanks the following people for their research and responsible disclosure of the above advisory:
+
+- [Julius Härtl](https://juliushaertl.de) - Vulnerability discovery and disclosure.

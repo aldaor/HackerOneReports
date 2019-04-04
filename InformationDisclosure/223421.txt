@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/223421
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/str33
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:10.09.2018 9:40:40
+
+Summary:
+
+Open port 10022 leads to disclosure of open-ssh version and current Debian version being used.
+
+POC- 
+1. I performed an nmap scan ( nmap -A -T4 -p- weblate.org)
+2. I saw the port 10022 was open and I did a telnet connect to the port.
+3. As soon as I did the telnet connect it returned me the openssh version and the debian version (check the .png file)
+4.I wasn't able to run any sort of commands as whatever I typed returned a protocol mismatch error.
+
+
+This doesn't necessarily mean a security issue as long as everything is being patched regularly. 

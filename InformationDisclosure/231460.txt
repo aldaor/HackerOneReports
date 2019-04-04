@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/231460
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/preben
+ReportedTo:Snapchat(snapchat)
+BountyAmount:15000.0
+Severity:high
+State:Closed
+DateOfDisclosure:19.08.2017 0:01:09
+
+Summary:
+@preben_ve found a Jenkins instance where they could login with any valid Google account.
+
+Once logged in, they gained access to sensitive API tokens. The access also included some source code disclosure for public apps and the ability to execute arbitrary code via the Jenkins Script Console.

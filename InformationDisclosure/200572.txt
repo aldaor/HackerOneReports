@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/200572
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/socialfox
+ReportedTo:Dovecot(dovecot)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:24.02.2017 7:21:52
+
+Summary:
+
+This vulnerability can read your plugins like you are using jQuery Superfish,jsquary easy etc... and emails... Sensitive Directories...for social engineering emails, directories, plugins is so important you should hide this. I share with files you can look file is saying everything.
+mikko@dovecot.fi
+jobs@dovecot.fi     like this.
+You should fix this.
+(and file saying your host too)
+(look ignored files in file)
+All system have vulnerability until you fix

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/205069
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/prbln
+ReportedTo:Zendesk(zendesk)
+BountyAmount:50.0
+Severity:medium
+State:Closed
+DateOfDisclosure:18.03.2017 15:55:35
+
+Summary:
+The researcher found an endpoint that generated an Express.js stack-trace for a specified URL input. 

@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/194790
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/inhibitor181
+ReportedTo:OX App Suite(appsuite)
+BountyAmount:888.0
+Severity:high
+State:Closed
+DateOfDisclosure:28.09.2017 7:20:24
+
+Summary:
+
+Hello, I have found that one can download all attachements if finds/has access to a public link (in this POC a shared task link). This is a big issue as one can download all the attachements of registered users, while the attacker is not actually logged in the application ! Also, I have found another link that leaks attachement names.
+
+Because of the severity, I have attached a POC video.
+
+Video description : at first, I will get a public task share link. With that link, I will have access to 2 tasks, only 1 witch has an attachement. By using burp calls, I will leak the names of other attachements. After this, I will try to view my attachement and download it. As you can see in the video, just changing the id form the link, allows me to download other restricted files !

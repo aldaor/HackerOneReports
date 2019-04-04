@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/2140
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/kinine
+ReportedTo:Flash (IBB)(ibb-flash)
+BountyAmount:2000.0
+Severity:
+State:Closed
+DateOfDisclosure:17.04.2014 0:41:53
+
+Summary:
+
+The proof of concept attached will exploit the implementation of flash in some browsers that will bypass the local-with-fileaccess sandbox. By encoding in ignored file:// uri characters, and navigating to another page with a decoder script. one is able to read arbitrary files AND parse it to the parent page, bypassing the local sandbox. 
+The flash applet has a default mode in which it will parse file content and another mode (by setting flashvars) that will parse the length of the content of a file. And iframe within those 2 makes sure that the original window is persistent and the applet in the iframe will only move the iframe, the data is then passed by localstorage, and if recieved by poc.html, the iframe is reset.
+A quick overview of what the poc is doing, in which order.
+-Determine the length of the content from the file through  the flash applet with mode 2
+-Determine the maximum amount of space which can be used for leaking the data (chrome uses a max of 260)
+-Since every character uses 8 bits, divide that amount by 8, set as maximum chars in one 'transmission'.
+-Determine  how much 'transmissions are needed' to get the entire file
+-Walk through file to get the entire file by appending all requested parts to variable 'total'
+-Call whatever callback function back.
+
+
+Demonstrated in poc2.html:
+-The impact of this attack is increased by the ability to download arbitrary remote files (Cross origin) by systematically downloading those files to a know predictable location. (using the download= attribute in a <a >tag). This link will be automatically clicked.  Now as long as the user is opening the file from a Drive:/User/Username location. We can simply predict the path to read the downloaded file on windows vista+ (Or any other OS with a default download folder for that matter).
+-This stage of exploitation enables an attacker to access a file with the auth of the user the following 'attack use cases' arise:
+1. Attacker could access and send users web-mail to his sown erver. (try using 'https://mail.google.com/mail/u/0/feed/atom' in poc2 while logged in with gmail)
+2. Attacker could get XSRF-tokens. To bypass such protections.
+I could imagine there are countless other possibilities. 
+-You might notice that loading the Hackerone page is painfully slow. However, In targeted attacks a attacker could filter the desirable data in the flash applet itself.
+
+
+
+Now for the exploit itself, I acknowledge that the exploit might look very complex.
+Which is why I added a 'frontend' that is tested under the following conditions.
+OS:Windows 8
+Browser: Google Chrome 32.0.1700.107 m

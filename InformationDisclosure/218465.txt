@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/218465
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Twitter(twitter)
+BountyAmount:280.0
+Severity:medium
+State:Closed
+DateOfDisclosure:01.11.2018 19:16:54
+
+Summary:
+
+**Steps to reproduce:**
+Open http://staging-engineering.gnip.com/.git/logs/refs/heads/master
+
+Publicly accessible GIT directory сan lead to leakage of source code and other private information.

@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/214839
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/japz
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:23.05.2017 5:21:32
+
+Summary:
+We recently made a change to how report invitations in order to make the [Disclosure Assistance](https://support.hackerone.com/hc/en-us/articles/115001936043) process better. Parts of this change regressed the fix we made in #123420 regarding how report invitations (such as to become an external participant) are handled. @japzdivino notified of this regression and worked with us to get the logic back to the previous intent.
+
+To correct this issue, we added logic that ties report invitation links to a user if the user exists on the platform (either the username or the e-mail address). If the invitation link was sent to an e-mail address not matching an existing user on HackerOne, any user can still consume the invitation.
+
+We are disclosing this report under Limited Visibility due to multiple attachments and comments including e-mail addresses, as this was part of the POC.

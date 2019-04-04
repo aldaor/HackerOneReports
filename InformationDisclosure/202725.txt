@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/202725
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ehsahil
+ReportedTo:Mapbox(mapbox)
+BountyAmount:750.0
+Severity:medium
+State:Closed
+DateOfDisclosure:12.07.2017 17:58:19
+
+Summary:
+On February 1st, 2017, Sahilsaif discovered an S3 bucket belonging to Mapbox which contained publicly accessible objects which should have been private. Using Sahilsaif's report, Mapbox mitigated the report by making the affected objects private.

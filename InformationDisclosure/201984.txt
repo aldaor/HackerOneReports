@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/201984
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/tk0
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:600.0
+Severity:medium
+State:Closed
+DateOfDisclosure:08.03.2017 14:13:46
+
+Summary:
+
+#Issue
+During my testing I noticed that ubnt website `https://directory.corp.ubnt.com` seems to leak some data into internet. Wordpress directory `https://directory.corp.ubnt.com/wp-content/uploads/` is showing files which I suppose shouldn't be visible to internet. 
+
+I noticed that these files include UBNT-employee email addresses (including personal?), pictures etc.
+
+#Reproduction
+Just open URL https://directory.corp.ubnt.com/wp-content/uploads/ and start browsing folders/files.
+Most "juicy" stuff can be seen in these folders: ██████████
+
+BR,
+-Tomi

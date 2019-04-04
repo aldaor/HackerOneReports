@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/202823
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/prial261
+ReportedTo:Twitter(twitter)
+BountyAmount:7560.0
+Severity:critical
+State:Closed
+DateOfDisclosure:11.07.2017 3:51:05
+
+Summary:
+The reporter discovered a bug related to the Vine Archive which had the potential to expose the email address or phone number associated with a Vine account to a third party through the Vine API. The vulnerability was discovered by the reporter, triaged, and remediated within 24 hours of the associated feature launching. Vine has issued a statement regarding this vulnerability on the Vine blog (https://medium.com/@vine/47385e44ac2).

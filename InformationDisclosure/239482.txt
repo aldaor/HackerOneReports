@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/239482
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:06.11.2018 15:39:07
+
+Summary:
+Publicliy accessible git-related file in sputnik.mail.ru
+
+sputnik.mail.ru is not currently covered with bug bounty program.
+

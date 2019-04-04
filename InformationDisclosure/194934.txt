@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/194934
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/rashedhasan007
+ReportedTo:Envoy(envoy)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:19.02.2017 20:02:36
+
+Summary:
+
+It is possible to mirror envoy website which exposes internal structure as also  client side java-script  and CSS . When an attacker makes a copy of your webpages on their local machine, it is possible scan the code for vulnerabilities to exploit without generating additional traffic on your web server . By this attacker can obtain client-side details. . The main reason why website mirroring can be seen as an attack against a website is the fact that mirroring uses webserver resources .
+
+Yet It is possible to integrate the mirrored site in a third party webserver , to eventually steal traffic for the envoy website , again as the mirror website is a complete clone of the original website , attacker can use this resource for social engineering purpose . 
+
+Again  , when a viewer is seeing a website he his actually downloading the site by web browser to view the website , but mirroring website is quite different as it exposes internal structure and director enlisting of your website . 
+
+
+Impacts: 
+
+1. Discloses Info about websites Internal structure and directory enlisting
+2. Threat for social engineering scams 
+3. It is possible to regulate traffic to fake website , which eventually may hamper the original websites visitor counting . 
+
+I personally wanted to use the cloned files to set up a demo website for testing purpose , later I thought It might violet your program rules , so I decided to go for reporting to you .Additionally I am attaching Screenshots . If you need any additional Information feel free to ask . 
+
+Thanks . 

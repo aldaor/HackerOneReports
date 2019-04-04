@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/19608
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/shahmeer-amir
+ReportedTo:Envoy(envoy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.08.2014 1:29:13
+
+Summary:
+
+
+The page was loaded from a URL containing a query string:
+https://signwithenvoy.com/device_config/preview_badge?company=ADNInd&email=tamannazaidy%40gmail.com&entryDateTime=Jul+9%2C+2014+%C2%B7+5%3A51+PM&field+Your+Company=%5BYour+Company%5D&logoUrl=&name=aoinond&phoneNumber=dadaoidnasndoasnd&photoUrl=%2Fassets%2Fsample_badge_photo-eff54885b6866868830f4fc11342b508.png
+
+Thats too much info being in GET. 
+P.S thats my testing account

@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/197786
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/alykode
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:19.04.2017 14:08:17
+
+Summary:
+
+Hello,
+
+REST-API, allows anonymous access to functionality that allows a hacker to list all users who have published a post on a WordPress site. Unfortunately, this generally includes the admin account
+
+POC: https://owncloud.com/wp-json/wp/v2/users/
+https://owncloud.com/wp-json/wp/v2/users/1/
+
+
+Kind Regards,
+Alex.

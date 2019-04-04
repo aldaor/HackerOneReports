@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/207236
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/scraps
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:16.03.2017 18:13:15
+
+Summary:
+A DoD website was misconfigured in a manner that could have potentially disclosed sensitive information. @scraps was able to demonstrate this vulnerability by searching for certain file types. Thanks @scraps!

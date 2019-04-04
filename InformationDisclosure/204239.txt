@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/204239
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/irotem2
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:05.09.2018 9:40:13
+
+Summary:
+Researcher has identified and reported an information disclosure vulnerability in Informatica's website and helped us in resolving the issue.

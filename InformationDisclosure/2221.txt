@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/2221
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/guido
+ReportedTo:HackerOne(security)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:28.02.2014 16:46:22
+
+Summary:
+
+Download CSS style sheet referenced from the HTML and do:
+
+grep -oP "file.:.*?scss" application-facbdb64a504bb08ec272860320e1941.css | sort | uniq
+
+As you can see it exposes information about the file system, source CSS files and software used.
+
+See enclosed file for a dump of the output of the command above.

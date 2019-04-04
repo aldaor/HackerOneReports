@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/202361
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/japz
+ReportedTo:Coinbase(coinbase)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:02.02.2017 4:30:12
+
+Summary:
+When a Coinbase user requests money from another coinbase user, the user that receives the request sees an email that says, in part:
+
+John Smith (foo@bar.com) sent you a request to pay 1 BTC using Coinbase.
+
+Where John Smith is the sending account's display name (meaning you can make it whatever you want), and foo@bar.com is the sending account's verified email address.   This is done intentionally, as without an identifier like an email address in the request, it would be impossible to tell the difference between the actual John Smith and someone claiming to be John Smith.  
+
+If Coinbase users wish to receive money while disclosing less information about themselves, Coinbase allows users to create single use BTC addresses that can receive payments (https://support.coinbase.com/customer/portal/articles/1816349-how-do-i-get-a-bitcoin-address-).

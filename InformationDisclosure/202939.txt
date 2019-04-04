@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/202939
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/babayaga_
+ReportedTo:Pornhub(pornhub)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:06.02.2017 21:33:37
+
+Summary:
+The researcher discovered a debug log file exposing path information.

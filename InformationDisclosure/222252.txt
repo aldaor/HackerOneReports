@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/222252
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/norver
+ReportedTo:ICQ(icq)
+BountyAmount:1000.0
+Severity:low
+State:Closed
+DateOfDisclosure:09.07.2017 14:15:02
+
+Summary:
+
+duplicate: https://hackerone.com/reports/219171 

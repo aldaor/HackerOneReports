@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/213936
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/mostafamamdoh
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:60.0
+Severity:medium
+State:Closed
+DateOfDisclosure:19.07.2017 23:10:49
+
+Summary:
+A security researcher discovered that password reset tokens were leaked to Intercom (which provides our support chat interface) and Google Analytics. While the time between a user clicking on a password reset link and actually resetting the password is typically quite low, there was still some risk.

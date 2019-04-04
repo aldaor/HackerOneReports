@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/228156
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/caesar302
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.03.2018 15:50:55
+
+Summary:
+
+Hello,
+I found a info disclosure vulnerability. We can enumerate emails via user_id parameter from Manage users.
+
+And I found that :
+
+hello@legalrobot.com
+mbay@codex.stanford.edu
+contact@hackerunit.com
+conduct@legalrobot.com
+dmca@legalrobot.com 
+
+I attached photos from burp repeater to be more explicit.
+
+We can easily bruteforce user_id parameter with ids to harvest user's emails.
+
+Regards,

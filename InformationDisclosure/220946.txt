@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/220946
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/isrsahilmk__
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.04.2017 13:19:39
+
+Summary:
+@mksahilisr reported a disclosure of the `.htaccess` file on https://portal.nextcloud.com. This has been resolved by adding the following to the Apache server configuration:
+
+```
+<Files .htaccess>
+  order allow,deny
+  deny from all
+</Files>
+```
+
+Since the `.htaccess` file contained some potential sensitive data this report has only been disclosed limitedly.

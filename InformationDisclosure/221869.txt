@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/221869
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/pappan
+ReportedTo:Homebrew(homebrew)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:05.03.2019 8:20:50
+
+Summary:
+
+In https://jenkins.brew.sh/user/latish1337/api/xml, I was able to see latish1337 users' email address.
+Hence, its possible to see the email of all the users listed in the https://jenkins.brew.sh/user/.
+{F176835}

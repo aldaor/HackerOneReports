@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/246780
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/silv3rpoision
+ReportedTo:WakaTime(wakatime)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:29.10.2017 15:43:38
+
+Summary:
+
+Hii team once again,
+Hope you are better 
+I have found that db01.wakatime.com is using an outdated version OpenSSH version leading to multiple vulnerability.
+How i find it 
+I scanned the domain with nmap and it gives me a open port 222
+and when i connect it with ncat it get connected and shows the whole server configuration.
+As shown in the screenshot .
+Fix it as soon as possible and if you want more information on this please let me know.
+
+Thanks 
+Regards Piyush kumar

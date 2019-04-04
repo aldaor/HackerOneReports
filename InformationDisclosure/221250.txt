@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/221250
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/isrsahilmk__
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.10.2017 22:21:08
+
+Summary:
+
+Hello Team,
+
+**Vulnerable Url:** https://rpm.newrelic.com/accounts/USERID.json
+
+**Description of the Bug:**
+
+As Restricted user for an organization cannot Add New users to the Organization, cannot change Organization Name, cannot generate or download report as well as cannot read the information of Owner except his/her email address.
+
+But here the json file is disclosing the Mobile Number of Owner and Billing CC Email of the Organization.
+_Well it's Limited only up to the person who is User in that Organization._ But it's still an Information Disclosure.
+
+**Proof Of Concept:**
+
+* Create an Account at [New Relic](https://newrelic.com/) using email address x@email.com (just for the sake of Proof of Concept)
+
+* Create Another account as email address y@email.com
+
+* From Account x@gmail.com add user y@email.com as "Restricted User".
+
+* Now from account y@email.com navigate to the link https://newrelic.com/accounts/ORGUSERID.json
+
+**You'll see the json file is disclosing the data that should not be disclosing to the Restricted User such as Owner's Phone Number and Billing CC Email.**
+
+Hope you'll fix it soon.
+
+Regards,
+Sahil Tembhare

@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/204984
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/inhibitor181
+ReportedTo:OX App Suite(appsuite)
+BountyAmount:888.0
+Severity:high
+State:Closed
+DateOfDisclosure:28.09.2017 7:19:38
+
+Summary:
+
+Hello, I have found a request in witch a user is able to copy other user's pattachements in his own folders and after that, he is able to download them or he is able to email them to another address or able to view them in browser.
+
+POC
+-----------------
+```
+PUT /appsuite/api/files?action=saveAs&attached=2&attachment=1&folder=41&module=1&session=4991e492365e4904bd8399333bc233de HTTP/1.1
+Host: sandbox.open-xchange.com
+//*headers, cookies*//
+
+{"folder_id":"54","description":"Description"}
+```
+Response
+```
+HTTP/1.1 200 OK
+Server: nginx
+//**//
+
+{"data":"54/51","timestamp":1486649907803}
+```
+
+In order for this to work you have to just pass in the GET parameter a folder id in where YOU have access for writing (it doesn't matter witch folder id is, you just need to be able to write in it!) and then change the attachement id. This will create a copy of the given attachement ID in the folder given in the JSON input (in the POC case 54). The server wil respond with the new folderID + file id.
+
+Then you can go to you files and see the copy of the targeted id.
+
+I have also attached 2 POC videos.
+
+In the first you can see the attack. In the first seconds you can see that the `folder` parameter from the GET request is just being used for writing validation, it doesn't really happen anything with it, there is no validation whether the attachement is in the inputted folder or not. Then I will copy all the attachement across all the accounts (for example XXE and exif are in user2's account, and you can see I am logged in with user3).
+
+Later in the video I have clicked the wrong links (while in incognito mode I cannot open files in new tabs because I am logged out), but in the second one you can see the download is working. Also sending the file per email or opening in browser works. That is why I have uploaded video 2.
