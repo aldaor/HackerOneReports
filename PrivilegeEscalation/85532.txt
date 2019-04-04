@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/85532
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/dz_samir
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.09.2015 8:23:35
+
+Summary:
+
+hello i find bug with it i can edit or delete any question users 
+
+poc 
+link https://apps.owncloud.com/knowledgebase/editquestion.php?page=89 
+
+
+thanks 

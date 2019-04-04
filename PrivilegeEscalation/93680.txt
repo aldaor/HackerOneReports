@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/93680
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/shahmeer-amir
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:10.11.2015 22:24:59
+
+Summary:
+Users with access to view each channel's Overview could view parts of the Home screen, and vice versa. We fixed the issue by correctly checking for each permissions separately on the relevant endpoints.

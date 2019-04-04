@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/92050
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/sarwarjahan
+ReportedTo:Trello(trello)
+BountyAmount:256.0
+Severity:
+State:Closed
+DateOfDisclosure:14.10.2015 17:08:04
+
+Summary:
+If a team was **already significantly compromised** because an attacker had gained control of an account that was part of the team, they could use the API to add a new member to the team with equivalent permissions to the account they had already compromised.
+
+While this wouldn't give an attacker any **additional** access to the team (beyond what they'd already have with the they'd already compromised), this behavior was unintended.
+
+A normal user does not have privilege to add new members to a group. But adding following HTML button (Payload), a Normal user can add new members to a group which he did not have privilege to perform
+Payload: 
+<a class="button-link u-gutter js-manage-members" href="#"><span class="icon-sm icon-member"></span> Add Members</a>
+
+Steps To Reproduce:
+1. Login to Trello  https://trello.com/login
+2. Navigate to any team Members page for which you are a normal user
+3. Add the above HTML element in the page by using Developer's tool as shown in PoC video
+4. Click on the above added button
+5. Give an Email address who is not a trello user
+6. Click on Send button
+
+Result: A forbidden Message is displayed by trello. But refresh the page and see that the new member is added to the group by a low privilege trello user who did not have the privilege to add members to group.
+
+Please refer the following PoC video for steps and proof.
+PoC Video: https://drive.google.com/folderview?id=0B3TS39fNVVULSncyOWZtd285eWs&usp=sharing

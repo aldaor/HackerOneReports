@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/93106
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/harry_mg
+ReportedTo:WePay(wepay)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:10.12.2015 9:04:22
+
+Summary:
+
+Hi. One of your subdomain http://staging.wepay.com/ is vulnerable to subdomain takeover. Since if you visit the site, it will be saying "unknown domain" which  indicates that there are no currently deployed services set up with the specified domain and attackers can copy that domain in any hosting sites. Tricking users and setting up what they want just to attack against others.  
+Just go to:
+
+http://staging.wepay.com/
+
+and you will see it.
+
+also look at this which indicates that Fastly is the CNAME:
+
+http://mxtoolbox.com/SuperTool.aspx?action=a%3Astaging.wepay.com&run=toolpage
+
+
+
+Thanks!

@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/97161
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/xmly
+ReportedTo:Twitter(twitter)
+BountyAmount:1120.0
+Severity:
+State:Closed
+DateOfDisclosure:16.02.2016 19:28:08
+
+Summary:
+
+I'm not the best at finding "why" this happened, but I am pretty sure it's not supposed to.
+I was keyword searching "protonmail invite" and this came up even though the user was not on public nor did i follow him. I go to twitter.com and search for the exact same tweet, nothing comes up of his tweet.
+I logged into a different tweetdeck account - I can still see the tweet by searching for it, the user is on private and I do not follow him.

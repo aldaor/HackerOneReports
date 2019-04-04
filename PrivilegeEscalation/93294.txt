@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/93294
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/hazimaslam
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:09.11.2015 20:36:37
+
+Summary:
+The Shopify API returned the first and last name of the author of pages, which may not have been intended by the store owner. We've removed the author name from the public API.

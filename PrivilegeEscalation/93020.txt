@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/93020
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/grande
+ReportedTo:VK.com(vkcom)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:17.10.2016 20:35:29
+
+Summary:
+
+1. Выбираем любую удаленную страницу.
+2. Например, открываем http://vk.com/id55555
+3. Видим сообщение о том, что "Страница удалена, либо еще не создана" и никакой информации более.
+4. Воспользуемся widget_subscribe.php с одним лишь параметром oid
+5. https://vk.com/widget_subscribe.php?oid=55555
+6. Profit! Наталья Кузнецова
+7. Кстати, я смог на неё ещё и подписаться. После этого я смог узнать ВУЗ.
+Для этого на странице виджета с переданным параметром открываем инспектор и для класса "w_subscr_btn" удаляем стиль display:none (ну либо ставим block и т.д.). Во всплывающем окне кликаем "Подписаться". Вуаля!

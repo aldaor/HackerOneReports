@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/96636
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/reecer
+ReportedTo:Snapchat(snapchat)
+BountyAmount:1500.0
+Severity:
+State:Closed
+DateOfDisclosure:24.12.2015 18:49:30
+
+Summary:
+This bug was a result of the server being unable to distinguish GET and POST parameters, oftentimes defaulting to using a GET parameter value over that of a POST parameter. If an attacker convinced a user to visit a URL with the attacker-specified password as a parameter, then if the user provided their current password and solved the CAPTCHA, this could allow an attacker to overwrite the user's credentials. The attacker would specify "newpassword" and "newpassword2" GET parameters which would override the POST values that the user specified - thus, changing the user's password to the attacker-known value.
+Suppose a user were to reset their password at the following url (with the given query parameters):
+```
+https://accounts.snapchat.com/accounts/change_password?
+newpassword={someNewPass}&newpassword2={someNewPass}
+```
+Then regardless of the new password entered into the form, `{someNewPass}` becomes the user's new password.  This becomes malicious when an attacker refers a users to this url which contains these query parameters to change the user's password.
+
+Even though this requires some level of social engineering -- convincing a user (whose username is known) not only to change his/her password, but do so via a given url -- I don't see a good reason to allow this behavior. Bottom line, _don't read username/passwords from query string_.
+
+I look forward to your response.

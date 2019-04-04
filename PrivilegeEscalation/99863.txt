@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/99863
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/rms
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:18.09.2018 14:29:54
+
+Summary:
+@rms reported an issue where a full-access users could create restricted users, even though the UI didn't make it seem like this was intended. We updated the UI to make this clearer.
