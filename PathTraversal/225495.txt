@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/225495
+WeaknessName:Path Traversal
+Reporter:https://hackerone.com/geekdad
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:17.05.2017 14:07:42
+
+Summary:
+
+Browsing this link https://hosted.weblate.org/admin/accounts/profile/  will ask for admin username and password as asked  when browsing https://hosted.weblate.org/admin/accounts/ or https://hosted.weblate.org/admin/ hence disclosing the directory path of forbidden area.
+screenshot : path.png
+
+also it is found that there is no rate limiting enforced at https://hosted.weblate.org/admin/login/?next=/admin/  hence attacker can break into staffs account by brute forcing. 
+screenshot : login.png

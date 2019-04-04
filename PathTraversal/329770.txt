@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/329770
+WeaknessName:Path Traversal
+Reporter:https://hackerone.com/ajxchapman
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:250.0
+Severity:critical
+State:Closed
+DateOfDisclosure:02.07.2018 10:43:43
+
+Summary:
+In UniFi Video Controller 3.9.3 and prior, an user with administrator privileges can restore the configuration using a specially crafted zip file. Due to the lack of validation for path transversal, the user can upload arbitrary files to arbitrary locations.

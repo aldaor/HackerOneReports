@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/284346
+WeaknessName:Path Traversal
+Reporter:https://hackerone.com/dzmitry
+ReportedTo:Mail.ru(mailru)
+BountyAmount:200.0
+Severity:low
+State:Closed
+DateOfDisclosure:28.12.2017 7:39:09
+
+Summary:
+It was possible for Android Mail application to upload file into directory level higher above configured download folder by crafting the attachment filename in user-assisted scenario.
+A real impact from this behavior is considered as minimal.
+Привет
+
+#106097 был исправлен не полностью, все еще можно скачать вложение в письме мимо downloads директории на  sdcard. 
+
+Если имя файла будет что-от вроде "../file.txt" то такой файл будет скачен мимо /sdcard/download. Для файлов "%2e%2e%2f/file.txt" скачивает правильно. 
+Скачать можно только на sdcard, в /data/data/ru.mail.mailapp/  не скачивает, так же если файл был создан, то оно его не перезаписывает, а создает новый
+
+Сценарий для атаки такой:
+1. На приложение Mail.ru воздействовать вроде никак не получится, однако допустим найдено некое приложение X которое хранит файлы в "/sdcard/Android/data/<x-package-name>"
+2. Вот тогда такое вложение может попасть в  "/sdcard/Android/data/<x-package-name>" и эксплуатировать проблему приложения Х удаленно
+
+Версия Android Mail.Ru Почты: 6.0.0.22977 from October 5, 2017

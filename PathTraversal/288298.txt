@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/288298
+WeaknessName:Path Traversal
+Reporter:https://hackerone.com/ramsexy
+ReportedTo:Valve(valve)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:09.05.2018 22:22:33
+
+Summary:
+Local File Inclusion (LFI) vulnerability in the pChart php library

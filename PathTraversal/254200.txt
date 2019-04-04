@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/254200
+WeaknessName:Path Traversal
+Reporter:https://hackerone.com/sp1d3rs
+ReportedTo:Unikrn(unikrn)
+BountyAmount:50.0
+Severity:medium
+State:Closed
+DateOfDisclosure:23.08.2017 12:12:46
+
+Summary:
+Thanks again @sp1d3rs, also for the summary. Nothing to add from our side except maybe for the wish for more reports having this quality.
+
+Final comment: nothing from that bucket was ever exposed to any user except the uploader, also nothing in the bucket is there for real archiving purposes.

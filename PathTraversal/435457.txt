@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/435457
+WeaknessName:Path Traversal
+Reporter:https://hackerone.com/sbakhour
+ReportedTo:Imgur(imgur)
+BountyAmount:50.0
+Severity:medium
+State:Closed
+DateOfDisclosure:13.12.2018 19:02:43
+
+Summary:
+
+Hello Imgur Administrators,
+
+I am not sure if this falls in your scope but I wanted to alert you that your Nexus Repository Manager can be accessed through https://nexus.imgur.com/
+Usually the default user/pass for the NRM are admin/admin123 but there is an alternative way to login using the below default credentials.
+user: anonymous
+pass: anonymous
+
+I was able to login and I got access to check all the repositories available. I uploaded the attached video as a proof of traversal.
+Kindly arrange to remove the user anonymous or change its password & limit the access to the Nexus Repo Manager site https://nexus.imgur.com/
+
+## Impact
+
+The attacker can manage to proxy, collect, and manage your dependencies (delete components & Analyze applications).

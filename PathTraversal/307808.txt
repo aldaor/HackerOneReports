@@ -1,0 +1,49 @@
+ReportLink:https://hackerone.com/reports/307808
+WeaknessName:Path Traversal
+Reporter:https://hackerone.com/orange
+ReportedTo:Ruby on Rails(rails)
+BountyAmount:1500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:19.07.2018 16:01:09
+
+Summary:
+There is an information leak vulnerability in Sprockets. This vulnerability
+has been assigned the CVE identifier CVE-2018-3760.
+
+Versions Affected:  4.0.0.beta7 and lower, 3.7.1 and lower, 2.12.4 and lower.
+Not affected:       NONE
+Fixed Versions:     4.0.0.beta8, 3.7.2, 2.12.5
+
+Impact
+------
+Specially crafted requests can be used to access files that exists on
+the filesystem that is outside an application's root directory, when the Sprockets server is
+used in production.
+
+All users running an affected release should either upgrade or use one of the work arounds immediately.
+
+Releases
+--------
+The 4.0.0.beta8, 3.7.2 and 2.12.5 releases are available at the normal locations.
+
+Workarounds
+-----------
+In Rails applications, work around this issue, set `config.assets.compile = false` and
+`config.public_file_server.enabled = true` in an initializer and precompile the assets.
+
+This work around will not be possible in all hosting environments and upgrading is advised.
+
+Patches
+-------
+To aid users who aren't able to upgrade immediately we have provided patches for the three supported release series.
+They are in git-am format and consist of a single changeset.
+
+* 4-0-fix-path-traversal.patch - Patch for the 4.0.x release series
+* 3-7-fix-path-traversal.patch - Patch for the 3.7.x release series
+* 2-12-fix-path-traversal.patch - Patch for the 2.12.x release series
+
+Credits
+-------
+
+Thanks to Orange Tsai from DEVCORE for reporting this issue.

