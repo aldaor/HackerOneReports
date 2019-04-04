@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/231510
+WeaknessName:HTTP Request Smuggling
+Reporter:https://hackerone.com/smziaurrashid
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:25.05.2017 14:58:39
+
+Summary:
+
+Summary:
+========
+The HTTP header of the gratipay.com website includes an unsafe CSP parameter for "script-src".
+
+Description:
+==========
+has a Content-Security-Policy configured the "script-src" parameter is set to "unsafe-inline", which allows injection of user passed values, which in result can be misused for Cross-Site Scripting attacks.
+
+Steps to Reproduce:
+================
+Go to the following link to check your gratipay.com website's http header response: https://hackertarget.com/http-header-check/
+``` Content-Security-Policy-Report-Only: default-src self;script-src self assets.gratipay.com unsafe-inline;```
+
+As can be seen, "unsafe-inline" is included in in the list of "script-src" parameters. For further information, see https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src
+
+Similar Report: #225833
+------------------------

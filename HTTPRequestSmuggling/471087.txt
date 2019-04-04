@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/471087
+WeaknessName:HTTP Request Smuggling
+Reporter:https://hackerone.com/yasinylcn17
+ReportedTo:RATELIMITED(ratelimited)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:21.12.2018 23:49:38
+
+Summary:
+
+> NOTE! Thanks for submitting a report! Please replace *all* the [square] sections below with the pertinent details. Remember, the more detail you provide, the easier it is for us to triage and respond quickly, so be sure to take your time filling out the report!
+
+**Summary:** [add summary of the vulnerability]
+
+**Description:** [add more details about this vulnerability]
+
+## Steps To Reproduce:
+
+(Add details for how we can reproduce the issue)
+
+  1. [add step]
+  1. [add step]
+  1. [add step]
+
+## Supporting Material/References:
+
+  * List any additional material (e.g. screenshots, logs, etc.)
+
+## Impact
+
+Kkx

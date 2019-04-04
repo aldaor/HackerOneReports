@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/214436
+WeaknessName:HTTP Request Smuggling
+Reporter:https://hackerone.com/cloudyvirus
+ReportedTo:Blockchain(blockchain)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:23.03.2017 15:30:45
+
+Summary:
+Submitter observed that CloudFlare-protected sites will serve content from other CloudFlare-protected sites when the "Host" HTTP request header is modified in transit.
+
+A PoC for an attacker to modify a victim user's "Host" HTTP request header could not be presented by the submitter; consequently this issue is considered non-exploitable.
+
+This behavior does not meet the definition of HTTP header injection, since the request's content does not determine the content of the headers in the HTTP response. Reference: https://www.owasp.org/index.php/HTTP_Response_Splitting
