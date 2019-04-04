@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/312555
+WeaknessName:Information Exposure Through Sent Data
+Reporter:https://hackerone.com/danila_xawdxawdx
+ReportedTo:Mail.ru(mailru)
+BountyAmount:150.0
+Severity:none
+State:Closed
+DateOfDisclosure:12.11.2018 17:40:44
+
+Summary:
+CSRF tokens were static, CSRF token for arbitrary user's account can be obtained.
+No direct security implications were found, since token is transmitted in request headers and can not be sent crossite, but using static tokens was considered as a bad security practice.
+
+mcs.mail.ru was not in bug bounty scope on the time of reporting.
