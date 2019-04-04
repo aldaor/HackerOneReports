@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/44202
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/shahmeer-amir
+ReportedTo:Vimeo(vimeo)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.03.2015 6:18:14
+
+Summary:
+
+Hello Vimeo team
+This is Shahmeer and i found out that the Vimeo web application is highly vulnerable to Poodle bleed vulnerability located on this IP
+54.235.139.25
+
+In order to scan this properly
+Go here https://www.poodlescan.com
+Enter the domain captions.cloud.vimeo.com
+And it will prompt as vulnerable

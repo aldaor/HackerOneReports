@@ -1,0 +1,65 @@
+ReportLink:https://hackerone.com/reports/50120
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/hammad
+ReportedTo:Square(square)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.04.2015 7:30:28
+
+Summary:
+
+Hello sir,
+
+I found a that the web application does not have proper rate limitation on the web application to prevent flooding to the victim's email with invitation emails.
+ the attacker can send thousand of unwanted and unknown email saying: 
+"You're invited to use Square Appointments 	
+
+Hi,
+Please set up your profile to start receiving online bookings."
+
+Attacker can repeat the same about thousand of times and can flood the victims email address using your platform.
+Easy to exploit makes it very critical. it would not take more then 1 hour for an attacker to flood the victim's email and the main part is, attacker will send those thousands of email using your platform which is not an acceptable risk.
+
+HTTP REQUEST; ( Test ) 
+
+POST /appointments/api/staff HTTP/1.1
+Host: squareup.com
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:36.0) Gecko/20100101 Firefox/36.0
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+X-NewRelic-ID: VQUHVVNADAUBUFRbBA==
+Content-Type: application/json; charset=utf-8
+X-CSRF-Token: z4MsNhJrDMsJiStycoo8dkVusdM8ybVI4QndI7iGrfA
+X-Requested-With: XMLHttpRequest
+Referer: https://squareup.com/appointments/staff/new
+Content-Length: 681
+Cookie: 
+Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
+
+{"first_name":"Hammad","last_name":"Qureshi","email":"Hiqureshi014@gmail.com","role":"owner_data","status":"enabled","timezone":"America/Los_Angeles","is_visible_in_default_booking":true,"messaging_type_ids":"[\"99230e7c-7acc-430d-9869-4e8f3c4e07ed\",\"a66d0dc3-3ec3-4cce-b731-c44d6ac2322f\",\"7e352ecb-b557-4995-b51c-ae4ddde07775\"]","service_ids":"[\"4734db8a-5d1a-4622-ab9c-8b622e4ab596\"]","open_hours":"[{\"start_dow0\":-1,\"end_dow0\":-1,\"start_dow1\":32400,\"end_dow1\":61200,\"start_dow2\":32400,\"end_dow2\":61200,\"start_dow3\":32400,\"end_dow3\":61200,\"start_dow4\":32400,\"end_dow4\":61200,\"start_dow5\":32400,\"end_dow5\":61200,\"start_dow6\":-1,\"end_dow6\":-1}]"}
+
+Steps to repo:
+1) Authenticate to the square application. ( attacker's account )
+2) Navigate to https://squareup.com/appointments/staff/staff-token
+3) add a fake staff member with victim's email.
+4) Start a proxy tool like Burp. and turn the interception on. 
+5) click save 
+6) As soon as you click save, an http request will appear in burp which will be similar to above one but it would consist of your details ( cookie, token etc  ).
+7) Send the request to intruder 
+8) add payloads.
+9) Start attack. Boom!
+
+Suggested fix
+A. Add a limit to the number of invitation attempts that can come from a particular IP address every 5 minutes. 
+B. Add a Captcha mechanism, which may come after a certain number of emails. 
+
+Please have a look at attachment.
+
+Sir please let me know if i am missing something.
+
+Cheers,
+Hammad

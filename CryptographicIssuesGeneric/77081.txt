@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/77081
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/lalakhan
+ReportedTo:Keybase(keybase)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:05.08.2015 1:28:42
+
+Summary:
+
+Issue description :-
+There was no "X-Content-Type-Options" HTTP header with the value nosniff set in the response. The lack of this header causes that certain browsers, try to determine the content type and encoding of the response even when these properties are defined correctly. This can make the web application vulnerable against Cross-Site Scripting (XSS) attacks. E.g. the Internet Explorer and Safari treat responses with the content type text/plain as HTML, if they contain HTML tags.
+
+Issue remediation :-
+Set the following HTTP header at least in all responses which contain user input:
+X-Content-Type-Options: nosniff
+
+Request:
+OPTIONS / HTTP/1.1
+Cookie: guest=lgHZIDA2MzM4NmU5ZWQ1ZTU3NWIwNjI1NTBiNTBmMjBmYTA4zlWtXXXOAAFRgMDEIPoFWhfui0zP639i8xFbEpow%2Flv4DLBOwb9VZrNNhfWg
+Host: keybase.io
+Connection: Keep-alive
+Accept-Encoding: gzip,deflate
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.63 Safari/537.36
+Accept: */*
+
+
+Response:
+HTTP/1.1 200 OK
+Server: nginx/1.6.2
+Date: Mon, 20 Jul 2015 20:43:44 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 3
+Connection: keep-alive
+X-Powered-By: Express
+Allow: GET
+Strict-Transport-Security: max-age=31536000; includeSubdomains; preload

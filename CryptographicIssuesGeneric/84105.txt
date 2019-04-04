@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/84105
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/paresh_parmar
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.10.2015 7:56:32
+
+Summary:
+@paresh_parmar reported the BREACH vulnerability on demo.owncloud.org. ownCloud has meanwhile disabled compression on the system. It should be noted that starting with ownCloud 8.2 the CSRF token is randomized for each request.
+
+As per request by the reporter this issue has only been disclosed limited.

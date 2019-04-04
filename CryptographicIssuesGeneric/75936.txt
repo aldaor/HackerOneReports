@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/75936
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/d1pakda5
+ReportedTo:Zendesk(zendesk)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.08.2015 23:33:44
+
+Summary:
+
+Here  I am addressing Critical misconfiguration in autologin feature 
+1. Open the link in the browser https://dashboard.zopim.com/#home and enter your username and password and don't tick (select) the option Always sign in automatically  and login 
+2. now logout from your account 
+3. now you logged out again reload the page https://dashboard.zopim.com/#home and you will be logged in
+here the user does not selected the autologin option but still he./she logged in automatically
+
+attack scenario
+lets a user is using his account on local computer so he doesnot selected the autologin option while login 
+then his work finished and signout and left after that any one can reload the link and login his/her account 
+
+Regards
+Dipak

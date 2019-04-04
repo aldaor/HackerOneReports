@@ -1,0 +1,92 @@
+ReportLink:https://hackerone.com/reports/50170
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/prosecco-inria
+ReportedTo:The Internet(internet)
+BountyAmount:7500.0
+Severity:
+State:Closed
+DateOfDisclosure:01.04.2015 7:30:30
+
+Summary:
+
+Many TLS servers, including those hosting sensitive websites such as
+www.nsa.gov and connect.facebook.net, support weak EXPORT_RSA ciphersuites.
+By factoring their 512-bit ephemeral RSA keys, a network attacker is able to impersonate
+these websites to web browsers and more generally, to client applications relying on
+vulnerable TLS libraries. We have demos showing these attacks at www.smacktls.com
+
+Who's vulnerable
+-------------------------
+Vulnerable TLS client-side libraries (and web browsers) include:
+- SecureTransport (used by Safari on iOS and OS X)
+- SChannel (used by Internet Explorer)
+- OpenSSL versions <= 1.0.1j (used by Android Browser and BlackBerry Browser)
+- BoringSSL versions before Nov 10, 2014 (used by Chrome <= version 40 on OS X, iOS, Android, Windows)
+- LibReSSL versions <= 2.1.1
+- IBM JDK 
+
+OpenSSL 1.0.1k fixes the vulnerability (CVE-2015-0204)
+
+Vulnerable TLS servers are listed and updated at: http://www.freakattack.com
+We reported the attack to Akamai, Facebook, FBI, and many banks.
+
+Attack Details
+---------------------
+More details are below, in the attached research paper, and on the website: www.smacktls.com#freak
+
+We show a server impersonation attack relying on the following:
+
+(1) Many TLS servers support various EXPORT ciphersuites which are
+now considered obsolete and breakable. For instance, the
+TLS_RSA_EXPORT_WITH_RC4_40_MD5 ciphersuite relies on a ephemeral
+512-bit RSA key that typically stays constant over the lifetime of the
+TLS server. Breaking this key allows a network attacker to impersonate
+the server to any client that accepts an EXPORT_RSA handshake.
+
+(2) Several TLS client libraries, including e.g. OpenSSL
+(<=1.0.1j), accept an EXPORT_RSA ServerKeyExchange
+during a regular RSA handshake. For the gory details of this bug, see
+the attached research paper.  In effect, these clients are willing to
+replace the certificate's public key with a signed ephemeral public
+key sent by the server (even if the ephemeral key is very short.)
+
+OpenSSL 1.0.0k fixed this bug (CVE-2015-0204) but previous versions of
+OpenSSL (used in Android browsers) and other clients listed above 
+are vulnerable.
+
+(3) 512-bit keys can now be factored in a few hours. With the help of
+Prof. Nadia Heninger who used cado-nfs (http://cado-nfs.gforge.inria.fr/) 
+to run factoring tasks on the Amazon EC2 cloud, we were able to factor 
+the ephemeral EXPORT_RSA keys for multiple server instances of 
+www.nsa.gov and connect.facebook.net. Each factoring task took between
+7 and 11 hours and cost about $70-$100.
+
+We note that the EXPORT_RSA keys for TLS servers seem to remain the
+same for several days (at least), which makes us think they are only
+refreshed when the server instance is rebooted.
+
+DEMO
+---------
+
+Putting these three elements together, we have demos that impersonate
+various HTTPS websites to the Safari web browser. 
+
+See: http://www.smacktls.com
+
+The demo shows how a network attacker can 
+(a) hijack HTTPS connections to www.nsa.gov to tamper with the careers page
+(b) hijack HTTPS connections to the Facebook JavaScript SDK to inject malicious
+    scripts in innocent third-party websites
+
+Countermeasures
+---------------------------
+
+We are already in touch with Apple, IBM, Microsoft and Google to fix the
+RSA_EXPORT bug on the client-side libraries. However, it seems likely
+that many clients will continue to use older versions of these
+libraries (e.g. Android cannot be easily updated.)
+
+We recommend that all TLS servers stop supporting EXPORT_RSA 
+ciphersuites. This would protect the hosted websites.
+
+

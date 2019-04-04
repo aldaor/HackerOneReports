@@ -1,0 +1,51 @@
+ReportLink:https://hackerone.com/reports/5786
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/bryanstern
+ReportedTo:Coinbase(coinbase)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:07.05.2014 21:58:00
+
+Summary:
+
+My name is Bryan Stern and I am Android Software Engineer. Last night I took another look at your Android application and found some disturbing vulnerabilities that could allow for a user's account to be hijacked. Fortunately, they are very easy to resolve. Below I have outlined the issue, gave some recommendations, and attached some screenshots.
+
+**Coinbase for Android Security Flaws:**
+
+1. The application does not perform any SSL certificate verification.
+2. The API design does not prevent request tampering or replays.
+3. The consumer id and secret of the app is widely available.
+
+**Potential for damage:**
+
+1. Without implementing your own SSL certificate validation in the Coinbase app, a "man in the middle" can sniff and alter communication between the application and Coinbase API. A malicious hacker could then use this to violate user privacy as well as take advantage of the other two flaws listed. Worse, an attacker could steal the access token provided in network responses and have full API access to the user's Coinbase account using the widely available Coinbase Android consumer id and secret.
+2. Because requests are neither adequately protected by SSL, nor are they signed, an attacker could repeat or tamper with requests. For example, an attacker could repeat requests to buy bitcoin, sell bitcoin, or send bitcoin requests from the app to either empty their associated bank account, sell bitcoins needed by the user, or repeat a transfer bitcoins to another account. Not only can transactions be repeated, they can be modified in transit. So, for example, an attacker could change the recipient (and/or amount) of a transaction request.
+3. The consumer id and secret exposure means that their is no trusted secret between the Coinbase Android app and the Coinbase API. This means any program could make requests to the Coinbase API pretending to be the Coinbase Android app. You would not be able to block the abuser of the Coinbase API without disabling the Coinbase Android app until a new build with a new consumer id and secret was distributed.
+
+**How to establish the man in the middle attack on Android**
+
+1. Set up a proxy server that the Android device will route traffic through. I use www.charlesproxy.com for this.
+2. Install the SSL certificate on the device that the proxy will present as Coinbase's SSL certificate to it's clients. (www.charlesproxy.com/charles.crt)
+3. Configure your device to point it's traffic through Charles.
+4. Enable SSL 
+5. View, repeat, and modify requests in Charles Proxy.
+
+**Availability of the Consumer Id and Secret**
+
+1. It is publicly available in the GitHub repository. (https://github.com/coinbase/coinbase-android/blob/bc6a03229416736acc2ea6bc2fb13f55f7029751/coinbase-android/src/com/coinbase/api/LoginManager.java#L49)
+2. It is visible in many requests made by the device when monitoring requests during the man in the middle attack.
+
+**Recommendations:**
+
+1. Read the Android Documentation on SSL. 
+2. Sign OAuth requests and use nonces. See Twitter's documentation for an example. https://dev.twitter.com/docs/auth/creating-signature
+3. Change your consumer id and secret and keep them confidential. There is no need to ever send the consumer secret if requests are signed using it.
+4. Based on the [available source code](https://github.com/coinbase/coinbase-android), I see that ProGuard is not being used. I highly recommend it both to obfuscate your compiled code and for some of the optimizations available.
+
+----
+
+Please let me know how much time you may need to resolve these issue as I would like to publish this on my own blog soon (~3 weeks). If you have any questions, I would be more than happy to answer any questions and walk your developers through the issues.
+
+Best Regards,
+Bryan Stern

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/92271
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/pisarenko
+ReportedTo:VK.com(vkcom)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:04.03.2018 13:07:19
+
+Summary:
+Возможность узнать ID записи с определенным хештегом, если он единственный на стене. 

@@ -1,0 +1,50 @@
+ReportLink:https://hackerone.com/reports/84453
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/prayas
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.03.2016 9:21:42
+
+Summary:
+
+Hi,
+
+There is lack of HSTS on you domain https://apps.owncloud.com
+
+https://apps.owncloud.com/content/add.php
+
+GET /content/add.php HTTP/1.1
+Host: apps.owncloud.com
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:39.0) Gecko/20100101 Firefox/39.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: https://apps.owncloud.com/
+Cookie: _ga=GA1.2.253154774.1440349970; __hstc=123946325.064f8833b677bb3f8fa92d275de0cf1c.1440349971890.1440349971890.1440443053275.2; hsfirstvisit=https%3A%2F%2Fowncloud.com%2F|https%3A%2F%2Fhackerone.com%2Fowncloud|1440349971889; hubspotutk=064f8833b677bb3f8fa92d275de0cf1c; _gat=1; __hssrc=1; __hssc=123946325.5.1440443053275; PHPSESSID=ja6a63hdb3ff617kqnm4luebk1
+Connection: keep-alive
+Cache-Control: max-age=0
+
+HTTP/1.1 200 OK
+Date: Mon, 24 Aug 2015 19:10:36 GMT
+Server: Apache/2.4.7 (Ubuntu)
+X-Powered-By: PHP/5.5.9-1ubuntu4.11
+X-Frame-Options: SAMEORIGIN
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Content-Encoding: gzip
+Vary: Accept-Encoding
+Content-Length: 3258
+Keep-Alive: timeout=5, max=100
+Connection: Keep-Alive
+Content-Type: text/html
+
+
+More:
+
+https://www.owasp.org/index.php/HTTP_Strict_Transport_Security
+
+Regards,
+Prayas

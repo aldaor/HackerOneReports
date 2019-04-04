@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/44909
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/harshafriend4all
+ReportedTo:itBit Exchange(itbit)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:14.02.2015 17:35:21
+
+Summary:
+
+hey guys !
+
+i have found an bug where your were not validating email verification codes properly !
+
+steps to reproduce 
+
+1) lets assume you have a@x.com as email id 
+2) now  change your email id to b@y.com  via >> https://beta.itbit.com/profile
+3)  note down the codes of old email & new email 
+    lets assume 
+           old=123
+           new=456
+4) now dont enter the codes and close the popup ! 
+5) now  change your email id to  c@secret.com  via the above url 
+6)  now note down the codes 
+             old=789
+             new=999
+7) now in the popup , enter the old code of c@secret.com  & new code of b@y.com
+8) and the c@secret will be vefired !
+
+the attack senario  ,
+
+is  you dont have access to the secret company mail , via this attack you are able to verify there email id of secret company 
+
+hope this bug will be fixed soon !

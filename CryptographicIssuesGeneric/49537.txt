@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/49537
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/ruisilva
+ReportedTo:Airbnb(airbnb)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.04.2015 7:36:56
+
+Summary:
+
+Hi
+I found ssl issues on your site: www.airbnb.pt
+
+POC:
+
+https://www.ssllabs.com/ssltest/analyze.html?d=airbnb.pt&s=23.203.215.81
+
+
+Ty 

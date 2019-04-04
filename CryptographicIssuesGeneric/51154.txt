@@ -1,0 +1,49 @@
+ReportLink:https://hackerone.com/reports/51154
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/madmantm
+ReportedTo:itBit Exchange(itbit)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.04.2015 3:30:36
+
+Summary:
+
+
+www.itbit.com details:
+
+
+### High Level, description
+
+It is possible for a malicious user to capture credential information of a www.itbit.com user with the use of SSLStrip. The scenario is that if a user is in a internet cafe and browses the internet while a malicious user intercepts his traffic, the way www.itbit.com servers are configured could allow the exposure of this users credential in the clear.
+
+### Steps to reproduce
+
+* (this will be the malicious machine) Use a linux distribution and install the MITMf proxy, available here (https://github.com/byt3bl33d3r/MITMf)
+* Execute the command with the following syntax (sudo python mitmf.py -i eth0 --spoof --arp --hsts --dns --gateway gatewayIP --target targetIP)
+(this will be the legitimate machine) Use a windows machine which will use any browser and connect to the www.itbit.com website, then authenticate, as you can see there is no HTTPS lock in the browser)
+* The credentials are entered and the site is navigated all in the clear (HTTP)
+* You can see the credentials are intercepted in the MITMf window log.
+
+### Example of captured information :
+
+>2015-03-12 12:29:27 192.168.4.128 SECURE POST Data (www.itbit.com):
+>_csrf=uDn52DSP4qctbJ8FPBDIYJEL&redirectUrl=%2Faccounts&username=madmantm%40hackerone.
+>com&password=madmantmpassword1234
+
+
+
+
+### Risk :
+
+The risk has been evaluated as critical, since the interception of a user could mean the compromise of his account and could also lead of a potential compromise of an admin account since the system is vulnerable and they could be targeted.
+
+### Mitigation / Corrective Measures :
+
+Disable port 80
+Fully use HTTPS in the whole website
+Implement HSTS (https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security)
+Adding www.itbit.com inside a certificate whitelist (http://src.chromium.org/viewvc/chrome/trunk/src/net/http/transport_security_state_static.json)
+
+### Example of HSTS on a Apache Server
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"

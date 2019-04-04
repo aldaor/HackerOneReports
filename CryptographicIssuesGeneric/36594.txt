@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/36594
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/lovepakistan
+ReportedTo:Coinbase(coinbase)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:24.05.2015 21:14:41
+
+Summary:
+
+New Device Confirmation token sends to the logged in user from unconfirmed device. Now If Click on Account or Settings or Profile email of new token will send to that person and same if user click multiple times, more and more confirmation emails user received. On each reload each confirmation token send to the user's email. Now All Tokens are Valid.
+
+User will use any one of them, but others are still valid. So It should expire after sometime.
+
+I have checked by reloading multiple times and all tokens are valid.

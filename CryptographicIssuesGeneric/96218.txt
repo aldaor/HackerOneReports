@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/96218
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/cyberattacker
+ReportedTo:withinsecurity(withinsecurity)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.10.2015 23:41:24
+
+Summary:
+
+Hi,
+I found you website using Uses unsafe-inline without nonce.
+ Allowing unsafe-eval can increase risk of various types of attacks. Consider adding a nonce which makes injecting malicious code more difficult as an attacker would need to guess the nonce.
+Thanks,

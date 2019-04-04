@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/392701
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/jaimaakali
+ReportedTo:MariaDB(mariadb)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:11.11.2018 16:42:20
+
+Summary:
+A missing DNS Certificate Authority Authorization rule was reported for our main domain. We resolved this by adding the relevant CAA rules in our DNS configuration.

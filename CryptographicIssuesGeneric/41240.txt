@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/41240
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/isox
+ReportedTo:Twitter(twitter)
+BountyAmount:140.0
+Severity:
+State:Closed
+DateOfDisclosure:20.09.2015 8:40:12
+
+Summary:
+
+Hi!
+Looks like there is SSLv3 Padding Oracle vuln on:
+
+199.16.156.44, 199.16.156.108, mx4.twitter.com

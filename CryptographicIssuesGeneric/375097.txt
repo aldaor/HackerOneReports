@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/375097
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/cryptographer
+ReportedTo:Slack(slack)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:28.11.2018 15:20:11
+
+Summary:
+@cryptographer found that for some regions, status.slack.com supported an outdated cipher suite, which we've since updated. Thanks @cryptographer!

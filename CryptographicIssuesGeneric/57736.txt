@@ -1,0 +1,53 @@
+ReportLink:https://hackerone.com/reports/57736
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/d1pakda5
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:23.04.2015 12:23:11
+
+Summary:
+
+I just checked for SPF records for the hackerone.com domain, and there are none, effectively allowing for spam(spoof) to originate from that domain. you can validate by testing yourself here: http://www.kitterman.com/spf/validate.html
+
+i want to show you an attack scenario
+An attacker would send a Fake email from security@hackerone.com saying that Please change your password, The victim is aware of phishing attacks, But when he sees that the mail originated from security@hackerone.com , He has no other way than to believe it. Clicking on the link takes him to a website where certain JavaScript is executed which steals his hackerone.com id and pin (SESSION COOKIE). The results can be more dangerous.
+
+<?php
+$to = "VICTIM@example.com";
+$subject = "Password Change";
+$txt = "Change your password by visiting here - [VIRUS LINK HERE]l";
+$headers = "From: security@hackerone.com";
+mail($to,$subject,$txt,$headers);
+?>
+
+I strongly recommend you to read this article :
+
+https://www.digitalocean.com/community/tutorials/how-to-use-an-spf-record-to-prevent-spoofing-improve-e-mail-reliability
+
+
+your spf report of hackerone.com is
+
+SPF record lookup and validation for: hackerone.com
+SPF records are published in DNS as TXT records.
+
+The TXT records found for your domain are:
+detectify-verification=013989914c06d6a62aa4663666920ac9
+google-site-verification=glWWhC-27LpigyjAxBsVOVUScJgNQ23GWdC4uOWC3dc
+tinfoil-site-verification: 873ece466d6b512578883941b7e40f6c751bb6f0=190a4eea096ee61c4ba13b63a442cbc3dcf94811
+google-site-verification=GObJCayWrxZLoAvYGPn8y75tF0SJk5d4iYrwMQTa23Y
+v=spf1 include:_spf.google.com include:sendgrid.net include:mail.zendesk.com include:spf.mandrillapp.com ~all
+
+Checking to see if there is a valid SPF record.
+
+Found v=spf1 record for hackerone.com:
+v=spf1 include:_spf.google.com include:sendgrid.net include:mail.zendesk.com include:spf.mandrillapp.com ~all
+
+
+Your SPF record is v=spf1 include:_spf.google.com include:sendgrid.net include:mail.zendesk.com include:spf.mandrillapp.com ~all
+
+It should be v=spf1 include:_spf.google.com include:sendgrid.net include:mail.zendesk.com include:spf.mandrillapp.com ~all
+
+The problem
+The article clearly shows difference between softmail and fail you should be using fail as Softmail allows anyone to send spoofed emails from your domains. in your SPF record you should replace ~ with - at last before all , - is strict which prevents all spoofed emails except if you are sending. Your bug is that you are using ~ , you should use -

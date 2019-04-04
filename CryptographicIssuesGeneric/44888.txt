@@ -1,0 +1,57 @@
+ReportLink:https://hackerone.com/reports/44888
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/atom
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:04.02.2015 15:25:50
+
+Summary:
+
+Hello HackerOne,
+
+I found out that it's easy to publish a program that isn't yours.
+
+``` January 20, 2015 ```
+I created a program named *Puffer Bird* and I leave the sandbox to prepare to launch the program.
+Then, I requested for a program review.
+
+``` January 21, 2014 at 1:08 AM ```
+I received an email from ██████@hackerone. 
+
+>At this time HackerOne is unable to validate the program because of multiple factors. Initial validation can begin by sending an email from the Pufferbird.com to support@hackerone.com. Additional details may be required to confirm your identity and the company.
+> 
+>Thank you.
+
+So, I went to a [Hosting Website](http://hostinger.ph), I created a New Account to create a domain *pufferbird.com* . 
+Screenshot: http://i.imgur.com/d6rgPX8.png
+After creating the domain, I created an email *no-reply@pufferbird.com*
+Screenshot: http://i.imgur.com/oeh83fH.png
+Then, I sent an email to ██████@hackerone.com
+Screenshot: http://i.imgur.com/C1v0XHg.png
+And It has been sent successfully.
+
+
+Note:  Because the domain I created is not pointing to host's nameservers, services like email will not work correctly but it can sent an email but not able to receive.
+-----------
+
+``` January 23, 2015 at 9:17 PM ```
+I sent another email directly to ██████@hackerone.com using my own and real email.
+
+
+``` January 24, 2015 at 12:23 AM ```
+I received an email that the program has been approved.
+Screenshot: http://i.imgur.com/5DBJnaE.png
+
+Short Recap:
+I made a program
+Leave the sandbox to request review
+██████@hackerone.com emailed me for validation of the program
+I validate the program using the fake pufferbird.com email address
+I emailed ██████@hackerone.com that I already sent the email which contains information about the program.
+no-reply@hackerone.com[HackerOne] emailed that the program has been approved.
+
+Screenshot: http://i.imgur.com/ZiuUOY9.png
+
+~ @atom

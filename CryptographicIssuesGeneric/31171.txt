@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/31171
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/voodookobra
+ReportedTo:concrete5(concrete5)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.10.2014 1:43:24
+
+Summary:
+
+```php
+
+    private function genString($a = 20)
+    {
+        $o = '';
+        $chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+{}|":<>?\'\\';
+        $l = strlen($chars);
+        while ($a--) {
+            $o .= substr($chars, rand(0, $l), 1);
+        }
+        return md5($o);
+    }
+```
+
+Using substr(rand()) then running md5() on the output would be better replaced by using bin2hex() and either openssl_random_pseudo_bytes($a) or mcrypt_create_iv($a, MCRYPT_DEV_URANDOM)
+
+For example:
+
+```php
+    private function genString($a = 20)
+    {
+        if (function_exists('mcrypt_create_iv')) {
+            return bin2hex(mcrypt_create_iv($a, MCRYPT_DEV_URANDOM);
+        }
+        return bin2hex(openssl_random_pseudo_bytes($a));
+    }
+```

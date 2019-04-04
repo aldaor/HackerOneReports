@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/91366
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/unknown_cybary
+ReportedTo:Imgur(imgur)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.12.2015 17:41:47
+
+Summary:
+The HTTP header X-Content-Type-Options was not set to nosniff. This can cause some browsers to try to determine the content/encoding type of a response, which is an undesired behavior.

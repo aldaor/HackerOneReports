@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/38682
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/jmoore15
+ReportedTo:Square(square)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:24.07.2015 23:58:18
+
+Summary:
+
+Although Square Readers implement encryption, possibly with a Derived Unique Key Per Transaction (DUKPT) scheme, the transaction counter of a Square Reader device is not verified when performing server-side decryption of swipe data. During a valid sale, a malicious merchant or third party can record several extra encrypted swipes of a credit card. Provided the data from extra swipes is not sent to Square's servers, they can then play these recordings back into the Square Register app at a much later time, even out of order, in order to initiate and complete fraudulent transactions at a later date.
+
+Because Square's servers do not validate that the current transaction counter associated with a particular encrypted swipe is greater than the last known transaction counter decrypted from that same device, any recordings of encrypted swipes that have not yet been used to initiate a transaction can later be played back in order to perform a new transaction for an arbitrary amount. The server will validate the played-back encrypted swipe even though Square has the necessary knowledge to decline the transaction based on a stale transaction counter.
+
+Consider the following scenario: 
+1. Merchant takes a customer's card.
+2. Malicious merchant uses a recording app to record an encrypted swipe of a customer's card. Or, a malicious third party uses a modified Square Reader app (possibly re-signed using Android signing vulnerability, for example) to record and transmit encrypted swipe data to a malicious server. For each transaction, the malicious app could pretend that the first swipe was invalid, and send the encrypted bits to a malicious server.
+3. Merchant then performs a valid transaction using the Square Register app. In the case of the malicious merchant, the merchant simply changes from the recording app to the Square Register app quickly. In the case of the malicious third party, the modified Square Register app would allow subsequent swipes to be processed normally (i.e. sent to Square's servers) to allow for correct app functionality and to avoid suspicion.
+4. Customer doesn't think anything of the multiple swipes--this is normal and expected due to bad swipes. Customer receives goods and goes about his or her day.
+5. Merchant performs many (perhaps hundreds) of transactions over the following days with the same Square Reader device.
+5. Days later, when customer isn't paying attention, or has forgotten about the original transaction, or when the malicious party is ready, the malicious merchant or third party could play back the encrypted swipe data (using Manchester Encoding to convert the encrypted bits back to audio if necessary, in the case where the modified Square Register app transmits decoded bits instead of raw audio) into the Square Register app (possibly under a different account). Square's servers will decrypted the decoded bits successfully and allow a transaction to continue, *even though the transaction count of the encrypted swipe is much lower than the transaction count of the last processed (i.e. decrypted) swipe for that particular Square Reader device* (identified by serial number).
+
+Solution: Decline transactions that are initiated with encrypted swipe data having a transaction counter that is lower than the last processed transaction counter for a particular Square Reader device. If a transaction counter (or device serial) is not currently sent to Square's servers along with encrypted swipe data, then add this data in a new version of the Square Reader, and start verifying it.
+
+Another security issue is that although Square claims to have deprecated and discontinued support of old Square Readers (S1, S2, and S3 devices, for example), these readers still work with the Square Register app. This is very insecure, since the unencrypted S1 readers might still be in use, or if/when the above issue is fixed and the fix involves a new Square Reader device, old and insecure encrypted Square Readers will still work.

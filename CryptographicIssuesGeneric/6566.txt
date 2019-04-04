@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/6566
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/rajuraju14
+ReportedTo:OkCupid(okcupid)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.04.2014 21:16:31
+
+Summary:
+
+Run the script attached: python ssltest.py okcupid.com
+
+For more information, go to heartbleed.com

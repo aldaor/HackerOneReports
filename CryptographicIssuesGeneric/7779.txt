@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/7779
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/redshark1802
+ReportedTo:Verizon Media(verizonmedia)
+BountyAmount:2500.0
+Severity:
+State:Closed
+DateOfDisclosure:16.05.2014 17:58:40
+
+Summary:
+Thank you for your submission to the Yahoo Bug Bounty program. We were able to reproduce the issue you reported and have implemented appropriate fixes. We appreciate your adherence to responsible disclosure guidelines and look forward to your future participation in the program.

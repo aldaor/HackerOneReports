@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/31415
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/mtk
+ReportedTo:RelateIQ(relateiq)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:13.08.2015 13:36:18
+
+Summary:
+
+Hi,
+You are using vulnerable SSL which is vulnerable to poodlebleed more info on this attack.
+http://poodlebleed.com/
+
+Vulnerable Domain:
+app.relateiq.com

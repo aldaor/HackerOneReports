@@ -1,0 +1,46 @@
+ReportLink:https://hackerone.com/reports/9116
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/atom
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.05.2014 15:42:15
+
+Summary:
+
+We know that our mobile number is connected to some subdomains of mail.ru like calendar, cloud and etc.
+
+I found out that using 1 Mobile Number can create or use it to MANY ACCOUNTS.
+
+This is what I did..
+
+I have a main account in mail.ru
+Email: atomtheman@mail.ru
+with Mobile Number of: 639154219078
+Screen shot: [Link](http://prntscr.com/3cdgm3)
+
+Then, I try to use the USED Mobile number in my main to connect to a NEW Account
+
+Email: atomtheman10@gmail.com
+with Mobile Number of: 639154219078 [SAME IN MY MAIN ACCOUNT]
+Screen shot: [Link](http://prntscr.com/3cdh0t)
+
+so, what is the bug here.. I choose the Information Disclosure Why?
+Just what I say Mobile Numbers are connected to some subdomains like calendar, cloud and etc.
+
+Main Account = User #1
+New Account = User #2
+
+Scenario:
+so let's say in CALENDAR.
+User #1 Make a PRIVATE EVENT in his calendar.mail.ru and he checked the SMS to make an aler 15 minutes before the exact event time.
+Screen shot: [Link](http://prntscr.com/3cdi5c)
+
+But because of unproper usage of Mobile Number that can use 1 mobile number to multiple accounts
+
+the SECRET EVENT may disclose to User #2.
+
+Get the point?
+
+so my suggestion here is 1 MOBILE NUMBER = 1 ACCOUNT.

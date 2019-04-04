@@ -1,0 +1,44 @@
+ReportLink:https://hackerone.com/reports/6547
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/leander
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.05.2015 21:29:27
+
+Summary:
+
+Hi,
+
+It appears that email messages from the platform are sent via plain SMTP even though the receiving MX supports ESMTPS (the use of ESMTP when STARTTLS is also successfully negotiated to provide a strong transport encryption layer).
+
+This allows for eavesdropping along the path between the originating system (such as o1.email.hackerone.com) and the receiving MX.
+
+To reproduce:
+- Have the platform deliver a message to a recipient whose MX supports STARTTLS
+- Inspect the email headers, in most cases the first 'Received:' header is relevant
+- Observe the transaction id and look for 'SMTP id' (versus 'ESMTPS id')
+- Observe lack of version/cipher/bits information that would be shown if TLS was used
+
+
+Fictional example headers provided below;
+
+- current
+Received: from o1.email.hackerone.com (o1.email.hackerone.com. [167.89.13.71])
+        by mx.receiving.tld with SMTP id e3si1568039obp.178.2014.04.08.05.59.10
+        for <recipient@domain.tld>;
+        Tue, 08 Apr 2014 05:59:11 -0700 (PDT)
+
+- suggested
+Received: from o1.email.hackerone.com (o1.email.hackerone.com. [167.89.13.71])
+        by mx.receiving.tld with ESMTPS id e3si1568039obp.178.2014.04.08.05.59.10
+        for <recipient@domain.tld>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 08 Apr 2014 05:59:11 -0700 (PDT)
+
+The perhaps slightly obvious fix seems to be to support ESMTPS by allowing STARTTLS to be negotiated by the sending system(s). Note that blunt enforcement will cause delivery problems as it depends on EMSTPS being supported on (any) receiving MX.
+
+HTH.
+
+-leander

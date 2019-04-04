@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/91350
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/d1pakda5
+ReportedTo:Imgur(imgur)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:23.12.2015 16:14:41
+
+Summary:
+An account option that allowed users to sign out everywhere was found to not be functioning properly. A user selecting this option was not signed out. A fix has been rolled out to update session security as a result of this report.

@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/3709
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/simon90
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.04.2014 10:16:47
+
+Summary:
+
+Hello team of HackerOne!
+
+I am Simone, and today I will report you a criptographic issue on your site!
+
+
+Issue: Strict Transport Security with too short max age.
+
+Description: Your site use a good "Strict Transport Security" but with short MAX AGE!
+
+Severity: See more information below.
+
+Proof of Concept by ssllabs.com (100% affidability):
+
+http://grabilla.com/0430b-dd84e505-e1c9-45bb-b537-9a975fd6124f.html#update
+
+"Strict Transport Security (HSTS) 	Yes   max-age=2678400; includeSubdomains   TOO SHORT (less than 180 days)"
+
+If you want to see the full scan with your "eyes" check it here: https://www.ssllabs.com/ssltest/analyze.html?d=hackerone.com&s=190.93.242.102
+
+Also..See more information here:
+
+https://community.qualys.com/thread/10857
+
+
+Thanks and best regards,
+Simone
