@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/273449
+WeaknessName:OS Command Injection
+Reporter:https://hackerone.com/maxpl0it
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:150.0
+Severity:high
+State:Closed
+DateOfDisclosure:19.06.2018 12:17:17
+
+Summary:
+In ToughSwitch v1.3.5 and prior, due to lack of validation is possible to execute an CSRF. If an authenticated user access an attacker controlled web page, it could trigger the CSRF and the resulting request could trigger an RCE.

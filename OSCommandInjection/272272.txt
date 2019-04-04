@@ -1,0 +1,39 @@
+ReportLink:https://hackerone.com/reports/272272
+WeaknessName:OS Command Injection
+Reporter:https://hackerone.com/kenziy
+ReportedTo:Bitwarden(bitwarden)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.09.2017 7:58:09
+
+Summary:
+
+Hello guys
+
+I don't know if you care about this issue but it seems that the export feature in your https://vault.bitwarden.com/#/tools is vulnerable to CSV injection. If a CSV contains a malicious command it may have big impact
+
+Even though there is a popup notification for users before opening the CSV but due to it is coming from bitwarden site. User might trust the CSV.
+
+I provide a video demo to show how the issue was found
+https://www.youtube.com/watch?v=Y8zmUZu9z4c
+
+Attack
+-------
+If the data inside the CSV if from other users then this might be a big impact. attackers will insert malicious command.
+
+Im using this excel command
+@SUM(1+1)*cmd|' /C calc'!A0
+
+Fix
+---
+Prefix =, +, - and @ symbols with a ' in issues when exporting them to a .csv file might do the tricks.
+
+
+Referrence
+------------
+https://hackerone.com/reports/111192
+https://hackerone.com/reports/216243
+
+Cheers
+Kenziy

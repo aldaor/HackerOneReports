@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/223344
+WeaknessName:OS Command Injection
+Reporter:https://hackerone.com/jaypatel
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:17.05.2017 18:03:47
+
+Summary:
+
+**Step to reproduce :**
+1.go to https://hosted.weblate.org/dictionaries/aptoide-uploader/bn/#add
+2.add "=1+1" to **Source** and ** Translation** filed 
+{F178723}
+3.now do **CSV export**
+4.you can see all the cell is displayed as "2" which means the code is executed.
+
+Best Regad's,
+Jay Patel

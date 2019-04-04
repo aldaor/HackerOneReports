@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/317043
+WeaknessName:OS Command Injection
+Reporter:https://hackerone.com/danila_xawdxawdx
+ReportedTo:Mail.ru(mailru)
+BountyAmount:1000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:11.05.2018 12:04:05
+
+Summary:
+PHP shell upload was possible on  widget.support.my.com support frontend site.
+
+This report was accepted within lootdog.io preliminary bug bounty program, because lootdog.io is supported via support.my.com.
