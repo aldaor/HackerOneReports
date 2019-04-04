@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/220150
+WeaknessName:Forced Browsing
+Reporter:https://hackerone.com/alykode
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.04.2017 14:08:00
+
+Summary:
+
+Hello,
+
+My investigations revealed that we have accesible directory in forbidden directory:
+
+http://www.ubnt.com/static/ - forbidden
+http://www.ubnt.com/static/cm/ - forbidden
+Here we have http://www.ubnt.com/static/cm/mode/ accesible and then /xm/l and /django/ foders
+
+POC:
+http://www.ubnt.com/static/cm/mode/ - 200 http code (accesible)
+http://www.ubnt.com/static/cm/mode/xml/ - 200 http code (accesible)
+http://www.ubnt.com/static/cm/mode/django/ - 200 http code (accesible)
+
+Now, i didn't looked up very close to this pages content, but for sure we are not supposed to acces them. Thank you.
+
+Kind Regards.

