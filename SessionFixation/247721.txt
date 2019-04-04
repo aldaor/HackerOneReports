@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/247721
+WeaknessName:Session Fixation
+Reporter:https://hackerone.com/whitehattushu
+ReportedTo:ICQ(icq)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:11.05.2018 12:04:32
+
+Summary:
+API token for web.icq.com was not expired after user logout.

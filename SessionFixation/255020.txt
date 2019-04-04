@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/255020
+WeaknessName:Session Fixation
+Reporter:https://hackerone.com/ashishag29
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:16.08.2017 5:33:23
+
+Summary:
+
+After resetting the password the page session gets fixed.
+Hope that you get it fixed
