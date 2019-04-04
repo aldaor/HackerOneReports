@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/149710
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/japz
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:11.07.2016 10:13:39
+
+Summary:
+
+Hi i found that server version are being disclosed on the response header on this URL: __https://assets.gratipay.com__ , this is a low risk but you can consider this as best practice because it is important to keep secret of server versions.
+
+See similar reports here: #141125
+
+Feel free to close this as __Informative__ if don't see any security risk by the given information disclosure.
+
+Regards
+Japz

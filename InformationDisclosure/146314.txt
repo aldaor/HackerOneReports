@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/146314
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/thearmfox
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.06.2016 21:36:20
+
+Summary:
+
+hi,
+you should to deny access here: https://download.nextcloud.com/ + all folders because everyone can see your files on the server.
+
+this is not a bug, but it's important to keep secret your files.
+
+
+to resolve this issue:
+In an .htaccess file you need to use:
+Deny from  all
+
+
+regards
+armfox97

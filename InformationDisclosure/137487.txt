@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/137487
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/xmly
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:12.05.2016 21:43:22
+
+Summary:
+##Issue
+
+The reporter found unsecure Amazon S3 buckets from a third-party service provider used by the LocalTapiola website. Visiting that amazon bucket on a browser showed the files on the bucket, whilst a secure bucket would have brought up an access denied page. 
+
+##Fix
+
+The issue was investigated and found to be valid although outside of the bug bounty program scope and in addition outside of the realm of the LocalTapiola services. All the information in the bucket is and was public. Nevertheless, the service provider in question reacted quickly and removed the unnecessary privileges because, although unharmful, that kind of open configuration was not needed.
+
+##Reasoning
+
+Most out of scope reports are closed as informative as they are not part of the bug bounty program but might provide good information (please see the policy for more information). As LocalTapiola does take security seriously, there are cases where actions are warranted also on out of scope reports. In this specific case, the report as such made it very easy to understand and pinpoint the issue, as well as inform the third party. As actions were taken to fix the issue, there was a decision to award the reporter and do a public disclosure.
+Searching through the source code of your homepage shows a few http://inpref.s3.amazonaws.com/ URLS.
+I assume that you own this s3 Amazon bucket.
+The problem here is, visiting that amazon bucket on a browser will shows the files on the bucket, whilst a secure bucket would bring up an access denied page. I have attached Screenshots showing Hackerone's bucket compared to your bucket to show you what a secure bucket looks like and where the bucket is being used in your source code.

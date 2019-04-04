@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/137404
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/a0005
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.10.2016 18:32:15
+
+Summary:
+
+The page at https://raw.githubusercontent.com/adi2909/basic-py/0532539f86cbb584aa7bfd8cc357fc9df4c25c03/data/allHostInfo.json
+
+has a ton of internal info about twitter hosts, including MACs, NICs, other hardware info, and hostnames.  This data, albeit a little dated, gives an attacker an excellent view into hardware, patching status, and network topology.
+
+I've uploaded a parsed JSON of this information

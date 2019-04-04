@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/142562
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/5haked
+ReportedTo:Pornhub(pornhub)
+BountyAmount:10000.0
+Severity:
+State:Closed
+DateOfDisclosure:03.10.2016 20:54:28
+
+Summary:
+Researcher was able to exploit a serialization error in the SimpleXMLElement class to perform object injection using the callbackUrl parameter.
+
+Researcher was successful in achieving the following:
+
+* SSRF
+* Local file inclusion
+* Limited execution of database commands without output

@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/163464
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/cablej
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:120.0
+Severity:
+State:Closed
+DateOfDisclosure:12.09.2016 18:47:42
+
+Summary:
+
+Hey,
+
+I noticed when monitoring the websocket requests that the account information of many users, including email address, is sent to the client. For example:
+
+```
+██████
+
+██████████
+
+█████████
+
+████████
+
+███████
+
+```
+
+There's hundreds of these requests, each containing user information. Please let me know if this is meant to be happening, but I didn't see a list of users on the site.

@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/146327
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/benoculars
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.07.2016 23:04:30
+
+Summary:
+
+In the HTTP response header from team.uberinternal.com, the nginx web server version is disclosed.
+
+```
+HTTP/1.1 301 Moved Permanently
+Server: nginx/1.8.1
+Date: Tue, 21 Jun 2016 22:45:53 GMT
+Content-Type: text/html
+Content-Length: 184
+Connection: keep-alive
+Location: https://team.uberinternal.com/
+```

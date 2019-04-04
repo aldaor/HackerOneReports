@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/146093
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/vivek-p
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.06.2016 7:36:19
+
+Summary:
+
+1. User Enumeration:
+It is possible to enumerate four  WordPress usernames (jancborchardt, jos, lukasreschke, frank). An attacker can use these username to carry out brute-force attack in order to forcefully authenticate.
+
+2. Akismet Plugin(2.5.0-3.1.4) vulnerable to unauthenticated Stored Cross Site Scripting:
+This vulnerability allows an attacker to post a comment on a WordPress site which will execute javascript in the WordPress admin console. This is a typical XSS vulnerability pattern and one of the attacks it enables would allow an attacker to steal a WordPress administrator’s cookies and gain administrative access to a WordPress website.
+
+3. XML-RPC Interface available: The presence of xmlrpc.php can cause brute force amplification attack.
+https://nextcloud.com/xmlrpc.php

@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/143575
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/fnqgpc
+ReportedTo:Phabricator(phabricator)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.06.2016 10:52:38
+
+Summary:
+
+Mongoose. The full path of the phabricator install is shown if you go to /login/mustverify/ while being logged out. This could be seen as a server configuration issue, but I think I followed your installation guide closely.
+
+Since I already wrote it I include a little patch, please feel free to ignore it if it's not what you need.

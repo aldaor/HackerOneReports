@@ -1,0 +1,43 @@
+ReportLink:https://hackerone.com/reports/152992
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/config
+ReportedTo:Harvest(harvest)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:29.07.2018 19:39:37
+
+Summary:
+
+Dear Harvest Security Team,
+
+To be honest, it’s really hard for me to report this issue without trying to see other user’s data, because in my point of view, this is an issue at the session of the HarvestApp that catchup already by Google Bot. What I would like to say is, I can’t proof yet the issue with my own account, but I can proof the issue at other people account since their invoice is catchup already by Google Bot.
+.
+I. Introduction
+===
+To make people easily processing and also generating the invoices, HarvestApp providing various way such as web invoices access, .pdf creation, and also send it directly to the customer that work together with them.
+
+In general, for accessing the Web Invoices, HarvestApp generating some __unique thing__ (well, let’s called it as a __hash__) so no one can be access into those web invoices directly without knowing those uniques hash.
+>For example, I have an invoices with unique ID = __#10188365__ and I would like to send it to customer or someone that I trust so they can see it earlier before sending it to customer.
+
+>In this situation, we just need to click the __“Web Invoices”__ feature and HarvestApp will automatically generate the unique hash just like = `https://justforpoc.harvestapp.com/client/invoices/2cbcd8b629d2250b7e4e082ec263be7c01299e34`. (__Harvest Invoices 1 - Web Invoice.png__)
+
+Regarding those information, the problem exist when the generation of Web Invoices isn’t protected and searchable by Bot Search Engine.
+.
+II. Additional Information
+===
+Please kindly note that if we would like to access an invoice, then we should go to `https://_________.harvestapp.com/client/invoices` which is can be access directly with only click the `invoices` tab.
+.
+III. Summary of the Issue
+===
+As described above at Part I, the issue could allow the Attacker to access people’s Web Invoices without knowing the victim’s password or even become a part of the team.
+.
+IV. Step to Reproduce
+===
+The step that we need to reproduce this issue is using the Google Dork. Since the URL that “stored” the invoices data is located at `https://_________.harvestapp.com/client/invoices`, then we just need to type: `site:.harvestapp.com inurl:'invoices’` at Google Search Engine. In this case, we will see many invoices that generated to Web Invoices by each user that registered already at HarvestApp. (__Harvest Invoices 2 - Google Dork.png__ and __Harvest Invoices 3 - Google Dork 2.png__)
+.
+__Note__: Once more, I’m really sorry for accessing the one of your customer’s data. But I just access one of the data just to make sure if the PoC is works (__Harvest Invoices 4 - Accessing People's Data.png__).
+.
+V. Video
+===
+For completing the explanation, I do attached the (unlisted) video at Youtube that could be access at `https://youtu.be/eO70DQV4fmI`.

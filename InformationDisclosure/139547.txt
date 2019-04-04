@@ -1,0 +1,52 @@
+ReportLink:https://hackerone.com/reports/139547
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ignatius
+ReportedTo:Dovecot(dovecot)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.06.2016 5:59:04
+
+Summary:
+
+Hi,
+
+This website is revealing the version information of the web server using. 
+
+http://www.dovecot.fi/
+
+REQUEST:
+--------------
+
+GET / HTTP/1.1
+Host: www.dovecot.fi
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:46.0) Gecko/20100101 Firefox/46.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+
+
+RESPONSE:
+----------------
+
+HTTP/1.0 200 OK
+Date: Wed, 18 May 2016 10:39:20 GMT
+Server: Apache/2.4.10 (Debian)
+X-Frame-Options: SAMEORIGIN
+x-xss-protection: 1; mode=block
+x-content-type-options: nosniff
+x-pingback: http://www.dovecot.fi/xmlrpc.php
+Link: <http://www.dovecot.fi/wp-json/>; rel="https://api.w.org/", <http://www.dovecot.fi/>; rel=shortlink
+Vary: Accept-Encoding
+Content-Encoding: gzip
+Content-Length: 6195
+Content-Type: text/html; charset=UTF-8
+X-Cache: MISS from dc1techproxy1
+X-Cache-Lookup: MISS from dc1techproxy1:3128
+Via: 1.0 dc1techproxy1 (squid/3.1.23)
+Connection: keep-alive
+
+Regards
+----
+Bharath

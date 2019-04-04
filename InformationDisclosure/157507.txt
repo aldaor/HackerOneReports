@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/157507
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/footstep
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.05.2017 8:01:03
+
+Summary:
+The researcher @footstep found that the web server behind downloads.gratipay.com (nginx) is disclosing its version on error pages. However, this domain is hosted on a third-party infrastructure, MaxCDN—making this impossible to fix and out-of-scope of our program.
+Hello,
+
+Navigating to http://downloads.gratipay.com/Error goes to a 404 error page disclosing your Nginx version. Server information should be protected since anyone with a bad intent on would try to find exploit for the specified server version.
+
+Thanks,
+Footstep

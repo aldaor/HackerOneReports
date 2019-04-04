@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/154855
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/pradeepch99
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.02.2017 2:15:46
+
+Summary:
+
+Restricted role user has no way to view the license key, but the license key is leaking in the source code.
+
+Steps to reproduce
+Assume userA is owner, userB is restricted user.
+
+Login as userB and go to https://rpm.newrelic.com/accounts/{acc_id}/applications/setup
+Select any Web agent, view page source
+search for “Your App Name” in the source code
+Observe the license key is disclosed
+<pre class='code-snippet'>config := newrelic.NewConfig('Your App Name', ‘{1234567890123456}’)
+config.BetaToken = '__YOUR_BETA_TOKEN__'
+app, err := newrelic.NewApp

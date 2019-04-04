@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/160981
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bugdiscloseguys
+ReportedTo:Harvest(harvest)
+BountyAmount:150.0
+Severity:high
+State:Closed
+DateOfDisclosure:12.01.2017 3:56:56
+
+Summary:
+
+Hey there,
+So when someone creates a new estimate for a client it is not accessible to anyone except the admin and the person with the private URL of the web invoice.
+Now their is an option to convert estimate into invoice through ``` https://amandhakertest.harvestapp.com/invoices/new?estimate_id=ID_HERE``` through which an project manager can extract information about the private estimates of the project which he is assigned to.
+If a user ( **PROJECT MANAGER** ) is not assigned to project **X** he cannot access any info of **X** .
+If is not necessary to accept the payment for the attacker to perform this kind of attack & it will be helpful as a project manager cannot check the invoices made by the other so it is quite impossible to check into the estimates and it can also lead into accessing the private invoice created by the admin as if the admin or the client accepts the payment now he is asked to create invoice for the estimate and after creating it only he is allowed to access it but attacker can use this method and guess out what a admin would have created with the particular estimate.
+
+Thanks.
+Please let me know if you need any further assistance with.
+God is great <3
+Jai maa kali <3 jai maa saraswati <3 jai maa durga <3 jai maa bhawani <3 jai maa lakshmi <3 jai maa ganga <3 jai maa sita <3 jai maa vaishnodevi <3 jai shree ram <3 jai shree ganesha <3 jai shree krishna <3 jai shiv shambhu <3 jai shree shani dev <3 jai bajrang bali <3 

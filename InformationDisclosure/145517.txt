@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/145517
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/paulochoupina
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.06.2016 19:19:22
+
+Summary:
+
+Information disclosure:
+
+So from simple lookup you can confirm the version of the jquery used.
+And is a outdated one, that accordingly to some research i did, was public vulnerabilities, such as XSS.
+
+
+Steps to reproduce:
+1- navigate to: https://nextcloud.com/introducing-the-nextcloud-bug-bounty-program/
+2- see sorce code
+3- find /wp-content/cache/minify/000000/hY1BEoJADAQ_hMnKxfdEiFS2dhNNVgt9vYhcKY4zNT2dUHluSBHcAnPgi3U0x2oju8rHTz1cIEEV7RAp0wyT2VSY7hIwWF07LHJd6MeT_Y3nBei38OMgR5d2NNtK9CYqjWNwK2WVHRCVwvT__wU.js
+4- navigate to: https://nextcloud.com/wp-content/cache/minify/000000/hY1BEoJADAQ_hMnKxfdEiFS2dhNNVgt9vYhcKY4zNT2dUHluSBHcAnPgi3U0x2oju8rHTz1cIEEV7RAp0wyT2VSY7hIwWF07LHJd6MeT_Y3nBei38OMgR5d2NNtK9CYqjWNwK2WVHRCVwvT__wU.js
+5- find: jquery:"1.7.2"

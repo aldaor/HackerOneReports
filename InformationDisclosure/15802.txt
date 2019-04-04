@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/15802
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bigbear
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:16.10.2014 8:32:15
+
+Summary:
+
+Приветствую!
+
+Уязвимый ресурс - http://s2.11x11.ru
+
+Бага - http://s2.11x11.ru/config/config.php
+
+Fatal error: require_once() [function.require]: Failed opening required 'config/consts.inc.php' (include_path='.:/usr/share/pear:/usr/share/php') in /var/www/11x11.ru/config/config.php on line 2

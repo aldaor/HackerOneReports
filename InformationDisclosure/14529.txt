@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/14529
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/blackb0xl33t
+ReportedTo:Mavenlink(mavenlink)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 10:00:32
+
+Summary:
+
+The web application https://mavenlink.com discloses version details of the underlying Platform / Server
+
+Following is the response from the server when the application initially communicates to the PORT 80 (HTTP) of the server
+
+HTTP/1.1 301 Moved Permanently
+Cache-Control: no-cache
+Content-Type: text/html
+Date: Mon, 02 Jun 2014 23:08:23 GMT
+Location: https://www.mavenlink.com/
+Server: nginx/1.2.3 + Phusion Passenger 3.0.17 (mod_rails/mod_rack)
+Status: 301
+X-Powered-By: Phusion Passenger (mod_rails/mod_rack) 3.0.17
+X-Rack-Cache: miss
+X-Request-Id: 8d28f92461c5d38e021fff7ff53e30b0
+X-Runtime: 0.002525
+X-UA-Compatible: IE=Edge,chrome=1
+Content-Length: 92
+Connection: keep-alive
+
+<html><body>You are being <a href="https://www.mavenlink.com/">redirected</a>.</body></html>
+
+Please find the attached screenshot

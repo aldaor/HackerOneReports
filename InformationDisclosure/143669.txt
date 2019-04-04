@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/143669
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/nikitchenko
+ReportedTo:Badoo(badoo)
+BountyAmount:280.0
+Severity:
+State:Closed
+DateOfDisclosure:09.06.2016 19:39:57
+
+Summary:
+
+Здравствуйте!
+В вашем сервисе есть фотографии сильно низкого качества, чтобы было невозможно разобрать кто на нем изображен. (например  разделе "Кому вы нравитесь?"  ) 
+Наше способ получить оригинал.
+Берем адрес скрытой картинки:
+https://pcache-pv-eu1.badoocdn.com/p76/hidden?euri=CD7SrePxVBgqQI6NZlSecpEED0VHR8HQsai3k4ChKXuBzuG9amb01yjMHKK12cPtpVOm2LUb0DXtv.wOaGyaHsKRyUMIHzgE1oEKsIAMFVl4315WdppTSP-D2jL1bI3oyRU4o-HvAtBwyJ4H0XgUWVSB7J4LTXmh&size=__size__
+
+Дописываем  в конец "?"
+Получили оригинал:
+https://pcache-pv-eu1.badoocdn.com/p76/hidden?euri=CD7SrePxVBgqQI6NZlSecpEED0VHR8HQsai3k4ChKXuBzuG9amb01yjMHKK12cPtpVOm2LUb0DXtv.wOaGyaHsKRyUMIHzgE1oEKsIAMFVl4315WdppTSP-D2jL1bI3oyRU4o-HvAtBwyJ4H0XgUWVSB7J4LTXmh&size=__size__?
+
+Хорошего дня!
+
+С Уважением, 
+Сергей Никитченко

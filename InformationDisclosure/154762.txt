@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/154762
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/issam_rabhi
+ReportedTo:Uber(uber)
+BountyAmount:3000.0
+Severity:
+State:Closed
+DateOfDisclosure:15.08.2016 19:46:50
+
+Summary:
+Limited disclosure due to credentials/tokens contained in the report. Thanks for the great find @issam_rabhi!

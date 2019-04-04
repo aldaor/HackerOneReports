@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/156510
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/sandh0t
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.09.2016 12:39:10
+
+Summary:
+
+Summary:
+=========
+The Directory Listing option is still enabled in the web server **88.198.160.130** , which displays all the files and folders contained in the directories:
+ **core** 
+**apps**
+**config**
+**lib**
+**settings**
+**resources**
+
+PoC:
+====
+Visit the following links:
+```
+http://88.198.160.130/core/
+http://88.198.160.130/apps/
+http://88.198.160.130/config/
+http://88.198.160.130/lib/
+http://88.198.160.130/settings/
+http://88.198.160.130/resources/
+```

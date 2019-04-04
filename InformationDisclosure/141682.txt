@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/141682
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ylujion
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.09.2016 7:26:27
+
+Summary:
+ylujion reported to us that it was possible to conduct a SSRF attack against Synthetics. This attack could be used to obtain various sensitive data about the server on which the Synthetics monitor is running. The report was particularly clever because access to the IP in question was explicitly blocked by Synthetics - but ylujion also found a way to bypass this block. 

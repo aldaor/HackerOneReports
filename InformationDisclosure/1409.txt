@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/1409
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/jobert
+ReportedTo:Factlink(factlink)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.04.2014 8:37:00
+
+Summary:
+
+Hi guys,
+
+I found a bug that allows users of your proxy to retrieve pages from your internal web servers -- in this case, the `172.16.64.0/24` subnet. As an example, please see [this link](http://fct.li/?url=https://172.18.64.13). As you will see, it returns the HTML of your Chef server (which, I assume, cannot be accessed from the internet). I wasn't able to access any of your systems. That being said, I didn't really spent time on it.
+
+Please note that once your proxy is also able to follow redirects, it should reject redirects to internal hosts as well.

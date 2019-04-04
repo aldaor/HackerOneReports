@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/142709
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/detroitsmash
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:21.06.2016 6:19:16
+
+Summary:
+
+Hi,
+
+I found the exactly same bug #97501 at ``https://app.shopify.com/services/partners/api_clients/<APP-ID>`` when uploading the svg image on app icon.
+
+###Steps to reproduce it
+
++ Make a new app at https://app.shopify.com/services/partners/api_clients
++ Goto app setting ``https://app.shopify.com/services/partners/api_clients/<APP-ID>``
++ Now upload the attached svg image and change the xlink with your owner.
++ Save changes and check your server log. 
+
+{F97509}
+
+Thanks

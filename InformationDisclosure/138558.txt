@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/138558
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/harikrishnan_c
+ReportedTo:Dovecot(dovecot)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.05.2016 7:42:43
+
+Summary:
+
+Due to improper configuration , the following directory is open and the files are listed.
+
+URL : http://xi.dovecot.fi/debian

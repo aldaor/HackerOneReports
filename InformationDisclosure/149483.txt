@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/149483
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/japz
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.07.2016 23:01:36
+
+Summary:
+
+Hi uber, maybe this is a low risk but i want to report that the __nginx__ and __openresty__ server version are being disclosed.
+
+__For openresty:__ Accessing this url: https://chef.uberinternal.com/ will give you an error "502 Bad Gateway" but you can see on the page that the server version was disclose (openresty/1.9.3.1). See screenshot (openresty.JPG).
+
+__For Nginx:__ When you go to this URL: __http://it-tools.uberinternal.com/__ , it will redirect to JetBrains but you will see in the response header that the __nginx/1.8.0__ version was disclosed. See screen shots (nginx_1.JPG and nginx_2.JPG)
+
+It is important to keep secret of server versions. Similar reports here: #141125
+
+Cheers
+Japz

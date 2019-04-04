@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/149327
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/12345678910
+ReportedTo:CodeIgniter(codeigniter)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.07.2016 11:34:23
+
+Summary:
+
+I would like to report an exposure of your web server kindly browse https://www.codeigniter.com/.htaccess

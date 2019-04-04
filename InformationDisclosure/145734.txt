@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/145734
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/japz
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.06.2016 9:56:06
+
+Summary:
+
+Hello nextcloud, i have another findings, i found that email address enumeration and or username enumeration is possible in signup/registration and forgot password under https://help.nextcloud.com/ , email/username enumeration can be use in any malicious intent by a malicious minded user.
+
+- For registration see attached (signup.JPG)
+- For forgot password, see attached (forgot_password.JPG)
+
+Additional info about username/email enumeration , i found it here: https://www.troyhunt.com/everything-you-ever-wanted-to-know/ under "Username enumeration and the impact on anonymity"

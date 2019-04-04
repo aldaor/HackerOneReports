@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/163106
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ahsan
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.08.2016 9:42:41
+
+Summary:
+@ahsantahir reported a missing permission check on an internal service allowing the extraction of the .htaccess file. We've fixed this by adjusting the Apache configuration and putting Basic Auth in front of the page.
+
+On request of the reporter this is disclosed limitedly.

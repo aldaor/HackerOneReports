@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/144129
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/jthetechguy
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:21.06.2016 22:28:32
+
+Summary:
+
+When a report is made public it shows all activity that took place in that report. This includes showing if the title of the report was changed and what it was changed from. 
+
+This could cause information to be public that the business may not wish to make public if the person that created the report put a very descriptive title.
+For Example
+https://hackerone.com/reports/140392
+This report was changed to only say a subdomain contained a cj vuln but the previous title which is still visible in the activity specifies the exact subdomain that was originally included in the title.

@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/15362
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/kinine
+ReportedTo:Flash (IBB)(ibb-flash)
+BountyAmount:3000.0
+Severity:
+State:Closed
+DateOfDisclosure:19.06.2014 18:07:45
+
+Summary:
+
+Adobe Flash Player issue 2719 and 2720.
+Exploit of this bug uses 2 separate vulnerabilities. 
+2720 is a bug which is able to, from the local-with-file sandbox, (default local sandbox), open both local and remote files, (local files and http/https resources). An attacker could for example read your email, or simply retrieve a local password store/cookies etc. After retrieving the desired data/file it can exfiltrate it out of the local-sandbox to a remote recourse (server from the attacker) using the same vector.
+
+2719 is a vulnerability which can mount a Flash applet from a http:// or https:// origin in the local-with-file-sandbox  mode, which is normally only used for files opened locally on the users file-system. Due to this issue the other 2720 vulnerability can be linked in such a way that it is remotely exploitable.
+
+By mounting 2719 before 2720 the user does not have to download anything, accept anything.
+The vulnerability requires no additional user interaction, simply visiting the site prepared to serve the exploit is enough.
+
+These vulnerabilities are already reported  to Adobe and will be patched next week's patch Tuesday (June 10). The CVE number assigned to the combination of these issues is CVE-2014-0535.
+
+The link below is a  video demonstration of the proof of concept:
+https://www.youtube.com/watch?v=EjXPAwBt_J4

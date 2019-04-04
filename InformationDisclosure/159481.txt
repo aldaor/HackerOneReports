@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/159481
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/surajsp
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.09.2016 14:47:34
+
+Summary:
+
+in form of html comment it disclosing full path of file name Security.html in all https://security.olx.com/ links

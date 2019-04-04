@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/136891
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ebrietas
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:20.06.2016 14:01:17
+
+Summary:
+The researcher discovered a misconfigured GitHub repo leaking some sensitive data.

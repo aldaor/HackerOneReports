@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/153178
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/konqi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.08.2016 9:03:55
+
+Summary:
+Local accounts enumerations via web-mounted userdirs in out-of-scope project.
+Добрый день. Нашел интересную вещь. Надеюсь уязвимость на самом деле существует, и я не параноик.
+
+Если аккаунт существует (cat /etc/passwd | grep %account_name%) то приложение редиректит (302) на /create/%account_name%/home или возвращает 200 как в случай ~nobody. 
+
+https://opensource.mail.ru/~nobody/
+https://opensource.mail.ru/~daemon/
+https://opensource.mail.ru/~root/
+https://opensource.mail.ru/~daemon/
+https://opensource.mail.ru/~lp/
+https://opensource.mail.ru/~adm/
+https://opensource.mail.ru/~shutdown/
+https://opensource.mail.ru/~bin/
+https://opensource.mail.ru/~sshd/
+
+если аккаунт не существует в системе то приложение возвращает status 500 
+https://opensource.mail.ru/~doesntexist/

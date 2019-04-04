@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/152669
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/0xamir
+ReportedTo:Harvest(harvest)
+BountyAmount:350.0
+Severity:
+State:Closed
+DateOfDisclosure:10.09.2016 15:54:53
+
+Summary:
+
+**Details:**  
+An attacker can enumerate the names of companies on your site by going to the URL `https://harvesterxxx.harvestapp.com/recurring_invoices/new?utf8=%E2%9C%93&recurring[client_id]=4677449&new_client[name]=` and cycling through the numerical value of the `recurring[client_id]=` argument, which will view their names in the header of the page.  
+  
+**PoC:**  
+1. Visit the aforementioned URL `https://harvesterxxx.harvestapp.com/recurring_invoices/new?utf8=%E2%9C%93&recurring[client_id]=4677449&new_client[name]=`
+2. increase or decrease the numerical value of the argument `recurring[client_id]=`  
+3. Now you can enumerate through the names of companies on Harvestapp.com  
+  
+*PS: i couldn't really determine whether or not this behavior was intentional or not but when i tried to submit a recurring invoice on behalf of the enumerated users the server returned an error, which led me to think that the names weren't supposed to be shown in the first place since this would fall under "information disclosure"*

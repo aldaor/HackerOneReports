@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/155578
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/pl_bounty
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.08.2016 17:24:41
+
+Summary:
+
+Vulnerability Name: User Enumeration and Information Disclosure
+Description:
+It was possible to enumerate users for SquareSpace admin console in uber-movement.
+Please find below details of users enumerated:
+1.	admin@gmail.com
+2.	jason@jasonbarone.com
+Information Disclosure in https://uber-movement.squarespace.com/?format=json helped me enumerate user for https://uber-movement.squarespace.com/config
+
+Please find attach document for proof of concept.

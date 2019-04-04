@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/145495
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/zuh4n
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.06.2016 18:10:38
+
+Summary:
+
+Hello guys,
+
+**_Details:_**
+The web server is configured to display the list of files contained in this directory. As a result of a misconfiguration - end user / attacker able to see content of the folders with systemically important files
+
+**_Vulnerable place:_**
+/wp-includes directory
+
+when I tried to navigate to this directory via your domain - service responses me 'Access forbidden', but if I will navigate to the same directory via IP address (http://88.198.160.129/) - service will reflects whole entry.
+
+**_PoC:_**
+{F100046}
+
+**_Impact:_** 
+Exposing the contents of a directory can lead to an attacker gaining access to source code or providing useful information for the attacker to devise exploits, such as creation times of files or any information that may be encoded in file names. The directory listing may also compromise private or confidential data.
+
+**_Remediation:_**
+- Configure your web server to prevent directory listings for all paths beneath the web root;
+- Place into each directory a default file (such as index.htm) that the web server will display
+instead of returning a directory listing.
+
+Let me know if you have any question.
+
+Thanks for your attention,
+Stas

@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/146106
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bugdiscloseguys
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.06.2016 20:33:25
+
+Summary:
+
+Hey There
+When A User Share Link With EMAIL TO A PERSON Option. (Screenshot)
+Reveals User's Email Address.
+Steps To Repro:
+1) Type Any Username Their that Exists. (Screenshot)
+2) You Will See Email Disclosed.
+Thanks :)

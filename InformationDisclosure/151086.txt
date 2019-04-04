@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/151086
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/agarri_fr
+ReportedTo:Dropbox(dropbox)
+BountyAmount:729.0
+Severity:
+State:Closed
+DateOfDisclosure:30.08.2016 2:50:24
+
+Summary:
+ACLs to prevent the webhook testing service from accessing internal addresses were not applied to a newly added subnet. Only read-only monitoring services were identified, and requests were limited to `GET`.
+
+This subnet was not yet serving production traffic. 

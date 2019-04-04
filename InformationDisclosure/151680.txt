@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/151680
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/kiraak-boy
+ReportedTo:GoCD(gocd)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.11.2018 13:51:55
+
+Summary:
+Possible SSRF vulnerability when creating a new package repository on GoCD.
+
+

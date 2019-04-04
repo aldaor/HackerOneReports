@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/150018
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/velby
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2016 15:13:02
+
+Summary:
+
+Hello, you can get an error and full path disclosure by following these steps:
+on any user generated POST request (such as during login, or changing user data) remove the CSRF token from the post request entirely. For example, on the login POST request,
+
+_CSRF_TOKEN=WqXB7vmysdM06gBarWZiNfnZ%3AOMznb0rVagzWr41P_h_N2Qj50LwPV2HZxKyJxR17lB6b&username=zrgzrgzerg&passphrase=sergsergsergrg&two_factor=
+
+Becomes
+
+username=zrgzrgzerg&passphrase=sergsergsergrg&two_factor=
+
+We get the following error with a full path disclosure:
+
+<br />
+<b>Notice</b>:  Undefined variable: ex in <b>/var/www/csprng/src/public/index.php</b> on line <b>160</b><br />
+<br />
+<b>Fatal error</b>:  Uncaught Error: Call to a member function getMessage() on null in /var/www/csprng/src/public/index.php:160
+Stack trace:
+0 {main}
+  thrown in <b>/var/www/csprng/src/public/index.php</b> on line <b>160</b><br />

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/143438
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/wkcaj
+ReportedTo:Shopify(shopify)
+BountyAmount:1500.0
+Severity:
+State:Closed
+DateOfDisclosure:17.07.2016 15:46:56
+
+Summary:
+A private Shopify GitHub repository was accidentally copied into a public GitHub repository. The repository contained some API secrets, which have since been rotated.

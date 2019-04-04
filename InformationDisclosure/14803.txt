@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/14803
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/kmh127001
+ReportedTo:Automattic(automattic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.06.2014 12:57:32
+
+Summary:
+
+Dear Sir,
+
+I've Noticed from your SourceCode that you are using HTTP Protocol, and that will makes Insecure served for data transition.
+
+we will give the attacker a chance for "MIMT" ( man in the middle attack) as you know that the name of the attack itself explain the steps.
+
+-check the source code of the main page.
+
+Solution: try to use https protocol, to prevent data and information disclosure.
+
+Best,

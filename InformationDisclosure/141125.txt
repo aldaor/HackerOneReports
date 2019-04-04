@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/141125
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ahsan
+ReportedTo:drchrono(drchrono)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 19:02:35
+
+Summary:
+
+Hey, I have noticed that the 403 forbidden page of drchrono shows Ngnix server version!
+As you can see in the attached picture.
+or you can go to this URL
+https://www.drchrono.com/site_media/

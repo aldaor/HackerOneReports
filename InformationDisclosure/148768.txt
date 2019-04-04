@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/148768
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/mefkan
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.07.2016 23:22:27
+
+Summary:
+This is expected behavior. Also, to any hackers reading this: **our website is not in scope for the bug bounty program**. Focus on our open source projects on Github please. We care about the security of people who use our libraries.
+Hi,
+
+PoC
+
+1- Go that link you'll see the version of nginx server 
+
+https://paragonie.com/static/highlightjs/

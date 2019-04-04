@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/139970
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/kamil_hism
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.03.2017 1:41:19
+
+Summary:
+
+This issue was originally reported via email security@newrelic.com
+___
+
+Hello,
+
+In preparation for security conference I'm doing a research of popular task tracking systems / project management software and how they affect company's IT security.
+
+During investigation I've found several critical vulnerabilities in PM systems themselves and also identified over 200 misconfigured JIRA, Redmine, etc accounts. A bunch of them are Fortune 500 companies. They were all notified and almost everyone have already been fixed.
+
+# Issue
+
+Issue with NewRelic's account is a bit similar to http://www.geek.com/games/valve-has-56-people-working-on-half-life-3-1572498/. It's occurs because of wrong permissions scheme and leads to leak of some sensitive data. Whether the user is logged in or not in JIRA applications he is able to see all shared filters and dashboards. Basically, the instance is externally exposed to non-logged users.
+
+There were detected leaking of such internal information:
+
+* employees roles, upcoming milestones, secret project and features through JIRA filters / dashsboards
+
+Please use urls below to review this leaks:
+
+* https://newrelic.atlassian.net/secure/ConfigurePortalPages!default.jspa?view=popular
+* https://newrelic.atlassian.net/secure/ManageFilters.jspa?filterView=search&Search=Search&filterView=search&sortColumn=favcount&sortAscending=false
+
+# Resolution
+
+Analyse each specific Filter or Dashboard shared with everyone by looking for "Shared with all users", in the "Manage Filters" and "Manage Dashboards" sections, and grant permissions to specific groups.
+
+Thanks.
