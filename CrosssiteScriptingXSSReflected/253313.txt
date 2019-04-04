@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/253313
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/ramuelgall
+ReportedTo:Automattic(automattic)
+BountyAmount:225.0
+Severity:low
+State:Closed
+DateOfDisclosure:22.08.2017 13:53:00
+
+Summary:
+
+Version 2.0.27 of the WooCommerce Product Vendors plugin doesn't appear to correctly escape the "vendor description" POST parameter and can be manipulated to reflect arbitrary scripting.
+The good news is that it does appear to do some form of clientside validation before posting, in addition to some serverside validation later, preventing this from becoming a stored attack. This appears to be due to the fact that "vendor_description" _POST parameter is echoed without being escaped on line 61 of templates/shortcode-registration-form.php
+
+I've created the following vulnerable URL on my personal site; WordPress and all plugins and themes are up to date, and the site is using the default "Storefront" theme.
+ http://steelpress.org/index.php/product-vendor-registration-form/
+
+The unescaped script is visible in the source when you run:
+
+curl -X POST -d "vendor_description=<script>alert("xss")</script>" "https://steelpress.org/index.php/product-vendor-registration-form/?confirm_email=1&email=1&firstname=1&lastname=1&location=1&register=Register&username=1&vendor_description=1&vendor_name=1"

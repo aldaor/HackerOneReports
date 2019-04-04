@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/216469
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/ilsani
+ReportedTo:Pornhub(pornhub)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:10.07.2017 18:49:22
+
+Summary:
+The researcher discovered that the `/export/GetPreview` is vulnerable to reflected XSS.

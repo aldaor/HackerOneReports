@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/286667
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/low-keytech
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:10.11.2017 14:26:02
+
+Summary:
+While the reporter identified this as an HTML injection, during our investigation we confirmed this was actually an XSS vulnerability but would have required a target to copy and paste a payload themselves. We made an exception to reward this `self-xss` with our minimum bounty given this occurred on `accounts.shopify.com`.
+Hi,
+When I opened this domain of yours,
+https://accounts.shopify.com/password-reset/new
+
+I just put the following text into email address box,
+<h1 style="color:blue;">harisbaig010@gmail.com</h1>
+it change the colour of the text.
+
+Well my point here is that if you could inject HTML, you might be able to add a <form> tag
+to the page.
+I also upload the picture as a proof.
+
+Peace.

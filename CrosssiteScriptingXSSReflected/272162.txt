@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/272162
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/sp1d3rs
+ReportedTo:Razer US(razer_us)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:08.11.2017 19:43:21
+
+Summary:
+Thanks to SP1D3RS for the great report and working with the team on this one.

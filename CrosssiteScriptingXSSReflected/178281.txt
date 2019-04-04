@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/178281
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:06.11.2018 15:38:51
+
+Summary:
+Reflected XSS via GET parameters in hs.mail.ru.
+
+hs.mail.ru is not currently covered by Bug Bounty program.

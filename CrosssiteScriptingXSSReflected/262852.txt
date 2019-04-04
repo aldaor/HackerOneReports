@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/262852
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/tungpun
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:24.08.2017 23:01:51
+
+Summary:
+
+# Summary
+
+I would like to report a Reflected XSS on gratipay.com.
+
+# Browsers Verified In
+
+  * Firefox 55.0.2 (up to date)
+
+# Steps To Reproduce
+
+  Goto this URL:
+`https://gratipay.com/on/npm/cx%00A<svg onload=alert(1)>`
+
+{F215426}

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/326449
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/fady_othman
+ReportedTo:Uber(uber)
+BountyAmount:2000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:13.11.2018 22:59:54
+
+Summary:
+The base parameter of `/oidauth/prompt` on multiple uberinternal.com subdomains was not sanitized before being reflected into the page body, making it vulnerable to reflected XSS. Additionally, these pages were affected by a clickjacking vulnerability that made exploitation easier, since a click was required to trigger the XSS.

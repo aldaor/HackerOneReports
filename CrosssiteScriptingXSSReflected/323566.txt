@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/323566
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/sup3r-b0y
+ReportedTo:MyCrypto(mycrypto)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:02.04.2018 22:01:47
+
+Summary:
+A reflected XSS was reported by sup3r-b0y that was activated by displaying unsanitized values of query parameters. The MyCrypto team worked with sup3r-b0y to identify and verify the fix, and are happy to confirm that the vulnerability described in the report has now been fixed. We are happy to continue to work with the HackerOne community to determine and resolve issues on an ongoing basis.
+
+A big thank you to sup3r-b0y for their help in identifying and resolving this issue!

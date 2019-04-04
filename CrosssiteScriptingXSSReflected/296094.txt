@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/296094
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/wdem
+ReportedTo:Inflection(inflection)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:09.02.2018 18:16:48
+
+Summary:
+Researcher uncovered a vulnerability where invalid JSON input was reflected back in the server error response. A specially-crafted invalid JSON request could then be used to trigger a reflected XSS on any page where the server error response was rendered in HTML. 

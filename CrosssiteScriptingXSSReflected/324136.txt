@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/324136
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/gromoza
+ReportedTo:Shopify(shopify)
+BountyAmount:1500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:08.04.2018 10:25:54
+
+Summary:
+@gromoza reported a reflected cross-site scripting vulnerability that affected some Shopify storefronts. The vulnerability resulted from improper handling of the `q` parameter, which was not properly escaped when placed into the [`collection` object](https://help.shopify.com/themes/liquid/objects/collection) in Liquid. As a result, stores that included `collection.title` in an HTML attribute would be vulnerable to reflected cross-site scripting. A reflected cross-site scripting vulnerability in the storefront could be used by unauthenticated users to attack the admin area of a store, given that the storefront is hosted on the same origin as the admin area of a store.
+WAF cut "<",">, but " and ' still in.
+1. 
+[PoC example link](https://lostvalues.myshopify.com/collections/vendors?q=X" onmouseover="alert('XSS')" style="font-size: 1001pt;") 
+2.mouse on X
+3. ..
+4.XSS alert message
+
+## Impact
+
+XSS atack

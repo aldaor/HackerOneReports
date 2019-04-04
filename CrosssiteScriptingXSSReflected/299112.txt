@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/299112
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/shay12tg
+ReportedTo:WordPress(wordpress)
+BountyAmount:450.0
+Severity:high
+State:Closed
+DateOfDisclosure:15.02.2018 23:14:12
+
+Summary:
+The reporter disclosed a reflected XSS vulnerability in MediaElement's Flash files, which are bundled in WordPress. 
+
+MediaElement and WordPress released versions 4.2.8 and 4.9.2, respectively, which resolve the issue.

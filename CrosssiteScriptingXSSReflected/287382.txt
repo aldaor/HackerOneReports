@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/287382
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/obmi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:300.0
+Severity:low
+State:Closed
+DateOfDisclosure:26.01.2018 14:12:29
+
+Summary:
+User-assisted XSS in message composer's drag-n-drop feature via alt property of emoji-style image.

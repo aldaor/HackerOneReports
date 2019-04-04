@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/254343
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/netfuzzer
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:21.08.2017 17:20:34
+
+Summary:
+In this report, the researcher found a DOM-Based XSS Vulnerability and was able to demonstrate an exploit that exposed cookie values. New 404 page handling code resulted in a fix for the issue.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/258596
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/ro_
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:27.01.2018 14:56:08
+
+Summary:
+Reflected URI-based XSS via crafted name of new PowerPoint document in presentation editor.

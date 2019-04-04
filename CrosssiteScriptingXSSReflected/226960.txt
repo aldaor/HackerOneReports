@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/226960
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/ysx
+ReportedTo:Harvest(harvest)
+BountyAmount:300.0
+Severity:medium
+State:Closed
+DateOfDisclosure:09.05.2017 15:21:23
+
+Summary:
+
+Hi @jorgeleria,
+
+I came across a potential reflected XSS vector while exploring **platform.harvestapp.com** functionality. At present, I have been unable to locate a functional payload, so would like to report this as HTML injection.
+
+## Proof of Concept
+### Steps to reproduce
+1. Visit the below Demonstration URL
+2. Select "Start Timer"
+3. The "Namespace" error message will present the unsanitised HTML (a marquee)
+
+### Demonstration URL
+```
+https://platform.harvestapp.com/platform/timer?app_name=TestCompany&closable=false&permalink=http://example.com/1/'"><h1><marquee>Test HTML</marquee></h1>&external_item_id=1&external_item_name=Test - Please click Start Timer
+```
+### Screenshot
+{F182792}
+
+Please let me know if you require any additional details regarding this vulnerability.
+
+Thanks!

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/305976
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/s_p_q_r
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:16.05.2018 15:39:45
+
+Summary:
+Reflected XSS in https://e.mail.ru/money/send via messageid GET parameter

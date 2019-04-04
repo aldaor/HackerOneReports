@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/276469
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/utkarsh123456
+ReportedTo:Razer US(razer_us)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:08.11.2017 19:40:58
+
+Summary:
+The tester discovered a reflected XSS vulnerability on a media content server, exploitable via Firefox.  This content server was used by Razer employees and close partners to store media related to Razer products.
+
+We appreciate the tester's hard work and as a courtesy we granted reputation for this report, which we will not do in the future.  However, it should be noted this server was out of scope of our program as it was deemed non-critical and was on the verge of being deprecated due to a switch to a different platform.  Ultimately, we did not fix this bug because the new platform was already online prior to the report; we simply completed the deprecation as scheduled

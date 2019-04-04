@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/292457
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/jr0ch17
+ReportedTo:Valve(valve)
+BountyAmount:350.0
+Severity:medium
+State:Closed
+DateOfDisclosure:09.05.2018 17:39:38
+
+Summary:
+
+Hi guys,
+
+##Description
+I found another XSS in www.dota2.com. This time it is located in **http://www.dota2.com/international/live/5/5/1**. However it seems that when you can change the /5/5 folders to any other number (to confirm) and it still worked. I tested this on http://www.dota2.com/international/live/1/1/1 and with other random digits.
+
+##Steps to reproduce
+1. Using any browser (except IE), go to
+`www.dota2.com/international/live/5/5/1})}});alert(document.cookie);(test=>{{({<!--`
+2. You'll see an alert box with your cookie.
+
+I was able to confirm the XSS works in Firefox, Chrome and Opera so the payload successfully bypasses the Chrome XSS filter since the reflection point is directly in a javascript.
+
+{F241581}
+
+## Impact
+
+As you know, with a reflected XSS, a malicious user could trick a user into browsing to a URL which would trigger the XSS and steal the user's cookie, capture keyboard strokes, etc and eventually take over a user's account. 
+
+Thanks,
+
+JR0ch17

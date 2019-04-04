@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/302357
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/hack2tools
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:23.05.2018 21:29:39
+
+Summary:
+Reflected XSS in https://account.mail.ru/signup via URI GET parameters

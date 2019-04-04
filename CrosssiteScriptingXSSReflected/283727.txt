@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/283727
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/gdinar
+ReportedTo:Razer US(razer_us)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:07.08.2018 17:22:01
+
+Summary:
+The saved cart endpoint was vulnerable to a reflective XSS due to lack of sanitization of cartcode which is inserted back in the HTML document, which could allow execution of malicious Javascript on the client.

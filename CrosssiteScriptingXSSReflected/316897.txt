@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/316897
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/danila_xawdxawdx
+ReportedTo:Mail.ru(mailru)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:12.11.2018 17:40:05
+
+Summary:
+Reflected XSS via GET paramters.
+
+On the time of reporting, XSS vulnerabilites of delivery-club.ru are not covered with bug bounty.
+

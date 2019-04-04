@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/218136
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/twicedi
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:16.06.2017 16:17:58
+
+Summary:
+A cross-site scripting vulnerability was found on a Department of Defense website which may trick a web user into executing a malicious script, potentially revealing a user's web session information or modify web content. @twicedi  was able to demonstrate this vulnerability by crafting a specially formatted URL.
+

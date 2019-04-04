@@ -1,0 +1,54 @@
+ReportLink:https://hackerone.com/reports/216812
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/sinkmanu
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:450.0
+Severity:low
+State:Closed
+DateOfDisclosure:15.05.2017 19:54:37
+
+Summary:
+#[Reflected XSS in error pages (NC-SA-2017-008)](https://nextcloud.com/security/advisory/?id=nc-sa-2017-008)
+
+**Risk level:** Low
+**CVSS v3 Base Score:** 3.5 (AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:N/A:N)
+**CWE:** Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') (CWE-79)
+
+#Description
+Inadequate escaping of error messages leads to XSS vulnerabilities in multiple components.
+
+Note that Nextcloud employs a strict Content-Security-Policy preventing exploitation of this XSS issue on modern web browsers.
+
+#Affected Software
+- Nextcloud Server < 11.0.3 (CVE-2017-0891)
+- Nextcloud Server < 10.0.5 (CVE-2017-0891)
+- Nextcloud Server < 9.0.58 (CVE-2017-0891)
+
+#Action Taken
+Error messages are now properly escaped.
+
+#Acknowledgements
+The Nextcloud team thanks the following people for their research and responsible disclosure of the above advisory:
+
+- [Manuel Mancera](http://twitter.com/sinkmanu) - Vulnerability discovery and disclosure.
+Hello,
+
+I found a HTML injection vulnerability [1] flaw in the Nextcloud (and Owncloud) latest version. Through this vulnerability an attacker could manipulate the website. This vulnerability could affect to the logged users. An attacker could send a malicious link (that contains the manipulated URL) to a legitimate user that he is logged in and simulate the login screen to stole the password (phishing), or multiple attacks more, like XSS.
+
+The Nextcloud/Owncloud application contains multiple security headers of HTTP, so, inject scripts or redirect to another websites is difficult, the problem is that not all the browser supports these headers (fortunatelly, the most used browsers yes).
+
+Exist more options to attack, for example, redirect the content of an <object> or <script> to a saved and shared items of your directory. Also, the mimetypes are well configured and the most browsers will not execute a javascript file that doesn't have the javascript content-type.
+
+Anyway, all the mitigations are well, but these aren't never-falling. So the solution to this vulnerability is sanitize the output before to deliver the HTML to the final user.
+
+Also, another security flaw is showed, but the impact is less, it is a full path disclosure and it show the full path of the Nextcloud/Owncloud installation.
+
+PoC (Proof of Concept):
+
+https://nextcloud-site/index.php/apps/files/ajax/download.php?files=%00&dir=</p>HTMLCODE
+
+I tested it in the last version.
+
+If you need more information, ask to me.
+
+Regards,

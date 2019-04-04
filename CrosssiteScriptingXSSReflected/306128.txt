@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/306128
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/whitesector
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:26.01.2018 20:13:33
+
+Summary:
+Reflected XSS in  http://cycloferon.health.mail.ru/ promo site.
+This domain is not covered by bug bounty program.
+
+Since this site is not longer supported, an access was closed as a workaround.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/238842
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/lalatina
+ReportedTo:Parrot Sec(parrot_sec)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:24.08.2017 12:12:34
+
+Summary:
+@lalka discovered a XSS on http://irc.parrotsec.org , sub domains are out of scope but this report was submitted prior to policy change regarding sub domains submissions.

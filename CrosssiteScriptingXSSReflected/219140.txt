@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/219140
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/teemuk
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:250.0
+Severity:medium
+State:Closed
+DateOfDisclosure:10.01.2018 12:16:50
+
+Summary:
+##Issue
+
+The reporter found issues related to previous reports, namely #170532 (aka. the gift that keeps on giving). This time the page ```pagename=TAArchiveWrapper``` and the ```localisation``` -parameter was vulnerable to XSS.
+
+##Fix
+
+Additional protections were tested and put in place.
+
+##Reasoning
+
+Mitigating issues and protecting off the shelf applications can prove to be a path of trial and error. Some applications, especially COTS, can be so complicated that there will be a continuous flow of small surprises. Reports like this prove that running a bug bounty program is an excellent way of slowly but surely solving issues that otherwise most probably would go undetected and completely under the radar. 
+

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/285241
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/zee_shan
+ReportedTo:AlienVault (alienvault_security)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:14.11.2017 16:23:26
+
+Summary:
+bypass for reflected XSS utilizing JS

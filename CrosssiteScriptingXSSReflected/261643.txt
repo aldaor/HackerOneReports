@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/261643
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:06.11.2018 15:39:23
+
+Summary:
+Reflected XSS via GET parameters in beta.tracker.my.com
+
+tracker.my.com is not currently covered with bug bounty program.

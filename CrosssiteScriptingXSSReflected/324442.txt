@@ -1,0 +1,49 @@
+ReportLink:https://hackerone.com/reports/324442
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/putsi
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:250.0
+Severity:high
+State:Closed
+DateOfDisclosure:09.04.2018 21:32:45
+
+Summary:
+##Issue
+The reporter found a vulnerability in the theme being used for the WP installation. The results was a reflected XSS.
+
+##Fix
+
+The vulnerable functionality was restricted.
+
+##Reasoning
+
+Running a system which potentially carries a lot of vulnerable endpoints and bad default settings is always a risk. Moreover, keeping track of potential vulnerabilities in themes is very tedious. Hardening should always be compulsory, but may not always be straightforward. While we do our best to be proactive in running our software securely, we do occasionally hit and miss. In this case, the reporter provided excellent value both from a technical point of view as well as explaining the potential impact. A learning opportunity for the occasional reader - put effort into things that matter to the organization you are reporting to.
+## Basic report information
+**Summary:** 
+The BBE Theme allows unauthorized access to bbe_open_htmleditor_popup.php which echoes unsanitized values of value-GET-parameter leading to reflected XSS. 
+
+**Description:** 
+The www.lahitapiolarahoitus.fi has Wordpress with theme BBE Theme v1.52. I did some code review and it seems that a file on the theme contains various problems:
+- The following admin URL can be accessed without being logged in: https://www.lahitapiolarahoitus.fi/wp-content/themes/bbe/bbe-engine/assets/actions/bbe_open_htmleditor_popup.php
+- The above page uses "value" GET-parameter and fails to sanitize the content.
+
+By combining the above problems, an attacker can craft a URL which triggers an cross-site scripting attack on any user (unauthenticated/authenticated) who opens the URL crafted by the attacker.
+
+**Impact:**
+* Make admin-user run malicious javascript which will then be used to access other WP-Admin functionalities --> Remote code execution --> Possibly piivoting to other hosts.
+* Make other users run malicious javascript.
+* Show spoofed content which can be used in social engineering attacks (such as fake login pages, fake invoices, face contact details, fake announcements etc.).
+
+## Browsers / Apps Verified In:
+
+  * Firefox
+
+## Steps To Reproduce:
+
+  1. Navigate to the following URL: ```https://www.lahitapiolarahoitus.fi/wp-content/themes/bbe/bbe-engine/assets/actions/bbe_open_htmleditor_popup.php?value=%22a%27);//%3C/script%3E%3Cbody%20onload=alert(document.cookie)%3E``` and notice that the XSS triggered.
+
+## Impact
+
+* Make admin-user run malicious javascript which will then be used to access other WP-Admin functionalities --> Remote code execution --> Possibly piivoting to other hosts.
+* Make other users run malicious javascript.
+* Show spoofed content which can be used in social engineering attacks (such as fake login pages, fake invoices, face contact details, fake announcements etc.).

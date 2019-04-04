@@ -1,0 +1,48 @@
+ReportLink:https://hackerone.com/reports/324423
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/yasar
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:250.0
+Severity:medium
+State:Closed
+DateOfDisclosure:19.06.2018 6:03:31
+
+Summary:
+##Issue
+
+The reporter found a simple XSS in myynti.lahitapiolarahoitus.fi. The parameter also allowed open redirects.
+
+##Fix
+
+No details on the fix.
+
+##Reasoning
+
+An XSS as such is not a huge issue from a risk perspective, although it poses a small risk for stealing of credentials. Open redirects allow for far more sophisticated attack vectors using mass phishing emails and a customized malicious login page.
+## Basic report information
+**Summary:** 
+There is an Reflected XSS on myynti.lahitapiolarahoitus.fi.
+
+**Description:** 
+There is an Reflected XSS on myynti.lahitapiolarahoitus.fi website. redirect parameter is vulnerable to XSS.
+
+**Impact:**
+Steals cookies from other logged in users.
+
+## Browsers / Apps Verified In:
+
+Tested on Chrome Version 57.0.2987.98 Built on 8.7, running on Debian 8.10 (64-bit)
+Tested on Firefox 52.5.2 (64-bit)
+
+## Steps To Reproduce:
+
+Click following link;
+https://myynti.lahitapiolarahoitus.fi/#/?redirect=javascript%3Aalert(document.cookie)
+
+## Additional material
+
+{F271480}
+
+## Impact
+
+Steals cookies from other logged in users.

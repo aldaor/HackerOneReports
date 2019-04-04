@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/269940
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/rooteval
+ReportedTo:VK.com(vkcom)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:25.10.2017 13:54:05
+
+Summary:
+Отсутствие фильтрации параметров при приглашении в группу. 

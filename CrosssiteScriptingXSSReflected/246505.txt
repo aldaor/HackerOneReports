@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/246505
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/awolsec
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:01.09.2017 15:40:02
+
+Summary:
+The researcher found a Reflected XSS vulnerability in the search query on support.rockstargames.com. This exploit worked by using double-encoding to bypass our filters. With the researcher's help we were able to resolve this vulnerability.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/217108
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/shogunlab
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:14.06.2017 18:21:24
+
+Summary:
+A cross-site scripting vulnerability was found on a Department of Defense website which may trick a web user into executing a malicious script, potentially revealing a user's web session information or modify web content. @shogunlab was able to demonstrate this vulnerability by crafting a specially formatted URL.

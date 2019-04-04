@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/276714
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/whitesector
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:20.11.2017 12:37:31
+
+Summary:
+Reflected XSS via GET paramters in quiz game on promo site in health.mail.ru subdomain.
+*.health.mail.ru was in the bug bounty program's scope on the moment of report submission.

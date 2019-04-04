@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/311413
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/truwa
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:21.08.2018 16:42:24
+
+Summary:
+Reflected XSS via GET parameters of AJAX method due to invalid content-type for JSON data.
+
+On the moment of the report delivery-club.ru was not covered by bug bounty program.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/216806
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/aghora
+ReportedTo:Pornhub(pornhub)
+BountyAmount:250.0
+Severity:high
+State:Closed
+DateOfDisclosure:15.05.2017 14:56:06
+
+Summary:
+The researcher discovered an XSS in the `redirect` parameter of the front controller which executes upon redirection.

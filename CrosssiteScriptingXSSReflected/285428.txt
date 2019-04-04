@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/285428
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/hisxo
+ReportedTo:Razer US(razer_us)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:27.11.2017 17:53:37
+
+Summary:
+The researcher (hisxo) discovered a reflected XSS vulnerability on support.razerzone.com.  hisxo also worked with H1 Triage to provide a valid PoC that demonstrated payload delivery using Burp Suite.  
+
+We appreciate the extra work and look forward to working with the researcher in the future.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/222556
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/txt3rob
+ReportedTo:Pornhub(pornhub)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.06.2017 14:06:01
+
+Summary:
+The researcher discovered a reflected XSS in the search route of `pornhubselect.com` domain.

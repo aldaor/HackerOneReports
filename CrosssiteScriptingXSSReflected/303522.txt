@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/303522
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/akamble937
+ReportedTo:Zomato(zomato)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:08.04.2018 12:01:08
+
+Summary:
+
+zomato.com/php/liveSuggest.php takes various field input to show customized out put for the users.
+The data entered to entity_id field is not santized or html encoded which allows user to add payloads via this parameter which will be reflected to user.
+
+Steps to reproduce :
+
+Please click on below link to check the poc . Also please find attached poc for reference
+
+https://www.zomato.com/php/liveSuggest.php?type=keyword&search_bar=1&q=ad&online_ordering=&search_city_id=5&entity_id=confirm(1)%20%3C%20%22%22%27%22ss%22%20onerror%3E;confirm(1)%3Cvideo%20src=x%3E%3Cvideo%20src=%22&entity_type=%22;%20onerror
+
+## Impact
+
+An attacker can craft a malicious link and send to users , which can then lead to session hijacking , redirecting to malicious or fake websites etc.

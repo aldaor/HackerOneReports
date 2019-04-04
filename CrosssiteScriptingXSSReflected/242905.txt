@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/242905
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/netfuzzer
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:1000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:17.07.2017 14:49:41
+
+Summary:
+The researcher found a Reflected XSS vulnerability at http://www.rockstargames.com/theballadofgaytony/js/jquery.base.js. This vulnerability could be exploited in multiple ways throughout different areas of the site. A bonus was awarded due to the prolific nature of the vulnerability.

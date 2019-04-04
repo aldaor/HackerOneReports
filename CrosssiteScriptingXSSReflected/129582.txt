@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/129582
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/seifelsallamy
+ReportedTo:Uber(uber)
+BountyAmount:3000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:25.01.2019 18:00:53
+
+Summary:
+A lack of proper input validation made it possible for an attacker to execute malicious JavaScript code on `partners.uber.com`. This reflected XSS would execute after making a POST request with an XSS payload in the path of the request. As a result, the server would directly insert the payload into the response, allowing the XSS to trigger on the page.
+
+Thanks, @seifelsallamy!

@@ -1,0 +1,74 @@
+ReportLink:https://hackerone.com/reports/293689
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/kenziy
+ReportedTo:HackerOne(security)
+BountyAmount:1500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:30.11.2017 6:09:18
+
+Summary:
+@kenziy found a reflected Cross-Site Scripting (XSS) vulnerability that was exploitable in Internet Explorer due to the CSP being ignored. The root cause of the vulnerability was rather interesting. In production, we had "Query String Sort" enabled in the Cloudflare caching settings. This is why we couldn't reproduce the same behavior in our local development environments. When Cloudflare sorted the `url` parameters, it placed the last `url` parameter (with the XSS payload) first because `J` (capital) comes before the `h` in the ASCII table. We noticed that the application load balancer (ALB) on AWS received the attributes in ascending order. The reason why this recently became a vulnerability, is because the app is now rendering the external link warning in React. Here's a step-by-step description what happened:
+
+1. user submits request with `url=http://test.com` and `url=JAVASCRIPT:some-payload` (in that order)
+2. Cloudflare reorders the parameters to `url=JAVASCRIPT:some-payload` and `url=http://test.com`
+3. ALB and nginx dispatch the request to unicorn
+4. unicorn uses the last `url` in the parameter, which matches the passed signature in the URL
+5. unicorn responds with a 200 OK and renders a container to load the React application
+6. React grabs the `url` from the query parameters, which, for the browser, is still `url=JAVASCRIPT:some-payload`, not `url=http://test.com`
+7. React parses the URL and renders the XSS payload
+
+The vulnerability was addressed by disabling the setting in Cloudflare. We want to thank @kenziy for bringing this to our attention, this was a great find!
+Hello hackerone team
+
+I want to report I bypass w/c lead to XSS (but limited only for IE) due to CSP block on chrome
+
+Here is the POC
+------------------
+```
+https://hackerone.com/redirect?signature=c9304cadaeabca0bfb7b92503c0318da5c42a86b&url=http%3A%2F%2Fbuglabs.me&url=JAVASCRIPT:alert%09(document.domain)
+```
+
+How I find this issue
+-----------------------
+First I notice that before you will redirect to other site hackerone will notify users that they are being redirected to other website
+Here is example
+------------------
+```
+https://hackerone.com/redirect?signature=c9304cadaeabca0bfb7b92503c0318da5c42a86b&url=http%3A%2F%2Fbuglabs.me
+```
+But when you change the url it will not match to the signature (h1 alers) by you can bypass it by adding &url
+so it would look like this
+```
+https://hackerone.com/redirect?signature=c9304cadaeabca0bfb7b92503c0318da5c42a86b&url=http%3A%2F%2Fbuglabs.me&url=
+```
+Now I try doing this to trigger XSS
+```
+https://hackerone.com/redirect?signature=c9304cadaeabca0bfb7b92503c0318da5c42a86b&url=http%3A%2F%2Fbuglabs.me&url=JAVASCRIPT:alert%09(document.domain)
+```
+due to CSP protection I was not able to trigger XSS (My bypass skills on CSP is not good enought :-( )
+But in IE it works :-)
+
+I beleive that this is an issue
+
+Minor RTLO that can treak users
+------------------------------------
+And another things is I try to do a RTLO on the URL (But because it has filter alert I dont know if this will trigger your interest)
+```
+https://hackerone.com/redirect?signature=c9304cadaeabca0bfb7b92503c0318da5c42a86b&url=http%3A%2F%2Fbuglabs.me&url=http%3A%2F%2F%09%E2%80%AEmoc.enorekcah
+```
+
+Tested
+-------
+IE11 - for XSS
+Chrome, Mozilla - for RTLO
+
+
+Advance Merry Christmas guys :-)
+
+Cheers
+Kenziy
+
+## Impact
+
+Trick user or trigger malicious script

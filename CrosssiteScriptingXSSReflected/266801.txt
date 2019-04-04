@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/266801
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/0ways
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:15.12.2017 5:32:06
+
+Summary:
+The researcher has identified and reported a Reflected XSS in Informatica website and helped us in resolving the issue.

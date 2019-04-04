@@ -1,0 +1,47 @@
+ReportLink:https://hackerone.com/reports/289330
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/sts
+ReportedTo:concrete5(concrete5)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:20.01.2018 5:35:07
+
+Summary:
+
+"Leave me in a room with some crayons and I'll draw on the wall."
+
+#Platform information
+* Issue: Core CMS issue
+* Version: Concrete5 - 8.2.1 md5(00080d5a625ddbaece643894f67d57b1) downloaded today from [official download site][2]
+
+#Short description
+There is reflected XSS vulnerability in `Database Name` filed on configuration page in installation process. 
+
+#Reproduction
+* Unzip Concrete5 CMS archive
+* Start installation process
+* On DB configuration screen fill the form with valid values (including exisitng db user, db host, db password) and as a DB name set `'<script>alert(1)</script>'`
+
+{F238580}
+
+* Click install 
+* Payload executed - in this case alert window is shown
+
+{F238579}
+
+#Mitigation
+Because of [MySQL scheme names restricion][1] this field should be validated.
+
+#Testing env
+PHP: 5.6.30+dfsg-0+deb8u1
+MySQL: 5.5.58-0+deb8u1
+Apache: 2.4.10-10+deb8u11
+
+#PS
+I have created a fix for this issue, but because this is my first vuln report could you tell me should I send you PR for this issue now, (how should I name it?) or should I wait for your response (in order to be OK with responsible disclosure rule)
+
+Cheers 
+
+[1]: https://dev.mysql.com/doc/refman/5.7/en/identifiers.html
+[2]: https://www.concrete5.org/download

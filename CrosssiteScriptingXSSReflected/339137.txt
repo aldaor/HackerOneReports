@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/339137
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/n4sty
+ReportedTo:ICQ(icq)
+BountyAmount:250.0
+Severity:high
+State:Closed
+DateOfDisclosure:01.10.2018 10:24:08
+
+Summary:
+XSS existed in part of "Compose message to" functionality via payload in nickname. Fixed via additing encoding.
+
+web.icq.com
+
+1. кликаем по чату. открываем боковое меню (уведомления) выбираем наш аккаунт с XSS ником. 
+при клике  на кнопку Начать чат с .... происходит  XSS  (screenshot_1)
+
+## Impact
+
+кража кукисоф

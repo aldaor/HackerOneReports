@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/303480
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/sandeeptanwani
+ReportedTo:Deconf(deconf_com)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:24.02.2018 18:52:43
+
+Summary:
+The researcher and our team determined that actually there wasn't any applicable vulnerability.

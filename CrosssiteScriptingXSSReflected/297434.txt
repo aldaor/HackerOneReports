@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/297434
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/0ways
+ReportedTo:Deconf(deconf_com)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:19.12.2017 20:03:57
+
+Summary:
+The researcher has identified a Reflected XSS vulnerability within an analytics report of our plugin. The report was well documented, providing a step-by-step PoC to demonstrate the vulnerability. 

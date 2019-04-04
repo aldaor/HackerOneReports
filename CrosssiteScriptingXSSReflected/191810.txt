@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/191810
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/hussain_0x3c
+ReportedTo:Uber(uber)
+BountyAmount:3000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:19.12.2018 22:46:37
+
+Summary:
+Due to a lack of input validation from the search field on `lert.uber.com`, it was possible to obtain a Reflected XSS from the URL path, e.g. `https://lert.uber.com/s/search/All/Home">PAYLOAD`.
+
+Thanks, @hussain_0x3c!

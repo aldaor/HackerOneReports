@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/219821
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/linkks
+ReportedTo:Maximum(maximum)
+BountyAmount:25.0
+Severity:
+State:Closed
+DateOfDisclosure:10.05.2017 13:09:18
+
+Summary:
+
+https://werkenbijdefensie.nl/vacatures/kla03vc%3cimg%20src%3da%20onerror%3dalert(1)%3ehm505/bouw/ 
+
+The value of the URL path folder 2 is copied into the HTML document as plain text between tags. The payload a03vc<img src=a onerror=alert(1)>hm505 was submitted in the URL path folder 2. This input was echoed unmodified in the application's response.

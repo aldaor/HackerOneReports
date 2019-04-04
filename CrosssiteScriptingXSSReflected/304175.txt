@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/304175
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/aidantwoods
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:25.09.2018 13:06:22
+
+Summary:
+Due to the lack of sanitisation in the commend area, with a especially crafted message, is possible to execute a XSS with the "preview" function. If a draft is save, is possible to exploit this bug using as and stored-XSS.

@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/311639
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/strukt
+ReportedTo:Zomato(zomato)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:07.04.2018 7:07:31
+
+Summary:
+
+Hello,
+
+I found an XSS issue due to the incorrect handling of the \ character in a <script> context, the following link works as a PoC that alerts the location of the document:
+
+https://www.zomato.com/googleOAuth2Callback?)}(alert)(location);{%3C!--&state=\
+
+The issue exists because, given that the \ character supplied as the `state` parameter value is not well escaped and reflected into the page, we are able to use it to escape the " and then inject our own JS code to execute it on the page.
+
+Note: This only works when the page is opened by an authenticated user
+
+## Impact
+
+This allows an attacker to inject custom Javascript codes that can be used to steal information from Zomato's user base and lure them to malicious websites on the internet on behalf of Zomato's website.

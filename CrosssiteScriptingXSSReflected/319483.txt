@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/319483
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/obmi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:15.08.2018 16:44:06
+
+Summary:
+Stored XSS via external (OAuth) account data.

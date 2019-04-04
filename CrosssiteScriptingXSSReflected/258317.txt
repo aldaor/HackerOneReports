@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/258317
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/ras-it
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:28.12.2017 17:47:01
+
+Summary:
+Reflected user-assisted XSS via crafted mailto "thread" parameter  on "message has been sent" page.
