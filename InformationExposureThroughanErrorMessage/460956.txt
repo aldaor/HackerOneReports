@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/460956
+WeaknessName:Information Exposure Through an Error Message
+Reporter:https://hackerone.com/whoami021
+ReportedTo:RATELIMITED(ratelimited)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:15.12.2018 23:49:34
+
+Summary:
+
+*attention that this is the https part of this domain
+the url https://pengu.will-never-love.me/ is showing a directory indexing
+which reveals the version of the Apache and OS of the ser
+
+PoC Included
+
+## Impact
+
+The attacker can use the gathered information for further exploitation of the server.

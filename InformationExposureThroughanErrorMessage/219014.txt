@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/219014
+WeaknessName:Information Exposure Through an Error Message
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:28.08.2017 9:07:34
+
+Summary:
+Due to a development designed error page and insecure CORS Header in dev-unifi-go.ubnt.com, the researcher was able to demonstrate how an attacker could steal users cookies by luring the user to access a web page controlled by the attacker.

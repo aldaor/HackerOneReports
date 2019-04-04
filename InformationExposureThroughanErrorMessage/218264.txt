@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/218264
+WeaknessName:Information Exposure Through an Error Message
+Reporter:https://hackerone.com/sainaen
+ReportedTo:Automattic(automattic)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:06.06.2017 20:14:30
+
+Summary:
+An employee's GitHub OAuth token was inadvertently exposed in the Travis CI build logs of an Automattic project.
+This token has since been revoked.
+
+Please see https://blog.travis-ci.com/2017-05-08-security-advisory for more information.

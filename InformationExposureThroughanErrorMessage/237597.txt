@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/237597
+WeaknessName:Information Exposure Through an Error Message
+Reporter:https://hackerone.com/pappan
+ReportedTo:Shopify(shopify)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:12.07.2017 0:44:11
+
+Summary:
+The researcher reported an issue where in certain cases product imports would send notification emails with full MySQL error messages. In this case, the error reported was caused by a timeout unrelated to the file uploaded by the researcher and didn't contain any sensitive information. The issue has been fixed and notification emails no longer show full MySQL error messages.
+Possible SQL Injection was observed when a descriptive error message was thrown in a mail sent to the user while importing products from csv. Used some special characters in csv to induce the error.
+
+DATABASE FOUND TO BE MYSQL.
+
+{F192274}

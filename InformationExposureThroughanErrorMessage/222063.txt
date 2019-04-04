@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/222063
+WeaknessName:Information Exposure Through an Error Message
+Reporter:https://hackerone.com/mrr3boot
+ReportedTo:Homebrew(homebrew)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:25.04.2017 16:46:47
+
+Summary:
+
+While logging into jenkins.brew.sh site, the vulnerable nginx version is disclosed via response headers.
+There is a chance with known vulnerabilities this could be compromised. so better to avoid banner disclosure with "Server Tokens Prod off" modification in conf file.
+
+Please let me know if any further information is required.
+
+Regards,
+Mr_R3boot.

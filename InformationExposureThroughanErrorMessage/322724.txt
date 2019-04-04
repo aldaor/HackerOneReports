@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/322724
+WeaknessName:Information Exposure Through an Error Message
+Reporter:https://hackerone.com/inet_freedom
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:04.06.2018 9:34:15
+
+Summary:
+bonus.mail.ru disclosed trace information with absolute paths via 5xx error messages
+
+bonus.mail.ru is not covered by bug bounty scope.

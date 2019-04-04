@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/218898
+WeaknessName:Information Exposure Through an Error Message
+Reporter:https://hackerone.com/n00bsec
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:150.0
+Severity:low
+State:Closed
+DateOfDisclosure:10.05.2018 19:37:09
+
+Summary:
+In this report, the researcher found an error message on our Careers page that exposed database table names. If an injection vulnerability had also existed there, this information could have helped an attacker carry out attacks.
+
+In response, we cleaned up the error message so that it still gives our developers useful information when thrown, but does not expose sensitive data.

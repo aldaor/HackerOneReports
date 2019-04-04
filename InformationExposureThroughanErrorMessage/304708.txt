@@ -1,0 +1,56 @@
+ReportLink:https://hackerone.com/reports/304708
+WeaknessName:Information Exposure Through an Error Message
+Reporter:https://hackerone.com/muon4
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:02.03.2018 4:59:45
+
+Summary:
+##Issue
+
+The reporter found that the Tomcat error pages leaks version information.
+
+##Fix
+
+The error page was changed to a static page.
+
+##Reasoning
+
+The issue was trivial as there was no direct implications of this minor leak of technical information. Normally this would not have been eligible for a bounty (see our policy for more details), but as this was a regression from a previous configuration a small bounty was in place. 
+
+ It is noteworthy to understand, that every error page and every detail is not a serious information leak - for readers of this report we would like to emphasize that not every error page will be awarded separately and that most of the "nonperfect" error pages in our domains are already well known issues on our backlog. None are critical.
+**Summary:** 
+Information exposure via error pages
+
+**Description:** 
+Hello there!
+
+I take the risk that this report might be closed as a N/A but because you are running outdated tomcat I wanted to take this risk and report this to you.
+
+So here we go..
+When you navigate to the page e.g.
+https://www.lahitapiola.fi/cs/Satellite?blobcol=urldata&blobkey=id&blobtable=MungoBlobs&blobwhere=15096s13006012asd&ssbinary=true
+
+You will see the error page which shows the exact version of the tomcat:
+{F253872}
+
+Here is some examples about the vulnerabilities of this version tomcat:
+https://www.securityfocus.com/bid/100901/info
+https://www.securityfocus.com/bid/97530
+
+There is two main reasons why I decided to report this to you:
+I am pretty sure that eariler your 404 error pages didn't show tomcat version.
+This tomcat is outdated and this information can be used of damage your reputation or in worst case to compromise this host.
+
+If you need any information please let me know.
+
+Cheers!
+
+**Domain:** 
+lahitapiola.fi
+
+## Impact
+
+An attacker get information about unpatched tomcat.

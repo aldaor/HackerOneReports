@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/482707
+WeaknessName:Information Exposure Through an Error Message
+Reporter:https://hackerone.com/seytan6161
+ReportedTo:Starbucks(starbucks)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:31.01.2019 18:39:42
+
+Summary:
+
+I've discovered Information Exposure Through an Error Message
+ on your system POC link:
+
+https://news.starbucks.com/cms/index.php?/cp/login/forgotten_password_form=http://evil.com/?id=test-test
+
+Vulnerable url --> https://news.starbucks.com/cms/index.php?/cp/login/forgotten_password_form=http://evil.com/?id=test-test
+
+Proof screenshot attached.
+
+## Impact
+
+Impact references:
+
+https://cwe.mitre.org/data/definitions/209.html
+
+Best regards

@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/260645
+WeaknessName:Information Exposure Through an Error Message
+Reporter:https://hackerone.com/masood_chaudhry
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:11.10.2017 0:10:48
+
+Summary:
+
+Affected Url:  https://webmail.legalrobot-uat.com/"><img src=x onerror=prompt(1)>
+When i Open This Link Then It Gives An Error In Which information is disclosing about your server type and its version and Os of your server and also port no is shown which is using on your server and open
+
+   For Proof i am attaching Screenshot 
