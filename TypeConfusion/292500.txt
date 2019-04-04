@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/292500
+WeaknessName:Type Confusion
+Reporter:https://hackerone.com/paulos_
+ReportedTo:Coinbase(coinbase)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.04.2018 18:24:58
+
+Summary:
+In the Coinbase wpe commerce open source library, a researcher observed a call to the PHP unset() function that relied on user controlled input.  The reporter observed that this could allow a malicious user to destroy arbitrary variables in the environment where this library is deployed. Unfortunately, Coinbase OSS libraries are out of scope of our bug bounty program, and researchers should directly submit an issue or pull request on the repository.
