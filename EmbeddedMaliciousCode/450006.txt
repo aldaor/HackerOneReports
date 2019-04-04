@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/450006
+WeaknessName:Embedded Malicious Code
+Reporter:https://hackerone.com/danny_grander
+ReportedTo:Node.js third-party modules(nodejs-ecosystem)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:26.11.2018 22:26:43
+
+Summary:
+
+I would like to report a case of malicious package (flat-stream) that made it's way into many other npm packages. One such popular package is `event-stream` (user dominictarr transferred the ownership of an npm module to another user because he wasn't actively maintaining it. That user then added malicious dependency to the package)
+
+See discussion here: 
+https://github.com/dominictarr/event-stream/issues/116
+
+# Module
+
+**module name:**  flatmap-stream
+**version:** [MODULE VERSION]
+**npm page:** `https://www.npmjs.com/package/flatmap-stream` (removed from npm by now)
+
+## Module Description
+
+It is not yet clear what the malicious code was doing. 
+See discussion here: https://github.com/dominictarr/event-stream/issues/116#issuecomment-441737695
+
+## Module Stats
+
+> Replace stats below with numbers from npm’s module page:
+
+flatmap-stream is not popular, but event-stream is very popular (1,996,440 downloads per week)
+
+## Impact
+
+RCE
