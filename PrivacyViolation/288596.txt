@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/288596
+WeaknessName:Privacy Violation
+Reporter:https://hackerone.com/chriszielinski
+ReportedTo:Zomato(zomato)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:28.12.2017 7:40:41
+
+Summary:
+@chriszielinski found that user personal information was leaking when you make a request using mobile user agent.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/230608
+WeaknessName:Privacy Violation
+Reporter:https://hackerone.com/shogunlab
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:07.11.2017 3:25:44
+
+Summary:
+Researcher has identified a vulnerability in one of our domain "marketplace.informatica.com" where anyone can see email ID of any user which is marked as "private".

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/277300
+WeaknessName:Privacy Violation
+Reporter:https://hackerone.com/apapedulimu
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:10.05.2018 16:16:55
+
+Summary:
+The `g-recaptcha-response` parameter was not validated on the server side when submitting a form to the `/signups` endpoint. Any or no value could be provided for this parameter.

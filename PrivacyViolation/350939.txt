@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/350939
+WeaknessName:Privacy Violation
+Reporter:https://hackerone.com/namthar
+ReportedTo:VK.com(vkcom)
+BountyAmount:300.0
+Severity:high
+State:Closed
+DateOfDisclosure:30.06.2018 21:13:46
+
+Summary:
+В некоторых случаях можно было получить привязанный к странице номер телефона. 

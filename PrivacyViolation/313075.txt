@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/313075
+WeaknessName:Privacy Violation
+Reporter:https://hackerone.com/eqbang
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:20.02.2018 15:42:12
+
+Summary:
+
+**Summary:**
+please refer to the following report:
+https://hackerone.com/reports/311289
+
+It was noticed that TTS changed the summary and set the domain to example.gov as not to reveal to the public. But at the bottom of the page, "britta changed the scope from https://ci.fr.cloud.gov to None."
+
+Recommendation:
+Should only provide general message for such situation: "britta changed the scope"
+
+## Impact
+
+not much of impact. but violate Confidentiality of the program.

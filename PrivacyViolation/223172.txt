@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/223172
+WeaknessName:Privacy Violation
+Reporter:https://hackerone.com/povargek
+ReportedTo:VK.com(vkcom)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:20.02.2018 22:41:35
+
+Summary:
+Просмотр адреса электронной почты после получения доступа к письмам-уведомлениям из ВК. 

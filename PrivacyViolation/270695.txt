@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/270695
+WeaknessName:Privacy Violation
+Reporter:https://hackerone.com/shogunlab
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:18.12.2017 6:51:20
+
+Summary:
+The researcher has identified and reported a Sensitive Data Exposure vulnerability in one of the Informatica's domain, and helped us in resolving the issue.

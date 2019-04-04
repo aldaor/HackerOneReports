@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/262088
+WeaknessName:Privacy Violation
+Reporter:https://hackerone.com/test99767
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.09.2017 17:23:33
+
+Summary:
+
+Hi team ..
+I found show hide privacy settings on website ... nobody can see  on my profile but i put code on my website anybode can see my total giving .. 
+
+Step reprodence ..
+
+1- go to https://gratipay.com/~demo/settings/ click turn on (  hide total to giving other) and (hide my self from search result ) this way nobody can see my profile it .
+2- go to https://gratipay.com/~demo/widgets/
+3- copy code to your website then preview your test site look show all your privacy before now you hide it
+
+* GIVING & TAKING WIDGETS
+
+Use this code to add a Gratipay "receiving" widget on your website:
+
+<script data-gratipay-username="demo"
+        src="//grtp.co/v1.js"></script>
+
+Or, if you'd like to include a "giving" widget, you can add the
+
+data-gratipay-widget="giving"
+attribute:
+<script data-gratipay-username="demo"
+        data-gratipay-widget="giving"
+        src="//grtp.co/v1.js"></script>
+
+
+##Poc
+ Screenshot 

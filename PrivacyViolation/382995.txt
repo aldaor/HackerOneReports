@@ -1,0 +1,78 @@
+ReportLink:https://hackerone.com/reports/382995
+WeaknessName:Privacy Violation
+Reporter:https://hackerone.com/sorachiace
+ReportedTo:Augur(augurproject)
+BountyAmount:250.0
+Severity:medium
+State:Closed
+DateOfDisclosure:19.07.2018 19:36:46
+
+Summary:
+
+##Summary
+The **slack.augur.net** record wasn't removed from the DNS after the migration to Discord (**invite.augur.net**) and was pointing to a non-existent page on GitHub Pages. So a subdomain takeover was possible and a proof-of-concept has been done to confirm this.
+
+##Description
+Searching for subdomains on **augur.net**, the **slack.augur.net** subdomain was found pointing to Cloudflare, and **http[s]://slack.augur.net** was pointing to a non-existing Github page (pictures attached also):
+
+`[*] Checking DNS.
+slack.augur.net has address 104.18.52.181
+slack.augur.net has address 104.18.53.181
+slack.augur.net has IPv6 address 2400:cb00:2048:1::6812:34b5
+slack.augur.net has IPv6 address 2400:cb00:2048:1::6812:35b5`
+
+`[*] Making HTTP/HTTPS request.`
+
+`[+] Unmanaged text 'there isn't a github page' found in response for 'slack.augur.net'! HTTP response is:<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; connect-src 'self'">
+<title>Site not found &middot; GitHub Pages</title>
+<style type="text/css" media="screen">
+body {
+background-color: #f1f1f1;
+margin: 0;
+font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+<--SNIP-->`
+
+##PoC
+To prove the subdomain take over, a new Github page was made on **sorachiace.github.io** (https://github.com/sorachiace/sorachiace.github.io) and the custom domain was set to point to **slack.augur.net** (pictures attached). The new page works on both HTTP and HTTPS.
+
+**HTTP Request:
+
+`curl http://slack.augur.net/
+<html>
+<head>
+<title>Nothing to see here!</title>
+</head>
+<body>`
+
+`<p>Nothing to see here!</p>
+<!--by SorachiAce-->`
+
+`</body>
+</html>`
+
+**HTTPS Request:**
+
+`curl https://slack.augur.net/
+<html>
+<head>
+<title>Nothing to see here!</title>
+</head>
+<body>`
+
+`<p>Nothing to see here!</p>
+<!--by SorachiAce-->`
+
+`</body>
+</html>`
+
+##Remediation
+Make sure to always remove the obsolete DNS records so no subdomains are pointing to external services which are not used anymore.
+
+## Impact
+
+As I can serve my own content without any restrictions, with this webpage I can set up a campaign to steal user session cookies, steal credentials, or for phishing purposes.

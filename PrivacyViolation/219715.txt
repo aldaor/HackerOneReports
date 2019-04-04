@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/219715
+WeaknessName:Privacy Violation
+Reporter:https://hackerone.com/zhumarin
+ReportedTo:VK.com(vkcom)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:20.09.2017 17:32:37
+
+Summary:
+Просмотр имени документов, недоступных через поиск. 

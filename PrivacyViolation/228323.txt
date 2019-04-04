@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/228323
+WeaknessName:Privacy Violation
+Reporter:https://hackerone.com/imxx
+ReportedTo:Teradici(teradici)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:29.05.2017 17:39:14
+
+Summary:
+techsupport.teradici.com had a weak password requirement, which is now fixed with complex password requirement.

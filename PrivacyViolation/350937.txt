@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/350937
+WeaknessName:Privacy Violation
+Reporter:https://hackerone.com/milkgames
+ReportedTo:Valve(valve)
+BountyAmount:750.0
+Severity:medium
+State:Closed
+DateOfDisclosure:30.05.2018 22:07:24
+
+Summary:
+Admin permissions on a game hub could be leveraged to view UGC reports on unrelated games.

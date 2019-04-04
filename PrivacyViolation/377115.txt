@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/377115
+WeaknessName:Privacy Violation
+Reporter:https://hackerone.com/iframe
+ReportedTo:ok.ru(ok)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:21.08.2018 22:14:46
+
+Summary:
+The vulnerability allowed unauthorized access to other users' file attachments with no ability to identify senders or recipients.
+
+Уязвимость позволяла получить несанкционированный доступ к приаттаченным файлам без возможности определить отправителя и получателя.
