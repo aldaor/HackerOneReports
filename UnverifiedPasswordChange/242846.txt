@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/242846
+WeaknessName:Unverified Password Change
+Reporter:https://hackerone.com/karthik87mit
+ReportedTo:Starbucks(starbucks)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:08.02.2019 19:09:55
+
+Summary:
+
+Hi,
+
+Password change is not notified to the account owner if its made from the account settings. This is very crucial as once the account is compromised, the attacker can change the password without giving any clue to the victim.
+
+Steps to reproduce the issue:
+
+1. Sign in with a valid username and password to www.starbucks.com
+2. Go to your settings and personal info.
+3. click change your password
+4. Change your password
+5. Looks for notification in your email.
+6. No emails are sent.
+
+Can be reproducible with all valid accounts.
+
+Password changed via the forgot password reset flows are notified while this notification is missing. 
+
+Thanks,
+Karthik
