@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/200909
+WeaknessName:Out-of-bounds Read
+Reporter:https://hackerone.com/hanno
+ReportedTo:PHP (IBB)(ibb-php)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:28.05.2017 19:23:37
+
+Summary:
+
+I have found and reported an out of bounds memory read in PHP:
+https://bugs.php.net/bug.php?id=73825
+
+It affected all three supported versions and has been fixed with the latest updates:
+https://secure.php.net/ChangeLog-5.php#5.6.30
+https://secure.php.net/ChangeLog-7.php#7.0.15
+https://secure.php.net/ChangeLog-7.php#7.1.1

@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/221789
+WeaknessName:Out-of-bounds Read
+Reporter:https://hackerone.com/theyarestone
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:25.05.2017 1:32:55
+
+Summary:
+The function TS_OBJ_print_bio() misuses OBJ_obj2txt(): the return value is the total length the OID text representation would use and not the amount of data written. This will result in OOB reads when large OIDs are presented.
+
+OpenSSL 1.0.2 users should upgrade to 1.0.2i
+OpenSSL 1.0.1 users should upgrade to 1.0.1u
+
+This issue was reported to OpenSSL on 21st July 2016 by Shi Lei (Gear Team, Qihoo 360 Inc.). The fix was developed by Stephen Henson of the OpenSSL development team.
+The function TS_OBJ_print_bio() misuses OBJ_obj2txt(): the return value is
+the total length the OID text representation would use and not the amount
+of data written. This will result in OOB reads when large OIDs are presented.
+
+refer:
+https://www.openssl.org/news/secadv/20160922.txt
