@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/219171
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/norver
+ReportedTo:VK.com(vkcom)
+BountyAmount:2000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:20.05.2017 17:14:48
+
+Summary:
+Уязвимость в библиотеке приложения VK на Android, позволяющая получить на свой номер код для восстановления некоторых страниц. 

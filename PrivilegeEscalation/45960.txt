@@ -1,0 +1,46 @@
+ReportLink:https://hackerone.com/reports/45960
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/coolboss
+ReportedTo:Vimeo(vimeo)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:18.03.2015 13:16:59
+
+Summary:
+
+Hello,
+
+This time I found a IDOR(Insecure Direct Object Reference) vulnerability. It allows an attacker to get unauthorized access to `Videos` of Channel whose privacy is set to `Only moderators and people I choose` without being a member.
+In simple words, we can access videos of private channel without being member of it.
+
+Proof Of Concept:
+===============
+1. See this channel ---> https://vimeo.com/channels/870575
+When opened it will show an error ---> 
+`Private Channel
+Sorry, this Channel is private. You do not have permission to view this Channel.`
+
+2. Now, I have a video placed there. Follow the steps to get access to my video.
+
+3.  Go to ---> https://vimeo.com/tools/widget/montage
+(Use burp proxy and intercept the request mades.)
+
+1st request --->  https://vimeo.com/tools/widget/montage
+2nd request ---> `https://vimeo.com/tools/widget/montage?widget=1&preview=1&user_id=36807051&badge_stream=channel&badge_channel=870575&badge_album=3231945&badge_layout=horizontal&badge_quantity=6&show_titles=no&badge_size=80`
+###Note `badge_channel` parameter to any value.
+
+Open this link ---> https://vimeo.com/tools/widget/montage?widget=1&preview=1&user_id=36807051&badge_stream=channel&badge_channel=870575&badge_album=3231945&badge_layout=horizontal&badge_quantity=6&show_titles=no&badge_size=80
+
+You will be shown my videos. Now keep enumerating `badge_channel={any valid value}`, it will get you access to any videos.
+
+4. Game over ...! :D
+5. This very dangerous as we can access any videos.
+
+
+Video POC : ---> http://youtu.be/vRAtxovcfHs (It is an unlisted video on youtube.)
+
+Hope to see this patched quickly. :-)
+
+Regards,
+Pranav

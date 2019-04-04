@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/263542
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/jackds
+ReportedTo:TTS Bug Bounty(tts)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:06.09.2017 14:46:33
+
+Summary:
+@jackds discovered a number of related subdomain takeover attacks against some subdomains of 18f.gov. 
+ 
+Technically, these domains are out of scope for our [Vulnerability Disclosure Policy](https://github.com/18F/vulnerability-disclosure-policy/blob/master/vulnerability-disclosure-policy.md). We want to remind hackers to please limit their testing to domains explicitly listed in that scope (which is repeated on [our HackerOne program page](https://hackerone.com/tts) for convenience). This is for your own safety: we want to be sure that everyone's on the same page about your activities being authorized.
+
+That said, this was a legitimate vulnerability, which we fixed, and we're disclosing details because they may be useful to other folks who operate services like ours.
+
+We couldn't just remove the DNS entries, since those are used for internal purposes with agency CNAMEs. However, there were other ways we were able to resolve this by routing requests for unknown domains differently, and now serve 404s for these subdomains.
+
+A few more details about the cause and solutions:
+
+* For the subdomain in question, this was caused by a combination of how were routing requests to unknown domains and how we served static websites.
+* The basic issue was that our servers used our `{REDACTED}.18f.gov` domain as a fallback for any unknown domain requests routed to us. So if a request came in for particular subdomains, we would end up treating it sort of like a request to `https://{REDACTED}.18f.gov`. Since we proxied our home page requests to the same host where `{REDACTED}.18f.gov`'s static site is currently hosted, and we passed along the original HTTP Host header for these unknown domains, it meant that the host would respond as if that unknown domain had been accessed directly on that host. As demonstrated, users could then to serve up content on these other domains.
+* So all that being said, the fix was actually straightforward, since it just involved disabling using the `{REDACTED}.18f.gov` website as a fallback for unknown domains. This should mean that the only requests we forward now are actually ones for the `{REDACTED}.18f.gov` domain.
+
+Thanks for the find, @jackds - we really appreciate it!
+
+[See also #263902, which was an independent discovery of the same issue on a different subdomain.]
+

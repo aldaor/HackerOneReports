@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/210298
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/r0x33d
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.10.2017 13:41:02
+
+Summary:
+
+Hello,
+
+I would like to report about **Privilege Escalation** on `rpm.newrelic.com` domain.
+
+You can change other company's user default notification preferences.
+
+In order to reproduce it, do the following steps:
+
+1) Login as company administrator
+2) Navigate to `https://rpm.newrelic.com/accounts/[aaa]/notification_channels` (replace `[aaa]` with your account ID)
+3) Open browser console, paste following code and hit enter: `$('#channel_id').val()`
+4) This will output company administrator channel id, copy it for later usage.
+
+{F165863}
+
+5) Create new user account and login into it
+6) Repeat step 2
+7) Select `None` from dropdown list and capture request to `https://rpm.newrelic.com/accounts/[aaa]/notification_channels/[bbb]/update_user_channel` ([aaa] - will be account ID and [bbb] - will be channel ID)
+
+{F165862}
+
+8) Change body payload `channel_id` key value to value you copied in step 4
+
+{F165864}
+
+9) Submit request
+10) Login as company administrator and repeat step 2 to check result.
+
+{F165865}

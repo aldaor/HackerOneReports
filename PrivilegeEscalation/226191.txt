@@ -1,0 +1,43 @@
+ReportLink:https://hackerone.com/reports/226191
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/dzmitry
+ReportedTo:Mail.ru(mailru)
+BountyAmount:300.0
+Severity:medium
+State:Closed
+DateOfDisclosure:02.01.2018 18:01:25
+
+Summary:
+Malicious local application can trick user into sending file from Mail.Ru Mail Android application folder by exploiting TOCTOU condition in ru.mail.ui.writemail.MailToMySelfActivity via symlink manipulation.
+Hello, Team
+
+
+Domain, site, application
+---
+Android Mail.Ru Email v. 5.5.1.21258
+
+
+Testing environment
+---
+Tested on non rooted Nexus 5x Android 7.1.2, 
+
+
+Intro
+---
+I found that #90693 was fixed incompletely and additionaly the attack can be improved using self sending activity.
+
+
+Steps
+---
+1. Create some word readable file in "/data/data/thirdparty/file.txt"
+2. Create soft link on that file "/data/data/thirdparty/link.txt"
+3. Send this soft via Intent.EXTRA_STREAM to the Mail.Ru "ru.mail.ui.writemail.MailToMySelfActivity"
+4. After some delay, for example 1000ms, remove soft link and create new, but which will point at any file from "/data/data/ru.mail.mailapp/*". Pay attention, that MailToMySelfActivity is do sending automatically and you need find for your PoC delay which will fit in time. (Or you can use ru.mail.ui.writemail.SharingActivity)
+5. The message will be sent. If user will open that message than attachment will be downloaded automatically into the "/sdcard/Android/data/ru.mail.mailapp/...." folder. 
+6. It means that any app will be able to read this attachment data which may contain private file content, for example message database.
+
+
+PoC
+---
+I attach PoC source
+Video link (accessed only by url): https://youtu.be/tXAadbkhDCM

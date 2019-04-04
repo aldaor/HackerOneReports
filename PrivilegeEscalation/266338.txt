@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/266338
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/quistertow
+ReportedTo:Razer US(razer_us)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:27.11.2017 17:48:14
+
+Summary:
+Two domains no longer in use under *.razerzone.com were left pointing to Cloudfront servers that were no longer active.  The DNS entries were cleared.
+
+We appreciate the report and look forward to working with the researcher in the future.

@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/21210
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/niks
+ReportedTo:Mavenlink(mavenlink)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:05.08.2014 16:33:52
+
+Summary:
+
+1. Consider Two browsers say X and Y, also consider two users say A and B.
+2. Sign in to https://app.mavenlink.com using user A through browser X, same as login with user B through browser Y.
+3. Now create a project through user A, and add user B as a consultant with Team Lead privilege.
+4. Now access this project through user B, and click on invite. A console will open asking for email id. Leave it as it is here and move to user A.
+5.  Access the user A console through browser X, and set the privilege of user B to Collaboration and also remove the invite privilege just corresponding to that user, as shown in image below.Now save it.
+6. Now move to user B again from where we left in step 4. Enter any email id and submit the request. You will see request will get completed successfully and given user will be invited, while this user doesn't having any privilege to do so..

@@ -1,0 +1,55 @@
+ReportLink:https://hackerone.com/reports/47932
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/daksh
+ReportedTo:Dropbox Acquisitions(dropbox-acquisitions)
+BountyAmount:729.0
+Severity:
+State:Closed
+DateOfDisclosure:04.04.2015 4:30:02
+
+Summary:
+
+Hey!
+
+I would like to report Privilege Escalation @hackpad.com's Invite feature.
+
+Description :
+
+Hackpad allows admin of the workspace to add/invite users for admin/member/guest etc roles. I can able to grant that access to any one with just one click.
+
+Attack Scenario: 
+
+Lets say you have workspace named attacker.hackpad.com and you want to be a member of victim.hackpad.com
+
+Steps to reproduce:
+
+1) Login in attacker.hackpad.com and visit victim.hackpad.com . You ll get error message like 
+
+<b>EMAIL</b> - is not a member of WORKSPACE.<br/><br/> You can <a href='/ep/invite/request-to-join?uid=UID'>request to join</a>.
+
+Copy that UID and request like :
+
+attacker.hackpad.com/ep/invite/request-to-join?uid=UID
+
+Actually this UID is of victim's workspace but we are sending this to our own workspace email.
+
+Finally you ll get email with :
+
+https://attacker.hackpad.com/ep/admin/account-manager/accept-join-request?token=TOKEN
+
+If you open this link in attacker's account it ll say "The user is already member of this workspace "  :/
+
+OUCH.
+
+Now change the domain name to vicitm's one like :
+
+https://victim.hackpad.com/ep/admin/account-manager/accept-join-request?token=TOKEN
+
+And send this to victim via email or clickjack him or anything. When he ll open this link Our attacker's account ll get the access of the site. You can check it over here :
+
+https://victim.hackpad.com/ep/admin/account-manager/
+
+Lemme know if you need any help.
+
+Regards,
+Daksh Patel

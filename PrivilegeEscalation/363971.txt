@@ -1,0 +1,44 @@
+ReportLink:https://hackerone.com/reports/363971
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/fbogner
+ReportedTo:New Relic(newrelic)
+BountyAmount:2500.0
+Severity:high
+State:Closed
+DateOfDisclosure:29.08.2018 20:11:55
+
+Summary:
+
+After installing the Windows Infrastructure client (as discussed in https://docs.newrelic.com/docs/infrastructure/new-relic-infrastructure/installation/install-infrastructure-windows-server) I noticed that integration yml config files are not only loaded from the folder within Program Files, but also from the non-existing unix specific /etc/ folder.
+{F307393}
+
+The interesting thing here is, that on Windows (verified for 7, Server 2008 R2 and Server 2012) every authenticated user is allowed to add new folders on the C: drive. This in turn allows an attacker to create the /etc/... folder structure that we discovered earlier.
+{F307394}
+
+Hence, any local user is able to create new integration yml config files that are loaded by the newrelic-infra.exe binary on startup. The interesting thing is, that this application is launched as SYSTEM because of its service configuration.
+ 
+After a little trail and error I discovered that this issue can be abused to poison the environment variables of the standard com.newrelic.winpkg integration job by reusing its name:
+{F307395}
+
+At first I thought about simply changing the %PATH%, but it looks like this is filtered. After a quick google search I came up with another interesting, likely exploitable environment variable: PathExt (http://environmentvariables.org/PathExt). The idea behind this variable is, that additional default file extensions can be added (in addition to thing like .exe and .bat)
+
+As shown in the following screenshot I create a new configuration file: C:\etc\newrelic-infra\integrations.d\newrelic-test-config.yml. This partially overwrites the configuration of the default com.newrelic.winpkg integration, which enables us to poison its environment with the attacker controlled %PATHEX environment variable. Thereby, whenever the nr-winpkg.exe spawns any external app (which it does), our exploit.exe application is launched instead:
+{F307396}
+
+The exploit.exe simply adds a new user as soon as it is launched. The highlighted command ensures that the %PATHEX variable is cleared so that we don't exploit ourselves, which would lead to an endless loop: 
+{F307397}
+
+On the next reboot - or as soon as the New Relic Infrastructure Agent is restarted - our malicious .yml integration file is loaded, which in turn poisons the environment for the default nr-winpkg.exe process. This finally, leads to the execution of our exploit.exe binary with SYSTEM permissions. Hence, any local user is able to add a new administrative user (attacker), thereby gaining full control over the affected endpoint:
+{F307398}
+
+PoC:
+=====================
+1.) Download the attached exploit-poc.zip as a non-administrative user
+2.) Extract its content to C:\
+3.) Reboot the system
+4.) A new administrative user attacker with the passwords Batman42 is added to the system
+5.) A local non-admin user gained full control over the affected endpoint.
+
+## Impact
+
+This issues allows any local user (using either console or RDP access) to escalate his privileges to LOCAL SYSTEM. Thereby full control over the affected endpoint is gained, which can then be abused to run tools like Mimikatz. This may lead to a Windows Active Directory domain wide compromise.

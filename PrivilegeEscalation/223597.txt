@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/223597
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/lincoln9932
+ReportedTo:VK.com(vkcom)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:09.07.2017 15:58:16
+
+Summary:
+Просмотр превью и названия некоторых видеозаписей. 

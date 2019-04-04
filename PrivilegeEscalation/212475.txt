@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/212475
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/rajauzairabdullah
+ReportedTo:Trello(trello)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:16.03.2017 5:32:59
+
+Summary:
+
+### Details:
+> Using this vulnerability attacker can get all the each and every detail  related to the **_specific Board_**.
+
+
+
+ More over other details which leaks are :
+
+>          1. username , fullname  , Initial etc (Of Victim ) and many other... 
+
+
+
+###Description:
+
++ go to account>> boards >> choose board , then go to **Print And Export** label and click on **Export Json**.
++ Intercept the request and Replace the Board it to the Victim Board Id. ( Consist of **8** Alphabets including numeric values ) and Forward the Request.
++ A response with **200** will be observed by you and a new Tab appeared with the **URL** related to your Board Json Details but its All the details about the Victim's Board. 
+
+> trello.com/b/**Here+will+be+your+Board+id**.json but Details below will be of **_Victim's Board_**.
+
+
+
+If there is any problem in reproduction, please tell me i will be demonstrating This Issue with Video POC.
+Greets
+**Raja Uzair Abdullah**

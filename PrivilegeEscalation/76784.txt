@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/76784
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/sobolev
+ReportedTo:Zaption(zaption)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.07.2015 21:59:40
+
+Summary:
+
+Hello!
+
+Example: http://www.zaption.com/listing/55aba5719c77e5386eb28df0
+
+We can rate tour any mark by POST http://www.zaption.com/ajax/gallery/listing/{tour_id}/rate/{mark}
+For example:
+POST http://www.zaption.com/ajax/gallery/listing/55aba5719c77e5386eb28df0/rate/100000000000000000
+
+So, we have "curve" layout and cheating in voting.
+
+Thank you for reading this report!

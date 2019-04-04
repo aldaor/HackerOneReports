@@ -1,0 +1,45 @@
+ReportLink:https://hackerone.com/reports/300879
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/michiel
+ReportedTo:New Relic(newrelic)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:17.08.2018 3:28:02
+
+Summary:
+
+## Details
+The endpoints `POST /v2/accounts/:account_id/alerts/conditions` (create new) and `PUT /v2/accounts/:account_id/alerts/conditions/:condition_id` (update existing) on `infrastructure-alert.service.newrelic.com` are vulnerable to privilege escalation.
+
+As per the screenshot below, an account with regular User privileges is informed that only Admins can create new infrastructure alert conditions:
+
+{F249820}
+
+However, a regular User without special privileges can forge a request to the aforementioned endpoints to create a new alert condition or update an existing one. 
+
+## Reproduction
+### Prerequisites:
+- Make sure you invite one regular user to your account and do not award ANY special permissions.
+
+{F249822}
+- Ensure you have an intercepting proxy like Burp Suite so you can easily capture the request to forge later.
+
+### Steps to reproduce
+First, as the admin go to https://infrastructure.newrelic.com/accounts/ACCOUNT_ID/settings/alerts and create a new alert condition. Make sure this request is captured in Burp Suite. It should be a POST request to https://infrastructure-alert.service.newrelic.com/v2/accounts/1835740/alerts/conditions.
+
+Copy this request so that it is easy for you to edit. For example, you could use the Burp Suite Repeater feature or simply use something like cURL.
+
+Now in Burp Suite, replace the cookies with those of a regular user to proof the endpoint will let a regular, unprivileged user create infrastructure condition alerts.
+
+The forged request can be seen in Burp Suite Pro below:
+{F249821}
+(The blurred cookie is a cookie of a regular user with no special permissions.)
+
+As a regular user it is also easy to update an infra condition alert using the same method. The only additional parameter you need to know as an attacker is the ID of the condition. But since a regular, unprivileged user has sufficient permissions to view existing conditions, they can use this method to obtain the ID of the condition they would want to forge an update request for.
+
+In this case, the forged request will have to go to`/v2/accounts/1835740/alerts/conditions/721518` and it must be a PUT request.
+
+## Impact
+
+Regular, unprivileged users with no additional roles can create and update infrastructure condition alerts. These two actions should only be allowed by admins or users with "Infrastructure manager" role.

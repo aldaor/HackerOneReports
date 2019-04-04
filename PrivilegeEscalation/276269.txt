@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/276269
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/benoculars
+ReportedTo:Starbucks(starbucks)
+BountyAmount:8000.0
+Severity:high
+State:Closed
+DateOfDisclosure:04.12.2017 22:44:46
+
+Summary:
+Hacker @benoculars was able to successfully faciliate multiple subdomain takeovers by taking advantage of a process flow to use some of the space provided for germany.openapi.starbucks.com, psv.openapi.starbucks.com, stage-psv.openapi.starbucks.com, and test-psv.openapi.starbucks.com. While we were still securely serving content from these domains, and no users or operations were impacted, it would have been possible for @benoculars to serve content from unique URLs not in use by our applications and services. 
+
+@benoculars had illustrated a non-destructive PoC, showing his ability to serve content from our domain. We were able to make platform and operational changes to resolve this issue. 
+
+Thanks @benocular for identifying weak subdomains and helping to resolve this issue! Great work! 

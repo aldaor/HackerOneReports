@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/277138
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/foobar7
+ReportedTo:Inflection(inflection)
+BountyAmount:750.0
+Severity:high
+State:Closed
+DateOfDisclosure:15.03.2019 17:10:52
+
+Summary:
+While the interface hides the users page from read-only users, they can still perform PUT requests to the API to change their privileges where they only have read-only permissions.

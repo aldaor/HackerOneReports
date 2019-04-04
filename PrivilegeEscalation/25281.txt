@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/25281
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/looping
+ReportedTo:HackerOne(security)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:25.09.2014 22:33:35
+
+Summary:
+
+HI ,found a vulnerability by which anyone's username or profile link can be changed in  hackerone
+Follow the Steps
+
+1.contact support@hackerone.com by your  email hacker@gmail.com  and ask your name from "abc" to "xyz"
+2.You will get a reply saying " for confirmation can you say send an email from your email account associated with your username " ie. from victim@gmail.com .
+3reply ok and use a spoofing service made by you or  a hacker to send spoofed emails
+example https://emkei.cz/
+4.know the victims email account and use it to send as senders email address to send a spoofed email saying change my username frm abc to xyz
+5.it will be done by the support staff .
+
+By knowing email of victim you can change anyone's username and profile link
+
+i did this while ago with a help of my friends account with his permission. where i followed the similar steps to change the username from ssssss to kaviraj where i didnt use his  email with his username registered to hackerone.
+
+Just a spoofed senders email is enough!
+
+countermeasure
+
+You must validate the email header and must use a proper email service provider like gmail to filter these kind of emails as a countermeasure.
+
+Impact
+
+By this way anyone's username and profile link can be changed without any knowledge to the victim.
+the victims hall of fame page name and profile URL could be changed by the attacker as username is changed.So there will be no proof or value of the victims finds and bounty and hall of fame(incase if attacker changes the name and URL to his name .he can say all are his finds and hall of fame are credited to him)
+while the victim logs in he will be shocked to see his new name!
+
+I hope you reply me and fix this issue
+
+Thanks
+Anand

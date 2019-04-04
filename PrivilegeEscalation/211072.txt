@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/211072
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/lincoln9932
+ReportedTo:VK.com(vkcom)
+BountyAmount:200.0
+Severity:medium
+State:Closed
+DateOfDisclosure:17.06.2017 23:21:02
+
+Summary:
+Отсутствие hash при создании трансляции. 

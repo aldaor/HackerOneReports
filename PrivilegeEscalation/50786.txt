@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/50786
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/satishb3
+ReportedTo:Vimeo(vimeo)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:23.04.2015 16:36:36
+
+Summary:
+
+It is possible for a user to add videos to other user's private groups. 
+
+Steps to verify:
+1. Log into vimeo.com as Alice. Create a new group (lets say, AlicePrivateGroup with group id 301924) and choose 'Only members can see this group' setting.
+2. Login as Bob and create a new group (lets say, BobGroup with group id 300754). If Bob access the AlicePrivateGorup - https://vimeo.com/groups/301924/, it displays 'Sorry, this Group is private. You do not have permission to view this Group' message.
+3. View any of the Bob videos and click on collections. 
+4. In the collections-> groups section, check BobGroup and intercept this request using burp proxy. Intercepted request looks like, 
+
+    POST /118099933?action=adder HTTP/1.1
+    Host: vimeo.com
+   User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:36.0) Gecko/20100101 Firefox/36.0
+    [...]
+
+    action=toggle_collection&type=group&id=300754&toggle=add&token=...
+
+5. In the intercepted request, replace the id value with AlicePrivateGorup id (301924). Modified request looks like, 
+
+    POST /118099933?action=adder HTTP/1.1
+    Host: vimeo.com
+    User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64; rv:36.0) Gecko/20100101 Firefox/36.0
+    [...]
+
+    action=toggle_collection&type=group&id=301924&toggle=add&token=...
+
+6. Send the modified request to the server. It adds Bob video to AlicePrivateGorup. To confirm, login as Alice and look at the AlicePrivateGorup videos.
+
+It is also possible for a user to add videos to other user's groups without joining the group just by changing the group id value in the above request.

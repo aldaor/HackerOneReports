@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/240562
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/leet-boy
+ReportedTo:Inflection(inflection)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:24.10.2017 19:19:50
+
+Summary:
+Researcher discovered an issue where role permissions were not being properly validated on certain administrator actions

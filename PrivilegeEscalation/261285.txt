@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/261285
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/samczsun
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:400.0
+Severity:
+State:Closed
+DateOfDisclosure:26.09.2017 16:53:17
+
+Summary:
+A security researcher discovered a potentially serious privilege escalation issue in our system which was ultimately traced to our use of the `allow-deny` package provided in the open source Meteor framework. We implemented a short-term fix (using triggers -
+ not great performance) on the same day this was reported and immediately began working with the Meteor core team on a long-term fix that would benefit the whole community. The Meteor team soon resolved the issue in the `allow-deny` package and we verified their solution; the issue has now been publicly disclosed [here](https://blog.meteor.com/meteor-allow-deny-vulnerability-disclosure-baf398f47b25). 
+
+To be clear: after an extensive review of our system and our logs, we can say with confidence that *no user data was exposed* and this vulnerability was never used in our production system, however the potentially serious nature of this issue demands note.
+
+We want to thank @samczsun for the creativity and excellent communication as this issue was discovered and as we worked with the Meteor team to resolve the issue for the entire Meteor community. We also want to thank the Meteor core team, especially @abernix, for support and guidance as this issue developed. Together we hit harder!

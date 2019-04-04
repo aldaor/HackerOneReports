@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/394861
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/dhiraj-mishra
+ReportedTo:MariaDB(mariadb)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:14.11.2018 9:03:30
+
+Summary:
+
+Dear Team, 
+
+Product Affected: https://github.com/MariaDB/server
+
+File:
+ /server/blob/10.3/sql/mysqld.cc#L2761
+
+```
+}
+    if (!SetSecurityDescriptorDacl(&sdPipeDescriptor, TRUE, NULL, FALSE))
+{
+```
+
+This was purely identified on code review, Never create NULL ACLs.
+
+A mail was sent to security@mariadb.org and MariaDB team is working on this and a fix will be pushed in next version, attached mail headers for your reference.
+
+## Impact
+
+An attacker can set it to Everyone (Deny All  Access), which would even forbid administrator access and may lead to privilege escalation.

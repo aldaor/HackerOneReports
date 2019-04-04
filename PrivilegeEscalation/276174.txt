@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/276174
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/jon_bottarini
+ReportedTo:New Relic(newrelic)
+BountyAmount:750.0
+Severity:medium
+State:Closed
+DateOfDisclosure:02.05.2018 21:49:13
+
+Summary:
+@jon_bottarini discovered an issue with our GraphQL implementation. This allowed a user without the proper authorization access to privileged account information on the same account.

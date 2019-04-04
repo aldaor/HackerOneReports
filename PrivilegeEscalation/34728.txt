@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/34728
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/surgent10cross
+ReportedTo:Eobot(eobotcom)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.12.2014 2:47:53
+
+Summary:
+
+POC :- video attached

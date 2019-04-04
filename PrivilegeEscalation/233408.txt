@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/233408
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/jin
+ReportedTo:Mixmax(mixmax)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:31.05.2017 0:11:16
+
+Summary:
+Unused DNS record was reported, we promptly removed.

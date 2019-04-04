@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/31418
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/c37hun
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.12.2015 11:00:32
+
+Summary:
+
+Добрый день,
+Уязвимость существует на parapa.mail.ru
+Авторизуюсь от имени любого пользователя parapa.mail.ru
+
+Удаляем все cookie на имя parapa.mail.ru
+Открываем любую фотографию или профиль далее обновляем страницу и сразу авторизируемся как автор (Дании автора добавляется нам в куки).
+
+После просмотра видео, вам будет все ясно.
+
+ссылка для скачивания видео:
+https://cloud.mail.ru/public/958ff35ce154%2Fparapa.swf

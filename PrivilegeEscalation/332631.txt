@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/332631
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/bogdantcaciuc
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:03.07.2018 15:23:38
+
+Summary:
+The researcher discovered a bypass in the "block profile publication" feature.

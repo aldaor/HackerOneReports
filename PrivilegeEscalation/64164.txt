@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/64164
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/coolboss
+ReportedTo:Shopify(shopify)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:20.04.2016 7:15:11
+
+Summary:
+This researcher pointed out that Shopify's app ecosystem has no built-in way of verifying who is using an app, and therefore most apps do not verify user privileges when requesting and displaying a store's data. To resolve this issue we implemented an "online access" mode in which an app can request temporary access tied to an individual user account. API requests in this mode may fail depending on the privileges that were granted to the user.
+
+Note: We are in the process of upgrading our apps to use the online access mode, but not all apps have been converted yet. Reports pertaining to other apps that fail to verify user privileges will be closed as duplicates.
+
+A complete explanation of online and offline API access modes can be found here: https://help.shopify.com/api/getting-started/authentication/oauth#api-access-modes

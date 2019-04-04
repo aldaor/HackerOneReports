@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/77679
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/mthirup
+ReportedTo:ok.ru(ok)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:29.08.2016 15:54:07
+
+Summary:
+Tomcat Servlet Examples application was accessible at wmf.ok.ru which leaved ok.ru vulnerable to cookie manipulation (http://lab.onsec.ru/2013/03/tomcat-servlet-examples-threats.html) and whatever else vulnerability Servlet Examples might contain. 

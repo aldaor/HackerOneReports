@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/50884
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/adrianbelen
+ReportedTo:Whisper(whisper)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:12.04.2015 2:24:32
+
+Summary:
+
+i have found that this activities are exported
+** Package: sh.whisper **
+  sh.whisper.WMainActivity
+  sh.whisper.WWhisperBrowserActivity
+  sh.whisper.WRelatedActivity
+  sh.whisper.WDiscoverActivity
+  sh.whisper.WCategoryFeedActivity
+  sh.whisper.WSettingsActivity
+    Parent Activity: sh.whisper.WMainV4Activity
+  sh.whisper.WShareActivity
+  sh.whisper.WQuickCreateActivity
+    Parent Activity: sh.whisper.WMainV4Activity
+  sh.whisper.WUserActivity
+  sh.whisper.WNotificationsActivity
+  sh.whisper.WInboxActivity
+  sh.whisper.WParseDeepLinkActivity
+  sh.whisper.WAddGroupActivity
+
+whisper android app have a 4 digits PIN that can be set by the user to protect from unauthorized access if the phone is lost(protection for user's inbox and notification) , but   **sh.whisper.WNotificationsActivity**
+  and **sh.whisper.WInboxActivity** are exported ,so any android app can called these activities to bypass the **4-digit code**
+
+watch this video on have i bypass the 4-digit code 
+
+** references**
+http://cwe.mitre.org/data/definitions/926.html

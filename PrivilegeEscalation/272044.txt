@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/272044
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/bagipro
+ReportedTo:Dropbox(dropbox)
+BountyAmount:1000.0
+Severity:low
+State:Closed
+DateOfDisclosure:30.11.2017 0:35:22
+
+Summary:
+The report indicates a flaw in our Android application that would allow a malicious app to gain read/write access to some cached files (provided the attacker knows the name of the files) and other minor pieces of information. The vulnerability was caused by not validating the package name of an incoming Intent which allowed a malicious application to masquerade as a trusted android Activity. 
+
+The scope of potential impact was limited, however we have chosen to award a bounty and fix this issue.

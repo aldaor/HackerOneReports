@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/29420
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/esamhacks
+ReportedTo:WePay(wepay)
+BountyAmount:350.0
+Severity:
+State:Closed
+DateOfDisclosure:19.06.2015 13:44:14
+
+Summary:
+
+An attacker can update the subscription details of the victim without any action from the victim. Following are the steps to reproduce:
+
+1. Login into account with any set of credentials, say victim@gmail.com 
+2. Click on "Create an Account", Click on Organization, Fill in all the details. Complete the next step too. Go to home. 
+3. Click on "Plus" sign in front of "Subscribers"
+4. FIll in plan name, price and other details. Save It. 
+5. Click on Edit Icon, Change the details and Intercept the request. 
+6. Note the value of "subscription_plan_id" parameter. This should be same as the last digit in the URL. 
+
+7. Login into the application with another set of credentials, say attacker@gmail.com.
+8. Repeat steps from "step 2" to "step 5". Make sure you fill in other details.
+9. Change the values to whatever you want to change in victim's account. Now change the value of "subscription_plan_id" from your subscription id to the one copied earlier in step 6. 
+10. Forward the request. You will see that the changes reflect in the victim's account, and not your account.
+
+Note: As subscription_plan_id is a numeric code, this can be simply brute forced and details of any subscriptions can be changed. Also the subscription details include some money stuff, so it Sounds problematic. 
+
+Please let me know if you have any queries. I don't think any screenshot is required. Let me know if required. 

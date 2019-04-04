@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/59508
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/eronx
+ReportedTo:drchrono(drchrono)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:21.07.2016 1:23:37
+
+Summary:
+
+Hi there,
+
+This is another vulnerability which allow users without privilege to access appointments ( permission of access scheduling ) is turned off to access or view all appointments within offices.
+
+What the attacker will do is make use of the print appointment feature. Basically accessing directly:
+[https://trizaeron.drchrono.com/examroom_printer_friendly/74506/20150401/20150504](https://trizaeron.drchrono.com/examroom_printer_friendly/74506/20150401/20150504)
+
+Take note that **74506** is the office id and **20150401/20150504** are just dates.
+
+In case you wanted more information, let me know.
+Clifford

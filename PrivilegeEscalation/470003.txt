@@ -1,0 +1,114 @@
+ReportLink:https://hackerone.com/reports/470003
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/0xcccc
+ReportedTo:Keybase(keybase)
+BountyAmount:3250.0
+Severity:high
+State:Closed
+DateOfDisclosure:31.01.2019 2:19:46
+
+Summary:
+
+In the previous [report](https://hackerone.com/reports/397478), about the privileged helper lacks of validation so any applications can abuse it to gain root privilege.
+
+But the security fix is incomplete.
+
+I can describe 3 different ways to bypass (possibly 4, I doubt).
+
+All the poc are simplified to not sending the actual attack payload, but instead a simple xpc_dictionary. If the code sign check works, I should received a "connection interrupt" error. To prove that I have bypassed the check, I will get a "Unable to read object" reply (that the MPMessagePack has received the message but doesn't recognize its format).
+
+## Description
+
+1. Time of use time of check
+
+source code: `poc1.m`
+
+Unlike Windows, macOS does not lock the executable that being executed.
+So between my evil process's creation and the XPC, there's a time window that I can simply replace my self with a valid executable.
+Since the original binary has `@rpath` dependencies, I have to copy the whole app bundle (not the single executable)
+
+If the code sign check works, I should received a "connection interrupt" error.
+
+2. pid reuse race condition
+
+According to the code, you've already known this, but just couln't believe that it could be an actual attack:
+ 
+ > https://github.com/gabriel/MPMessagePack/commit/c01e974b09d8278696582c40bf73ddf74e7531ad#diff-de800048bd73ccd8bd9fea83da21f613R143
+ >
+ > The OS’s process ID space is relatively small, which means that process IDs are commonly reused.
+ > There is a recommended alternative to process IDs, namely audit tokens (audit_token_t), but you can’t use this because a critical piece of public API is missing.
+ > While you can do step 2 with an audit token (using kSecGuestAttributeAudit), there’s no public API to get an audit token from an XPC connection.
+ > Fortunately, process ID wrapping problems aren’t a real threat in this context because, if you create an XPC connection per process, you can do your checking based on the process ID of that process. If the process dies, the connection goes away and you’ll end up rechecking the process ID on the new connection.
+ 
+ This technique is the variant of Ian Beer's exploit
+ https://bugs.chromium.org/p/project-zero/issues/detail?id=1223
+ 
+ on macOS, pid can be reuse. You can even replace current executable
+ to a different process with fork() / posix_spawn() while keeping the old pid.
+ 
+ For loop for about 8 times you can trigger the race condition.
+ 
+In the Console.app, search `process:keybase.Helper`
+
+I was expected to see this message repeats 8 times:
+
+``` 
+Failed to pass code requirement: Error Domain=MPMessagePack Code=-67050 "Binary failed code requirement" UserInfo={NSLocalizedDescription=Binary failed code requirement, NSLocalizedRecoveryOptions=(
+ OK
+```
+ 
+ But instead, some of the messages got passed
+
+```
+ You can attach to Keybase.Helper process, put a breakpoint at SecStaticCodeCheckValidityWithErrors to see the behavior
+```
+
+3. `DYLD_INSERT_LIBRARIES` library injection
+
+source code: `poc1.m` and `injected.m`
+ 
+`DYLD_INSERT_LIBRARIES` can inject evil payload to valid signed process, without touching its code signature.
+ 
+ To prevent this attack, you can either add LibraryValidation to whitelisted binary (I strongly recommend this) or add any custom Entitlement to the code signature.
+ 
+ Addictionaly, XPC has the built-in support for checking entitlement.
+
+Please refer to 
+
+> (Objective See: "Reversing to Engineer: Learning to 'Secure' XPC from a Patch")[https://objective-see.com/blog.html]
+
+for more information.
+
+4. (possible) abuse Electron remote debugging and process.dlopen to load untrusted code
+
+ The allowed identifiers are keybase.Installer and keybase.Keybase, but I couln't find where keybase.Keybase is.
+I doubt that it's the typo for "Keybase.Electron" because I found this: 
+https://github.com/keybase/client/blob/6f1e2c08d514713db6dc33081a09a6dcf9bd5493/osx/KBKit/KBKit/Component/KBAppBundle.m#L52
+
+If so, there's the 4th bypass:
+Abuse trusted Electron to load evil library and run the exploit.
+
+Keybase gui is based on Electron, which has built in debugg option like --inspect=[port] or --inspect-brk=[port]
+Then it will expose the debug protocol on localhost that can be interacted via WebSocket
+Through this debug protocol
+
+We should NEVER trust such script language interpreters like Electron, node.js, or even lua or something.
+Library Validation can prevent them from dylib hijack, but some interpreter also have the ablity to run shellcode.
+ 
+So just block them.
+
+## The advise
+
+To implement a secure XPC server, you need to follow all of these:
+
+1. Just as the comment in https://github.com/gabriel/MPMessagePack/commit/c01e974b09d8278696582c40bf73ddf74e7531ad#diff-de800048bd73ccd8bd9fea83da21f613R143 says, don't use pid the check code signature. Use `audit_token_t`!
+
+2. PID can be reused, not to mention path. Don't trust it.
+
+2. Add Library Validation flag (https://developer.apple.com/library/archive/documentation/Security/Conceptual/CodeSigningGuide/Procedures/Procedures.html#//apple_ref/doc/uid/TP40005929-CH4-SW9) to whitelisted clients. This kills all dylib injection tricks ( (but not shellcode, so don't whitelist script interpreters)
+
+3. After the new flags applied, attackers can still grab old signed binaries. Add new custom entitlements (you can customize the name, as long as it don't starts with `com.apple.private`) check to the code sign requirements.
+
+## Impact
+
+An attacker that can execute arbitrary code in normal user can be elevated to root privilege.

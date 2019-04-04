@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/289051
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/picklepwns
+ReportedTo:TTS Bug Bounty(tts)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:28.11.2017 22:03:29
+
+Summary:
+@picklepwns discovered a subdomain takeover attack.
+
+Technically, the domain was out of scope for our Vulnerability Disclosure Policy. We want to remind hackers to please limit their testing to domains explicitly listed in that scope (which is repeated on our HackerOne program page for convenience). This is for your own safety: we want to be sure that everyone's on the same page about your activities being authorized.
+
+That said, this was a legitimate vulnerability, which we fixed with other government partners.
+
+Thanks for the find, @picklepwns - we really appreciate it!

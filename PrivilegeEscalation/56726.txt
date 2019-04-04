@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/56726
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/frozen
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:16.09.2015 20:35:43
+
+Summary:
+Only the the store owner is allowed to create new staff members, but staff members with full access can take over other invited staff members' accounts using the invitation link that was available in Settings -> Account page. To resolve this, we changed the display of the Account page so only the account owner has access to the invitation link.

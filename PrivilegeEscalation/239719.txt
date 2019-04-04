@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/239719
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/hacknroll
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:1500.0
+Severity:critical
+State:Closed
+DateOfDisclosure:24.11.2017 11:28:34
+
+Summary:
+EdgeOS version `1.9.1.1` and prior, consequence of the lack of validation on the input of the `Feature` functionality, an attacker with access to an `operator` (read-only) account and ssh connection to the devices, can escalate privileges to `admin` (root) access in the system.

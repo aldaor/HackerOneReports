@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/314962
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/ajxchapman
+ReportedTo:Razer US(razer_us)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:23.07.2018 2:08:07
+
+Summary:
+Excellent report from @achapman.   We appreciate the time, effort, technical skill, and professionalism of the researcher in helping us find and fix this issue.

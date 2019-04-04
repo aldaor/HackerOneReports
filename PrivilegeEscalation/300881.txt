@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/300881
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/tolo7010
+ReportedTo:Mavenlink(mavenlink)
+BountyAmount:150.0
+Severity:low
+State:Closed
+DateOfDisclosure:03.05.2018 18:36:50
+
+Summary:
+
+Reproduction:
+=========
+
+- As an administrator, invite an account members e.g: user1@email.com via https://app.mavenlink.com/settings/account/members 
+- An invitation link sent to user1@email.com, as user1, open email inbox and click on the link, notice the link redirects to page url:
+https://app.mavenlink.com/account_invitations/[token]/acceptances/new
+- Note the above link.
+- As user1, Click "Accept", the user has been added as an active member.
+- As administrator, remove user1 from active member list.
+- As user1, go to the noted link: https://app.mavenlink.com/account_invitations/[token]/acceptances/new,
+and click "Accept", the user has been added to the group again.
+
+## Impact
+
+Any user can add himself after has been deleted from an administrator.

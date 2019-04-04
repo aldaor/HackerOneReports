@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/386144
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/heeeeen
+ReportedTo:VK.com(vkcom)
+BountyAmount:500.01
+Severity:low
+State:Closed
+DateOfDisclosure:12.11.2018 15:57:23
+
+Summary:
+Initialization a call by a third-party application. 

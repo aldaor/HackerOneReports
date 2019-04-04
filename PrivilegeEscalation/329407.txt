@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/329407
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/grampae
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:23.04.2018 17:44:30
+
+Summary:
+@grampae discovered an uninitialized Drupal instance running on one of our properties being hosted by a third party provider, an issue we've seen previously. To prevent this issue from surfacing again, we decommissioned the related domains and contacted the provider with details of the issue.

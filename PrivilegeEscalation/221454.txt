@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/221454
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/twicedi
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:1500.0
+Severity:high
+State:Closed
+DateOfDisclosure:13.11.2017 10:41:48
+
+Summary:
+In UCRM `2.3.0-beta4` and prior, consequence of a lack of validation in `Client Impersonation` functionality, an attacker with access to an `Read-Only` account can escalate privileges to `Admin`. The vulnerability was fixed in UCRM `2.3.0`.
