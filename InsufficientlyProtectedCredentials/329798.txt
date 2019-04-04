@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/329798
+WeaknessName:Insufficiently Protected Credentials
+Reporter:https://hackerone.com/0x0g
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:25.03.2018 21:33:50
+
+Summary:
+One of our photographers accidentally took a photograph that exposed the WiFi password of the H1-202 event, which we consider bad OPSEC. This photo was published on our Facebook page and the [public hackathon leaderboard](/hackathons/h1202/live). We've updated the policy regarding photographs during these events and deleted references to the password. We ended up rewarding a bounty because this could've impacted the availability of the local network if an outsider would be present at the location. We don't believe this could've impacted the confidentiality or integrity of the data on the network. Connectivity is really important to our hackers during such events. We'd like to acknowledge @0x0g for looking out for us and the hackers who participate in our events!
+**Summary:**
+
+the h1-202 event took several photos for the event that rotate on the *public* leaderboard. One of these photos disclosed the local wifi SSID and Password.
+
+**Description:**
+SSID: HackerOne
+Password: █████████
+
+### Steps To Reproduce
+
+1. Look at the photo attached
+
+
+### Remediation
+
+Have your staff photographer revie the background for photos to not disclose passwords.
+
+## Impact
+
+Local attackers could connect to the wifi and sniff any unencypted traffic, as well as DoS the network (potentially).

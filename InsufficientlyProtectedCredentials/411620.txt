@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/411620
+WeaknessName:Insufficiently Protected Credentials
+Reporter:https://hackerone.com/imran1121
+ReportedTo:Chaturbate(chaturbate)
+BountyAmount:300.0
+Severity:medium
+State:Closed
+DateOfDisclosure:11.01.2019 8:01:38
+
+Summary:
+The hacker found that the server replays some form field data back in the response when there were form validation errors, which could be cached or viewed by someone with physical access to the same device used to complete the form. The fix was to delete the form data from showing in the response. 
+The target was https://billingsupport.chaturbate.com/customer_support/information_form/

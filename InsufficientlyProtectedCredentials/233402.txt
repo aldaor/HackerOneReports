@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/233402
+WeaknessName:Insufficiently Protected Credentials
+Reporter:https://hackerone.com/z3t
+ReportedTo:Mixmax(mixmax)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:31.05.2017 3:24:37
+
+Summary:
+
+None of the weakness categories really fit this so I apologize for that.
+
+The subdomain `sales.mixmax.com` points to `151.101.16.229`, a `webflow.io` proxy server. Because it 404s, this leads me to believe that a subdomain takeover is possible through the webflow service as whatever this is pointing to is unused. 
+
+Due to odd DNS configurations I'm not 100% sure on this but thought I'd make you aware just in case.
