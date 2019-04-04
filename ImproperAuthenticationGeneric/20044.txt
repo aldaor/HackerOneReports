@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/20044
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/tdthechamp
+ReportedTo:Envoy(envoy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.08.2014 4:04:22
+
+Summary:
+
+During the testing i found that able to access the account section of the page even after logout. Screenshot attached for your reference which shows that account section is accessible after logout. Screenshot attached for your reference. Please let me know if you need more information on this.
+
+Curl Command- This will take you to my test account(tirthankar.aries@gmail.com) where i already logged out.
+
+curl -i -s -k  -X 'GET' \
+    -H 'Referer: https://signwithenvoy.com/users/sign_in' -H 'User-Agent: Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)' -H 'DNT: 1' \
+    -b '__cfduid=d841ed09a9eeae5f49d9739ed19f6a7e81404975788001; _EnvoyWeb_session=UXJzMGtlUGpwZGhsQnY0TUQxeHFlbERSYnlyUjM1SS9KZzVKaDE1Y0hiTUVhZGtaVmpvTm11SFl2WHhvTWN2RWZLYzNZQXViNEVlb1FPWCt3b2NSL2plOXZYWDZlZHI5Q1B6T3BQcXFYSnJHUkpPUzZ0aTQvRUVkRnRKY1JjODJabHgzQlVISmt4Znl4bzdIbjNkRUxmeWJ5K05EaXFoZVFNMmV0S2VOZ28raWswQXF4TEZxRHJEU2ZnUUpURENiLS1ZM1RtNmZvNDd0UldONDNETFZIdzVRPT0%3D--a9ad9a14939a492f5e23ec651cbf1e9d0bbb7430; __utma=224060185.1943019271.1404975815.1404978949.1405348689.3; __utmc=224060185; __utmz=224060185.1404975815.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); mp_5faecb07a6c9505c4d691dc72da80e5d_mixpanel=%7B%22distinct_id%22%3A%20%221471f15958f2ac-0197d788064eb38-32265a3f-f9c87-1471f15959037e%22%2C%22%24initial_referrer%22%3A%20%22https%3A%2F%2Fsignwithenvoy.com%2F%22%2C%22%24initial_referring_domain%22%3A%20%22signwithenvoy.com%22%7D; __utmb=224060185.1.10.1405348689' \
+    'https://signwithenvoy.com/account/edit/admin'

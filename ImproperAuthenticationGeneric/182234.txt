@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/182234
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/abc12345
+ReportedTo:Pushwoosh(pushwoosh)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:15.11.2016 8:11:47
+
+Summary:
+Unsecured Grafana instance

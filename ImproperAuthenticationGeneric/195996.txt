@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/195996
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ehsahil
+ReportedTo:Showmax(showmax)
+BountyAmount:1200.0
+Severity:high
+State:Closed
+DateOfDisclosure:15.02.2018 16:10:40
+
+Summary:
+Access token uniquely maps to particular user record, which is then the only one accessible to user when doing API calls. Issue arise when intermediate service had used service token to update the user record. That allowed accessing user details of other user that the current access token belongs to only for very small subset of user information. Still the right practice (and original design) asked for using the appropriate user's access token and enforcement of strict access control check, so user has access to only her data.

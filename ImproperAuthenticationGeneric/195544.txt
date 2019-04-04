@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/195544
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/mazen160
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:15.02.2017 21:29:31
+
+Summary:
+A Department of Defense website was mis-configured to expose access control data backup files, and potentially the personal information of its users. Thanks for notifying us of this, @mazen160!

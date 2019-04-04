@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/167698
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/koshti25
+ReportedTo:Boozt Fashion AB(boozt)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.07.2017 10:19:39
+
+Summary:
+
+I have found a vulnerability in your website. Its regarding session fixation. Kindly go through my report.
+If you want solution that too I can provide.
+Session fixation is dangerous as it comes under Broken authentication and session management vulnerability which is No-2 in OWASP Top10 list.

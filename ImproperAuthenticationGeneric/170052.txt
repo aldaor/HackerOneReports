@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/170052
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/skorov
+ReportedTo:DigitalSellz(digitalsellz)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:27.11.2016 23:08:43
+
+Summary:
+@skorov discovered a vulnerability that allows a user can gain access to S3. This Vulnerability has been fixed.

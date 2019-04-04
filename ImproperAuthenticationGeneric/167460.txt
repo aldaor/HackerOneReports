@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/167460
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/xia_ulhusnain
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.03.2017 1:42:14
+
+Summary:
+
+Hi!
+I have found Session Hijacking Bug in your website www.newrelic.com 
+from session hijacking an attacker can login to victim's account without any authentication.
+Video POC given Below.

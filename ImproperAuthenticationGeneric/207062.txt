@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/207062
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/povargek
+ReportedTo:VK.com(vkcom)
+BountyAmount:700.0
+Severity:
+State:Closed
+DateOfDisclosure:31.12.2017 11:22:20
+
+Summary:
+Восстановление сессии после сброса в течение короткого времени. 

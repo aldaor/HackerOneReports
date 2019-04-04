@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/173251
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/c0rte
+ReportedTo:RubyGems(rubygems)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.10.2016 16:29:07
+
+Summary:
+
+Hi,
+
+I saw that the email is sent in clear-text instead of TLS (Transport Layer Security) any Man-in-the-middle attacker is able to read these sensitive Emails and get the password reset link which lead to account takeover.
+
+Email details:
+from:	help@rubygems.org
+to:	Victim@gmail.com
+date:	Fri, Sep 30, 2016 at 10:31 PM
+subject:	Change your password
+mailed-by:	rubygems.org
+encryption:	ec2-52-43-250-235.us-west-2.compute.amazonaws.com did not encrypt this message
+
+Thanks,
+Diogo Real

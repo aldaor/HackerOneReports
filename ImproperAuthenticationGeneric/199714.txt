@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/199714
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/sumitsahoo
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:20.05.2017 16:27:26
+
+Summary:
+There is no rate limit enabled for "Current Password" field on Setting page of nextcloud.com. A malicious minded user can continually tries to brute force an account password.

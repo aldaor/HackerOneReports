@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/203311
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/generaleg
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:07.04.2017 20:05:31
+
+Summary:
+A DoD website was configured in a manner that allowed a remote user to bypass a file access control. This vulnerability could have allowed the user to view potentially sensitive system files. @generaleg able to demonstrate this vulnerability by crafting a specially formatted URL. Thanks @generaleg!

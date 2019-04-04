@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/194832
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/jamesclyde
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:11.01.2017 17:42:10
+
+Summary:
+
+Hello,
+
+This issue has the same impact as this one: #143482. But the fix is not complete, there is a shopify subdomain (VPN server) where you still can connect your google account. This should be hide and protected.
+
+So you guys need to change this so that only shopify.com Google accounts are accepted.
+
+POC screen: https://snag.gy/qQz6WO.jpg
+
+Let me know about it and happy new year!!
+
+
+Jamesclyde90

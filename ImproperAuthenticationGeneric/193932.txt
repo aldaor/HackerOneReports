@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/193932
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/mthirup
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:15.02.2017 21:12:22
+
+Summary:
+A Department of Defense website was mis-configured such that the password reset function could be bypassed to change a user's password. @mthirup was able to demonstrate this vulnerability by crafting a specially formatted URL. Thanks @mthirup!

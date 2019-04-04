@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/206591
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ngalog
+ReportedTo:Uber(uber)
+BountyAmount:8000.0
+Severity:high
+State:Closed
+DateOfDisclosure:25.01.2019 17:41:45
+
+Summary:
+An error in our OAuth2 flow for `central.uber.com` allowed an attacker to leverage an open redirect that allowed for a full account takeover. When logging into `central.uber.com`, the `state` parameter for login.uber.com contained a redirect location instead of a CSRF token. As a result, an attacker could modify the state parameter to have a poisoned `central.uber.com` path which would redirect to a custom domain after login and allow them to steal an account OAuth access token.
+
+Thanks, @ngalog!

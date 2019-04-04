@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/192197
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/7h3_3y3
+ReportedTo:Coinbase(coinbase)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:30.08.2017 23:00:54
+
+Summary:
+Per [our policy](https://hackerone.com/coinbase), issues which require rooted victim devices are in-scope.

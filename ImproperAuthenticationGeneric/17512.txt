@@ -1,0 +1,74 @@
+ReportLink:https://hackerone.com/reports/17512
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/coolboss
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.07.2014 22:44:32
+
+Summary:
+
+Hello,
+
+I found another bug on hackerone.
+This time it is very dangerous and creative.
+Hope you will definitely love it.
+
+Any valid account on hackerone can be hacked. eg Co-founders @jobert and @michiel can also be hacked.
+I tried this one on my account only.
+
+Lets go to the point ...
+
+Things required to takeover complete account :
+========================================
+1. Valid email-id which is registered on hackerone.
+
+Now, chaining from my previously i.e lately reported bugs.
+User enumeration attack I reported recently.
+
+One can find a registered email easily. eg michiel@hackerone.com or jobert@hackerone.com
+
+Basic Idea :
+==========
+1. I am requesting a 'Reset Password link' to user's email. 
+eg.
+https://hackerone.com/users/password/edit?reset_password_token=MUm2xQ_TEtf2RaG1H3DK
+
+2. Guessing the reset_password_token i.e reset_password_token=MUm2xQ_TEtf2RaG1H3DK
+
+As everyone replying my bug reports know that there is no BRUTE FORCE protection. I am doing the same.
+
+
+Proof of concept :
+================
+1. Generate a 'Reset Password link' of user whose account is to be compromised/hacked.
+2. Use a burp suite and configure it to do a Brute Force Attack on token
+eg. https://hackerone.com/users/password/edit?reset_password_token=MUm2xQ_TEtf2RaG1H3DK
+
+Now, it is very easy to identify valid reset_password_tokens.
+
+Server Status 200 ---> valid
+Server Status 302 ----> invalid
+
+length 4378 --->valid
+length 1525 --->invalid
+
+3. Try resetting password now.
+4. Login with email and password.
+
+Special Note :
+===========
+Attacker doing a brute force will get all valid tokens which are requested by user and are valid.
+So attacker can reset password of users.
+
+This was all from me. Hope now you understand the severity and power of Brute Force.
+I am attaching a screenshot POC to show that there is no protection from server side as mentioned by @michiel and @jobert to me recently about brute force.
+
+Just I made attack on my account. To show it I am attaching a screen shot. 
+And there is really no protection from hackerone server. I have already made few thousands request and I am eagerly waiting for something to block me from server side.
+
+Hope you quickly get back to me. :)
+
+Regards,
+Pranav

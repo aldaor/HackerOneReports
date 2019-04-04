@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/197726
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/fng
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:11.10.2017 22:27:30
+
+Summary:
+
+The ticket raising system used by newrelic suffers from an informational vulnerability where in an attacker can view certain details about open bugs or project information of newrelic. Details include employee names and potentially email address and ticket names which an unauthorized personnel can view without login that can be very useful to an attacker.
+
+endpoints:
+
+https://newrelic.atlassian.net/secure/ManageFilters.jspa?filterView=popular
+https://newrelic.atlassian.net/secure/ManageFilters.jspa?filterView=search
+
+remediation:
+
+filters names can contain useful information that may expose the company's private information and should not be set to 'shared with the public'.
+
+Please see the attached POC for details and let me know if there are any questions.
+
+-fng

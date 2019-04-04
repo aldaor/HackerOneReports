@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/200179
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/hanuman1
+ReportedTo:Uber(uber)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:19.12.2018 22:41:57
+
+Summary:
+When verifying your phone number attached to your Uber account, it was possible to re-use an old verification URL to validate a new cell phone number. In addition to this, there was no rate limiting on the SMS verification which allowed for it to be easily brute-forced. The internal team resolved this by removing the ability to perform SMS URL verification in favor of a standard 4-digit verification.
+
+Thanks, @hanuman1!

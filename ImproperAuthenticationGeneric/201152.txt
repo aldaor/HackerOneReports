@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/201152
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/adminadminadmin
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:11.04.2017 4:53:44
+
+Summary:
+The Researcher was able to visit the internal pages of the application by changing few parameters in the URL. We have identified it as broken authenticated page display.
+
+Due to the EOL of the application, it was decommissioned. 

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/201940
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/cyber-guard
+ReportedTo:YouPorn(youporn)
+BountyAmount:1000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:13.06.2017 16:49:01
+
+Summary:
+The researcher identified a faulty Oauth implementation allowing YouPorn accounts to be hijacked. The researcher exploited a feature which links Pornhub and YouPorn accounts together by leveraging old accounts which were previously deleted, or where username was changed.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/167582
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/cyber-guard
+ReportedTo:Pornhub(pornhub)
+BountyAmount:750.0
+Severity:
+State:Closed
+DateOfDisclosure:28.10.2016 20:31:01
+
+Summary:
+An endpoint was identified by the researcher allowing private user albums/photos to be viewed.

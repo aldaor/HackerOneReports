@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/188205
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/hackerwahab
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:04.12.2016 18:49:18
+
+Summary:
+
+Hello,
+
+My self Abdulwahab,
+ I want to Alert You that Your website is Facing a serious Problem Called : Username Enumeration
+This Problem is on
+nextcloud.com/wp-admin
+
+We Use wpscan to get username 
+
+and the username is 
+"frank"
+After getting username a user can Bruteforce it Using Wpscan and get access to admin panel and upload shell and also get all sub_domain Means Full Server is Hacked!
+
+FIX
+===
+To Fix this use Wordpress Login Attemptizer
+
+Thanks,
+ABDULWAHAB,
+Independent Cyber Security Researcher,

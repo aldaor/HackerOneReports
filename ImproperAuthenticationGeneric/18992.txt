@@ -1,0 +1,39 @@
+ReportLink:https://hackerone.com/reports/18992
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/hunter
+ReportedTo:Mail.ru(mailru)
+BountyAmount:3000.0
+Severity:
+State:Closed
+DateOfDisclosure:18.07.2016 16:44:33
+
+Summary:
+
+Hi. With this bug you can attach any mobile number to any email box without any notification to the user. And after some time, you can get access to the email using the attached phone number.
+
+To reproduce the steps, you will need mobile phone with any working number, Firefox and Tamper Data plugin.
+
+Steps
+
+1. Go to https://m.mail.ru/cgi-bin/signup
+
+2. Put target email name and anything you want in other inputs
+
+3. Submit form and modify on the fly the RegStep to 5 with Tamper Data
+
+4. Submit your mobile number which you want to attach
+
+5. Get SMS and confirm link in it.  Example: 
+http://bk.ru/t/EucBxHz3nI2wdap => https://m.mail.ru/cgi-bin/reg?ID=YOUR_ID_HERE&code=YOUR_CODE_HERE&RegStep=10
+
+6. Then go to https://m.mail.ru/cgi-bin/reg?ID=YOUR_ID_HERE&code=YOUR_CODE_HERE&RegStep=2
+
+7. Submit form by typing your phone number and any strong password like Pa55wORd1234
+
+8. Get SMS and again confirm the link
+
+9. All done
+
+Now you can log in to target email account and look the security settings. There are will be shown your confirmed mobile phone number. I hope it will be useful for you.
+ 	
+P.S. If you do not get to reproduce the sequence, you can send me the email name to attach phone number.

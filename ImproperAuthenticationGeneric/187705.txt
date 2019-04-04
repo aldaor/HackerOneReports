@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/187705
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/spam404
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:15.02.2017 21:52:17
+
+Summary:
+A Department of Defense website was exposed to an authentication bypass vulnerability which could have allowed an unauthenticated user to browse the website as an authenticated user. Thanks to @spam404 for discovering this vulnerability!

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/210417
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/exception
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:23.04.2018 13:26:17
+
+Summary:
+In this report, the researcher found that it was possible to bypass our CAPTCHA check by injecting a random value into the X-Forwarded-For header in the sign in POST request. At the time the researcher submitted this report, we only enforced CAPTCHA checks on sign-in requests that had failed multiple times in an effort to stop brute-force login attacks. By modifying the X-Forwarded-For header, the researcher discovered that our server would interpret each request as a new user and so it wouldn't force a CAPTCHA check.
+
+After we solved this bug by changing how our servers handled the X-Forwarded-For header, we ended up changing our CAPTCHA system entirely. Now, we use an invisible CAPTCHA that is always active, even on the first login, making for a more secure environment for our users.

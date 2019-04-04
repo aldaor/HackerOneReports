@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/186393
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/yynl
+ReportedTo:OWOX, Inc.(owox)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:22.05.2017 9:46:29
+
+Summary:
+Subdomain http://www.owox.ru/ was preserved from being taken over by an attacker:
+https://kiosk.owox.ru/
+https://blog.owox.ru/

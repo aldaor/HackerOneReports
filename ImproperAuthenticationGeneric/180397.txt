@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/180397
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/abdulwahab
+ReportedTo:Boozt Fashion AB(boozt)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:27.07.2017 10:16:29
+
+Summary:
+
+Hello,
+Great Day,
+
+I just want to Inform You that i Founded an Misconfiguration in your Website with android app.
+
+Steps to Reproduce
+====================
+1.Login in to your Website
+https://www.boozt.com/login
+2.Login with same account on android
+3.Change Password ion Website
+4.As You See That pass Changed Successfuly and The You Logout
+5.But in Android You are still Logged in You also Check by Closing and Reopening App
+
+Thanks,
+ABDULWAHAB,
+Cyber Security Researcher,

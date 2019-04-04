@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/17474
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/appsecure_in
+ReportedTo:Phabricator(phabricator)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:05.08.2014 5:37:48
+
+Summary:
+
+Hi,
+
+Hope you are good!
+
+Steps to repro:
+1) Create a Phabricator account having email address "a@x.com".
+2) Now Logout and ask for password reset link. Don't use the password reset link sent to your mail address.
+3) Login using the same password back and update your email address to "b@x.com" and verify the same. Remove "a@x.com".
+4) Now logout and use the password reset link which was mailed to "a@x.com" in step 2.
+5) Password will be changed.
+
+All previous password reset links should automatically expire once a user changes his email address.
+Please fix this.
+
+Best Regards
+Anand Prakash

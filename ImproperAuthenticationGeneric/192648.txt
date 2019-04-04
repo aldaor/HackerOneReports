@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/192648
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/cyber-guard
+ReportedTo:YouPorn(youporn)
+BountyAmount:1000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:13.02.2017 16:44:58
+
+Summary:
+The researcher found it was possible to take over a YouPorn account by using an unverified account with matching email address to sign up to PornHub. this vulnerability works by abusing an insecure OAuth implementation.

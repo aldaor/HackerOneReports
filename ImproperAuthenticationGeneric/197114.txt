@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/197114
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/nahamsec
+ReportedTo:YouPorn(youporn)
+BountyAmount:1000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:17.08.2017 21:19:09
+
+Summary:
+The researcher discovered an IDOR path which allows the user to few content and images from a password protected videos.

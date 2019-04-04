@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/182576
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/gaurang
+ReportedTo:OWOX, Inc.(owox)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:17.11.2016 17:34:23
+
+Summary:
+Subdomain http://kiosk.owox.com/ was preserved from being taken over by an attacker.

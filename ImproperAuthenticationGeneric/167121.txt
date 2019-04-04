@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/167121
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/povargek
+ReportedTo:VK.com(vkcom)
+BountyAmount:1050.0
+Severity:
+State:Closed
+DateOfDisclosure:09.05.2017 13:20:48
+
+Summary:
+Недостаточная проверка пользователя при смене IP-адреса. 

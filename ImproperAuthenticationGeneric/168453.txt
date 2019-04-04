@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/168453
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/rubyroobs
+ReportedTo:Uber(uber)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:20.10.2016 20:03:27
+
+Summary:
+When applying for monthly billing, statistics and data regarding account usage that was fetched and subsequently submitted could be tampered with. This data would be reviewed by a human making a credit decision, potentially influencing their decision inappropriately in favor of the applicant.

@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/193556
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/aa23
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:29.12.2016 21:19:54
+
+Summary:
+
+Dear Suppport Team ,
+Commonly After Logout time , session  should destroy and then new session should be created ..
+But in your application , it is  not possible and same sessioncookie is there before logout and after logout   from your application  .  For further details please find the  attachment.... 
+
+
+Ragards,
+a23

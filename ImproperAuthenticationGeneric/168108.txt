@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/168108
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/danielhartnell
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.02.2017 3:23:48
+
+Summary:
+
+Hi,
+
+As I reported to security@newrelic.com, here's the authentication bypass vulnerability report. I've left some details out in this report but you're welcome to reach out to me with any questions.
+
+Here's a more detailed overview:
+
+# SSO Authentication Bypass
+
+## Summary
+
+It is possible to POST a custom SAML response to https://rpm.newrelic.com/accounts/$account_id/sso/saml/finalize and bypass authentication. When a SAML response is built by an identity provider, like Okta, it should be signed with an X.509 certificate. We should be confirming that the signed SAML response is valid but it appears that we’re overlooking that. This is described here: https://developers.onelogin.com/saml
+
+Requirements to exploit this vulnerability: An account ID (for an SSO-enabled account) and user email are required.
+
+## Proof of concept
+
+I wrote a simple proof of concept to help illustrate this problem. The file, `nr-saml-poc.html` was emailed to security@newrelic.com in my initial report. You can open it in your browser and provide an account ID and user email and then POST the base64 encoded payload to New Relic. This should result in successful authentication.
+
+## Recommendations
+
+I believe that if we ensure that the signed response is valid, it should be sufficient to resolve this issue. Unfortunately I have not had a lot of time to explore this issue and I think it would be good to review this in depth to make sure I have not missed any other important details.

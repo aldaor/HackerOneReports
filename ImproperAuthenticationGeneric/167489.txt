@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/167489
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/youssefmahmoud
+ReportedTo:Yelp(yelp)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:21.10.2016 9:24:37
+
+Summary:
+
+Hello
+### Details:
+All My accounts have been closed i dnot know the reason so i have played around and manged to bypass this mechanism using the last unused password token  
+
+### Steps:
+-  go to forget password page and get new password reset token and dnot use it 
+-  go  and make anything against the rules lead to close your account [ I dnot know what make it close :D]
+- go to your email and using the reset password email you will go to the change password page 
+- Enter the new password two times you will get in in your profile
+- You can edit your privacy and password ,info but when you try to enter your email page the server will respond with 500 internal error 
+- if you try to write review the server will respond with 500 internal server error 
+- if you try to edit your profile will respond with 500 server error 
+
+
+### Fix:
+- when you close the account make sure you expire all reset token associted with it
+
+### closed_account_used in test:
+````
+tamdoooooooooo@gmail.com
+````
+
+## the closed_accounts:
+````
+tamdoooooooooooooo@gmail.com,tuser387@yahoo.com
+testuser.t@yahoo.com
+````
+ I hope you open it again 
+
+Thanks

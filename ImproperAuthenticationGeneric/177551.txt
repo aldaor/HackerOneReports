@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/177551
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/indcyberjoker
+ReportedTo:Uber(uber)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:13.11.2018 22:46:34
+
+Summary:
+Due to improperly validation of phone numbers during the Android Rider sign-up, it was possible to spam a phone number with verification calls and texts. By inputting an 11 or 12 digit phone number, it would be truncated to 10 digits, resulting in the same number from varying inputs.

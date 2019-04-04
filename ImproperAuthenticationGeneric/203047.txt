@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/203047
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/prakharprasad
+ReportedTo:YouPorn(youporn)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:17.12.2018 15:49:28
+
+Summary:
+Researcher was able to modify the 'user_id' value when adding favorites via the YouPorn mobile API in order to add videos to other users' favorites.

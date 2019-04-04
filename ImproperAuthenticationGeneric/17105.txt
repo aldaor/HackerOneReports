@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/17105
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ashesh
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.07.2014 22:42:03
+
+Summary:
+
+**POC IS ATTACHED**
+______________________________________________________________
+**Description:**
+---------------------------
+This bug allows me to see others users usernames even if they don't want to.
+___________________________________________________________
+
+__Steps to reproduce:__
+--------------------------------------
+
+1. Log in to account A
+2. Change password of account A
+3. You will be automatically logged out.
+4. Log in with account B
+5. You will see Account A edit page 
+6. This means Privacy leak (Username of A)
+
+____________________________________________________________
+
+**Exploit scenario:**
+-----------------------------------
+User ABC wants to be completely anonymous , He signed up for Hackerone but still want to be hidden, He never tell anyone his username. But one day he changed his password and he was logged out automatically.Then immediately his friend asked for his PC, Thinking that he was logged out, and his friend won't see his information.His friend logged in with his own account. The next screen he sees is http://hackeone.com/ABC/edit he was surprised, by seeing this he now knows that His friend just logged out from hackerone so it must be his account. But ABC trusted Hackerone that once logged out his cache and username  will be deleted(no forever).
+
+**BTW: When I make your website get a 523 error , Is it vulnerability?**

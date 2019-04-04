@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/200125
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/jon_bottarini
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:16.06.2017 19:56:53
+
+Summary:
+A Department of Defense website was misconfigured in a manner that could have exposed sensitive information. Thank you @jon_bottarini for notifying us of this!
+

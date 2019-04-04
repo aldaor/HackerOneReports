@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/201300
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/prial261
+ReportedTo:Twitter(twitter)
+BountyAmount:5040.0
+Severity:
+State:Closed
+DateOfDisclosure:25.03.2017 20:08:02
+
+Summary:
+The researcher discovered that an endpoint used for providing information about Vine reposts was unintentionally disclosing the IP address the repost was made from. Upon receiving this report we immediately took steps to correct the issue and updated the misconfigured endpoint the same day the report was triaged. Based on our investigation, we do not believe there was any malicious abuse of the endpoint.

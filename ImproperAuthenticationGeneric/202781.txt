@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/202781
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ngalog
+ReportedTo:Uber(uber)
+BountyAmount:7500.0
+Severity:high
+State:Closed
+DateOfDisclosure:25.01.2019 17:56:43
+
+Summary:
+The Facebook OAuth application was misconfigured to allow any URL that followed the `https://auth.uber.com/login?*` format to be provided as a `redirect_uri`. By taking advantage of this, @ngalog was able to discover that the `next_url` parameter could be added to the `redirect_uri` allowing it to be chained further. Next, @ngalog found that the `https://login.uber.com/logout` endpoint would redirect based on the Referer header, making it possible to chain together another redirect. By piecing this together, @ngalog was able to provide us with an awesome single-URL PoC which would:
+
+1. Prompt OAuth authorization on `facebook.com`
+2. Redirect to `https://auth.uber.com/login?next_url=https://login.uber.com/logout` from Facebook
+3. Redirect to `https://login.uber.com/logout` from `auth.uber.com`
+4. Redirect to attacker site from Referer header and return the token
+
+When combined, this would have allowed for a full account takeover and was a very creative and cool bug.
+
+Nice work, @ngalog!

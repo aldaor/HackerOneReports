@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/194308
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/sp1d3rs
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:16.03.2017 17:32:33
+
+Summary:
+A password reset vulnerability was found on a DoD website, which could have allowed a malicious user to identify legitimate users and arbitrarily reset their passwords. @sp1d3rs was able to demonstrate this vulnerability by accessing a DoD webpage. Thanks @sp1d3rs! 

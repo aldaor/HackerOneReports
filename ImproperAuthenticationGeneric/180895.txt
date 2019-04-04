@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/180895
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/attacker911
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:40.0
+Severity:medium
+State:Closed
+DateOfDisclosure:16.08.2017 23:41:27
+
+Summary:
+A security researcher discovered that during password reset, the user was automatically logged in if the password reset was identical to their original password; this was the result of a change to prevent password resets to the identical password. However, if the intent is to reset the password, as shown by the user being on the password reset screen after clicking on a password reset email, the user should only be able to reset, rather than simply log in.

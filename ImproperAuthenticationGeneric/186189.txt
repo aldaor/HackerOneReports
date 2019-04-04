@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/186189
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/korprit
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:12.01.2017 15:49:27
+
+Summary:
+A Department of Defense website was misconfigured to disclose potentially sensitive system and user information. korprit was able to demonstrate this vulnerability by requesting a particular webpage and logfile. Thanks korprit!

@@ -1,0 +1,105 @@
+ReportLink:https://hackerone.com/reports/197436
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/jon_bottarini
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:11.10.2017 23:08:04
+
+Summary:
+
+In this vulnerability, a restricted user is able to edit the alert conditions of a synthetics monitor, even if he is unauthorized to do so. 
+
+**Steps to reproduce:** 
+
+- Admin user invites User1 to New Relic account as a restricted user
+- User1 accepts invitation, joins the account
+- Admin goes to Synthetics > Permissions and creates Group1. Admin adds User1 to Group1 and sets the following restrictions for monitors:
+
+View all monitors = checked
+Edit all monitors = unchecked
+Private locations = checked
+Edit all private locations = unchecked
+
+With these settings, User1, the restricted user, can view *but not modify* any of the settings within the monitors. 
+
+- Admin creates a second group, called Group2. In this group, the admin adds himself and sets the following restrictions for monitors: 
+
+View all monitors = checked
+Edit all monitors = checked
+Private locations = checked
+Edit all private locations = checked
+
+With these settings, only the admin account has full control to view, edit, and modify any of the settings within the monitors. 
+
+- Admin account creates two monitors. The monitors are called: Monitor1 and Monitor2.
+
+- In Monitor1, it does not matter what is filled out, except #5: Get Notified. The admin selects “Do not notify anyone” as the setting for this monitor. 
+- For Monitor2, the admin uses an email as the “Get Notified” setting. Please see Fig. 1, this is what the settings should like like to the admin for Monitor2. 
+
+With this logic, the following is true:
+
+1. Monitor1 alerts no-one
+2. Monitor2 alerts “example@gmail.com” of issues
+3. In all situations, User1 is _supposed to not be able to edit any of the monitors_ because he is a restricted user and in Group1, which explicitly states that editing of monitors is not allowed (is unchecked). 
+
+- User1 navigates to Synthetics and clicks on “Monitor1”. The URL should look something like this: https://synthetics.newrelic.com/accounts/1523936/monitors/5b8d01f9-389e-4120-aa83-20baa98e086c/
+- User1 appends `/conditions` at the end of the URL. The URL now looks like this: https://synthetics.newrelic.com/accounts/1523936/monitors/8f4a3a49-6355-4455-8480-79d93acdfda7/conditions
+- User1 should not be able to be here! He isn’t authorized to make edits to Monitors! User1 clicks on “Add to another alert policy” on this page
+- User1 can now choose to add another alert policy to this monitor. User1 clicks on Monitor2 from the alert policy settings. 
+- User1 clicks on save. 
+- User1 has successfully edited Monitor1, enabling email alerts to be sent to example@gmail.com for Monitor1 because the alert policies for Monitor2 allow email alerts. 
+- If Admin goes back to the https://synthetics.newrelic.com/accounts/1523936/monitors/8f4a3a49-6355-4455-8480-79d93acdfda7/conditions section for Monitor1, he will be able to see that an alert condition has been added without his authorization! 
+
+Here is the raw request of the Restricted User when he clicks on "Save":
+
+```
+Request URL:https://synthetics.newrelic.com/accounts/1523936/alerts/8f4a3a49-6355-4455-8480-79d93acdfda7/conditions.json
+Request Method:POST
+Status Code:200 OK
+Remote Address:52.72.47.111:443
+
+Response Headers
+access-control-allow-credentials:true
+access-control-allow-origin:https://synthetics.newrelic.com
+access-control-expose-headers:ETag, Link
+access-control-max-age:86400
+Cache-Control:private, no-cache, no-store, max-age=0, must-revalidate
+Connection:keep-alive
+content-encoding:gzip
+Content-Type:application/json
+Date:Wed, 11 Jan 2017 01:21:02 GMT
+Expires:Fri, 01 Jan 1990 00:00:00 GMT
+Pragma:no-cache
+Proxied-By:Service Gateway
+Set-Cookie:XSRF-TOKEN=GZZ3jOvBLVY6x11su86uk5hSC2FCKUYtE6o5rI25isLl6VhaaO1uVr9XDdNH41oh;Version=1;Path=/;Max-Age=31449600;Secure
+Strict-Transport-Security:max-age=31536000; includeSubdomains
+transfer-encoding:chunked
+vary:Origin, Access-Control-Allow-Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+X-Frame-Options:Deny
+X-NewRelic-App-Data:PxQGQldSDAQEXUNOFWZSBDBDV10RBwAWWQ1WPhdqUUFHMlwDYgRBFA1VUj1JAltQXxEPFkRtGB0FUlVcFwgXK1QfZE1ZVFFARxZlTkoMXAwNQlgTLwcCE2sFTBh2HG1WSQhqb087GFEGTkUfZBdXXV0BUBVYDl0RRB5nLjU3EREcVE9SGwEZVFUCBgNUVVBOHVMUQF0IBwFQUA5TBAIFUlRTVAREPg==
+
+Request Headers
+Accept:application/json, text/plain, */*
+Accept-Encoding:gzip, deflate, br
+Accept-Language:en-US,en;q=0.8
+Connection:keep-alive
+Content-Length:208
+Content-Type:application/json;charset=UTF-8
+Cookie:ajs_anonymous_id=%225f89d111-e552-4583-ab52-10b9a12a5035%22; optimizelyEndUserId=oeu1484014963631r0.32557837963963276; hit_signup_confirmation=1; __qca=P0-1015391273-1484014969570; __insp_wid=833722916; __insp_slim=1484038002136; __insp_nv=true; __insp_targlpu=https%3A%2F%2Fdiscuss.newrelic.com%2Ft%2Fnr-user-roles-and-insights%2F1079; __insp_targlpt=NR%20User%20roles%20and%20Insights%20-%20Insights%20-%20New%20Relic%20Online%20Technical%20Community; NRREFL=https://www.google.com/; NRREFP=https://www.google.com/; _mkto_trk=id:412-MZS-894&token:_mch-newrelic.com-1484014970019-86872; optimizelySegments=%7B%22171941824%22%3A%22gc%22%2C%22172184284%22%3A%22false%22%2C%22172242367%22%3A%22search%22%2C%221025373943%22%3A%22none%22%7D; optimizelyBuckets=%7B%7D; ei_client_id=58757dc4ec30d60012aec58d; __ar_v4=JBSCNJNEJVESXE5GXBKROX%3A20170109%3A1%7CYCNZVXZ6TJDJ3KMJRVGKFH%3A20170109%3A6%7CI7ZJI4CQMBCNHGOQ27AYQZ%3A20170109%3A6%7CX524XMXO4FFB5H6B4GWKPS%3A20170109%3A4%7CDLQZ5QQWIFBZZM5ECJME6X%3A20170109%3A1; _ceg.s=ojlays; _ceg.u=ojlays; nr_zd_logged_in=true; login_service_login_newrelic_com_tokens=%7B%22token%22%3A+%22pD%2B8AuyEmqRinwcl6NgwrqQN%2F15juEbuj9jkpL%2F%2B9Rqr91fXnq%2FDjQtzljHqEiUFSmnwmxX9bqA%2BCLmx3Qwh0m7UekKTFwUEMgE5DrB7fyGQslUBo%2B5dIl%2Ffu1RIPtRzBYBbn%2BelpqdSRFu6zPLzvgGYeRgo0le%2B08CDp8tn36JUmWFI3Hie%2FGOdAn6M0zJ%2BbV7eI8thx75a%2FfpH5WNHxMXyDpGeQuxDz%2FvnVxJrKQTrGfzlJXYXZp2xFBe3m44bI3gvz9GTuKU3hRciGzQx%2BPbOqFSyerQ7tHv5kJoyQEn1KrZRXIR%2BfmgH2hFNCFaMmVNcq5nqZWN9t3wBSFzsEA%3D%3D%22%2C+%22refresh_token%22%3A+%22nLt6gEDiJHh7cTIwWOLQstYP4Qq8Ayz%2FMowIaLMb0%2Bokd6eKSPxHaoL9nrz5a59GOVtbfhNu787sYKfcR9awrFut3RRuZJiN9jCg5lfoufe0PHmTqJHbbgYg6F2gLMESBVUX2qi6RStopMK4x6aURRaYQ6dn5CtSptKZcVAVTCimwnpx8OEpy3FGy3McLHxcoa9EssjPCWm5Xn5wDxRtzSsp1aSbhI34jKWiJgnNYJDE1kKQnvB%2BGu55Gq3%2BulZHJ1mi%2BLxHU7DWfOG%2F0bSkKySPiO7j4ojWjm8mkQnRzNokaZXpkwtr1HEaL%2FtjGXmZ1mA4NdZBBES4wWjVqEIwdg%3D%3D%22%7D; XSRF-TOKEN=mHXGz4gcxUgoh6HFoZU5SVqHLGYLCEEK9F1EeoHWivjt1gloe3RCMeTAWZRVGqF6; TSNGUID=73d3c835-326d-43a8-aa10-2d437c434378; ajs_user_id=1798936; ajs_group_id=1523936; _ga=GA1.2.26295853.1484008238; intercom-session-cyym0u3i=cG5vZWVvRG5hVFh1WkMvQ1JkSGJwYnp0T0VIdFJJaCtzYngwZ0JBM3FVaVJpTUcvYy8rVVJyWFVtZEJTWS9ZUS0tNTh4NjZsVjAwZDVkUXEweGVJK3ZMUT09--99e3fa70d0965c0c7cdae88b582e0dd471e9d409; login_idle_session_timeout={"lastInteractionAt":1484097662,"warningTime":180,"lastIdleLimitCheck":1484097349,"idleLimit":1577880000}
+Host:synthetics.newrelic.com
+Origin:https://synthetics.newrelic.com
+Referer:https://synthetics.newrelic.com/accounts/1523936/monitors/8f4a3a49-6355-4455-8480-79d93acdfda7/conditions
+User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36
+X-XSRF-TOKEN:mHXGz4gcxUgoh6HFoZU5SVqHLGYLCEEK9F1EeoHWivjt1gloe3RCMeTAWZRVGqF6
+
+Request Payload
+{"id":111235,"accountId":1523936,"name":"Monitor2","enabled":true,"isDefaultPolicy":false,"accountPolicyId":32094,"description":"No applicable conditions for this policy - No notification channels associated"}
+```
+
+Normally, this should return a 401 Not Authorized error. It seems like there is nothing to check to see if the Restricted User is actually authorized to perform the actions at this endpoint.
+
+Please let me know if you need additional information, 
+
+Jon Bottarini

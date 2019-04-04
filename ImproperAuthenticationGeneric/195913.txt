@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/195913
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/f4lrik
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.08.2017 16:04:08
+
+Summary:
+account.mail.ru allows user to be authenticated by external mail password. If user is authenticated with external e-mail and e-mail's password via account.mail.ru interface, he can access some of the gaming sites without additional authentication, though these sites can use different account (password) for the same e-mail.
+
+Currently this behavior is by design and is not believed to have any real security implications due to fact in existent threat model access to e-mail always leads to access to gaming account.

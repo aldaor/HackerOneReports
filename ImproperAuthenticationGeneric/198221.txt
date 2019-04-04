@@ -1,0 +1,44 @@
+ReportLink:https://hackerone.com/reports/198221
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/jon_bottarini
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:27.04.2017 17:03:31
+
+Summary:
+
+###Summary
+
+When a restricted user visits this URL:
+
+There is a request sent to this URL: https://www.staging-bam.nr-data.net. Within that request leaks the following information about the entire account, that the restricted user can view:
+
+```
+{"ins":[{"timestamp":1484335693778,"timeSinceLoad":1.131,"browserWidth":1380,"browserHeight":758,"referrerUrl":"https://rpm.newrelic.com/accounts/█████/applications","currentUrl":"https://rpm.newrelic.com/accounts/████/applications/setup","pageUrl":"https://rpm.newrelic.com/accounts/██████████/applications/setup","eventType":"PageAction","customer_user_full_name":"RESTRICTED USER","customer_user_permission_role":"restricted","customer_user_job_title":"CEO","customer_user_id":████,"customer_account_id":█████████,"customer_account_name":"This is the account name","current_customer_account_id":████████,"email":"█████","apm_current_product":"Lite Monthly","apm_first_payment_date":"2017-01-10 00:04:40","apm_trial_start_date":null,"apm_trial_complete_date":null,"apm_license_amount":0,"apm_connected_hosts_parent":0,"apm_connected_hosts_sub":0,"brow_current_product":"Browser Lite","customer_account_create_date":"2017-01-10 00:04:39","customer_number_of_users":2,"customer_company_size":"Just Me","customer_owner_email":"123dontspam@gmail.com","customer_payment_method":"credit card","customer_master_account_id":██████████,"customer_master_account_name":"This is the account name","customer_partnership_id":null,"customer_partnership_name":null,"customer_root_account_id":█████████,"customer_root_account_name":"This is the account name","customer_user_create_date":"2017-01-10 00:37:20","customer_rpm_sales_rep":"█████","customer_account_billing_country":"USA","customer_account_custom_pricing":false,"mobile_current_product":"Lite Monthly","insights_current_product":"Free Monthly","browser_current_product":"Lite Monthly","synthetics_current_product":"Lite Monthly","infrastructure_current_product":"Pro Monthly","guid":"73d3c835-326d-43a8-aa10-2d437c434378","category":"APM Setup","location":"Private","nr_product":"PLTF","nr_subproduct":"SETUP","Segment":"{\"integrations\":{\"Intercom\":false}}","actionName":"SETUP_APM Setup_viewApmHome"}]}
+```
+
+This request exposes the "master account" and full name of the `"customer_rpm_sales_rep":"████"`, the billing method associated with the account, the date of first payment, the billing country, and many other details about the account that usually would be restricted to just the account owner. 
+
+Inside this request as well, it looks like the request is sending info to this IP:
+
+```
+New Relic SCNET-50-31-164-0-24 (NET-50-31-164-0-1) 50.31.164.0 - 50.31.164.255
+Server Central Network SCN-3 (NET-50-31-128-0-1) 50.31.128.0 - 50.31.255.255
+```
+Could this be related to the IP address mentioned in this report?: https://hackerone.com/reports/141682
+
+Here is the full request:
+
+```
+Request URL:https://staging-bam.nr-data.net/ins/1/528f970912?a=1441,238575&v=1016.8b58850&to=cV5eEkBfCF1WRBgAFkJdWQVTRA1eXUUYEgNGREA%3D&rst=14115&ref=https://rpm.newrelic.com/accounts/██████/applications/setup&at=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%2BE0FUQjlTVwFfR0UVW0RUUFwVVxJIE1VTVhUTQFRvNGJ9XkJWREEEFG1fVzlbXgBUSxQNQxJARFVEHhIIUEBCaBUUU19DB1FEDV5dFA1DJV1fRBRdXAhUQRlWERZeWFMHRlkLX0AZXg8CV0kSShBWAVBHQ0UEOWBhfVxfXwZYX1NoFRBdQhJcEEQWRFYUG0MAV1BEE0BVO2Njew0AEUFuXQlcWRBeQV9ZBkQIE1YHXkMBEx8UUQQHRkRCA21iNHwJRFICA1xFbwNEVQpFQGlfCAJXUFIKVxJeE1VXWxIDEB0SAFdREERBU2gzNn8LUQpXQhBCbF9ZFQNVQ1ESW18KEwkUQxMTVxMcRFRVBUVGRFI%2BNGJ8CgdRUwtEXUJEPhVXXVY5QVUWR1YUDUMSQERVRB4SAlRSQkITA21jYCsIUwhQXkZoEhJTRUUVbVIFQxEMFQcHXkJVRB4SAlRSQkITA21jYCsIWhVEVkROPldtAAJECBIQQ0ZTFU1EVFRREkdCAW5hZnpbD1ZdVTlBVRdCWllZPhJbXFUJR0RGCxFCRRQDEB0SD1xTCERXU0Q%2BClNIXxNGEl5FQUNSTURUVFESR0IBbmFmelsVV0hdCUdCO1BfRl8ARAgTVgdeQwETHxRRBAdGREIDbWI0fAlTQwkIW14SXBBWBV1AUxUcGw%3D%3D
+Request Method:POST
+Status Code:204 No Content
+Remote Address:50.31.164.112:443
+```
+See screenshot attached.
+
+Thanks, 
+
+Jon Bottarini

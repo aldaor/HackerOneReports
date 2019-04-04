@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/168289
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/anda123
+ReportedTo:Coinbase(coinbase)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:11.10.2016 19:00:16
+
+Summary:
+Due to a bug first reported by another researcher, when one coinbase user sent bitcoin to another coinbase user, the receiving user had the sending user's email address silently added to their contact list.  While this does not raise PII exposure concerns under our Privacy Policy, we felt it was unexpected and not good user experience, so we fixed it.
+
+This report was a duplicate report of the original report and further reported that the email addresses already added to contact lists were not removed after we fixed the original issue.  After we fixed the underlying bug, some email addresses were already added to other users' contact lists.  The email addresses added to receiving users' contact lists are not tied to a bitcoin address or specific transaction.  No other information (name, etc) is included in the contact.  They appear no different in our system than any other contact a user added.  In order to be sure we removed these contacts we would need to purge all contacts for all users, which we regard as a fairly draconian solution and not appropriate for this issue.  We therefore decided to leave the contacts in place.

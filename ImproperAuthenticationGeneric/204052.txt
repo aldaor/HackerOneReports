@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/204052
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/korprit
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:29.03.2017 13:04:12
+
+Summary:
+The researcher found weak password in the site `nutty.ubnt.com`, but the system does not differentiate between authenticated and non-authenticated users. The researcher was not able to provide a PoC that could expose any vulnerability, so the report was closed "Informative".
+nutty.ubnt.com has a login link, when clicking on it the user is presented with a login form.  using 'admin' for both username and password results in valid session.
+
+this account allow for the upload of arbitrary files.  I am checking to see if this will allow for further functionality (like a webshell)

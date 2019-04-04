@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/173551
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/procode701
+ReportedTo:Uber(uber)
+BountyAmount:10000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:17.05.2017 16:35:51
+
+Summary:
+With an email address for a valid Uber account, it was possible to take over that account because the reset token was exposed in the response of a password reset HTTP request. This meant an attacker could initiate password reset for an account and immediately receive the reset token for that account.
+
+We consider the security of our user's data top priority, so we were very interested in this report. Furthermore, @procode701 was a pleasure to work with and we look forward to more reports in the future.

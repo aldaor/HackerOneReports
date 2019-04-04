@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/167585
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/cyber-guard
+ReportedTo:Pornhub(pornhub)
+BountyAmount:750.0
+Severity:
+State:Closed
+DateOfDisclosure:20.09.2016 16:39:52
+
+Summary:
+The researcher has found a Grafana instance accessible to the public. User sign-up was left open which allowed him to open an account and access charts on various server resource usage. 
+
+This report is considered out-of-scope but Pornhub chose to reward the researcher due to the severity of the issue he found and the quality of the report.

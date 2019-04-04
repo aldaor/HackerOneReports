@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/171337
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/vi3hnu
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:20.0
+Severity:
+State:Closed
+DateOfDisclosure:12.01.2017 18:01:51
+
+Summary:
+A security researcher discovered that near-duplicate accounts like attacker@gmail.com, a.ttacker@gmail.com, and attacker+foo@gmail.com were all treated as separate accounts, while some email services, like gmail and google apps, treat these as the same account. This issue could lead to excess email confirmation messages from Legal Robot to a single real email account. If the legitimate user confirmed the email address (as we are all sort of trained to do with email), the attacker's account on Legal Robot would be activated.

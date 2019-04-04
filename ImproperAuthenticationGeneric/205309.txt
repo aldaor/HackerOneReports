@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/205309
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ho_nc
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.05.2018 21:36:03
+
+Summary:
+@ho_nc reported an issue with session expiration. We determined that this report was invalid, and it was self-closed by the researcher.

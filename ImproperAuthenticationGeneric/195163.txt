@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/195163
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ak1t4
+ReportedTo:Starbucks(starbucks)
+BountyAmount:250.0
+Severity:medium
+State:Closed
+DateOfDisclosure:28.02.2017 23:51:53
+
+Summary:
+@ak1t4 reported that the Starbucks SAP server webgui was exposed to the internet with default TMSADM credentials.
+
+Although the risk was flagged as critical by the researcher, Starbucks security along with SAP security team performed an internal assessment on the risk and changed the severity to medium based on the following information:
+TMSADM does not have privileges for updating the configuration and did not have access to production data. All the data that was exposed with TMSADM account was limited to test data that was part of default installation. There was information disclosure of few internal server names through web pages but those machines are locked down from internal and external access.
+
+As part of the resolution, the default password was changed and access further restricted.  
+
+Thanks @ak1t4!

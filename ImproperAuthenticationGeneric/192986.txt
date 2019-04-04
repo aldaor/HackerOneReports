@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/192986
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/aa23
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:27.12.2016 13:17:26
+
+Summary:
+
+Dear Gratipay Team,
+
+there is a Username Disclosure of a user  in your web application's Source Code . For futher detail  i have enclosed the screenshot of the vulnerability . Please find the attachment !! 
+
+Preventive Measure::
+ hide username  fromm  sourcr code
+Encrypt the username 
+

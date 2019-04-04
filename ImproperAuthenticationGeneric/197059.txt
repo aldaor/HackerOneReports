@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/197059
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/jon_bottarini
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:16.10.2017 3:42:02
+
+Summary:
+
+Hello - 
+
+A user with restricted access is able to view the phone number and the billing email of the account owner by simply ".json" at the end of the "https://rpm.newrelic.com/accounts/" URL. The URL structure looks like this:
+
+https://rpm.newrelic.com/accounts/██████.json
+
+Wherin "███████" is the account ID of the owner. 
+
+**Steps to reproduce:**
+
+1. Owner creates a New Relic account, invites User2 as a restricted user to join the account. 
+2. User2 creates an account and is added to the team
+3. User2 appends ".json" at the end of the URL and is able to see the admin information
+
+Please let me know if you need additional information, thanks. 
+
+Jon Bottarini
