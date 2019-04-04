@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/112871
+WeaknessName:Phishing
+Reporter:https://hackerone.com/bigbear_
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.04.2018 15:23:55
+
+Summary:
+It was possible to insert attacker controlled text into UI message on tanks.mail.ru.
+tanks.mail.ru is not covered by bug bounty scope.

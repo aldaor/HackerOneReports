@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/459634
+WeaknessName:Phishing
+Reporter:https://hackerone.com/mik317
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:12.12.2018 17:35:47
+
+Summary:
+@mik317 submitted a misconfiguration in some of our GitHub repositories to us. Wikis are inherently editable for all users, but for some repositories an organization may want to restrict this access. In some cases it was possible for GitHub users outside of the [Hacker0x01](https://github.com/Hacker0x01) organization to add and edit wiki pages of open source repositories of HackerOne. We decided to address this because some of these repositories are open source libraries that are used by people outside of HackerOne, like [react-datepicker](https://github.com/Hacker0x01/react-datepicker). To avoid confusion to those users, we're now restricting access to the wiki or completely removed the wiki.
+
+We audited our public GitHub repositories and determined whether the access should be revoked. It has, on purpose, not been disabled for all repositories.
+
+In order to revoke access, go into the Settings of a GitHub repository. On the right will be a "Features" section. The top two items are "Wikis" and "Restrict editing to users in teams with push access only". The options are pretty self-explanatory. In case the repository doesn't need a wiki, it'd be recommended to disable the wiki all-together. In case you do need it, check the second option to ensure only team members can contribute to the wiki.
+
+We'd like to thank @mik317 for bringing this to our attention!
+**Summary**
+Hi HackerOne team,
+recently this vulnerability have been reported and resolved in various programs, so I'm going to try my bad luck, reporting the same kind of report also in this program.
+
+**Steps**
+1. Go on https://github.com/Hacker0x01/react-datepicker/wiki/BB-test
+2. I've created a simple page in the wiki without be a collaborator of the repo, or and without any permission
+3. Going on https://github.com/Hacker0x01/react-datepicker/wiki/ you can add a new `fake` or `phishing` page clicking on the `New page` or `edit` buttons.
+4. {F388246}
+
+**PS**
+First of all, 
+I'm not sure that this type of issue is allowed on your program, but seeing the following report (https://hackerone.com/reports/457009) seem that is quite accepted by anyone, so I will try my luck (I'm going to fail, I know lol).
+I know also that the impact isn't interesting, but as I said previously, let me try :)
+
+## Impact
+
+Add and edit pages in the `wiki` of the https://github.com/Hacker0x01/react-datepicker/ repo

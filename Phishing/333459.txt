@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/333459
+WeaknessName:Phishing
+Reporter:https://hackerone.com/mlucool
+ReportedTo:Node.js third-party modules(nodejs-ecosystem)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:16.06.2018 12:32:41
+
+Summary:
+
+Hi,
+  
+
+I have [posted here](https://github.com/npm/registry/issues/306), but I wanted to make you aware of this easy social engineering trick. I do not want to claim any of these are currently malicious, but it they easily could be.
+
+  
+
+Thanks,
+
+Marc
+
+## Impact
+
+The attacker could do anything...use the postinstall as the user, work the same as steal data, etc.

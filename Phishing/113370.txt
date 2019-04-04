@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/113370
+WeaknessName:Phishing
+Reporter:https://hackerone.com/bigbear_
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.04.2018 15:23:25
+
+Summary:
+It was possible to insert attacker controlled text into UI message on warofdragons.com.
+warofdragons.com is not covered by bug bounty scope.

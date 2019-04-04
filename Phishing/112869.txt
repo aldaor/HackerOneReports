@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/112869
+WeaknessName:Phishing
+Reporter:https://hackerone.com/bigbear_
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.04.2018 15:23:43
+
+Summary:
+It was possible to insert attacker controlled text into UI message on s2.jugger.ru.
+s2.jugger.ru is not covered by bug bounty scope.

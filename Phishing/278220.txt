@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/278220
+WeaknessName:Phishing
+Reporter:https://hackerone.com/hk755a
+ReportedTo:Inflection(inflection)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:29.11.2017 1:35:17
+
+Summary:
+When creating a GoodHire account, a fairly wide range of ASCII characters are permitted in certain fields like Company Name. This field is included in email templates that are automatically sent to new users when an account owner invites them to join a GoodHire account. Theoretically, spam content or an imitation URL could be included in the company name. However, we believe this scenario is extremely unlikely to occur, and any impact would be minimal. The amount of text that can be included is constrained by the app, the attacker has no control over where the text is placed, and business accounts are also manually verified to look for signs of fraud. As a result, we have decided not to make any changes at this time. 

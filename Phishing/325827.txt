@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/325827
+WeaknessName:Phishing
+Reporter:https://hackerone.com/w2w
+ReportedTo:MyCrypto(mycrypto)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:18.04.2018 14:34:12
+
+Summary:
+w2w reported a text injection attack where the user could be shown arbitrary text injected via query parameters. The MyCrypto team worked with w2w to resolve these issues, and appreciate the responsible disclosure. We look forward to continuing to work with the security community to triage and resolve issues like these should they arise. 
