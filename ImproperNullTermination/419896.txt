@@ -1,0 +1,86 @@
+ReportLink:https://hackerone.com/reports/419896
+WeaknessName:Improper Null Termination
+Reporter:https://hackerone.com/jobert
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:09.10.2018 23:55:44
+
+Summary:
+"What, HackerOne resolved a report that was submitted by @jobert?"
+
+At HackerOne we often find security vulnerabilities ourselves. In most cases, we find them before new features even make it into production. Sometimes we find them when they're already in the wild. Recently we've launched a new feature called [retesting](https://docs.hackerone.com/hackers/retesting.html). Up until now, HackerOne would always retest our own findings. We're changing that. This is the first report we identified ourselves where we're expanding retesting to the community. When we identified this vulnerability, we filed a ticket to our own bug bounty program instead of filing an internal ticket. We then leveraged the community to retest the vulnerability and allow them to find a bypass.
+
+This particular security vulnerability allowed an unauthenticated user to upload attachments and attach them to the last created report draft of other users. This was possible by sending a specially crafted request to the `/attachments` endpoint. Our investigation concluded that this was not abused.
+
+Thanks to the hackers that retested this vulnerability!
+The newly launched beta embedded submissions form introduced the concept of anonymous submissions. When an anonymous user starts writing a report through an embedded form, a UUID will be generated to track their submission. Any object that is created will reference this UUID. We call this a `tracer`. Because anonymous submissions also allow the person to upload attachments, we made a minor update to the controller. Here's a snippet of the controller:
+
+```ruby
+skip_before_action :authenticate_user!, only: :create
+
+def create
+  attachment = Interactors::Attachments::Upload.interact(
+    file: params[:file],
+    attachable: report_draft,
+    as_user: current_user,
+  )
+
+  # ...
+end
+
+# ...
+
+private
+
+def report_draft
+  return unless params[:tracer].present?
+  ReportDraft.find_by(tracer: params[:tracer])
+end
+```
+
+When a `POST` request is sent to the `/attachments` endpoint, the `create` method will be called. This method will call the `report_draft` method, which will try to load the report draft. In case a `tracer` value hasn't been given or the `tracer` value is not found, the method will return `nil`. Any report draft with a `tracer` value that is `nil` is created by an authenticated user, as we identify those based on their author, not the `tracer` value.
+
+At first sight, this seems to be fine because of the `return unless params[:tracer].present?` check. If the parameter wouldn't be submitted, the value would be `nil`, and therefor the `present?` method would return false. However, when the user submits an array with one element that contains a null byte, the `present?` check will return true, and the ActiveRecord query will execute an `IS NULL` query. Here's a code example that shows this behavior:
+
+```
+[1] pry(main)> ["\x00"].present?
+=> true
+[2] pry(main)> ReportDraft.find_by(tracer: ["\x00"])
+   ReportDraft Load (1.0ms)  SELECT  "report_drafts".* FROM "report_drafts" WHERE "report_drafts"."tracer" IS NULL LIMIT $1  [["LIMIT", 1]]
+=> #<ReportDraft:0x00007fcd94ae6dc0>
+```
+
+Here's a normal request that is submitted to the attachments controller when an anonymous user uploads anything:
+
+```
+POST /attachments HTTP/1.1
+Host: localhost:8080
+...
+
+------WebKitFormBoundarylWiasZL7nPVPOJ9M
+Content-Disposition: form-data; name="tracer";
+
+04b0e56b-da08-4d3e-8962-f2455cfdbd19
+------WebKitFormBoundarylWiasZL7nPVPOJ9M
+Content-Disposition: form-data; name="file"; filename="file.txt"
+Content-Type: text/plain
+
+file-contents
+------WebKitFormBoundarylWiasZL7nPVPOJ9M--
+```
+
+In order to properly inject the array containing the null byte, the hex view in Burp Suite can be used. Here is the original request in the hex editor, in which case it has a proper UUID in the `tracer` parameter:
+
+{F356266}
+
+Here is the updated request, where the `tracer` parameter has been changed to an array and the value has been changed to a null byte:
+
+{F356267}
+
+## Impact
+
+This means that if an array with a null byte to the `/attachments` endpoint is submitted, a random report draft will be loaded that was created by an authenticated user. The attachment will then be attached to that report draft. This allows an attacker to inject attachments in other users' report drafts, before it is submitted to the program.
+
+The vulnerability requires user interaction to be exploited. When a user submits the report form, only the attachment IDs will be submitted that are cached in the DOM. This means that the injected attachment will only be submitted when the user refreshes the page **before** submitting the report. This means that they may actually detect the injected attachment, and they will have the ability to delete it.
