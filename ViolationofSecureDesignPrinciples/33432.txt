@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/33432
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/geekboy
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.12.2014 23:09:59
+
+Summary:
+
+Hey Team
+this is geekboy :)
+
+this report is about broken authentication in mobile section .
+
+Description : 
+when user want to add any mobile number to his account , he will go mobile section and twitter will ask the user to select the country and enter the mobile number .
+
+so when testing i entered the random mobile number and twitter says that verification code sent to the mobile number , and asking for the verification code >> http://sd.uploads.im/NsmJl.png
+
+i cant provide the code coz i entered the random number .
+
+now i logged out my account and came to forget password page .
+
+the issue is here , twitter asking me to send the verification code on the mobile number which i didn't verified and  its not associated with my account .  >> http://sd.uploads.im/LRUhA.png
+
+so without verification Twitter should not associate the mobile number with account for the password reset purpose ! 
+
+Thanks
+geekboy :) 

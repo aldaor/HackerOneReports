@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/285482
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/whitehatmmalam
+ReportedTo:SEMrush(semrush)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:13.03.2018 14:21:00
+
+Summary:
+
+The site has a security misconfiguration issue. The site accept weak passwords like "123" or "12345" or "abc12345" which can be guessed easily with the help of some auto attacks. 

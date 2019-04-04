@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/327671
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/asad_anwar
+ReportedTo:SEMrush(semrush)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:29.06.2018 10:36:09
+
+Summary:
+
+i want to report a context spoofing or text injection at u.semrush.com
+
+## Impact
+
+Fix & Mitigation:
+Fix 404 error page to a new who not allow text content injection

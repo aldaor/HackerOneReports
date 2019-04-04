@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/280408
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/mr_r3boot
+ReportedTo:Infogram(infogram)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:06.11.2017 9:03:07
+
+Summary:
+
+I am just looking at your SPF records then found following. SPF Records missing safe check which can allow me to send mail on behalf of infogram.
+
+#PoC:
+The TXT records found for your domain are:
+```
+"v=spf1 include:_spf.google.com include:spf.mandrillapp.com include:mailgun.org ~all"
+```
+Simply anyone can use ```https://emkei.cz/``` service to trigger mail to anyone on behalf of infogram.
+#Fix:
+
+```v=spf1 include:_spf.google.com include:spf.mandrillapp.com include:mailgun.org -all```
+
+>#*If team don't wanna hear about spf related checks please let me know. i'll close this report myself.*
+
+Regards,
+Mr.R3boot.

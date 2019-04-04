@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/345
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/tomvg
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.06.2015 11:39:57
+
+Summary:
+
+I just created the admin profile, go check it out: https://hackerone.com/nimda
+Or see attached image!
+
+[This is very much related!](https://www.youtube.com/watch?v=6BKjNcwpsBc#t=50)
+
+[<svg/onload=alert(1)//]() **_[Free iPad Here!](javascript&colon;alert(1))_**
+This is [Un](javascript:location='foo')[re](">)[la]([ted](javascript:))  

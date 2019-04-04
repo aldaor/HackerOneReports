@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/334253
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/modam3r5
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:05.07.2018 23:09:23
+
+Summary:
+
+Hi , 
+the behavior found in some of programs that need to `Apply to this program` like @hackthedts this program need to your submit Application before start found/send bug to them .
+this button have no any validations/check protect for CSRF bug , that can lead to auto apply to program by used this link `https://hackerone.com/hackthedts?apply=true`
+
+#POC 
+this CSRF work fine with user that have a tax confirm or had an bounty get before .
+1- open this link https://hackerone.com/hackthedts?apply=true
+2- if you login-in you will see that your apply has been send successfully , if not login you will redirect to login page then the apply will take a place automatic 
+ 
+
+
+### Optional: Your Environment (Browser version, Device, etc)
+
+ * any
+
+this should be an step to confirm the apply or an additional step to be sure what the user/research will do .
+
+## Impact
+
+this can be used to send massive apply with only open link

@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/309663
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/godexmachine
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:16.01.2019 14:43:08
+
+Summary:
+Text content spoofing protection bypass within application interface in 3k.mail.ru.
+
+Text-only content spoofing reports are usually not accepted. This report was triaged, because application had protection which was bypassed by reseracher.
+3k.mail.ru is not in bug bounty scope.
+

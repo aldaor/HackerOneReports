@@ -1,0 +1,57 @@
+ReportLink:https://hackerone.com/reports/331940
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/stok
+ReportedTo:Vend(vend)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:07.06.2018 6:01:13
+
+Summary:
+
+Hey Team! 
+I love loyalty bonuses, that turns first time users into returning customers , but sometimes loyalty can be exploited, just like in this chase.
+
+## LT:DR
+A firtstime loyalty customer will get x times the amount of loyalty bonus from the story by racing the loyalty link x amount of times in one go.  
+https://stokhackerone.vendhq.com/loyalty/claim/XXXXXX
+
+## See POC video for full Walkthrough
+https://youtu.be/MFvNs99NvnA
+
+# POC: 
+1. Create a store
+1. Enable the loyalty program
+1. Make a sale
+1. Add the first time customers email adress
+1. open up loyalty email 
+1. submit the post 1,2,30,50 times depending on how mutch loyalty you want to receive
+1. enjoy your loyalty.
+
+I tried it a couple times with two unique users, sometimes its a 100% race, ie
+50 times 100 = 5000, sometimes its a little lower, depends on load and latency.
+i only tried it twice to be sure not to DOS. 
+
+## Once again, finally, thanks got having an awesome product, it saves so mutch time for SMB's!
+Stay epic!
+
+//f
+
+## Impact
+
+An attacker could race the loyalty claim post to get x amount of loyalty bonus and if the site has enabled the ecom version, and then use that cash as a loyalty
+
+##How do customers redeem their loyalty
+https://support.vendhq.com/hc/en-us/articles/201382810-Setting-Up-and-Using-Loyalty-in-Vend#redeem
+
+When a customer wants to pay for a sale with their loyalty balance, it's simple and easy for your staff.
+
+Just add the items to the sale, add the customer to the sale, and click 'Pay'.
+Customers can pay:
+
+All of the sale with loyalty
+Part of sale with loyalty
+
+To pay the entire sale with loyalty, simply choose the loyalty payment type. This will be greyed out if the customer does not have enough loyalty to pay for the whole sale.
+
+To pay part of a sale with loyalty, type the amount to be paid by loyalty into the total field. This must be equal to, or less than, the total loyalty the customer has. If it is, the loyalty payment button will now be available. Click the loyalty payment button. Then, pay the remainder of the sale off using another payment type.

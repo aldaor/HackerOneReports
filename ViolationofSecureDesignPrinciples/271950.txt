@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/271950
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/ethio
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:10.11.2017 4:17:37
+
+Summary:
+
+Hi,
+I have seen Improper Implementation of Password strength checker for registration and login page. Once it suggest complex password, one can alter the password but the complexity remain the same  Its usually related to Ajax or auto-reload implementation.  
+
+PoC
+-------------------------------------
+As a prof of concept see the attached picture, where the complexity says very high but with no password input. 

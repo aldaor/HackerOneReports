@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/404713
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/crazy_wonk
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:28.09.2018 10:26:50
+
+Summary:
+There was no rate limit on delete account confirmation email, leading to user being able to send (himself) flood of emails.

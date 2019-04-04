@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/3991
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/siddiki
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:25.04.2016 4:40:07
+
+Summary:
+
+I tried to change my email address on hackerone.com.And when I tried adding null Bytes,it was being accepted by hackerone.com.
+I am registered wth haxorsistz@gmail.com and I tried to change my email address to haxorsistz@gmail.com%00 
+And guess what,this address was granted as an email address.

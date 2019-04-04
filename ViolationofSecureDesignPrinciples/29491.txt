@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/29491
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/mrrm
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:09.10.2014 17:08:05
+
+Summary:
+
+the IDN: http://ebаy.com/
+
+is a homograph for the latin ebay.com. if you click that first link, youm might think that you are going to ebay.com. in fact, you are going to a homograph url http://xn--eby-7cd.com/
+
+more info http://www.chromium.org/developers/design-documents/idn-in-google-chrome
+
+more info http://www.charset.org/punycode.php?encoded=http%3A%2F%2Fxn--eby-7cd.com%2F&decode=Punycode+to+normal+text
+
+it would be safer to show the punycode version of the url so that it would be apparent that something weird is going on. that is, show http://xn--eby-7cd.com/ instead of http://ebаy.com/

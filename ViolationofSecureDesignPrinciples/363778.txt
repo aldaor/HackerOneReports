@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/363778
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/n00bsec
+ReportedTo:RBKmoney(rbkmoney)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:02.07.2018 8:51:54
+
+Summary:
+The DNS record of dev.rbk.money pointed to the Github, but the domain was not used in any Github account. So it was possible to bind it to any repository.

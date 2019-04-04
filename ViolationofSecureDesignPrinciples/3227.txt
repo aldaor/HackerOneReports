@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/3227
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/wkcaj
+ReportedTo:HackerOne(security)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:11.03.2014 20:33:27
+
+Summary:
+
+Hey,
+
+To be honest, I'm not sure if there is any *real* security implications of this bug, but it's (IMO) something which should be fixed at some point (since it'll be pretty easy).
+
+On signup, the username you chose has to be alphanumeric. If you submit someone else's username, followed by a null-byte (`%00`), you'll get an error indicating that the username has been taken (expected behaviour). Same with `%20`. However, if you submit the username followed by a control character, such as a new line (`%0a`), the request will go through and you'll be signed up.
+
+There are a couple of consequences of this. The first is that your profile can't be viewed (which also means you can't update your own settings!). You'll get a 404.
+
+The second is that any bug reports you submit will look like another user submitted them. Again, not that big of a deal.
+
+### Proof-of-Concept
+1. Browse to https://hackerone.com/users/sign_up
+2. Enter any details, make sure your username is followed by `%0a` (use Burp to append it)
+3. Confirm your email, then login
+4. Click your profile picture in the top right
+5. You'll get a 404
+
+If you need anymore information just shout,
+Cheers,
+Jack

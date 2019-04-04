@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/3986
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/siddiki
+ReportedTo:HackerOne(security)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:20.04.2014 15:13:00
+
+Summary:
+
+I reported the issue earlier (Report #3662) .But instead of asking more information,you just closed the bug.Well,you said you never seen google indexing authentication tokens.
+okCupid,is a client of hackerone.com.Let's see whats google doing with their tokens:
+
+Search with the following dork:
+site:www.okcupid.com/settings?userid_token=
+And see the results cache.Can you see,both users email address and tokens are being indexed by search engines?
+This is what going to happen with hackerone too.As those pages does not have noindex,nofollow tags.
+
+Ok,lets show you another example.A cached page of Facebook Support Centre.
+
+http://webcache.googleusercontent.com/search?q=cache:ikhWiVtVF50J:www.facebook.com/support/case%3Feid%3DAREP3f8aORMfZcbVfPE9BKUgbk0dNVASVI2RkPSYyIyyxwpoS5a8pQwEuEGItQSTgfg_knkrsm6UMRAiXk2_JrLw-XhkBlDoNipvIpL8QSONNA+&cd=1&hl=en&ct=clnk&gl=in
+
+Go to the address.Notice whats written on the search box,just right side of the facebook logo.
+
+"Hi Samrita, What do you need help with?"
+Now,can you answer me,how the hell is google indexing such a page,which requires users authentication.Yah! You are right.Google is indexing browsers cache for search results.After I reported the bug to facebook,they added noindex and nofollow tags to all sensitive pages.
+And yet you are telling its not a bug ?
+Well may luck help you and your secret reports.
+
+Thanks

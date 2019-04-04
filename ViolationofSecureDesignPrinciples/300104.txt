@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/300104
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/muon4
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:14.01.2018 18:36:43
+
+Summary:
+##Issue
+
+The reporter found a redirect from https->http->https in the late stages of the authentication process.
+
+##Fix
+
+The issue was fixed.
+
+##Reasoning
+
+Although no authentication information was leaked, session related data could in theory also leak at this stage of the authentication process, hence a configuration change was issued. What do we learn from this? Although you may force upgrades from http to https serverside, it is very important to make sure that you are not having any unnecessary plain text requests as they all are - in theory at least - prone to information leaks.
+
+*To readers of this summary: do not blindly report each and every plain text redirect and link to us - be it internal or external - your reports will not be processed unless there is an actual impact or a true business case.*
+

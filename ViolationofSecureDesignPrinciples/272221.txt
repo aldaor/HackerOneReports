@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/272221
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/skanthak
+ReportedTo:Brave Software(brave)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:09.07.2018 21:40:17
+
+Summary:
+
+> NOTE! Thanks for submitting a report! Please fill all sections below with the pertinent details. Remember, the more detail you provide, the easier it is for us to verify and then potentially issue a bounty.
+
+## Summary:
+
+The executable installer BraveSetup-ia32.exe is vulnerable to DLL hijacking: it loads (at least) version.dll from its application directory (which is typically the user's "Downloads" directory %USERPROFILE%\Downloads) instead Windows' system directory %SystemRoot%\System32
+
+## Products affected: 
+
+Windows 7 and newer versions, Brave version 0.18.36
+
+## Steps To Reproduce:
+
+Place the attached version.dll in %USERPROFILE%\Downloads, download the current BraveSetup-ia32.exe and execute it: version.dll displays message boxes showing its caller.
+
+## Supporting Material/References:
+
+See https://skanthak.homepage.t-online.de/sentinel.dll

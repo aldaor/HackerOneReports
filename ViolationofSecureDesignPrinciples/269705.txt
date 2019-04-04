@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/269705
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/luckydivino
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:27.09.2017 5:21:06
+
+Summary:
+
+Hello team,
+
+__Summary:__
+
+I observed that your website `https://nextcloud.com` still uses WP less than `4.8.2` which is vulnerable to multiple attacks, i reported it so that the team will be aware of it, below are the new discovered bug that you can find on this release: https://wordpress.org/news/2017/09/wordpress-4-8-2-security-and-maintenance-release/
+
+  1. $wpdb->prepare() can create unexpected and unsafe queries leading to potential SQL injection (SQLi). WordPress core is not directly vulnerable to this issue, but we’ve added hardening to prevent plugins and themes from accidentally causing a vulnerability. Reported by Slavco
+  2. A cross-site scripting (XSS) vulnerability was discovered in the oEmbed discovery. Reported by xknown of the WordPress Security Team.
+  3. A cross-site scripting (XSS) vulnerability was discovered in the visual editor. Reported by Rodolfo Assis (@brutelogic) of Sucuri Security.
+  4. A path traversal vulnerability was discovered in the file unzipping code. Reported by Alex Chapman (noxrnet).
+  5. A cross-site scripting (XSS) vulnerability was discovered in the plugin editor. Reported by 陈瑞琦 (Chen Ruiqi).
+  6. An open redirect was discovered on the user and term edit screens. Reported by Yasin Soliman (ysx).
+  7. A path traversal vulnerability was discovered in the customizer. Reported by Weston Ruter of the WordPress Security Team.
+  8. A cross-site scripting (XSS) vulnerability was discovered in template names. Reported by Luka (siKiritokic).
+  9. A cross-site scripting (XSS) vulnerability was discovered in the link modal. Reported by Anas Roubi (qasuar).
+
+__Mitigation:__
+
+Upgrade to wordpress 4.8.2
+
+Regards
+Chachi

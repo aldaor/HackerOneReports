@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/3722
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/pwndizzle
+ReportedTo:Slack(slack)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.04.2014 20:53:37
+
+Summary:
+
+Using the incoming webhook service it is possible to send messages to the team from an arbitrary username. A malicious user could modify the image of the webhook service to match an existing user and then send a message with the username of an existing user. Other users would not be able to tell the difference between messages from the real user and a spoofed message unless they actually examined the user/bot.
+
+Example request:
+
+POST /services/hooks/incoming-webhook?token=G98rIOYar6DPwDINWFcBnEXT HTTP/1.1
+Host: mailinator.slack.com
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+Content-Length: 87
+Connection: keep-alive
+
+payload={"channel": "#general", "username": "TARGET", "text": "I'm a spoofed message!"}
+
+
+The incoming webhook should not accept username as a parameter, this should be static and stored server-side. At very least a server-side check should verify that the username parameter does not match an existing username.

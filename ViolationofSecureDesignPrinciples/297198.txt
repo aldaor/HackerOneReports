@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/297198
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/flex0geek
+ReportedTo:Binary.com(binary)
+BountyAmount:50.0
+Severity:low
+State:Closed
+DateOfDisclosure:06.03.2018 18:15:55
+
+Summary:
+On 12th Dec flex0geek reported that binary.com was leaking password reset tokens through referer headers .
+
+At first this sight the report was closed as we had fixed this earlier and our code base seemed fine . 
+
+Later on the researcher sent a video POC which did show that we were leaking password reset tokens through referer headers .
+
+After further investigation it was found that the bug was in Firefox Quantum browsers which did not took action for 
+
+```
+rel="noopener noreferrer"
+```
+
+And sent referer headers even though it was not supposed to which worked quite perfect below version 56
+
+This incident was reported to Mozilla firefox team and the fix was deployed in version 59
+
+The details of the incident can be found here 
+
+#http://blog.shashank.co/2018/02/firefox-quantum-browser-referer-leakage.html
+
+We would like to thank @flex0geek for the report . Though it was not a bug from our side but still the bug was awarded for the researchers patience and professional behaviour .
+
+
+
+

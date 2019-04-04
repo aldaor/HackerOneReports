@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/307670
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/tomnomnom
+ReportedTo:Keybase(keybase)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:02.03.2018 16:57:16
+
+Summary:
+
+Hello!
+
+When using the Keybase Chrome extension and viewing a Hacker News profile page with an additional `id` parameter in the query string, Hacker News uses the username from the first `id` parameter, whereas the Keybase extension uses the username from the second `id` parameter.
+
+Example URL: https://news.ycombinator.com/user?id=TomNomNom&id=edoverflow
+
+{F256097}
+
+Note that this is the profile page for the Hacker News user `TomNomNom`, whereas the Keybase Chat modal is for the (in this case non-existent) Keybase user `TornNomNom` (i.e. with the first `m` replaced with an `r` and an `n`). In a real attack the attacker would register the Keybase account, use the same Avatar as the target, and probably choose a more convincing homograph than `m` -> `rn`
+
+## Impact
+
+Users attempting to send a secure, sensitive message to a Keybase user can be tricked into sending that message to a malicious user instead.

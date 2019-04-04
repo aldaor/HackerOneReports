@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/35532
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/born2hack
+ReportedTo:QIWI(qiwi)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.12.2014 14:27:13
+
+Summary:
+
+Hi, team
+I noticed that while registering qiwi account with Indian mobile number, the verfication code is not coming.
+I think somewhere there is an error in your system.
+Vulnerable url :
+qiwi.com
+
+After entering  Indian mobile .
+https://qiwi.com/register/password.action?identifier=50845626&login=%2B917569323695#
+
+Your system is not sending verification code .
+As a result registration process is not getting completed.
+Thanks and regards
+Haji

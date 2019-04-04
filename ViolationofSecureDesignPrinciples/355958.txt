@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/355958
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/ketankumar_godhani
+ReportedTo:Passit(passit)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:11.08.2018 14:19:19
+
+Summary:
+Added HSTS headers

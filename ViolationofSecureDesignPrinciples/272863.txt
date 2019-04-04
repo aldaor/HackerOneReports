@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/272863
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/aneeskhan
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:19.10.2017 20:47:54
+
+Summary:
+
+#Summary:
+
+This is just for the awareness to use HTTPS everywhere, even for outgoing links - where it's possible.
+
+Treat this report with some salt, not as in hashes.
+
+#Navigate to:
+
+https://www.legalrobot.com/events/2017/06/12/ICAIL/
+
+Some of the External Links on that Page redirects to HTTPS after click, but cookie is sent on the network before that.
+
+See the Previous Reports:
+https://hackerone.com/reports/260591
+
+See the Attached Image.
+
+Best Regards,
+Anees Khan

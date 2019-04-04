@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/35237
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/huzaifa_jawaid
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:14.08.2015 18:08:47
+
+Summary:
+
+Hey team,
+I have found a way to boost your reputation without any efforts.
+if a researcher send a report and someone already send same report so he got a duplicate mean 2 points. If he send this issue more multiple times he will got Duplicate again and again.
+so he can gain more points by this.
+poc attached with report   

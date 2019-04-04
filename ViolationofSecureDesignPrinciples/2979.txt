@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/2979
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/eronx
+ReportedTo:Slack(slack)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.08.2014 5:16:16
+
+Summary:
+
+Here is an unvalidated insertion of an image, resulting to content spoofing
+
+https://awayon.slack.com/account/photo?url=http://www.thenewstribe.com/wp-content/uploads/2014/01/Syrian-Electronic-Army-hacked-CNN.jpg
+
+It displays any photo, what the attacker must know is just the "awayon" or the team name.
+
+Thank you.
+
+Clifford Trigo

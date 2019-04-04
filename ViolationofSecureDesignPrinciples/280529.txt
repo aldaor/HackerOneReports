@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/280529
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/saikiran-10099
+ReportedTo:Infogram(infogram)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:30.10.2017 9:23:39
+
+Summary:
+
+Vulnerability:-
+->Password reset links should work in such a way that "only the last generated password reset link should be valid" i.e; if two tokens are generated at a time, then 2nd token must work and 1st token must be invalid.
+->If not, another case is that "if some number of reset links are generated at a time, if any one link is used in that links, then all remaining links should get invalid".
+
+This is the standard practice followed and implemented by all secured websites that are running bug bounty programs on hackerone.
+
+Any issues, please let me know...
+
+Thank you 

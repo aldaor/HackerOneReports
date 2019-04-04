@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/288707
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/abartan
+ReportedTo:Aspen(aspen)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:09.11.2017 16:16:09
+
+Summary:
+
+There is an Email Spoofing Vulnerability.
+Steps to reproduce:
+1) Go to http://emkei.cz/
+2) Fill "From Email" field to admin@aspen.io or any other aspen email.
+3) Fill the victim's address (your address) to "TO" field and fill in other details as you wish.
+You will receive email from aspen admin. 
+Reference:
+https://hackerone.com/reports/575
+Thank you for time and consideration you provided for reading my report.
+Note: If you don't find it in your inbox, see spam folder. If the victim is using Gmail/yahoo account it might be in spam folder.
+Your sincerely,
+Abartan Dhakal
+
+#NOTE : If you are not interested in such vulnerabilities , do let me know, I will close the report my self so that I dont loose rep points

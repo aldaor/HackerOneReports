@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/39486
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/niyaax
+ReportedTo:Mail.ru(mailru)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:28.06.2015 14:41:06
+
+Summary:
+
+There is no bruteforce protection here  http://e.mail.ru/cgi-bin/passrestore?email=[email here]
+Also the actual thing is when I put a non-existing email in the above url's "email" parameter I get an error.
+But if i put my email there it gives the option to recover my password which means the email exists. As this do not have any bruteforce protection an attacker may get all the emails of the mail.ru
+Thanks
+Niyaax

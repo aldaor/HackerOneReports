@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/281274
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/ph0b0s
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:20.10.2017 23:11:55
+
+Summary:
+
+Hi, @legalrobot
+
+I found another venturebeat.com URL without HTTPS in https://www.legalrobot-uat.com/press/
+
+
+I hope you fix this
+
+
+Screenshot attached bellow
+
+
+Cheers,
+Ph0b0s
+
+
+
+
+
+

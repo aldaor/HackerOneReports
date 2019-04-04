@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/338523
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/alpha66
+ReportedTo:Passit(passit)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:11.08.2018 14:19:42
+
+Summary:
+
+Hi Team,
+
+The removal of account is one of the sensitive part of a web application that needs to protect, therefor removing an account should validate the authenticity of the legitimate user.
+
+Scenario:
+===============
+
+The user logins to a shared computer (office, library, cafe)
+Left the account open.
+Intruder came and try to delete the users account
+Intruder can easily delete the account because the system did not protect it by asking the password to validate that the person deleting the account is the legitimate user.
+
+
+Mitigation:
+============
+Put reauthentication when anyone/user is deleting an account, ask the user to input password before the completion of the account deletion.
+
+Let me know if you need more information.
+
+Regards
+alpha66
+
+## Impact
+
+when removing an account, the system did not require the user to input the account password.

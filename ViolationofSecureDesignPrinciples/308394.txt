@@ -1,0 +1,44 @@
+ReportLink:https://hackerone.com/reports/308394
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/co0nan
+ReportedTo:Khan Academy(khanacademy)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:19.04.2018 22:39:54
+
+Summary:
+
+Hi Team,
+
+### Details:
+I have found that the csrf_token ( fkey parameter )which prevent CSRF attacks is fixed in same browser and didn't changed even user login or logout , a lot of users can use the same CSRF_token , this can be exploited such 2 ways :
+ 
+### Shared computers:
+- attacker open "https://www.khanacademy.org" and login to his account
+- attacker copied the value of "fkey parameter" then he will logout
+- victim will logged in his account with the same CSRF_token value (fkey parameter)
+- now attacker forced the victim to change his email address to attacker emails , since he already have the valid CSRF_token
+
+### XSS:
+- due to XSS vulnerability. Attacker knows the CSRF_token for the victim so he can use this in any actions behind the victim , for example :  change user email address   
+
+CSRF PoC to takeover user account by linked the attacker email address:
+
+```
+<html>
+  <body>
+    <form action="https://www.khanacademy.org/settings/linkemail" method="POST">
+      <input type="hidden" name="fkey" value="CSRF_token" />
+      <input type="hidden" name="email" value="[attacker-email-address]" />
+      <input type="submit" value="Submit request" />
+    </form>
+  </body>
+</html>
+```
+
+## Impact
+
+As i described above this can be exploited to takeover another account
+
+Let me know if there is anything unclear

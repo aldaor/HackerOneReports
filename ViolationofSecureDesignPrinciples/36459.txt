@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/36459
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/internetwache
+ReportedTo:ThisData(thisdata)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.01.2015 19:45:22
+
+Summary:
+
+Hi,
+
+I noticed that there is no TXT record containing a SPF header:
+
+#PoC
+```
+> dig TXT revert.io +short
+"google-site-verification=ix6OUwvbN9AJLTcdg3ulWcMibIWGgUy_zWEXrWeRYE4"
+```
+
+The [SPF Header](http://de.wikipedia.org/wiki/Sender_Policy_Framework) can be used to prevent phishers from impersonating you/your company in the emails' FROM header. 
+
+#Fix
+You can fix that by generating an SPF-TXT record with all your outgoing mailservers.
+
+All the best,
+Sebastian

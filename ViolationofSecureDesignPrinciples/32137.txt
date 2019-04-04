@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/32137
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/testoid
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:25.05.2016 2:17:19
+
+Summary:
+
+The `report_id[]` param simply returns whatever entered , instead of showing report id's only. This can result in content injection in the reports field.
+For example check this one : http://goo.gl/py2V8j 

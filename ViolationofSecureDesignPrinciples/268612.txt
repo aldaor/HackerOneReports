@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/268612
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/test99767
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.10.2017 5:50:06
+
+Summary:
+
+
+This is just for the awareness to use HTTPS everywhere, even for outgoing links - where it's possible.
+ 
+##Navigate to:
+
+         https://www.legalrobot-uat.com/
+
+Example page (In the lower part where you find the observer.com Link):
+
+observer redirect to HTTPS after click, but cookie is sent on the network before that.
+
+

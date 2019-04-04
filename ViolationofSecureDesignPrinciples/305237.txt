@@ -1,0 +1,56 @@
+ReportLink:https://hackerone.com/reports/305237
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/muon4
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:600.0
+Severity:medium
+State:Closed
+DateOfDisclosure:10.04.2018 3:36:59
+
+Summary:
+##Issue
+The reporter found that it was possible to upload svg's and exe's in a reply in a conversation chain and target the receiver of the message .
+
+##Fix
+
+The possibility to upload files in this specific way was disabled.
+
+##Reasoning
+
+Based on the report, the issue was found to be valid. The report cleary shows how to exploit the vulnerability. Looking into the issue however, showed that this actually quite rarely triggers anything on an updated browser on an updated operating system running updated AV -software. This is very much the case for all Localtapiola workstations. 
+## Basic report information
+**Summary:** 
+Malicious file upload
+
+**Description:** 
+Hello!
+
+I noticed that when a user sends new message you have restricted pretty strictly the files which is ok to upload. Like .svg:
+{F254353}
+
+How ever if a user impersonate another user (just a one example) and start the conversation with localtapiola's employee and will get the message from localtapiola an attacker can upload malicious files which can be used against your employees like .svg and .exe:
+{F254354}
+
+I sended one email to me with "malicious" svg file and it came through. This could obviously contain something much more badly than just a pop up window:
+{F254352}
+
+I want to underline that I'm not 100% sure is this expected behaviour but in my opinion files like .exe should not be allowed. And why an (attacker) user should be allowed to upload anything at this point? 
+
+This is straight way to attack against your employees and/or bypass the original upload restrictions.
+
+**Domain:** 
+secure.lahitapiola.fi
+
+## Browsers / Apps Verified In:
+
+  * Newest version of FF
+
+## Steps To Reproduce:
+
+  1. Start conversation with secure service
+  2. When you receive the first message via this service upload any file like .exe or .svg
+  3. See that you can send these files
+
+## Impact
+
+An attacker can bypass upload restrictions.

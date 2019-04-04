@@ -1,0 +1,42 @@
+ReportLink:https://hackerone.com/reports/305082
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/jack898
+ReportedTo:Showmax(showmax)
+BountyAmount:128.0
+Severity:
+State:Closed
+DateOfDisclosure:16.01.2018 14:52:07
+
+Summary:
+
+NOTE BEFOREHAND: I KNOW it's not located on the core showmax.com domain, but that doesn't effect the applications of this and it still has the same risk.
+
+**Summary:** At https://sso.showmax.com/auth/failure?message=, you can change the message parameter to any text and it will be returned on the page in a red box. This could lead to phishing and confusing users since the text is being returned within the actual website.
+
+**Description:** You can take the URL https://sso.showmax.com/auth/failure?message= and change the "message" parameter to any text (and you can encode it with percent encoding) and it will be returned as text on the loaded page.
+
+**Platform(s) Affected:** Tested in Chrome 63.0.3239.132 (Official Build) (64-bit), should work in most situations
+
+**User Identification:**████████ but N/A
+
+
+## Steps To Reproduce:
+
+1. Take the URL https://sso.showmax.com/auth/failure?message=
+2. Change the message parameter text to anything
+3. Copy and paste the new URL into a browser
+4. You'll notice the text is returned clearly in a red box at the top of the loaded page
+
+## Supporting Material/References:
+
+  I attached an image with an example payload.
+
+Thanks,
+Jack
+
+## Impact
+
+An attacker could use this to phish and steal user accounts by setting it up with a convincing, percent-encoded message to redirect them to a site with a fake login that steals their information.
+Example of an attacker payload: https://sso.showmax.com/auth/failure?message=%47%6F%20%74%6F%20%65%76%69%6C%2E%63%6F%6D
+
+As you can see, at first glance this URL doesn't give away the text in the box, making it even more convincing and dangerous. A real attacker could obviously make a more convincing payload though that said something like my attached image.

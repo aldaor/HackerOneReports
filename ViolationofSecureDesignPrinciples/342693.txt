@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/342693
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/ethical_hacker30121996
+ReportedTo:SEMrush(semrush)
+BountyAmount:50.0
+Severity:low
+State:Closed
+DateOfDisclosure:14.08.2018 13:25:02
+
+Summary:
+
+Hi Team,
+I have found that if user open the link of reset password and than click on any external links within the reset password page its leak password reset token in referer header.
+
+Steps to reproduce:
+
+1.Open Password reset page from email. 
+2.Click on any social media link(on follow us section)
+3.Intercept the request(I have used burp suite) 
+4.You can see the link for reset password in referrer
+
+## Impact
+
+It allows the person who has control of particular site to change the user's password (CSRF attack), because this person knows reset password token of the user.

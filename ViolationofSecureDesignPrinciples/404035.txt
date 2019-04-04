@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/404035
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/crazy_wonk
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:28.09.2018 10:20:54
+
+Summary:
+It was possible to post 200- 300 of comments within minutes, there was no rate limiting applied.

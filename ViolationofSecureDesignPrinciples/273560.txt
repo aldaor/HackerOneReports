@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/273560
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/saikiran-10097
+ReportedTo:WakaTime(wakatime)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:01.10.2017 14:56:19
+
+Summary:
+
+Dear sir,
+At first, i am very happy to report an issue.  Before three months, i reported to wakatime and again i am reporting another issue now.
+
+Note:-This report is similar to #244614 which was previously reported at the start of this bug bounty program.
+
+Vulnerability:-
+->If two password reset tokens are generated at a time, then the first reset token doesn't expire after the generation of second reset token.
+->Similarly, if 100 password reset tokens are generated then only the last generated reset token should be valid, but here all 100 tokens are being valid until any one in it is used to change password.
+->As per industrial standards, and also as a best security issue, only one token should be valid at a time but not all the tokens.
+
+I hope that you will resolve this issue as i am reporting a valid issue.  Any issues, please let me know
+
+Thank you

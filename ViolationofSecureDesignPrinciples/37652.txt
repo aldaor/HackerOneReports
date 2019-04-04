@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/37652
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/indtiger
+ReportedTo:Sucuri(sucuri)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:29.03.2015 8:11:33
+
+Summary:
+
+hiiii 
+I found that form contained inside page loaded over SSL submits its contents to another page over HTTP 
+--></div><!-- end #testimonial-box --><div id="generate-box"><div class="wrap"><h3 class="sitecheck">Scan your website FOR FREE</h3><form action=" http://sitecheck.sucuri.net/ " method="post"> 
+    <input class="sitecheck-form-field" type="text"  name="scan" value="What&#039;s your domain?" onfocus="if ( this.value != '') { t
+
+
+If you want to do https properly, the only way is to enable it for your entire website. All images, stylesheets, iframes and everything else should be secured. This might be a big undertaking for a big website, but if you take security seriously then it is certainly worth it.
+
+Additionally, make sure that your webservers reject any http requests and redirect the user to the https page instead (without the http request being processed at all) and send the browser a Strict-Transport-Security header.
+
+
+if you want more information then please let me know
+
+
+Thanks And Regards
+Jitendra K Singh
+ 

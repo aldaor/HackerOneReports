@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/32990
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/prakharprasad
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.05.2015 8:17:39
+
+Summary:
+
+Hey, 
+
+This bug allows anyone to enumerate usernames of invited programs.For example there are two kinds of program at HackerOne - **Public programs** and **Invited** programs. Generally invited programs are only accessible to certain users based on reputation system. 
+
+Now, for most public programs the username of the program remains same as program name, that is for Slack's program it is *slack*, for Square it is *square*. So my finding to enumerate works like the following (taking example of **████** invitation only program):
+
+████ program is located at https://hackerone.com/████, but it is only accessible to invited users else if an uninvited user visits the page he gets a 404 error, that's sweet. Isn't it ?
+
+But using the following logic: 
+
+https://hackerone.com/████/common_responses.json (500 Internal Server Error)
+https://hackerone.com/████/common_responses.json (500 Internal Server Error)
+https://hackerone.com/trololol/common_responses.json (404 Not Found)
+
+Based on the responses we can understand that for every existing program (public/invited) the server throws 500 error code but for non-existent program it throws 404 error code. So someone who wants to guess if a company is there in the invited program simply needs to send the following request (assuming company name is same as username, as it is currently in most of the cases at HackerOne):
+
+https://hackerone.com/<company-name-here>/common_responses.json (500 if exists or 404 if it doesn't, then if the username is not in any of the public program then surely it will be in invited program :-) )
+
+This thing can be automated with a list of company names as potential usernames.
+
+Thanks,
+Prakhar Prasad

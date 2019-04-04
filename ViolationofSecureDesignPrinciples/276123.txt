@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/276123
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/wdem
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:03.03.2018 13:55:25
+
+Summary:
+
+Hi!
+
+Owncloud does not enforce password complexity on password change, so it's possible to use passwords of any size or form. 
+
+In example I can set my password to be "a" or "qwerty".
+
+__________________________________________________________________
+How to reproduce:
+Change your password to something that does not match your required complexity.
+__________________________________________________________________
+
+__________________________________________________________________
+Proof Of Concept:
+Login with my dummy account
+account --> "testingdisp2@gmail.com"
+password --> "q"
+__________________________________________________________________
+
+Thanks!
+WdeM

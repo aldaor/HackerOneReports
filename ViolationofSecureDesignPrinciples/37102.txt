@@ -1,0 +1,51 @@
+ReportLink:https://hackerone.com/reports/37102
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/ruisilva
+ReportedTo:Eobot(eobotcom)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:23.12.2014 9:44:43
+
+Summary:
+
+URL: https://www.eobot.com/chat/
+
+Summary:
+
+I detected that OPTIONS method is allowed. This issue is reported as extra information. 
+
+Impact:
+
+Information disclosed from this page can be used to gain additional information about the target system. 
+
+Fix:
+
+Disable OPTIONS method in all production systems. 
+
+POC:
+
+Request:
+
+OPTIONS /chat/ HTTP/1.1
+Cache-Control: no-cache
+Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.170 Safari/537.36 Netsparker
+Accept-Language: en-us,en;q=0.5
+Host: www.eobot.com
+Cookie: ASP.NET_SessionId=k3sdqyneoanbhhbqhk2no54y; userLang=lang=es&lastVisit=11/22/2014 12:52:30 AM
+Accept-Encoding: gzip, deflate
+
+Response:
+
+HTTP/1.1 200 OK
+Date: Sat, 22 Nov 2014 09:35:49 GMT
+Server: Microsoft-IIS/8.5
+Public: OPTIONS, TRACE, GET, HEAD, POST
+X-Powered-By: X-Powered-By
+X-XSS-Protection: 1; mode=block
+Strict-Transport-Security: max-age=31536000
+Allow: OPTIONS, TRACE, GET, HEAD, POST
+Content-Length: 0
+
+ 

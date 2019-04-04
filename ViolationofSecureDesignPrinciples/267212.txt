@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/267212
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/nihaddl
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.09.2017 17:23:03
+
+Summary:
+
+hi team ..
+
+i can not login or sign up with  third-party social media like ( facebook , google , twitter ...) i check one of them it show me message error ( 400 Bad Request ) please fixed soon 

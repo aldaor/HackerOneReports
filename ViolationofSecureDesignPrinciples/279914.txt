@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/279914
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/clarckowen_
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:16.11.2017 23:24:17
+
+Summary:
+
+Hello Hackerone,
+
+**Summary:**
+I have found that #38343 is not yet fully fixed, disabled user is not always gets notification about password change when a password is changed via password reset link, then such a notification is not send to the disabled user.
+
+**Description (Include Impact):**
+When a password changed in user's profile `When a password changed in user's profile` or `password reset links` for `enabled/active user` receives a notification via email containing that the password was recently changed. This is the fixed that reported in #38343. 
+
+However, it defeats the fix in #38343 because when a password changed in `password reset links` for `disabled/inactive user` does not receive notification via email containing that password was recently changed.
+
+__POC__ 
+https://vimeo.com/214135835
+password: protection

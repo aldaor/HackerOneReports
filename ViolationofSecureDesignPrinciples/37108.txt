@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/37108
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/shivathegame
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.01.2015 3:40:56
+
+Summary:
+
+In the report  31193      cmiller said    "Twitter does warn if the user tries to visit a malicious URL while passing through our t.co URL shortening service. Thanks!"
+
+
+URL redirection warning not given for punny code URL.
+
+
+ATTACK:
+ I mainly envision using this as an attack against admins of programs that use twitter. for example, if a bad guy can put up a spoof site behind one of these IDN links that one of the admins carelessly enters their credentials into, then the bad guy can go do bad stuff against the target site...

@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/273803
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/smit
+ReportedTo:Maximum(maximum)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:15.11.2017 9:01:29
+
+Summary:
+CSP script-src unsafe directive needed for Google Tag Manager
+Hi Dear Maximum Team
+
+Hope you are good!
+
+**Vulnerablity Summary**
+The HTTP header of the werkenbijmcdonalds.nl website includes an unsafe-inline parameter for "script-src".
+
+**Impact:**
+However, the "script-src" parameter is set to "unsafe-inline" or "unsafe-eval", which allows injection of user passed values, which in result can be misused for Cross-Site Scripting attacks.This is to allow "bootstrapping" or passing data to JavaScript from HTML pages. It's a dangerous setting, so I recommend here to fix it soon by passing data to JavaScript in the DOM instead of creating JavaScript variables from HTML.
+
+
+**Mitigation**
+Please remove "unsafe-inline" from "script-src", to  resolve. Thanks for reading this!
+
+If you need help, be free to ask.
+
+Happy to help.
+
+Regards,
+@smit
+

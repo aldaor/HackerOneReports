@@ -1,0 +1,63 @@
+ReportLink:https://hackerone.com/reports/31188
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/anshuman_bh
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.11.2014 15:38:33
+
+Summary:
+
+While creating a new audience list at the URL `https://ads.twitter.com/accounts/<redacted>/audience_manager/create_list_audience`, under `Data security and privacy` it is clearly mentioned that 
+```
+When creating a list audience, the information in your data file is always hashed before it is sent to Twitter, and Twitter never reveals or shares the information in your list with anyone or any other service.
+```
+
+During testing, it was observed that it is possible to load an audience list from a completely different account that you are not authorized to have access to. And, this can be done without even possessing the access to the audience list of the other account. An attacker would simply have to iterate/bruteforce through numerical values. 
+
+Steps to Reproduce:
+* Start a proxy tool such as Burp and authenticate into a valid user account which has the Ads & Analytics dashboard enabled.
+
+* Navigate to `https://ads.twitter.com/accounts/<redacted>/audience_manager/create_list_audience`
+
+* Create a valid audience list by filling in all the information and uploading a valid CSV file.
+
+* In Burp, notice that the CSV file is uploaded to the domain `upload.twitter.com` and then a POST request is sent to the URL `https://ads.twitter.com/accounts/<redacted>/audience_manager/create_list_audience` with a parameter `blobstore_path`in the POST body as shown below. The X-CSRF-Token, session cookies and the account IDs are redacted below:
+
+```
+POST /accounts/<redacted>/audience_manager/create_list_audience HTTP/1.1
+Host: ads.twitter.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:29.0) Gecko/20100101 Firefox/29.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+X-CSRF-Token: <redacted>
+X-Requested-With: XMLHttpRequest
+Referer: https://ads.twitter.com/accounts/<redacted>/audience_manager/create_list_audience
+Content-Length: 151
+Cookie: <redacted>
+Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
+
+account=<redacted>&name=test&audience_identification_type=3&input_file_record_count=10001&blobstore_path=%2Fta_data%2F2812522204%2F1413168758432.txt
+```
+
+* Notice that the file is successfully uploaded as a audience list. 
+
+* Now, logout of this account and authenticate into a different account. Follow all the steps above but instead of uploading the same CSV file as above, submit a random file and intercept the request to the URL `https://ads.twitter.com/accounts/<redacted>/audience_manager/create_list_audience` in Burp.
+
+* Replace the value of the `blobstore_path` variable to the value of the previous account `%2Fta_data%2F2812522204%2F1413168758432.txt` and forward the request. 
+
+* Notice that the request is successfully submitted. After a few hours, both the requests above would be processed and both the accounts would have the ***same*** audience list. 
+
+Essentially, what the 2nd account did was simply supply the `blobstore_path` value of the previous account and the 2nd account got access to the audience list of the 1st account.
+
+There might be an argument as to how would an attacker know the value of the `blobstore_path` of other accounts. Notice that the value of the `blobstore_path` variable does not appear to be random or something like a CSRF token that the attacker couldn't guess. It is simply a directory structure with 2 integers `/ta_data/2812522204/1413168758432.txt` which can be iterated/bruteforced. Hence, I believe that argument is irrelevant. 
+
+Remediation Hypothesis:
+If `2812522204` in the above `blobstore_path` represents the account and `1413168758432.txt` represents the actual CSV file, then there should be some sort of authorization controls enforced to ensure that users are only allowed to supply paths representing CSV files under their own account directory. But, I can't be 100% sure about this.  
+
+Cheers!

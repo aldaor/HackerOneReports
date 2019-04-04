@@ -1,0 +1,43 @@
+ReportLink:https://hackerone.com/reports/4049
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/suhas_gaikwad
+ReportedTo:OkCupid(okcupid)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.04.2014 22:10:29
+
+Summary:
+
+I come across security issue in OkCupid. OkCupid is using Components with Known Vulnerabilities.
+
+Link: http://www.okcupid.com/
+
+Criticality level: Medium
+
+Each http response shows server information (Version), which is not useful to user and browser. But same can be useful to attacker.
+
+Description : Including information about the server provides no tangible benefit to either the browser or user. It can direct an attacker to known vulnerabilities in the server version and should therefore be avoided.
+
+Vulnerablities in OKWS/3.1.19.0 will impact OkCupid. Its similar to Top 10 OWASP 2013-A9-Using Components with Known Vulnerabilities (https://www.owasp.org/index.php/Top_10_2013-A9-Using_Components_with_Known_Vulnerabilities ). Attacher can use same info to hack OkCupid servers.
+
+Steps:
+1) Open Google Chrome Developer tool
+2) Open link http://www.okcupid.com/ 
+3) Observe HTTP response. It will show server name and server version. (I used tool used by me to check HTTP response)
+
+HTTP response header =
+Cache-control:private
+Connection:keep-alive
+Content-Length:23749
+Content-Type:text/html; charset=utf-8
+Date:Sat, 15 Mar 2014 11:08:45 GMT
+P3P:CP="NOI CURa ADMa DEVa TAIa OUR BUS IND UNI COM NAV INT", policyref="http://www.okcupid.com/w3c/p3p.xml"
+Server:OKWS/3.1.19.0
+
+Browser : ANY 
+
+My Recommendation : 
+1) Avoid version number. We can address this problem by either configuring the server not to display the banner at all or by changing it to make the server look like something else. There are a number of tools that help in faking the banners.
+
+Please look into issue on priority. Let me know if you need more details.
