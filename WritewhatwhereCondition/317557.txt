@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/317557
+WeaknessName:Write-what-where Condition
+Reporter:https://hackerone.com/diabllo
+ReportedTo:Mail.ru(mailru)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:18.07.2018 18:56:50
+
+Summary:
+It was possible to get few game items by replaying the single purchase operation for multiple times during the short amount of time.
+
+market.games.mail.ru is not in the bug bounty scope, the bounty was awarded out-of-scope due to real monetary impact.
