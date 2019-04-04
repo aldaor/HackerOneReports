@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/490899
+WeaknessName:Unprotected Transport of Credentials
+Reporter:https://hackerone.com/d33van
+ReportedTo:RATELIMITED(ratelimited)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:17.02.2019 17:48:57
+
+Summary:
+
+Hi Team,
+
+Description 
+While I was testing the application i found this bug where the application is sending the credentials over Plain text in URL : https://auth.ratelimited.me/login?username=testqaz%40grr.la&password=D33vanh%40h%40h%40
+
+Vulnerable URl https://auth.ratelimited.me
+
+## Impact
+
+Impact: if the application is sending the credentials over GET request it will be saved in the history of the Browser
