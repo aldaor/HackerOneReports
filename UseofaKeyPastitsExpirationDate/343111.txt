@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/343111
+WeaknessName:Use of a Key Past its Expiration Date
+Reporter:https://hackerone.com/noumar
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:400.0
+Severity:medium
+State:Closed
+DateOfDisclosure:21.07.2018 9:09:59
+
+Summary:
+The OAuth2 endpoint of the Nextcloud server was not following RFC6749. The server did not perform required verification of provided data. And the server did not properly rotate and expire access tokens. In case of a compromised OAuth client this could lead to unauthorized access.
+
+After working together with @noumar the issues have been resolved.

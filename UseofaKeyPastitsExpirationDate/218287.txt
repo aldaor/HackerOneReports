@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/218287
+WeaknessName:Use of a Key Past its Expiration Date
+Reporter:https://hackerone.com/huntman
+ReportedTo:Kaspersky Lab(kaspersky)
+BountyAmount:400.0
+Severity:critical
+State:Closed
+DateOfDisclosure:03.08.2017 8:37:27
+
+Summary:
+
+I have downloaded kaspersky internet security from the playstore and it asks for free version or trial version and i have given trial version then i got 7 days free pack,After that i used with the help of lucky patcher and freedom app i can able to byepass without money i can able to purchase 365 days pack ,Hope this will help ,I have attached screenshot here kindly check,I dint spend not even single $

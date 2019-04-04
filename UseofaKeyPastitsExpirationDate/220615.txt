@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/220615
+WeaknessName:Use of a Key Past its Expiration Date
+Reporter:https://hackerone.com/simongurney
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:19.05.2017 12:15:38
+
+Summary:
+
+https://uwncom-stage.ec2-us-east-1.us1.svc.ubnt.com/
+
+The above domain uses an SSL certificate which expired 50 days ago.
