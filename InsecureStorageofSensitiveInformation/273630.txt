@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/273630
+WeaknessName:Insecure Storage of Sensitive Information
+Reporter:https://hackerone.com/xsam
+ReportedTo:Yelp(yelp)
+BountyAmount:300.0
+Severity:high
+State:Closed
+DateOfDisclosure:09.11.2017 22:01:22
+
+Summary:
+The configuration file of an internal IRC bot (which included credentials to internal services and some external services used by Yelp developers) was inadvertently included by an employee in a personal public GitHub repository. The repository was taken down and the affected credentials rotated.
