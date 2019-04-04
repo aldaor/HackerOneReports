@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/246995
+WeaknessName:Use of Hard-coded Credentials
+Reporter:https://hackerone.com/gerben_javado
+ReportedTo:Zomato(zomato)
+BountyAmount:500.0
+Severity:critical
+State:Closed
+DateOfDisclosure:19.07.2017 8:39:45
+
+Summary:
+Authorization credentials for one of our development environments were hard coded in our Android App. We changed it as soon as this was reported. 
+
+Thanks @gerben_javado for reporting this.
