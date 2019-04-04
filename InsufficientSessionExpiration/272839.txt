@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/272839
+WeaknessName:Insufficient Session Expiration
+Reporter:https://hackerone.com/wdem
+ReportedTo:Unikrn(unikrn)
+BountyAmount:40.0
+Severity:medium
+State:Closed
+DateOfDisclosure:05.10.2017 16:03:13
+
+Summary:
+
+**Summary:** [Weak session id implementation]
+
+**Description:** [Unikrn does not change session id after password is changed. Reusing same session ids, after password is changed is highly risky. 
+Example scenario: Hacker has successfully brute forced the password of a victim and has access to the account. The victim notices that something's off and chooses to change the password of the account. Hacker has still full access to the account, even after the password is changed, because of the working session id that he got from the server when he logged in to the victim's account.]
+
+
+## Steps To Reproduce:
+
+(Add details for how we can reproduce the issue)
+
+  1. [Intercept requests when logged in to unikrn and retrieve current session id]
+  2. [Change the password of the user]
+  3. [Do the step 1 again and compare the session id]
+
+## Supporting Material/References:
+
+If necessary, check my Proof of Concept video.
+
+https://drive.google.com/file/d/0B28KqsVY5jK6aVdTYzg5RTNMcGM/view

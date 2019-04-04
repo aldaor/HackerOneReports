@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/357625
+WeaknessName:Insufficient Session Expiration
+Reporter:https://hackerone.com/blacksword
+ReportedTo:Passit(passit)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:12.07.2018 15:21:20
+
+Summary:
+
+#Description : 
+
+On changing password only current session using which user changes password only that expires however old sessions in any other browser or device does not expire and remains active. 
+
+
+#Reproduction Steps : 
+
+To verify the issue :
+
+1. Log in to Browser A and make sure to check 'stay logged in to this device' checkbox while logging in. 
+2. Log in to Browser B and go to https://app.passit.io/account/change-password and change password.
+Notice that Session on Browser A will remain active and does not expire.
+
+## Impact
+
+Due to this bug, there is no way for the victim to revoke access of attacker if account has been already compromised.

@@ -1,0 +1,76 @@
+ReportLink:https://hackerone.com/reports/216294
+WeaknessName:Insufficient Session Expiration
+Reporter:https://hackerone.com/tcpiplab
+ReportedTo:Urban Dictionary(urbandictionary)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:20.06.2017 8:20:00
+
+Summary:
+
+# Session replay vulnerability in www.urbandictionary.com
+
+I considered titling this bug "*Session tokens not expiring*", which is what you need to tell your development team. But I titled it as I did to emphasize at least one attack made possible by the bug. There may be others.
+
+## Description
+Privileged functions, e.g., `/handle.save.php` can still be used after the user has clicked the "sign out" link. The cause of the vulnerability seems to be that the server is not invalidating session cookies when the user "signs out". I observed session tokens remaining valid even 72 hours after being issued.
+
+Exploitation requires the anti-CSRF `authenticity_token` from the privileged page from before the victim "logged out", and any one of the victim's `_rails_session` cookies from before the victim "logged out". Note that because the server issues a new cookie with each Response, the attacker may choose from among many cookies.
+
+## Impact
+1. Cookies that never expire can impact the security of the user:
+   1. The user's session is susceptible to hijacking or replay.
+   1. The user has no way of causing the application to invalidate their session. This is important in shared computing environments.
+2. Cookies that never expire can impact the security of the server:
+   1. The time window to brute-force a valid session token is increased.
+   1. If many session tokens remain valid, brute-forcing has that many more chances to guess correctly.
+
+## Step-by-step Reproduction Instructions
+1. Set up an HTTP intercept proxy like Burp Suite or ZAP.
+
+1. Authenticate to `http://www.urbandictionary.com/users.php` via the Gmail OAuth function, receiving a valid session cookie from `www.urbandictionary.com`, and then "sign out" by clicking `http://www.urbandictionary.com/auth/logout`.
+
+1. Send a `POST` request to `https://www.urbandictionary.com/handle.save.php` containing:
+   1. The `authenticity_token` from the privileged page from before the user "logged out".
+   1. Any one of the user's `_rails_session` cookies from before the user "logged out".
+   1. In the body of the POST set `user[handle]` to a new value. I've used `H.H. Vong`.
+   1. In the body of the POST set `commit` to `Save`.
+
+   {F171456}
+
+   The screen-shot above shows how to use Burp Repeater to replay a session and modify the user handle.
+
+   Here is that request as a curl command:
+
+   ```
+   $ curl -L -i -s -k  -X $'POST'     -H $'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0' -H $'Referer: https://www.urbandictionary.com/handle.php' -H $'Content-Type: application/x-www-form-urlencoded'     -b $'_rails_session=bnBaYnJjSjNJcmxGN1JrWjFkbmUwa0NFY05GdThtcmtHQU0zTHhsem1iQngyQmhvYUdKQTRCVmNHNlBGRTEvRm9aczFwRXc5ekVUV2FEVDM4RSswQU9rejBReGc1M3dxVGhRV0REQmFCUWFkYWcwQ1RhV2NIN1VUalQyM09tNHAwS3lkc0JaRlJqNkxKd2xNZVdKQzhYOFpBdlhqRHhoYVplWmczTFZBL3hlb3E2YUxkVmp4NEkzZUxtZXBQa1ozME9MUFdXRHRDQStOWXdUT2xkcTRSdz09LS1LNXVZWmFBL0F5STRIUjkwTmdnczR3PT0%3D--4ea5f8f5d73379881a6db43b9b8cdcc9d7c89773'     --data-binary $'authenticity_token=C4EmquHAIijNq8UrFfbdfm%2B3Bp5RxvL1BpzMdf3%2FJgtw%2FSn%2FgTt4AlFlIDWFivaesfXJFgNqrWS8DD85obbnpA%3D%3D&user%5Bhandle%5D=H.H.+Vong&commit=Save'     $'https://www.urbandictionary.com/handle.save.php'
+   ```
+
+1. The response will be a `302/Found` with the `Location` field set to `https://www.urbandictionary.com/users.php`. Your browser will follow the `302` redirect, issuing a `GET` request for the URL in the `Location` field. The server will respond with a `200/OK` status code.
+
+   {F171455}
+
+   The screen-shot above shows the Burp Repeater response with the rendered HTML displaying the successfully modified user handle.
+
+   If you're verifying this with `curl`, you could just `grep` for the modified value. Append this to the `curl` command previously specified: ` | grep -i vong`. Two lines of the HTML in the returned page will contain the newly modified handle:
+
+   ```
+   <title>Urban Dictionary: Hello H.H. Vong</title>
+   <span>Hello H.H. Vong</span>
+   ```
+
+## Suggested Mitigation/Remediation Actions
+1. Configure the server side application to invalidate a user's submitted session token:
+   1. When a new token is issued by the server side application, so that only one token is valid at any given time.
+   1. When the user submits a valid session token to `/auth/logout`.
+   1. When a valid session token has not been submitted to the server side application for greater than *n* seconds where *n* is some value consistent with your own internal policy.
+   1. When a valid session token, stored on the server, is older than *m* seconds, where *m* is the maximum age allowed for a session cookie, based on your own internal policy.
+
+## Product, Version, and Configuration
+* Kali Linux 2016.2
+* Mozilla Firefox 45.7.0
+* Burp Suite 1.7.17
+* `curl` 7.52.1
+
+Please let me know if you need more information about this issue. Thanks.

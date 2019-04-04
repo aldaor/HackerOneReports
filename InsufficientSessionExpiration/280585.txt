@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/280585
+WeaknessName:Insufficient Session Expiration
+Reporter:https://hackerone.com/craxermgr
+ReportedTo:Boozt Fashion AB(boozt)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:23.10.2017 10:00:09
+
+Summary:
+
+Your system does not change session id after password is changed. Reusing same session ids, after password is changed is highly risky. 
+
+Example scenario: Hacker has successfully brute forced the password of a victim and has access to the account. The victim notices that something's off and chooses to change the password of the account. Hacker has still full access to the account, even after the password is changed, because of the working session id that he got from the server when he logged in to the victim's account
+
+To reproduce...
+1. Login to your account
+2. visit my profile and go to change password.
+3. After changing the password, Your are still logged in,,..

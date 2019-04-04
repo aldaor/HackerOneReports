@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/273881
+WeaknessName:Insufficient Session Expiration
+Reporter:https://hackerone.com/nullsaint
+ReportedTo:Automattic(automattic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.11.2017 13:11:40
+
+Summary:
+
+Hi there,
+I found broken session bug on your website.Your website is unable to validate the session.That may lead takeover victims account.
+
+Reproduce:
+1.Go to https://polldaddy.com and log into your account from two different browsers.
+2.Now change password from any browser you already logged in
+3.You will be still logged into another browser.
+
+Kindly fix this issue.
+Thx,
