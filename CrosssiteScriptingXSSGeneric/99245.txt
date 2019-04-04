@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/99245
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/enderun07
+ReportedTo:Mapbox(mapbox)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:03.05.2016 22:37:49
+
+Summary:
+On November 12th, 2015, enderun07 reported a stored cross-site scripting (XSS) issue in the share page of a v3 or v4 map hosted on api.mapbox.com. The vulnerability also affected version 2.2.3 and 1.6.5 and earlier of [mapbox.js](https://www.mapbox.com/mapbox.js/api/v2.4.0/). [Mapbox GL JS](https://www.mapbox.com/mapbox-gl-js/api/) and [Mapbox Studio](https://www.mapbox.com/mapbox-studio/) styles were not affected by this issue. 
+
+If an attacker named a project in our [classic map editor](https://www.mapbox.com/editor/) with a malicious payload for the title, the payload would execute when a victim viewed the share page of the map and clicked on the share control. The map share control is an arrow button under the zoom control that when clicked creates a modal dialog that allows a user to easily share a Mapbox map on Facebook, Twitter, Pinterest, or an external website.
+
+Though enderun07 used the payload `"'><img src=a onerror=confirm(2)>"><script>alert(1);</script><iframe onload=alert(97)>"><svg onload=alert(2);>"onmouseover="confirm(2);<input onfocus=prompt(1) autofocus>"--> </script><svg/onload=';alert(/XSSPOSED/);'>"`, we were able to replicate the issue with the shorter payload `<img src=a >\"><iframe onload=alert('XSS')>`.
+
+A few factors limited the severity of this vulnerability. First, a victim had to visit the share page of the malicious map or an attacker-controlled website with a malicious mapbox.js map. Users visiting www.mapbox.com or a website using mapbox.js with a non-malicious map were not affected. Second, the user had to click on the share control of the map in order for any malicious code to execute. An attacker might have used social engineering to encourage a user to click on the share control of the malicious map. Third, the map share page on api.mapbox.com includes the title of the map, which would have contained the malicious payload in the top left-hand corner. Some users may have found the map title strange and would not have followed instructions to click on the share control.
+
+We patched Mapbox servers on December 22nd, 2015 and released a public patch and [Node Security advisory](https://nodesecurity.io/advisories/74) for mapbox.js on January 12th, 2016. The code for the patch is [in pull request 1102 of mapbox.js](https://github.com/mapbox/mapbox.js/pull/1102).
+
+We strongly encourage anyone with an application that loads untrusted TileJSON - an uncommon usage scenario - into a mapbox.js map to upgrade to v2.2.4 or v1.6.5 of mapbox.js. 
+Hi Mapbox
+
+I've found a xss vulnerability on mapbox sharing system.
+
+I've a project called with "'><img src=a onerror=confirm(2)>"><script>alert(1);</script><iframe onload=alert(97)>"><svg onload=alert(2);>"onmouseover="confirm(2);<input onfocus=prompt(1) autofocus>"--> </script><svg/onload=';alert(/XSSPOSED/);'>"
+
+than click it and copy the share URL and go to URL
+
+than click the the marked area than you will see the vulnerability

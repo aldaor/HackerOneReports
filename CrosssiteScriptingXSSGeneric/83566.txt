@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/83566
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/zephrfish
+ReportedTo:Pornhub(pornhub)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:23.05.2016 10:43:21
+
+Summary:
+The researcher identified that the following URL for the Pornhub blog was vulnerable to reflected/semi-stored cross site scripting, which enabled the researcher to craft a URL that pops multiple alert boxes as the page is loading. The affected url can be seen below:
+
+`http://www.pornhub.com/blog?602c2%22%3E%3Cscript%3Ealert%28%27XSS%20by%20ZephrFish%28HackerOne%20%29%27%29%3C%2fscript%3Ed59e5=1`
+
+The issue was patched and the researcher was awarded a bounty for the responsible disclosure.
+
+Thank you to Zephrfish for this report.

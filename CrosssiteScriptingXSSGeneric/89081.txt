@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/89081
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bhavi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:24.10.2015 15:18:59
+
+Summary:
+
+
+Hello mail.ru Security Team,
+
+I have found XSS vulnerability On your WEBSITE :- http://corp.mail.ru/en/jobs/feedback/
+
+My Payload is this :- >'>"><img src=x onmouseover =prompt(0)>
+
+Vulnerability :- "XSS vulnerability" 
+
+Vulnerable Fields : "Social Network fields"
+
+Cross-Site Scripting (XSS) vulnerabilities are a type of computer security vulnerability typically found in Web applications. XSS vulnerabilities enable attackers to inject client-side script into Web pages viewed by other users.
+
+Let's See how to find this vulnerability.
+
+Following This all Reproduce Steps Attached POC Dropbox URL:- 
+
+And you can see there the XSS Vulnerability is fully Execute by My payload.
+
+
+Wooooooooooooooo.............!!!!!!!!!!!!!
+
+POC :- Attached Video POC Dropbox URL:- https://www.dropbox.com/sh/7f0yd70uy1yzdfh/AADy-v63UC0rWvNFffk_HW2Ea?dl=0
+
+
+
+Thank You...!
+
+Regards,
+Pratik Panchal

@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/8862
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/eronx
+ReportedTo:StopTheHacker(stopthehacker)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.07.2014 0:31:17
+
+Summary:
+
+Hello,
+
+1. go to http://www.stopthehacker.com/support/
+2. input "><img src=x onerror=prompt(1)> in the search box (use firefox)
+3. A prompt box will appear. XSSed.
+
+Thank you sir.
+
+Clifford

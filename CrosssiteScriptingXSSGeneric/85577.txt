@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/85577
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/ala_arfaoui
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.11.2015 11:20:31
+
+Summary:
+@ala_arfaoui reported an issue potentially leading to a XSS vulnerability when an attacker is able to intercept and modify unencrypted HTTP requests.
+
+As of request by the reporter this issue has been only disclosed limited.

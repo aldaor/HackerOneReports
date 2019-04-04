@@ -1,0 +1,82 @@
+ReportLink:https://hackerone.com/reports/87835
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/avicoder_
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.10.2015 7:04:45
+
+Summary:
+
+Hi **OwnCloud Team** ,
+
+###Vulnerability Description:###
+
+**What is Webview?:** We can load a remote URL or display HTML pages stored in our application within an activity using WebView. Internally it uses WebKit rendering engine to display web pages. It supports methods to navigate forward and backward, text searches, etc. It has some nice features such as support for the usage of JavaScript.
+
+###Where I found it?###
+
+In **SamlWebViewDialog.java.class** located under the path ` android/src/com/owncloud/android/ui/dialog/` 
+
+I clipped the important code which introduced this vulnerability in your app.
+
+            if (mSsoWebView == null) {
+            // initialize the WebView
+            mSsoWebView = new SsoWebView(getActivity().getApplicationContext());
+            mSsoWebView.setFocusable(true);
+            mSsoWebView.setFocusableInTouchMode(true);
+            mSsoWebView.setClickable(true);
+            
+            WebSettings webSettings = mSsoWebView.getSettings();
+            webSettings.setJavaScriptEnabled(true);
+            webSettings.setBuiltInZoomControls(false);
+            webSettings.setLoadWithOverviewMode(false);
+            webSettings.setSavePassword(false);
+            webSettings.setUserAgentString(MainApp.getUserAgent());
+            webSettings.setSaveFormData(false);
+            
+            CookieManager cookieManager = CookieManager.getInstance();
+            cookieManager.setAcceptCookie(true);
+            cookieManager.removeAllCookie();
+            
+            mSsoWebView.loadUrl(mInitialUrl);
+        }
+        
+
+here you can see that:
+
+    `webSettings.setJavaScriptEnabled(true);`
+
+The *WebView* Object been activated to parse javascript inside it.
+
+**However by default when we create an WebView object JavaScript is disabled by default until and unless it explicitly declare by the developer.** 
+
+The untrusted Javascript code can call into the Java Reflection APIs exposed by the Interface and execute arbitrary commands. Some distributions of the Android Browser app have an addJavascriptInterface call tacked on, and thus are vulnerable to RCE.
+
+###Mitigation:###
+
+If you turn off the setJavaScriptEnabled as follows, adversaries will not be able to run any JavaScript in order to perform XSS 
+`webSettings.setJavaScriptEnabled(False);`
+
+
+###SEVERITY: High ###
+
+It is not just limited to XSS because of javascript ! In fact, using this, an attacker can even use JavaScript to invoke certain methods on the phone, such as sending an SMS to another number, making a call, or even getting a remote shell using tools such as Drozer.
+
+**I highly recommend my article on github for the mitgation and understanding of the attack**
+
+##https://github.com/vjex/WriteUp/blob/master/WebviewVuln.md##
+
+###More References:###
+
+   - http://www.wintellect.com/devcenter/paulballard/new-report-sites-significant-security-vulnerabilities-in-android-devices
+   - http://www.cvedetails.com/cve/CVE-2013-4710/
+   - https://community.rapid7.com/community/metasploit/blog/2015/01/02/2014-a-year-of-android-exploits-in-metasploit
+   - https://github.com/jduck/VulnWebView/
+
+**Happy to help.**
+Cheers
+#:)#
+
+@avicoder

@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/7917
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/smiegles
+ReportedTo:Respondly(respondly)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.04.2014 16:30:41
+
+Summary:
+
+Hi.
+
+When I go to the find page and insert a `private note`, with as content : `<img src='x' onerror='alert(4)'` it will execute directly.
+
+As preview :
+1.) http://prntscr.com/3axvz5
+2.) http://prntscr.com/3axw3k
+
+Best regards,
+
+Olivier Beg

@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/81441
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/dz_samir
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:24.08.2015 22:29:00
+
+Summary:
+
+Hello
+Installing the Digital Downloads App in *.myshopify.com
+1-install the app  https://apps.shopify.com/digital-downloads
+2-select product and click Add Digital Attachment 
+3-click to upload file and upload file with name <svg onload=alert(1)>
+the code  <svg onload=alert(1)> will execute XSS
+
+<span class="file-name"><strong>Success:</strong> <svg onload="alert(1)"/></span>
+
+tested in firefox
+
+Hadji Samir
+ 

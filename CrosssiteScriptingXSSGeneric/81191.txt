@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/81191
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/alyssa_herrera
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:19.05.2016 0:47:38
+
+Summary:
+
+http://now.informatica.com/en_data-integration-for-dummies_book_2642.html?source=Homepage
+The issue is located here. I will be including a video demonstrating this vulnerability 
+Xss vector used: <svg onload=confirm(document.domain)>xs 

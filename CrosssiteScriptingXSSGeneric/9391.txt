@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/9391
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/old_reporter
+ReportedTo:Ian Dunn(iandunn-projects)
+BountyAmount:25.0
+Severity:
+State:Closed
+DateOfDisclosure:24.04.2014 17:50:51
+
+Summary:
+
+Xss present in tools -->  Notify
+
+I have made small video poc please have a look :)
+https://www.dropbox.com/s/smuy4lfjwt9fx1v/ticket.mp4
+
+Looking forward
+
+Atul

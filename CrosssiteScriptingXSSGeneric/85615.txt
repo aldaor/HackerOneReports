@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/85615
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/stefanofinding
+ReportedTo:Vimeo(vimeo)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:31.08.2017 10:29:49
+
+Summary:
+
+__Description__
+
+The value of the parameter _section_ is reflected in the Javascript function `MusicStoreCommon.initialize()` without escaping, which allows to insert Javascript code.
+
+__Proof of concept__
+1. Go to https://vimeo.com/musicstore?section=%27-alert(document.domain)-%27.
+2. `alert(document.domain)` is executed.
+
+This reflected XSS is reproducible on Chrome, Safari and Firefox.

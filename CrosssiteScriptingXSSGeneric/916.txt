@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/916
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/smiegles
+ReportedTo:Verizon Media(verizonmedia)
+BountyAmount:2173.75
+Severity:
+State:Closed
+DateOfDisclosure:07.03.2014 0:44:02
+
+Summary:
+Thank you for your submission to the Yahoo Bug Bounty program. We were able to reproduce the issue you reported and have implemented appropriate fixes. We appreciate your adherence to responsible disclosure guidelines and look forward to your future participation in the program.

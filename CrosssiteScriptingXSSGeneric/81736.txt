@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/81736
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/blinkms
+ReportedTo:Automattic(automattic)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:16.10.2015 16:17:29
+
+Summary:
+
+Hi there  ,
+
+I have identified a WordPress security vulnerability , a potential XSS vulnerability that affects latest version of WordPress .
+
+POC :-
+
+Go to GET *****.wordpress.com/wp-admin/post-new.php
+
+In Text (HTML Field) input , <HTML xmlns: ><audio>
+<audio src=wp onerror=alert(0X1)>
+
+
+Now, Click on Visual Tab , XSS will trigger . (Screenshot attached )
+
+Thanks and please address this issue .

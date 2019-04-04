@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/94230
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/mdv
+ReportedTo:Zendesk(zendesk)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:20.10.2015 22:53:27
+
+Summary:
+
+Hello.
+This vulnerability works on all sites where there Zopim chat.
+Vulnerable link:
+https://www.zopim.com/#1=1&__zopim_widget_proxy=1.zopim.com/s/W/xdds/PIJ4+155G8p7LL3w/c/1444997086678%22%3E%3C/script%3E%3Csvg/onload=alert%28%22XSS%22%29%3E
+Vulnerable param is __zopim_widget_proxy.
+For XSS i used "></script><svg/onload=alert("XSS")>
+Tested in Mozilla Firefox.

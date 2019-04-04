@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/9522
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/smiegles
+ReportedTo:Automattic(automattic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 10:00:26
+
+Summary:
+
+Hi,
+
+I found a flash based XSS located here :
+`https://polldaddy.com/swf/storage.swf?onload=alert(1)`
+
+It happends in the `ExternalInterface.Call` Function, when a parameter is inserted unfiltered it will allow XSS, you can patch it by only allowing :
+A-Z a-z 0-9
+
+Best regards,
+
+Olivier Beg

@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/8010
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/prakharprasad
+ReportedTo:Respondly(respondly)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.04.2014 16:13:35
+
+Summary:
+
+Hey,
+
+So, we can send emails to team email address like  - **kfvm@mail.respond.ly** . In the email body if there is a hyperlink pointing to `javascript:alert(0);` or any other `javascript: URI` then open viewing the email in your web application with *original HTML* view and then on clicking it will trigger javascript execution, that is XSS.
+
+Thanks!

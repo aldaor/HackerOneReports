@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/95231
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/mazen160
+ReportedTo:Twitter(twitter)
+BountyAmount:280.0
+Severity:
+State:Closed
+DateOfDisclosure:12.08.2016 16:48:07
+
+Summary:
+
+I have found an XSS on the "Poll" feature on Twitter.com. 
+
+Payload Example:
+`<img src=x onerror=alert(1)>`
+
+Screenshot: I have attached a screenshot in this submission in order to demonstrate the issue.
+
+Best,
+Mazin

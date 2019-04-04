@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/9375
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/eronx
+ReportedTo:Ian Dunn(iandunn-projects)
+BountyAmount:25.0
+Severity:
+State:Closed
+DateOfDisclosure:23.04.2014 23:41:22
+
+Summary:
+
+I am reporting this in general to all fields in Basic Google Maps Placemarks Settings plugin settings.
+
+The plugin settings page input fields: http://www.site.com/wp-admin/options-general.php?page=bgmp_settings are subject to XSS.
+
+Kindly check sir.
+
+Thank yoiu very much.
+
+Clifford Tirog 

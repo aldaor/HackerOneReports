@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/84371
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/enderun07
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.10.2015 7:05:31
+
+Summary:
+
+Hi Owncloud,
+
+I've found  A XSS vulnerability on apps.owncloud.com
+
+When I add a comment to add any comment field,My profile page shows my latest comment
+
+When I add a comment starts with "><img src=x onerror=confirm(2)> the page show this comment 
+
+so XSS alert occurs in profile page.
+
+Even if a victim is not authenticated,vulnerability occurs on page

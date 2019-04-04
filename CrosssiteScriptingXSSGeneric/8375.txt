@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/8375
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/quistertow
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.08.2014 16:07:28
+
+Summary:
+
+Hi,
+I found a flash based XSS in rs.mail.ru.
+Vulnerable link:
+http://rs.mail.ru/b27161485.swf?link1=javascript:alert(document.domain)
+Just click on the page and you will see the alert.
+Tested on Mozilla Firefox
+Regards,
+  Florin

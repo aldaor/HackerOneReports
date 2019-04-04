@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/93550
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/skansing
+ReportedTo:Adobe(adobe)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.04.2016 18:05:49
+
+Summary:
+```http://edex.adobe.com/search/global/[SEARCH_HERE] ``` does not properly escape input and allows for reflected XSS.  
+
+The search stops and strips on = to avoid XSS but does not handle encodings.
+Using ```%3D``` for ```=``` it is possible to inject reflected XSS attacks.

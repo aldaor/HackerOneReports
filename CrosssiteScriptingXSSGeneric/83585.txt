@@ -1,0 +1,74 @@
+ReportLink:https://hackerone.com/reports/83585
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bigbear_
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.10.2015 11:28:18
+
+Summary:
+
+Приветствую.
+
+Уязвимость существует за счёт отображения всех запросов к серверу в режиме отладки, доступными любому пользователю.
+
+Как следствие мы имеем 2 нехороших проблемы:
+
+1) Full SQL Disclosure
+
+Run query: SELECT * FROM forum_config
+Run query: SELECT cat_id,name FROM forum_cats ORDER BY order_id
+Run query: SELECT forum_id FROM forum_forums ORDER BY order_id
+Run query: SELECT user_id FROM forum_group_members WHERE group_id='2'
+Run query: SELECT forum_id FROM forum_topics WHERE topic_id='16462'
+Run query: SELECT count(*) FROM forum_topics WHERE topic_id='16462'
+Run query: SELECT count(*) FROM forum_forums WHERE forum_id='2'
+Run query: SELECT is_hidden FROM forum_forums WHERE forum_id='2'
+Run query: SELECT * FROM forum_votes WHERE topic_id='16462'
+Run query: INSERT INTO forum_topics SET shows=shows+1
+Run query: UPDATE forum_topics SET shows=shows+1 WHERE topic_id='16462' LIMIT 1
+Run query: SELECT * FROM forum_forums WHERE forum_id='2'
+Run query: SELECT id FROM forum_httpcache WHERE block='menu' AND host='2' AND uri='/info/forum/topic.php?f=2&t=16462&debug=1' AND date>1440048023
+Run query: SELECT topic_id,lasttime FROM forum_topics WHERE forum_id='2' AND is_upped=0
+Run query: SELECT topic_id,lasttime FROM forum_topics WHERE forum_id='2' AND is_upped=1
+Run query: SELECT * FROM forum_topics WHERE topic_id='16462'
+Run query: SELECT count(*) FROM forum_posts WHERE topic_id='16462'
+Run query: SELECT * FROM forum_posts WHERE post_id='144132'
+Run query: SELECT text FROM forum_posts_body WHERE post_id='144132'
+Run query: SELECT count(*) FROM forum_posts WHERE topic_id='16462' AND user_id IN (102569,100003,100038,100016,100014,4990670,5479514,7624268,10518326,11050749,11378540,100203,15891906,17303459,21181254)
+Run query: SELECT nick FROM port_users WHERE id='102907'
+Run query: SELECT * FROM forum_forums WHERE forum_id='1'
+Run query: SELECT count(*) FROM forum_topics WHERE forum_id='1'
+Run query: SELECT count(*) FROM forum_topics WHERE forum_id='2'
+Run query: SELECT * FROM forum_forums WHERE forum_id='5'
+Run query: SELECT count(*) FROM forum_topics WHERE forum_id='5'
+Run query: SELECT * FROM forum_forums WHERE forum_id='3'
+Run query: SELECT count(*) FROM forum_topics WHERE forum_id='3'
+Run query: SELECT * FROM forum_forums WHERE forum_id='4'
+Run query: SELECT count(*) FROM forum_topics WHERE forum_id='4'
+Run query: SELECT * FROM forum_forums WHERE forum_id='6'
+Run query: SELECT count(*) FROM forum_topics WHERE forum_id='6'
+Run query: SELECT * FROM forum_forums WHERE forum_id='7'
+Run query: SELECT count(*) FROM forum_topics WHERE forum_id='7'
+Run query: SELECT * FROM forum_forums WHERE forum_id='8'
+Run query: SELECT * FROM forum_forums WHERE forum_id='9'
+Run query: SELECT * FROM forum_forums WHERE forum_id='10'
+Run query: SELECT * FROM forum_forums WHERE forum_id='11'
+Run query: SELECT count(*) FROM forum_topics WHERE forum_id='11'
+Run query: SELECT * FROM forum_forums WHERE forum_id='12'
+Run query: DELETE FROM forum_httpcache WHERE date<1440048023 LIMIT 65535
+Run query: DELETE FROM forum_httpcachefull WHERE date<1440048023 LIMIT 65535
+Run query: DELETE FROM forum_httpcache WHERE block='menu' AND uri='/info/forum/topic.php?f=2&t=16462&debug=1' LIMIT 65535
+Run query: INSERT INTO forum_httpcache SET block='menu',host='2',uri='/info/forum/topic.php?f=2&t=16462&debug=1',date=1440048623,forum_id='0'
+Run query: INSERT INTO forum_httpcachefull SET id='',date=1440048623,content='a:3:{s:4:\"menu\";s:1940:\"
+
+Хорошо бы разрешить отладку только для админов.
+
+2) Reflected XSS
+
+http://riot.mail.ru/info/forum/topic.php?f=2&t=16462<script>alert(100)</script>&debug=1
+
+На самом деле, не важно куда вставлять XSS, она всё равно отразится в запросах.
+
+Из-за специфики уязвимости, сработает только в IE.

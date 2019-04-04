@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/82725
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/zombiehelp54
+ReportedTo:Zendesk(zendesk)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:13.11.2015 22:07:11
+
+Summary:
+
+Hi , I have found an XSS vulnerability in commenting on articles.
+Steps to reproduce:
+1. Go to an article on your website for example: https://testingthatweb.zendesk.com/hc/en-us/articles/204094081 
+2. Type this in the comment box: `[Click here](javascript:alert(1))`
+3. after the comment is posted , you'll see your comment , press on the link `Click Here` and you got your XSS 
+
+Thanks , Please tell me if you are having any problems reproducing this bug.
+M.

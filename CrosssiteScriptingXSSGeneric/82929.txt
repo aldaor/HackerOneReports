@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/82929
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/zephrfish
+ReportedTo:Pornhub(pornhub)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:23.05.2016 10:48:14
+
+Summary:
+The researcher identified that multiple albums were vulnerable to reflected cross site scripting from the URL, a few examples and proofs of concept are shown explained with relevant get requests and responses plus screenshots. The malicious link is shown below:
+
+`http://www.pornhub.com/albums? redirect=L2FsYnVtcw%253d%253ddb35e%2522%253e%253cscript%253ealert%2528"ZephrFish"%2529%253c%252fscript%253e87263&password=jPasswordField1&login_key=1436000042&login_hash=48ac3b23f17e55750dbda1462b7250c1&remember_me=1&username=%252799%2527%2bOR%2b%25271%2b%253d%2b1%2527 `
+
+The issue was resolved and the researcher was awarded a bounty for his responsible disclosure.
+
+Thank you Zephrfish for this report.

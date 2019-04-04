@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/87588
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/robd4k
+ReportedTo:Udemy(udemy)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:09.11.2015 10:08:45
+
+Summary:
+
+Hi,
+
+I just want to report a XSS Vulnerability
+
+POC:
+
+
+Fire up LIVEHTTPHEADERS and capture the request
+
+- I upload 2015-08-24_162829.png as my file name
+
+-After capturing the request, rename you image into '"><img src=x onerror=alert(1)> as payload
+

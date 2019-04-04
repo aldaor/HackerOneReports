@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/90083
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/lalatina
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.07.2017 12:02:10
+
+Summary:
+XSS on aw.mail.ru
+aw.mail.ru is not currently in bug bounty scope.

@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/8737
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/atom
+ReportedTo:Respondly(respondly)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:23.04.2014 0:57:49
+
+Summary:
+
+```
+
+```

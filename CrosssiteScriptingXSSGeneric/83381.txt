@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/83381
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/psych0tr1a
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.03.2016 9:19:08
+
+Summary:
+Due to a bug in the URL generation component mainly used by forms on the ownCloud appstore available at apps.owncloud.com is vulnerable to multiple reflected XSS. This problem seems only to be exploitable in Internet Explorer since other browsers are URL encoding GET parameters.
+
+This was reproducible using something like: 
+`curl "https://apps.owncloud.com/content/search.php?PHPSESSID=\">XSSHERE<script>alert(1)</script>"|grep XSS`
+
+The output was then containing the unescaped malicious Javascript.
+
+While the issue appears overall over the platform we have merged issues related to the same root cause into this one but would like to thank all reporters reporting this vulnerability. On request of some commenters this issue is only disclosed limitedly.

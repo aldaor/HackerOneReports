@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/86069
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/danila_xawdxawdx
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:25.05.2017 10:22:29
+
+Summary:
+Self-XSS via message editor on few game forum domains.
+
+Game projects are not currently in bug bounty scope.
+На форумах таких игр как https://wf.mail.ru/forums, https://pw.mail.ru/forums/  и им подобным использующим такой же форум, есть уязвимость Xss. Что бы java script сработал, следует перейти в сообщения, написать в поле заэнкоденный вариант кода " %3Cscript%3Ealert()%3C/script%3E " и он сработает при нажатии на элемент "переключение редактора в визуальный режим". 

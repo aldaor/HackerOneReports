@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/85291
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/mdv
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:31.08.2015 22:37:28
+
+Summary:
+
+https://www.shopify.com/signup?signup_type=%27|alert%28%27XSS%27%29|%27
+Vulnerable param is signup_type. For the XSS i used '|alert('XSS')|'
+
+Tested in Mozilla Firefox 40.0.3

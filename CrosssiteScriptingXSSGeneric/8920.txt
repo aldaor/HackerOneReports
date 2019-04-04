@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/8920
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/dekeeu
+ReportedTo:Cloudflare(cloudflare)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.05.2014 3:15:19
+
+Summary:
+
+Hi.
+
+I want to report to you a Reflected XSS(cross site scripting) vulnerability that I found in Cloudflare web-application and in a considerable percent can affect the safety of the users . Generally, an "attacker" can use XSS to send a malicious script to an unsuspecting user. The end user's browser has no way to know that the script should not be trusted and will execute the script.
+
+The link where you can see a PoC is: http://js.cloudflare.com/xss%22onload=%22alert%281%29
+
+Steps for reproduce this flaw: Open the link above in a web browser (I recommend Mozilla Firefox or Opera) and you can see that an alertbox will appear , so my javascript function was successfully executed.
+
+Regards,
+Coltuneac Alexandru
+

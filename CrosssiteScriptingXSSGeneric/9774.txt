@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/9774
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/karshxz7593
+ReportedTo:Slack(slack)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:01.06.2014 6:26:54
+
+Summary:
+
+The type of XSS Vulnerability I found on your website is a stored xss. after i connect my github account   and add a new integration then i chose my repositories then on the right side of that is a textfield that has a placeholder of  Branches (optional). then i put the following code on that textfield "><img src=x onerror=alert(document.domain);>  then i click save integration button. then after that an alert box popup containing the domain of the site.

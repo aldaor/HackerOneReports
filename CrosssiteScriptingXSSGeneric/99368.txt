@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/99368
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/securitythinker
+ReportedTo:Algolia(algolia)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:22.05.2016 15:05:16
+
+Summary:
+
+i found an xss issue here :
+https://www.algolia.com/explorer#?index=test&tab=ranking
+i tried to put  an xss payload ("><img src=x onerror=alert(0)>)
+in index > ranking> so i put the xss payload in Ranking formula then hit save ...when it is being saved the xss payload is being stored that upon Indices xss payload executed
+p.s please screen shot

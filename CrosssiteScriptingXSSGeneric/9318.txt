@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/9318
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/bitquark
+ReportedTo:Mail.ru(mailru)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:06.06.2014 11:43:17
+
+Summary:
+
+There is an XSS on the front page of mail.ru which can be exploited by manipulating the _regionConfirm_ page parameter. The parameter is included without proper escaping in JavaScript code featured on the page. Because of the nature of the exploit, browser XSS protection may be bypassed.
+
+Proof-of-concept:
+
+http://mail.ru/?regionConfirm=alert(document.cookie)});}}%3C/script%3E

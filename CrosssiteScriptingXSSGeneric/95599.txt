@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/95599
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/paulos_
+ReportedTo:Binary.com(binary)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:13.11.2015 16:52:29
+
+Summary:
+paulos_ reported  xss in new account section of binary.com which was resolved by us 

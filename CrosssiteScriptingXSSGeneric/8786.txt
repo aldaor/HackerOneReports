@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/8786
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/smiegles
+ReportedTo:Cloudflare(cloudflare)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.08.2014 16:54:57
+
+Summary:
+
+Hello,
+
+I found a Cross-site scripting located here :
+http://cdnjs.cloudflare.com/ajax/libs/jplayer/2.2.0/Jplayer.swf?jQuery=alert&id=XSS
+
+Best regards,
+
+Olivier Beg

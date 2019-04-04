@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/83373
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/psych0tr1a
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.10.2015 7:07:01
+
+Summary:
+
+`REQUEST:`
+TRACE / HTTP/1.0
+Host: owncloud.com
+Cookie: 74b33b43fa`
+
+`RESPONSE:`
+HTTP/1.1 200 OK
+Date: Wed, 19 Aug 2015 06:59:31 GMT
+Server: Apache/2.2.17 (Linux/SUSE)
+Connection: close
+Content-Type: message/http
+
+TRACE / HTTP/1.0
+Host: owncloud.com
+Cookie: 74b33b43fa; wordpress_test_cookie=WP+Cookie+check; _icl_current_language=en
+
+
+This vulnerability can show cookie with http only flag
+
+with xss it's a very critical attack vector

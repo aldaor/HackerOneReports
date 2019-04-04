@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/93807
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/strukt
+ReportedTo:FanFootage(fanfootage)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.12.2015 16:12:56
+
+Summary:
+
+Hello,
+
+An XSS can be triggered if the user uploaded an image with an XSS vector as the file name,
+See the screenshot for more info,
+
+Thanks
