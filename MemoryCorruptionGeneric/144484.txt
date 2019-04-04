@@ -1,0 +1,39 @@
+ReportLink:https://hackerone.com/reports/144484
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/guido
+ReportedTo:Ruby(ruby)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.06.2016 0:56:51
+
+Summary:
+
+(originally send by e-mail on 4 Jun 2016)
+
+Setting a very high precision in the date_strftime_with_tmx() function,
+the following check (in the STRFTIME macro in date_strftime.c) will not
+work as expected if 's' >= 0x80000000 (this is the same type of issue as
+the other vulnerability I submitted).
+
+```c
+124         if (start + maxsize < s + precision) {          \
+125             errno = ERANGE;                 \
+126             return 0;                       \
+127         }
+```
+
+This code causes a crash on my 32 bit system:
+
+```ruby
+require 'date'
+d =  DateTime.new(2007,11,19,8,37,48,"-06:00")
+d.strftime("%2147483647c")
+```
+
+64 bit is probably not affected (strictly technically possible, but
+unlikely).
+
+Let me know if you need more information.
+
+Guido

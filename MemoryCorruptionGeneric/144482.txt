@@ -1,0 +1,195 @@
+ReportLink:https://hackerone.com/reports/144482
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/guido
+ReportedTo:Ruby(ruby)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:21.06.2016 0:56:33
+
+Summary:
+
+(originally send by e-mail on 4 Jun 2016)
+
+The problem is this line in ext/stringio/stringio.c strio_getline():
+
+```c
+1002     if (limit > 0 && s + limit < e) {
+1003     e = rb_enc_right_char_head(s, s + limit, e, get_enc(ptr));
+1004     }
+```
+
+This works as intended as long as the sum of s (pointer) and limit
+(long) doesn't overflow. So if on a 32 bit system 's' happens to be
+0xBF000000, and limit is 0x7FFFFFFF, the sum of both values is
+0x3EFFFFFF, which is a completely unrelated address. From there, there
+are several paths to be chosen from based on what the first parameter to
+the function is ('str').
+
+```c
+  1005	    if (NIL_P(str)) {
+            ...
+            ...
+  1008	    else if ((n = RSTRING_LEN(str)) == 0) {
+            ...
+            ...
+  1024	    else if (n == 1) {
+            ...
+            ...
+  1030	    else {
+            ...
+            ...
+```
+
+All these paths eventually call strio_substr(). A wrong 'pos' parameter
+to this function is not possible because it was checked earlier:
+
+```c
+   996	    if (ptr->pos >= (n = RSTRING_LEN(ptr->string))) {
+   997		return Qnil;
+   998	    }
+```
+
+a wrong 'len' parameter to this function doesn't matter as it will
+correct it itself:
+
+```c
+    98	static VALUE
+    99	strio_substr(struct StringIO *ptr, long pos, long len)
+   100	{
+   101	    VALUE str = ptr->string;
+   102	    rb_encoding *enc = get_enc(ptr);
+   103	    long rlen = RSTRING_LEN(str) - pos;
+   104	
+   105	    if (len > rlen) len = rlen;
+   106	    if (len < 0) len = 0;
+   107	    if (len == 0) return rb_str_new(0,0);
+   108	    return rb_enc_str_new(RSTRING_PTR(str)+pos, len, enc);
+   109	}
+```
+
+As for the first path ('str' is nil, line 1005), it will call
+strio_substr() with an invalid 'len' value, which doesn't matter because
+strio_substr() corrects it:
+
+```c
+  1005	    if (NIL_P(str)) {
+  1006		str = strio_substr(ptr, ptr->pos, e - s);
+  1007	    }
+```
+
+Within the second path ('str' is an empty string, line 1008), there is
+the risk of an OOB read here, because this routine's logic is based on
+the belief that 'e' denotes the end of the buffer. 'p' will never become
+'e' because either 1) a null pointer dereference will occur (once it
+reads at address 0x00000000) or 2) no \n character is found before 'p'
+reaches an invalid memory page. In theory an attacker could use this
+mishap to find the \n character at various places in memory (by
+adjusting the 'limit' variable), but that is usually not very useful.
+(The way an attacker can know at which the \n character is found will
+become clear later).
+
+```c
+  1009		p = s;
+  1010		while (*p == '\n') {
+  1011		    if (++p == e) {
+  1012			return Qnil;
+  1013		    }
+  1014		}
+  1015		s = p;
+  1016		while ((p = memchr(p, '\n', e - p)) && (p != e)) {
+  1017		    if (*++p == '\n') {
+  1018			e = p + 1;
+  1019			break;
+  1020		    }
+  1021		}
+  1022		str = strio_substr(ptr, s - RSTRING_PTR(ptr->string), e - s);
+```
+
+The third path ('str' is 1 character large, line 1024) is similar to the
+second path except that memchr is used to find the desired character:
+
+```c
+  1025		if ((p = memchr(s, RSTRING_PTR(str)[0], e - s)) != 0) {
+  1026		    e = p + 1;
+  1027		}
+  1028		str = strio_substr(ptr, ptr->pos, e - s);
+```
+
+The fourth path is entered if 'str' is 2 or more bytes large (line
+1030). The first condition is always true if a very high 'limit' value
+is chosen (the premise of this vulnerability):
+
+```c
+  1031		if (n < e - s) {
+```
+
+The first subpath is never true in this case:
+
+```c
+  1032		    if (e - s < 1024) {
+```
+
+So the second subpath is entered. This can be used to find the arbitrary
+string 'str' across the totality of virtual memory:
+
+```c
+  1040		    else {
+  1041			long skip[1 << CHAR_BIT], pos;
+  1042			p = RSTRING_PTR(str);
+  1043			bm_init_skip(skip, p, n);
+  1044			if ((pos = bm_search(p, n, s, e - s, skip)) >= 0) {
+  1045			    e = s + pos + n;
+  1046			}
+  1047		    }
+```
+
+After any of these paths have been traversed, the attacker can read the
+'pos' attribute to get the relative location of the string that has been
+found somewhere in memory:
+
+```c
+  1051	    ptr->pos = e - RSTRING_PTR(ptr->string);
+```
+
+By subtracting this current 'pos' from the previous 'pos' the attacker
+can know the position of string that was searched for relative to the
+base string.
+
+My hypothesis is that, if we assume that the attacker can control the
+'limit' variable as well as the string that has to be searched for and
+they can invoke strio_getline an arbitrary number of times, they can
+make Ruby divulge arbitrary information such as private keys (if they
+are loaded in memory), by searching for 'BEGIN PGP PRIVATE KEY BLOCK'
+and adjust the 'limit' parameter in combination with all alphanumeric
+characters to deduce the entire base64-encoded private key.
+
+Note that a pointer address can naturally be very high (on 32 bit
+anyway), such as 0xFFFF0000. In that event, a 'limit' of 0x10000 can be
+enough to overflow this computation:
+
+```c
+1002     if (limit > 0 && s + limit < e) {
+```
+
+Here is code that can be used to trigger the vulnerability.
+
+```ruby
+require "stringio"
+s = StringIO.new
+s.puts("abc")
+s.rewind()
+x = s.gets('xxx', 0x7FFFFFFFFFFFFFF0)
+puts(s.pos)
+```
+
+The vulnerability is more likely to trigger on 32 bit than on 64 bit,
+since on 32 bit, the chance that the base string is allocated beyond the
+half of the virtual address space (0x80000000 or above, like 0xBF000000
+in my initial example) than on 64 bit (where it needs to be allocated at
+0x8000000000000000 or above). I did all of my testing on 32 bit.
+
+Please let me know if you request a CVE, or if you need more information
+from me.
+
+Guido

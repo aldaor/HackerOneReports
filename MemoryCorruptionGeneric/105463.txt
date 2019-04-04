@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/105463
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/hacker00000000
+ReportedTo:Imgur(imgur)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:03.03.2016 17:26:21
+
+Summary:
+
+api.imgur.com permits SWF files on a non-HTTPS server to load data from this HTTPS server. Setting the secure attribute to false could compromise the security offered by HTTPS. In particular, setting this attribute to false opens secure content to snooping and spoofing attacks.
+
+The allow-access-from node has an optional attribute 'secure'. So say the crossdomain.xml on api.imgur.com has : 
+
+<allow-access-from domain="imgur.com" secure="false"/>
+<allow-access-from domain="*.imgur.com" secure="false"/>
+<allow-access-from domain="*.imgur-dev.com" secure="false"/>
+
+If this is set to true (default), a flash client retrieved over HTTP cannot access data on the ideanetsetter.yahoo.com over HTTPS.
+
+I can only think of one risk in setting secure to false: A user with a poisoned host file or DNS server might be diverted to a flash client on a fake http://subdomain.example.com.
+This flash client can now access sensitive data on api.imgur.com 
+
+
+Good Fix ,

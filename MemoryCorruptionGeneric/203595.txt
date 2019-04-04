@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/203595
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/soreks
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:800.0
+Severity:
+State:Closed
+DateOfDisclosure:29.03.2017 23:32:07
+
+Summary:
+
+The patch of the report https://hackerone.com/reports/192896 you forgot to add here https://github.com/Shopify/mruby-engine

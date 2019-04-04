@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/123091
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/daniyal_nasir
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.03.2017 1:40:06
+
+Summary:
+
+Hello,
+there is no rate limitation on entering "promo code" while upgrading the subscription.
+an attacker can bruteforce the promo code and could get a lot of benefits with that.
+
+https://rpm.newrelic.com/accounts/XXXXXXX/products
+
+i have tested this bug by attempting 500+ invalid promo code.
+and got the same json response on every request.
+
+{"info":null,"error":"Promotion \"XXXXXXX\" was not found"}
+
+A simple fix for this issue is that you should use captcha implementation after 5-6 invalid attempts, to prevent the bruteforce attacks from this vulnerability.

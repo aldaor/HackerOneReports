@@ -1,0 +1,42 @@
+ReportLink:https://hackerone.com/reports/12497
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/hhj4ck
+ReportedTo:Flash (IBB)(ibb-flash)
+BountyAmount:7500.0
+Severity:
+State:Closed
+DateOfDisclosure:07.10.2014 23:00:14
+
+Summary:
+
+Adobe Flash Player FileReference Use-after-Free Vulnerability
+------------------------------------------------------------------
+I. Summary
+Adobe Flash Player is prone to a vulnerability which leads to Use-after-Free. The FileReference Object which is used to access local files, when wrapped inside a custom defined Class could lead to a use-after-free operation. Successful exploits may allow an attacker to execute arbitrary code in the context of the affected application. 
+------------------------------------------------------------------
+II. Description
+Adobe Flash is a multimedia and software platform used for authoring of vector graphics, animation, games and rich Internet applications (RIAs) that can be viewed, played and executed in Adobe Flash Player. The FileReference Class provides a means to upload and download files between a user's computer and a server. An operating-system dialog box prompts the user to select a file to upload or a location for download.
+
+To trigger the Use-after-Free vulnerability, we start by building a wrapper Class, within which, we create and call member functions of FileReference. For our POC code snippet, the wrapper Class "Crash" is defined in Crash.as.
+If we go through the normal process of loading a local image (browse(), load()... sequence) via FileReference several times, memory corruption caused by read/write to freed memory will occur. In order to simplified the triggering process, we use the FileReferenceList Object instead, which allows us to load several images at the same time.
+
+To reproduce the problem via our poc code snippets, we should start by executing the poc.swf in the Internet Explorer. Then Click the "Click Me" button, choose all the images inside the "pics" folder. Normally, the memory crash caused by Use-after-Free will occur. If nothing happens after a few seconds, we could Click the button and do the same operations again. Orelse, copy and paste the images inside the "pics" folder so that we could load more images at the same time.
+
+In order to exploit this Use-after-Free Vulnerability to execute shellcode, an attacker may use multithread feature of Flash to HeapSpray the memory between the "Free" and "Use". 
+
+POC and its source code of this vulnerability could also be downloaded from here:
+http://www.hhjack.com.cn/report/FileReferenceUAF.rar (4.16 MB).
+lastest version of Adobe Flash Player has been tested under both Windows 7 and Windows XP.
+------------------------------------------------------------------
+III. Impact
+Use-after-Free
+------------------------------------------------------------------
+IV. Affected
+Adobe Flash Player under Windows XP and Windows 7.
+Other versions may also be affected.
+------------------------------------------------------------------
+V. Solution
+There is no known workaround at this time.
+------------------------------------------------------------------
+VI. Credit
+Wen Guanxing from Venustech is credited for this vulnerability.

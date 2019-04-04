@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/125400
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/trabajoduro_2
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.05.2016 23:42:42
+
+Summary:
+
+Your SPF record required more than 10 DNS Lookups to be performed during the test. The number of "include" mechanisms and chained "redirect' modifiers should be kept to a minimum.
+
+According to RFC 4408, 'SPF implementations MUST limit the number of mechanisms and modifiers that do DNS Lookups to at most 10 per SPF check, including any lookups caused by the use of the "include" mechanism or the "redirect" modifier"'.  The mechanisms of: "include", "mx", "a", "ptr", and "exists"  count against the limit of 10 lookups. The "all, "ip4", and "ip6" mechanisms do not count against the limit of 10 since they do not require a DNS Lookup.
+
+SPF implementations should be restrict the number of DNS Lookups to 10 per check in order to explicitly limit how much data will be accepted to:
+
+Prevent excessive bandwidth usage or memory usage
+Prevent DoS attacks
+If you use the "include" in your SPF record, it will have referenced SPF records evaluated with your SPF record and as a direct result the DNS Lookup count is dependent upon third parties. If you are close to reaching your limit of 10 DNS Lookups and someone in your "include" adds additional DNS record to their own SPF record, you could easily go over your limit of 10.
+
+How can you fix this?
+Prune unnecessary :include files from the SPF record.
+Use different domains for mail from different places so you don’t need one SPF record to rule them all.
+Don’t publish SPF records, rely on DKIM for authentication. Even Hotmail is checking DKIM these days.

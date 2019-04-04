@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/135946
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/guido
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:03.05.2016 18:19:00
+
+Summary:
+Severity: Low
+
+ASN1 Strings that are over 1024 bytes can cause an overread in applications using the X509_NAME_oneline() function on EBCDIC systems. This could result in arbitrary stack data being returned in the buffer.
+
+OpenSSL 1.0.2 users should upgrade to 1.0.2h
+OpenSSL 1.0.1 users should upgrade to 1.0.1t
+
+This issue was reported to OpenSSL on 5th March 2016 by Guido Vranken. The fix was developed by Matt Caswell of the OpenSSL development team.
+
+Note
+====
+
+As per our previous announcements and our Release Strategy (https://www.openssl.org/policies/releasestrat.html), support for OpenSSL version 1.0.1 will cease on 31st December 2016. No security updates for that version will be provided after that date. Users of 1.0.1 are advised to upgrade.
+
+Support for versions 0.9.8 and 1.0.0 ended on 31st December 2015. Those versions are no longer receiving security updates.
+https://github.com/openssl/openssl/commit/ea96ad5a206b7b5f25dad230333e8ff032df3219

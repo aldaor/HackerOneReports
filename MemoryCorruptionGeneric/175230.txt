@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/175230
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/guido
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.12.2016 13:16:26
+
+Summary:
+
+Note: OpenSSL decided not to assign a CVE, so I'm submitting this for reputation points.
+
+See:
+
+https://github.com/openssl/openssl/commit/6dcba070a94b1ead92f3e327cf207a0b7db6596f
+https://github.com/guidovranken/openssl-x509-vulnerabilities

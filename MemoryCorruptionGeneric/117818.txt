@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/117818
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/noob-boy
+ReportedTo:LeaseWeb(leaseweb)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.02.2016 20:15:14
+
+Summary:
+Missing SPF Records and DKIM policy
+-----------------------------------------------------
+At this moment the leaseweb.com domain is missing the appropriate SPF records and DKIM policy. We are aware of the attack scenarios and currently working on a solution. We will add the missing SPF records and DKIM policy as soon as possible (ETA 2016-04-01).
+

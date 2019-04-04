@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/135027
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/guido
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.05.2016 18:20:23
+
+Summary:
+
+https://github.com/openssl/openssl/commit/ffe9150b1508a0ffc9e724f975691f24eb045c05
+
+If a bounty isn't possible for these non-CVE vulns then I'd appreciate reputation points so it wasn't all for nothing :P.

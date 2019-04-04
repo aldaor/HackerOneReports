@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/141676
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/anish2good
+ReportedTo:Bime(bime)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.06.2016 21:31:53
+
+Summary:
+
+The BIME unable to load the datasource, when user has created larger number of data source , and as a result it's throws error poppup and the __enduser can't do any thing, the entire PAGE got broken, can't delete any datasources__ which leads entire BIME functionality broken
+
+__This is Error Popup Message__ Attached the screenshot FYR
+```
+An Error Occurred 
+```
+
+Steps to Reproduce 
+login to  my BIME __https://document.bime.io__ with my credentials
+```
+anish2good@yahoo.co.in
+Document@123
+```
+Click on Data sources as result you can see the Error Popup
+
+Once Confirm the Vulnerability, I will change my password  

@@ -1,0 +1,106 @@
+ReportLink:https://hackerone.com/reports/112632
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/guido
+ReportedTo:Tor(torproject)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:19.10.2017 10:16:26
+
+Summary:
+
+Hello,
+
+the name_parse function in libevent's DNS code is vulnerable to a buffer overread.
+```c
+ 935 static int
+ 936 name_parse(u8 *packet, int length, int *idx, char *name_out, int name_out_len) {
+ 937     int name_end = -1;
+ 938     int j = *idx;
+ 939     int ptr_count = 0;
+ 940 #define GET32(x) do { if (j + 4 > length) goto err; memcpy(&_t32, packet + j, 4); j += 4; x = ntohl(_t32); } while      (0)
+ 941 #define GET16(x) do { if (j + 2 > length) goto err; memcpy(&_t, packet + j, 2); j += 2; x = ntohs(_t); } while (0)
+ 942 #define GET8(x) do { if (j >= length) goto err; x = packet[j++]; } while (0)
+ 943 
+ 944     char *cp = name_out;
+ 945     const char *const end = name_out + name_out_len;
+ 946 
+ 947     /* Normally, names are a series of length prefixed strings terminated */
+ 948     /* with a length of 0 (the lengths are u8's < 63). */
+ 949     /* However, the length can start with a pair of 1 bits and that */
+ 950     /* means that the next 14 bits are a pointer within the current */
+ 951     /* packet. */
+ 952 
+ 953     for (;;) {
+ 954         u8 label_len;
+ 955         if (j >= length) return -1;
+ 956         GET8(label_len);
+ 957         if (!label_len) break;
+ 958         if (label_len & 0xc0) {
+ 959             u8 ptr_low;
+ 960             GET8(ptr_low);
+ 961             if (name_end < 0) name_end = j;
+ 962             j = (((int)label_len & 0x3f) << 8) + ptr_low;
+ 963             /* Make sure that the target offset is in-bounds. */
+ 964             if (j < 0 || j >= length) return -1;
+ 965             /* If we've jumped more times than there are characters in the
+ 966              * message, we must have a loop. */
+ 967             if (++ptr_count > length) return -1;
+ 968             continue;
+ 969         }
+ 970         if (label_len > 63) return -1;
+ 971         if (cp != name_out) {
+ 972             if (cp + 1 >= end) return -1;
+ 973             *cp++ = '.';
+ 974         }
+ 975         if (cp + label_len >= end) return -1;
+ 976         memcpy(cp, packet + j, label_len);
+ 977         cp += label_len;
+ 978         j += label_len;
+ 979     }
+ 980     if (cp >= end) return -1;
+ 981     *cp = '\0';                                                                                                   
+ 982     if (name_end < 0)
+ 983         *idx = j;
+ 984     else
+ 985         *idx = name_end;
+ 986     return 0;
+ 987  err:
+ 988     return -1;
+ 989 }
+```
+
+Prior to the memcpy on line 976 it is not asserted that the range (```packet + j```) - (```packet + j + label_len```) does not exceed the length of the ```packet``` buffer (as stored in variable ```length```). My proof of concept exploits the possibility to keep jumping around in the buffer (lines 959 - 968), until the buffer index (```j```) is at the very end --- then, an overread of 63 bytes will occur. No overwrite takes place.
+
+As you know, an overread *may* result in a crash, depending on a variety of factors.
+
+I believe the code in Tor is vulnerable and I will update this report with PoC against Tor itself as soon as I've constructed one.
+
+Nobody has been notified of this bug except you. I will not contact the libevent developers about this issue unless you explicitly request so. It's up to you to notify them yourself.
+
+To test against the latest version of libevent (libevent-2.0.22-stable.tar.gz):
+
+```sh
+CFLAGS="-fomit-frame-pointer -fsanitize=address" ./configure
+make -j4
+cd samples
+./dns-example -servertest
+```
+
+in a different terminal run
+```sh
+python libevent-poc.py
+```
+
+Output of ```dns-example``` should be:
+```
+EVUTIL_AI_CANONNAME in example = 2
+=================================================================
+==27496== ERROR: AddressSanitizer: stack-buffer-overflow on address 0x7ffcf5a7355c at pc 0x7f6096a6b652 bp 0x7ffcf5a72bb0 sp 0x7ffcf5a72ba8
+READ of size 1 at 0x7ffcf5a7355c thread T0
+
+...
+...
+```
+
+Guido

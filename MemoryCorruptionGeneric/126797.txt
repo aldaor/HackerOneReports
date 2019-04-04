@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/126797
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/agarri_fr
+ReportedTo:Tor(torproject)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:21.10.2017 16:44:58
+
+Summary:
+
+Hello,
+
+I'm not sure how to understand the rules regarding "Bonus over Base Bounty/Mozilla Bounty for code execution exploits". Are vulnerabilities affecting Firefox ESR 38.7 covered by this section?
+
+If yes, you may be interested by MFSA 2016-27 aka CVE-2016-1964:
+https://www.mozilla.org/en-US/security/advisories/mfsa2016-27/
+
+Live PoC at http://nicob.net/firefox-aeshooT3/Bug-2/AtomicBaseIncDec-write_av_at_null.xml

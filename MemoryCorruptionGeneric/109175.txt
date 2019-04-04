@@ -1,0 +1,79 @@
+ReportLink:https://hackerone.com/reports/109175
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/libnex
+ReportedTo:PHP (IBB)(ibb-php)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:20.01.2016 0:20:52
+
+Summary:
+
+Copy Paste of bug report at https://bugs.php.net/bug.php?id=71020
+Issue verified and fixed.
+
+Description:
+------------
+This is a vulnerability is in the function Collator::sortWithSortKeys. The vulnerable code is in ext/intl/collator/collator_sort.c
+
+1) Given an array, each element (hashData) is being referenced by a pointer in sortKeyIndxBuf[sortKeyCount].zstr (line 493):
+
+414: hash = Z_ARRVAL_P( array );
+...
+425: ZEND_HASH_FOREACH_VAL(hash, hashData) {
+....
+493: sortKeyIndxBuf[sortKeyCount].zstr = hashData;
+
+2) The array is then destroy and it's hashData elements freed (ref count -1):
+508: zval_ptr_dtor( array );
+
+
+3) Note that at this point sortKeyIndxBuf[sortKeyCount].zstr still contain pointers to the hashData elements which has been freed. In essence, sortKeyIndxBuf[sortKeyCount].zstr  are dangling pointers.
+
+4) A new array is reinitialized,
+510: array_init(array);
+
+5) The dangling pointers are then added as elements into the new array:
+515: zend_hash_next_index_insert( Z_ARRVAL_P(array), sortKeyIndxBuf[j].zstr);
+
+
+
+6) I've included a POC that triggers this  vulnerability, The POC can be obtained via: https://www.dropbox.com/s/5y9azo01hvflzug/collate-UAF-Poc.php?dl=0
+
+		-an array of 0xbb elements is being passed into the function
+		-sortKeyIndxBuf[0].zstr to sortKeyIndxBuf[0xba].zstr points to the elements in the array
+		- Array is destroyed via zval_ptr_dtor( array );
+		- sortKeyIndxBuf[0....0xba].zstr are now dangling pointers
+		- New array initialized (Hashtable with initial element size of 8)
+		- As the dangling pointers are added to array, the size of the Hashtable grows.
+		- As the Hashtable grows, it's allocated more memory via zend_hash_do_resize()
+		- It will then be allocated memory that co-incides with an address pointed to by the dangling pointer sortKeyIndxBuf[j].zstr. Thus sortKeyIndxBuf[j].zstr now no longer points to a valid zval.
+		- When the code below dereferences this address, because it is pointing to an invalid zval, it will access dereference whatever is the value within this "corrupted zval". In this case it's a null pointer dereference. 
+		  514:Z_TRY_ADDREF_P( sortKeyIndxBuf[j].zstr );
+
+
+
+Stopped reason: SIGSEGV
+0x000000000069f9cd in zval_addref_p (pz=0x7fffed28f840) at /home/elaw/php-7.0.0RC8/Zend/zend_types.h:822
+822             return ++GC_REFCOUNT(Z_COUNTED_P(pz));
+gdb-peda$ bt
+#0  0x000000000069f9cd in zval_addref_p (pz=0x7fffed28f840) at /home/elaw/php-7.0.0RC8/Zend/zend_types.h:822
+#1  zif_collator_sort_with_sort_keys (execute_data=0x7fffed213120, return_value=0x7fffed213110) at /home/elaw/php-7.0.0RC8/ext/intl/collator/collator_sort.c:514
+#2  0x0000000000ae496c in ZEND_DO_FCALL_SPEC_HANDLER () at /home/elaw/php-7.0.0RC8/Zend/zend_vm_execute.h:842
+#3  0x0000000000ae0a37 in execute_ex (ex=0x7fffed213030) at /home/elaw/php-7.0.0RC8/Zend/zend_vm_execute.h:414
+#4  0x0000000000ae135e in zend_execute (op_array=0x7fffed27f000, return_value=0x0) at /home/elaw/php-7.0.0RC8/Zend/zend_vm_execute.h:458
+#5  0x0000000000a58578 in zend_execute_scripts (type=0x8, retval=0x0, file_count=0x3) at /home/elaw/php-7.0.0RC8/Zend/zend.c:1428
+#6  0x00000000009b143d in php_execute_script (primary_file=0x7fffffffdee0) at /home/elaw/php-7.0.0RC8/main/main.c:2471
+#7  0x0000000000bb41e3 in do_cli (argc=0x2, argv=0x14cc4d0) at /home/elaw/php-7.0.0RC8/sapi/cli/php_cli.c:974
+#8  0x0000000000bb53b5 in main (argc=0x2, argv=0x14cc4d0) at /home/elaw/php-7.0.0RC8/sapi/cli/php_cli.c:1345
+#9  0x00007ffff0c5ab45 in __libc_start_main (main=0xbb4d24 <main>, argc=0x2, argv=0x7fffffffe328, init=<optimized out>, fini=<optimized out>, rtld_fini=<optimized out>,
+    stack_end=0x7fffffffe318) at libc-start.c:287
+#10 0x0000000000445719 in _start ()
+
+
+This bug seems to have been introduced in this commit: Bug introducted in https://github.com/php/php-src/commit/4fbaddb4f8b041769bea7efdd12313641387bd14
+Only php 7 is affected.
+
+According to their developer:
+stas@php.net
+Putting this in public before the release probably wasn't the best idea, as this could be exploitable if the sortable data is user-controlled.

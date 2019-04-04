@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/135152
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/hji
+ReportedTo:PHP (IBB)(ibb-php)
+BountyAmount:1500.0
+Severity:
+State:Closed
+DateOfDisclosure:05.05.2016 21:20:48
+
+Summary:
+
+https://bugs.php.net/bug.php?id=71923

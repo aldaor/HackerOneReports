@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/142472
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/guido
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:20.09.2016 10:27:41
+
+Summary:
+https://www.openssl.org/blog/blog/2016/06/27/undefined-pointer-arithmetic/
+1.0.2 version here:
+https://github.com/openssl/openssl/commit/a004e72b95835136d3f1ea90517f706c24c03da7
+
+1.0.1 version here:
+https://github.com/openssl/openssl/commit/6f35f6deb5ca7daebe289f86477e061ce3ee5f46
+
+```
+These will get listed in the next security advisory and rolled up in the next release whenever that is.
+```
+
+according to the OpenSSL team.

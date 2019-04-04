@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/135945
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/guido
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:03.05.2016 18:18:51
+
+Summary:
+Severity: Low
+
+An overflow can occur in the EVP_EncryptUpdate() function. If an attacker is able to supply very large amounts of input data after a previous call to EVP_EncryptUpdate() with a partial block then a length check can overflow resulting in a heap corruption. Following an analysis of all OpenSSL internal usage of the EVP_EncryptUpdate() function all usage is one of two forms. The first form is where the EVP_EncryptUpdate() call is known to be the first called function after an EVP_EncryptInit(), and therefore that specific call must be safe. The second form is where the length passed to EVP_EncryptUpdate() can be seen from the code to be some small value and therefore there is no possibility of an overflow. Since all instances are one of these two forms, it is believed that there can be no overflows in internal code due to this problem. It should be noted that EVP_DecryptUpdate() can call EVP_EncryptUpdate() in certain code paths. Also EVP_CipherUpdate() is a synonym for EVP_EncryptUpdate(). All instances of these calls have also been analysed too and it is believed there are no instances in internal usage where an overflow could occur.
+
+This could still represent a security issue for end user code that calls this function directly.
+
+OpenSSL 1.0.2 users should upgrade to 1.0.2h
+OpenSSL 1.0.1 users should upgrade to 1.0.1t
+
+This issue was reported to OpenSSL on 3rd March 2016 by Guido Vranken. The fix was developed by Matt Caswell of the OpenSSL development team.
+https://github.com/openssl/openssl/commit/3f3582139fbb259a1c3cbb0a25236500a409bf26

@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/127918
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/decoder
+ReportedTo:Uber(uber)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 22:37:26
+
+Summary:
+
+By this Bug we can easily spam anyone's phone with Uber Sms
+
+We just need to use his/her phone number while registration and Open https://partners.uber.com/dashboard/documents/
+so we have 2 option 1st is upload and 2nd is Send Sms on phone 
+so we can spam anyone's phone by using sms feature 
+you should use phone number verification process or sms limit in one day   Thanks

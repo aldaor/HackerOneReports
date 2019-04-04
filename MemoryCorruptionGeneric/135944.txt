@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/135944
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/guido
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:03.05.2016 18:18:43
+
+Summary:
+Severity: Low
+
+An overflow can occur in the EVP_EncodeUpdate() function which is used for Base64 encoding of binary data. If an attacker is able to supply very large amounts of input data then a length check can overflow resulting in a heap corruption.
+
+Internally to OpenSSL the EVP_EncodeUpdate() function is primarly used by the PEM_write_bio* family of functions. These are mainly used within the OpenSSL command line applications. These internal uses are not considered vulnerable because all calls are bounded with length checks so no overflow is possible. User applications that call these APIs directly with large amounts of untrusted data may be vulnerable. (Note: Initial analysis suggested that the PEM_write_bio* were vulnerable, and this is reflected in the patch commit message. This is no longer believed to be the case).
+
+OpenSSL 1.0.2 users should upgrade to 1.0.2h
+OpenSSL 1.0.1 users should upgrade to 1.0.1t
+
+This issue was reported to OpenSSL on 3rd March 2016 by Guido Vranken. The fix was developed by Matt Caswell of the OpenSSL development team.
+https://github.com/openssl/openssl/commit/ee1e3cac2e83abc77bcc8ff98729ca1e10fcc920

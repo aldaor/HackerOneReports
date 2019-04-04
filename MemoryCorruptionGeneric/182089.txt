@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/182089
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/madrobot
+ReportedTo:Pushwoosh(pushwoosh)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:22.11.2016 4:24:58
+
+Summary:
+Attacker was able to spam users via invites

@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/119989
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/guido
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.03.2016 0:06:00
+
+Summary:
+
+Public disclosure, although I did inform the OpenSSL people beforehand.
+
+https://guidovranken.wordpress.com/2016/03/01/public-disclosure-malformed-private-keys-lead-to-heap-corruption-in-b2i_pvk_bio/

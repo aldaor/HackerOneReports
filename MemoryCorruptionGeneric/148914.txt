@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/148914
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/ahsan
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.07.2016 21:02:26
+
+Summary:
+
+Hey, I've found a session management issue in CMS Airship [bridge.cspr.ng]
+
+Issue
+----------
+[*] When the password of an account is changed from a session, other sessions doesn't expire!
+
+### Steps to Reproduce
+[+] We Need to use two broswers
+
+1. Login to one browser
+2. Login to second browser
+3. Then change the password from one browser.
+4. After changing the password, go to other browser, the session will still be alive
+
+- That means, server-side session not expire after password change.
+
+How to Fix?
+---------------
+Server-side session should expire after password is changed from one session, or it should ask (either logout from other devices/browsers OR don't destroy the session [Like facebook does when changing password])
+
+I hope you'll fix this soon! :-)
+
+Thanks,
+-Ahsan Tahir

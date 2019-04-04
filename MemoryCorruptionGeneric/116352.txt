@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/116352
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/kira_evil
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:15.02.2016 22:07:20
+
+Summary:
+
+A heap-based buffer overflow in the SPDY implementation in nginx 1.3.15 before 1.4.7 and 1.5.x before 1.5.12 allows remote attackers to execute arbitrary code via a crafted request. The problem affects nginx compiled with the ngx_http_spdy_module module (which is not compiled by default) and without --with-debug configure option, if the "spdy" option of the "listen" directive is used in a configuration file.
+This vulnerability affects Web Server. 
+
+Current version is : nginx/1.4.6
+
+The impact of this vulnerability:
+An attacker can cause a heap memory buffer overflow in a worker process by using a specially crafted request, potentially resulting in arbitrary code execution.
+
+How to fix this vulnerability:
+Upgrade nginx to the latest version of apply the patch provided by the vendor.
+
+Screenshots attached for the reference.

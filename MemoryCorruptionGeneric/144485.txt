@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/144485
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/guido
+ReportedTo:Ruby(ruby)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.06.2016 0:57:04
+
+Summary:
+
+(originally send by e-mail on 6 Jun 2016)
+
+Configure with ASAN AddressSanitizer:
+
+```
+mkdir install; CFLAGS="-fsanitize=address" ./configure
+--disable-install-doc --disable-install-rdoc --disable-install-capi
+-prefix=`realpath ./install` && make -j4 && make install
+```
+
+Then execute:
+
+```
+$ ./ruby -e '"a".encode("utf-32").tr("b".encode("utf-32"),
+"c".encode("utf-32"))'
+=================================================================
+==17122==ERROR: AddressSanitizer: heap-buffer-overflow on address
+0x602000014a98 at pc 0x7ff04065cf01 bp 0x7ffdfe7629b0 sp 0x7ffdfe7629a8
+WRITE of size 4 at 0x602000014a98 thread T0
+...
+...
+```
+
+The actual corruption occurs here:
+
+```c
+6196     TERM_FILL(t, rb_enc_mbminlen(enc));
+```
+
+Guido

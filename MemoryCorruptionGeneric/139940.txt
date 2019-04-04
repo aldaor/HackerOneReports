@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/139940
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/aaditya_purani
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:16.06.2016 6:26:28
+
+Summary:
+##Issue
+
+The reporter found one SSH-server (mobilelt.lahitapiola.fi) in the LocalTapiola network which had some issues. The SSH-server was not patched and it was open to the internet. 
+
+##Fix
+
+The issue was investigated and found to be valid although outside of the bug bounty program scope. The service provider responsible for the SSH-server blocked the ssh-port from the internet. The SSH-server did not reside on a network where customer information was handled and customer information was never at risk.
+
+##Reasoning
+
+Most out of scope reports are closed as informative as they are not part of the bug bounty program but might provide good information (please see the policy for more information). As LocalTapiola does take security seriously, there are cases where actions are warranted also on out of scope reports. In this specific case, the report as such made it very easy to understand and pinpoint the issue, as well as to inform the third party service provider responsible for managing the SSH-server. As actions were taken to fix the issue, there was a decision to award the reporter and do a public disclosure.

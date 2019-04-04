@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/119033
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/hacker00000000
+ReportedTo:Cakebet(cakebet)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.03.2016 11:40:18
+
+Summary:
+
+Hi Security Team ,
+
+Your SPF record suffers from a “too many lookups” error.
+
+The specifications for the SPF record limit the number of lookups (such as, translating a name to an IP address) to 10.
+
+An SPF record like what is shown below will have the too many lookup errors :
+
+Found v=spf1 record for cakebet.com: 
+v=spf1 mx include:zoho.com include:smtp1.uservoice.com include:amazonses.com include:_spf.google.com ~all 
+
+evaluating...
+Results - PermError SPF Permanent Error: Too many DNS lookups
+
+- How to Fix it :
+Make the SPF record passed validation test with pySPF (Python SPF library)
+
+Good Fix ,

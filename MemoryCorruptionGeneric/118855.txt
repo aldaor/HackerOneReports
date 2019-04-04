@@ -1,0 +1,43 @@
+ReportLink:https://hackerone.com/reports/118855
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/guido
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:27.03.2016 23:33:14
+
+Summary:
+Severity: Low
+
+The internal |fmtstr| function used in processing a "%s" format string in the
+BIO_*printf functions could overflow while calculating the length of a string
+and cause an OOB read when printing very long strings.
+
+Additionally the internal |doapr_outch| function can attempt to write to an OOB
+memory location (at an offset from the NULL pointer) in the event of a memory
+allocation failure. In 1.0.2 and below this could be caused where the size of a
+buffer to be allocated is greater than INT_MAX. E.g. this could be in processing
+a very long "%s" format string. Memory leaks can also occur.
+
+The first issue may mask the second issue dependent on compiler behaviour.
+These problems could enable attacks where large amounts of untrusted data is
+passed to the BIO_*printf functions. If applications use these functions in this
+way then they could be vulnerable. OpenSSL itself uses these functions when
+printing out human-readable dumps of ASN.1 data. Therefore applications that
+print this data could be vulnerable if the data is from untrusted sources.
+OpenSSL command line applications could also be vulnerable where they print out
+ASN.1 data, or if untrusted data is passed as command line arguments.
+
+Libssl is not considered directly vulnerable. Additionally certificates etc
+received via remote connections via libssl are also unlikely to be able to
+trigger these issues because of message size limits enforced within libssl.
+
+This issue affects OpenSSL versions 1.0.2 and 1.0.1.
+
+OpenSSL 1.0.2 users should upgrade to 1.0.2g
+OpenSSL 1.0.1 users should upgrade to 1.0.1s
+
+This issue was reported to OpenSSL on February 23rd by Guido Vranken.  The
+fix was developed by Matt Caswell of the OpenSSL development team.
+https://github.com/openssl/openssl/commit/9cb177301fdab492e4cfef376b28339afe3ef663

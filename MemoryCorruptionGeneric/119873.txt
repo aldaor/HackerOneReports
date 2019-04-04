@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/119873
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/guido
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:27.03.2016 23:33:43
+
+Summary:
+Severity: Low
+
+In the BN_hex2bn function the number of hex digits is calculated using an int
+value |i|. Later |bn_expand| is called with a value of |i * 4|. For large values
+of |i| this can result in |bn_expand| not allocating any memory because |i * 4|
+is negative. This can leave the internal BIGNUM data field as NULL leading to a
+subsequent NULL ptr deref. For very large values of |i|, the calculation |i * 4|
+could be a positive value smaller than |i|. In this case memory is allocated to
+the internal BIGNUM data field, but it is insufficiently sized leading to heap
+corruption. A similar issue exists in BN_dec2bn. This could have security
+consequences if BN_hex2bn/BN_dec2bn is ever called by user applications with
+very large untrusted hex/dec data. This is anticipated to be a rare occurrence.
+
+All OpenSSL internal usage of these functions use data that is not expected to
+be untrusted, e.g. config file data or application command line arguments. If
+user developed applications generate config file data based on untrusted data
+then it is possible that this could also lead to security consequences. This is
+also anticipated to be rare.
+
+This issue affects OpenSSL versions 1.0.2 and 1.0.1.
+
+OpenSSL 1.0.2 users should upgrade to 1.0.2g
+OpenSSL 1.0.1 users should upgrade to 1.0.1s
+
+This issue was reported to OpenSSL on February 19th 2016 by Guido Vranken.  The
+fix was developed by Matt Caswell of the OpenSSL development team.
+https://openssl.org/news/secadv/20160301.txt
