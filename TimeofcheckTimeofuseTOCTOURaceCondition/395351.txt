@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/395351
+WeaknessName:Time-of-check Time-of-use (TOCTOU) Race Condition
+Reporter:https://hackerone.com/encrypt
+ReportedTo:Chaturbate(chaturbate)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:27.09.2018 12:21:48
+
+Summary:
+The hacker found that it was possible to add more than the limit of 5 whitelabel subdomains. The 5 limit is a soft limit, however we resolved this.

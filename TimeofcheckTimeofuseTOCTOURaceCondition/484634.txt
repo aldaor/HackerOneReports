@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/484634
+WeaknessName:Time-of-check Time-of-use (TOCTOU) Race Condition
+Reporter:https://hackerone.com/hudmi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:05.03.2019 9:00:58
+
+Summary:
+Race condition (TOCTOU) in pandao.ru marketplace allowed to use bonus points more than once.
+
+On the time of reporting, pandao.ru runs temporary pre-bug bounty competition program with $1000 bounties for vulnerabilities related to money/points/orders manipulation
