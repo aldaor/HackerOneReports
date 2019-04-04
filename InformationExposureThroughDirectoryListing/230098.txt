@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/230098
+WeaknessName:Information Exposure Through Directory Listing
+Reporter:https://hackerone.com/pahan1234
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.05.2017 21:53:04
+
+Summary:
+
+STEP:
+====================
+1. goto https://bridge.cspr.ng/login and enter your username,password
+2.  click "LogIn" and intercept the request
+3.   change the value in cookie header and add '(single quote) in PHPSESSID field
+      eg: PHPSESSID=kn7e21dpp2ocai2ckn1v147qev'
+4.  Forward the packet and see full path is disclose
+{F186342}

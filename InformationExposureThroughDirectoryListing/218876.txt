@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/218876
+WeaknessName:Information Exposure Through Directory Listing
+Reporter:https://hackerone.com/lukasreschke
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:06.06.2017 11:52:37
+
+Summary:
+#[Share tokens for public calendars disclosed (NC-SA-2017-011)](https://nextcloud.com/security/advisory/?id=nc-sa-2017-011)
+
+**Risk level:** Medium
+**CVSS v3 Base Score:** 4.3 (AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:N)
+**CWE:** Information Exposure Through Directory Listing (CWE-548)
+
+#Description
+A logical error caused disclosure of valid share tokens for public calendars. Thus granting an attacker potentially access to publicly shared calendars without knowing the share token.
+
+#Affected Software
+- Nextcloud Server < 11.0.3 (CVE-2017-0894)
+
+#Action Taken
+The error has been fixed and regression tests been added.
+
+#Acknowledgements
+The Nextcloud team thanks the following people for their research and responsible disclosure of the above advisory:
+
+- Lukas Reschke - Nextcloud GmbH (lukas@nextcloud.com) - Vulnerability discovery and disclosure.
+

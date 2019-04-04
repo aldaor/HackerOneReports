@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/260221
+WeaknessName:Information Exposure Through Directory Listing
+Reporter:https://hackerone.com/mobius07
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:17.05.2018 9:04:38
+
+Summary:
+
+Hello.
+
+I found open directories on the site https://apps.nextcloud.com, which can be viewed by any unauthorized user. There is an error at https://apps.nextcloud.com/static/. F212856
+All directories and files in them, starting with `/static/` can be viewed or downloaded with all the content. Perhaps there is some kind of confidential information. 
+
+Decision:
+Disable directory browsing.  If this is required, make sure the listed files does not induce risks.
+
+Thank you

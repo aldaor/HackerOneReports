@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/403909
+WeaknessName:Information Exposure Through Directory Listing
+Reporter:https://hackerone.com/ismailtsdln
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:07.01.2019 11:55:08
+
+Summary:
+
+Hi Security Team,
+
+Url : https://apps.nextcloud.com/static/assets/
+Dork : site:nextcloud.com intitle:index.of
+
+Hello I am Ismail Tasdelen. I was testing directory security and I saw many directories open.
+
+Thanks
+
+## Impact
+
+A directory listing is inappropriately exposed, yielding potentially sensitive information to attackers.  This is a motive source for attackers.

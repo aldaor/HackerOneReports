@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/461242
+WeaknessName:Information Exposure Through Directory Listing
+Reporter:https://hackerone.com/shrey3
+ReportedTo:RATELIMITED(ratelimited)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:24.12.2018 10:17:36
+
+Summary:
+
+**Summary:** A misconfigured server can show a directory listing, which could potentially yield sensitive information to an attacker. 
+
+**Solution** :     
+1.  Disable directory listings in the web- or application-server configuration by default.
+2. Restrict access to unnecessary directories and files.
+3. Create an index (default) file for each directory.
+
+## Steps To Reproduce:
+
+(Add details for how we can reproduce the issue)
+
+  1. go to ratelimited.me
+  2. right click on and image and open it
+  3.  go to this url https://ratelimited.me/assets/
+  4. Click on parent directory
+  5. now you can access all the folders shown
+
+
+Some Examples :
+1. https://ratelimited.me/assets/sass/material-kit/sections/
+2. https://ratelimited.me/assets/sass/material-kit/plugins/
+3. https://ratelimited.me/assets/js/
+4. https://ratelimited.me/assets/css/
+
+## Impact
+
+A directory listing provides an attacker with the complete index of all the resources located inside of the directory. The specific risks and consequences vary depending on which files are listed and accessible.

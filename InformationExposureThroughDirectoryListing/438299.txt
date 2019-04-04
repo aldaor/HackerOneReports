@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/438299
+WeaknessName:Information Exposure Through Directory Listing
+Reporter:https://hackerone.com/ameerpornillos
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:11.02.2019 17:47:03
+
+Summary:
+
+**Summary:** Researcher has found directory listing exposure to several vcache**.usw2.snappytv.com websites. A directory listing provides an attacker with the complete index of all the resources located inside of the directory as well as download or access its contents. 
+
+While the researcher did not dig deeper on to the available files, it might be possible that these websites host sensitive information like private videos which can publicly be downloaded or accessed by any user.
+
+## Steps To Reproduce:
+
+Browse to the URLs below to see the vulnerability.
+
+1. http://vcache01.usw2.snappytv.com/media/
+2. http://vcache02.usw2.snappytv.com/media/
+3. http://vcache03.usw2.snappytv.com/media/
+4. http://vcache04.usw2.snappytv.com/media/
+5. http://vcache05.usw2.snappytv.com/media/
+6. http://vcache06.usw2.snappytv.com/media/
+7. http://vcache07.usw2.snappytv.com/media/
+8. http://vcache08.usw2.snappytv.com/media/
+
+## Impact:
+A directory listing provides an attacker with the complete index of all the resources located inside of the directory. The specific risks and consequences vary depending on which files are listed and accessible. The files can possibly expose sensitive information as well as sensitive files like private videos or photos.
+
+## Supporting Material/References:
+**Proof**
+{F373267}
+
+## Impact
+
+A directory listing provides an attacker with the complete index of all the resources located inside of the directory. The specific risks and consequences vary depending on which files are listed and accessible. The files can possibly expose sensitive information as well as sensitive files like private videos or photos.

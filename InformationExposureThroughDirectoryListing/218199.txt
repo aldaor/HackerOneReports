@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/218199
+WeaknessName:Information Exposure Through Directory Listing
+Reporter:https://hackerone.com/xyberwolf
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:14.07.2017 13:18:03
+
+Summary:
+
+Hi Sir/Madam ,
+
+I found a directory listing bug in one of your subdomain - https://apps.nextcloud.com
+
+Here is the location of directory listing
+https://apps.nextcloud.com/static/
+
+here is the access to some of your files
+
+By,
+Baskaran (XyberWolf)

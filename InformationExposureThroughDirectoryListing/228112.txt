@@ -1,0 +1,43 @@
+ReportLink:https://hackerone.com/reports/228112
+WeaknessName:Information Exposure Through Directory Listing
+Reporter:https://hackerone.com/pahan1234
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:21.06.2017 1:46:18
+
+Summary:
+
+ i found three vulnerability
+Directory information disclose,Email address disclose, and possible Remote code execution in Zendmail
+during signup your code accept username with ',",/,@ while all of the special character must be forbidden or encoded in username
+
+Directory Disclose:
+______________________
+ 1. goto sign-up  page and create a account with  username with double quote like as"
+2. signin and goto ur account and add email address, then logout 
+3.goto Forgot-Password section and enter username of above ( as" )
+4.and see full path of server has been disclose (screenshot: directory.png)
+
+Email address Disclose
+_________________________
+if you look close to screenshot below that email address of the user also disclose
+
+Zendmail rce
+________________________________
+from the above screenshot, ur are using zendmail for email verification
+and searching through exploit of zendmail ,i found that  Zendmail is vulnerable to Remote code Execution
+a security researcher Dawid Golunski discover its flaw CVE-2016-10034 in December
+where user can set corrupted email like '"attacker\" -oQ/tmp/ -X/var/www/cache/phpcode.php "@email.com'; cause RCE
+His link https://legalhackers.com/advisories/ZendFramework-Exploit-ZendMail-Remote-Code-Exec-CVE-2016-10034-Vuln.html
+its possible to add such email in user account
+i also reported  this flaw of email REGEX  https://hackerone.com/reports/226334 but you ignored
+
+i also tried this payload but cant confirm that file has been created or not because i was testing in your website
+you can also confirm by locally
+
+Using the above username ( as") break the sql query during email sending cause exception throw
+
+also checked that if i used that username in password reset ,server response time is delayed
+it may cause Dos attack but it not possible in that case because u using Cloudflare network to prevent

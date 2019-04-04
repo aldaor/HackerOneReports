@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/278225
+WeaknessName:Information Exposure Through Directory Listing
+Reporter:https://hackerone.com/hackerneo
+ReportedTo:CodeIgniter(codeigniter)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:18.10.2017 2:35:59
+
+Summary:
+
+The attacker can check the website's backend technology simply by typing site_name/index.php/welcome/index it will display the codeigniter welcome page if the developer dosen't removed the built in controller and view welcome.php and welcome_message.php i attaching a screenshot below as a proof of concept
