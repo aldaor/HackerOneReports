@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/178506
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/sameoldstory
+ReportedTo:Instacart(instacart)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:24.12.2016 8:35:09
+
+Summary:
+
+# Overview
+
+When user creates a list, they can choose to not make it public. However the attacker can still access the information that user chose to hide.
+
+# Steps to Reproduce
+
+1. Log in to Instacart.
+2. Choose a private list that you want to see, for example the one with id = 10.
+3. Go to https://www.instacart.com/api/v2/recipes/10
+4. Response reveals all metadata of the list including title, description and image.
+
+# Security Implications
+
+The attacker can use this vulnerability to obtain metadata of any list regardless of what the visible flag is set to. Also, since list id is incremental it's easy to fetch metadata for all Instacart lists, both public and private.

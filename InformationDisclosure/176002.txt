@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/176002
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/cablej
+ReportedTo:Coinbase(coinbase)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:16.11.2016 18:59:46
+
+Summary:
+In the Coinbase Buy Widget flow, we were displaying the last 4 digits of a user's phone number for verification purposes (e.g. "we've send a code to xxx-1234").  Industry standard seems to be 2 digits instead of 4, so we now mask all but the last 2 digits.

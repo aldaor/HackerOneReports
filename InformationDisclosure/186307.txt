@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/186307
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/clizsec
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:27.04.2017 20:19:47
+
+Summary:
+A misconfigured Department of Defense webserver improperly disclosed application information. @clizsec was able to demonstrate this vulnerability by crafting a specially formatted URL.

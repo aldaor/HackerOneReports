@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/183318
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ph_spade
+ReportedTo:OWOX, Inc.(owox)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:22.05.2017 9:52:11
+
+Summary:
+I can access the website through its IP following its default port which is port 80 .. it means that the hacker can Execute a DDOS on your website..
+
+Actual IP and Port accessible:: 104.155.10.15:80
+just copy and paste it in URL address bar..

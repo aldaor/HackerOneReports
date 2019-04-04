@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/179217
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/goodman97
+ReportedTo:Blockchain(blockchain)
+BountyAmount:50.0
+Severity:low
+State:Closed
+DateOfDisclosure:15.12.2016 7:00:05
+
+Summary:
+404 page was disclosing platform version details. Fixed.

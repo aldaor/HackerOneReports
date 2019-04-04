@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/172609
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/iamsha4yan
+ReportedTo:Ian Dunn(iandunn-projects)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:06.10.2016 17:18:48
+
+Summary:
+
+Hello
+#Vulnerable File and Link :
+`http://localhost/wordpress/wp-content/plugins/google-authenticator-per-user-prompt/views/requirements-error.php`
+
+
+#Vulnerable Link :
+8
+`<em>(You're running version <?php echo PHP_VERSION; ?>)</em>`
+
+#Vulnerable Code:
+`<?php echo PHP_VERSION; ?>`
+
+Good Luck/

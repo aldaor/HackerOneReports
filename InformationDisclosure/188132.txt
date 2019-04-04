@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/188132
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/cr4zyrud
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:04.12.2016 9:03:23
+
+Summary:
+
+Hi @nextcloud ,
+
+#Description
+Wordpress version disclosure.
+
+#Affected items
+https://nextcloud.com/readme.html
+https://nextcloud.com/wp-admin/install.php
+https://nextcloud.com/wp-login.php
+
+#The impact of this vulnerability
+Possible Wordpress Version information disclosure.You are using wordpress 4.6.1 version also you not delete **`https://nextcloud.com/wp-admin/install.php`** if you got any type of database problem in your site attacker try to install it for deface,And to be noted that you not protect your admin panel **`https://nextcloud.com/wp-login.php`** with captcha attacker can easily Bruteforce your admin panel.
+
+#Web references
+* http://www.hackingtutorials.org/web-application-hacking/hack-a-wordpress-website-with-wpscan/
+
+#How to fix this vulnerability
+1. Just Delete The **readme.html** from **`/`** root path
+1. and also delete **install.php** from **`/wp-admin/`**
+
+Please resolved as close if not acceptable.Because this is my first hunting ;) .
+**Thanks**

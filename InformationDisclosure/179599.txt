@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/179599
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/lewerkun
+ReportedTo:Blockchain(blockchain)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:03.11.2016 19:53:48
+
+Summary:
+The reporter identified mildly sensitive information leaked through an internal ticket-tracking system, due to a flaw in the ticket-tracking system setting some items to a "Public" shared default setting. We made adjustments to the ticket-tracking system and resolved the issue.

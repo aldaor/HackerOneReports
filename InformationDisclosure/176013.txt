@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/176013
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/koenrh
+ReportedTo:Vimeo(vimeo)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:29.09.2017 17:40:27
+
+Summary:
+An insecure bucket was discovered on the GCP platform that had some debug information in it.  Steps were taken to secure the bucket and it's contents.

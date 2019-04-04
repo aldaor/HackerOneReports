@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/174721
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/kedrisch
+ReportedTo:Twitter(twitter)
+BountyAmount:1260.0
+Severity:medium
+State:Closed
+DateOfDisclosure:14.11.2016 17:09:11
+
+Summary:
+
+https://publish.twitter.com/?url=https://twitter.com/*private_account_id*/likes
+
+POC:
+Private account https://twitter.com/testprivateacc1
+
+https://publish.twitter.com/?url=https://twitter.com/testprivateacc1/likes

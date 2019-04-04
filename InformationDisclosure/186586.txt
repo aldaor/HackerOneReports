@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/186586
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/hackerish
+ReportedTo:OWOX, Inc.(owox)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:06.01.2017 15:21:48
+
+Summary:
+Hi,
+I was looking at the office.owox.com on port 3000 Grafana webapp. I'm not sure if it is for demo purposes, but I can access the main dashboard and view all graphs. I am also able to sign in and create my own organizations, dashboards etc. I searched on the net for any reference to this web application but I failed to locate one. That's why I thought I probably have to notify you in case it is not intended to be open to everyone on the wild.
+
+If indeed it is for demo purposes, please let me close the report myself.
+looking forward to hearing from you
+Thank you

@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/175760
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/mohamedsherif
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:12.01.2017 19:04:42
+
+Summary:
+
+By looking in the css of " olx.com.eg " i found that the logo src is linking to an external website
+ https://olxegstatic-a.akamaihd.net/bd498cb-868/packed/img/2fc685b4081782d863b0c0c452ee54197b.png
+this was so normal until i simply changed the url to just
+https://olxegstatic-a.akamaihd.net/
+I found then a full xml file that contains all the files hosted in this (cdn i believe) including important files like the ".htaccess" and the ability to easily download it and open all the content inside it
+This vulnerability is dangerous because of it giving access to all the files on the cdn or this hosting platform
+On the other hand , no html or php files were found which is great

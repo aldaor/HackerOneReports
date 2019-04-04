@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/186230
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/japz
+ReportedTo:HackerOne(security)
+BountyAmount:12500.0
+Severity:high
+State:Closed
+DateOfDisclosure:30.11.2016 9:18:19
+
+Summary:
+This issue was introduced on Monday, November 21st and resolved one week later on Monday, November 28th, within 90 minutes of the report being filed. We'd like to thank @japzdivino for bringing this to our attention and for working with us as we resolved the issue.
+
+A new "Export as .zip" feature was released that permits teams to export the full contents of a report (including any internal comments and attachments). This is a useful feature for when a team needs to relay the full contents of a report to other colleagues who may not have access to HackerOne.
+
+In this particular case, the vulnerability allowed for downloading internal attachments that would normally only be visible by team members. As part of our standard Root Cause Analysis, we also discovered that inline attachments could be misused to potentially view internal attachments at a future point based on guessing attachment identifiers.
+
+HackerOne performed a thorough investigation of all uses of the "Export as .zip" functionality and have found no evidence of malicious exploitation of this vulnerability.
+
+Note that although #182358 looks similar on the surface, it is unrelated, as it was fixed before this issue was introduced.
+Hello HackerOne Team
+
+This newly disclosed report: #182358 __Partial disclosure of report activity through new "Export as .zip" feature__ was not completely fix.
+
+I have found that i can still view the attachment after it is being removed on the thread.
+
+Best PoC is this #182358 since this is the newly fix and disclosed.
+
+Steps to reproduce
+
+  1. Go to https://hackerone.com/reports/182358
+  2. Export the report as .zip
+  3. Now extract the .zip file (`HackerOne_Report-security#182358.zip`)
+  4. You will see that the image is still there, but base on the thread, you guys removed it on disclosed report.
+
+I have attached the .zip file downloaded and save on my local and i can still view the removed image.
+
+__Disclosed partially removed attachment:__ {F138022}
+
+Regards
+Japz

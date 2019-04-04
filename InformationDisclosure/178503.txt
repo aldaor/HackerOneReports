@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/178503
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/kushal89shah
+ReportedTo:Uber(uber)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:17.05.2017 15:15:38
+
+Summary:
+The `www.uber.com/a/join?invite_code=inviteCode` endpoint returned email and/or phone number for the user with the invite code `inviteCode`. 
+
+Since protecting our users data is our top priority, we were very interested in this report. It was also a pleasure to work with @kushal89shah and we look forward to more reports in the future!

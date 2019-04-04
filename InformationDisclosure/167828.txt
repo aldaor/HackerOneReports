@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/167828
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ayoubfathi_
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.09.2016 23:29:33
+
+Summary:
+@ayoubfathi found a strong indicator of the existence of some private programs which were using SAML. Although it was not definitive, and we also warn teams using SAML that doing so removes their reasonable expectation of not being discoverable, we made some changes to help teams more easily disguise their existence.
+
+Given that the technique may still be used to potentially discover some private teams, we're not disclosing the method involved, but suffice to say it was very clever.
+
+Thanks, @ayoubfathi!

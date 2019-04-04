@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/167036
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/babayaga_
+ReportedTo:Yelp(yelp)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.11.2017 20:17:46
+
+Summary:
+
+Hey,
+
+I have noticed that the 404 Not Found page of apiok.ru shows Ngnix server version!
+This may b a Low Risk But If the attacker came to know about the Server version he can gather some public exploits of that server version & perform his malicious attacks.
+
+Similar Report: #141125
+
+Link where the Server Version is been disclosed.
+
+https://engineeringblog.yelp.com/wp-content/
+
+Screen Shot Attached.
+
+Thanks,
+KHIZER JAVED

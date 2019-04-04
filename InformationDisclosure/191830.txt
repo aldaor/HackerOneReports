@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/191830
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/samhax
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:01.06.2017 15:09:43
+
+Summary:
+A misconfigured Department of Defense webserver improperly disclosed application information. @sulemanmalik03 was able to demonstrate this vulnerability by crafting specially formatted URLs.
+

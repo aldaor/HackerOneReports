@@ -1,0 +1,69 @@
+ReportLink:https://hackerone.com/reports/187602
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:02.03.2017 13:17:47
+
+Summary:
+
+В веб директории сайта содержится папка от Subversion.
+Теоретически это дает раскрытие исходных кодов, но в данном случае файлы с расширением .php.svn-base тоже исполняются веб-сервером.
+
+**Пример:**
+```
+https://element.mail.ru/.svn/entries
+``` 
+
+```
+10
+
+dir
+14
+https://office.raketa.center/svn/element-web-results/trunk/el5_gmr
+https://office.raketa.center/svn/element-web-results
+
+
+
+2016-11-30T16:15:54.841876Z
+14
+web
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+6086c3a0-2f5c-4305-a42f-7d1c32d336dd
+
+Cache
+dir
+
+Config
+dir
+
+static
+dir
+
+cdn_check.php
+file
+
+
+
+
+2016-11-30T12:48:44.732739Z
+e36b53b466ee98d7072459b056525708
+2016-10-13T14:07:44.113442Z
+11
+web
+```

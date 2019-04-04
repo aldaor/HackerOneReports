@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/194319
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/overlax
+ReportedTo:Skyport Systems(skyportsystems)
+BountyAmount:25.0
+Severity:low
+State:Closed
+DateOfDisclosure:07.02.2017 18:17:40
+
+Summary:
+
+This information might help an attacker gain a greater understanding of the systems in use and potentially develop further attacks targeted at the specific version of Nginx.
+
+Impact: 
+An attacker might use the disclosed information to harvest specific security vulnerabilities for the version identified.
+
+
+Steps to reproduce: 
+1. Go to ```https://skycontrol.skyportsystems.com/images/shell/```
+2. Now the nginx version shows in bottom. 

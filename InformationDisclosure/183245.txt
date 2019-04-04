@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/183245
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/japz
+ReportedTo:Pushwoosh(pushwoosh)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:18.11.2016 8:23:14
+
+Summary:
+Nginx version disclosure

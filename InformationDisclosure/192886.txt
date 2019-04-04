@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/192886
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/mishre
+ReportedTo:Mapbox(mapbox)
+BountyAmount:1000.0
+Severity:low
+State:Closed
+DateOfDisclosure:21.03.2017 14:55:20
+
+Summary:
+Security researcher @mishre reported that the Mapbox Android SDK was using the Broadcast Receiver for location services requests and recommended that the switch be made to use the Local Broadcast Manager. The Local Broadcast Manager offers more granular control of broadcast permissions, as well as performance enhancements.
+
+As part of the Mapbox Android SDK 5.x milestone, we had identified this feature of the SDK for refactoring and improvement. @mishre’s research highlighted the performance and security benefits of this switch and their recommendations were implemented in the Mapbox Android SDK `4.2.1` update, released December 22, 2016 (see [Release Notes](https://github.com/mapbox/mapbox-gl-native/issues/7519)). 
+
+We recommend that all Android SDK users update to v4.2.1 or later. Mapbox Android SDK v4.2.1 uses the Local Broadcast Manager instead of the Broadcast Receiver. This change limits broadcasts of location data to local objects within the application's process.
+
+Thank you again @mishre. This was a well researched and high quality report.
+
+For more information on these specific Android API calls please see: [BroadcastReceiver](https://developer.android.com/reference/android/content/BroadcastReceiver.html) and [LocalBroadcastManager](https://developer.android.com/reference/android/support/v4/content/LocalBroadcastManager.html).

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/184057
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/cyriac
+ReportedTo:Pushwoosh(pushwoosh)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:23.11.2016 5:11:07
+
+Summary:
+Attacker was able to read app name and subscribers count

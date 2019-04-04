@@ -1,0 +1,48 @@
+ReportLink:https://hackerone.com/reports/174883
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/pmort
+ReportedTo:Sucuri(sucuri)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:05.12.2016 8:13:46
+
+Summary:
+
+Hi Team,
+
+While doing some recon on the subdomains of sucuri.net I came across [logstash2.sucuri.net](http://logstash2.sucuri.net:3000) which is running a grafana instance on port 3000. It appears that the instance has had the /public directory deleted or is unavailable as there are a few 404 errors which make the page unusable through a browser (as can be seen in attached screenshots 1 & 2). 
+
+Through further investigation I was able to determine that the back end API's were still working so I was able to test authentication through this method by sending a POST request (via curl) to /login on the webserver with the correct structure of a grafana login request, as seen below:
+```
+curl -w "\n" -H 'Content-Type: application/json;charset=UTF-8' --data-binary $'{\"user\":\"username\",\"email\":\"\",\"password\":\"password\"}' logstash2.sucuri.net:3000/login
+```
+Which returns:
+```
+{"message":"Invalid username or password"}
+```
+and trying to access a restricted page such as: ```/api/login/ping``` will result in:
+```
+{"message":"Unauthorized"}
+```
+
+However, when a login is attempted using the default credentials for grafana (admin:admin), as shown:
+```
+curl -w "\n" -H 'Content-Type: application/json;charset=UTF-8' --data-binary $'{\"user\":\"admin\",\"email\":\"\",\"password\":\"admin"}' logstash2.sucuri.net:3000/login
+```
+I was able to successfully authenticate as seen below (and also displayed in the third screenshot):
+```
+{"message":"Logged in"}
+```
+
+This gave me administrative access over the grafana instance and I could have made modifications to the installation as would normally be possible for an administrator through the web interface, although it would have to be done through the backend API's, which are documented online.
+
+I made no attempt to escalate my privileges from here, or to gain a reverse shell on the system.
+
+If I was a malicious actor I would attempt to use this administrative access to exploit grafana in order to gain a reverse shell and attempt to compromise the machine further from there.
+
+
+If you have any questions please don't hesitate to contact me. 
+
+Thanks,
+Patrick.

@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/163730
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/mansouri_badis
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.08.2017 18:29:38
+
+Summary:
+
+RSS (Really Simple Syndication) and related formats are methods for publishing regularly updated web content. RSS feeds are XML documents that are made available for client downloads and are often included with content managament systems, such as blogs.
+
+https://www.legalrobot.com/rss.xml

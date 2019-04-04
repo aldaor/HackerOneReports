@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/173972
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/linkks
+ReportedTo:ok.ru(ok)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:10.04.2017 12:45:40
+
+Summary:
+Several source files were accessible at *.mycdn.me
+
+https://st.mycdn.me//WEB-INF/web.xml 
+https://st.mycdn.me/WEB-INF/web.xml
+https://groupava1.mycdn.me/redirect.jsp
+https://groupava1.mycdn.me/index.jsp

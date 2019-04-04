@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/193419
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/pisarenko
+ReportedTo:VK.com(vkcom)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:09.02.2017 9:40:11
+
+Summary:
+Исследователем был найден способ узнать имя и фамилию удаленного профиля.
+
+Т.к. программа поощрения поиска уязвимостей на сайте направлена на поиск уязвимостей, а не на поиск багов, мы решили поощрить исследователя репутацией, но не деньгами.
+

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/167041
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/top
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:31.12.2016 19:23:44
+
+Summary:
+Security researcher discovered a NGINX version disclosure on legalrobot.com by submitting illegal characters. As a result of this report, we clarified our H1 policy on version disclosure without demonstrated vulnerability.

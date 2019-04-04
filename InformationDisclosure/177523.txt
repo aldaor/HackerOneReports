@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/177523
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/billy_blaze
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:588.0
+Severity:
+State:Closed
+DateOfDisclosure:10.12.2016 10:00:51
+
+Summary:
+##Issue
+
+The reporter found that a logged on customers real name (but no further personal information) could leak to a 3rd party site in certain transaction processes. 
+
+##Fix
+
+The issue was investigated and found to be valid. 
+
+##Reasoning
+
+The reported case was valid and although not a vulnerability as such, it was not intended behavior. The scope of the issue was quite limited. The application has been updated. The bounty decision was made partially based on the potential consequences for a more serious customer information leak.
+

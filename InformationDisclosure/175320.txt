@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/175320
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bibo
+ReportedTo:Brave Software(brave)
+BountyAmount:50.0
+Severity:low
+State:Closed
+DateOfDisclosure:13.11.2016 17:30:56
+
+Summary:
+
+Hi Brave team,
+
+Have found 2 Directory listing on:
+- https://ledger.brave.com/swaggerui/
+- https://vault-staging.brave.com/swaggerui/
+
+Refer to screenshosts for clarification:
+
+{F127337}
+
+{F127336}

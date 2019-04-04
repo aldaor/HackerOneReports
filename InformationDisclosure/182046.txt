@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/182046
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/japz
+ReportedTo:Pushwoosh(pushwoosh)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:14.11.2016 11:47:17
+
+Summary:
+Design Issue, Information Disclosure, Low Severity

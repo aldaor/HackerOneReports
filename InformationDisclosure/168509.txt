@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/168509
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ahmed_ezzat_nasr0x
+ReportedTo:Coinbase(coinbase)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:28.11.2016 18:16:31
+
+Summary:
+docs.gdax.com was exposing the nginx version in error pages.  We changed the nginx configuration to not report that information as a defense-in-depth measure.

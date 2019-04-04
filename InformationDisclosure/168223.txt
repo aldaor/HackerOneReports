@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/168223
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/archers123
+ReportedTo:Instacart(instacart)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.12.2016 19:33:01
+
+Summary:
+
+I noticed when monitoring the websocket requests that the account information of user, including user_id is sent to the client. 
+
+__{"t":"d","d":{"r":8,"a":"p","b":{"p":"/carts/3671079_xjdJHqx88J435eDW5zxN/users/-KRbGN8R6uIjy6_OPx_j","d":{"id":25390626,"name":"Username}}}}__

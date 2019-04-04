@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/174449
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/sasi2103
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:21.11.2016 8:12:53
+
+Summary:
+
+**Summary:**
+I found out that after I quit private program, I still gets update about that program, e.g. new scope changes/amount of money and etc.
+
+**Description (Include Impact):**
+I noticed that if I quit program I still gets email updates about the private program, private data can be leak on that email.
+
+### Steps To Reproduce
+1. I got invite to █████ private program.
+2. After period of time I quit that program.
+3. I still get email updates about that program.
+
+### soultions
+1. Remove email address from program once hacker quit.
+2. Set boolean flag, true/false once the user quit. (The flag can help once the user gets invite again or if he/she wants to rejoin).
+
+Thanks,
+Sasi

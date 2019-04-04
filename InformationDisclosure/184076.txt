@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/184076
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/tsug0d
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.07.2017 18:18:13
+
+Summary:
+A Department of Defense website was mis-configured in a manner that could have exposed personal account information.  @tsug0d was as able to demonstrate this vulnerability by crafting a specially formatted URL. Thank you for notifying us!
+

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/189414
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/babayaga_
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:16.03.2017 17:38:42
+
+Summary:
+A Department of Defense website was misconfigured to disclose potentially sensitive system and user information. @mr_47 was able to demonstrate this vulnerability by requesting specific web files. Thanks @mr_47!

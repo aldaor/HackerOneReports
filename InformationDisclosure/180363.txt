@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/180363
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/theflofly
+ReportedTo:Trello(trello)
+BountyAmount:2048.0
+Severity:
+State:Closed
+DateOfDisclosure:14.03.2017 15:46:04
+
+Summary:
+It was possible for a malicious power-up to modify it's communications with the Trello web client in a way that would cause itself to be misidentified as a different power-up.  This would potentially allow the malicious power-up to access the other power-up's private data, potentially including API tokens for other services (e.g. GitHub, Twitter, etc)
+
+This issue was resolved by changing the protocol to make this sort of attack impossible.

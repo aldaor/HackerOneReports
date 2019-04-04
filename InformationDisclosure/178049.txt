@@ -1,0 +1,42 @@
+ReportLink:https://hackerone.com/reports/178049
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/nstikhomirov
+ReportedTo:QIWI(qiwi)
+BountyAmount:300.0
+Severity:medium
+State:Closed
+DateOfDisclosure:10.03.2017 20:24:32
+
+Summary:
+
+При запросе RAW:
+```
+GET https://edge.qiwi.com/piggybox-service/piggybox/testt HTTP/1.1
+Host: edge.qiwi.com
+Connection: keep-alive
+accept: application/json
+content-type: application/json
+```
+
+Сервер возвращает:
+```
+HTTP/1.1 200 OK
+Date: Tue, 25 Oct 2016 15:48:24 GMT
+Content-Type: application/json
+Content-Length: 182
+Connection: keep-alive
+Access-Control-Allow-Credentials: true
+Access-Control-Allow-Headers: Cache-Control, Authorization, Origin, Content-Type, RequestToken
+Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
+Access-Control-Allow-Origin: https://kopilka.qiwi.com
+Access-Control-Max-Age: 86400
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Server: nginx-wallarm
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+
+{"alias":"testt","balance":1,"description":"12233321","goal":0,"name":"\u003cB\u003eHI\u003c/B\u003e","owner":"\u003cB\u003eHI\u003c/B\u003e","recommended":1337,"status":1,"type":0}
+```
+
+Как видим в JSON структуре вернулся `balance`

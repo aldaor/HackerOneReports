@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/171048
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/juliocesar
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.10.2016 13:42:34
+
+Summary:
+
+Hello Security team,
+
+Request: if you think the reported issues have acceptable risk and you are not going to make changes then kindly request to mark as Informative or let me close it.
+
+I'm not sure if this is the normal behavior of the page, but i thought i would be a good idea reporting to you guys.
+
+I took a look at http://corporate.olx.ph source code and found some javascript code returning some interesting information from the server. Its even possible to see some sql structure. I also looked at other's olx.ph subdomain but they don't return those information in the same way as http://corporate.olx.ph does.
+
+Again: if you think the reported issues have acceptable risk and you are not going to make changes then kindly request to mark as Informative or let me close it.

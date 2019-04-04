@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/180349
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bagipro
+ReportedTo:Zendesk(zendesk)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:18.03.2017 15:54:42
+
+Summary:
+The researcher identified that `CREATE_REQUEST` broadcast in Zopim's android SDK was unprotected.

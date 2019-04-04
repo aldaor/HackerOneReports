@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/172296
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/japz
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:20.0
+Severity:low
+State:Closed
+DateOfDisclosure:16.10.2016 4:56:32
+
+Summary:
+Security researcher showed that we were returning the number of seconds to wait between attempts. While this can be helpful for legitimate users, it's more likely to be exploited by attackers that simply need to set a timer for the number of seconds we return in the error message.

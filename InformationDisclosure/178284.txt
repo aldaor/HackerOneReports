@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/178284
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bobrov
+ReportedTo:QIWI(qiwi)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:18.11.2018 7:12:22
+
+Summary:
+
+**Уязвимый сценарий**: /user/all/orders
+**Уязвимые параметры**: order, sort
+**PoC**:
+```
+http://vitrina.contact-sys.com/user/all/orders?order[]=order_number&sort=desc
+http://vitrina.contact-sys.com/user/all/orders?order=order_number&sort[]=desc
+```
+
+**Примеры путей**:
+```
+█████_plugin_style_table.inc
+```

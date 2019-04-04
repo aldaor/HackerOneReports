@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/183925
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ziot
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.01.2017 20:38:29
+
+Summary:
+A misconfigured USTRANSCOM website allowed arbitrary system files to be downloaded. ziot was able to demonstrate this vulnerability by downloading a file from a specially crafted URL. Thanks ziot!

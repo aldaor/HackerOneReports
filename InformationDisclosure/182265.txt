@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/182265
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/1_1_1
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:60.0
+Severity:low
+State:Closed
+DateOfDisclosure:11.12.2016 15:01:25
+
+Summary:
+##Issue
+
+The reporter found that unnecessary http methods were allowed.
+
+##Fix
+
+The setup was fixed so that only http GET and http POST are allowed.
+
+##Reasoning
+
+The issue was not critical, as the impact of using other methods than GET and POST in this domain is nearly nonexistent. The bounty reflects the criticality of the issue.
+
+
+HTTP OPTIONS method is enabled on this web server. The OPTIONS method provides a list of the methods that are supported by the web server, it represents a request for information about the communication options available on the request/response chain identified by the Request-URI.
+
+Domain :
+viestinta.lahitapiola.fi

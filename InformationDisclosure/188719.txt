@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/188719
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/deepankerchawla
+ReportedTo:HackerOne(security)
+BountyAmount:10000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:05.01.2017 20:12:27
+
+Summary:
+This issue was identified by @deepankerchawla on December 6th and resolved a few hours later. We would like to thank @deepankerchawla for bringing this to our attention and for working with us as we resolved the issue.
+
+The new skill sets feature was released in stages to a limited set of hackers on the HackerOne platform. The issue was identified when about 20 users on HackerOne had access to the new feature, as the feature was on a paced roll out path. The skill set feature is used to send tailored invitations for private programs. Hackers have to submit reports as proof for their skills. Due to an incorrectly written query, the proof, which includes report titles, was exposed to all other hackers that applied for the same skill set. Noteworthy is that only report titles of fixed vulnerability reports could have been exposed and only the reports that were sent in as proof.
+
+Our policy describes that HackerOne awards $10,000 for any vulnerability that might grant unauthorized access to confidential bug descriptions. Although HackerOne doesn’t believe this meets that exact description, HackerOne cannot guarantee what kind of information hackers provide in report titles. Because of that, we decided to still award a $10,000 bounty. However, anything other than the report title of resolved bugs were not exposed through this vulnerability.
+Link: https://hackerone.com/settings/skills
+
+IN respone of above request all reports submitted for review are getting disclosed.

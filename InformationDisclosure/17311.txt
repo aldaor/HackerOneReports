@@ -1,0 +1,122 @@
+ReportLink:https://hackerone.com/reports/17311
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/anonymous_india
+ReportedTo:Uzbey(uzbey)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:23.07.2014 12:25:56
+
+Summary:
+
+Breach Attack Vulnerability
+
+Respected Sir/Madam I Hope Your Cooperate With Me Cause It's Not Easy To Find Vulnerability On Your Official Website.
+Vulnerability description
+
+This web application is potentially vulnerable to the BREACH attack.An attacker with the ability to:
+
+    Inject partial chosen plaintext into a victim's requests
+    Measure the size of encrypted traffic 
+
+can leverage information leaked by compression to recover targeted parts of the plaintext.BREACH (Browser Reconnaissance & Exfiltration via Adaptive Compression of Hypertext) is a category of vulnerabilities and not a specific instance affecting a specific piece of software. To be vulnerable, a web application must:
+
+    Be served from a server that uses HTTP-level compression
+    Reflect user-input in HTTP response bodies
+    Reflect a secret (such as a CSRF token) in HTTP response bodies 
+
+Affected items
+
+    / 
+
+The impact of this vulnerability
+
+An attacker can leverage information leaked by compression to recover targeted parts of the plaintext.
+
+How to fix this vulnerability
+
+The mitigations are ordered by effectiveness (not by their practicality - as this may differ from one application to another).
+
+    Disabling HTTP compression
+    Separating secrets from user input
+    Randomizing secrets per request
+    Masking secrets (effectively randomizing by XORing with a random secret per request)
+    Protecting vulnerable pages with CSRF
+    Length hiding (by adding random number of bytes to the responses)
+    Rate-limiting the requests 
+
+Proof Of Concept
+Vulnerability description
+This web application is potentially vulnerable to the BREACH attack.An attacker with the ability to:
+
+    Inject partial chosen plaintext into a victim's requests
+    Measure the size of encrypted traffic 
+
+can leverage information leaked by compression to recover targeted parts of the plaintext.BREACH (Browser Reconnaissance & Exfiltration via Adaptive Compression of Hypertext) is a category of vulnerabilities and not a specific instance affecting a specific piece of software. To be vulnerable, a web application must:
+
+    Be served from a server that uses HTTP-level compression
+    Reflect user-input in HTTP response bodies
+    Reflect a secret (such as a CSRF token) in HTTP response bodies 
+
+This vulnerability affects /.
+Attack details
+This alert was issued because the following conditions were met:
+
+    The page content is served via HTTPS
+    The server is using HTTP-level compression
+    URL encoded GET input q was reflected into the HTTP response body.
+    HTTP response body contains a secret named captcha_token
+
+Request Headers
+
+Content-Length: 129
+Content-Type: application/x-www-form-urlencoded
+Referer: https://staging.uzbey.com:443/
+Cookie: SSESS997d19cdd0123760ed5fa56a71cd9963=N2UOxTPQlqIqesSjgvTD_bUzYcUBdfe31_r4NnPwxnU
+Host: staging.uzbey.com
+Connection: Keep-alive
+Accept-Encoding: gzip,deflate
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.63 Safari/537.36
+Accept: */*
+
+Exploitation Link
+
+https://staging.uzbey.com/?q=user/register/_913193
+Request Data
+
+form_build_id=form-0awIfMcaolOh-FNuBKHrPM3ZCHprARkZSdhTcEEnSAc&form_id=user_login&name=blkpglru&op=Log%20in&pass=g00dPa%24%24w0rD
+Respond Data
+
+HTTP/1.1 200 OK
+Date: Mon, 23 Jun 2014 11:03:40 GMT
+Server: Apache
+Expires: Sun, 19 Nov 1978 05:00:00 GMT
+Last-Modified: Mon, 23 Jun 2014 11:03:40 +0000
+Cache-Control: no-cache, must-revalidate, post-check=0, pre-check=0
+ETag: "1403521420"
+Content-Language: en
+Vary: Accept-Encoding,User-Agent
+Content-Length: 44843
+Connection: close
+Content-Type: text/html; charset=utf-8
+Original-Content-Encoding: gzip
+The impact of this vulnerability
+An attacker can leverage information leaked by compression to recover targeted parts of the plaintext.
+
+How to fix this vulnerability
+
+The mitigations are ordered by effectiveness (not by their practicality - as this may differ from one application to another).
+
+    Disabling HTTP compression
+    Separating secrets from user input
+    Randomizing secrets per request
+    Masking secrets (effectively randomizing by XORing with a random secret per request)
+    Protecting vulnerable pages with CSRF
+    Length hiding (by adding random number of bytes to the responses)
+    Rate-limiting the requests 
+
+If You Have Any Problem Related This Breach Attack Than See This I Am Sure You Will Understand That Properly What I Am Talking About
+
+http://breachattack.com/
+
+Thankz For Reading My Message Have A Good Day Respected Sir/Madam Please Approved My Vulnerability Cause Of My Hard Work Which I Had Done It's Not Easy To Find Vulnerability On Your Official Website I Hope You Get My Point Of View.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/194142
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/japz
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:11.10.2017 3:14:37
+
+Summary:
+A security researcher found an AWS S3 bucket serving public resources (intentionally). The files in this bucket were static assets like logos and marketing assets. We later removed this bucket altogether and therefore re-opened and marked this report as Resolved.

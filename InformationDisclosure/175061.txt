@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/175061
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/kazan71p
+ReportedTo:Slack(slack)
+BountyAmount:700.0
+Severity:medium
+State:Closed
+DateOfDisclosure:30.11.2016 22:07:43
+
+Summary:
+@kazan71p found an information disclosure vulnerability at stun.screenhero.com which revealed limited monitoring information. We fixed the vulnerability and conducted an investigation to confirm that this was not exploited. Thanks @kazan71p!

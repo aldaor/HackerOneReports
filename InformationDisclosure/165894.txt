@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/165894
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/leet-boy
+ReportedTo:Boozt Fashion AB(boozt)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.09.2016 21:44:40
+
+Summary:
+User enumeration through login/registration/forgot password is not considered as security vulnerability.

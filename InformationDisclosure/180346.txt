@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/180346
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/japz
+ReportedTo:Yelp(yelp)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:09.11.2017 20:10:13
+
+Summary:
+
+Hi Yelp Team,
+
+I have found a little information disclosure on your system with regards to the version of server you are using, due to not properly handling 404 errors , whe you go to the page that i not existing, the exact nginx version was disclosed.
+
+__PoC URL:__ engineeringblog.yelp.com/test
+
+__PoC Screenshot:__ {F33044}
+
+It is important to keep secret of the exact server versions.
+
+__Mitigation:__
+
+You may want to create a customize 404 error page, or you can just simply remove the nginx server version.
+
+Regards
+Japz

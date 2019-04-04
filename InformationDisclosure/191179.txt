@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/191179
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/babayaga_
+ReportedTo:Starbucks(starbucks)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:17.01.2017 22:43:31
+
+Summary:
+On Dec 14, 2016, @muhammadkhizerjaved submitted a report to Starbucks via the HackerOne platform. In the report @muhammadkhizerjaved identified that the DNS entry for `digital.starbucks.com` had a CNAME record that resolved to `ghs.google.com`. The researcher attempted to takeover the subdomain as part of their report, but Google requires domain verification before granting access to services such as storage and mail. Though the researcher was not able to takeover the subdomain completely, they were able to claim a G Suite account using the `digital.starbucks.com` subdomain. This could potentially prevent Starbucks from using services such as Google Drive, GMail, and Google Calendar with that particular subdomain. It was our assessment that this did not pose any particular security risk as the researcher would not be able to verify domain ownership for `digital.starbucks.com` and utilize those services. To fully resolve the issue we removed the CNAME record and put in place a web forwarding rule for `digital.starbucks.com` towards Starbucks' new web landing page at `1912pike.com`.
+Thanks @muhammadkhizerjaved!

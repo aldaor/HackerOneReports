@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/171272
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/dhanunjaya
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.09.2016 9:22:10
+
+Summary:
+
+Hello Team ,
+
+Request: if u think the reported issues have an Acceptable risk and u r not going to make changes then kindly request to mark as Informative .
+
+Reference:- #8061 , #7813 , #163106
+
+POC URL:-
+https://demo.owncloud.org/.htaccess
+
+Regard's
+Santhosh

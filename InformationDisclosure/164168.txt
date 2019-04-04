@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/164168
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bobrov
+ReportedTo:QIWI(qiwi)
+BountyAmount:150.0
+Severity:medium
+State:Closed
+DateOfDisclosure:31.03.2017 19:59:50
+
+Summary:
+XSS on qiwi.com via static files

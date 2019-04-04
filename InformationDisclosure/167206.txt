@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/167206
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/lukeberner
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.12.2018 22:21:51
+
+Summary:
+Currently OLX is working on the mitigation of this vulnerability. All API endpoints are being reviewed by dedicated resources and fixed under high urgency. 
+Hi,
+
+Through api-v2/items you can list all information of users (except email). As items are sequential, you can just make a script that crawls items from:
+
+https://www.olx.com.ar/api-v2/items/822200000
+to
+https://www.olx.com.ar/api-v2/items/901858309
+
+Example of sensible user information from random curl:
+```
+██████████
+```
+```
+█████████
+```
+
+Example of random curl: 
+```
+$ curl https://www.olx.com.ar/api-v2/items/822200000
+██████████
+```
+
+Let me know if you need anything else.
+
+Cheers,
+Luke.-

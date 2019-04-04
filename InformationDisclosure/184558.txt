@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/184558
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/lalatina
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:05.07.2017 20:53:56
+
+Summary:
+A Department of Defense website was mis-configured in a manner that could have exposed sensitive information about the web application or system. @lalka was able to demonstrate this vulnerability by crafting a specially formatted URL. Thank you for notifying us!
+

@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/163599
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/gorkhali
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.08.2016 17:43:08
+
+Summary:
+
+Seeing your s3 Amazon bucket, the problem is, visiting your amazon bucket will shows the files on the bucket, while  secure bucket would bring up an access denied page. I have attached Screenshots comparing your bucket with secure bucket to show you what a secure bucket looks like and where the bucket is being used in your source code.

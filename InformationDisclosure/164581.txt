@@ -1,0 +1,50 @@
+ReportLink:https://hackerone.com/reports/164581
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/rpinuaga
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:17.11.2016 22:20:14
+
+Summary:
+##Issue
+
+The reporter found an issue in the Oracle Webcenter Sites Support Tools (Fatwire) which lead to a minor technical information leakage. 
+
+##Fix
+
+The issue was investigated and found to be valid. The fix was to remove the leaking functionality.
+
+##Reasoning
+
+The reported case was valid and within the scope of the bug bounty program. The issue was fixed and the reporter was awarded with a bounty. The bounty was based on consequence-risk assessment.
+
+Oracle WebCenter Sites Support Tools are available in: www.lahitapiola.fi
+
+This software is password protected, but some pages are publicly available and reveal internal information.
+
+The welcome page is located at: http://www.lahitapiola.fi/henkilo?pagename=Support/Home
+
+This page reveal data as the running user: DefaultReader and the internal server name: s17334.tapiola.fi
+
+Also other information like the server context:
+* cs_version:'Oracle WebCenter Sites 11.1.1.6.1  Build Date: Nov 13 2013 at 19:25:33 Build Number: 66 Revision:160478'
+* java_runtime_version:'1.6.0_38-b05'
+* java_version:'1.6.0_38'
+* java_vm_version:'20.13-b02'
+* os_arch:'amd64'
+* os_name:'Linux'
+* os_version:'2.6.18-308.16.1.el5'
+* os_proc: 4
+* ws_info:'Apache Tomcat/7.0.35'
+
+There are other available pages like:
+http://www.lahitapiola.fi/henkilo?pagename=Support/Performance/Home
+http://www.lahitapiola.fi/henkilo?pagename=Support/Performance/Standard/Home
+
+These pages are also accessible through: http://www.lahitapiola.fi/cs/Satellite
+
+For example: http://www.lahitapiola.fi/cs/Satellite?pagename=Support/Home
+
+I have tested default Fatwire usernames and passwords, and it seems that they were changed, but anyway it is recommended to check the credentials of the users allowed to login from Internet.

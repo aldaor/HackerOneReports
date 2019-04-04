@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/167859
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/cha5m
+ReportedTo:Zomato(zomato)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:14.10.2016 10:42:14
+
+Summary:
+An alpha version of our Base product was exposed on a Jenkins server. 
+
+Thanks @n0rb3r7 for reporting this.

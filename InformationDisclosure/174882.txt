@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/174882
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/vinesh1989
+ReportedTo:Yelp(yelp)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:27.10.2016 18:42:09
+
+Summary:
+
+During analysis it was observed that I was able to request "ShowCheck In Alert" Request for non friend user.
+
+I performed this application from Mobile application. Below are the steps we have to carry to achieve this:
+
+Logged in to Yelp Mobile Application
+Visit any added friend and click on "ShowCheck In Alert" 
+It will originate the request from the mobile application. Capture this request and Change the UserID value with any other user non-added friend value. Server sends response with OK message.
+
+Please find attached POC for the same.

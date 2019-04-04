@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/183978
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/nahamsec
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:06.01.2017 21:21:25
+
+Summary:
+A misconfigured Army website may have allowed unauthorized users to remotely download local files, potentially revealing sensitive system or user information. Nahamsec was able to demonstrate this vulnerability by crafting a particularly formatted URL. Thanks Nahamsec! 

@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/182358
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/faisalahmed
+ReportedTo:HackerOne(security)
+BountyAmount:10000.0
+Severity:high
+State:Closed
+DateOfDisclosure:29.11.2016 1:51:51
+
+Summary:
+This problem was introduced on Monday, November 14th and resolved the following day on Tuesday, November 15th, within one hour of the report being filed. This was an impressive find, and we want to give a huge shout-out to @faisalahmed for bringing this to our attention within 24 hours of releasing the new feature that contained this vulnerability!
+
+When a program has publicly disclosed a report on HackerOne, the platform supports the ability to perform a [limited disclosure](https://support.hackerone.com/hc/en-us/articles/205269479). A normal disclosure includes vulnerability information, attachments, and the full timeline of activity. But a limited disclosure restricts visibility to a summary of the vulnerability and the timeline of activity (comments or actions).
+
+In this particular case, the vulnerability allowed viewing the comments that would normally not be visible in a limited disclosure. Only comments were affected: the report's vulnerability information, attachments, and internal comments were not visible.
+
+HackerOne performed a thorough investigation of all uses of the export functionality and have found no evidence of malicious exploitation of this vulnerability. As part of our standard process, we have notified the programs affected by @faisalahmed and his colleague during the demonstration of the proof of concept to HackerOne.
+Hello Team,
+I noticed a new feature has been launched, which allows to export report. Great feature.
+But unfortunately it discloses comments of partially disclosed reports which supposed to be hidden..
+
+###POC:
+* Go to this partially disclosed report > https://hackerone.com/reports/██████████
+* Click **Export** Button.
+* You'll see comments are getting disclosed!
+
+{F134909}
+
+This way you can see all the partially disclosed reports comments.
+
+Please let me know if you need more information!
+
+Looking forward!

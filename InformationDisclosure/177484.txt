@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/177484
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/staytuned
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:29.10.2016 1:29:57
+
+Summary:
+
+**Summary:**
+
+information disclosure after removed from any program
+
+**Description (Include Impact):**
+
+after subscribing to changes for any program  (  Notify me of changes ) then when the program removed you , 
+
+you could still recieve the changes notification
+
+
+### Steps To Reproduce
+
+1. i have subscribed for Mindoktor    (  Notify me of changes ) 
+2. yesterday  Mindoktor   went from public to private 
+3. even though i was not there in program , 
+
+i have received the notification of their policy changes 
+
+
+
+Hope you would fix this 
+
+
+Thanks

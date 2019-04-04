@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/190195
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bobrov
+ReportedTo:QIWI(qiwi)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:27.03.2017 7:22:31
+
+Summary:
+Researcher found that one of web-server had .bash_history in home directory and this file was accessible through web.

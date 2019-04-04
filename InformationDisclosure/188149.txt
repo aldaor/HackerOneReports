@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/188149
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/spam404
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:16.02.2017 21:44:47
+
+Summary:
+A Department of Defense website was mis-configured in a manner that could have exposed personal information. Thanks for notifying us of this, @spam404!

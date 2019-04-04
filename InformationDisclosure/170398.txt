@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/170398
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/sfsecurityfirst
+ReportedTo:Boozt Fashion AB(boozt)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.07.2017 10:16:10
+
+Summary:
+
+ADB Backup is enabled for this app. ADB Backup feature is a good tool for backing up all of your files. If it's enabled, malicious users who have your phone can copy all of the sensitive data for this app in your phone.
+Requirement:
+
+Unlock phone's screen;
+Enable the developer mode.
+Sensitive data include lifetime access token, username or password, etc, can be accessed.
+Recommendation: configure the android:allowBackup attribute to False.
+
+References: 
+http://developer.android.com/guide/topics/manifest/application-element.html#allowbackup
+https://blog.c22.cc/advisories/cve-2013-5112-evernote-android-insecure-storage-of-pin-data-bypass-of-pin-protection/

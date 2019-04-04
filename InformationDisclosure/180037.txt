@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/180037
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/haquaman
+ReportedTo:OX App Suite(appsuite)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:28.12.2016 1:41:57
+
+Summary:
+
+If you start composing a new email (to an external email, otherwise decryption fails), attach a document, then click "Use drive mail", and set a password. Then click "Security" then encrypt (not by clicking the lock icon, as that will show the warning and disable drive mail attachments. When you send the email, the email will be in plain text with the drive mail attachment link (which I think is why the autodecryption fails in OX UI), and also an attachment with the encrypted portion, which when decrypted contains the sent document without the drive mail security password you set.
+
+Sorry about the ramble there, just wanted to get the notes down. If you want me to write this up better, and potentially give a screencast, then let me know.
+
+Cheers,
+
+Hugh

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/169992
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/procode701
+ReportedTo:Slack(slack)
+BountyAmount:400.0
+Severity:
+State:Closed
+DateOfDisclosure:31.10.2016 19:00:38
+
+Summary:
+@procode701 discovered a bug related to a specific configuration with our third-party email infrastructure provider, which had the potential to leak certain information from email on non-product Slack domains for specific addresses.  Slack applied a fix to the configuration and performed a thorough investigation around vulnerability scope and activity. Thanks @procode701!
