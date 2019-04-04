@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/197279
+WeaknessName:HTTP Response Splitting
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Airbnb(airbnb)
+BountyAmount:2500.0
+Severity:low
+State:Closed
+DateOfDisclosure:03.04.2018 23:33:12
+
+Summary:
+By using a URL-escaped character sequence, bobrov was able to inject HTTP headers into the responses of some redirects on the m.airbnb.com domain. This allowed them to perform actions such as setting cookies for the airbnb.com domain. This primarily affected Internet Explorer, and was not reproducible on Firefox or Chrome. The issue was fixed by fixing the character handling behavior of the configuration responsible for the redirect.
+
+Thanks to bobrov for this well-documented finding!

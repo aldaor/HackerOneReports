@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/176159
+WeaknessName:HTTP Response Splitting
+Reporter:https://hackerone.com/noob-boy
+ReportedTo:Brave Software(brave)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:17.10.2016 18:19:29
+
+Summary:
+
+
+
+## Summary:
+
+you must trick someone into viewing a website they did not want to view by tempting them with something they are familiar with.
+
+## Products affected: 
+
+ Brave iOS application 
+
+https://itunes.apple.com/in/app/brave-web-browser/id1052879175?mt=8  
+
+this application is vulnerable to the URI obfuscation 
+
+## Steps To Reproduce:
+
+ * open browser into ios device 
+* type www.brave.com@fb.com 
+* it will open fb.com without any pop ups 
+
+## Supporting Material/References:
+
+  *PoC is under attached 
+
+https://www.youtube.com/watch?v=51RPPwSEXvU

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/184881
+WeaknessName:HTTP Response Splitting
+Reporter:https://hackerone.com/yynl
+ReportedTo:OWOX, Inc.(owox)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:22.05.2017 9:50:20
+
+Summary:
+Description : invalid URL parsing with and '@' this can harm full for user
+
+Live POC : https://my.bi.owox.com@evil.com

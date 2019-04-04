@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/277354
+WeaknessName:HTTP Response Splitting
+Reporter:https://hackerone.com/anonymousmian
+ReportedTo:Inflection(inflection)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:01.11.2017 19:04:25
+
+Summary:
+Researcher reported an issue that was previously reported by a different researcher (and subsequently removed from program scope) and then requested that we publicly disclose the report after closing it as a duplicate.

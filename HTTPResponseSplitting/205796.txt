@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/205796
+WeaknessName:HTTP Response Splitting
+Reporter:https://hackerone.com/lalatina
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:07.11.2017 12:35:27
+
+Summary:
+HTTP response header CRLF injection via GET parameters in tz.mail.ru.
+tz.mail.ru is not currently in the Bug bounty scope.
