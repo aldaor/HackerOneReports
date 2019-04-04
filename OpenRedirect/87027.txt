@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/87027
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Keybase(keybase)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:26.09.2016 2:05:51
+
+Summary:
+
+PoC
+```
+https://keybase.io//www.google.com/%2f%2e%2e
+```
+
+HTTP Response:
+```
+HTTP/1.1 303 See Other
+...
+Location: //www.google.com/%2f%2e%2e/
+```

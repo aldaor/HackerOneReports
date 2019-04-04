@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/99516
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/zombiehelp54
+ReportedTo:Zendesk(zendesk)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:16.10.2017 16:35:32
+
+Summary:
+See title.

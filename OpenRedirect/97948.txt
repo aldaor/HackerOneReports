@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/97948
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/ragnar
+ReportedTo:HackerOne(security)
+BountyAmount:2500.0
+Severity:
+State:Closed
+DateOfDisclosure:14.11.2015 15:22:16
+
+Summary:
+(This is similar to #97191)
+
+If the following conditions are met…
+
+* You are an admin of a demo team
+* And you click a malicious link provided by an attacker
+* And you are social engineered into interacting with the displayed dialog
+* And you are using a browser that doesn't support `Content Security Policy` (such as Internet Explorer)
+
+… then a same-origin policy violation could occur.
+Hi,
+
+Two weeks ago, I found a Cross-domain AJAX request, but due to the fact that you uses a very strict Content Security Policy, I hesitated to send this. Today, I noticed that bug has been fixed. But this fix can be bypassed.
+
+This example not working now (screenshot 1):
+
+https://hackerone.com/bugs?subject=/google.com/
+
+
+But if will be (screenshot 2):
+
+https://hackerone.com/bugs?subject=/hackerone.com@google.com/
+or https://hackerone.com/bugs?subject=%2Fhackerone.com.google.com
+
+
+It's will work. 

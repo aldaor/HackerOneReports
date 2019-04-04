@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/96474
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/bigbear_
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.03.2017 13:14:56
+
+Summary:
+
+Условие: нужно быть уже залогиненным.
+
+https://it.mail.ru/users/login/?next=http://www.example.com

@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/7900
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/melvin
+ReportedTo:Respondly(respondly)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.04.2014 0:01:46
+
+Summary:
+
+An attacker can use an open redirect vulnerability in the Twitter OAuth process to redirect someone to his/her webpage, while also obtaining the OAuth token and verifier of the victim. 
+
+The vulnerability is right here: https://app.respond.ly/_oauth/twitter/?requestTokenAndRedirect=https://hackerone.com. When someone authorizes their Twitter account using that URL, the redirect will go to https://hackerone.com.
+
+Recommendation: make sure the `requestTokenAndRedirect` paramater only accepts hosts on whitelisted domains.
