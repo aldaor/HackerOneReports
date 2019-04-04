@@ -1,0 +1,50 @@
+ReportLink:https://hackerone.com/reports/394060
+WeaknessName:Information Exposure Through Debug Information
+Reporter:https://hackerone.com/13ern
+ReportedTo:Passit(passit)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:21.11.2018 15:24:03
+
+Summary:
+
+**Summary:** 
+The application app.passit.io is vulnerable against username enumeration through the use of error messages and dictionary attack.
+
+**Description:**
+We noted that the application uses GET request with a rate limit of 60 seconds which is too broad. The application returns an error message that shows detailed information about security features such as throttling time.
+
+Error Message
+``{"detail":"Request was throttled. Expected available in 56 seconds."}``
+
+```
+{"detail":"Request was throttled. Expected available in 11 seconds."}
+```
+
+```
+GET /api/username-available/§test§@live.com/ HTTP/1.1
+Host: app.passit.io
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:52.0) Gecko/20100101 Firefox/52.0
+Accept: application/json
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: https://app.passit.io/register
+Cookie: 5e4ffd7719ea3cd0ed363b25e55debfc=4024de2a37006545bdf7c9ef5f52386b
+Connection: close
+```
+Evidence showing that 
+{F332846}
+
+## Supporting Material/References:
+
+  * Adding in screenshot of Burp Intruder 
+
+
+**Recommended Migitation**
+Remove the information from the GET response with the number of seconds for throttling and also perform a restriction of IP from enumeration by using IP blacklisting.
+
+## Impact
+
+By having knowledge of the number of messages and the throttling through the use of CURL command. 
+It is possible to script a enumeration script to bypass the throttling security feature by checking for the value " Expected available " and perform a sleep after a random number of second to perform the enumeration again.

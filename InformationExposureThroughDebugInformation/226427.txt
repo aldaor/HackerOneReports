@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/226427
+WeaknessName:Information Exposure Through Debug Information
+Reporter:https://hackerone.com/sp1d3rs
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:05.07.2017 20:31:05
+
+Summary:
+A Department of Defense website was mis-configured in a manner that could have exposed sensitive information about the web application or system. @sp1d3rs was able to demonstrate this vulnerability by crafting a specially formatted URL. Thank you for notifying us!

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/295552
+WeaknessName:Information Exposure Through Debug Information
+Reporter:https://hackerone.com/ruvlol
+ReportedTo:WePay(wepay)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:09.01.2018 19:51:26
+
+Summary:
+A testing stage server was accessible from the internet leaking some debug info. Thanks @ruvlol for reporting this    to us.
