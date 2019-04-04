@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/83578
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/karthic
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.10.2015 7:06:31
+
+Summary:
+
+I just checked for SPF records for the owncloud.com domain, and there are none, effectively allowing for spam(spoof) to originate from that domain. you can validate by testing yourself here: http://www.kitterman.com/spf/validate.html
+
+SPF record lookup and validation for: owncloud.com
+
+SPF records are published in DNS as TXT records.
+
+The TXT records found for your domain are:
+v=spf1 a:mx.owncloud.com a:kerio.owncloud.com a:schaltsekun.de a:m.hive01.com include:cmail1.com include:email.influitive.com include:google.com ~all 
+
+Checking to see if there is a valid SPF record. 
+
+Found v=spf1 record for owncloud.com: 
+v=spf1 a:mx.owncloud.com a:kerio.owncloud.com a:schaltsekun.de a:m.hive01.com include:cmail1.com include:email.influitive.com include:google.com ~all 
+
+evaluating...
+Results - PermError SPF Permanent Error: Too many DNS lookups

@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/84078
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/c0ldb00t3r
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.02.2016 0:29:14
+
+Summary:
+We have received multiple reports that some of our domains on *.owncloud.com and *.owncloud.org are not using a recommended configuration for HTTPS purposes. To avoid having multiple issues to track SSL / TLS related problems on *.owncloud.com and *.owncloud.org we have merged multiple issues together in this one.
+
+Meanwhile, we have changed all critical customer facing systems to a secure configuration. It shall be noted that ownCloud is continuously working on their systems and once we have updated some older operating systems we will be able to increase the configuration even more. 
+
+- [apps.owncloud.com](https://www.ssllabs.com/ssltest/analyze.html?d=apps.owncloud.com): A
+- [customer.owncloud.com](https://www.ssllabs.com/ssltest/analyze.html?d=customer.owncloud.com&latest): C
+- [presales.owncloud.com](https://www.ssllabs.com/ssltest/analyze.html?d=presales.owncloud.com&latest): C 
+- [s3.owncloud.com](https://www.ssllabs.com/ssltest/analyze.html?d=s3.owncloud.com&latest): A
+- [download.owncloud.com](https://www.ssllabs.com/ssltest/analyze.html?d=download.owncloud.com&latest): B
+- [owncloud.com](https://www.ssllabs.com/ssltest/analyze.html?d=owncloud.com&latest): B
+- [doc.owncloud.com](https://www.ssllabs.com/ssltest/analyze.html?d=doc.owncloud.com&latest): B
+- [owncloud.org](https://www.ssllabs.com/ssltest/analyze.html?d=owncloud.org&latest): B
+- [doc.owncloud.org](https://www.ssllabs.com/ssltest/analyze.html?d=doc.owncloud.org&latest): B
+- [owncloud.help](https://www.ssllabs.com/ssltest/analyze.html?d=owncloud.help&latest): A+
+
+In case of different issues we'd like to ask to open a new issue. We'll however not consider any of the above listed items as issue.

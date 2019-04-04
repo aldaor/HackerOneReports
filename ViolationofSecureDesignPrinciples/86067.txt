@@ -1,0 +1,55 @@
+ReportLink:https://hackerone.com/reports/86067
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/codequick
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.09.2015 15:08:28
+
+Summary:
+
+Send this request:
+
+GET https://support.hackerone.com HTTP/1.1
+Connection: keep-alive
+Accept: application/json, text/javascript, */*; q=0.01
+X-Requested-With: XMLHttpRequest
+Content-Length: 0
+User-Agent: Jakarta Commons-HttpClient/3.1
+Host: support.hackerone.com
+
+Response header:
+
+HTTP/1.1 200 OK
+Server: cloudflare-nginx
+Date: Tue, 01 Sep 2015 06:52:11 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+Age: 56
+Cache-Control: must-revalidate, private, max-age=0
+Cf-Railgun: 87a16c353c 0.02 0.338003 0030 5f99
+Etag: W/"bcace9020a24a9e907e225a39b266b41"
+P3p: CP="NOI DSP COR NID ADMa OPTa OUR NOR"
+Set-Cookie: _zendesk_shared_session=-VnZMKzVjYjE3UE9YNTFTL3JRdUNMbGJ2QWIrRFdCcHlnMmV5YUF5REZjM2lsLzFVYnlHSitnTXl0M3lwYy8rdlVjZEkxZEVXQkY4UXBpOEQ5OW1HL0Rxb21xSWMrelZnQ0FaWm9zeVV3d2JMWTdtVUIzSksrd2JlbTlaQlB2NTZheEYyMVNPbTJjMHhNUnd6ZmRCLzRBPT0tLXVIVEtEZllZaEpGSVdWb0p4S1RKM1E9PQ%3D%3D--115cc986bb0920272411c9d98503a8791592f7e7; path=/; HttpOnly
+Set-Cookie: _zendesk_authenticated=; path=/; expires=Thu, 01 Jan 1970 00:00:00 -0000; HttpOnly
+Status: 200 OK
+Strict-Transport-Security: max-age=86400;
+Vary: X-Device-Type, X-User-Role
+X-Content-Digest: ae308f9f9f3a0371e5536ade23b825b5e2bd31dc
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Rack-Cache: fresh
+X-Request-Id: 7c17bd5c-2511-483b-c8b3-b8ca3a61d4b8
+X-Runtime: 0.022081
+X-Ua-Compatible: IE=Edge,chrome=1
+X-Xss-Protection: 1; mode=block
+X-Zendesk-Origin-Server: hcapp8.pod4.sac1.zdsys.com
+CF-RAY: 21ef0d0696891067-CDG
+
+HSTS age is 86400
+
+Calculation= 86400/60s
+                    =1440/60m
+                    =24/24 day
+                    = 1 day

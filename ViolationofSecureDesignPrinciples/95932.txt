@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/95932
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/maxi
+ReportedTo:itBit Exchange(itbit)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:28.11.2015 15:30:07
+
+Summary:
+
+Upon every unsuccessful login attempt an email is sent to the user containing the time of login attempt ,user-agent and ip .It is possible to modify the request using proxy tools and modify the user agent string to to a malicious link and the email being sent to notify the user will contain this malicious link e.g malware or phishing
+
+**POST request** : 
+```
+POST /login HTTP/1.1
+Host: exchange.itbit.com
+User-Agent: for more : evil.com Firefox/41.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: https://exchange.itbit.com/login
+Cookie: _ga=GA1.2.910533099.1444909209; __hstc=57227381.b73f10bacc30e3e12c424740d707f651.1444911108632.1445875748608.1445882559935.3; hsfirstvisit=https%3A%2F%2Fexchange.itbit.com%2F||1444911108630; hubspotutk=b73f10bacc30e3e12c424740d707f651; _gat=1; __hssrc=1; __hssc=57227381.1.1445882559935; itBit.b=s%3Ae90dc24a-136a-405a-a479-8a1dff3bbd84.McOr4UOS5hfm5MGgVsrsVCfTGMmDo2I3DX2K7KGGyNI; itBit.c=N14BcLvhRAYuH56Qn_KsgQ2q; itBit.s=s%3A7d02596a-46ea-4079-9db8-84e0f2f33ada.Lf2oKK5wAXiwJ2THzp%2B6cXNZ3Ac9mJejvPMokL6afp4
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 1121
+```
+
+Kindly check screenshot 

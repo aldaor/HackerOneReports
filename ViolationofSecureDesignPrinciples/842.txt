@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/842
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/xtross1
+ReportedTo:HackerOne(security)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:28.05.2015 4:50:18
+
+Summary:
+
+Data entered in these fields will be cached by the browser. An attacker who can access the victim's browser could steal this information.

@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/85559
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/shivathegame
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.09.2015 7:10:45
+
+Summary:
+
+step1:Reset password
+step2:In the pop up--click auto save password
+step3:Just login to own cloud
+Step4:You will see your password in the user name field 
+
+ I hope you catch me...

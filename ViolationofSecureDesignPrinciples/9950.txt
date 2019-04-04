@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/9950
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/faisalahmed
+ReportedTo:HackerOne(security)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:25.04.2016 8:19:19
+
+Summary:
+When a user changed his/her password (either directly or with reset password flow), existing sessions were kept active.
+
+We already invalidate all sessions when a user logs out, but we were not doing the same for password changes. This means that if an attacker were to get access to an account, even if you changed your password, it would not directly disable his/her session (unless you explicitly went to "logout", which is not the most user-intuitive).
+
+As a result of this report, we rethought how we handled password changes, and we decided to invalidate all sessions on a password change/reset to protect from this possible problem.

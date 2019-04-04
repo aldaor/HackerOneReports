@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/90778
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/sherlock_
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:17.06.2016 18:50:35
+
+Summary:
+The suggestion was to set `X-Permitted-Cross-Domain-Policies: master-only`. From [Adobe](https://www.adobe.com/devnet-docs/acrobatetk/tools/AppSec/xdomain.html) ([per](https://github.com/twitter/secureheaders/issues/88)):
+
+> Normally a meta-policy is declared in the master policy file, but for those who can’t write to the root directory, they can also declare a meta-policy using the X-Permitted-Cross-Domain-Policies HTTP response header.
+
+However, our web site and web applications do not use Adobe Flash. As far as we can tell, this header is concerned only with the security of Flash content.

@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/87531
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/hussein98d
+ReportedTo:Gratipay(gratipay)
+BountyAmount:20.0
+Severity:low
+State:Closed
+DateOfDisclosure:06.01.2016 8:54:06
+
+Summary:
+
+Hello,
+We can bomb (spam) any email we want using your website. 
+POC : 
+1.register
+2.go to https://gratipay.com/~hussein98d/emails/ and add your victim's email
+3.start intercepting requests and click on "resend"
+4.replay the same request many time , the victim's email will be spammed with Gratipay messages.
+
+Thanks,
+Hussein

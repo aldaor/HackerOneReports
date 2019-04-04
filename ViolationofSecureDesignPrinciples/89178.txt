@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/89178
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/bugs3ra
+ReportedTo:BitHunt(bithunt)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.06.2016 10:04:35
+
+Summary:
+
+HI,
+
+There is no captcha or rate limit to protect from bots against adding request for new products.
+
+Check image attached for 20 request sent one after the other with 200 OK status.

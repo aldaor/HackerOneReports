@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/96826
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/maxi
+ReportedTo:itBit Exchange(itbit)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.12.2015 17:05:25
+
+Summary:
+
+
+Dear team..
+i want to report a Logical Bug to your site..
+The Bug is..
+It's not Validationg a Previously Created Account on your site. means, A persone can Signup Many time with his old email... which is already Registerd.
+
+or an Attacker can OwerRight ur User's Previouse account with Fishy
+Details..
+this Bug can Harm ur Repuation & can Irretate a User.. & evil mind person will missuse this for Prank your valid user..
+
+## FIX : 
+
+```
+$query = "Select email from tablename where email = '$email'";
+$result mysql_query($query)
+if(mysql_num_rows($result) > 0) {
+echo 'Email already register';
+}
+```

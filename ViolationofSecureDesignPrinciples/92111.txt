@@ -1,0 +1,39 @@
+ReportLink:https://hackerone.com/reports/92111
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/dz_samir
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:06.02.2016 21:38:56
+
+Summary:
+@00day has reported a missing sanitization of names included in mails sent by hello@owncloud.com.
+
+If an user has configured their name to include a XSS payload this would be included within the mail sent to the user. This could lead to Javascript getting executed if the mail client is configured to execute Javascript. Due to the fact that this is input supplied by the user themselves we do consider this a low severity impact configuration issue. 
+
+We have been working together with the third-party providing the hello@owncloud.com service to us to make sure that in the future new user names are not used in vulnerable contexts like this. Unfortunately this does not apply to already created user names.
+Hello 
+i create account with username have a payload code "><img src="c" onerror=alert(1)><script>alert(1)</script>,
+and i always when i  get mail from hello@owncloud.com i get mail win inject the code payload (html code inject)
+From: ownCloud <hello@owncloud.com>
+Reply-To: hello@owncloud.com
+To: s-dz@hotmail.fr
+Message-ID: <1443803020209.163f96fc-108e-42bf-8c10-86406627607e@smtp.hubapi.com>
+Subject: ownCloud Security & Encryption 2.0; A Technical Overview
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_Part_2297473_416570165.1443803059574"
+List-Unsubscribe: <mailto:MCQyw6Wdcg_W8ys71T8040lgVzv76n4tcsZ_W4fKWHX3ZskbF0@m.hsms06.com>, <http://t.hsms06.com/e1t/c/*W4Zt7h03lnvKlW7vlbtK3d_CYy0/*W48wfbt6qPs7GW8WTnbw5F30_R0/
+------=_Part_2297473_416570165.1443803059574
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi "><img src=3D"c" onerror=3Dalert(1)><script>alert(1)</script>,
+
+PoC image 
+
+
+Thanks 
+
+Hadji Samir 

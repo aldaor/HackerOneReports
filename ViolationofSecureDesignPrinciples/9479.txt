@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/9479
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/uname
+ReportedTo:HackerOne(security)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:28.04.2015 5:06:57
+
+Summary:
+
+Hi,
+
+The following host "profile-photos-user-content.hackerone.com" does not set the x-content-type-options header to nosniff. If a malicious user is able to upload an image with script content (Possible within the comments metadata) Internet Explorer (up till IE8) might render the content as Javascript and execute malicious code.
+
+The problem is more severe since the photos are uploaded to a subdomain of hackerone.com.
+
+Cheers,

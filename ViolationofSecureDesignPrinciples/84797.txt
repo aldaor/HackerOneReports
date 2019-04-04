@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/84797
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/paulos_
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.10.2015 0:24:03
+
+Summary:
+
+Hi,
+
+With this bug, a local attacker can infect users with malware. it
+works this way, after the sign up page or most pages, a Download
+prompt appears. (for example, at your Hackerone Page hackerone.com/owncloud),
+However, the downloads url, in my case, it was 
+
+http://download.owncloud.org/community/owncloud-daily-stable8.1.tar.bz2
+
+Did you see what I see? the page is delievered by http. so an attacker
+does this, downloads the file, bind a malware to it. host it to his
+server, and when a legit user try to donwload it, deliever the payload
+binded with the games. user runs that, game over. who's to blame?
+well, duh... owncloud!
+
+The easiest solution is just changing the URL from
+http://download.owncloud.org/community/owncloud-daily-stable8.1.tar.bz2
+to https://download.owncloud.org/community/owncloud-daily-stable8.1.tar.bz2
+because the site works both ways, only... the second one gets
+downloaded from an encrypted source. I don't even know why you put the
+HTTP version anyways.
+
+Note: I am doing this for the points, not the bounty. so please don't damage it.
+
+Thanks again,
+Paulos

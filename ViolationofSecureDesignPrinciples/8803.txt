@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/8803
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/s3curient
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.05.2014 8:14:01
+
+Summary:
+
+http://tp-test1.corp.mail.ru/ link has various operations which should not be accessible to an anonymous user. 
+
+As admin panel is accessible an attacker can use this information in targeted attack and he can bruteforce the username and password.
+
+on the other side server information is easily available with version and operating system details. 

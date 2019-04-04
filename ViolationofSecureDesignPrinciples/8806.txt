@@ -1,0 +1,48 @@
+ReportLink:https://hackerone.com/reports/8806
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/internetwache
+ReportedTo:Cloudflare(cloudflare)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 10:00:22
+
+Summary:
+
+Hi there,
+
+I noticed two things on the following url: https://www.cloudflare.com/ajax/modal-dialog.html
+
+##1. CSRF
+There are some csrf countermeasures in place (e.g. X-Requested-With: XMLHttpRequest), however they're not validated on the server. 
+
+This leads to an uncritical csrf:
+
+```
+<html>
+  <body>
+    <form action="https://www.cloudflare.com/ajax/modal-dialog.html" method="POST">
+      <input type="hidden" name="type" value="default" />
+      <input type="hidden" name="content" value="This&#32;is&#32;my&#32;content" />
+      <input type="submit" value="Submit request" />
+    </form>
+  </body>
+</html>
+```
+
+##2. Content spoofing
+Using 1.) I can send some abitary content within the ```content``` parameter to my victim. 
+
+The ```Content-Type``` is ```text/html```, however I was not able to break the filter and conduct a xss at the first glance.
+
+As said, I could send an abitary message fomatted with new-lines to my victim telling him to send over some details or something (be creative here :) ). That would result in a (lame) phishing attack.
+
+#What should you fix?
+ - Set a better Content-Type. E.g. "text/plain" 
+- Validate the CSRF headers
+- Do not send the displayed error message in the request. (e.g. hardcode those message and pass an ID depending on the situation).
+
+Let me know, what you think about this.
+
+Thanks,
+Sebastian
