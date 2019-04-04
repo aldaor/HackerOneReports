@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/272097
+WeaknessName:Integer Underflow
+Reporter:https://hackerone.com/mipu94
+ReportedTo:Perl (IBB)(ibb-perl)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:11.12.2017 7:53:16
+
+Summary:
+
+Hi security team,
+i [reported](https://rt.perl.org/Public/Bug/Display.html?id=131562)  some samples triggered crash in eval funtion in perl. 
+The bug come because variable `start` and `items` used type `I32` which takes half the range of line_t and folds it into negative numbers, leading to trying to store the lines at negative indexes.
