@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/138852
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/vijay_kumar1110
+ReportedTo:Pornhub(pornhub)
+BountyAmount:750.0
+Severity:
+State:Closed
+DateOfDisclosure:13.02.2017 22:39:14
+
+Summary:
+The researcher discovered a vulnerability where a user may pin and post other users' content to their stream without their authorization.

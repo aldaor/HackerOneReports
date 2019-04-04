@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/140432
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/paulos_
+ReportedTo:Gratipay(gratipay)
+BountyAmount:10.0
+Severity:medium
+State:Closed
+DateOfDisclosure:17.06.2016 6:42:09
+
+Summary:
+
+Hey,
+
+Its me again. since the Login with Facebook doesnt have a dedicated directory like gratipay.com/facebook/callback it is possible to still steal access tokens.
+
+https://www.facebook.com/dialog/oauth?response_type=code&client_id=144124902390407&redirect_uri=https://gratipay.com/~attacka/&scope=public_profile%2Cemail%2Cuser_friends&state=mjemgKNb0s24lbEqBcyVqDEVNoYDYs
+
+As you can see it will send the token to my profile (/~attacka) and my profile points to example.com, if the user clicks on that link the referrer header will send tokenz (obviously lol)
+
+gratipay also imports pictures from 3rd parties, forexample my img src is from ls.googleusercontent.com which means it will also leak the access_tokens to there.
+
+Fix: add the redirect uri like: https://www.gratipay.com/facebook/callback so users have no way to tamper with it.
+
+Thanks,
+P

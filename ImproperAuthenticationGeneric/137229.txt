@@ -1,0 +1,44 @@
+ReportLink:https://hackerone.com/reports/137229
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ehsahil
+ReportedTo:Dropbox(dropbox)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.05.2016 15:47:01
+
+Summary:
+
+Hi, 
+
+**SSRF** is a vulnerability that appears when an attacker has the ability to create requests from the vulnerable server.
+
+Usually, Server Side Request Forgery (SSRF) attacks target internal systems behind the firewall that are normally inaccessible from the outside world (but using SSRF it’s possible to access these systems). With SSRF it’s also possible to access services from the same server that is listening on the loopback interface.
+
+Using Server Side Request Forgery attacks it’s possible to:
+
+1. Scan and attack systems from the internal network that are not normally accessible
+2. Enumerate and attack services that are running on these hosts
+3. Exploit host-based authentication services
+
+Steps to reproduce: 
+
+1. Goto https://www.dropbox.com/developers/apps
+
+2. Create an App. 
+
+3. Enter Webhooks URLs and analyse response: 
+
+ i. http://scanme.nmap.org:80 => it gives an output (PORT 80 is Open)
+
+ ii. http://scanme.nmap.org:1337 => No output (Port 1337 is closed)
+
+ iii. http://nmap.org:22 output gives banner information (SSSH-2.0-OpenSSH_6.6.1\r\n)
+
+
+Using above scenario attacker can do port scanning from dropbox servers. 
+
+ Please see attached images for Proof of concept. 
+
+ Thanks 
+ **@gone**

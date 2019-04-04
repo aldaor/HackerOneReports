@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/165048
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ysx
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:19.09.2016 15:49:03
+
+Summary:
+Some services (including Splunk and SMTP) on a staging system (shard3-db2.ec2.shopify.com) were unintentionally exposed to the internet due to misconfigured firewall rules. The staging system was obsolete and has been shut down.

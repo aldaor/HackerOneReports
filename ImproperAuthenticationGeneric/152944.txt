@@ -1,0 +1,46 @@
+ReportLink:https://hackerone.com/reports/152944
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/babayaga_
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.10.2016 7:32:20
+
+Summary:
+
+Hi,
+
+Sir I found a Vulnuberlity in your Website. Called Session Management Flaw
+You can Know More About This Flaw through OWASP Guide
+ https://www.owasp.org/index.php?title=Broken_Authentication_and_Session_Management&setlang=en
+
+in this Loop Hole The Application Is Not Destroying the Session After Signing Out from The User Account at
+https://rpm.newrelic.com/
+& Thus If The Attacker Got his Hands Upon Users Cookies he can Get Access To the User Account.
+
+An attacker can get the user session cookies by any means Session Spoofer, Cookie Staler etc 
+
+Steps To Reproduce:
+
+1: Login to Your newrelic  Account. after successful login you will b taken to https://rpm.newrelic.com/
+
+2: Then Use "BrupSuite" or any other  Utility to get the cookies of that session ( I'm using "EditThisCookie" Chrome Extension in a Case of Attacker he can Use Any Sort Of cookie Stealing Script or Cookies Soofing Utility to get his hands on cookies ).
+
+>And grab the cookies of active User Session.
+
+3: Then Logout of the  Account from https://rpm.newrelic.com/ & You will See That The Site will take you towards 
+https://login.newrelic.com/
+
+4: Clear all Cookies related to https://newrelic.com/ & https://rpm.newrelic.com/   Then Inject Hijacked User Cookies so that you can get into the user session...
+
+After the cookies Is been injected You will See That the main page https://newrelic.com/  & https://login.newrelic.com/ are telling you that you are not logged in but if you open https://rpm.newrelic.com/ You will see that you are logged in to the account...
+
+& You can see & Edit any User Info :P
+
+& Also The cookies you captured will work for long so you can get into account anytime you need i tested cookies that worked lost last about 1 day :p 
+
+Sir, I'm making & Uploading a POC Video to YouTube & Will send you as soon as possible.
+
+thanks,
+Khizer Javed 

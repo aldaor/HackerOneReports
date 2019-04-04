@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/158270
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/cjlegacion
+ReportedTo:Certly(certly)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:29.08.2016 12:27:01
+
+Summary:
+
+1.login the account.
+2. browse any tabs or anything in the site
+3. logout the account 
+4.click the back browser button and you are able to see the all previous page Related Topic: https://hackerone.com/reports/7909

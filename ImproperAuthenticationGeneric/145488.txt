@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/145488
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/pradeepch99
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.04.2017 15:09:39
+
+Summary:
+
+Steps to reproduce
+1. Login as user1 in firefox browser
+2. Go to http://localhost/nextcloud/index.php/settings/personal
+3. Go to other browser (chrome) and login as user1
+4. Change the password in chrome 
+
+Observe that the session in firefox still works

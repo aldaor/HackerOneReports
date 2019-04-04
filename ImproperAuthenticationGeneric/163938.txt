@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/163938
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/rijalrojan
+ReportedTo:Slack(slack)
+BountyAmount:2500.0
+Severity:
+State:Closed
+DateOfDisclosure:14.09.2016 20:02:46
+
+Summary:
+@uranium238 discovered a vulnerability with a 3rd party email integration provider which would allow messages in Slack email integrations to be leaked. We worked with the 3rd party to get this issue resolved, and performed a thorough investigation to confirm that this had never been exploited. Thanks @uranium238 for an interesting finding!

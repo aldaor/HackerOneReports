@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/145402
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/gaurang
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.06.2016 15:10:52
+
+Summary:
+
+Android app version: 1.0.0
+
+Issue Details:
+-----------------
+The following activities are exported and it does not have a permission set. 
+
+1) com.owncloud.android.ui.activity.FileDisplayActivity
+2) com.owncloud.android.ui.activity.ReceiveExternalFilesActivity
+3) com.owncloud.android.authentication.AuthenticatorActivity
+4) com.owncloud.android.ui.activity.ShareActivity
+
+This could allow any malicious application to initiate the above mentioned activities thus bypassing security checks or getting private information of any user.
+
+Recommendation:
+-------------------------
+Set the permission for the above mentioned activities or either set android:exported=false (which allows the activities to be launched by only components of the same app or the same uid)

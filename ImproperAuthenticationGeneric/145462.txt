@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/145462
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/johnd
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.06.2016 16:03:43
+
+Summary:
+
+User can share any files with link and can also set password for it but issue is there isn't any rate limting implemented there at this feature. So attacker can bruteforce shared link whereas on the other side victim might be thinking he is safe even he shared private file link in publically.

@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/156941
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/test_account_bd
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.10.2016 2:16:15
+
+Summary:
+
+Dear Sir
+
+
+I ran a few pentest on your website and at one place I had to stop! it was this - ( https://www.veris.in/wp-login.php )
+
+this panel is risky! because this leads to brute force attack please fix this issue!
+
+
+full attackinfo: https://blog.sucuri.net/2015/12/using-wpscan-finding-wordpress-vulnerabilities.html
+
+Vun: https://www.veris.in/wp-login.php

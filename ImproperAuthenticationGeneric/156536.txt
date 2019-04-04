@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/156536
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/rijalrojan
+ReportedTo:Uber(uber)
+BountyAmount:10000.0
+Severity:
+State:Closed
+DateOfDisclosure:14.09.2016 19:51:31
+
+Summary:
+Possibility to read emails from various Uber subdomains. None of the domains exposed were actively being used for Uber email communication to employees or users.

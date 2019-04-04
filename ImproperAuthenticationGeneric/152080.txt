@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/152080
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/babayaga_
+ReportedTo:Coursera(coursera)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.08.2016 6:58:35
+
+Summary:
+
+In this Loop Hole The Application does not destroy session after logout.. means the cookies are working to login to user account & change account Information, The Cookies are usable after many hours of logout about after 1 day i'm able to access the account & edit info.
+
+Steps To Reproduce This Issue:
+
+1: go to coursera.org
+
+2. Login to your account.......
+
+3. Get the cookies using " Brub Suite" or "EditThisCookie" 
+
+4: Logout from the account...
+
+5: Clear all the cookies related to coursera.org
+
+6: Save the cookies you copied in a text file...
+
+7: Now Injact/Import Old Cookies to the coursera.org by "EditThisCookie"... 
+
+8: as u can see.. you will be again logged In to coursera.org account.. using old session cookies..
+
+For More Information about This Vulnerability You can check OWASP Guide 
+
+https://www.owasp.org/index.php?title=Broken_Authentication_and_Session_Management&setlang=en 
+
+Thanks, 
+khizer Javed

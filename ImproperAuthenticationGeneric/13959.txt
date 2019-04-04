@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/13959
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/niks
+ReportedTo:Automattic(automattic)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:10.08.2014 6:00:52
+
+Summary:
+
+This vulnerability includes privileges escalation, authentication bypass, as well as some information disclosure as well. follow the below steps for reproduction.
+
+1. go to https://cloudup.com and make two accounts say X and Y.
+2. login with the account X and upload a file(can be txt,php,anything) and set a password for this file, now right click on download and copy the link location of the file. It is something like (https://cloudup.com/files/iDQ23wk5p1O/download)
+3. Now logout from account X, and login with account Y. Now load the link location of file copied in step 2. what you will get? Forbidden, right?
+4. But wait a second, modify the url mentioned in step 2 like below
+ https://cloudup.com/files/iDQ23wk5p1O/   (remove the download part)
+5. Load the above modified url, and you will see, you can access the file contents i.e. password protected file (authentication bypass), accessed by another user who is not authorized (privilege escalation) and information disclosure like 
+"exif":{"exiftool version number":"9.35","file name":"HiTmbEE-C2","directory":"/tmp/thumbs","file size":"46 kB","file modification date time":"2014:05:29 08:37:22+00:00","file access date time":"2014:05:29 08:37:22+00:00","file inode change date time":"2014:05:29 08:37:22+00:00","file permissions":"rw-rw-r--"

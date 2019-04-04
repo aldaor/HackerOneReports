@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/145629
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/malcolmx
+ReportedTo:Algolia(algolia)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:17.01.2017 15:36:22
+
+Summary:
+Bad 2FA activation flow has been discovered that could lead to user, which would not read the onscreen instructions, thinking the 2FA has been activated before it really did.
+Hello aligola team,
+
+there are 2-factor authentication bypass while login 
+
+Steps=>
+1.made 2-factor authentication in your account 
+2.login to your account 
+3.you will see that your account is already opened without do 2-factor authentication 
+
+POC video attached 
+
+Thanks

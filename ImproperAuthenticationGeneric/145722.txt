@@ -1,0 +1,44 @@
+ReportLink:https://hackerone.com/reports/145722
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/koolacac
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.06.2016 13:42:28
+
+Summary:
+
+Since HTTP Basic authentication is used on [https://newsletter.nextcloud.com], This type of authentication is vulnerable to Bruteforce attack.
+
+ *refer the attachment below*
+{F100241}       
+
+*refer the attachment below*
+{F100240}        
+
+**Attacking via metasploit auxilary scanner http_login:**
+
+*refer the attachment below*
+{F100239}   
+
+An attacker can bruteforce the following directories on {https://newsletter.nextcloud.com}
+
+>1) [https://newsletter.nextcloud.com/admin/]
+>2) [https://newsletter.nextcloud.com/admin/pma/]
+>3) [https://newsletter.nextcloud.com/admin/phpmyadmin/]
+>4) [https://newsletter.nextcloud.com/admin/mysql]
+
+>The website also reveals that **PHP list** *version 3.2.5* is used 
+ 
+*refer the attachment below*
+{F100238}   
+
+An attacker can take advantage of this and can exploit the framework related vulnerability.
+
+>Recently **PHP list** *version 3.2.5* was vulnerable to XSS and CSRF 
+* {https://packetstormsecurity.com/files/137278/PHPList-3.2.4-Cross-Site-Request-Forgery-Cross-Site-Scripting.html}
+* {https://www.youtube.com/watch?v=cU6ob4sCKgs}
+
+So it is a good practice to use the latest stable version and dont reveal the banner in the error messages.
+

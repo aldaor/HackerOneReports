@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/146067
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/bugdiscloseguys
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:19.07.2016 15:19:24
+
+Summary:
+The restore capability of Nextcloud was not verifying whether an user has only read-only access to a share. Thus an user with read-only access was able to restore old versions.
+
+A detailed advisory can be found at https://nextcloud.com/security/advisory/?id=nc-sa-2016-005.
+
+------
+Thanks a lot, @bugdiscloseguy for pointing out this vulnerability!
+
+**On request of the reporter this report has been only disclosed limitedly**.

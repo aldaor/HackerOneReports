@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/145950
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/detroitsmash
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:19.07.2016 13:06:41
+
+Summary:
+The WebDAV endpoint was not properly checking the permission on a WebDAV "COPY" action. This allowed an authenticated attacker with access to a read-only share to put new files in there. It was not possible to modify existing files.
+
+A detailed advisory can be found at https://nextcloud.com/security/advisory/?id=nc-sa-2016-004.
+
+------
+Thanks a lot, @detroitsmash  for pointing out this vulnerability!
+Hi,
+
+Any invited user to a shared folder with no edit privilege can create files in it through copy feature of ``Nextclod`` android app.
+
+### Steps to reproduce it
+
++ Create any folder and invite a user in it without any edit privilege.
++ Now login from invited user account through android app.
++ Copy any file from your ``nextcloud`` root folder to shared folder.
++ Check nextcloud web app!! Copied file will show in shared folder
+
+Thanks

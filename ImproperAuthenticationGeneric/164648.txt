@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/164648
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/attacker911
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:40.0
+Severity:
+State:Closed
+DateOfDisclosure:11.09.2017 21:45:49
+
+Summary:
+A security researcher discovered that after resetting a password, the user was automatically logged in. As such, compromising a legitimate password reset link (via referrer token leakage or a similar issue) could lead to compromising the account since the user would not be forced to log in after resetting their password. OWASP [forgot password recommendations](https://www.owasp.org/index.php/Forgot_Password_Cheat_Sheet) suggest a better approach, which we have now implemented. Thanks to @attacker911 for another great report!

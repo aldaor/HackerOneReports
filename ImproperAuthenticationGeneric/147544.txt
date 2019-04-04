@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/147544
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/onidnalbj
+ReportedTo:Slack(slack)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:15.09.2016 3:30:48
+
+Summary:
+
+We can generate a __token__ test in any community that we are to use the API in the community (__although we are not community managers__)
+
+In the attached __video__, I show you how to generate a token in a community in which I am not administrator and I can check absolutely everything and even make use of the API.
+
+__Note__: talk to the administrator of the community to make this test getbootstrap.

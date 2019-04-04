@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/145621
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/mkbb
+ReportedTo:Slack(slack)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.06.2016 23:34:51
+
+Summary:
+File thumbnails which were uploaded before the implementation of auth checks do not have those checks retroactively applied. However, their URLs contain a secret which prevents guessing or brute-forcing of their location.

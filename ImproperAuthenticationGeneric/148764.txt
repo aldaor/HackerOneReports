@@ -1,0 +1,39 @@
+ReportLink:https://hackerone.com/reports/148764
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/vijay_kumar1110
+ReportedTo:Pornhub(pornhub)
+BountyAmount:1500.0
+Severity:
+State:Closed
+DateOfDisclosure:05.11.2016 11:11:12
+
+Summary:
+Researcher was able to access private user content by calling the post ID.
+Hi Team,
+
+Description : It's a very simple but very impact full issue.  Pornhub have privacy feature for streams where you can hide your stream(private). Only your friends can see your stream but there is way it  can be bypass this and all the private streams can be seen on pornhub.
+
+Steps to reproduce : 
+1.Create a profile with username Victim and go to his profile setting --> preferences --> stream preferences.
+2.In stream preferences you will see the option of who can see your stream with two options everyone and only friends.
+3.Set  Only Friends option here. Now go to your profile and post on your stream(You can post photos ,videos etc.). Let's say your post id is = "12345" A simple post will a link something like :  http://www.pornhub.com/users/victim/post/stream_posts_users/12345
+
+Open this link and you can see your post now. Since you have set the privacy for your stream so only your friends can see this post.
+4. Now create One more profile with the username Attacker and try to open Victim's profile. You will see the message saying that stream is private.Even if you try to open the same link mentioned above ,it will tell you the same message again.
+ 5. Try to open this URL :  http://www.pornhub.com/users/victim/post/stream_posts_users/12345.
+You will notice that Attacker is not able to open this Post. 
+6. Now change this url to : http://www.pornhub.com/users/Attacker/post/stream_posts_users/12345
+
+So you have just changed the Username part in this link and you will see that you are able to see the post now. This works on each type of post of stream. Ex: Photos,videos , Gifs etc.
+
+So basically  the trick here is open the link with your username and change the post ID to any private/public post ID and you can read/view private stream posts of any user of pornhub now. 
+
+Providing you the Video POC for more understanding :
+
+https://youtu.be/CUeM15NSmYA
+
+
+Let me know if you need any other information regarding this issue.
+
+Best Regards !
+Vijay Kumar 

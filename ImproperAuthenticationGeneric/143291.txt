@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/143291
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/err
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.06.2016 22:16:35
+
+Summary:
+
+issue:
+1.click forget password as driver or rider [https://login.uber.com/login]
+2.input an email which not signed up! 
+3. press reset password. 
+there will be 'We've sent you an email with a link to reset your password.' message. 
+
+because it can not verify email is signed up or not! 
+
+I'd tried with my personal email. I got the message in webpage but did not get any further email from Uber. 
+is that another bug? 

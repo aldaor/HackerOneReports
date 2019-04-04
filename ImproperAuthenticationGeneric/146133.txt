@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/146133
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/bugdiscloseguys
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:25.10.2018 10:19:39
+
+Summary:
+1. UserA creates a password protected share
+2. UserA shares this link with UserB
+3. UserB accessed the share with the password
+4. UserA changes the password
+5. Now userB can still access the share.
+
+At step 5 userB should be prompted to authenticate again.

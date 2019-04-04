@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/142221
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/thisishrsh
+ReportedTo:Zomato(zomato)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.06.2016 7:28:35
+
+Summary:
+
+User can bypass the OTP verification needed while placing an order with a restaurant. User can give a random number and intercept the OTP request. If wrong OTP is provided then the error message shows the session code which is the OTP in this case. Hence that session code can be used to verify the phone number and the order can be placed.
+Similarly,by intercepting the final order placing request,one can change the number and place N number of orders with restaurant.
+
+Please Refer to the attached POC.

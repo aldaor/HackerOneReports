@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/155862
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/rajauzairabdullah
+ReportedTo:Trello(trello)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.08.2016 17:02:33
+
+Summary:
+
+There is Authentication Problem with the Verification Code for Activating 2FA !
+
+**Description:**
+Verification Code is getting reused for multiple times aven on every activation 2FA action there you recieve saperate an new Verification Code  for Activating 2FA !
+>[Proof Video](https://vid.me/tF7R)
+
+thanks

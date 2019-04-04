@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/148903
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/kelunik
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.07.2016 20:32:01
+
+Summary:
+
+Airship doesn't reject weak passwords for the initial account. It happily accepts the password `test` for a root user `test`. This isn't a vulnerability in the software itself, but it's still listed in [vulnerabilities we prevent](https://github.com/paragonie/airship-docs/blob/master/en-us/WHY.md#vulnerabilities-we-prevent):
+
+> **Broken Authentication**
+> Airship rejects weak passwords that hackers could easily guess.
+
+Feel free to close this as informative, but I think it's still security related, so I'll report it here.

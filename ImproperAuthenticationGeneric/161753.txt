@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/161753
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/rajauzairabdullah
+ReportedTo:Trello(trello)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.05.2017 13:26:26
+
+Summary:
+
+As per you have rate limit set on 6 times requesting verfication code 
+request 6 verification and put the verification code which was send to u in first sms will be accepted by server. even after first sms all 5 sms is sent by server to mobile .
+On the request of new authenticaton code old one should get invalidate but here its not.
+hope u understand :)
+regards
+<jaguar/>

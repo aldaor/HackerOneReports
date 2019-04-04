@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/14698
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/eronx
+ReportedTo:WePay(wepay)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.09.2014 0:19:28
+
+Summary:
+
+Hello, this report is a copy of my previous reports sent to your email ( security@wepay.com) some days ago. ( Ticket #437198 and Ticket #437190 ):
+
+You mentioned that you are working on a "sudo mode" for adding an email address, deleting an account and other sensitive actions (add bank accounts for payouts, etc.);. Sensitive information like those should have re authentication in place.
+
+Thank you.
+
+Clifford Trigo

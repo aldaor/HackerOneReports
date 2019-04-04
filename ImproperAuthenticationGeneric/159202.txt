@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/159202
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/s0meb0dy
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.09.2016 15:29:29
+
+Summary:
+
+[Issue resolved by the OLX support , at the time of discovery of bug , olx.in was not in scope]
+
+Whenever a user wants to login through the mobile app , the user enters his mobile number and then he is presented with a screen to enter the OTP . The problem is that there is no rate limiting on the number of attempts , since the OTP is only 4 digits long , all the combinations can be tried in a very short span of time hence anyone can login in anyone's account by typing victim's mobile number and trying all OTPs.
+
+Here is the original video and PDF i sent to the OLX Support.
+https://youtu.be/ds8dOFt_8s4

@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/145452
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/detroitsmash
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:350.0
+Severity:
+State:Closed
+DateOfDisclosure:13.12.2016 16:20:08
+
+Summary:
+
+Hi,
+
+I found a bug where a shared link of particular file can disclose all files of that folder. 
+
+###Steps to reproduce
+
++ Make a group( ```http://*/nextcloud/index.php/settings/users```) and a standard user in it.
++ Now goto any folder and change it to gallery view
+{F99993}
+
++ Invite that group which u made in step 1 with ``share`` privilege .
++ From standard user account, goto that shared folder and make a shared link of any file. E.g:
+
+{F99992}
+
++ Untick the ``can share`` privilege from that group using folder owner account. Eg: 
+
+{F99994}
+
+
+
+
+Now the shared link which was created by standard user will work as folder shared link. And when folder untick the ``can share`` privilege public is automatically created without asking folder owner.
+
+Thanks

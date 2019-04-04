@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/13639
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/coolboss
+ReportedTo:Factlink(factlink)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.05.2014 13:22:08
+
+Summary:
+
+I found that you are using X/Csrf token as a protection against CSRF attacks.
+
+But you are using same X/Csrf token in and out.
+
+eg
+z3qrwilV8lz7CXsMhmvqxn+93GDZm/m9w/d5DZjoj8w=
+
+This token is same before and after log-in.
+This must be patch as it me result session hacks. 

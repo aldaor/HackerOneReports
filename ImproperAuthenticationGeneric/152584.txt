@@ -1,0 +1,43 @@
+ReportLink:https://hackerone.com/reports/152584
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/eboda
+ReportedTo:Harvest(harvest)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:10.09.2016 22:00:01
+
+Summary:
+
+Summary
+---------
+
+I can takeover your `███` S3 bucket. You are using https://proxy.harvestfiles.com to proxy requests to this bucket. The proxy automatically signs the requests and adds the required authorization headers for your S3 user.
+
+However, an attacker can then simply impersonate the user and create arbitrary requests which will be signed and forwarded to the S3 bucket. 
+
+Proof of Concept
+-----------
+
+As a proof of concept I have created a file on the bucket: █████████
+
+This was done by issuing the following request:
+
+```
+PUT ███████ HTTP/1.1
+Host: proxy.harvestfiles.com
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate, br
+Connection: close
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 15
+
+arbitrary-write
+```
+
+Impact
+--------
+
+Of course, instead of just writing one file, I can change the access control policy and add my own account as the owner. If you check the acl: ████ 
+you will see the user ██████████ has full control over the bucket and with your proxy he basically acts on our behalf.

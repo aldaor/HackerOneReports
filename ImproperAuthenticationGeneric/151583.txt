@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/151583
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/hacklikeapro
+ReportedTo:Ian Dunn(iandunn-projects)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:16.07.2016 9:21:08
+
+Summary:
+
+Hi, I have found that in the page  wp-admin possible to perform user enumeration though differences in error massages:
+if user exist the site will return :" ERROR: The password you entered for the username admin is incorrect."
+if user not exit: Invalid username.

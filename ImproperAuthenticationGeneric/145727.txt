@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/145727
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/japz
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.06.2016 9:59:10
+
+Summary:
+
+Hi I've found that the user is allowed to perform brute force in help.nextcloud.com login, i've tried to input wrong password 25 times , then input my correct password in my 26th attempt and it is successfully login, a malicious minded user can always continue guessing an account password.
+
+Steps to reproduce
+
+Go to https://help.nextcloud.com/ then click login button and you can now perform brute force attack.
+
+Regards
+Japz

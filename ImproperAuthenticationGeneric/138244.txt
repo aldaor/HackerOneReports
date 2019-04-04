@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/138244
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/albinowax
+ReportedTo:WP API(wp-api)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:17.10.2016 23:40:44
+
+Summary:
+
+The WP REST API WordPress plugin fails to apply access controls for the 'edit' context. This means that with a single HTTP request, an attacker can obtain the following information for every single registered user: username, email address, first name, last name, date of registration, and detailed privilege information. This is a treasure trove of information for someone planning an attack - they know exactly which email addresses to target in order to gain admin privileges and complete control over the webserver.
+
+To replicate this issue, simply send the following request while unauthenticated:
+GET /wp-json/wp/v2/users?context=edit
+
+Please note that I've submitted this report to a couple of entities directly affected by this vulnerability so they can implement a workaround.

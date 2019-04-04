@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/155130
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/palashjhabak
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.08.2016 13:34:18
+
+Summary:
+
+Me and my friend, Ekansh, have found a severe security bug in your website, http://olx.in. Using this loophole one can gain full access to user accounts and perform actions like add/edit/delete ads and even delete the account itself.
+
+Please find below attached video report and an accompanying pdf report showcasing the details of how we performed the attack, what are the possible impacts and an analysis of how easily and fast it can be achieved for many many users. 

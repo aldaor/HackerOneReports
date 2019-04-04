@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/141090
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/meals
+ReportedTo:Starbucks(starbucks)
+BountyAmount:6000.0
+Severity:
+State:Closed
+DateOfDisclosure:13.01.2017 0:26:31
+
+Summary:
+A vulnerability had existed which allowed for unauthorized viewing of order details belonging to other users.  @meals delivered a solid report & worked with us to resolve the issue.
+Thanks @meals!
+
+
+

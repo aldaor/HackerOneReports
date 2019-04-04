@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/148163
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/vivek-p
+ReportedTo:Uber(uber)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:24.08.2016 15:43:28
+
+Summary:
+Limited disclosure at @vivek-p's request.

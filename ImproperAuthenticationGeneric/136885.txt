@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/136885
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/parth
+ReportedTo:Uber(uber)
+BountyAmount:8000.0
+Severity:
+State:Closed
+DateOfDisclosure:15.08.2016 17:28:38
+
+Summary:
+Thanks for another great find @parth!

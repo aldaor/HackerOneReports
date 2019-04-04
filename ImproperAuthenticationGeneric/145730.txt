@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/145730
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/bug_cat
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.07.2016 22:01:23
+
+Summary:
+
+Hi Security team,
+
+I would like to report a vulnerability bypass firewall.
+when you are trying to navigate this  [link](https://newsletter.nextcloud.com/admin) it needs authentication
+but it’s possible to access to admin panel when you add `index.php` after `/admin/`.
+`https://newsletter.nextcloud.com/admin/index.php`
+
+P.o.C : video in attachment.

@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/145896
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/rootxflood
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.12.2016 16:12:16
+
+Summary:
+
+Hey!
+I found a token miss configuration flaw in Nextcloud 9.0.50 [Latest version], When we reset password for a user a link is sent to the registered email address but incase it remain unused and email is updated by user from control panel then too that old token [reset link] sent at old email address remains valid.
+
+A better explanation
+-
+1- User use reset feature to get reset link [Email : abc@x.com]
+2- User came to know about his old password so remain the link unused and the token not expires 
+3- Now User changes his email from control panel [New email : abcd@z.com]
+4- But the old reset still remains valid after email change
+
+In-case an attacker able to get access to user's old email account he can hack his Nextcloud account too via that link, so expiring the token at email change will be a better practice

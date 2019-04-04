@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/145207
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/hassanjawaid
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.08.2017 13:30:33
+
+Summary:
+
+Data returned in web responses can be cached by user's browsers as well as by intermediate proxies. This directive works to prevent that by setting the expiration time to a value that will always be evaluated as in the past.

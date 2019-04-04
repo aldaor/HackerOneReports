@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/163227
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/cjlegacion
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.11.2016 22:28:36
+
+Summary:
+
+1 install add ons "Edit this Cookie" in google chrome"
+2 login your account/create an account
+3 get the cookie using "edit this cookie"
+4 logout the account
+5 delete the current cookie using edit this cookie and put the cookie what you copy and refresh the tab
+
+Video POC:https://mega.nz/#!SBMEVKaC!xOdfj6VAQmkmKrpy88BSZsCDwg0rGFH_WltMhdIgs_s

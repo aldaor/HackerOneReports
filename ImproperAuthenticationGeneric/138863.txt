@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/138863
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/malcolmx
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.08.2016 23:33:10
+
+Summary:
+
+Hello, 
+in login page https://login.newrelic.com/login
+there is no rate limit for brute force attack on password which allow attacker to do as much he can from requests for guessing the user password.
+the same was happened in Facebook
+newrelck.png(F93837)
+    
+Thaanks

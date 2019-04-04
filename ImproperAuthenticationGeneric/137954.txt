@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/137954
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/mikkz
+ReportedTo:Pornhub(pornhub)
+BountyAmount:1500.0
+Severity:
+State:Closed
+DateOfDisclosure:11.11.2016 20:26:15
+
+Summary:
+The researcher discovered a way to post to another user's stream even if you are not friends with them.

@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/14177
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/shahriyar
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.11.2014 14:30:47
+
+Summary:
+
+Please check the video for Full Proof of Concept

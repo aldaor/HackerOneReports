@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/143482
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/wkcaj
+ReportedTo:Shopify(shopify)
+BountyAmount:3000.0
+Severity:
+State:Closed
+DateOfDisclosure:17.07.2016 15:45:24
+
+Summary:
+An Icinga monitoring server, which was intended to be accessible only by Shopify employees, had Google OAuth misconfigured such that all Google accounts were accepted (regardless of whether they belonged to the `shopify.com` hosted domain or not). The server has been reconfigured to validate the `hd` (hosted domain) parameter, so that only `shopify.com` Google accounts are accepted.

@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/141734
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/muzammilabbaskayani
+ReportedTo:drchrono(drchrono)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 19:02:28
+
+Summary:
+
+Open the Password  Reset Link
+Change the  link with below Link
+ https://drchrono.com/accounts/password/reset/complete
+it Show  that  I change The Password successfully .But I not

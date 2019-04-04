@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/159507
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/kxyry
+ReportedTo:QIWI(qiwi)
+BountyAmount:950.0
+Severity:
+State:Closed
+DateOfDisclosure:26.11.2016 6:55:30
+
+Summary:
+CSRF in implementation of oAuth protocol allows attackers takeover the account of any user.

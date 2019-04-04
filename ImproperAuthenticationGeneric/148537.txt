@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/148537
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ahsan
+ReportedTo:Coinbase(coinbase)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.06.2016 20:19:53
+
+Summary:
+
+Hey, this is Ahsan Tahir! I've found a authorization issue in coinbase! :-)
+
+Issue
+=======
+When we login to coinbase using PC (not authorized) it asks for authorization using a link, which is sent to our email and we have to authorize it by clicking on that email; but, when we login to a windows phone (using a browser), it doesn't requires any authorization, and we directly login, it shows the transactions and the total balance in our wallet, which is no doubt **Information Disclosure**; further, if we go to this URL https://www.coinbase.com/settings, we can edit our settings [change password, delete account, change other settings] etc.. so this is no doubt **Authorization/Authentication** Issue.
+
+### Steps to Reproduce:
+1. Login with Windows Phone (Lumia). 
+2. It won't ask for any authorization, and it will disclose the transactions etc..
+3. Go to https://www.coinbase.com/settings.
+4. Now you can also *edit* the settings.
+
+How to Fix?
+----------------
+When we login to windows phone using browser, it *should* ask for authorization! Like sending a mail to the email of that account or other type of authorization!
+
+If you have any other questions or if anything needs clarification, please let me know.
+Hoping for you to fix this issue ASAP!
+
+Thanks,
+- Ahsan Tahir
