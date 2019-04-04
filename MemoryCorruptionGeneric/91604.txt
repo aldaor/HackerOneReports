@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/91604
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/kiraak-boy
+ReportedTo:Imgur(imgur)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:09.12.2015 18:11:40
+
+Summary:
+The crossdomain.xml file hosted at http://api.imgur.com/crossdomain.xml was too open. This allowed SWF files to make HTTP requests and see it's response. If this was not changed, then attacker.com can embed a SWF on attacker.com/example.html that makes an HTTP request to http://api.imgur.com/. The result page for http://api.imgur.com/ would include the CSRF token and the SWF file could make requests with the user's cookies.

@@ -1,0 +1,68 @@
+ReportLink:https://hackerone.com/reports/73491
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/93c08539
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:01.04.2016 11:11:16
+
+Summary:
+
+#Vulnerability
+The function `static int ub_normalize_filename(char* filename)` (implemented by the patch `430-smart-post-upload.patch` in the file `uploadbuffer.c` on the `SDK.UBNT.v5.5`) have the following code:
+```
+static int ub_normalize_filename(char* filename)
+{
+
+    char *fwd_slash;
+    char *back_slash;
+    size_t size;
+    /**
+     *  Some comments removed
+     */
+    if (filename == 0)
+    {
+        return -1;
+    }
+    size = strlen(filename);
+    fwd_slash = strrchr(filename, '/');
+    back_slash = strrchr(filename, '\\');
+    if ((fwd_slash == 0) ||
+	(back_slash == 0))
+    {
+	    /* No slashes or backslashes */
+        return 0;
+    }
+    if ((back_slash - filename == size - 1) ||
+	(fwd_slash - filename == size - 1))
+    {
+        return -1; /* 'Empty filename ???' */
+    }
+    /* Move file part from last backslash to last forwardslash,
+       Copy including ending string \0 */
+    memmove(fwd_slash + 1, back_slash + 1, size - (back_slash - filename));
+    return 0;
+}
+```
+Manipulating the `filename` value of a HTTP POST (like in the report [73480](https://hackerone.com/reports/73480)), it's possible to cause a buffer overflow with the following value `filename="\asdfasdfasdfasdfsdfgdsfg/a"`. The Pointers will point to the following locations:
+```
+\asdfasdfasdfasdfsdfgdsfg/a\0
+^                        ^  ^
+-back_slash              |  |
+                         |  -End of String
+                         |
+                         -fwd_slash
+```
+	
+The `memmove` will write to `fwd_slash + 1` the content of `back_slash + 1` (until the end of the String), what will copy string off the bounds. 
+
+```
+\asdfasdfasdfasdfsdfgdsfg/aasdfasdfasdfasdfsdfgdsfg/a
+^                          ^
+-Init                      |
+                           -End of String
+```
+
+#Consequences
+It's possible to cause a buffer overflow, but it's unlikely the vulnerability to result in a arbitrary code execution (but possible), once it's allocated in a the heap memory (function `ub_parse_disposition`, file `uploadbuffer.c`, I think).

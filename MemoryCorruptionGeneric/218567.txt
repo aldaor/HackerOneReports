@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/218567
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/ilsani
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:800.0
+Severity:medium
+State:Closed
+DateOfDisclosure:13.04.2017 22:44:41
+
+Summary:
+
+File [2] as input causes a segfault in mruby.
+
+mruby crashes in ary_copy (array.c:71):
+```
+Program received signal SIGSEGV, Segmentation fault.
+0x000000000040e088 in array_copy (src=<optimized out>, size=<optimized out>, dst=<optimized out>) at /tmp/mruby/src/array.c:71
+71          dst[i] = src[i];
+```
+
+Test platform:
+Linux 3.16.0-4-amd64 #1 SMP Debian 3.16.39-1+deb8u1 x86_64 GNU/Linux

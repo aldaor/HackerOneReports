@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/237125
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/michan
+ReportedTo:Mixmax(mixmax)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:16.07.2017 7:07:43
+
+Summary:
+To limit unintended effects across our UI and infrastructure, we put a maximum length on team names.

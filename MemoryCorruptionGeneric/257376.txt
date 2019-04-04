@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/257376
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/alyanwarr
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:16.09.2017 13:39:10
+
+Summary:
+
+Similar to [#223454](https://hackerone.com/reports/223454), there is no string size restriction on `project` parameter which is sent directly to the server.  
+
+**URL:** https://hosted.weblate.org/hosting/
+**PoC:** `poc1.png` and `poc2.png`
+
+Shall you need any more info notify me, 

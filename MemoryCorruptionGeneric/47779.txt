@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/47779
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/guido
+ReportedTo:The Internet(internet)
+BountyAmount:3000.0
+Severity:
+State:Closed
+DateOfDisclosure:06.04.2015 2:42:11
+
+Summary:
+
+The IBB's programs provide a great incentive for me to find vulnerabilities in open source software. With this one I set out to find a vulnerability in PHP and discovered that the vulnerability that I found exists in a wider constellation of applications, including BSD libc's. IBB's Alex Rice's advice to contact CERT was very helpful. Judging by the amount of visitors of my blog article on the vulnerability, contacting CERT helped greatly in disseminating awareness and prompting maintainers to implement remedies, so thank you for that.
+
+My original write-up: https://guidovranken.wordpress.com/2015/02/04/full-disclosure-heap-overflow-in-h-spencers-regex-library-on-32-bit-systems/
+cert.org: http://www.kb.cert.org/vuls/id/695940
+NetBSD: http://cvsweb.netbsd.org/bsdweb.cgi/src/lib/libc/regex/regcomp.c
+FreeBSD: https://github.com/freebsd/freebsd/commit/70c79b42a2551445f9a05cb0a6573d813587302a
+Dragonfly BSD: http://gitweb.dragonflybsd.org/dragonfly.git/commit/2841837793bd095a82f477e9c370cfe6cfb3862c
+LLVM: http://lists.cs.uiuc.edu/pipermail/llvm-commits/Week-of-Mon-20150202/257966.html
+Redhat: https://bugzilla.redhat.com/show_bug.cgi?id=1191049
+Debian: https://bugs.debian.org/cgi-bin/pkgreport.cgi?correspondent=luciano%40debian.org;include=subject%3Aregex;dist=unstable
+
+PHP is vulnerable, albeit in a deprecated set of functions, and the vulnerability can be exposed to the internet with a single line of PHP code. I have both filed a format bug report on their bug tracker and enquired about the status of said report at their security mail address, and as of present I have not received a response yet. The vulnerable code is statically included with PHP (ie. the presence of the vulnerability in PHP does not depend on the underlying libc).
+
+Android's Bionic libc may also be vulnerable since it includes the vulnerable code in its upsteam-netbsd directory ( https://github.com/android/platform_bionic/blob/7dd126a38ca501818b07927f310dcc0f531c0f1f/libc/upstream-netbsd/lib/libc/regex/regcomp.c#L270 ). I'm not sure if it's directly vulnerable but if you wish so I can try my best to check if it is.
+
+Thanks,
+
+Guido

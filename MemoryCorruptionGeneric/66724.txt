@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/66724
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/richo
+ReportedTo:LibSass(libsass)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.06.2015 18:57:44
+
+Summary:
+
+I haven't actually spent much time on the bug, because it doesn't look super exploitable outside of a local DoS, but the attached PoC will crash sassc in the middle of libsass from latest git, trying to deref $0x8, which appears to be the value of some tag in a tagged union.
+
+Let me know if I can help chasing this down, but I mostly wanted to just punt it over the fence.

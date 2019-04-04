@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/5466
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/robin
+ReportedTo:MS-DOS(msdos)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.04.2014 17:07:11
+
+Summary:
+
+Hello,
+
+While i was Going through object Files of v1.1 and Opened MS-dos Applications everything was going fine, Then i opened 'CHKDSK' Then suddenly the interface Crashed and It After That it Gave Such a Feedback to my Windows That All the DOS Related Applications are incompatible And are not a Valid Windows 32 Application. It can Also be a Bug Related to Windows 7.
+
+Refer Screenshots.
+
+Thanks!

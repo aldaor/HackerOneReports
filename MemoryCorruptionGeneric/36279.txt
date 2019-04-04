@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/36279
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/hhj4ck
+ReportedTo:Flash (IBB)(ibb-flash)
+BountyAmount:2000.0
+Severity:
+State:Closed
+DateOfDisclosure:11.03.2015 4:19:11
+
+Summary:
+
+I. Summary
+Adobe Flash Player is prone to a vulnerability which leads to Use-After-Free. After parsing a malformed mp4 file, Flash will not free the NetStream object properly. Such memory block is still accessed even the page containing Flash is closed, which leads to a memory crash. 
+------------------------------------------------------------------
+II. Description
+Adobe Flash is a multimedia and software platform used for authoring of vector graphics, animation, games and rich Internet applications (RIAs) that can be viewed, played and executed in Adobe Flash Player. NetStream object can load and play an external mp4 file. 
+After playing a mp4 file, Flash will keep on accessing the memory saving the media object. A malformed mp4 file will trick the Flash to believe that this film never ends. The accessing continues even the web page containing Flash is closing. Closing the page release Flash from the memory space, while the accessing is still going on via a standalone thread. 
+There are two possible types of crash depending on the order of different blocks' release:
+1. If the media object memory is freed first, then the memory crash is caused by accessing freed memory.
+2. If the meida object is freed later, the crash is caused by executing freed memory.
+Each of the two possible types of crash may by exploited by carefully crafted mp4 file which could lead to code execution.
+
+POC and its source code are attached.   
+------------------------------------------------------------------
+III. Impact
+Use-After-Free
+------------------------------------------------------------------
+IV. Affected
+Adobe Flash Player (verion >10)
+------------------------------------------------------------------
+V. Reference
+http://helpx.adobe.com/security/products/flash-player/apsb14-24.html
+It has been asigned as CVE-2014-8438
+------------------------------------------------------------------
+VI. Credit
+Liu Jincheng and Wen Guanxing from Venustech ADLAB are credited for this vulnerability.

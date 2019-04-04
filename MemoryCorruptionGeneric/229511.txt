@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/229511
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/chols
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:02.06.2017 9:46:51
+
+Summary:
+
+Hi Weblate Security Team,
+
+How are you? Hope you all have a good day and doing well just like me. :)
+I've found a No Rate Limiting in contact directory of your site because there is no mitigation in there like adding a captcha, In this case the attacker can spam you.
+
+https://hosted.weblate.org/contact/
+
+Best Regards,
+Jolan Saluria

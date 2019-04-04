@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/2170
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/clem1
+ReportedTo:Flash (IBB)(ibb-flash)
+BountyAmount:10000.0
+Severity:
+State:Closed
+DateOfDisclosure:27.02.2014 21:44:27
+
+Summary:
+
+This bug was reported directly to Adobe and got assigned CVE-2014-0502.
+
+http://helpx.adobe.com/security/products/flash-player/apsb14-07.html
+
+This one was actively (and it still is) exploited since February 12th in watering hole campaigns against nonprofit research institutions and human right activists websites.
+
+If I can get a reward for this vulnerability, I'd be happy to give it to charity!

@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/47234
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/biloulehibou
+ReportedTo:Flash (IBB)(ibb-flash)
+BountyAmount:7500.0
+Severity:
+State:Closed
+DateOfDisclosure:25.03.2015 19:39:16
+
+Summary:
+
+Sending messages between workers while having the animation reloaded can cause an object to be freed while a reference remains in memory. An attacker can use this issue to control eip and potentially execute arbitrary code.
+
+Identified as CVE-2015-0320, and reported to Adobe via Chrome VRP:
+https://helpx.adobe.com/security/products/flash-player/apsb15-04.html
+
+Original report with proof of concept showing how to control eip:
+https://code.google.com/p/chromium/issues/detail?id=437441

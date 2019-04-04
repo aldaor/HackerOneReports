@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/276253
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/geeknik
+ReportedTo:Tor(torproject)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:31.10.2017 18:53:02
+
+Summary:
+
+Triggered in `22139c0`, compiled with `-fsanitize=memory` and clang 6.0.0-trunk.
+
+`./fuzz-consense < test000bbb`
+
+```
+==9293==WARNING: MemorySanitizer: use-of-uninitialized-value
+    #0 0x5611f7f7e4de in networkstatus_parse_vote_from_string /root/tor/src/or/routerparse.c:3533:23
+    #1 0x5611f75bbbd1 in fuzz_main /root/tor/src/test/fuzz/fuzz_consensus.c:66:8
+    #2 0x5611f75bb29d in main /root/tor/src/test/fuzz/fuzzing_common.c:179:3
+    #3 0x7f9914298b44 in __libc_start_main /build/glibc-6V9RKT/glibc-2.19/csu/libc-start.c:287
+    #4 0x5611f75488ce in _start (/root/tor/src/test/fuzz/fuzz-consensus+0x3bc8ce)
+
+SUMMARY: MemorySanitizer: use-of-uninitialized-value /root/tor/src/or/routerparse.c:3533:23 in networkstatus_parse_vote_from_string
+```

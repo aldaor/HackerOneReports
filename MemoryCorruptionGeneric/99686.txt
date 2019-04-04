@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/99686
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/bigbear_
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.03.2017 13:11:16
+
+Summary:
+
+Если помните багу с HeartBleed, то там можно было читать оперативную память сервера в поисках Credential информации.
+
+Здесь же похожая уязвимость, когда сервер crash-ится, на жестком диске остаётся дамп памяти вместе со всеми данными, которые можно анализировать для выяснения причины падения.
+
+https://wiki.archlinux.org/index.php/Core_dump
+
+Самая хохма, что этот дамп доступен пользователям Web.
+
+https://w1.dwar.ru/core
+
+Качаем дамп с указанием диапазона:
+
+GET /core HTTP/1.1
+Range: bytes=0-100099
+Host: w1.dwar.ru
+
+Меняя диапазоны байтов, получаем всякие данные...
+
+Вот пример:
+
+php -d memory_limit=256M -d error_log=/opt/WWWRoot/w1.dragons/wwwroot/crons/mng

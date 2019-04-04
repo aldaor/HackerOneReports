@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/57505
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/pulkit_pandey
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:15.10.2015 3:47:27
+
+Summary:
+An Amazon S3 bucket (http://shopify.com.s3.amazonaws.com/) was unintentionally left with directory listing enabled. Even though the files in the bucket were all publicly accessible, it was not intended for the directory listing to be visible.

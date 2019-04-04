@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/47227
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/biloulehibou
+ReportedTo:Flash (IBB)(ibb-flash)
+BountyAmount:10000.0
+Severity:
+State:Closed
+DateOfDisclosure:25.03.2015 19:40:38
+
+Summary:
+
+The issue occurs while sharing a bytearray between two workers. If one worker calls bytearray.compress() while the other uses that bytearray, Flash does not correctly handle the race and may double free the array.
+
+Identified as CVE-2015-0312, and reported to Adobe via Chrome VRP:
+https://helpx.adobe.com/security/products/flash-player/apsb15-03.html
+
+Original report with exploit for Chrome:
+https://code.google.com/p/chromium/issues/detail?id=436022

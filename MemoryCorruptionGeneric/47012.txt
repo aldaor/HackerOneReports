@@ -1,0 +1,39 @@
+ReportLink:https://hackerone.com/reports/47012
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/hhj4ck
+ReportedTo:Flash (IBB)(ibb-flash)
+BountyAmount:2000.0
+Severity:
+State:Closed
+DateOfDisclosure:25.03.2015 19:39:25
+
+Summary:
+
+I. Summary
+Adobe Flash Player is prone to a vulnerability which leads to Out-of-Bound memory access memory via carefully crafted regular expression. An attacker can exploit this issue to defeat ASLR protection or even execute arbitrary code in the context of affected application (Internet Explorer, EXCEL...).
+------------------------------------------------------------------
+II. Description
+Adobe Flash is a multimedia and software platform used for authoring of vector graphics, animation, games and rich Internet applications (RIAs) that can be viewed, played and executed in Adobe Flash Player. 
+
+When constructing a RegExpObject, most part of memory was applied from the heap. While heap overflow may also happen as it is with CVE-2013-0634, CVE-2014-0559, the matching result is stored on the stack. A fixed size int ovector[99] is defined to store the matching index numbers of the target string. A simple line of ActionScript could lead to a crash caused by reading inaccessable memory:
+
+"Venus".match("(((((((((((((((((((((((((((((((((((((((((((((((((?P<G2>)))))))))))))))))))))))))))))))))))))))))))))))))"); 
+
+For the given regular expression above, ovector[99] will be filled with zeros. Then Flash Player managed to construct an Array containing the matching result recognized by AS3. Since there is a named group G2, the Array will also contain a string index entry (G2) that is filled with substring of the target string. The start address of the substring is calculated as follow: start address of target string + ovector[nameIndex*2]. The length of the substring is calulated as:  ovector[nameIndex*2+1] - ovector[nameIndex*2].
+
+The problem is that nameIndex equals to the number of left brackets inside the given regular expression. As the number of left brackets is fully controlled, ovector[nameIndex*2+1] is able to read values out of the stack memory ovector. Flash took mitigations where it checks if the nameIndex is larger than 49, ignoring the fact that nameIndex can be 49 itself. When nameIndex equals to 49, nameIndex*2+1 equals to 99, ovector[nameIndex*2+1] will point to stack memory out of bound. Normally, ovector[nameIndex*2+1] points to the saved EIP under windows and it is a very large value for length field.
+
+This may result in returning a string with a fake length field with enormous value to the AS3 interface. Advanced Heap Fengshui techniques may even allow an attacker build workable exploit via such string to access arbitrary memory.
+
+poc and its source code are attached.
+------------------------------------------------------------------
+III. Impact
+Out-of-Bound Access
+------------------------------------------------------------------
+IV. Reference
+It has got assigned as CVE-2015-0330.
+https://helpx.adobe.com/security/products/flash-player/apsb15-04.html
+https://code.google.com/p/chromium/issues/detail?id=450198
+------------------------------------------------------------------
+V. Credit
+Wen Guanxing from Venustech ADLAB is credited for this vulnerability.

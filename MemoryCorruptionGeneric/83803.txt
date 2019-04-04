@@ -1,0 +1,71 @@
+ReportLink:https://hackerone.com/reports/83803
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/ashesh
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.09.2015 9:36:03
+
+Summary:
+
+Domain: https://apps.owncloud.com
+
+The Secure Socket Layer (SSL) protocol allows for secure communication between a client and a server. The client usually authenticates the server using an algorithm like RSA or DSS. Some SSL ciphers allow SSL communication without authentication. Most common Web browsers like Microsoft Internet Explorer, Netscape and Mozilla do not use anonymous authentication ciphers by default.
+
+A vulnerability exists in SSL communications when clients are allowed to connect using no authentication algorithm. SSL client-server communication may use several different types of authentication: RSA, Diffie-Hellman, DSS or none. When 'none' is used, the communications are vulnerable to a man-in-the-middle attack."
+
+Impact:
+An attacker can exploit this vulnerability to impersonate your server to clients.
+
+Solution:
+Disable support for anonymous authentication.
+
+1) Apache: 
+Typically, for Apache/mod_ssl, httpd.conf or ssl.conf should have the following lines:
+SSLProtocol -ALL +SSLv3 +TLSv1
+SSLCipherSuite ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM
+
+For Apache/apache_ssl include the following line in the configuration file (httpsd.conf):
+SSLRequireCipher ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM
+2) IIS: 
+For IIS please see: How to disable PCT 1.0, SSL 2.0, SSL 3.0, or TLS 1.0 in Internet Information Services, How to Restrict the Use of Certain Cryptographic Algorithms and Protocols in Schannel.dll, How to Determine the Cipher Suite for the Server and Client, , and How to restrict the use of certain ciphers in Internet Information Services 5.0
+
+3) Wu-FTP: For Wu-FTP which supports TLS, the ciphers parameter in TLS configuration file should be set to -ALL +SSLv3 +TLSv1
+For more details please consult the docs/HOWTO/ssl_and_tls_ftpd.HOWTO file provided by wu-ftpd distribution.
+
+4) Lighttpd: For lighttpd: Locate the lighttpd config file and modify the following ssl.ciper-list line to include !aNULL. A restart of the lightttpd application is necessary.
+Example: ssl.cipher-list = "TLSv1+HIGH !SSLv2 RC4+MEDIUM !aNULL !eNULL !3DES @STRENGTH"
+
+Additional reading: 
+http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_1-1/ssl.html 
+http://httpd.apache.org/docs/2.0/mod/mod_ssl.html#sslciphersuite 
+http://www.megasecurity.org/Info/ssl_servers.html
+
+Results:
+
+    CIPHER KEY-EXCHANGE AUTHENTICATION MAC ENCRYPTION(KEY-STRENGTH) GRADE
+    SSLv3_SUPPORTS_CIPHERS_WITH_NO_AUTHENTICATION _ _ _ _ _
+    ADH-RC4-MD5 DH None MD5 RC4(128)_ MEDIUM_
+    ADH-DES-CBC3-SHA DH None SHA1 3DES(168)_ HIGH_
+    ADH-AES128-SHA DH None SHA1 AES(128)_ MEDIUM_
+    ADH-AES256-SHA DH None SHA1 AES(256)_ HIGH_
+    ADH-CAMELLIA128-SHA DH None SHA1 Camellia(128)_ MEDIUM_
+    ADH-CAMELLIA256-SHA DH None SHA1 Camellia(256)_ HIGH_
+    ADH-SEED-SHA DH None SHA1 SEED(128)_ MEDIUM_
+    AECDH-RC4-SHA ECDH None SHA1 RC4(128)_ MEDIUM_
+    AECDH-DES-CBC3-SHA ECDH None SHA1 3DES(168)_ HIGH_
+    AECDH-AES128-SHA ECDH None SHA1 AES(128)_ MEDIUM_
+    AECDH-AES256-SHA ECDH None SHA1 AES(256)_ HIGH_
+    TLSv1_SUPPORTS_CIPHERS_WITH_NO_AUTHENTICATION _ _ _ _ _
+    ADH-RC4-MD5 DH None MD5 RC4(128) _MEDIUM_
+    ADH-DES-CBC3-SHA DH None SHA1 3DES(168) _HIGH_
+    ADH-AES128-SHA DH None SHA1 AES(128) _MEDIUM_
+    ADH-AES256-SHA DH None SHA1 AES(256) _HIGH_
+    ADH-CAMELLIA128-SHA DH None SHA1 Camellia(128) _MEDIUM_
+    ADH-CAMELLIA256-SHA DH None SHA1 Camellia(256) _HIGH_
+    ADH-SEED-SHA DH None SHA1 SEED(128) _MEDIUM_
+    AECDH-RC4-SHA ECDH None SHA1 RC4(128) _MEDIUM_
+    AECDH-DES-CBC3-SHA ECDH None SHA1 3DES(168) _HIGH_
+    AECDH-AES128-SHA ECDH None SHA1 AES(128) _MEDIUM_
+    AECDH-AES256-SHA ECDH None SHA1 AES(256) _HIGH_

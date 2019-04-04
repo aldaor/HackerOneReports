@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/49378
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/rohill-eis
+ReportedTo:Dropbox(dropbox)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.04.2015 8:03:36
+
+Summary:
+
+I've found a flaw which does not verify your email, when you sign up for a new account, irrespective of domain name we can create multiple accounts. So we can use fake emails to get as many dropbox accounts.
+
+PFA video and get back to me if there is anything else.
