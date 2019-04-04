@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/335339
+WeaknessName:Resource Injection
+Reporter:https://hackerone.com/irvinlim
+ReportedTo:Slack(slack)
+BountyAmount:250.0
+Severity:medium
+State:Closed
+DateOfDisclosure:19.07.2018 13:48:53
+
+Summary:
+Slack's career page was using an outdated Greenhouse JavaScript dependency which resulted in an HTTP parameter pollution vulnerability. This would have allowed the loading of external Greenhouse forms (not owned by Slack). We updated the Javascript and the issue is resolved. Thanks @irvinlim!

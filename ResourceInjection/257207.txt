@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/257207
+WeaknessName:Resource Injection
+Reporter:https://hackerone.com/armaanpathan
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:40.0
+Severity:low
+State:Closed
+DateOfDisclosure:12.08.2017 3:09:29
+
+Summary:
+A security researcher discovered that they were able to inject potentially malicious code into Legal Robot's newly created [Roadmap](https://app.legalrobot.com/roadmap) page through improper input sanitization when submitting a new Idea for consideration by the community. A limited-scope attack was possible since the input sanitization only occurred during the approval process. Only the current user could be impacted by this attack, but with the addition of social engineering or some unknown exploit, this bug could have been a component of a more serious attack. Thanks to @i1ackerone_ for an excellent report!

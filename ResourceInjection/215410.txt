@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/215410
+WeaknessName:Resource Injection
+Reporter:https://hackerone.com/sinkmanu
+ReportedTo:ownCloud(owncloud)
+BountyAmount:150.0
+Severity:medium
+State:Closed
+DateOfDisclosure:06.07.2017 6:47:01
+
+Summary:
+HTML Injection in Error Pages

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/315865
+WeaknessName:Resource Injection
+Reporter:https://hackerone.com/cablej
+ReportedTo:Coinbase(coinbase)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:02.04.2018 16:26:56
+
+Summary:
+When creating a product, users can upload a logo.  The logo_url was not escaped properly, allowing an attacker to inject malicious characters into a style tag.
+
+This vulnerability did not allow for XSS due to our CSP, however, it did allow for CSS injection.
