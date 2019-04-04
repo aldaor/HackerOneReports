@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/214171
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/locator
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:800.0
+Severity:
+State:Closed
+DateOfDisclosure:04.05.2017 7:58:48
+
+Summary:
+@ssarong reported a null pointer dereference in MRuby: https://github.com/mruby/mruby/issues/3532
+
+The issue was corrected in https://github.com/mruby/mruby/commit/d35fcf1ea2bfc3933b2f2543265874669feeee95

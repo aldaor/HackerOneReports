@@ -1,0 +1,51 @@
+ReportLink:https://hackerone.com/reports/318603
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/ozzyoz
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:315.0
+Severity:high
+State:Closed
+DateOfDisclosure:19.06.2018 17:44:31
+
+Summary:
+##Issue
+
+The reporter found inconsistencies in response times when requesting the sitemap. The sitemap was generated on the fly in a way that consumed resources more than necessary.
+
+##Fix
+
+The sitemap functionality was rewritten.
+
+##Reasoning
+
+The flaw was very simple and even simpler to exploit. The actual impact was small, but in theory was available for wrongdoings. 
+## Basic report information
+**Summary:** 
+Your sitemap isn't split into many other sitemaps which causes all of the sitemap URL's to start loading in just 1 Sitemap which in turn causes a big strain on your server. 
+
+**Description:** 
+It took more than 5 minutes just to load your sitemap.  That is not normal.  
+
+**Impact:**
+Servers can lockup because of this.  Look at this Github discussion about a similar issue to yours which has caused servers to lockup for another Webmaster experiencing the same issue as yours. 
+
+https://github.com/maartenba/MvcSiteMapProvider/issues/258
+
+## Browsers / Apps Verified In:
+
+Google Chrome
+
+## Steps To Reproduce:
+
+  1. Visit http://lahitapiola.fi/sitemap.xml or https://lahitapiola.fi/sitemap.xml
+  2.  You will notice just how long it takes to load your sitemap.  It takes so long that every hit on your server for Sitemap request, will harm your server CPU and other resources. 
+
+## Additional material
+
+ To reduce load, the sitemap can be split into many sitemaps. 
+
+## Related reports, best practices
+
+## Impact
+
+This impacts your ability to run your web applications efficiently and will thus affect your ability to run your business smoothly.

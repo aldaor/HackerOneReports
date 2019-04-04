@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/209860
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/hamzar97
+ReportedTo:Khan Academy(khanacademy)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:17.04.2018 20:52:25
+
+Summary:
+Rate limiting on account confirmation emails and forgot password.

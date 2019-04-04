@@ -1,0 +1,47 @@
+ReportLink:https://hackerone.com/reports/280748
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/putsi
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:315.0
+Severity:medium
+State:Closed
+DateOfDisclosure:27.12.2017 20:11:21
+
+Summary:
+##Issue
+
+The reporter was able to craft an http-request to request a CAPTCHA-image with arbitrary size. The image was generated on the server, leading to excessive load for large-sized images. The issue was reintroduced (fixed in #204208) due to a patch that broke the good configuration. 
+
+##Fix
+
+The dimensions of the CAPTCHA was limited server side.
+
+##Reasoning
+
+The flaw was very simple and even simpler to exploit, but the potential business impact was significant. Very much a stealthy DOS potentially hard to pinpoint. The bounty reflects the potential business impact.
+
+# Short summary
+Hi, I noticed that the following report has been fixed and closed, however the bug has reappeared in different parameters: https://hackerone.com/reports/204208
+
+# Basic report information
+
+**Summary:**
+It is possible to generate a simple request which creates a high cpu/bandwidth consumption from the server by abusing the captcha servlet
+
+**Description:**
+By sending a specially crafted request and changing the height/width and minWordSize and maxWordSize parameters in the captcha form it is possible to consume large amount of cpu/memory and bandwidth.
+
+**Domain:**
+http://viestinta.lahitapiola.fi/
+
+# Browsers / Apps Verified In:
+
+Chrome / CURL
+
+# Steps To Reproduce:
+
+* Send a request to the following url:  https://viestinta.lahitapiola.fi/nms/jsp/captcha.jsp?captchaID=@vq-ooKP6OECsEZDMwxvQGBMqfP81em45ejwud1pg7vc=&width=10000&height=100000&minWordSize=20000&maxWordSize=200000000 and notice that the server is trying to generate the image, however it doesn't respond as it takes tons of resources to generate such image.
+
+# Remarks
+
+In the scope of testing I saw that denial of service is out of scope, This attack is more applicative and doesn't use distributed denial of service methods and I think it is important for you to fix this although it is not in scope.

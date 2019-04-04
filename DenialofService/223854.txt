@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/223854
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/ant_pyne
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:17.05.2017 14:08:18
+
+Summary:
+
+Hi Weblate,
+
+I am trying to register for an account when I came across a page where the password was required to be set up. The url is https://demo.weblate.org/accounts/password where the password was to be created after one provides his or her initial details.
+
+There is no limit to the length of the password that can be created for this site. Hence, I tried with a big payload and everytime server responded me with a 500 internal server error. But when I registered with Antara007! password, it was accepted gleefully. Password length is something that might sound quite insignificant but is quite important.
+
+You need to decrease password length :There are two reasons for limiting the password size. For one, hashing a large amount of data can cause significant resource consumption on behalf of the server and would be an easy target for Denial Of Service attack.
+
+Normally all sites have a password minimum to maximum length like 72 characters limit or 48 limit to prevent Denial Of Service attack. in my sql but in weblate registration page there are no limitation. Let me know if you need any more details.
+
+I am attaching some screenshots so that it can be understood properly.
+
+Thanks,
+Dipmalya Pyne.

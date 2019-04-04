@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/201346
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/guido
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:1000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:07.02.2017 18:01:59
+
+Summary:
+Severity: Moderate
+
+If a malicious server supplies bad parameters for a DHE or ECDHE key exchange then this can result in the client attempting to dereference a NULL pointer leading to a client crash. This could be exploited in a Denial of Service attack.
+
+OpenSSL 1.1.0 users should upgrade to 1.1.0d
+
+This issue does not affect OpenSSL version 1.0.2.
+
+Note that this issue was fixed prior to it being recognised as a security concern. This means the git commit with the fix does not contain the CVE identifier. The relevant fix commit can be identified by commit hash efbe126e3.
+
+This issue was reported to OpenSSL on 14th January 2017 by Guido Vranken. The fix was developed by Matt Caswell of the OpenSSL development team.
+https://www.openssl.org/news/secadv/20170126.txt
+
+https://guidovranken.wordpress.com/2017/01/26/cve-2017-3730-openssl-1-1-0-remote-client-denial-of-service-affects-servers-as-well-poc/

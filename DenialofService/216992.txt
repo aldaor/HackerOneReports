@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/216992
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/locator
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:800.0
+Severity:
+State:Closed
+DateOfDisclosure:03.05.2017 1:35:54
+
+Summary:
+@ssarong reported a heap buffer overflow in MRuby: https://github.com/mruby/mruby/issues/3565
+
+The issue was corrected in https://github.com/mruby/mruby/commit/39ca4ef3bcdfec6047647e697f94cb84f2251175

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/205536
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/locator
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:800.0
+Severity:
+State:Closed
+DateOfDisclosure:28.02.2017 13:39:51
+
+Summary:
+@ssarong reported the following crash in MRuby: https://github.com/mruby/mruby/issues/3465
+
+The issue was patched in https://github.com/mruby/mruby/commit/9e93d5dbf0c96cbf5cc0bc5a9c5f734248d7c37b

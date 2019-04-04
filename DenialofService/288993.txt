@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/288993
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/alex_gaynor
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:1000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:11.01.2018 5:43:35
+
+Summary:
+OpenSSL 1.1.0 SSL/TLS will hang during a call to SSL_peek() if the peer sends an empty record. This could be exploited by a malicious peer in a Denial Of Service attack.
+
+OpenSSL 1.1.0 users should upgrade to 1.1.0a
+
+This issue was reported to OpenSSL on 10th September 2016 by Alex Gaynor. The fix was developed by Matt Caswell of the OpenSSL development team.
+As described here: https://www.openssl.org/news/secadv/20160922.txt

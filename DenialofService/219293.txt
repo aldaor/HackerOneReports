@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/219293
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/locator
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:01.06.2017 22:06:04
+
+Summary:
+@ssarong reported an input that triggers an out-of-bounds read: https://github.com/mruby/mruby/issues/3603
+
+This issue was addressed upstream in https://github.com/mruby/mruby/commit/761493934e19d1a6edea53e9fbdb39eb78ef898e

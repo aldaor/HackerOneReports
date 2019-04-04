@@ -1,0 +1,54 @@
+ReportLink:https://hackerone.com/reports/300391
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/tan_stream
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:315.0
+Severity:medium
+State:Closed
+DateOfDisclosure:11.04.2018 10:42:45
+
+Summary:
+##Issue
+The reporter found a parameter which enabled you to generate a potentially huge load on the server by just modifying a parameter value.
+
+##Fix
+
+The application was patched.
+
+##Reasoning
+
+Initially the report was very unprofessional, lacking almost everything needed. Usually reports with this level of information are closed immediately - the quality of the report rarely gets better with iterations, rather they spiral into something even worse. However, the speculation in this report, although not reproducible with the information provided in the initial report, was interesting and raised some eyebrows. With some additional guidance the reporter in the end produced a very nice actionable report - thank you for that. This is a learning opportunity for (waaaaay too) many people submitting reports - if you don't put in the effort, don't expect the results. 
+> NOTE! Thanks for submitting a report! Please replace **all** the [square] sections below with the pertinent details. Do not remove any subsections of this template. If the report is not complete, we will most likely close your report with no further action. **QUALITY BEFORE QUANTITY**. Remember, the more detail you provide, the easier it is for us to verify and then potentially issue a bounty, so be sure to take your time filling out the report. Use backticks for codesamples and URL's.
+
+## Basic report information
+**Summary:** The parameter in the POST query allows to control size of returned page which in turn can lead to the potential DOS attack
+
+**Description:** I found the parameter in the POST query which allows to control the size of the returned page. Usually this query return the simple JSON error (F249324: 1.png)
+If the 'dropdownSize' parameter was changed then we see the same error which is repeated the many times (F249325: 2.png)
+This parameter allows to control the size of the returned page. If similar requests will be sent from a large number computers then this can be lead to the potential DOS attack
+The POST query is attached (F249327: query.txt)
+
+**Domain:** www.lahitapiola.fi
+
+## Browsers / Apps Verified In:
+
+  * Firefox ESR 45.3.0
+
+## Steps To Reproduce:
+
+(Add details for how we can reproduce the issue)
+
+  1. Change the value in the dropdownSize parameter from the attached query.txt and send the query
+
+## Additional material
+
+  * 1.png
+  * 2.png
+  * 3.png
+  * query.txt
+
+## Related reports, best practices
+
+## Impact
+
+The attacker can make a machine or network resource unavailable

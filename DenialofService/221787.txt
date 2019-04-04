@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/221787
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/theyarestone
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:25.05.2017 1:33:01
+
+Summary:
+If a server uses SHA512 for TLS session ticket HMAC it is vulnerable to a DoS attack where a malformed ticket will result in an OOB read which will ultimately crash.
+
+The use of SHA512 in TLS session tickets is comparatively rare as it requires a custom server callback and ticket lookup mechanism.
+
+OpenSSL 1.0.2 users should upgrade to 1.0.2i
+OpenSSL 1.0.1 users should upgrade to 1.0.1u
+
+This issue was reported to OpenSSL on 19th August 2016 by Shi Lei (Gear Team, Qihoo 360 Inc.). The fix was developed by Stephen Henson of the OpenSSL development team.
+If a server uses SHA512 for TLS session ticket HMAC it is vulnerable to a
+DoS attack where a malformed ticket will result in an OOB read which will
+ultimately crash.
+
+The use of SHA512 in TLS session tickets is comparatively rare as it requires
+a custom server callback and ticket lookup mechanism.
+
+refer:
+https://www.openssl.org/news/secadv/20160922.txt

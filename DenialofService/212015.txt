@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/212015
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/ashishag29
+ReportedTo:Starbucks(starbucks)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:15.08.2017 0:37:24
+
+Summary:
+
+unable to register since the passwords are unable to match.Check the attachment.

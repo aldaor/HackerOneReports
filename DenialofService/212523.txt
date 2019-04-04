@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/212523
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/mr_edwards
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:31.03.2018 9:32:48
+
+Summary:
+##Issue
+
+The reporter was able to craft a direct URL that triggered a single user denial of service by modifying a cookie. The affected user had to manually delete the selectedLanguage -cookie to resolve the situation.
+
+##Fix
+
+The issue was investigated and found to be valid.
+
+##Reasoning
+
+The reported case was valid and within the scope of the bug bounty program. The issue was mitigated, but as the issue was systemic (systemwide) and the same identical cookie had been reported before ( #201723), a smaller bounty was awarded. 
+

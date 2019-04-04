@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/22012
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/born2hack
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:31.08.2014 18:45:58
+
+Summary:
+
+Hi, team .
+I found that password reset link sent by twitter is not validated.
+
+Description: 
+When a user ask for password reset link at two different times, say at 12.00 PM and at 12.03 PM.
+Then he is able to change his password using either of the link.
+Here the previous token is not expiring as soon as a new one is generated.
+Which means  a link generated at 12.00 PM can also be use to change  the password.
+For better securtiy previous token should get expired or should be invalidated as soon as new link is generated for that user.
+
+POC:
+1) Ask for reset link 2 times
+2) Change the password using first link.
+3) There you go , it's possible and previous link is valid to change the password.
+
+Fix: invalidate the previous token or link as soon as a new token or link is generated.
+
+If any further information required please let me know.
+
+Thanks and regards.
+Mohd Haji

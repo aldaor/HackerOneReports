@@ -1,0 +1,76 @@
+ReportLink:https://hackerone.com/reports/303632
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/nwoltman
+ReportedTo:Node.js third-party modules(nodejs-ecosystem)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:25.01.2018 17:21:10
+
+Summary:
+
+**Module:**
+
+Fastify - https://www.npmjs.com/package/fastify
+Affected versions: <=0.37.0 (all version before 0.38.0)
+
+**Summary:**
+
+A denial-of-service attack can be performed against servers running Fastify by sending a request with "Content-Type: application/json" and a very large payload.
+
+**Description:**
+
+Fastify internally builds up the request payload as a string and then JSON parses the string once the full payload is received. It does not (before v0.38.0) limit the size of the payload before JSON parsing it, meaning that the string can grow large enough to surpass either V8's string length limits and throw an `uncaughtException`, or it can surpass the process's memory limits and crash the process.
+
+To perform this attack, one must send a request with `Content-Type: application/json` containing a very large payload. The request may be streamed. The payload only needs to be large enough to surpass V8's string length limit (`2^30 - 25` bytes with V8 62 / Node 9, or `2^28 - 16` bytes for earlier versions), at which point the Node.js process will crash with an `uncaughtException`. If the process running Node has less memory than V8's maximum string size, the process will run out of memory and crash earlier. If multiple requests with a large payload are made in parallel, the process will run out of memory very quickly (this can be done with only a few parallel requests).
+
+This attack can be performed repeatedly and indefinitely.
+
+## Steps To Reproduce:
+
+  1. Create a Fastify server using the [default example](https://github.com/fastify/fastify#example).
+  2. Add a POST route. Example: `fastify.post('/*', async () => 'response text')`.
+  3. Start the server (e.g. `node app.js`).
+  4. Use a tool such as curl or Node to send a POST request with `Content-Type: application/json` to the sever (i.e. running on `localhost:3000`) with a payload of size 1 GB or larger.
+  5. The server will crash before the request completes.
+
+Piece of code responsible for this issue (from the last commit before the vulnerability was fixed): https://github.com/fastify/fastify/blob/8bc80ab61ad8de3fd498bf885ac645a0a634874c/lib/handleRequest.js#L60-L81
+
+## Impact:
+
+All servers running Fastify <= 0.37.0 without a reverse proxy in front that limits the size of request payloads are vulnerable to this denial-of-service attack.
+
+## Supporting Material/References:
+
+Example attack using Node:
+
+```js
+const http = require('http');
+
+const req = http.request({
+  host: 'localhost',
+  port: 3000,
+  path: '/',
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+}, (res) => {
+  console.log(res.statusCode);
+  console.log(res.headers);
+}).on('error', (err) => {
+  console.log(err);
+});
+
+const buff = Buffer.alloc(100000);
+
+for (var i = 0; i < 20000; i++) {
+  req.write(buff);
+}
+
+req.end();
+```
+
+## Impact
+
+An attacker can consistently crash a Node process running Fastify, thus creating a denial-of-service scenario.

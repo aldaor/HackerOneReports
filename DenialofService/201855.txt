@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/201855
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/baljeet1337
+ReportedTo:Coinbase(coinbase)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:30.08.2017 22:48:17
+
+Summary:
+Duplicate report we missed closing out.

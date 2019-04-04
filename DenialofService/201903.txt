@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/201903
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/locator
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:28.02.2017 0:45:08
+
+Summary:
+@ssarong discovered an integer overflow in MRuby's code generator, which resulted in a crash. The issue was reported upstream in https://github.com/mruby/mruby/issues/3426 and fixed in https://github.com/mruby/mruby/commit/6e0ba0085d22b7751c46b178e841046483f0f6b4.

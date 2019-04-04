@@ -1,0 +1,52 @@
+ReportLink:https://hackerone.com/reports/311776
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/billy_blaze
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:264.0
+Severity:
+State:Closed
+DateOfDisclosure:15.02.2018 20:28:39
+
+Summary:
+##Issue
+
+The reporter found that the secure messaging platform did not restrict the amount of recipients which could lead to a logical denial of service by flooding the backoffice with spam.
+
+##Fix
+
+A limit was introduced.
+
+##Reasoning
+
+The messaging platform by definition allows sending of emails, also to multiple recipients. The report revealed an issue that could theoretically cause a "non-technical resource exhaustion" in the backoffice. People would get overwhelmed by spam filling their inboxes. Theoretical for the reason that there are controls in the backoffice limiting the impact. The proof in this report was fair and reasonable enough without actually flooding.
+
+## Basic report information
+**Summary:** 
+Confidential message systems fails to restrict large amount of receivers. This might lead to hardware exhausting and/or attacking localtapiola internal employees as securemail recipient.
+
+**Description:** 
+Despite https://secure.lahitapiola.fi/ is designed to send emails, there is small bug which allows user to exhaust server resources and or exhausting peoples work time. I used 376 different dummy non-existent *@lahitapiola.fi receiver in tests.
+
+**Impact:**
+Loss of worktime while checking thru every securemail email. It takes time to copy/paste received links and check if the contact is real or not. This is basically email spam with some steroids as sender server is lahitapiola´s trusted one. Mixing different senders addrs and attachments this could be neat tool to exploiters.
+
+## Browsers / Apps Verified In:
+
+  *Chrome, Firefox
+
+## Steps To Reproduce:
+
+  1. Go to https://secure.lahitapiola.fi/index and fill all fields. Intercept when sending email and add recipient email addresses separeted by comma in under Content-Disposition: form-data; name="recipient"
+
+
+## Additional material
+
+  * not applicable
+
+## Related reports, best practices
+
+  * Deltagon´s secure mail allows user to add more than one recipient by clicking "add row". This can be manually overrided. There is no limit or it is very high. Service should restrict amount of default receivers or allow email to be send only to email addresses inserted thru "add row" process.
+
+## Impact
+
+spamming from 'trusted' source internal lahitapiola´s employees.

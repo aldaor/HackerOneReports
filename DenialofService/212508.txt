@@ -1,0 +1,68 @@
+ReportLink:https://hackerone.com/reports/212508
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/mr_edwards
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:400.0
+Severity:medium
+State:Closed
+DateOfDisclosure:13.12.2017 9:53:48
+
+Summary:
+##Issue
+
+The reporter was able to craft a direct URL that triggered a single user denial of service by modifying a cookie. The affected user had to manually delete the selectedLocale -cookie to resolve the situation. 
+
+##Fix
+
+The issue was investigated and found to be valid.
+
+##Reasoning
+
+The reported case was valid and within the scope of the bug bounty program. The issue was mitigated and the reporter was awarded with a bounty.
+
+Hey,
+I want to report again similar issue to #201723 , but cookie is setting up on different parameter.
+
+## Basic report information
+**Summary:**
+found a way in which any attacker will send a link to user, and user will not able to use any of the service provided by lahitapiola.
+
+**Affected Websites**
+1. verkkopalvelu.tapiola.fi
+2. www.lahitapiola.fi
+
+**Domain:** 
+verkkopalvelu.tapiola.fi
+
+## Browsers / Apps Verified In:
+
+  * Latest Version of Firefox 
+
+## Steps To Reproduce:
+
+####Payload: `"><img src ` (only)
+
+####Vulnerable Parameter: selectedLocale
+
+  1. Send this url to victim using html tag:
+
+```
+https://verkkopalvelu.tapiola.fi/a3/PalauteWeb/?locale=fi&ltapp=Palautelomake&p=1302686354497&selectedLanguage=fi%27&selectedArea=&selectedLocale=en%22%3E%3Cimg%20src
+```
+
+For your testing purpose, copy this link in your browser, and paste it and go, now click on any link on website, you will be ended up on this page:
+
+ {F167978}
+
+  2: User will not able to use any of the above effected localtapiola's services, untill user manually delete the cookie.
+
+## Additional material
+
+  * See POC video
+
+{F167981}
+
+
+Thanks
+Regards
+Neeraj

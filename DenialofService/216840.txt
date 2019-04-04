@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/216840
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/theyarestone
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:2500.0
+Severity:high
+State:Closed
+DateOfDisclosure:12.04.2017 0:58:54
+
+Summary:
+A malicious client can send an excessively large OCSP Status Request extension. If that client continually requests renegotiation, sending a large OCSP Status Request extension each time, then there will be unbounded memory growth on the server. This will eventually lead to a Denial Of Service attack through memory exhaustion. Servers with a default configuration are vulnerable even if they do not support OCSP. Builds using the "no-ocsp" build time option are not affected.
+
+Servers using OpenSSL versions prior to 1.0.1g are not vulnerable in a default configuration, instead only if an application explicitly enables OCSP stapling support.
+
+OpenSSL 1.1.0 users should upgrade to 1.1.0a
+OpenSSL 1.0.2 users should upgrade to 1.0.2i
+OpenSSL 1.0.1 users should upgrade to 1.0.1u
+
+This issue was reported to OpenSSL on 29th August 2016 by Shi Lei (Gear Team, Qihoo 360 Inc.). The fix was developed by Matt Caswell of the OpenSSL development team.
+A malicious client can send an excessively large OCSP Status Request extension.
+If that client continually requests renegotiation, sending a large OCSP Status
+Request extension each time, then there will be unbounded memory growth on the
+server. This will eventually lead to a Denial Of Service attack through memory
+exhaustion. Servers with a default configuration are vulnerable even if they do
+not support OCSP. Builds using the "no-ocsp" build time option are not affected.

@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/364964
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/guido
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:20.09.2018 9:06:18
+
+Summary:
+
+https://www.openssl.org/news/secadv/20180612.txt
+
+```
+OpenSSL Security Advisory [12 June 2018]
+========================================
+
+Client DoS due to large DH parameter (CVE-2018-0732)
+====================================================
+
+Severity: Low
+
+During key agreement in a TLS handshake using a DH(E) based ciphersuite a
+malicious server can send a very large prime value to the client. This will
+cause the client to spend an unreasonably long period of time generating a key
+for this prime resulting in a hang until the client has finished. This could be
+exploited in a Denial Of Service attack.
+
+Due to the low severity of this issue we are not issuing a new release of
+OpenSSL 1.1.0 or 1.0.2 at this time. The fix will be included in OpenSSL 1.1.0i
+and OpenSSL 1.0.2p when they become available. The fix is also available in
+commit ea7abeeab (for 1.1.0) and commit 3984ef0b7 (for 1.0.2) in the OpenSSL git
+repository.
+
+This issue was reported to OpenSSL on 5th June 2018 by Guido Vranken who also
+developed the fix.
+```
+
+## Impact
+
+Client DoS

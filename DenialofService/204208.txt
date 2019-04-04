@@ -1,0 +1,52 @@
+ReportLink:https://hackerone.com/reports/204208
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/irotem2
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:315.0
+Severity:medium
+State:Closed
+DateOfDisclosure:18.03.2017 12:37:34
+
+Summary:
+##Issue
+
+The reporter was able to craft an http-request to request a CAPTCHA-image with arbitrary size. The image was generated on the server, leading to excessive load for large-sized images. 
+
+##Fix
+
+The dimensions of the CAPTCHA was limited server side.
+
+##Reasoning
+
+The flaw was very simple and even simpler to exploit, but the potential business impact was significant. Very much a stealthy DOS potentially hard to pinpoint. The bounty reflects the potential business impact.
+
+## Basic report information
+**Summary:** 
+It is possible to generate a simple request which creates a high cpu/bandwidth consumption from the server by abusing the captcha servlet
+
+**Description:**
+By sending a specially crafted request and changing the height/width parameters in the captcha form it is possible to consume large amount of cpu/memory and bandwidth.
+
+By Sending a width 21800 and height 4800 the server responded after a few seconds with a payload of 318k.
+When increasing the height to 48000, the server responded after about 15 seconds with a payload of 3M.
+
+Testing was stopped in order to prevent a full denial of service on the website but it seems that there is no limit and easily with a couple of requests we can deny service to the servlet and maybe even the whole server.
+
+**Domain:** 
+http://viestinta.lahitapiola.fi/
+
+## Browsers / Apps Verified In:
+
+  * Chrome / CURL
+
+## Steps To Reproduce:
+
+(Add details for how we can reproduce the issue)
+
+  1. Send a request to the following url - http://viestinta.lahitapiola.fi/nms/jsp/captcha.jsp?captchaID=@vq-ooKP6OECsEZDMwxvQGKYlOO5cUAx8hD9Z856vdHI=,122&width=21800&height=4800&minWordSize=8&maxWordSize=8
+  2. Increase the parameters width and height until server gets unresponsive or under heavy load
+
+
+## Remarks
+
+In the scope of testing I saw that denial of service is out of scope, This attack is more applicative and doesn't use distributed denial of service methods and I think it is important for you to fix this although it is not in scope

