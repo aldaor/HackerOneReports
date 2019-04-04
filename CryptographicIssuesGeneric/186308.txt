@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/186308
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/r0p3
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:23.06.2017 13:30:22
+
+Summary:
+A DoD website was misconfigured in a manner that could have allowed an attacker to collect sensitive information about user sessions. @r0p3 was able to demonstrate this vulnerability by crafting a specially formatted URL.
+

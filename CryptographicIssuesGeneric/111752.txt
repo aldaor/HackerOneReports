@@ -1,0 +1,53 @@
+ReportLink:https://hackerone.com/reports/111752
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/hacker00000000
+ReportedTo:Imgur(imgur)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:21.01.2016 21:56:37
+
+Summary:
+
+Hi imgur Security Team,
+
+This is an urgent issue and wish you fix it as soon as possible ...
+
+so this web application " imgur.com " " is potentially vulnerable to the BREACH attack.
+
+An attacker with the ability to:
+
+Inject partial chosen plaintext into a victim's requests 
+Measure the size of encrypted traffic 
+can leverage information leaked by compression to recover targeted parts of the plaintext.
+
+BREACH (Browser Reconnaissance & Exfiltration via Adaptive Compression of Hypertext) is a category of vulnerabilities and not a specific instance affecting a specific piece of software. To be vulnerable, a web application must:
+
+Be served from a server that uses HTTP-level compression 
+Reflect user-input in HTTP response bodies 
+Reflect a secret (such as a CSRF token) in HTTP response bodies
+
+URL: /signin/
+
+Attack details
+This alert was issued because the following conditions were met:
+
+The page content is served via HTTPS
+The server is using HTTP-level compression
+URL encoded GET input redirect was reflected into the HTTP response body.
+HTTP response body contains a secret named csrf
+The impact of this vulnerability
+An attacker can leverage information leaked by compression to recover targeted parts of the plaintext.
+How to fix this vulnerability
+The mitigations are ordered by effectiveness (not by their practicality - as this may differ from one application to another).
+
+Disabling HTTP compression 
+Separating secrets from user input 
+Randomizing secrets per request 
+Masking secrets (effectively randomizing by XORing with a random secret per request) 
+Protecting vulnerable pages with CSRF 
+Length hiding (by adding random number of bytes to the responses) 
+Rate-limiting the requests
+
+
+Good Fix , 

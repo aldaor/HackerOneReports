@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/146910
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/linkks
+ReportedTo:Maximum(maximum)
+BountyAmount:20.0
+Severity:
+State:Closed
+DateOfDisclosure:31.03.2017 2:19:59
+
+Summary:
+
+RC4 cipher suites (SSL3 on port 443): 
+
+SSL3_CK_RSA_RC4_128_MD5 - High strength
+SSL3_CK_RSA_RC4_128_SHA - High strength
+
+Host: qics.maximum.com

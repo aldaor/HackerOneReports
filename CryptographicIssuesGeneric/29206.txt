@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/29206
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/simon90
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.10.2014 21:26:35
+
+Summary:
+
+Twitterflight.com (From Twitter Inc..I just checked it with whois) Website service encrypts traffic using an old deprecated protocol with known weakness wich is obsolete and insecure, you should disable it.
+
+POC in the attachments.

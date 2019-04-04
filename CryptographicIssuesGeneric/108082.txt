@@ -1,0 +1,49 @@
+ReportLink:https://hackerone.com/reports/108082
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/hanno
+ReportedTo:ownCloud(owncloud)
+BountyAmount:350.0
+Severity:
+State:Closed
+DateOfDisclosure:04.04.2016 13:18:46
+
+Summary:
+Hanno Böck reported a vulnerability within the optional encryption plugin used by ownCloud. This plugin can be enabled to encrypt the file contents with a per-user key.
+
+Due to the missing Authenticated Encryption a malicious storage administrator could tamper with the encrypted ciphertext. In case of binary files such as EXE files this may for example allow an attacker to inject arbitrary code into the encrypted files.
+
+As an hardening measure to ownCloud 9.0 we have done the first step to mitigate this attack vector: We've introduced authenticated encryption. Due to this in a properly configured ownCloud server a storage administrator can't modify files anymore, if a file gets tampered it won't be downloadable anymore.
+
+We're aware that the ownCloud Encryption module is not yet perfect and are constantly working on improving it. As a next step we're aiming at [encrypting file names](https://github.com/owncloud/core/issues/22105).
+We were technically aware of this vulnerability and the report of @hanno has increased it's severity given his proof of concept for modifying binary files. This was also the reason why we didn't mention encryption as a measure to ensure integrity, in older ownCloud it simply guaranteed that a storage admin could not access the file content.
+
+We recommend administrators using the ownCloud Encryption module to read [our documentation](https://doc.owncloud.org/server/9.0/admin_manual/configuration_files/encryption_configuration.html) with more information about the ownCloud encryption.
+
+------
+
+A [blog post by Hanno Böck](https://blog.hboeck.de/archives/880-Pwncloud-bad-crypto-in-the-Owncloud-encryption-module.html) covering this issue is also available. 
+The owncloud file storage encryption uses the AES encryption algorithm in CFB mode without any authentication. The encryption module is advertised as a way to use a potentially untrusted external storage [1].
+
+Let's assume someone uses owncloud with the encryption module and an untrusted storage and expects the data to be safe. A windows software application gets uploaded and shared in this owncloud instance. As an example we can use the putty.exe file [2].
+
+Most Windows EXE files have a very unique structure. By Xor-ing data one can manipulate that. CFB mode allows bitwise manipulations, but these will cause the next block to contain garbage data.
+
+The PoC attack I developed will:
+a) First flip a single bit in the third block of the file. This will cause the fourth block to contain garbage and thus the file will no longer be a valid PE file. Thereby Windows will execute the DOS part of that executable.
+b) EXE files contain usually a DOS stub that is almost always the same. We can now Xor our own code over that DOS part and thus backdoor the Executable.
+
+This gives one 16 bytes of code execution. This is quite limited, but it can be extended by doing more manipulations on the file and jumping to other manipulated blocks. I haven't done that, but it's definitely doable. My PoC will create an EXE file that prints out the chars "PWN".
+
+To mount the attack:
+* Unpack the attched tarball
+* run "make" in the pwncloud dir
+* run "pwncloud [file]" with [file] being an exe file in an encrypted owncloud storage
+The attach script itself is written in bash, it requires a small C tool to xor files and a small piece of assembly code that is compiled with nasm.
+
+This attack is made even easier by the fact that the filename is not hidden from the attacker. He can see which files are EXE files and backdoor them all. A variant of this attack could be executed if there are files in the storage with other file formats and content known to the attacker (e.g. a zip file or tarball from a popular application).
+
+The bottom line is: Using encryption without any authentication or signatures is dangerous. It should not be used in any circumstances. In its current form the owncloud encryption module should not be used and not be trusted.
+
+
+[1] https://owncloud.org/blog/how-owncloud-uses-encryption-to-protect-your-data/
+[2] http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html

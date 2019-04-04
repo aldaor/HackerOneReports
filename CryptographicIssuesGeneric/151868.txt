@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/151868
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/rajauzairabdullah
+ReportedTo:Algolia(algolia)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:07.09.2016 7:57:17
+
+Summary:
+
+There is not Rate limit in Inviting a similar contact Multiple times 
+See the attachment for confirmation :

@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/134145
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/ngaurav
+ReportedTo:QIWI(qiwi)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:06.06.2016 12:15:14
+
+Summary:
+
+The validity of the SSL certificate is about to expire on 15 may 2016. The browser will normally present the user with a warning message indicating that the certificate has expired. These warnings are extremely confusing for the typical web user, and cause most users to question the authenticity of the site they are attempting to view.
+
+Recommendation :Renew the ssl certificate before it expires on 15 may 2016.

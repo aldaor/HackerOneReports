@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/25382
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/jpsecurityresearch
+ReportedTo:Cloudflare(cloudflare)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.09.2014 17:22:27
+
+Summary:
+
+Vulnerability description
+mod_negotiation is an Apache module responsible for selecting the document that best matches the clients capabilities, from one of several available documents. If the client provides an invalid Accept header, the server will respond with a 406 Not Acceptable error containing a pseudo directory listing. This behaviour can help an attacker to learn more about his target, for example, generate a list of base names, generate a list of interesting extensions, look for backup files and so on.
+
+VULN AFFECTS WEBSERVER
+
+IMPACT - Possible information disclosure: directory listing, filename bruteforcing, backup files.
+
+FIX - Disable the MultiViews directive from Apache's configuration file and restart Apache.
+You can disable MultiViews by creating a .htaccess file containing the following line:
+
+Options -Multiviews
+
+HTTP HEADER RESULTS~
+
+Response
+HTTP/1.1 406 Not Acceptable
+Date: Wed, 20 Aug 2014 11:50:24 GMT
+Content-Type: text/html; charset=iso-8859-1
+Connection: keep-alive
+Alternates: {"index.html" 1 {type text/html}}
+Vary: negotiate,Accept-Encoding
+Server: cloudflare-nginx
+CF-RAY: 15ce5f817c840bb1-HKG
+Content-Length: 1020

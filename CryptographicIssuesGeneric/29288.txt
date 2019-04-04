@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/29288
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/webpentest
+ReportedTo:Sucuri(sucuri)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:17.11.2014 14:30:52
+
+Summary:
+
+Whenever a user of waf.sucuri.net exports his reports graph data as a png, an unencrypted request is sent over to export.highcharts.com.
+
+This enables a mitm-able attacker to sniff and|or replace exported image.
+
+Also, the whole practice of offloading potentially private user data to an unrelated website is questionable.
+
+Solution: replace http://export.highcharts.com with httpS://export.highcharts.com

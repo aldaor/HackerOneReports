@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/120941
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/mrtuxracer
+ReportedTo:Zomato(zomato)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:30.06.2017 4:52:41
+
+Summary:
+There was an issue with how the NexTable was storing passwords for merchants. This was fixed by the NexTable Team.
+
+Thanks @mrtuxracer for reporting this.

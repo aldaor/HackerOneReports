@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/166634
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/nimia
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:21.09.2016 17:51:44
+
+Summary:
+
+Severity: Low
+
+A malicious client can negotiate SSLv2 ciphers that have been disabled on the server and complete SSLv2 handshakes even if all SSLv2 ciphers have been disabled, provided that the SSLv2 protocol was not also disabled via SSL_OP_NO_SSLv2.
+
+This issue affects OpenSSL versions 1.0.2 and 1.0.1.
+
+OpenSSL 1.0.2 users should upgrade to 1.0.2f
+OpenSSL 1.0.1 users should upgrade to 1.0.1r
+
+This issue was reported to OpenSSL on 26th December 2015 by Nimrod Aviram and Sebastian Schinzel. The fix was developed by Nimrod Aviram with further development by Viktor Dukhovni of the OpenSSL development team.
+This is a DROWN-related issue that essentially circumvented the instructions on how to disable SSLv2 at the time. Its primary effect was that a lot of servers were vulnerable to DROWN even though they thought they had SSLv2 disabled.
+It was reported to OpenSSL and fixed in versions 1.0.2f and 1.0.1r:
+https://www.openssl.org/news/secadv/20160128.txt
+
+(and obviously the DROWN attack itself was reported to OpenSSL, as explained in this OpenSSL blogpost:
+https://www.openssl.org/blog/blog/2016/03/01/an-openssl-users-guide-to-drown/
+
+Thanks!

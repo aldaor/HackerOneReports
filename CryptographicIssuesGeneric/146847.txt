@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/146847
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/ddworken
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.07.2016 23:03:32
+
+Summary:
+
+The SSL certificate deployed on faspex.uber.com was originally issued for faspex.ubersp.com. This means the certificate is invalid for that domain and when loaded will display an error in the user's browser. Since this is an uber internal page, uber employees are most likely getting used to clicking through SSL errors which opens them up to future MITM attacks. 
+
+Thanks,
+David Dworken

@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/138179
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/dadrian
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:2500.0
+Severity:
+State:Closed
+DateOfDisclosure:01.06.2016 3:39:41
+
+Summary:
+This issue only affected versions of OpenSSL prior to March 19th 2015 at which
+time the code was refactored to address vulnerability CVE-2015-0293.
+
+s2_srvr.c did not enforce that clear-key-length is 0 for non-export ciphers. If
+clear-key bytes are present for these ciphers, they *displace* encrypted-key
+bytes. This leads to an efficient divide-and-conquer key recovery attack: if an
+eavesdropper has intercepted an SSLv2 handshake, they can use the server as an
+oracle to determine the SSLv2 master-key, using only 16 connections to the
+server and negligible computation.
+
+More importantly, this leads to a more efficient version of DROWN that is
+effective against non-export ciphersuites, and requires no significant
+computation.
+
+This issue affected OpenSSL versions 1.0.2, 1.0.1l, 1.0.0q, 0.9.8ze and all
+earlier versions.  It was fixed in OpenSSL 1.0.2a, 1.0.1m, 1.0.0r and 0.9.8zf
+(released March 19th 2015).
+
+This issue was reported to OpenSSL on February 10th 2016 by David Adrian and J.
+Alex Halderman of the University of Michigan.  The underlying defect had by
+then already been fixed by Emilia Käsper of OpenSSL on March 4th 2015.  The fix
+for this issue can be identified by commits ae50d827 (1.0.2a), cd56a08d
+(1.0.1m), 1a08063 (1.0.0r) and 65c588c (0.9.8zf).
+This is a retroactive submission of CVE-2016-0703, a.k.a. the "Extra Clear" bug, which can lead to the Special DROWN variant of the DROWN attack. After some discussion with the other DROWN authors, I'm submitting on behalf of myself (David Adrian) and J. Alex Halderman the vulnerability CVE-2016-0703, which was acknowledged by OpenSSL as Sev:High at https://www.openssl.org/news/secadv/20160301.txt. 

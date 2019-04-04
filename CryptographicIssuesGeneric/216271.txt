@@ -1,0 +1,58 @@
+ReportLink:https://hackerone.com/reports/216271
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/guifre
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:10.11.2017 22:24:05
+
+Summary:
+
+Hi,
+
+I get in touch to report that cloud.newrelic.com is vulnerable to CVE-2014-3566 (POODLE). 
+
+Websites that support SSLv3 and CBC-mode ciphers are potentially vulnerable to an active MITM (Man-in-the-middle) attack. This attack, called POODLE, is similar to the BEAST attack and also allows a network attacker to extract the plaintext of targeted parts of an SSL connection, usually cookie data. Unlike the BEAST attack, it doesn't require such extensive control of the format of the plaintext and thus is more practical.
+
+The impact of this vulnerability
+	An attacker may be able to exploit this problem to conduct man-in-the-middle attacks and decrypt communications between the affected service and clients.
+
+PoC:
+$ nmap  -sV --version-light --script ssl-poodle -p 443 cloud.newrelic.com
+PORT    STATE SERVICE REASON
+443/tcp open  https   syn-ack
+| ssl-poodle:
+|   VULNERABLE:
+|   SSL POODLE information leak
+
+$ nmap --script ssl-enum-ciphers -p 443 cloud.newrelic.com
+
+PORT    STATE SERVICE
+443/tcp open  https
+| ssl-enum-ciphers:
+|   SSLv3:
+|     ciphers:
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 2048) - A
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 2048) - C
+|     compressors:
+|       NULL
+|     cipher preference: server
+|     warnings:
+|       64-bit block cipher 3DES vulnerable to SWEET32 attack
+|       CBC-mode cipher in SSLv3 (CVE-2014-3566)
+
+How to fix this vulnerability
+	It's recommended to disable SSLv3 and replace it with TLSv1.0 as soon as compatibility with legacy clients is no longer required. (The only browser that does not support TLSv1.0 is Internet Explorer 6).
+
+To disable SSLv2 and SSLv3: 
+	For Nginx:
+	ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+
+References
+	https://security.googleblog.com/2014/10/this-poodle-bites-exploiting-ssl-30.html
+
+I look forward to hearing from you
+
+Best Regards

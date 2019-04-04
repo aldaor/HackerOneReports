@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/112496
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/bountypls
+ReportedTo:Coinbase(coinbase)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:21.02.2016 19:33:53
+
+Summary:
+
+Hey Coinbase, I have some found some sessions issues linking your web and the coinbase wallet means the android application, So as the user authenticates from the android app An android device linked is shown on this page : https://www.coinbase.com/settings/security_settings
+
+POC: 
+1) Open android app and login.
+2) Swife from left side and open settings and then navigate to manage accounts.
+3) Leave the android app in the manage accounts page and then log in to the coinbase by PC
+4) Open https://www.coinbase.com/settings/security_settings On pc and remove the android device from the authorized apps.
+5) After removing wait a little bit and then turn to your android device you will see manage accounts page and you can still 1) Rename 2) Delete an existing wallet (Which can result in money loss) 3) Make the wallet primary.
+6) You will see that even after removing the android device from the web it is still doing 3 tasks on the manage accounts page in the android device.
+
+
+NOTE: It will keep on making changes but as you click the back button the session gets invalidated.
+
+Mitigation : As soon an user clicks the remove android device button from the security page located at this url : https://www.coinbase.com/settings/security_settings , The session of the android app must be quickly get invalidated, If your device gets at bad hands then an USER can suffer an huge loss.
+
+
+Regards,
+Hisham Mir

@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/101330
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/linkks
+ReportedTo:Maximum(maximum)
+BountyAmount:10.0
+Severity:
+State:Closed
+DateOfDisclosure:31.03.2017 2:21:01
+
+Summary:
+
+
+This SSL certificate is either expired or not yet valid. Some browsers will continue connecting to the site after presenting the user with the warning, while others will prompt the user with a dialog box requesting their approval to proceed. These warnings are extremely confusing for the typical web user, and cause most users to question the authenticity of the site they are attempting to view.
+This vulnerability affects Server dev.maximum.com
+
+Attack details
+The SSL certificate (serial: 00bbd5ac7347a6a588) is expired.
+The certificate validity period is between Wed Dec 7 15:35:18 UTC+0300 2011 and Thu Dec 6 15:35:18 UTC+0300 2012
+
+
+The impact of this vulnerability
+This SSL certificate is not valid.
+
+How to fix this vulnerability
+Verify Start Date and/or End Dates of your SSL Certificate. 

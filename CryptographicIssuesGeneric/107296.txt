@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/107296
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/voodookobra
+ReportedTo:Automattic(automattic)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:17.03.2016 14:13:54
+
+Summary:
+
+https://github.com/Automattic/jetpack/blob/bc7a4541ef6f0e9f583376d801ab0c40cfb976c3/class.jetpack-xmlrpc-server.php#L115
+
+I mentioned this to @daljo628 and he suggested submitting it here instead.
+
+This looks very much like a classic [timing attack vulnerability](http://blog.ircmaxell.com/2014/11/its-all-about-time.html). The fix would be to use `hash_equals()` (which I have provided a sane polyfill for in [sarciszewski/php-future](https://github.com/sarciszewski/php-future) if you don't already have one handy).

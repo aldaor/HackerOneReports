@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/31166
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/voodookobra
+ReportedTo:joola.io(joola-io)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:25.10.2014 18:11:24
+
+Summary:
+
+https://github.com/joola/joola/blob/a534c3dca1a0deaec99c192978e61a35dd3a9069/lib/common/index.js#L90-L98
+
+`Math.random()` is not sufficient for cryptographic purposes (such as authentication tokens).
+
+An example replacement that uses `window.crypto.getRandomValues()` is available here:
+
+https://github.com/resonantcore/lib/blob/9362480647b304aee6819ea94a18409241e79378/js/diceware/diceware.js#L60-L94
+
+Further information:
+https://media.blackhat.com/us-13/US-13-Soeder-Black-Box-Assessment-of-Pseudorandom-Algorithms-WP.pdf

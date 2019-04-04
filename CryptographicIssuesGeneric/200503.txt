@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/200503
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/edio
+ReportedTo:Alvosec(alvosec)
+BountyAmount:3.0
+Severity:low
+State:Closed
+DateOfDisclosure:23.02.2017 17:23:12
+
+Summary:
+
+Dear Alvosec bug bounty team,
+
+# Summary
+---
+
+A PRNG is an algorithm used to produce random-looking numbers with certain desirable statistical properties. In order for a PRNG to be cryptographically secure it must be resistant to prediction.
+
+The `generatepass()` function in [Alvocrypt](https://alvosec.com/alvocrypt/) currently uses `Math.random()` as a pseudo-random number generator which is not a cryptographically secure PRNG.
+
+The PRNG is implemented in `generatepass()` as follows:
+
+~~~
+function generatepass(plength) {
+    temp = ''
+    for (i = 0; i < plength; i++)
+        temp += keylist.charAt(Math.floor(Math.random() * keylist.length))
+    return temp
+}
+~~~
+
+# How can this be fixed?
+---
+
+You could either implement a CPRNG from a library or use the [Web Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/RandomSource/getRandomValues).
+
+Yours sincerely,
+Ed

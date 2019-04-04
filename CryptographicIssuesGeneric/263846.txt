@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/263846
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/h1c-7501
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.08.2017 5:41:36
+
+Summary:
+
+Hello LegalRobot,
+I'd like to report a nice little bug.
+As I already give a clear Title so I think u understand this.Simply LegalRobot allows disposable or temporary email address to register account.
+Let me know if u have any question
+Thanks 
+Cheers
+Anas

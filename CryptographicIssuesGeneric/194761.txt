@@ -1,0 +1,81 @@
+ReportLink:https://hackerone.com/reports/194761
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/anandakshya
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:18.02.2017 11:50:14
+
+Summary:
+##Issue
+
+The reporter had found that the secure transport (SSL/TLS) settings of viestinta.lahitapiola.fi did not follow current best practices. The configuration made us vulnerable to CVE-2016-2107, Padding Oracle Attack.
+
+##Fix
+
+The issue was investigated and found to be valid. The server settings were updated to reflect a much more current set of best practices. 
+
+##Reasoning
+
+Most out of scope reports are closed as informative as they are not part of the bug bounty program but might provide good information (please see the policy for more information). SSL/TLS best practices are out of scope, but LocalTapiola reserves the right to make adjustments to configurations (or to disregard advice) based on reports received. In this specific case, LocalTapiola awarded the reporter for the heads up as we did react based on the report. Noteworthy for this report is that at the time we reconfigured our SSL/TLS, we had already received a few other reports on the same issue. We decided to award the previous reporters with the same bounty and reopen their reports (they had been previously dismissed). We also decided to add these reporters to the report at hand - we do not publicly disclose several reports on the same issue. Normally, only the first reporter is awarded a bounty, but we decided that in this specific case, this is the fair and transparent way to go.
+
+Hello Lahitapiola Security Team,
+
+I would like to make two reports:
+1. Subdomain viestinta.lahitapiola.fi is vulnerable to CVE-2016-2107 .
+2. All the Lahitapiola domains/subdomains in scope of bug bounty have weak cipher suites and are susceptible to various SSL related attacks.
+
+##**Subdomain viestinta.lahitapiola.fi is vulnerable to CVE-2016-2107 :**
+
+_**Proof of Concept**_: 
+* https://filippo.io/CVE-2016-2107/#viestinta.lahitapiola.fi:443
+* https://www.ssllabs.com/ssltest/analyze.html?d=viestinta.lahitapiola.fi&hideResults=on
+
+_**Fix**_: Upgrade openssl version on the server to latest stable version
+
+##  All the Lahitapiola domains/subdomains in scope of bug bounty have weak cipher suites and are susceptible to various SSL related attacks.
+Moreover, the cipher suites list is not in order.
+
+Proof of Concept:
+```
+sslscan --no-fallback --no-renegotiation --no-compression --no-heartbleed viestinta.lahitapiola.fi
+
+Testing SSL server viestinta.lahitapiola.fi on port 443
+
+  Supported Server Cipher(s):
+Accepted  TLSv1.2  112 bits  ECDHE-RSA-DES-CBC3-SHA        Curve P-256 DHE 256
+Accepted  TLSv1.2  112 bits  EDH-RSA-DES-CBC3-SHA          DHE 2048 bits
+Accepted  TLSv1.2  112 bits  DES-CBC3-SHA
+Accepted  TLSv1.1  112 bits  ECDHE-RSA-DES-CBC3-SHA        Curve P-256 DHE 256
+Accepted  TLSv1.1  112 bits  EDH-RSA-DES-CBC3-SHA          DHE 2048 bits
+Accepted  TLSv1.1  112 bits  DES-CBC3-SHA
+```
+##How to fix?
+Replace **cipher suites** list on your servers with the one below:
+
+```
+ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!3DES:!MD5:!PSK
+```
+
+##Why should I trust the list above and what difference would it make to my infrastructure?
+The openssl bugs are very frequent and every new release of openssl raises one or other over-hyped SSL related vulnerability creating havoc on internet. Given this scenario, it may not be able to keep on upgrading openssl (most of the time upgrading openssl requires OS/server restart) for every release, therefore, the correct approach is to  reduce the attack surface. 
+And couple of reasons:
+* The preferred cipher suites listed above is well tested for security,speed,order of preference.
+* The above list is the minimal list of cipher suites that supports all modern/old browser(exception IE on XP)
+* The list above only has strong cipher suites in order of preference(essentially with the list above you are saying internet that you only support strong cipher suites and force clients to establish handshake on preferred list).
+* The cipher suites list above supports perfect forward secrecy for all modern browsers.
+
+**Most importantly, speed:**
+As you business model demands end users to share PII data on your infrastructure, besides security, speed has to be another important factor into consideration. You could very well see the difference on speed of SSL handshake between client and your infrastructure with the command below:
+
+```
+for x in {1..10}; do curl -kso /dev/null -w "tcp:%{time_connect}, ssldone:%{time_appconnect}\n" https://viestinta.lahitapiola.fi; done
+```
+
+Run the above bash command before and after updating cipher suites to find out the speed of SSL handshake.
+
+**__PS: The cipher suite list not only applies for viestinta.lahitapiola.fi but for all your business critical infrastructure.__**
+
+Regards
+Akshya

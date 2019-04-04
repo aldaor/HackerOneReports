@@ -1,0 +1,71 @@
+ReportLink:https://hackerone.com/reports/134760
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/d0rkerdevil
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:15.05.2017 14:38:25
+
+Summary:
+
+hello,
+        i m pentesting sandbox.veris.in and found that it is vulnerable to SSL/TLS BEAST ATTACK vulnerability
+at port 443.
+PoC >>>
+
+<<<<<sandbox.veris.in:443>>>>>>>>
+
+Supported versions:
+ TLSv1.0 TLSv1.1 TLSv1.2
+Deflate compression: no
+Supported cipher suites (ORDER IS NOT SIGNIFICANT):
+  TLSv1.0
+     RSA_WITH_3DES_EDE_CBC_SHA
+     DHE_RSA_WITH_3DES_EDE_CBC_SHA
+     RSA_WITH_AES_128_CBC_SHA
+     DHE_RSA_WITH_AES_128_CBC_SHA
+     RSA_WITH_AES_256_CBC_SHA
+     DHE_RSA_WITH_AES_256_CBC_SHA
+     RSA_WITH_CAMELLIA_128_CBC_SHA
+     DHE_RSA_WITH_CAMELLIA_128_CBC_SHA
+     RSA_WITH_CAMELLIA_256_CBC_SHA
+     DHE_RSA_WITH_CAMELLIA_256_CBC_SHA
+     TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA
+     TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+     TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
+  (TLSv1.1: idem)
+  TLSv1.2
+     RSA_WITH_3DES_EDE_CBC_SHA
+     DHE_RSA_WITH_3DES_EDE_CBC_SHA
+     RSA_WITH_AES_128_CBC_SHA
+     DHE_RSA_WITH_AES_128_CBC_SHA
+     RSA_WITH_AES_256_CBC_SHA
+     DHE_RSA_WITH_AES_256_CBC_SHA
+     RSA_WITH_AES_128_CBC_SHA256
+     RSA_WITH_AES_256_CBC_SHA256
+     RSA_WITH_CAMELLIA_128_CBC_SHA
+     DHE_RSA_WITH_CAMELLIA_128_CBC_SHA
+     DHE_RSA_WITH_AES_128_CBC_SHA256
+     DHE_RSA_WITH_AES_256_CBC_SHA256
+     RSA_WITH_CAMELLIA_256_CBC_SHA
+     DHE_RSA_WITH_CAMELLIA_256_CBC_SHA
+     TLS_RSA_WITH_AES_128_GCM_SHA256
+     TLS_RSA_WITH_AES_256_GCM_SHA384
+     TLS_DHE_RSA_WITH_AES_128_GCM_SHA256
+     TLS_DHE_RSA_WITH_AES_256_GCM_SHA384
+     TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA
+     TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+     TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
+     TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
+     TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384
+     TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+     TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+----------------------
+Server certificate(s):
+  630209594b7770daccb1da429dbb924c01eaeae6: CN=*.veris.in, OU=PositiveSSL Wildcard, OU=Domain Control Validated
+----------------------
+Minimal encryption strength:     strong encryption (96-bit or more)
+Achievable encryption strength:  strong encryption (96-bit or more)
+BEAST status: vulnerable    <---------------------vulnerable patch it.
+CRIME status: protected

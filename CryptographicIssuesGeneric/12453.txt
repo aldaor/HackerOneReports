@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/12453
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/chmosama
+ReportedTo:ReddAPI(reddapi)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.10.2014 16:46:42
+
+Summary:
+
+URL :- https://www.reddapi.com/docs/
+
+Description :-
+There was no "Strict-Transport-Security" header in the server response.
+
+Remediation detail :-
+A Strict-Transport-Security HTTP header should be sent with each HTTPS response. The syntax is as follows:
+
+Strict-Transport-Security: max-age=<seconds>[; includeSubDomains]
+
+The parameter max-age gives the time frame for requirement of HTTPS in seconds and should be chosen quite high, e.g. several months. A value below 7776000 is considered as too low by this scanner check. The flag includeSubDomains defines that the policy applies also for sub domains of the sender of the response.
+
+Issue background :-
+The HTTP Strict Transport Security policy defines a timeframe where a browser must connect to the web server via HTTPS. Without a Strict Transport Security policy the web application may be vulnerable against several attacks:
+If the web application mixes usage of HTTP and HTTPS, an attacker can manipulate pages in the unsecured area of the application or change redirection targets in a manner that the switch to the secured page is not performed or done in a manner, that the attacker remains between client and server.
+If there is no HTTP server, an attacker in the same network could simulate a HTTP server and motivate the user to click on a prepared URL by a scoial engineering attack.
+The protection is effective only for the given amount of time. Multiple occurrence of this header could cause undefined behaviour in browsers and should be avoided.

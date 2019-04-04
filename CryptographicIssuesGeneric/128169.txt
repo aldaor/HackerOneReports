@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/128169
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/hanno
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:12.04.2016 12:09:49
+
+Summary:
+Severity: Moderate
+
+There is a carry propagating bug in the x86_64 Montgomery squaring procedure. No
+EC algorithms are affected. Analysis suggests that attacks against RSA and DSA
+as a result of this defect would be very difficult to perform and are not
+believed likely. Attacks against DH are considered just feasible (although very
+difficult) because most of the work necessary to deduce information
+about a private key may be performed offline. The amount of resources
+required for such an attack would be very significant and likely only
+accessible to a limited number of attackers. An attacker would
+additionally need online access to an unpatched system using the target
+private key in a scenario with persistent DH parameters and a private
+key that is shared between multiple clients. For example this can occur by
+default in OpenSSL DHE based SSL/TLS ciphersuites.
+
+This issue affects OpenSSL version 1.0.2.
+
+OpenSSL 1.0.2 users should upgrade to 1.0.2e
+
+This issue was reported to OpenSSL on August 13 2015 by Hanno
+Böck. The fix was developed by Andy Polyakov of the OpenSSL
+development team.
+For certain inputs OpenSSL's BN_mod_exp function (which is used for RSA and Diffie Hellman) can produce wrong results.
+The issue has been fixed by OpenSSL and rated moderate severity:
+https://openssl.org/news/secadv/20151203.txt
+
+A code example is here:
+https://github.com/hannob/bignum-fuzz/blob/master/CVE-2015-3193-openssl-vs-gcrypt-modexp.c
+
+Some more info:
+https://blog.fuzzing-project.org/31-Fuzzing-Math-miscalculations-in-OpenSSLs-BN_mod_exp-CVE-2015-3193.html

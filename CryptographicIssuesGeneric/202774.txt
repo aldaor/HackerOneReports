@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/202774
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/jstnkndy
+ReportedTo:ExpressionEngine(expressionengine)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.02.2017 21:25:19
+
+Summary:
+Justin Kennedy identified a Type Juggling vulnerability in ExpressionEngine that allowed access to unserialize using user supplied data, ultimately achieving SQL Injection. The full details of this vulnerability can be found here: https://foxglovesecurity.com/2017/02/07/type-juggling-and-php-object-injection-and-sqli-oh-my/

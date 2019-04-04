@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/20873
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/mik
+ReportedTo:The Internet(internet)
+BountyAmount:3000.0
+Severity:
+State:Closed
+DateOfDisclosure:17.11.2014 23:54:19
+
+Summary:
+
+The rsync algorithm synchronizes remote files in 3 steps:
+- The receiver divides the basis file into 700-byte blocks, performing two checksums on each block (a rolling checksum based on Addler32) and an md5 sum
+- The sender then scans it's version of the file byte-by-byte looking for matches against both sums, transmitting either literal data, or a copy command (copy offset length)
+- The receiver makes a copy of the file by applying the delta commands from the sender
+
+While it is known that md5 doesn't offer much collision resistance, it is perhaps unknown that the fast md5 collisions can be combined with a collision against the rolling sum.  They can.
+
+For files where all of the data is in the same privilege domain, this may allow bypassing validation rules.
+
+More critically, for files where data for the system and other users is mixed with untrusted data (VM images, databases), this could allow privilege escalation.
+
+There are two different classes of attack on md5 - collisions and chosen-prefix collisions:
+- Collisions are very quick to generate on a normal PC, but require a fully crafted file to work (the original demo was a postscript file).  This is what I have attached.
+- Chosen-prefix attacks are more serious, but require more work to generate (approx 2^50) - I do not have an example of one of these yet.
+
+Also note that rsync does a final full-file hash, which will fail.  This reduces this to just a DoS attack unless --inplace is used (common for syncing large files).
+
+Since rsync is used for mirroring large open-source projects, and is used in the background for many open source, closed-source and in-house systems, I believe this may qualify for an internet bug bounty.

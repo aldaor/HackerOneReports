@@ -1,0 +1,100 @@
+ReportLink:https://hackerone.com/reports/145552
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/1337_inj3c70r
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.06.2016 20:40:05
+
+Summary:
+
+Sir,
+
+I have found a major bug in your website :) That Is Directory listing & Practical Attacks On PGP signature)
+
+affected area>>
+
+https://download.nextcloud.com/server/ 
+
+here is my poc>>
+
+{F100081}
+
+
+Poc Details:
+The web server is configured to display the list of files contained in this directory. As a result of a misconfiguration - end user / attacker able to see content of the folders with systemically important files.
+
+Impact::
+Exposing the contents of a directory can lead to an attacker gaining access to source code or providing useful information for the attacker to devise exploits, such as creation times of files or any information that may be encoded in file names. The directory listing may also compromise private or confidential data.
+
+
+Another Bug is here 
+
+1.https://download.nextcloud.com/server/daily/
+
+2. https://download.nextcloud.com/server/daily/latest.tar.bz2.asc
+& poc>>
+
+{F100082}
+
+
+
+{F100083}
+
+
+Impact::
+
+1.Practical Attacks on PGP
+
+No data security implementation can ever be completely safeguarded from the 
+attacks of an adversary. PGP like most cryptographic and security applications 
+can be circumvented in a variety
+ of ways. This section will cover several of the 
+practical attacks (both technical and non-technical) on Pretty Good Privacy that 
+do not involve cryptanalysis or any attack on the cryptosystem protocols, but 
+instead the implementation of PGP on a data system
+
+2.Pass-phrase and Private Key File Compromises
+
+One of the most common ways for an attacker to compromise the security of 
+PGP on a system is to obtain another user’s pass
+-
+phrase and/or private key 
+file. If an attacker has access to the pass phrase and 
+secret key file they can 
+read the compromised user’s encrypted messages and make signatures using 
+that user’s private key. This weakness is not just specific to PGP; this is a 
+typical weakness found in most password/pass-phrase authentication 
+cryptosystems. Users may select easily guessed pass-phrases or may store 
+their private key in a location where someone with malicious intent may access 
+it.  
+An attacker may also use a tool or utility that will try to obtain a user’s pass 
+phrase from the local workstation. Brute force or dictionary attack utilities such 
+as PGPCrack or PGPpass are designed to crack PGP encrypted files. The 
+attacker may also use a keyboard logger utility that can capture the keystrokes 
+of an unsuspecting user and save it to a designated location where they can then retrieve the user’s revealed plaintext pass-phrase. 
+
+3.Public Key Tampering
+
+In a public key cryptosystem, the public keys of users should be distributed so all have the components necessary to securely communicate and exchange information with each other. A crucial component in this system is the fact that users must be able to trust that a public key really belongs to whom it appears to belong to. This particular vulnerability is quite important to be aware of,many novices and even IT professionals may fall victim to trusting the tampered public key of an impostor. Once a user encrypts a document or message with the tampered public key and sends it, the impostor will be able to decrypt and read the contents. The user may have just unintentionally disclosed sensitive 
+personal or proprietary company information. PGP users should make certain that they only trust the public key of someone if they have got it directly from its owner, or someone the user directly trusts has 
+signed the public key of the new user.
+
+4.Trojan Horse Attacks
+
+Trojan horse attacks pose one of the most serious threats to application 
+security today. A Trojan horse is a seemingly harmless program that contains 
+malicious code, which may
+ infect a users PGP application or their operating 
+system subverting the security of both. An attacker could use this code to 
+capture a user’s plaintext messages, or to obtain the user’s pass-phrase or private key. 
+
+
+and so many :)
+
+Thanks sir :) 
+
+Regards,
+
+1337_inj3c70r

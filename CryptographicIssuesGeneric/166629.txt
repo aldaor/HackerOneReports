@@ -1,0 +1,39 @@
+ReportLink:https://hackerone.com/reports/166629
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/nimia
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:2500.0
+Severity:
+State:Closed
+DateOfDisclosure:21.09.2016 17:50:33
+
+Summary:
+Severity: High
+
+A cross-protocol attack was discovered that could lead to decryption of TLS sessions by using a server supporting SSLv2 and EXPORT cipher suites as a Bleichenbacher RSA padding oracle.  Note that traffic between clients and non-vulnerable servers can be decrypted provided another server supporting SSLv2 and EXPORT ciphers (even with a different protocol such as SMTP, IMAP or POP) shares the RSA keys of the non-vulnerable server. This vulnerability is known as DROWN (CVE-2016-0800).
+
+Recovering one session key requires the attacker to perform approximately 2^50 computation, as well as thousands of connections to the affected server. A more efficient variant of the DROWN attack exists against unpatched OpenSSL servers using versions that predate 1.0.2a, 1.0.1m, 1.0.0r and 0.9.8zf released on 19/Mar/2015 (see CVE-2016-0703).
+
+Users can avoid this issue by disabling the SSLv2 protocol in all their SSL/TLS servers, if they've not done so already. Disabling all SSLv2 ciphers is also sufficient, provided the patches for CVE-2015-3197 (fixed in OpenSSL 1.0.1r and 1.0.2f) have been deployed.  Servers that have not disabled the SSLv2 protocol, and are not patched for CVE-2015-3197 are vulnerable to DROWN even if all SSLv2 ciphers are nominally disabled, because malicious clients can force the use of SSLv2 with EXPORT ciphers.
+
+OpenSSL 1.0.2g and 1.0.1s deploy the following mitigation against DROWN:
+
+SSLv2 is now by default disabled at build-time.  Builds that are not configured with "enable-ssl2" will not support SSLv2.  Even if "enable-ssl2" is used, users who want to negotiate SSLv2 via the version-flexible SSLv23_method() will need to explicitly call either of:
+
+   SSL_CTX_clear_options(ctx, SSL_OP_NO_SSLv2);
+   or
+   SSL_clear_options(ssl, SSL_OP_NO_SSLv2);
+
+as appropriate.  Even if either of those is used, or the application explicitly uses the version-specific SSLv2_method() or its client or server variants, SSLv2 ciphers vulnerable to exhaustive search key recovery have been removed. Specifically, the SSLv2 40-bit EXPORT ciphers, and SSLv2 56-bit DES are no longer available.
+
+In addition, weak ciphers in SSLv3 and up are now disabled in default builds of OpenSSL.  Builds that are not configured with "enable-weak-ssl-ciphers" will not provide any "EXPORT" or "LOW" strength ciphers.
+
+OpenSSL 1.0.2 users should upgrade to 1.0.2g
+OpenSSL 1.0.1 users should upgrade to 1.0.1s
+
+This issue was reported to OpenSSL on December 29th 2015 by Nimrod Aviram and Sebastian Schinzel. The fix was developed by Viktor Dukhovni and Matt Caswell of OpenSSL.
+General DROWN was responsibly disclosed to the OpenSSL team prior to the public disclosure.
+This OpenSSL blog post, by Viktor Dukhovni and Emilia Käsper, describes the vulnerability:
+https://www.openssl.org/blog/blog/2016/03/01/an-openssl-users-guide-to-drown/
+
+This is probably a good opportunity to again thank everyone who helped with the disclosure process :-)

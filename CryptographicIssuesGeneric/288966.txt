@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/288966
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/omespino
+ReportedTo:Twitter(twitter)
+BountyAmount:280.0
+Severity:
+State:Closed
+DateOfDisclosure:22.02.2018 0:11:25
+
+Summary:
+
+
+**Summary:** POODLE SSLv3 bug on multiple twitter smtp servers
+
+**Description:** CVE-2014-3566: The SSL protocol 3.0, as used in OpenSSL through 1.0.1i and other products, uses nondeterministic CBC padding, which makes it easier for man-in-the-middle attackers to obtain cleartext data via a padding-oracle attack, aka the "POODLE" issue.
+
+
+## Steps To Reproduce:
+
+Hi Twitter Sec team here is the POC
+
+  1. get a nmap installation and twitter_smtp_ssl_servers.txt file (attached)  
+  2. run this command :
+"nmap -sV --version-light -Pn --script ssl-poodle -p 25 -iL twitter_smtp_ssl_servers.txt | grep -B 5 VULNERABLE"
+  3. See the results 
+
+## Supporting Material/References:
+
+  * An output screentshot  and the twitter_smtp_ssl_servers.txt are attached.

@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/207404
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/hack40077
+ReportedTo:Dovecot(dovecot)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.02.2017 12:46:51
+
+Summary:
+
+
+I Found SSL Certification Expired at https://licenses.dovecot.fi/ 
+I Found Vulnerability CVE-2016-2183 lists.dovecot.fi
+
+CVE-2016-2183  
+
+Description : 
+A flaw was found in the way the DES/3DES cipher was used as part of the TLS/SSL protocol. A man-in-the-middle attacker could use this flaw to recover some plaintext data by capturing large amounts of encrypted traffic between TLS/SSL server and client if the communication used a DES/3DES based ciphersuite.
+
+Problem Location : 
+http://lists.dovecot.fi/
+
+Mitigation : 
+TLS libraries and applications should limit the length of TLS sessions with a 64-bit cipher.
+
+References : 
+https://sweet32.info/

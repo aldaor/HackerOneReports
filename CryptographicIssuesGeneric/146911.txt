@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/146911
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/linkks
+ReportedTo:Maximum(maximum)
+BountyAmount:20.0
+Severity:
+State:Closed
+DateOfDisclosure:31.03.2017 2:19:47
+
+Summary:
+
+Host: qics.maximum.com
+
+The SSL server (port: 443) encrypts traffic using SSLv3.0.

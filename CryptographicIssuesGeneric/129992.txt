@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/129992
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/ericlaw
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.08.2017 2:55:24
+
+Summary:
+
+Certificate Authority Authorization (supported by LetsEncrypt and other CAs) allows a domain owner to specify which Certificate Authorities should be allowed to issue certificates for the domain. All CAA-compliant certificate authorities should refuse to issue a certificate unless they are the CA of record for the target site. This helps reduce the threat of a bad guy tricking a Certificate Authority into issuing a phony certificate for your site.
+
+The CAA rule is stored as a DNS resource record of type 257. You can view a domain’s CAA rule using a DNS lookup service:
+
+https://dns.google.com/query?name=hackerone.com&type=257&dnssec=true
+
+Hackerone should set a CAA record to help prevent misissuance of a certificate for its domains.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/129942
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/benteveo
+ReportedTo:Xero(xero)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.05.2016 6:52:04
+
+Summary:
+A flaw in our Credit Card Verification process was reported that could have allowed an attacker to avail themselves of a Xero Subscription without paying for it, for a month at most. This was rated as non-critical and was quickly fixed.  Mitigation measures were in place to detect any abuse and we have no reports of this flaw ever being exploited.

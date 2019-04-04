@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/129138
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/reed
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:18.02.2017 1:44:07
+
+Summary:
+
+When installing New Relic on a new Ubuntu 16.04 (xenial) machine to test out the beta, I noticed this warning:
+`W: gpgv:/var/lib/apt/lists/apt.newrelic.com_debian_dists_newrelic_Release.gpg: The repository is insufficiently signed by key B60A3EC9BC013B9C23790EC8B31B29E5548C16BF (weak digest)`
+
+This specifically means that the signature at https://apt.newrelic.com/debian/dists/newrelic/Release.gpg used the SHA-1 digest algorithm.
+
+I downloaded both `Release` and `Release.gpg` and validated this:
+
+```
+| => gpg -v --verify Release.gpg Release
+gpg: armor header: Version: GnuPG v1.4.11 (GNU/Linux)
+gpg: Signature made Thu Mar 17 12:04:33 2016 CDT
+gpg:                using DSA key 0xB31B29E5548C16BF
+gpg: using PGP trust model
+gpg: Good signature from "New Relic <support@newrelic.com>"
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: B60A 3EC9 BC01 3B9C 2379  0EC8 B31B 29E5 548C 16BF
+gpg: binary signature, digest algorithm SHA1
+```
+
+Signatures with that GPG key need to be using SHA-2 or better.
+
+More information about this problem and the best ways to fix it:
+* https://wiki.debian.org/Teams/Apt/Sha1Removal
+* https://www.debian-administration.org/users/dkg/weblog/48
+* https://juliank.wordpress.com/2016/03/15/clarifications-and-updates-on-apt-sha1/
+* https://askubuntu.com/questions/750133/how-can-i-fix-w-the-repository-is-insufficiently-signed-by-the-key

@@ -1,0 +1,215 @@
+ReportLink:https://hackerone.com/reports/141239
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/anish2good
+ReportedTo:Nginx (IBB)(ibb-nginx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.05.2016 18:08:55
+
+Summary:
+
+Module ngx_http_auth_basic_module is broken and allowing all password after __@__ symbol  if the password contains this format  __abcedfgh@xyz__
+====================
+
+This Vulnerability exists in all Nginx Version I have tested, attached the PoC video FYI&A__
+---------------------
+
+I have setup a .htpasswd and provided these Credentials
+```
+UserName : testuser
+Password : abcedfgh@xyz
+```
+
+This is the step the create .htpasswd file
+```
+
+root@ ~ sudo htpasswd -c /etc/nginx/.htpasswd testuser
+New password: 
+Re-type new password: 
+Adding password for user testuser
+```
+This is my nginx  default.conf file setting
+
+```
+    location / {
+        auth_basic "Restricted";
+        auth_basic_user_file /etc/nginx/.htpasswd;
+        root   /usr/share/nginx/html;
+        index  index.html index.htm;
+    }
+```
+
+My .htpasswd file 
+```
+root@ ~ cat ../.htpasswd 
+testuser:BnMHORZSKiQ3k
+```
+
+Note the password is 12 character Long and after 8 character there is __@__ symbol and some string, now the issue is nginx is accepeting first 8 character as valid password for example theese are the valid passwords and allowing the nginx AUTH to pass
+
+```
+abcedfgh@xyz
+abcedfgh@xy
+abcedfgh@x
+abcedfgh@
+abcedfgh
+```
+The  curl output using the following credentails  testuser:abcedfgh@xyz
+```
+root@ ~ curl -v  -k -u  testuser:abcedfgh@xyz http://localhost
+* About to connect() to localhost port 80 (#0)
+*   Trying 127.0.0.1... connected
+* Connected to localhost (127.0.0.1) port 80 (#0)
+* Server auth using Basic with user 'testuser'
+> GET / HTTP/1.1
+> Authorization: Basic dGVzdHVzZXI6YWJjZWRmZ2hAeHl6
+> User-Agent: curl/7.19.7 (x86_64-unknown-linux-gnu) libcurl/7.19.7 NSS/3.12.7.0 zlib/1.2.3 libidn/1.18 libssh2/1.2.2
+> Host: localhost
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Server: nginx/1.0.15
+< Date: Thu, 26 May 2016 14:49:53 GMT
+< Content-Type: text/html
+< Content-Length: 17
+< Last-Modified: Thu, 26 May 2016 14:32:15 GMT
+< Connection: keep-alive
+< Accept-Ranges: bytes
+< 
+Welcome to Nginx
+* Connection #0 to host localhost left intact
+* Closing connection #0
+```
+
+
+The  curl output using the following credentails  testuser:abcedfgh@xy
+```
+root@ ~ curl -v  -k -u  testuser:abcedfgh@xy http://localhost
+* About to connect() to localhost port 80 (#0)
+*   Trying 127.0.0.1... connected
+* Connected to localhost (127.0.0.1) port 80 (#0)
+* Server auth using Basic with user 'testuser'
+> GET / HTTP/1.1
+> Authorization: Basic dGVzdHVzZXI6YWJjZWRmZ2hAeHk=
+> User-Agent: curl/7.19.7 (x86_64-unknown-linux-gnu) libcurl/7.19.7 NSS/3.12.7.0 zlib/1.2.3 libidn/1.18 libssh2/1.2.2
+> Host: localhost
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Server: nginx/1.0.15
+< Date: Thu, 26 May 2016 14:50:04 GMT
+< Content-Type: text/html
+< Content-Length: 17
+< Last-Modified: Thu, 26 May 2016 14:32:15 GMT
+< Connection: keep-alive
+< Accept-Ranges: bytes
+< 
+Welcome to Nginx
+* Connection #0 to host localhost left intact
+* Closing connection #0
+```
+
+
+```
+root@ ~ curl -v  -k -u  testuser:abcedfgh@x http://localhost
+* About to connect() to localhost port 80 (#0)
+*   Trying 127.0.0.1... connected
+* Connected to localhost (127.0.0.1) port 80 (#0)
+* Server auth using Basic with user 'testuser'
+> GET / HTTP/1.1
+> Authorization: Basic dGVzdHVzZXI6YWJjZWRmZ2hAeA==
+> User-Agent: curl/7.19.7 (x86_64-unknown-linux-gnu) libcurl/7.19.7 NSS/3.12.7.0 zlib/1.2.3 libidn/1.18 libssh2/1.2.2
+> Host: localhost
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Server: nginx/1.0.15
+< Date: Thu, 26 May 2016 14:50:16 GMT
+< Content-Type: text/html
+< Content-Length: 17
+< Last-Modified: Thu, 26 May 2016 14:32:15 GMT
+< Connection: keep-alive
+< Accept-Ranges: bytes
+< 
+Welcome to Nginx
+* Connection #0 to host localhost left intact
+* Closing connection #0
+root@ ~ curl -v  -k -u  testuser:abcedfgh@ http://localhost
+* About to connect() to localhost port 80 (#0)
+*   Trying 127.0.0.1... connected
+* Connected to localhost (127.0.0.1) port 80 (#0)
+* Server auth using Basic with user 'testuser'
+> GET / HTTP/1.1
+> Authorization: Basic dGVzdHVzZXI6YWJjZWRmZ2hA
+> User-Agent: curl/7.19.7 (x86_64-unknown-linux-gnu) libcurl/7.19.7 NSS/3.12.7.0 zlib/1.2.3 libidn/1.18 libssh2/1.2.2
+> Host: localhost
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Server: nginx/1.0.15
+< Date: Thu, 26 May 2016 14:50:23 GMT
+< Content-Type: text/html
+< Content-Length: 17
+< Last-Modified: Thu, 26 May 2016 14:32:15 GMT
+< Connection: keep-alive
+< Accept-Ranges: bytes
+< 
+Welcome to Nginx
+* Connection #0 to host localhost left intact
+* Closing connection #0
+root@ ~ curl -v  -k -u  testuser:abcedfgh http://localhost
+* About to connect() to localhost port 80 (#0)
+*   Trying 127.0.0.1... connected
+* Connected to localhost (127.0.0.1) port 80 (#0)
+* Server auth using Basic with user 'testuser'
+> GET / HTTP/1.1
+> Authorization: Basic dGVzdHVzZXI6YWJjZWRmZ2g=
+> User-Agent: curl/7.19.7 (x86_64-unknown-linux-gnu) libcurl/7.19.7 NSS/3.12.7.0 zlib/1.2.3 libidn/1.18 libssh2/1.2.2
+> Host: localhost
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Server: nginx/1.0.15
+< Date: Thu, 26 May 2016 14:50:27 GMT
+< Content-Type: text/html
+< Content-Length: 17
+< Last-Modified: Thu, 26 May 2016 14:32:15 GMT
+< Connection: keep-alive
+< Accept-Ranges: bytes
+< 
+Welcome to Nginx
+* Connection #0 to host localhost left intact
+* Closing connection #0
+```
+```
+root@ ~ curl -v  -k -u  testuser:abcedfg http://localhost
+* About to connect() to localhost port 80 (#0)
+*   Trying 127.0.0.1... connected
+* Connected to localhost (127.0.0.1) port 80 (#0)
+* Server auth using Basic with user 'testuser'
+> GET / HTTP/1.1
+> Authorization: Basic dGVzdHVzZXI6YWJjZWRmZw==
+> User-Agent: curl/7.19.7 (x86_64-unknown-linux-gnu) libcurl/7.19.7 NSS/3.12.7.0 zlib/1.2.3 libidn/1.18 libssh2/1.2.2
+> Host: localhost
+> Accept: */*
+> 
+< HTTP/1.1 401 Unauthorized
+< Server: nginx/1.0.15
+< Date: Thu, 26 May 2016 14:50:33 GMT
+< Content-Type: text/html
+< Content-Length: 195
+< Connection: keep-alive
+* Authentication problem. Ignoring this.
+< WWW-Authenticate: Basic realm="Restricted"
+< 
+<html>
+<head><title>401 Authorization Required</title></head>
+<body bgcolor="white">
+<center><h1>401 Authorization Required</h1></center>
+<hr><center>nginx/1.0.15</center>
+</body>
+</html>
+* Connection #0 to host localhost left intact
+* Closing connection #0
+```

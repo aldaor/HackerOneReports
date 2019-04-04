@@ -1,0 +1,65 @@
+ReportLink:https://hackerone.com/reports/14199
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/mohaab007
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:16.08.2014 22:49:57
+
+Summary:
+
+hi,
+
+i hope this one is not dup :)
+
+https://www.ssllabs.com/ssltest/analyze.html?d=uclfinal.twitter.com&hideResults=on
+
+https://www.ssllabs.com/ssltest/analyze.html?d=euro2012.twitter.com&hideResults=on
+
+
+
+
+mohameds-iMac:Downloads mohaab007$ java -jar TestSSLServer.jar uclfinal.twitter.com
+Supported versions: SSLv3 TLSv1.0
+Deflate compression: YES
+Supported cipher suites (ORDER IS NOT SIGNIFICANT):
+  SSLv3
+     RSA_WITH_RC4_128_MD5
+     RSA_WITH_RC4_128_SHA
+     RSA_WITH_3DES_EDE_CBC_SHA
+     RSA_WITH_AES_128_CBC_SHA
+     RSA_WITH_AES_256_CBC_SHA
+  (TLSv1.0: idem)
+----------------------
+Server certificate(s):
+  fb77d158dc1724ac550804ec186c48c402210eb0: CN=*.twitter.com, O="Twitter, Inc.", L=San Francisco, ST=California, C=US, SERIALNUMBER=X5-6oDhQgpWsUADnOU2IdZ38YWlIV8/8
+----------------------
+Minimal encryption strength:     strong encryption (96-bit or more)
+Achievable encryption strength:  strong encryption (96-bit or more)
+BEAST status: protected
+CRIME status: vulnerable
+
+
+and
+
+
+mohameds-iMac:Downloads mohaab007$ java -jar TestSSLServer.jar euro2012.twitter.com
+Supported versions: SSLv3 TLSv1.0
+Deflate compression: YES
+Supported cipher suites (ORDER IS NOT SIGNIFICANT):
+  SSLv3
+     RSA_WITH_RC4_128_MD5
+     RSA_WITH_RC4_128_SHA
+     RSA_WITH_3DES_EDE_CBC_SHA
+     RSA_WITH_AES_128_CBC_SHA
+     RSA_WITH_AES_256_CBC_SHA
+  (TLSv1.0: idem)
+----------------------
+Server certificate(s):
+  fb77d158dc1724ac550804ec186c48c402210eb0: CN=*.twitter.com, O="Twitter, Inc.", L=San Francisco, ST=California, C=US, SERIALNUMBER=X5-6oDhQgpWsUADnOU2IdZ38YWlIV8/8
+----------------------
+Minimal encryption strength:     strong encryption (96-bit or more)
+Achievable encryption strength:  strong encryption (96-bit or more)
+BEAST status: protected
+CRIME status: vulnerable

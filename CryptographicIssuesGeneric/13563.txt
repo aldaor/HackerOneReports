@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/13563
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/robin
+ReportedTo:Factlink(factlink)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 10:00:33
+
+Summary:
+
+Hello,
+
+SPF is missing for both of these sites..Factlink.com and Staging.factlink.com

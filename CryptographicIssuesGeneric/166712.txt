@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/166712
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/nightwatch-cybersecurity
+ReportedTo:Boozt Fashion AB(boozt)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.07.2017 10:19:11
+
+Summary:
+
+We tested the Android app, v2.0.2
+
+To replicate:
+
+    Install the app, and run it until you reach the login screen.
+
+    Install PacketCapture:
+    https://play.google.com/store/apps/details?id=app.greyshirts.sslcapture
+
+    Go to PacketCapture, go through setup, SKIP the SSL certificate
+    install process
+
+    Activate PacketCapture At this point all network traffic will be
+    going through PacketCapture. SSL traffic will be encrypted using a
+    self-signed certificate, not trusted by the device.
+
+    Go back to to the app, enter any credentials and try to login.
+
+    In PacketCapture, observe login calls without any SSL being used
+
+You can also replicate this issue with an MITM proxy
+
+Implications is that anybody monitoring the network can see the login credentials

@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/181768
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/monish
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:60.0
+Severity:medium
+State:Closed
+DateOfDisclosure:15.12.2016 8:34:55
+
+Summary:
+##Issue
+
+The reporter found that the domain viestinta.lahitapiola.fi had a SSL/TLS misconfiguration. 
+
+##Fix
+
+The issue was investigated and found to be valid although not highly critical. The cipher suites were hardened.
+
+##Reasoning
+
+Technical configuration issues are mostly closed as informative. This finding however did carry some impact as very weak encryption could be negotiated in combination with obsolete protocol versions.
+Websites that support SSLv3 and CBC-mode ciphers are potentially vulnerable to an active MITM (Man-in-the-middle) attack. This attack, called POODLE, is similar to the BEAST attack and also allows a network attacker to extract the plaintext of targeted parts of an SSL connection, usually cookie data. Unlike the BEAST attack, it doesn't require such extensive control of the format of the plaintext and thus is more practical. 
+Any website that supports SSLv3 is vulnerable to POODLE, even if it also supports more recent versions of TLS. SSLv3 is disabled by default in Firefox 34, which was released on Nov 25 2014.
+An attacker may be able to exploit this problem to conduct man-in-the-middle attacks and decrypt communications between the affected service and clients

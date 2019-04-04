@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/136986
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/jurajsomorovsky
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:2500.0
+Severity:
+State:Closed
+DateOfDisclosure:19.05.2016 19:37:43
+
+Summary:
+A MITM attacker can use a padding oracle attack to decrypt traffic when the connection uses an AES CBC cipher and the server support AES-NI.
+
+This issue was introduced as part of the fix for Lucky 13 padding attack (CVE-2013-0169). The padding check was rewritten to be in constant time by making sure that always the same bytes are read and compared against either the MAC or padding bytes. But it no longer checked that there was enough data to have both the MAC and padding bytes.
+
+OpenSSL 1.0.2 users should upgrade to 1.0.2h
+OpenSSL 1.0.1 users should upgrade to 1.0.1t
+
+This issue was reported to OpenSSL on 13th of April 2016 by Juraj Somorovsky using TLS-Attacker. The fix was developed by Kurt Roeckx of the OpenSSL development team.
+Advisory: https://www.openssl.org/news/secadv/20160503.txt
+Writeup (Referencing a proof of concept): http://web-in-security.blogspot.de/2016/05/curious-padding-oracle-in-openssl-cve.html

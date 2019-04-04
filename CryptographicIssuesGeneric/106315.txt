@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/106315
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/ddworken
+ReportedTo:Coinbase(coinbase)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:06.01.2016 16:29:44
+
+Summary:
+
+Hi, 
+
+There is an unlikely (but theoretically exploitable vulnerability) is caused by allowing users to sign messages with their addresses. So far I have not been able to exploit this, but I believe that it is exploitable. 
+
+On coinbse.com, the user can see a list of their addresses [here](https://www.coinbase.com/addresses). When they click on an address, they get the option to "Sign a message". 
+
+An attacker could create a raw transaction (explanation of how to do so is [here](http://www.righto.com/2014/02/bitcoins-hard-way-using-raw-bitcoin.html)) spending from one of the addresses listed there to an attacker controlled address. The attacker would then sign the raw transaction so that it is ready to be sent out to the entire network. Then the attacker would send some amount of bitcoin to Coinbase (a predetermined amount to a predetermined address). Shortly after sending the bitcoin to Coinbase, the attacker would then relay his signed transaction to send the bitcoin to his own privately held address. 
+
+The end outcome of this is that Coinbase believes they have received some amount of Bitcoin (and it had a number of confirmations in an address controlled by Coinbase), but in reality they lost it since the attacker stole it before Coinbase could transfer it elsewhere. 
+
+Realistically, I'm not sure whether this can be practically exploited. None the less, I would recommend adding some sort of parsing code to the "Sign a message" utility so that it will refuse to sign a transaction. 
+
+Thanks,
+David Dworken

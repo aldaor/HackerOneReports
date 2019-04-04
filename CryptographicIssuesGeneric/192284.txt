@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/192284
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/madhur_bhargava
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:07.04.2017 7:56:59
+
+Summary:
+
+https://www.olx.ph supports SSLv3 and hence is vulnerable to POODLE attack, which is a kind of Man in the middle attack.
+
+This vulnerability was discovered in 2014 by Google(More Information below):
+https://security.googleblog.com/2014/10/this-poodle-bites-exploiting-ssl-30.html
+http://chrisburgess.com.au/how-to-test-for-the-sslv3-poodle-vulnerability/
+
+Disabling SSL 3.0 support, or CBC-mode ciphers with SSL 3.0, is sufficient to mitigate this issue.

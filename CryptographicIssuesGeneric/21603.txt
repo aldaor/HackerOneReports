@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/21603
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/born2hack
+ReportedTo:IRCCloud(irccloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.10.2014 16:49:49
+
+Summary:
+
+Hi, Team.
+I found that bruteforce protection is not enabled on the login page of https://www.irccloud.com/ .
+I tried a lot but didn't get any type of capcha or ratelimiting.
+Thanks and regards
+Mohd Haji

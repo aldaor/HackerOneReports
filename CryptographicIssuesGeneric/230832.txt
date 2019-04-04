@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/230832
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/d0rkerdevil
+ReportedTo:Cuvva(cuvva)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:22.05.2017 18:16:31
+
+Summary:
+
+To the Cuvva security team,
+i was going through your website and i thought to look for latest cryptographic issues
+as the website uses SSL/TLS i.e,HTTPS
+
+target: https:cuvva.com:443
+
+so i quickly run the nmap with ssl-enum script to look for new Vulnerability that is known as "SWEET32"
+
+detail about sweet32 vuln:~
+Cryptographic protocols like TLS, SSH, IPsec, and OpenVPN commonly use block cipher algorithms, such as AES, Triple-DES, and Blowfish, to encrypt data between clients and servers. To use such algorithms, the data is broken into fixed-length chunks, called blocks, and each block is encrypted separately according to a mode of operation. Older block ciphers, such as Triple-DES and Blowfish use a block size of 64 bits, whereas AES uses a block size of 128 bits.
+
+note: this vulnerability and exploitation has been demo'ed at defcon
+ref site: https://sweet32.info/
+
+1. run nmap
+2.type nmap --script ssl-enum-ciphers cuvva.com
+3.now hit enter and let it do its work and after it done you will
+find that https:443 is vulnerable to sweet32.
+
+TLSv1.1 and TLSv1.2 both are vulnerable
+
+checkout the attachment :)
+
+regards
+Ashish Kunwar

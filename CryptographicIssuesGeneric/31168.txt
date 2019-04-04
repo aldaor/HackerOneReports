@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/31168
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/voodookobra
+ReportedTo:WP API(wp-api)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:29.10.2014 19:57:02
+
+Summary:
+
+Because hashes and tokens are compared with the `!==` and `===` operators, these checks may be susceptible to timing attacks. More info: http://codahale.com/a-lesson-in-timing-attacks/
+
+Affected code:
+
+https://github.com/WP-API/OAuth1/blob/45197eca2925f5022192903d3639decd0ae1811c/lib/class-wp-json-authentication-oauth1.php#L562
+https://github.com/WP-API/OAuth1/blob/45197eca2925f5022192903d3639decd0ae1811c/lib/class-wp-json-authentication-oauth1.php#L290

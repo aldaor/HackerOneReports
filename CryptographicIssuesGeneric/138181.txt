@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/138181
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/dadrian
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:01.06.2016 3:39:32
+
+Summary:
+This issue only affected versions of OpenSSL prior to March 19th 2015 at which
+time the code was refactored to address the vulnerability CVE-2015-0293.
+
+s2_srvr.c overwrite the wrong bytes in the master-key when applying
+Bleichenbacher protection for export cipher suites.  This provides a
+Bleichenbacher oracle, and could potentially allow more efficient variants of
+the DROWN attack.
+
+This issue affected OpenSSL versions 1.0.2, 1.0.1l, 1.0.0q, 0.9.8ze and all
+earlier versions.  It was fixed in OpenSSL 1.0.2a, 1.0.1m, 1.0.0r and 0.9.8zf
+(released March 19th 2015).
+
+This issue was reported to OpenSSL on February 10th 2016 by David Adrian and J.
+Alex Halderman of the University of Michigan.  The underlying defect had by
+then already been fixed by Emilia Käsper of OpenSSL on March 4th 2015.  The fix
+for this issue can be identified by commits ae50d827 (1.0.2a), cd56a08d
+(1.0.1m), 1a08063 (1.0.0r) and 65c588c (0.9.8zf).
+I'm retroactively submitting CVE-2016-0704, a.k.a. "Leaky Export", which is a Bleichenbacher-style bug that leads to another variant of the Special DROWN attack. I'm submitting on behalf of myself and J. Alex Halderman, as we independently found this bug. This was validated by OpenSSL as Sev:Moderate at https://www.openssl.org/news/secadv/20160301.txt.
+
+See https://drownattack.com for more information.

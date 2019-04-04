@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/254895
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/c0d3fire
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:30.07.2017 19:42:47
+
+Summary:
+
+Hello security team,
+
+The site legalrobot.com is potentially vulnerable to the BREACH attack.
+
+Allowing an attacker the ability to:
+- Inject partial chosen plaintext into a victim's requests
+- Measure the size of encrypted traffic
+- can leverage information leaked by compression to recover targeted parts of the plaintext.
+
+BREACH (Browser Reconnaissance & Exfiltration via Adaptive Compression of Hypertext) is a category of vulnerabilities and not a specific instance affecting a specific piece of software. To be vulnerable, a web application must:
+
+Be served from a server that uses HTTP-level compression
+Reflect user-input in HTTP response bodies
+Reflect a secret (such as a CSRF token) in HTTP response bodies
+
+Mitigations to fix this include:
+- Disabling HTTP compression
+- Separating secrets from user input
+- Randomizing secrets per request
+- Masking secrets (effectively randomizing by XORing with a random secret per request)
+- Protecting vulnerable pages with CSRF
+- Length hiding (by adding random number of bytes to the responses)
+- Rate-limiting the requests
+
+For more info on breach attack visit: http://www.breachattack.com/
+
+I have attached an image "proof_of_vuln.png" for POC.

@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/20081
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/mohaab007
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.08.2014 16:37:59
+
+Summary:
+
+URL:
+
+http://lb.vine.co/login
+
+
+you need to use HTTPS and enforce it :)

@@ -1,0 +1,79 @@
+ReportLink:https://hackerone.com/reports/20071
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/mohaab007
+ReportedTo:Automattic(automattic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.08.2014 16:02:38
+
+Summary:
+
+Hi,
+
+
+Vulnerable Website:
+
+https://public-api.wordpress.com/oauth2/authorize?client_id=930&response_type=code&blog_id=0&state=05f9c401dedcb9b3f33d82e8b335d1128d24d4cbc4a73903374f952acdfd34f6&redirect_uri=https%3A%2F%2Fvaultpress.com%2Flogin%2F%3Faction%3Drequest_access_token
+
+I tested the website using firefox add-on called:  Strict Transport Security Detector
+
+https://addons.mozilla.org/en-US/firefox/addon/strict-transport-security-d/
+
+
+HSTS addresses the following threats:
+
+User bookmarks or manually types http://example.com and is subject to a man-in-the-middle attacker:
+
+     HSTS automatically redirects HTTP requests to HTTPS for the target domain
+
+Web application that is intended to be purely HTTPS inadvertently contains HTTP links or serves content over HTTP:
+
+     HSTS automatically redirects HTTP requests to HTTPS for the target domain
+
+A man-in-the-middle attacker attempts to intercept traffic from a victim user using an invalid certificate and hopes the user will accept the bad certificate:
+
+     HSTS does not allow a user to override the invalid certificate message
+
+more :
+
+HSTS mitigates the following threats.
+
+1. HTTP request to an HTTPS site
+
+For example: 
+
+1. User wants to visit SecureSite.com
+2. User types SecureSite.com into the address bar
+3. Browser automatically appends "http://" making the following request: http://SecureSite.com
+4. Server responds with 301 (permanent redirect) to the following location: https://SecureSite.com
+5. Browser makes request to above URL
+
+The above scenario allows for a man-in-the-middle attack as a result of the unintentional HTTP request to SecureSite.com. An attacker can leverage a tool such as ssltrip to transparently hijack the HTTP request prior to the 301 redirect. HSTS eliminates this attack window as long as the user previously accessed SecureSite.com over HTTPS and obtained the HSTS header.
+
+Even with HSTS enabled, a user's initial request to SecureSite.com would remain unprotected from attacks. As a result, both Chrome and Mozilla introduced HSTS preload lists. If SecureSite.com is on Chrome's HSTS preload list, a freshly installed Chrome browser will only allow secure connections to that site, even if the user never accessed it before.
+2.  Insecure link referencing an HSTS enabled site
+
+For example:
+1. Forum.com includes a link to http://SecureSite.com
+2. HSTS will automatically convert the link to HTTPS for the HSTS-enabled site
+3. Invalid Certificate
+
+The following would be considered invalid certificates:
+- Self-signed and/or untrusted CA signed certificate
+- Expired
+- Wrong name specified
+
+
+
+references:
+
+http://blog.nvisium.com/2014/04/is-your-site-hsts-enabled.html
+
+https://www.owasp.org/index.php/HTTP_Strict_Transport_Security#Threats
+
+http://www.chromium.org/sts
+
+https://developer.mozilla.org/en-US/docs/Web/Security/HTTP_strict_transport_security
+
+https://www.owasp.org/index.php/Test_HTTP_Strict_Transport_Security_(OTG-CONFIG-009)

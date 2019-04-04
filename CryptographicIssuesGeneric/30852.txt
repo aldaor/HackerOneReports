@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/30852
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/hasanemrebeyy
+ReportedTo:RelateIQ(relateiq)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:24.12.2014 18:18:08
+
+Summary:
+
+Relateiq Website service encrypts traffic using an old deprecated protocol with known weakness wich is obsolete and insecure, you should disable it.
+
+POC in the attachments.
+
+https://foundeo.com/products/iis-weak-ssl-ciphers/test.cfm?test_domain=www.relateiq.com

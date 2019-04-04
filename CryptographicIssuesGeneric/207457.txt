@@ -1,0 +1,48 @@
+ReportLink:https://hackerone.com/reports/207457
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/hack40077
+ReportedTo:Khan Academy(khanacademy)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:22.02.2017 15:40:43
+
+Summary:
+
+
+CVE - 2011 - 3389
+Description : 
+The SSL protocol, as used in certain configurations in Microsoft Windows and Microsoft Internet Explorer, Mozilla Firefox, Google Chrome, Opera, and other products, encrypts data by using CBC mode with chained initialization vectors, which allows man-in-the-middle attackers to obtain plaintext HTTP headers via a blockwise chosen-boundary attack (BCBA) on an HTTPS session, in conjunction with JavaScript code that uses (1) the HTML5 WebSocket API, (2) the Java URLConnection API, or (3) the Silverlight WebClient API, aka a "BEAST" attack.
+
+Problem Location : 
+https://www.khanacademy.org/
+
+Mitigation : 
+The Upgrade TLS version on the server to latest stable version
+
+CVE - 2013 - 0169 :
+
+Description : 
+The TLS protocol 1.1 and 1.2 and the DTLS protocol 1.0 and 1.2, as used in OpenSSL, OpenJDK, PolarSSL, and other products, do not properly consider timing side-channel attacks on a MAC check requirement during the processing of malformed CBC padding, which allows remote attackers to conduct distinguishing attacks and plaintext-recovery attacks via statistical analysis of timing data for crafted packets, aka the "Lucky Thirteen" issue.
+
+Problem Location : 
+https://www.khanacademy.org/
+
+Mitigation : 
+The Upgrade TLS version on the server to latest stable version .
+
+
+Sweet 32 Attack - CVE-2016-2183, 
+
+Description : 
+A flaw was found in the way the DES/3DES cipher was used as part of the TLS/SSL protocol. A man-in-the-middle attacker could use this flaw to recover some plaintext data by capturing large amounts of encrypted traffic between TLS/SSL server and client if the communication used a DES/3DES based ciphersuite.
+
+Problem Location : 
+https://www.khanacademy.org/
+
+Mitigation :  
+The  removed DES/3DES from the supported lists of crypto algorithms.
+TLS libraries and applications should limit the length of TLS sessions with a 64-bit cipher.
+
+References : 
+https://sweet32.info/

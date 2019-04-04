@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/119918
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/zephrfish
+ReportedTo:Pornhub(pornhub)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:22.06.2016 15:42:43
+
+Summary:
+The researcher identified that the mail.pornhub.com subdomain has a public facing web login for Barracuda Spam & Virus Firewall.

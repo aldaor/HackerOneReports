@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/115271
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/linkks
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.05.2016 17:30:02
+
+Summary:
+
+One of the SSL certificates used by your SSL server contains a public key less than 2048 bit long. 
+
+New Standard for SSL Certificates Industry standards set by the Certification Authority/Browser (CA/B) Forum require that certificates issued after January 1, 2014 MUST be at least 2048-bit key length.1 As computer power increases, anything less than 2048-bit certificates are at risk of being compromised by hackers with sophisticated processing capabilities. The cybersecurity industry is moving to stronger 2048-bit encryption to help preserve internet security.
+
+Public key: 
+0x40 0xD0 0x69 0x78 0xFE 0x9B 0xFE 0x80 0xED 0x56 0xB4 0xF7 0x60 0x2C 0x2A 0xCF 
+0x89 0x96 0x93 0x86 0xFB 0x10 0x1B 0x5C 0x57 0x1E 0x63 0x4E 0x6A 0x91 0x86 0xC5 
+0x72 0xD3 0x80 0x91 0x9B 0xB6 0x81 0xEF 0x8A 0x8F 0x11 0x76 0x59 0x69 0x9E 0x22 
+0x64 0xD5 0xE5 0x6B 0xB5 0xBA 0x25 0x20 0x7C 0x42 0x20 0xF6 0xDC 0x9D 0x6B 0x33 
+0xA2 
+
+The impact of this vulnerability
+Any certificate with a public key less than 2048-bit are at risk of being compromised by hackers with sophisticated processing capabilities. 
+
+How to fix this vulnerability
+If you have any 1024-bit certificates or certificates with less than 2048-bit key length, you will need to migrate to 2048-bit key length.

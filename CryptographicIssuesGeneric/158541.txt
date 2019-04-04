@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/158541
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/mattweidner
+ReportedTo:Moneybird(moneybird)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.06.2017 7:00:23
+
+Summary:
+Researcher noted that a non-secure HTTP endpoint is allowed in webhooks. We have decided to allow non-secure webhooks because too many API clients don't have HTTPS endpoints to receive our webhooks. We have added warnings to inform our clients what the security risks are, but cannot require HTTPS without having too much impact on the existing API connections.

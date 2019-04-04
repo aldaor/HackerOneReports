@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/199436
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/pkkothawade
+ReportedTo:Yelp(yelp)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.11.2017 21:47:52
+
+Summary:
+
+Researchers have found new attack against 3DES-CBC cipher in TLS,that they can decrypt customer data using a method called SWEET32 Birthday Attack.
+
+This Vulnerability has got CVE-2016-2183 and has cvss score 5.0
+
+This vulnerability can be found manually by simply using nmap script
+
+nmap -Pn -p --script ssl-enum-ciphers ip
+
+Mitigation for SWEET32 attack
+
+->Prefer minimum 128-bit cipher suites
+
+->Limit the length of TLS sessions with a 64-bit cipher, which could be done with TLS renegotiation or closing and starting a new connection
+
+-> Disable cipher suites using 3DES
+Reference link: https://sweet32.info/

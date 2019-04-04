@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/22203
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/born2hack
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.11.2014 23:15:20
+
+Summary:
+
+Hi, team.
+I found a bug in twitter.com
+Description and POC:
+1) Create a twitter account having email address "abcd@x.com".
+2) Now Logout and ask for password reset link. Don't use the password reset link.
+3) Login using the same password back and update your email address to "efgh@x.com" and verify the same.
+4) Now logout and use the password reset link which was mailed to "abcd@x.com" in step 2.
+5) You can see that it is possible to change the password.
+Here  the password reset link of "abcd@x.com" which was old email address associated with twitter can be use to change the password of twitter account having  updated email address "efgh@x.com".
+
+Attack scenario:
+If victim's previous "abcd@x.com" account was compromised, he decided to updated his twitter email address to "efgh@x.com" but before updating by mistake he asked for password reset link. As a result his twitter account will be compromised by the attacker.
+
+Fix: As soon as new email address is updated all the previous links should also get expired.
+
+If you want further information please let me know.
+
+Thanks and regards.
+Mohd Haji

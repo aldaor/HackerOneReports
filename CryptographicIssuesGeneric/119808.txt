@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/119808
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/amsda
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.03.2016 16:28:14
+
+Summary:
+
+Hi,
+
+I want to report a drown attack in *.owncloud.com.
+
+A cross-protocol attack was discovered that could lead to decryption of TLS
+sessions by using a server supporting SSLv2 and EXPORT cipher suites as a
+Bleichenbacher RSA padding oracle.  Note that traffic between clients and
+non-vulnerable servers can be decrypted provided another server supporting
+SSLv2 and EXPORT ciphers (even with a different protocol such as SMTP, IMAP or
+POP) shares the RSA keys of the non-vulnerable server. This vulnerability is
+known as DROWN (CVE-2016-0800).
+
+You can check here: https://test.drownattack.com/?site=owncloud.com

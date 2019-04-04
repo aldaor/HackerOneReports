@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/15047
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/vineet
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.09.2014 11:44:52
+
+Summary:
+
+Hello,
+
+These days Captcha's are one of the most vulnerable methods To Protect The Website From Bots, But there is a Extension Named Rumola Which Automatically Fills up the Captcha While We Fill Other Credentials like Email etc. Here a Vulnerability Arises That Bots May Use This Extension Script in their Interface To Bypass the Captcha Check. it may lead to flooding in database too.
+
+As a possible Fix, you can Replace Captcha check with- 1) A Honeypot Trap or 2) A simple Task or 3) Skill testing Question.
+
+thanks 
+
+Vineet

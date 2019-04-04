@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/144782
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/hxd
+ReportedTo:Python (IBB)(ibb-python)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:30.08.2016 17:19:36
+
+Summary:
+
+python smtplib starttls stripping attack
+
+* affects: (basically all versions of smtplib with starttls support and projects relying on it)
+ * python 2.7.2 - 2.7.11 (dates back ~14 years)
+ * python 3.0 - 3.5.1 (dates back ~7 years)
+
+Python's implementation of `smtplib` fails to raise an exception upon an unexpected response during negotiation of tls via the starttls protocol. This allows a MiTM capable of injecting smtp messages to force smtplib to **silently** abort tls negotiation proceeding to transmit cleartext. (impacting confidentiality)
+For more details see [1]
+potentially affects a variety of open source projects from Django, web2py, ...
+
+initially reported to python PSRT (timeline see [1]) with details, PoC [2] and patch [2]. The patch was accepted and recently landed in python 2.7/3.x [3,4].
+full details and the actual research material that was securely disclosed to Python PSRT will be made available at [1] (currently a preliminary vulnerability note)
+
+the PoC `striptls` [2] is a generic protocol independent tls interception proxy written in python that is also capable of probing for various starttls stripping vectors in smtp, pop3, imap, ftp, xmpp, acap and irc. It is also available via `pip install striptls` (pretty handy for sniffing/proxying proprietary protocols based on top of implicit/explicit tls)
+
+Vendor announcements: [5,6,7]
+
+the preliminary vulnerability note [1] will be updated in accordance with the Python software release scheduled for June 26th.
+
+[1] https://github.com/tintinweb/pub/tree/master/pocs/cve-2016-0772
+[2] https://github.com/tintinweb/striptls
+[3] https://hg.python.org/cpython/rev/d590114c2394
+[4] https://hg.python.org/cpython/rev/b3ce713fb9be
+[5] http://www.openwall.com/lists/oss-security/2016/06/14/9
+[6] https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2016-0772
+[7] https://access.redhat.com/security/cve/cve-2016-0772
