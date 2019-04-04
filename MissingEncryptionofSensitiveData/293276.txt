@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/293276
+WeaknessName:Missing Encryption of Sensitive Data
+Reporter:https://hackerone.com/webster
+ReportedTo:Cloudflare(cloudflare)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.01.2018 22:11:50
+
+Summary:
+
+When a Cloudflare user has a paid account, but Cloudflare can't process the user's credit card, Cloudflare emails the user from billing@cloudflare.com, subject line "Cloudflare Failed Taking Payment for (#INV-D1234567)".
+
+The email contains an attachment, "2017-11-19_Cloudflare_INV-D1234567.pdf", a PDF file that contains an invoice. The invoice includes the user's name, the user's address, and under "Payment Methods" lists the user's name as it appears on their credit card, and "Visa ending 123456******1234". Additionally, invoices containing partial card numbers in the same format can be downloaded from /a/account on the Cloudflare site.
+
+In other words, Cloudflare is both storing cleartext, and transmitting cleartext (via third-party Mandrill), the first six digits AND the last four digits of user credit cards. 
+
+This practice is discouraged by Visa best practices documentation ("Disguise or suppress all but the last four digits of the PAN"), and prohibited by MasterCard rules ("must reflect only the last four digits of the primary account number"). PCI DSS rules discourage the practice, but allow it. See Requirement 3 preface, Requirement 3.3; Technical Guidelines for Protecting Stored Payment Card Data.
+
+The practice violates federal law, *See*, 15 U.S.C. § 1681(c)(g), "no person that accepts credit cards or debit cards for the transaction of business shall print more than the last 5 digits of the card number or the expiration date upon any receipt provided to the cardholder at the point of the sale or transaction". There has been significant litigation over whether online receipts fall under these requirements, and courts have held that they have. Violation of this provision exposes Cloudflare to damages, fees, and costs.
+
+The practice also violates the laws of numerous states, which in some states prohibit display of more than a certain number of digits, or actively require encryption at rest of more than a certain number of digits. *See*, e.g., Cal. Civ. Code § 1747.09, "no person, firm, partnership, association, corporation, or limited liability company that accepts credit or debit cards for the transaction of business shall print more than the last five digits of the credit or debit card account number or the expiration date upon ... Any receipt provided to the cardholder ..."
+
+Cloudflare should display only the last four digits of the user's card number, and ensure the remainder of the card number is encrypted. All existing invoices should be regenerated. Cloudflare should research if this matter triggers any breach notification requirements under state or federal law. Cloudflare should also ensure that personal information and especially financial information transmitted via third parties—in this case, Mandrill—is covered by the third party's policies and Cloudflare's privacy policy. Finally, Cloudflare should review the processes involved in generation of the invoices, to ensure that systems that generate the invoice (I see wkhtmltopdf is being used) do not even have *access* to full PANs, but only truncated PANs.
+
+In addition to the foregoing, the first six digits of a card number are the BIN number, which identify network, bank name, type of card (e.g. credit, debit, prepaid), and in some cases brand. Making 10 out of 16 digits of a card number available in cleartext via email exposes Cloudflare customers to an elevated risk of fraud and identity theft.
+
+Anywhere sequential numbers appears in this report (e.g. 1234), the actual numbers have been replaced. Thanks!
+
+## Impact
+
+Invoices without sufficient PAN truncation, which display 10 of 16 digits of card numbers, are sent cleartext and are downloadable by users, resulting in too many digits of the card number being accessible. In addition to being against best practices, it violates law, and could result in fraud and identity theft.
