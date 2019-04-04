@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/97319
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bigbear_
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.03.2017 13:14:30
+
+Summary:
+
+Возникает из-за передачи переменной username как массива.
+
+allods.my.com/forum/wcf/acp/index.php?form=Login
+
+_POST
+
+packageID=1&password=1&s=1&url=&username[]=1
+
+error message: PHP warning in file /opt/WWWRoot/allods.com/wwwroot/forum/wcf/lib/util/StringUtil.class.php (118): trim() expects parameter 1 to be string, array given
+
+Screen attached.

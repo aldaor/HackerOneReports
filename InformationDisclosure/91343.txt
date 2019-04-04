@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/91343
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/protector47
+ReportedTo:Imgur(imgur)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:14.04.2018 8:47:26
+
+Summary:
+
+Hi there,
+I noticed a small information leak which allows an attacker to check whether an email address is associated with an account.If your account is not associated with website then an error will become raise that **"That username or email was not found."**
+You should always return a status message like: **"If your email exists in our database, you'll receive a reset link"**. That way an attacker cannot distinguish between the two cases.
+Also you should add rate limiting :)
+
+Thanks,

@@ -1,0 +1,49 @@
+ReportLink:https://hackerone.com/reports/90308
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/paulos_
+ReportedTo:Coinbase(coinbase)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:23.12.2015 4:24:31
+
+Summary:
+
+Hi,
+
+Using Gmail it is possible to get the list of email addresses that use/have coinbase accounts. 
+
+as a prerequisite: we will need a script to bruteforce a list of email addresses. consider this script:
+```python
+import random
+#values only contain small letters and numbers
+letters = 'abcdefghijklmnopqrstuvwxyz0123456789'
+def generateWord():
+        letter = ''
+        for i in range(12): #all possisble values are 12 in length
+                letter += random.choice(letters)
+        return letter
+#add all possible values to list
+file = open("wordList.txt","a")
+counter = 1;
+while True:
+
+        try:
+                #avoid duplicates
+                generated = generateWord()+"@gmail.com;
+                file.write(generated)
+                print counter,"words Generated so far"
+                counter++;
+        except KeyboardInterrupt:
+                break 
+```
+That script will generate all the list of emails that can be created with *a-z+0-9*. this can easily be used with a dictionary bruteforce attack to generate more realistic emails like dave.egor@gmail.com (note: this is actually pretty much doable with a much powerful botnet who multi-thread this and give back the list of emails). 
+
+Then we will add these contacts to our Google Contacts (google.com/contacts), then ask Coinbase to import contacts to invite. (https://www.coinbase.com/invite_friends). after Coinbase imported our contacts, it tries to provide a **feature** to tell if an account already have a Coinbase account or not. (see screenshot)
+
+Its pretty much known most people who use Bitcoin are those who want to hide their real identity. but by using this trick, it is to know the user list. I believe this is some sort of Duplicate of some issue because you probably taught of this, or not. but anyway, I am going to propose a way to fix it
+
+**Recommended Fix:** if a user is already a member to coinbase, the person who is inviting them doesn't need to know that. if he/she is already a member, the person inviting will see them as a normal email and will still see, "Invite Sent". but in the background, invite for memebers won't be sent and for non-memeber will be.
+
+Thanks,
+P

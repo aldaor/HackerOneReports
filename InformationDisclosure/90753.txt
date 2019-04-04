@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/90753
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/girish_s_pattanashetty
+ReportedTo:Zendesk(zendesk)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:02.11.2015 22:43:27
+
+Summary:
+
+Content spoofing, also referred to as content injection or virtual defacement, is an attack targeting a user made possible by an injection vulnerability in a web application.
+
+It display the same as its entered. 
+The crafted Thing will make the user to access or capy paste the malacious site and later it will return back to zendesk.
+
+
+Possible Fix:
+URL Encode spaces to %20 which will convert spoofing content look like link

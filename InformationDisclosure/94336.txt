@@ -1,0 +1,65 @@
+ReportLink:https://hackerone.com/reports/94336
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/coolboss
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.10.2015 12:48:38
+
+Summary:
+In the response to a request on `/reports/<id>.json`, as the user that submitted the report, the minimum bounty of a team was returned. 
+
+This leads to a very minor information disclosure in the case a user submitted a report to an invite-only team. If the user is then removed from the program, they will still be able to access the report, and therefore be able to see the minimum bounty amount of the team.
+
+This was mitigated by removing the minimum bounty from the response.
+Hello,
+
+Privileged information is getting leaked to an unauthorized user in the json response of `https://hackerone.com/reports/<report id>.json`.
+
+In a team there can be many members, also roles are defined. But an x-member of the team is getting information which should not be visible to him. (As I tested it on sandboxed team but it i believe it is also affecting other private programs )
+
+Proof Of Concept :
+================
+1. UserA is part of TeamA.
+2. UserA creates a test report.
+3. Now, UserA can access the report via `Reports` tab.
+4. Admin now removes the UserA from the team.
+5. Now, UserA becomes X-user of the team.
+6. UserA canNOT access the team.
+7. But can access the test report which he/she created.
+
+When UserA accesses the report then a request is made to `https://hackerone.com/reports/<report id>.json`. Note the response for my test report.
+
+``
+{id: 94333, url: "https://hackerone.com/reports/94333", title: "asdf", state: "Open", substate: "new",…}
+abilities: {can_manage?: false, can_export?: false, can_add_comment?: true, can_change_state?: false,…}
+activities: []
+bug_reporter_agreed_on_going_public_at: null
+can_view_team: true
+created_at: "2015-10-17T04:29:44.364Z"
+cve_ids: []
+disclosed_at: null
+external_advisory_url: null
+has_bounty?: false
+id: 94333
+is_external_bug: false
+is_member_of_team?: false
+is_participant: true
+minimum_bounty: 1000
+public: false
+readable_substate: "New"
+....
+``
+
+Here, some fields like `minimum_bounty: 1000` and relevant team details are leaked. These fields are meant for only to people to whom the team is visible.
+
+Attack Scenario :
+==============
+I tested this bug on sandboxed team. But I believe this bug will affect the on going programs. Consider the scenario ...
+Private Program invites a User. User submits a bug. This bug will be visible to the user via `Reports` tab. Now, team decides to remove the User and removes him/her. Now, User can still get updates of the programs via the json response. The `team information` and `bounty details` are meant for only researchers who are invited to the program and people who are part of the team. 
+
+Let me know if you have any questions.
+
+Thanks,
+Pranav

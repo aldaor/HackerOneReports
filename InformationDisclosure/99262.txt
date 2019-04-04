@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/99262
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bigbear_
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.03.2017 13:10:13
+
+Summary:
+
+Не факт, что вам удастся это исправить, так как проблема в стороннем ПО - "brat rapid annotation tool"
+
+Который доступен по ссылке
+
+otus.p.mail.ru/brat
+
+Стоит немного погулять по директориям и увидим раскрытие путей:
+
+Could not write statistics cache file to directory /home/sites/ling.go.mail.ru/brat/server/src/../../data/tutorials/bio/: [Errno 13] 
+
+Permission denied: u'/home/sites/ling.go.mail.ru/brat/server/src/../../data/tutorials/bio/.stats_cache'
+
+Скрин прикладываю.

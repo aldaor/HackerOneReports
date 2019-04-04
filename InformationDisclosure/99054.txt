@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/99054
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bigbear_
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.03.2017 13:14:20
+
+Summary:
+
+Какая-то интересная отладочная информация.
+
+http://opensource.mail.ru/search?q[]=1
+
+Самое интересное то, что от значения переменной q зависит ошибка в том или ином файле.
+
+Удалось получить 3 вида ошибок:
+
+
+http://opensource.mail.ru/search?q[]=1
+
+undefined method `gsub' for ["1"]:Array ->  file: wiki.rb
+
+
+http://opensource.mail.ru/search?q=%C0
+
+invalid byte sequence in UTF-8 ->  file: shellwords.rb
+
+
+http://opensource.mail.ru/search?q=%00
+
+string contains null byte ->  file: git_layer_grit.rb

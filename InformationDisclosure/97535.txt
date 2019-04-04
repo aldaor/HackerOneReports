@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/97535
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/rms
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:10.11.2015 22:44:06
+
+Summary:
+The `/admin/mobile_devices.json` endpoint could disclose the SNS tokens for each connected mobile device. While this token would not be useful for an attacker on its own, we have removed the endpoint since it was no longer useful.
+List of devices is accessible regardless of the account limitations.
+
+**PoC**
+
+. Create a limited account A with no rights.
+. Log some devices with a different account B.
+. From account A, GET /admin/mobile_devices.json.
+. List of devices.

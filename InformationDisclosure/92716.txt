@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/92716
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/symbiansymoh
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.12.2015 4:18:04
+
+Summary:
+
+Hi HackerOne Team,
+I have found a bug in HackerOne Platform allows any attacker to deanonymousize any security researcher using the platform and the most wild usage is to disclose some information about this security researcher if he is invited to a private program or not.
+Unfortunately HackerOne is replying 404 response to the non-found researchers/programs this will allow attackers to harvest and deanonymousize researchers/programs.
+
+In-depth analysis:
+[*]When user is logged out and start to hit a private hackerone program link so we have this response code states:
+302 means program is exist but you have to sign in to check if you're eligible to see it or not
+404 means there is no program yet
+200 any user is able to access this program / program is public
+
+[*]When the user is logged in and start to hit a private hackerone program link so we have this response code states::
+404 means you're not invited to this program / program is not exist yet "onerror event is triggered"
+200 means you're eligible to see the program "onload event is triggered"
+
+PoC Code:
+<html>
+<script src="https://hackerone.com/bookingcom" onload="javascript:alert('Yes the logged in user is invited to this private program and there is a program called bookingcom for sure');" onerror="javascript:alert('No, This user is not invited to this private program or there is no private program called bookingcom');"></script>
+</html>
+
+PoC Video:
+https://youtu.be/Z_NBSNBxarY

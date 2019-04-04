@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/90321
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ba4fe4ca95021d367f8a574
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.01.2016 19:05:29
+
+Summary:
+
+maybe you want to remove this page https://download.owncloud.org/manual/
+
+also other servers have this issue:
+https://doc.owncloud.com/manual/
+https://forum.owncloud.org/manual/

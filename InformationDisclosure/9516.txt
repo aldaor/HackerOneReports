@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/9516
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/siddiki
+ReportedTo:Ian Dunn(iandunn-projects)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.06.2014 8:56:57
+
+Summary:
+
+**Vulnerable File**
+google-authenticator-per-user-prompt/views/requirements-error.php
+
+**Description**
+That file discloses the PHP version and Wordpress version to the world.Which is not a bug actually,but these information can be helpful to demonstrate further devastating bugs.
+
+**Suggestion**
+I saw that you rejected many path disclosure reports cause those are not in your hand.It depends upon server settings,how that will handle error messages.But this case is different.Its not actually an error message.And cant be mitigated by switching off error display.
+I suggest you to keep such actions so that unauthorized users could not use this file directly.

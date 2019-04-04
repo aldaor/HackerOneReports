@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/9745
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/faisalahmed
+ReportedTo:Localize(localize)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 1:53:41
+
+Summary:
+
+Hi,
+found another information disclosure vulnerability/Full Path Disclosure on your application.
+
+Proof of Concept
+-------------------------
+GET  : https://www.localize.im/projects/[projiect ID/languages/[Language ID]
+POST CONTENT: 
+`CSRFToken=TOKEN&updatePhrases[previous][yxr][0]=&updatePhrases[edits][yy4][0]=&updatePhrases[edits][yxr][0]=&updatePhrases[previous][yxq][0]=&####LotsOfPhrases######&updatePhrases[secret]=[SecredCodes]&updatePhrases[translatorID]=[ID]`
+
+Just Add "[]" after any of those *updatePhrases[edit][ID][0]* parameter.
+
+Note: look like my last FPD Vulnerability report. doesn't it?
+but last one was at *updatePhrases[previous][ID][0]* that is fixed as you rolled out a fix for that..
+i just went to check that the bug is fixed or not and found there is another parameter that is still vulnerable.
+
+### The information from page:
+> **Warning: trim() expects parameter 1 to be string, array given in /srv/data/web/vhosts/www.localize.im/htdocs/index.php on line 192**
+
+I Also Added a Screenshot of that FPD as attachment..
+Thanks

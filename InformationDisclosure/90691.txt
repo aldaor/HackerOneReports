@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/90691
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bigbear_
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.11.2015 11:37:11
+
+Summary:
+
+Приветствую!
+
+По ссылке   http://ling.go.mail.ru/server-status  видно расшаренный server-status.
+
+Правда, он урезан для этого сервера, но всё равно, наверное, стоить спрятать от обычных пользователей.

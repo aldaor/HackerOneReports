@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/90805
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/whit537
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:12.06.2017 18:03:20
+
+Summary:
+
+I leaked our bank account numbers for PNC and New Alliance in screenshots on https://github.com/gratipay/inside.gratipay.com/issues/308. They were up for about six days (and will have gone out in email to Gratipay contributors and watchers). I've removed the screenshots from the comments, but they're still up on the GitHub CDN.

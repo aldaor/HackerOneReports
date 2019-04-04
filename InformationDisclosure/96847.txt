@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/96847
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/sarwarjahan
+ReportedTo:Keybase(keybase)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:15.07.2016 14:07:44
+
+Summary:
+
+
+
+Steps:
+1. Login to https://keybase.io/
+2. Click on Me icon from top-right button (https://keybase.io/[username])
+3. Click on Edit picture button (https://keybase.io/[username]#edit-me)
+4. Intercept the traffic using proxy tool (e,g, Burp Suite)
+5. Click on "Prove my Twitter identity" link
+6. In the request, change the value of "sig_gen" parameter value from TwitterProof to some other random string (Attached image: Request.png)
+7. Forward the request
+
+Result: Unhandled exception occurs, which shows error dialog box as shown in attached image Error.png
+Notice that the error dialog message contains sensitive information like-
+application Module Names, Method Names, Error Location, Path etc.
+
+This behavior is not acceptable. Keybase should not display any server side application details to end-users when an exception occurs.
+
+Reference:
+https://cwe.mitre.org/data/definitions/209.html
