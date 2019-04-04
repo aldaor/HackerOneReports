@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/26700
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/avlidienbrunn
+ReportedTo:Square(square)
+BountyAmount:2000.0
+Severity:
+State:Closed
+DateOfDisclosure:17.11.2014 14:30:49
+
+Summary:
+
+Hi!
+
+The OAUTH prompt at https://connect.squareup.com/oauth2/authorize?client_id=EXAMPLE prints out the current OAUTH appname without sanitizing it from {{}}-style AngularJS templates. This makes it possible for an attacker to add an AngularJS template to his/her appname that calls the $scope.allow function (essentially emulating a click on the "Allow" button). When a user visits the authorization page at https://connect.squareup.com/oauth2/authorize?client_id=EXAMPLE, the template injection will authorize the app without any user interaction.
+
+Steps:
+1. Sign up for square connect at https://connect.squareup.com
+2. Create a new app, name it "{{allow()}}"
+3. Sign in to another square account
+4. Visit the apps OAUTH authorization URL at https://connect.squareup.com/oauth2/authorize?client_id=YOUR_APP_ID&redirect_uri=https://google.com
+5. Your square account has now allowed the newly created app full permissions
+
+PoC connect URL (my app): https://connect.squareup.com/oauth2/authorize?client_id=YguUrc5EMXXCXTjpiTPjFQ

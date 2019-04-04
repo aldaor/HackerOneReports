@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/215053
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/thenickdude
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:6000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:08.08.2017 18:03:00
+
+Summary:
+Devices that can be monitored by airControl include a ticket based authentication system that allows access to the WebUI using a ticket id. This system had a flaw that allowed unauthenticated access without a valid ticket, given these requirements were met:
+1. A device was monitored by airControl.
+2. The "Open Web-UI" airControl feature was used on the device since last reboot.
+3. Device wasn't rebooted after #2.
+
+The vulnerability was reported on 2017-03-21 and fixed in these versions:
+* airOS v8.0.2, v7.2.5, v6.0.2, v5.6.15 (released 2017-03-28)
+* airGateway v1.1.9 (released 2017-03-28)
+* airFiber v3.7-rc3, v3.4.3, v3.2.3 (released 2017-04-07)
+
+* airControl 2.0.2 and 2.1-beta7 include changes to the "Open Web-UI" function authentication routine that makes all prior device versions invulnerable even after the "Open Web-UI" feature is used.

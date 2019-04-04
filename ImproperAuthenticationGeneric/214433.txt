@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/214433
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/kartik1202
+ReportedTo:Trello(trello)
+BountyAmount:768.0
+Severity:
+State:Closed
+DateOfDisclosure:04.04.2017 14:15:07
+
+Summary:
+Due to a recent code change, the rate limiting of incorrect two factor codes was not being enforced properly, allowing an attacker to try more codes than they should have been allowed to.
+Trello has a feature which allows the user to enable Two factor authentication to enhance the security.
+But no Rate Limiting is present on second authentication, i.e. code sent to Registered Mobile Number.
+Attacker can try as many attempts as he wants to bypass the 2 factor authentication.
+So using Burp Suite Intruder attacker can easily get the code sent to Registered Mobile Number.
+
+Vulnerable end-point: /1/authentication
+
+Even websites such as Facebook/Yahoo/Google were vulnerable to such flaws few years back.
+Reference: https://shubs.io/how-i-bypassed-2-factor-authentication-on-google-yahoo-linkedin-and-many-others/
+
+As per current scenario, there is no use of two factor authentication in Trello right now. So a proper Rate Limiting should be implemented which will not allow the attacker to bypass the 2 factor authentication.
+
+PFA Intruder, Request and Response Screenshots.

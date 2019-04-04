@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/243842
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/footstep
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:21.08.2017 17:39:12
+
+Summary:
+
+Hi,
+
+This is a bypass of the fix on #229987. I could confirm that old link still works. Though you would need to use 2 browsers to pull this off
+
+##Reproduction Steps
+1. In Browser1, request a password reset
+- Load link sent to your email in the same browser 
+- Request another password reset in Browser2
+- Load link sent to your email in the same browser 
+- Change the password on Browser2
+- Successful :D
+- Change the password on Browser1
+- Success :D
+- Now login in any of the password with the last password.
+
+Shuaib.

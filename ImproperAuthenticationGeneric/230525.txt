@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/230525
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/todayisnew
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:20.0
+Severity:
+State:Closed
+DateOfDisclosure:17.07.2017 15:36:38
+
+Summary:
+A security researcher discovered that an AWS S3 bucket was left unassigned after decommissioning. The bucket was previously used as a redirect to our main domain, legalrobot.com. If not for CloudFlare redirect rules already in place, the unused bucket could have allowed anyone that created an S3 bucket with the correct name and region to control the legalrobot.co.za domain.

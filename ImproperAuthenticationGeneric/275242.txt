@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/275242
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/flex0geek
+ReportedTo:WakaTime(wakatime)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:07.10.2017 10:10:00
+
+Summary:
+
+Hello,
+when I reset password all tokens are valid can be used, should keep valid only token in the last request or you can invalidate all reset links after using one of the requests successfully.
+
+Steps:
+1) go to the password reset page and request more than one request.
+2) go to your email and use the first reset link.
+3) you can change password successfully.
+
+Please check it,
+Thanks.

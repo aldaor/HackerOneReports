@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/29471
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/jayden
+ReportedTo:Square(square)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:28.03.2015 14:41:07
+
+Summary:
+
+Hi , 
+##Intro
+when a normal user create an account using that link  : https://www.bookfresh.com/users/signup/
+he will have a freebie account (limited account / free )  . if the user want to get more Features he must upgrade to  Team($39.95/Month) or Business($19.95/Month) account .
+
+but there is a bug that allow the attacker to get Team or Business account without paying anything  .
+
+## Steps 
+ 1 - goto https://www.bookfresh.com/users/signup/
+ 2 - after filling the form  intercept the    registration request   (POST request) , there is a paramcalled user[act_type_id]  set to be 1 (user[act_type_id]=1) . 
+to get Business account change to 2  . user[act_type_id]=2
+to get Team account change to 3   . user[act_type_id]=3
+3- submit the request and you will be redirected auto to your dashboard(which is btw not good practice) . with  Team/Business  Privilege .
+
+
+
+

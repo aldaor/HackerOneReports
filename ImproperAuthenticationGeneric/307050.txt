@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/307050
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/severus
+ReportedTo:Grabtaxi Holdings Pte Ltd(grab)
+BountyAmount:3000.0
+Severity:high
+State:Closed
+DateOfDisclosure:03.02.2018 4:55:47
+
+Summary:
+The researcher identified an endpoint that was publicly accessible and contained minuscule amount of sensitive information with some dummy data. We quickly resolved the issue and rewarded the researcher.
+
+We are thankful to @severus for his continued contribution to our bug bounty program to keep Grab safe.

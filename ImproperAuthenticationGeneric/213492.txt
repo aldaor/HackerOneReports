@@ -1,0 +1,67 @@
+ReportLink:https://hackerone.com/reports/213492
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/rashedhasan007
+ReportedTo:Trello(trello)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:20.03.2017 15:02:52
+
+Summary:
+
+
+Hi there Trello Security Team , 
+I have noticed a certain behaviour at https://trello.com . What I belief to be a bug . 
+
+Summery:  
+---------------------
+
+
+You can authenticate an email added on your account with same authentication token multiple times . You remove it , add it again use the same token . It confirms the email.
+
+
+
+Background: 
+---------------------
+
+
+If you add a new email on your Trello account a confirmation link is sent to your address , you can confirm your account by clicking on it . Then again you remove the email . add it again , when you add it Trello web application does not immediately allows the email . It sends a confirmation link to the users email address . here is the thing , you have now two confirmation links/tokens . you avoid the second one and verify the email address with the first confirmation link ,and surprisingly it confirms your email address . Again , you can use it multiple times . Remove that email again . Add it and again a new link arrives , avoid that link use the first link , and it confirms the email address again and again ! . 
+
+Proof Of Concept: 
+---------------------
+
+
+- go to the website and sign up with this email testacc00003@gmail.com 
+-  give a team name and invite an email as you like . 
+- you have got a link on opening the account at testacc00003@gmail.com , confirm your email ( This is not our expected  link ) 
+-  now go to settings and add a new email testmachine00001@gmail.com , Email not added immediately , we need to confirm  
+- We got a confirmation link . 
+
+ paste it on browser and it confirms testmachine00001@gmail.com . now remove this email . 
+-  Again add this email , another token received 
+
+-  avoid this token , use the first token . 
+-  Email address confirmed ! we can do this few more times and avoid all the new links and can only use   the first . 
+
+ - this is also can be possible for testacc00003@gmail.com . set testmachine00001@gmail.com as your primary email . 
+ - remove testacc00003@gmail.com , and then add again . you receive a token . 
+
+-  paste it on browser and it confirms your email address . 
+-  Now this will work from point 7 to 9 . 
+
+-  We can confirm an email address with one confirmation token multiple times as demonstrated . 
+
+-  Another thing to mention that it is not that the token is same , the signature is different in every link sent . 
+
+What is Expected: 
+---------------------
+
+It is expected that the token should expire after it is used once . Every time new token that is send for how many of time the email is added again - should only work for that once . but there using the same token again and again we are authenticating the email . whereas we observe that the signature in every confirmation link is randomly generated 
+
+I have showed a demonstration , I hope you have understood the issue . It is a authentication misconfiguration issue according to me , and it is completely a manual finding by me, Which I reported to you directly.I have tried to maintain the policy of your program, If you find any spelling mistakes or grammatical error while reading please do not close the report and let me know about it first , It will be a request to go through the report completely with the video proof of concept attached .
+ 
+Video Zip File: https://www.dropbox.com/s/sftvmehjisjnleg/T_au.zip
+Password: trello500>$@@--
+
+Sincerely , 
+@rashedhasan007 

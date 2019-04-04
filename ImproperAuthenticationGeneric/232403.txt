@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/232403
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/str33
+ReportedTo:Cuvva(cuvva)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:27.05.2017 18:54:48
+
+Summary:
+Duplicate of #231380

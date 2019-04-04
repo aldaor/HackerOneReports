@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/213180
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/rehan
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:40.0
+Severity:none
+State:Closed
+DateOfDisclosure:18.08.2017 5:53:27
+
+Summary:
+A security researcher discovered that the password reset form disregards the email field on the reset form, relying only on the reset token to find the user. However, the email field was only used in a pre-reset validation. While the reset token provides sufficient assurance that the holder of the token is legitimate, the email field caused some confusion because an arbitrary email could be used and the reset process would still return a success message. This could have led some to think the reset process allowed arbitrary password resets (it did not).

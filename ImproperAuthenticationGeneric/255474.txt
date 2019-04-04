@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/255474
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/princesinha
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:20.0
+Severity:
+State:Closed
+DateOfDisclosure:01.09.2017 17:47:30
+
+Summary:
+
+Hello
+I recently found a bug that without entering First and Last name the profile got updated, means a user can able to put his/her full name blank. In your website there is a validation for first and last name. If a user fill the first name then he has to fill the last name too and vice-versa but if he put both the field blank then he can update his profile and put his full name blank.
+POC is attached with this report.
+Thank you
+Regards 
+Prince Sinha

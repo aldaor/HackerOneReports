@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/263535
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/prateek_0490
+ReportedTo:Zomato(zomato)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:27.10.2017 5:19:38
+
+Summary:
+Internal sales dashboard was open. 

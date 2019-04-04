@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/351361
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ivh
+ReportedTo:Phabricator(phabricator)
+BountyAmount:300.0
+Severity:low
+State:Closed
+DateOfDisclosure:22.05.2018 9:27:26
+
+Summary:
+
+When an administrator wants to create a user, he can go to https://phabricator.example.com/people/create/ and will be required to enter his MFA token in order to enter high security mode.
+
+However, if an administrator goes to https://phabricator.example.com/people/new/standard/ he will bypass the choice of user type and go straight to the new standard user form. This form allows the administrator to create a new user without entering high security mode.
+
+mongoose
+
+## Impact
+
+The attacker could create a user account for someone that is not supposed to have access to Phabricator, or for himself in order to keep his access to Phabricator after losing access to the (compromised) administrator account.

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/274336
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ysx
+ReportedTo:Snapchat(snapchat)
+BountyAmount:250.0
+Severity:medium
+State:Closed
+DateOfDisclosure:06.10.2017 9:06:26
+
+Summary:
+@ysx found a bitstripsforschools CNAME entry pointing to an unclaimed WordPress domain, which could be taken over by an external party.
+
+The CNAME entry was for a product that is no longer active.

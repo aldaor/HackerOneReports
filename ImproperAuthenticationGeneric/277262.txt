@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/277262
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/kunal_bahl
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.05.2018 21:38:44
+
+Summary:
+@kunal_bahl discovered an open S3 bucket that appeared to belong to us. It was determined that this belonged to another company and this information was forwarded to Amazon for remediation.

@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/3356
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/mlitchfield
+ReportedTo:Phabricator(phabricator)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:05.04.2014 22:08:45
+
+Summary:
+
+Hi All,
+
+Please see the attached file.
+
+Thanks in advance
+
+Mark Litchfield

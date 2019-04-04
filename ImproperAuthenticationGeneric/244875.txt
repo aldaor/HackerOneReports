@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/244875
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/pratyushjanghel
+ReportedTo:WakaTime(wakatime)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.07.2017 21:38:44
+
+Summary:
+
+Hi Wakatime Security Team,
+
+There is a  session management vulnerability in your website. i.e. user's session is not expiring immediately after the logout.
+
+You can get more information of the vulnerability here - https://www.owasp.org/index.php?title=Broken_Authentication_and_Session_Management&setlang=en
+
+An attacker can get the user's session cookies by using Session Spoofer, Cookie Staler etc. and thus, can get the access to the user account.
+
+# Steps To Reproduce:
+
+1. Login into your wakatime.com account.
+2. Capture any request. For example Account Settings using Burp Proxy. 
+3. Logout from the website.
+4. Replay the request captured in step 2 and notice it displays the proper response.
+
+Reference From : #353
+
+Hope you fix this soon ;)
+
+Best Regards,
+Pratyush Janghel

@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/223427
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/tushar21
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:17.05.2017 14:15:13
+
+Summary:
+
+there is vulnerability that allows loggin in using old email id i.e a disconnected google account 
+attack scenario:
+1: attacker has compromised google id of user 
+2:now user notices this and changes email id and removes previous authentication
+3:but still attacker can login using disconnected google acvoint using login with google

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/2596
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/daksh
+ReportedTo:Verizon Media(verizonmedia)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.08.2015 20:22:29
+
+Summary:
+Thank you for your submission to Yahoo’s Bug Bounty program. While we recognize the effort that you put into the research and writing of a report for us to evaluate, we will take your report into consideration for any future releases. We appreciate your adherence to responsible disclosure guidelines and look forward to your future participation in the program.

@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/248656
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/kaysbugs
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:750.0
+Severity:high
+State:Closed
+DateOfDisclosure:29.07.2018 20:38:19
+
+Summary:
+Improper protection of the 2FA login made a bypass of the 2FA possible.
+The bug required to know user credentials but effectively rendered the 2FA ineffective.
+
+The issue has been fixed by the Nextcloud team and has been validated by the reporter.
+
+

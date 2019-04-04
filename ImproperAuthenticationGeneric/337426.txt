@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/337426
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/saneh
+ReportedTo:Passit(passit)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:11.08.2018 14:19:59
+
+Summary:
+
+> NOTE! Thanks for submitting a report! Please replace *all* the [square] sections below with the pertinent details. Remember, the more detail you provide, the easier it is for us to triage and respond quickly, so be sure to take your time filling out the report!
+
+**Summary:** Authorization Token is Not expiring After Logout
+
+**Description:** Hello Team,
+
+I have observed the application is assigning auth token after successful login to every user which is part of every request user made to application. If user click on logout sill auth token is not expiring which is not a good security practise. An attacker can steal the auth token via Man in the Middle attack because HSTS is not implemented. 
+## Steps To Reproduce:
+
+(Add details for how we can reproduce the issue)
+
+1. Login to Application and configure the burp suite.
+2. Click on Add new password, fill all the required details and click on save. capture the request in burp suite, send the request to repeater and forward to the application. Application will add the entry under user account.
+ 3. Click on Logout.
+4. Goto burp suite repeater tab and forward the request to application. It will create one more entry to user account with previous auth token.
+
+## Supporting Material/References:
+
+  * List any additional material (e.g. screenshots, logs, etc.)
+
+## Impact
+
+Auth token should be expired after user logout. If an attacker get access to auth token he can user this token after user logout of application to delete/add password list.

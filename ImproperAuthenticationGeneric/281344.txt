@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/281344
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/cablej
+ReportedTo:Uber(uber)
+BountyAmount:750.0
+Severity:medium
+State:Closed
+DateOfDisclosure:13.11.2018 22:39:48
+
+Summary:
+A lack of rate limiting on the "/confirm" endpoint made it possible for an attacker to add themselves to arbitrary business.uber.com accounts by brute forcing confirmation codes. If they were able to successfully brute force the correct confirmation code, this would allow an attacker to take rides on behalf of a victim company. Some businesses use a geofence for their Uber for Business account, so it was not possible to attack all businesses.

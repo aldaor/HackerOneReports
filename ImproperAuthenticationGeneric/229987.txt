@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/229987
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/brdoors3
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.06.2017 15:10:22
+
+Summary:
+
+
+Hi team,
+
+I noticed that when requesting multiple reset links at https://demo.weblate.org/ all tokens are valid and can be used.
+
+In numerous applications the following policy is adopted as an additional security measure:
+
+- keep valid only that token with shorter lifetime (last requested)
+
+or
+
+- invalidate all reset links generated after successful use of one of these tokens
+
+Please check it.

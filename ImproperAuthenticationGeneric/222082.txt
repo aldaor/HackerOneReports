@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/222082
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/k_jagdish
+ReportedTo:OWOX, Inc.(owox)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:22.05.2017 9:38:48
+
+Summary:
+Hello Team,
+While I was testing your Web Application OWOX, I came to know that https://support.owox.com/ is Vulnerable to "Broken Authentication & Session Management Vulnerability" and it is possible to bypass the login very easily.
+
+When the user login with his credentials via gmail account, he allowed to access his account, but he logs out from https://support.owox.com/, the session is not completely expired and it is possible to bypass login by just old request replay or by clicking the signup button, It won't ask for gmail account credentials for logging in after ending previous session.
+
+Here are the steps to reproduce the bug :
+
+Step 1 : Go to https://support.owox.com/hc/ and Sign in with you gmail account
+Step 2 : Browser few web pages at https://support.owox.com/hc/
+Step 3 : Log out from https://support.owox.com/hc/ (make sure you have logged out from gmail also)
+Step 4 : Click on Sign in again, you won't be asked for login with Gmail or something like that.
+
+Successfully Logged In without entering username-password or gmail account.
+Please fix this bug and let me know if you need any other information.
+
+Thank You
+K. Jagdish

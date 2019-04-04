@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/332586
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/damian89
+ReportedTo:Starbucks(starbucks)
+BountyAmount:4000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:30.05.2018 20:29:28
+
+Summary:
+@damian89 found an unsecured JIRA instance containing internal and sensitive information. The finding was supported with detailed reporting and impact information. We immediately blocked remote access to the site and prevented anonymous users from browsing and editing issues. Thank you @damian89 for your great research!

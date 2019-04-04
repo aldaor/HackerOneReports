@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/253934
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/dilip_prakash
+ReportedTo:Boozt Fashion AB(boozt)
+BountyAmount:60.0
+Severity:
+State:Closed
+DateOfDisclosure:04.09.2017 11:57:07
+
+Summary:
+
+Hi Team,
+
+Step to Repro
+
+- Request for password reset link.
+- Go to email and click on password reset link 
+https://www.boozt.com/eu/en/customer/reset-password/c55ae0b6e00e883238d81e9a5a5d9ff1
+- Now remove the token and use the link
+https://www.boozt.com/eu/en/customer/reset-password
+
+Observe that able to reset the password without the token.
+
+Fix :
+Always password reset link should work with a valid token.
+
+Regards,
+dilip_prakash

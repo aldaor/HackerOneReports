@@ -1,0 +1,50 @@
+ReportLink:https://hackerone.com/reports/213418
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/billy_blaze
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:2000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:22.06.2018 8:03:47
+
+Summary:
+##Issue
+
+The reporter found a way to circumvent the privilege system for the admin-user for a company account. Once circumvented, a user could gain access to critical information in the company account, including user data. The finding requires the use of TUPAS-authentication as an entry point which made exploitability harder. 
+
+##Fix
+
+No final fix yet. Process-level controls added.
+
+##Reasoning
+
+The implementation as such was based on a business decision which included proper risk assessment. Initially this report was dismissed based on the existing risk assessment. The reporter however showed exemplary persistence and did a very thorough rebuttal of the bug bounty team's conclusions and decisions. The issue was then escalated within LähiTapiola with the specific angle of privacy and potential information leak of privacy sensitive data. The original business decision was re-evaluated and it was found to be out of line in light of the upcoming regulatory changes. The bounty reflects both criticality and exploitability.
+
+## Basic report information
+**Summary:** User able to access company details in yrityspalvelu without proper permissions
+
+**Description:** User can access "any" company detail information, contracts, bills etc if able to do TUPAS authentication. If company already have "pääkäyttäjä" accounts made, this most like wont work. I tried with "clean/fresh" company.
+
+**Domain:** https://yrityspalvelu.tapiola.fi/
+
+## Browsers / Apps Verified In:
+
+  * Chrome
+
+## Steps To Reproduce:
+
+ 1. Go to https://yrityspalvelu.tapiola.fi/a3/YvpAuthWebKoha/verkkopalveluhakemus/
+ 2. Fill with company info you want examine (y-tunnus)
+ 3. Give any bogus user data
+ 4. Do TUPAS authentication and follow registration till end.
+ 5. Login using fresh credentials (email+passwd)
+https://yrityspalvelu.tapiola.fi/a1/tatuma/jsp/kayttaja/kirjaudu.jsp
+ 6. View bills, company information, made insurance claims etc..
+
+## Additional material
+
+  * not this time.
+
+## Related reports, best practices
+
+*tick on "Minulla on lupa tehdä yrityksen verkkopalvelusopimus." should not be enough properly ensure user permission to view company information and in some cases quite sensitive one.

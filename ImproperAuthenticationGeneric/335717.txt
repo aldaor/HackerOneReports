@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/335717
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/paramdham
+ReportedTo:Passit(passit)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:11.08.2018 14:19:59
+
+Summary:
+
+##Description of the issue :-
+
+I have found that when changing password  in passit account there is no Authentication process by asking current password or any other confirmation 
+
+If a user leaves their computer  or account is still active in insecure place,or if account is hijacked or if CSRF is exploitable[bypassed]  we don't want someone else to be able to quickly change password. 
+
+I somewhat understand the existing password is required to prevent malicious users (who may access the current session on the user's machine) from changing password.
+
+## Impact
+
+Since user can't recover his password ,  so if  someone changes his password victim may not get his account back

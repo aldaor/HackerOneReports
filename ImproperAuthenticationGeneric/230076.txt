@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/230076
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/imran_hadid
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:13.06.2017 15:41:17
+
+Summary:
+
+Hi, 
+
+The Reset password mechanism can't validate or authenticate an user properly. After removing a user account it's possible to takeover the user account by using reset password option. which is turn into takeover an account. 
+
+##Step to Reproduce: 
+
+1. Go to [weblate](https://demo.weblate.org)
+2. Remove your account from [weblate](https://demo.weblate.org)
+3. Now go to for [login](https://demo.weblate.org/accounts/login/)
+4. Enter username or email and password, try to login. you are failed to login because email and password is removed
+5. Now click on [reset it](https://demo.weblate.org/accounts/reset/)
+6. Enter email and captcha and hit `Reset my password`
+{F186309}
+7. Open mail and click on reset password link 
+{F186311}
+8. Now enter Password twice and login to the account 
+
+After doing all the steps you are successfully able to change the password.
+{F186313}
+
+Thanks 

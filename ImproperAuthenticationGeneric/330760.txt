@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/330760
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/danila_xawdxawdx
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:04.06.2018 9:24:37
+
+Summary:
+Improper access control allowed user account to perform privileged actions for partner's account with same ID.

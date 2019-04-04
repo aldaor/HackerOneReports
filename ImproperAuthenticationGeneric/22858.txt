@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/22858
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/andi_r
+ReportedTo:Phabricator(phabricator)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:06.09.2014 10:37:00
+
+Summary:
+
+Old unused Password reset tokens are not expiring on phabricator after the issuance of a new reset link.
+Explaination
+Suppose at 09:00 o'clock I used password forgot password option and got a reset link on my email. Lets call it reset_1. But i didnot use it.
+And at 09:04 o'clock  I used again the forgot password option and got a new reset_link,which is reset_2.
+Now generally after the issuance of reset_2,the previous unused reset link should expire.But in case of phabricator its not happening.Both the reset links are remaining usable at the same time.

@@ -1,0 +1,83 @@
+ReportLink:https://hackerone.com/reports/27404
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/secgeek
+ReportedTo:Twitter(twitter)
+BountyAmount:2800.0
+Severity:
+State:Closed
+DateOfDisclosure:30.09.2014 21:44:48
+
+Summary:
+
+i've found a new critical logical vulnerability that allow deleteing credit card of any twitter account in ads.twitter.com , the vulnerability affects the Dismiss functionality of credit cards in payments methods section
+
+the vulnerability is similair to the one i've reported earlier [h1 report #27205] but this time the impact is  higher as it only requires the credit card id without a need of the user account id.
+
+the credit card id is only 6 numbers such as "220152" which can be easily guessed / brute-forced by an attacker and also an evil attacker could lanuch a massive attack to delete all credit cards from all twitter accounts and halt their own campaigns
+
+Below is the technical details of the vulnerability:
+
+##Affected Domain:
+
+https://ads.twitter.com
+
+##Affected Page:
+
+https://ads.twitter.com/accounts/18ce53wqoxd/payment_methods/handle_failed/220152
+
+##Request Type: 
+POST
+
+##Affected POST Parameters:
+id
+
+##Affected GET parameters:
+https://ads.twitter.com/accounts/18ce53wqoxd/payment_methods/handle_failed/220152
+220152 at the URL
+
+#Steps to reproduce the vulnerability:
+
+1) Login to ads.twitter.com with your account
+
+2) create a new campaign and add a payment method with credit card 
+     but the credit card should not be valid
+
+3) wait for the pending status to finish [in my case it took with me around 48 hours ]
+
+4) open the payments methods page to list your credit cards at  
+      https://ads.twitter.com/accounts/[account id]/payment_methods
+
+5)   you will find your credit card  failed to get approved as on the screenshot: 
+    http://oi59.tinypic.com/292marr.jpg
+
+6) press on Dismiss button and intercept the http request 
+
+###you will find the request as the following :
+
+POST /accounts/18ce53wqoxd/payment_methods/handle_failed/220152 HTTP/1.1
+Host: ads.twitter.com
+Connection: keep-alive
+Content-Length: 108
+Cache-Control: max-age=0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Origin: https://ads.twitter.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.94 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Referer: https://ads.twitter.com/accounts/18ce53wqoxd/payment_methods
+Accept-Encoding: gzip,deflate
+Accept-Language: en-US,en;q=0.8
+Cookie: [Your Cookies Here]
+utf8=%E2%9C%93&authenticity_token=Lb6HONDceN5mGvAEUvCQNakJUspD60Odumz%2FtrVdQfE%3D&id=219642&dismiss=Dismiss    
+
+send the request to repeater to use it later 
+
+7) repeat again the steps from 1 -> 3 but from a different twitter account and a different browser , also you can use this time a valid credit card .
+
+8) open the payments methods page to list your credit cards at 
+    https://ads.twitter.com/accounts/[account id]/payment_methods
+    then inspect the radio button of your credit card and copy the id value which will be 6 numbers.
+
+9) now all you have to do is to repeat the request saved in burp suite and change the id value of credit card in POST and URL with the other twitter user account, then reply the request you will find that the credit card have been removed from that twitter account directly without user interaction .
+
+kindly check and review the vulnerability 
+Thanks

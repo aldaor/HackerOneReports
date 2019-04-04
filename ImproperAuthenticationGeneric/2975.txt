@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/2975
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/eronx
+ReportedTo:Slack(slack)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.08.2014 0:47:38
+
+Summary:
+
+When deleting a team, it needed a proper authentication. It does not re authenticate the user if he is the legit owner who is trying to delete the team.
+
+In a case where, we leave our account for a few minutes and somebody walks by then quickly delete our team.
+
+Clifford

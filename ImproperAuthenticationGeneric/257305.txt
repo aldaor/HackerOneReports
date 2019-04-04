@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/257305
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ramsexy
+ReportedTo:Boozt Fashion AB(boozt)
+BountyAmount:200.0
+Severity:medium
+State:Closed
+DateOfDisclosure:25.05.2018 14:43:20
+
+Summary:
+
+##Description
+I have found a flaw in the authentication process when accessing the website by visiting an unsubscribe link.
+
+##PoC
+1. Visit http://click.email.boozt.com/?qs=723df61c937e4dbf9e378d2157f7907baa95fa00699f2b4d13e192b1d14ed67323d5c7a75c6f801baf1e68c2beabbc43d574caeb9b6f8c085971631d636b3cda
+2. Go in my customer profile and click on **My orders**.  Server should respond a 403 and ask for a password. F210300
+3. Now, resend the request, but intercept it and change your PHPSESSID cookie. Server now return a 200 and you are fully authenticated. F210301
+
+##Impact
+This vulnerability allows an attacker to access victim private info and orders. I think the impact is high because the unsub link is present in promotion emails, which is more likely to be shared with other users. 

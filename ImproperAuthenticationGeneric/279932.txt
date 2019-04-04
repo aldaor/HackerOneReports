@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/279932
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/rey_7
+ReportedTo:Boozt Fashion AB(boozt)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:24.10.2017 11:00:35
+
+Summary:
+
+Hi Team,
+
+when i try to login in this subdomain(https://boozt-stage1.booztx.com/login) using gmail or facebook,the login form does not redirect me to gmail/facebook,it is giving the error message since it is blacklisted by the server.
+
+Steps to Reproduce:
+1) Goto https://boozt-stage1.booztx.com/login
+2) Click login  using gmail or Facebook 
+3) you will get error message as per the screenshot
+
+Mitigation:
+
+Whitelist those two URL"s since it is required by the user to signup. 

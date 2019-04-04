@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/27357
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/banned
+ReportedTo:Square(square)
+BountyAmount:750.0
+Severity:
+State:Closed
+DateOfDisclosure:17.11.2014 14:30:50
+
+Summary:
+
+Hi there,
+
+I have found out that there is no "authorization" in which prohibits a user to modify client's data of other users.
+
+As per sample I have two(2) accounts:
+ One freebie account and One subscribed account ( Monthly )
+
+The freebie account has a Client with ID : f42b88d1af62f0a9d240024e83690174. That is :https://www.bookfresh.com/index.html?view=customer&id=f42b88d1af62f0a9d240024e83690174.
+
+Now, I tried to access the same URL as per the other account ( subscribed monthly) and I can read and write on the client detail!
+
+Even when not the merchant of the client, I can still access the client detail and modify it by just knowing the customer ID ( Md5 hash, can be trivially known ).
+
+If you wanted more information regarding this, then let me know.
+
+Cheers,
+Clifford

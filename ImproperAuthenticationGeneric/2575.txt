@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/2575
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/prakharprasad
+ReportedTo:Slack(slack)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:29.05.2014 22:15:44
+
+Summary:
+
+Hi,
+
+I've found a way to circumvent redirect_uri restrictions imposed by the web application using domain-suffix/subdomain technique.
+
+I created an OAuth application under https://api.slack.com/applications/new. That has OAuth redirect_uri configured to http://www.google.com.
+
+So technically 
+
+Allowed Request shall be :
+https://slack.com/oauth/authorize?client_id=2190698099.2192071336&redirect_uri=http://www.google.com
+
+Denied Request shall be:
+
+https://slack.com/oauth/authorize?client_id=2190698099.2192071336&redirect_uri=http://www.blahblah.com
+
+Surprisingly If I point the redirect_uri to http://www.google.com.mx (see .mx suffix) the endpoint will be accepted, infact endpoint like http://www.google.com.attacker.com will be accepted too. The server doesn't block these suffix attacks.
+
+So attackers can craft an OAuth endpoint like below to circumvent redirect_uri restrictions :
+
+https://slack.com/oauth/authorize?client_id=2190698099.2192071336&redirect_uri=http://www.google.com.mx
+
+
+Thanks!
+Prakhar Prasad

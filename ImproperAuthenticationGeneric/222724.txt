@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/222724
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/saadahmedx
+ReportedTo:Mapbox(mapbox)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:25.04.2017 19:10:25
+
+Summary:
+Security researcher @saad_ahmed reported two Mapbox owned S3 buckets with `public-read` ACL. One of these, `mapbox-js`, was `public-read` by design, the other however was not and subsequently was switched to a `private` ACL. Thank you again @saad_ahmed, we appreciate you keeping Mapbox security in mind.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/239623
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/securinti
+ReportedTo:Slack(slack)
+BountyAmount:1500.0
+Severity:
+State:Closed
+DateOfDisclosure:21.10.2017 6:06:01
+
+Summary:
+@securinti informed us of support portals configured in manners which allowed for abuse. This is not an issue with Slack itself, but we were able to make a change to help mitigate this for such insecure configurations. Thank you!

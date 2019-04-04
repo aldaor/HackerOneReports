@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/223609
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/amsda
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:17.05.2017 18:14:12
+
+Summary:
+
+Hi,
+
+There is an issue with password reset functionality with Weblate: user is not receiving notification when he reset password.
+
+Good thing: when user change his info like profile update, password change. User get email notification for password change etc.
+
+Issue: user not always gets a notification about password change. When user change his password then a notification is not send to the user.
+
+It is good practice to always send email notification for user when a password change.
+
+Please let me know if more details required.
+
+thanks

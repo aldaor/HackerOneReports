@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/211283
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/bughunter111
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:16.10.2017 7:07:08
+
+Summary:
+
+### Description:
+The given URL fails to validate Origin header- leading to Cross-Site WebSocket Hijacking. 
+
+### Impact:
+The impact, however, depends on how the server is configured. For example, it might require an authentication token which are user specific. In such cases, it might not be as sever as it would be in cases where server doesn't require anything at all.  
+Since almost all the request in the site are performed in web socket, it might be possible to hijack the websocket. The impact would be similar to side-wise CSRF plus every response from server could be possible to be read by attacker.
+
+### Affected Domain: 
+app.legalrobot.com/socketjs/444/jfalksf/websocket
+
+### Reference: 
+https://www.christian-schneider.net/CrossSiteWebSocketHijacking.html
+https://www.notsosecure.com/how-cross-site-websocket-hijacking-could-lead-to-full-session-compromise/

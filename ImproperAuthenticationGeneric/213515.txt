@@ -1,0 +1,67 @@
+ReportLink:https://hackerone.com/reports/213515
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/rashedhasan007
+ReportedTo:Trello(trello)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:20.03.2017 15:03:06
+
+Summary:
+
+Hi there Trello Security Team , 
+
+I have noticed a certain behaviour at https://trello.com . What I belief to be a bug .
+
+Firstly , I would like to mention it is possible to use same cellphone number on multiple accounts without any problem , which I considere to be a security issue . I chose to report this in one report as they are co - related . 
+
+Summery: 
+---------------------
+
+
+You can authenticate one cellphone number on multiple accounts , which should not happen . One cellphone should only work for one account . 
+
+You can verify the cellphone number with the first verification code you received on phone multiple times .   __Surprisingly the same code  verifies the cellphone number which was obtained from another users account  if we use it on other account__ . 
+
+Background: 
+---------------------
+
+
+Trello has a 2FA , where it allows user to add their cellphone number . when user adds their cellphone number , trello sends a verification code . user inputs that code and number is verified for the account . When user removes the cellphone number , add the number again trello again sends a verification code , but instead of using that user can use the first verification code to verify his cellphone , this can be done multiple times . remove number , add number again code arrives , avoid it . use the first code and your number is verified ! Moreover Trello web application allows that same cellphone number to be used on multiple accounts con - currently , for the reason same code  verifies the cellphone number which was obtained from another users account if we use it on other account . 
+
+
+Proof Of Concept: 
+---------------------
+
+
+-  First we are in a account with email mahadeehassan2@gmail.com .
+- We go to configure 2FA . 
+- Then add 2FA , it will remind to save display code . 
+-  Then we put our cellphone number . a code arrives . 
+-  We put the code and number verified . 
+-  We remove the number and add again again code arrives. 
+-  We avoid it and use the first one , number verified .  
+-  We can do this multiple times . for every time the first code will not expire and work again and again . 
+
+-  We can authenticate this same number on a different account with the email testmachine00001@gmail.com 
+-  Well while authenticating this , we will get a code on our cellphone number . we avoid it and choose 1st code from previous account 
+__ -  Surprisingly it verifies the cellphone number which was obtained from another users account . __
+
+
+What is Expected: 
+---------------------
+
+
+It is expected , a verification code will not and should not work more than once and expire after using every single time the number was added . It is expected same cellphone will not be allowed on multiple accounts at the same time , if removed from one account it can be used on another , but concurrently on multiple accounts it should not be allowed .again code obtained from one users account can be used on another users account , which is really surprising !   
+
+I have showed a demonstration , I hope you have understood the issue . It is a authentication misconfiguration issue according to me , and it is completely a manual finding by me, Which I reported to you directly.
+
+I have tried to maintain the policy of your program, If you find any spelling mistakes or grammatical error while reading please do not close the report and let me know about it first , It will be a request to go through the report completely with the video proof of concept attached .
+
+
+Video Zip File: https://www.dropbox.com/s/lrth7dj3uelhhnb/T_2FA.zip
+Password: trello500>$@@--
+
+thanks,
+@rashedhasan007
+ 

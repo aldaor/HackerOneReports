@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/245408
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/gerben_javado
+ReportedTo:Zomato(zomato)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:17.08.2017 11:27:59
+
+Summary:
+##Introduction
+An attacker just needs to supply an email address to gain a valid access token for the Zomato applications. Thus any account on Zomato can be fully accessed with just the email address.
+
+#Endpoint
+`/v2/auth.json`
+
+##Impact
+Critical, without any user interaction an attacker can access any account.

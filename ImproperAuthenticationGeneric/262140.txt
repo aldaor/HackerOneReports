@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/262140
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ihusnain49
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:26.08.2017 5:01:33
+
+Summary:
+
+Hi Team,
+Its a minor issue, but hope you'll fix it.
+It seems like after changing password for example my current password is : Dashi2367@
+And lets assume that the hacker got an access to my account, and i will change my password to ex. Dashi2367/ . 
+
+There's no restriction when i change a new password with a similarity to the old password 
+In this way the attacker can still hack account easily because there's a similarity to the old and the new one.
+
+Hope you'll triaged this.
+Looking forward to your reply.
+
+Best Regards,
+Husnain Iqbal

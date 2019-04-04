@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/23363
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/xtross1
+ReportedTo:Phabricator(phabricator)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:10.09.2014 19:16:02
+
+Summary:
+
+Hi,
+
+The application authenticates user before the password is changed by the user.
+
+POC:
+1. User attempts password reset
+2. User gets verification link
+3. User access link and gets authenticated automatically before performing any password change
