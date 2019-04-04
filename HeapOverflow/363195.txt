@@ -1,0 +1,186 @@
+ReportLink:https://hackerone.com/reports/363195
+WeaknessName:Heap Overflow
+Reporter:https://hackerone.com/kushal89shah
+ReportedTo:Block.one(eosio)
+BountyAmount:2500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:19.02.2019 9:16:33
+
+Summary:
+
+Hello Block.One / EOS Product Security Team,
+
+Good Afternoon.
+
+There exists a Memory Corruption vulnerability in the latest Binaryen Library and also in the EOS repo for Binaryen Library. The Binaryen_s2wasm_PoC.s file is attached along with this report.
+
+Reproduction Steps: -
+
+1) Fetch latest Binaryen repsository from https://github.com/EOSIO/binaryen.
+OR
+1) Fetch latest Binaryen repository from https://github.com/WebAssembly/binaryen.
+
+2) Compile and Build binaryen using the flags CFLAGS=-fsanitize=address, CXXFLAGS=-fsanitize=address and LDFLAGS=-fsanitize=address.
+3) Run the attached Binaryen_s2wasm_PoC.s file with s2wasm or eosio-s2wasm utility depending on the repository used.
+
+Below is the Heap Buffer Overflow Crash output of the eosio-s2wasm tool with the Binaryen_s2wasm_PoC.s file.
+
+h4ck3r@h4ck3r-VirtualBox:~/Documents/eos_binaryen_non_afl_asan$ ./binaryen/bin/eosio-s2wasm Binaryen_s2wasm_PoC.s -o test_output2.wasm
+=================================================================
+==19040==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6020000001e8 at pc 0x5624e5382263 bp 0x7fffb06aae80 sp 0x7fffb06aae70
+READ of size 8 at 0x6020000001e8 thread T0
+    #0 0x5624e5382262 in wasm::S2WasmBuilder::parseFunction()::{lambda(wasm::Expression*)#5}::operator()(wasm::Expression*) const (/home/h4ck3r/Documents/eos_binaryen_non_afl_asan/binaryen/bin/eosio-s2wasm+0x3dd262)
+    #1 0x5624e5382f43 in wasm::S2WasmBuilder::parseFunction()::{lambda(wasm::Expression*, wasm::Name)#11}::operator()(wasm::Expression*, wasm::Name) const (/home/h4ck3r/Documents/eos_binaryen_non_afl_asan/binaryen/bin/eosio-s2wasm+0x3ddf43)
+    #2 0x5624e5386859 in wasm::S2WasmBuilder::parseFunction()::{lambda(wasm::WasmType)#21}::operator()(wasm::WasmType) const (/home/h4ck3r/Documents/eos_binaryen_non_afl_asan/binaryen/bin/eosio-s2wasm+0x3e1859)
+    #3 0x5624e538cead in wasm::S2WasmBuilder::parseFunction() (/home/h4ck3r/Documents/eos_binaryen_non_afl_asan/binaryen/bin/eosio-s2wasm+0x3e7ead)
+    #4 0x5624e538dd98 in wasm::S2WasmBuilder::parseType() (/home/h4ck3r/Documents/eos_binaryen_non_afl_asan/binaryen/bin/eosio-s2wasm+0x3e8d98)
+    #5 0x5624e537f076 in wasm::S2WasmBuilder::process() (/home/h4ck3r/Documents/eos_binaryen_non_afl_asan/binaryen/bin/eosio-s2wasm+0x3da076)
+    #6 0x5624e537992f in wasm::S2WasmBuilder::build(wasm::LinkerObject*) (/home/h4ck3r/Documents/eos_binaryen_non_afl_asan/binaryen/bin/eosio-s2wasm+0x3d492f)
+    #7 0x5624e5371992 in wasm::Linker::linkObject(wasm::S2WasmBuilder&) (/home/h4ck3r/Documents/eos_binaryen_non_afl_asan/binaryen/bin/eosio-s2wasm+0x3cc992)
+    #8 0x5624e52fbc94 in main (/home/h4ck3r/Documents/eos_binaryen_non_afl_asan/binaryen/bin/eosio-s2wasm+0x356c94)
+    #9 0x7ff8fafae1c0 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x211c0)
+    #10 0x5624e52f65c9 in _start (/home/h4ck3r/Documents/eos_binaryen_non_afl_asan/binaryen/bin/eosio-s2wasm+0x3515c9)
+
+0x6020000001e8 is located 8 bytes to the left of 16-byte region [0x6020000001f0,0x602000000200)
+allocated by thread T0 here:
+    #0 0x7ff8fbd40458 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.4+0xe0458)
+    #1 0x5624e533b0de in __gnu_cxx::new_allocator<wasm::Expression*>::allocate(unsigned long, void const*) (/home/h4ck3r/Documents/eos_binaryen_non_afl_asan/binaryen/bin/eosio-s2wasm+0x3960de)
+    #2 0x5624e5335353 in std::allocator_traits<std::allocator<wasm::Expression*> >::allocate(std::allocator<wasm::Expression*>&, unsigned long) (/home/h4ck3r/Documents/eos_binaryen_non_afl_asan/binaryen/bin/eosio-s2wasm+0x390353)
+    #3 0x5624e5329a2b in std::_Vector_base<wasm::Expression*, std::allocator<wasm::Expression*> >::_M_allocate(unsigned long) (/home/h4ck3r/Documents/eos_binaryen_non_afl_asan/binaryen/bin/eosio-s2wasm+0x384a2b)
+    #4 0x5624e5329c3b in void std::vector<wasm::Expression*, std::allocator<wasm::Expression*> >::_M_realloc_insert<wasm::Expression*>(__gnu_cxx::__normal_iterator<wasm::Expression**, std::vector<wasm::Expression*, std::allocator<wasm::Expression*> > >, wasm::Expression*&&) (/home/h4ck3r/Documents/eos_binaryen_non_afl_asan/binaryen/bin/eosio-s2wasm+0x384c3b)
+    #5 0x5624e5320264 in void std::vector<wasm::Expression*, std::allocator<wasm::Expression*> >::emplace_back<wasm::Expression*>(wasm::Expression*&&) (/home/h4ck3r/Documents/eos_binaryen_non_afl_asan/binaryen/bin/eosio-s2wasm+0x37b264)
+    #6 0x5624e5314ab1 in std::vector<wasm::Expression*, std::allocator<wasm::Expression*> >::push_back(wasm::Expression*&&) (/home/h4ck3r/Documents/eos_binaryen_non_afl_asan/binaryen/bin/eosio-s2wasm+0x36fab1)
+    #7 0x5624e538c38c in wasm::S2WasmBuilder::parseFunction() (/home/h4ck3r/Documents/eos_binaryen_non_afl_asan/binaryen/bin/eosio-s2wasm+0x3e738c)
+    #8 0x5624e538dd98 in wasm::S2WasmBuilder::parseType() (/home/h4ck3r/Documents/eos_binaryen_non_afl_asan/binaryen/bin/eosio-s2wasm+0x3e8d98)
+    #9 0x5624e537f076 in wasm::S2WasmBuilder::process() (/home/h4ck3r/Documents/eos_binaryen_non_afl_asan/binaryen/bin/eosio-s2wasm+0x3da076)
+    #10 0x5624e537992f in wasm::S2WasmBuilder::build(wasm::LinkerObject*) (/home/h4ck3r/Documents/eos_binaryen_non_afl_asan/binaryen/bin/eosio-s2wasm+0x3d492f)
+    #11 0x5624e5371992 in wasm::Linker::linkObject(wasm::S2WasmBuilder&) (/home/h4ck3r/Documents/eos_binaryen_non_afl_asan/binaryen/bin/eosio-s2wasm+0x3cc992)
+    #12 0x5624e52fbc94 in main (/home/h4ck3r/Documents/eos_binaryen_non_afl_asan/binaryen/bin/eosio-s2wasm+0x356c94)
+    #13 0x7ff8fafae1c0 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x211c0)
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow (/home/h4ck3r/Documents/eos_binaryen_non_afl_asan/binaryen/bin/eosio-s2wasm+0x3dd262) in wasm::S2WasmBuilder::parseFunction()::{lambda(wasm::Expression*)#5}::operator()(wasm::Expression*) const
+Shadow bytes around the buggy address:
+  0x0c047fff7fe0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c047fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c047fff8000: fa fa fd fa fa fa fd fd fa fa fd fd fa fa 00 fa
+  0x0c047fff8010: fa fa fd fd fa fa fd fa fa fa fd fa fa fa 00 fa
+  0x0c047fff8020: fa fa 00 00 fa fa 00 fa fa fa fd fa fa fa fd fa
+=>0x0c047fff8030: fa fa fd fa fa fa fd fa fa fa fd fa fa[fa]00 00
+  0x0c047fff8040: fa fa fd fd fa fa 00 00 fa fa fd fd fa fa fd fa
+  0x0c047fff8050: fa fa fd fd fa fa fd fd fa fa fd fa fa fa fd fd
+  0x0c047fff8060: fa fa fd fa fa fa fd fa fa fa fd fd fa fa fd fd
+  0x0c047fff8070: fa fa fd fa fa fa fd fd fa fa fd fd fa fa fd fa
+  0x0c047fff8080: fa fa fd fa fa fa fd fa fa fa fd fd fa fa fd fd
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==19040==ABORTING
+h4ck3r@h4ck3r-VirtualBox:~/Documents/eos_binaryen_non_afl_asan$ cd binaryen/
+h4ck3r@h4ck3r-VirtualBox:~/Documents/eos_binaryen_non_afl_asan/binaryen$ git log -1
+commit 4bea1a95393faed5f2d624373d1a7e38270ef9f3 (HEAD -> eosio, origin/eosio, origin/HEAD)
+Merge: b4b5dc9d e13b8b74
+Author: Daniel Larimer <bytemaster@users.noreply.github.com>
+Date:   Mon May 28 16:24:14 2018 -0400
+
+    Merge pull request #9 from EOSIO/replace-assert
+    
+    Replace assert with throw
+h4ck3r@h4ck3r-VirtualBox:~/Documents/eos_binaryen_non_afl_asan/binaryen$ 
+
+Below is the Heap Buffer Overflow Crash output of the s2wasm tool with the Binaryen_s2wasm_PoC.s file.
+
+h4ck3r@h4ck3r-VirtualBox:~/Documents/binaryen_non_afl_asan$ ./binaryen/bin/s2wasm Binaryen_s2wasm_PoC.s -o test_output.wasm
+=================================================================
+==19008==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x602000000268 at pc 0x557272be18a3 bp 0x7ffe30c42ad0 sp 0x7ffe30c42ac0
+READ of size 8 at 0x602000000268 thread T0
+    #0 0x557272be18a2 in wasm::S2WasmBuilder::parseFunction()::{lambda(wasm::Expression*)#4}::operator()(wasm::Expression*) const (/home/h4ck3r/Documents/binaryen_non_afl_asan/binaryen/bin/s2wasm+0x1a38a2)
+    #1 0x557272be1c5b in wasm::S2WasmBuilder::parseFunction()::{lambda(wasm::Expression*, wasm::Name)#10}::operator()(wasm::Expression*, wasm::Name) const (/home/h4ck3r/Documents/binaryen_non_afl_asan/binaryen/bin/s2wasm+0x1a3c5b)
+    #2 0x557272bee390 in wasm::S2WasmBuilder::parseFunction()::{lambda(wasm::Type)#20}::operator()(wasm::Type) const (/home/h4ck3r/Documents/binaryen_non_afl_asan/binaryen/bin/s2wasm+0x1b0390)
+    #3 0x557272c00af5 in wasm::S2WasmBuilder::parseFunction() (/home/h4ck3r/Documents/binaryen_non_afl_asan/binaryen/bin/s2wasm+0x1c2af5)
+    #4 0x557272c0511c in wasm::S2WasmBuilder::process() (/home/h4ck3r/Documents/binaryen_non_afl_asan/binaryen/bin/s2wasm+0x1c711c)
+    #5 0x557272bb84c1 in wasm::Linker::linkObject(wasm::S2WasmBuilder&) (/home/h4ck3r/Documents/binaryen_non_afl_asan/binaryen/bin/s2wasm+0x17a4c1)
+    #6 0x557272b8f4aa in main (/home/h4ck3r/Documents/binaryen_non_afl_asan/binaryen/bin/s2wasm+0x1514aa)
+    #7 0x7f837c0851c0 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x211c0)
+    #8 0x557272b968f9 in _start (/home/h4ck3r/Documents/binaryen_non_afl_asan/binaryen/bin/s2wasm+0x1588f9)
+
+0x602000000268 is located 8 bytes to the left of 16-byte region [0x602000000270,0x602000000280)
+allocated by thread T0 here:
+    #0 0x7f837ce17458 in operator new(unsigned long) (/usr/lib/x86_64-linux-gnu/libasan.so.4+0xe0458)
+    #1 0x557272bc9a4a in void std::vector<wasm::Expression*, std::allocator<wasm::Expression*> >::_M_realloc_insert<wasm::Expression* const&>(__gnu_cxx::__normal_iterator<wasm::Expression**, std::vector<wasm::Expression*, std::allocator<wasm::Expression*> > >, wasm::Expression* const&) (/home/h4ck3r/Documents/binaryen_non_afl_asan/binaryen/bin/s2wasm+0x18ba4a)
+    #2 0x557272bcb0fc in void std::vector<wasm::Expression*, std::allocator<wasm::Expression*> >::emplace_back<wasm::Expression*>(wasm::Expression*&&) (/home/h4ck3r/Documents/binaryen_non_afl_asan/binaryen/bin/s2wasm+0x18d0fc)
+    #3 0x557272bfef73 in wasm::S2WasmBuilder::parseFunction() (/home/h4ck3r/Documents/binaryen_non_afl_asan/binaryen/bin/s2wasm+0x1c0f73)
+    #4 0x557272c0511c in wasm::S2WasmBuilder::process() (/home/h4ck3r/Documents/binaryen_non_afl_asan/binaryen/bin/s2wasm+0x1c711c)
+    #5 0x557272bb84c1 in wasm::Linker::linkObject(wasm::S2WasmBuilder&) (/home/h4ck3r/Documents/binaryen_non_afl_asan/binaryen/bin/s2wasm+0x17a4c1)
+    #6 0x557272b8f4aa in main (/home/h4ck3r/Documents/binaryen_non_afl_asan/binaryen/bin/s2wasm+0x1514aa)
+    #7 0x7f837c0851c0 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x211c0)
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow (/home/h4ck3r/Documents/binaryen_non_afl_asan/binaryen/bin/s2wasm+0x1a38a2) in wasm::S2WasmBuilder::parseFunction()::{lambda(wasm::Expression*)#4}::operator()(wasm::Expression*) const
+Shadow bytes around the buggy address:
+  0x0c047fff7ff0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c047fff8000: fa fa fd fa fa fa fd fd fa fa fd fd fa fa fd fa
+  0x0c047fff8010: fa fa fd fa fa fa fd fa fa fa fd fa fa fa fd fd
+  0x0c047fff8020: fa fa 00 00 fa fa 00 fa fa fa fd fd fa fa fd fa
+  0x0c047fff8030: fa fa 00 fa fa fa 00 fa fa fa fd fa fa fa fd fa
+=>0x0c047fff8040: fa fa fd fa fa fa fd fa fa fa fd fa fa[fa]00 00
+  0x0c047fff8050: fa fa fd fd fa fa 00 00 fa fa fd fd fa fa fd fa
+  0x0c047fff8060: fa fa fd fd fa fa fd fd fa fa fd fa fa fa fd fd
+  0x0c047fff8070: fa fa fd fa fa fa fd fa fa fa fd fd fa fa fd fd
+  0x0c047fff8080: fa fa fd fa fa fa fd fd fa fa fd fd fa fa fd fa
+  0x0c047fff8090: fa fa fd fa fa fa fd fa fa fa fd fd fa fa fd fd
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+  Left alloca redzone:     ca
+  Right alloca redzone:    cb
+==19008==ABORTING
+h4ck3r@h4ck3r-VirtualBox:~/Documents/binaryen_non_afl_asan$ cd binaryen/
+h4ck3r@h4ck3r-VirtualBox:~/Documents/binaryen_non_afl_asan/binaryen$ git log -1
+commit 682bb461e6084048d1085f985f2a0973977d06b4 (HEAD -> master, origin/master, origin/HEAD)
+Author: Sam Clegg <sbc@chromium.org>
+Date:   Wed Jun 6 12:16:01 2018 -0700
+
+    Handle parse errors in wasm-emscripten-finalize (#1589)
+h4ck3r@h4ck3r-VirtualBox:~/Documents/binaryen_non_afl_asan/binaryen$ 
+
+Eagerly awaiting your response.
+
+Thanking You,
+
+Yours Sincerely,
+Kushal Arvind Shah.
+Senior Security Researcher | Fortinet's FortiGuard Labs.
+
+## Impact
+
+Memory Corruption and Potential Information Disclosure & Arbitrary Code Execution.

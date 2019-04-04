@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/395531
+WeaknessName:Heap Overflow
+Reporter:https://hackerone.com/rkhunter
+ReportedTo:Kaspersky Lab(kaspersky)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:15.08.2018 16:18:51
+
+Summary:
+xxx

@@ -1,0 +1,56 @@
+ReportLink:https://hackerone.com/reports/337986
+WeaknessName:Heap Overflow
+Reporter:https://hackerone.com/geeknik
+ReportedTo:Perl (IBB)(ibb-perl)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:19.05.2018 19:00:32
+
+Summary:
+
+An attacker supplies a regular expression containing one or more `\xDF` characters after an escape putting the regexp into unicode matching mode, such as a `\N{}` escape.  Each `\xDF` character adds one byte of overflow, and any other text in the regular expression is written in order, providing the attacker control over the bytes written to the overflowed region.
+
+* Reported to the [Perl security mailing list](https://rt.perl.org/Ticket/Display.html?id=132227) on 6 Oct 2017.
+* Confirmed as a security flaw by TonyC on 31 Jan 2018
+* CVE-2018-6797 assigned to this flaw on 6 Feb 2018
+* Patch released to the security mailing list for Perl 5.24 and Perl 5.26 on 09 Feb 2018
+* Patch released to the security mailing list for Perl blead on 22 Feb 2018
+* [Public security advisory](https://github.com/Perl/perl5/blob/blead/pod/perl5262delta.pod) released on 14 April 2018
+
+On 31 Jan 2018 Perl dev TonyC says in an email to the Perl security mailing list that `depending on the heap implementation it may be possible to perform a nastier exploit - an attacker has almost complete control over the bytes written.`
+
+```
+==28186==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x60700000ac58 at pc 0x000000846c2d bp 0x7ffe716bc7f0 sp 0x7ffe716bc7e0
+WRITE of size 1 at 0x60700000ac58 thread T0
+    #0 0x846c2c in S_regatom /root/perl/regcomp.c:13652
+    #1 0x8587f6 in S_regpiece /root/perl/regcomp.c:11708
+    #2 0x8587f6 in S_regbranch /root/perl/regcomp.c:11633
+    #3 0x88830a in S_reg /root/perl/regcomp.c:11371
+    #4 0x8c90dc in Perl_re_op_compile /root/perl/regcomp.c:7363
+    #5 0x5297d0 in Perl_pmruntime /root/perl/op.c:5888
+    #6 0x74d853 in Perl_yyparse /root/perl/perly.y:1210
+    #7 0x58b9b8 in S_parse_body /root/perl/perl.c:2450
+    #8 0x593622 in perl_parse /root/perl/perl.c:1753
+    #9 0x42eb7d in main /root/perl/perlmain.c:121
+    #10 0x7fba4cebe82f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
+    #11 0x42fe18 in _start (/root/perl/perl+0x42fe18)
+
+0x60700000ac58 is located 0 bytes to the right of 72-byte region [0x60700000ac10,0x60700000ac58)
+allocated by thread T0 here:
+    #0 0x7fba4dc62602 in malloc (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x98602)
+    #1 0x92dfd4 in Perl_safesysmalloc /root/perl/util.c:153
+    #2 0x8c6cbe in Perl_re_op_compile /root/perl/regcomp.c:7209
+    #3 0x5297d0 in Perl_pmruntime /root/perl/op.c:5888
+    #4 0x74d853 in Perl_yyparse /root/perl/perly.y:1210
+    #5 0x58b9b8 in S_parse_body /root/perl/perl.c:2450
+    #6 0x593622 in perl_parse /root/perl/perl.c:1753
+    #7 0x42eb7d in main /root/perl/perlmain.c:121
+    #8 0x7fba4cebe82f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow /root/perl/regcomp.c:13652 S_regatom
+```
+
+## Impact
+
+Depending on the heap implementation a remote attacker could have complete control over the bytes written to memory.

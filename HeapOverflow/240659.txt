@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/240659
+WeaknessName:Heap Overflow
+Reporter:https://hackerone.com/geeknik
+ReportedTo:Stellar.org(stellar)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.06.2017 17:35:24
+
+Summary:
+@geeknik found a heap buffer overflow in stellar-core's toml parser. This is low severity because toml parser is only used to parse config file of stellar-core.

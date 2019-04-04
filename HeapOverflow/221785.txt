@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/221785
+WeaknessName:Heap Overflow
+Reporter:https://hackerone.com/theyarestone
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:25.05.2017 1:32:28
+
+Summary:
+An overflow can occur in MDC2_Update() either if called directly or through the EVP_DigestUpdate() function using MDC2. If an attacker is able to supply very large amounts of input data after a previous call to EVP_EncryptUpdate() with a partial block then a length check can overflow resulting in a heap corruption.
+
+The amount of data needed is comparable to SIZE_MAX which is impractical on most platforms.
+
+OpenSSL 1.0.2 users should upgrade to 1.0.2i
+OpenSSL 1.0.1 users should upgrade to 1.0.1u
+
+This issue was reported to OpenSSL on 11th August 2016 by Shi Lei (Gear Team, Qihoo 360 Inc.). The fix was developed by Stephen Henson of the OpenSSL development team.
+An overflow can occur in MDC2_Update() either if called directly or
+through the EVP_DigestUpdate() function using MDC2. If an attacker
+is able to supply very large amounts of input data after a previous
+call to EVP_EncryptUpdate() with a partial block then a length check
+can overflow resulting in a heap corruption.
+
+The amount of data needed is comparable to SIZE_MAX which is impractical
+on most platforms.
+
+refer:
+https://www.openssl.org/news/secadv/20160922.txt

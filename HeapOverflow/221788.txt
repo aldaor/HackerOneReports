@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/221788
+WeaknessName:Heap Overflow
+Reporter:https://hackerone.com/theyarestone
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:25.05.2017 1:32:16
+
+Summary:
+The function BN_bn2dec() does not check the return value of BN_div_word(). This can cause an OOB write if an application uses this function with an overly large BIGNUM. This could be a problem if an overly large certificate or CRL is printed out from an untrusted source. TLS is not affected because record limits will reject an oversized certificate before it is parsed.
+
+OpenSSL 1.0.2 users should upgrade to 1.0.2i
+OpenSSL 1.0.1 users should upgrade to 1.0.1u
+
+This issue was reported to OpenSSL on 2nd August 2016 by Shi Lei (Gear Team, Qihoo 360 Inc.). The fix was developed by Stephen Henson of the OpenSSL development team.
+The function BN_bn2dec() does not check the return value of BN_div_word().
+This can cause an OOB write if an application uses this function with an
+overly large BIGNUM. This could be a problem if an overly large certificate
+or CRL is printed out from an untrusted source. TLS is not affected because
+record limits will reject an oversized certificate before it is parsed.
+
+refer:
+https://www.openssl.org/news/secadv/20160922.txt

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/249786
+WeaknessName:Heap Overflow
+Reporter:https://hackerone.com/pisarenko
+ReportedTo:VK.com(vkcom)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:04.03.2018 13:02:10
+
+Summary:
+Отсутствие flood-контроля при отправке Истории в личные сообщения друзьям. 
