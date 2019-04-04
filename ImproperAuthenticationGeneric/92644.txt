@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/92644
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/herlove
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.01.2016 17:53:07
+
+Summary:
+@herlove has reported a vulnerability within the appstore at apps.owncloud.com allowing an adversary to bypass the HTTP referer based CSRF protection. This issue was caused by an insufficient regular expression which has been patched meanwhile.
+
+On request of the reporter this issue has been disclosed limited and not public.

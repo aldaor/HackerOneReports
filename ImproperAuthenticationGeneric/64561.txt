@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/64561
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/paramdham
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:20.0
+Severity:
+State:Closed
+DateOfDisclosure:25.09.2016 18:18:04
+
+Summary:
+Security researcher found that we were missing an SPF record on our primary domain.

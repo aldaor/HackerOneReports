@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/5441
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/shivakumarplayz
+ReportedTo:MS-DOS(msdos)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.04.2014 17:17:55
+
+Summary:
+
+Step1:Go to command prompt
+Step2:Type "net user"
+Step3:Find the administrator name which you would like to change the password
+Step4:Type " net user" space "administrator name" space  *
+Step5:It will ask you to change the password
+Step6:Type the password and confirm it..

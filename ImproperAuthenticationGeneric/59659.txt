@@ -1,0 +1,104 @@
+ReportLink:https://hackerone.com/reports/59659
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/antrax
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:08.06.2015 20:55:21
+
+Summary:
+
+For POC:
+Original Email or banned email: def@gmail.com
+Updating Email: abc@gmail.com
+
+Hello team this bug is something interesting and critical..
+
+I have checked once the accounts are disable not easy to open, but i have found a 
+vulnerability which allow a user to reopen disable accounts.
+
+Disable Accounts Are two types:
+1) Disable by user ownself.
+2) Disable by hackerone for any reason (abusive behaviour , breaking rules etc.)
+
+So i am Brief second one how to exploit because second one is too much interesting exploit 
+as compare to first one ;)
+
+I am looking digging and found something cool and reopen disable accounts.
+
+Steps To reproduce:
+1)  Goto Email option and put working email for updating like (abc@gmail.com) then recieve an email of confirmation token (don't use it).
+
+2) Now abusing and breaking hackerone rules which cause to lead banning :D
+
+3) OOPS i am ban and also check my also updating email token on (abc@gmail.com) also expire :/
+ and not working anymore and links be like:
+https://hackerone.com/users/confirmation?confirmation_token=<generated token>
+
+4) But Confirmation Instructions give me some hints :D
+•	Confirmation instructions
+•	The confirmation token you provided is invalid.
+•	Enter the email address you signed up with to request a new confirmation token
+
+5) So again put this update email(abc@gmail.com) and BOOM recieved confirmation email
+then  confirmed account , email successfully update.
+
+6) Now use forgot pass and access to your account again.
+
+After account ban i am not able to check my reports even not get forgot pass email but if i am hide my email on email updating then i am again access to my account.
+After this if anyone change identity like username , email , name etc .
+
+•	After Disabling totally remove emails even they are on update mode or if they in update mode before sending confirmation email check account is disable or not or any other condition .
+
+Yola disable accounts again access able or changing identity is simple so again and again spamming
+and via this bug again and again account open even old nicks :D
+
+Some Other Effects:
+i)Old reports back
+ii) Account successfully shifted to new email.
+iii) Old triaged bugs , not payable bounties everthing you have.
+
+
+
+
+
+
+
+
+
+May be this one is valid but scenrio be like:
+First Scenerio:
+Well i am playing some options and going to email and check if someone updating 
+email there is no option to cancel this new email even if i am updating old email also
+even they show me 
+
+"You have a pending confirmation for 1234@gmail.com."
+
+Cool no option to remove this email but something is good after sometime token of confirmation is expire and not working anymore but tale of this lead to critical exploit.
+ 
+Steps To Reproduce:
+1)  Goto Email option and put working email then recieve an email of confirmation token (don't use it).
+
+2) After Checking some hours they expire and not working anymore and links be like:
+https://hackerone.com/users/confirmation?confirmation_token=<generated token>
+
+3) But Confirmation Instructions give me some hints :D
+Confirmation instructions
+The confirmation token you provided is invalid.
+Enter the email address you signed up with to request a new confirmation token.
+
+4) So i can check and put another email (456@gmail.com )and see no email recieved about confirmation
+but suddenly i can put my email which is above i can filled for updating (1234@gmail.com)
+and hit resend and see email recieved for confirmation :o
+
+5) I click the link and email successfully confirmed and further use forgot password functionality to takeover the full account or access to the account.
+
+
+Reason behind is first time token generated on behalf of 1234@gmail.com
+and still alive until email was not removed on hackerone pending bar..
+
+If someone mistakenly put wrong email confirmation link sent to user, but some hours 
+token is expire ,but but attacker still user this token to use takeover account.
+
+Second issue may be not valid but first one is interesting and valid...hope you fix it soon :)

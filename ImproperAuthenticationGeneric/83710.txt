@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/83710
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ashesh
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:15.09.2015 9:18:39
+
+Summary:
+
+URL: https://apps.owncloud.com/usermanager/login.php
+  
+Issue detail
+The following cookie was issued by the application and does not have the secure flag set:
+
+`PHPSESSID=27caghhkfjvuso3mmiqajqt2n4; path=/; HttpOnly`
+The cookie appears to contain a session token, which may increase the risk associated with this issue. You should review the contents of the cookie to determine its function.  
+
+Issue background
+If the secure flag is set on a cookie, then browsers will not submit the cookie in any requests that use an unencrypted HTTP connection, thereby preventing the cookie from being trivially intercepted by an attacker monitoring network traffic. If the secure flag is not set, then the cookie will be transmitted in clear-text if the user visits any HTTP URLs within the cookie's scope. An attacker may be able to induce this event by feeding a user suitable links, either directly or via another web site. Even if the domain which issued the cookie does not host any content that is accessed over HTTP, an attacker may be able to use links of the form http://example.com:443/ to perform the same attack.  
+
+Issue remediation
+The secure flag should be set on all cookies that are used for transmitting sensitive data when accessing content over HTTPS. If cookies are used to transmit session tokens, then areas of the application that are accessed over HTTPS should employ their own session handling mechanism, and the session tokens used should never be transmitted over unencrypted communications.  

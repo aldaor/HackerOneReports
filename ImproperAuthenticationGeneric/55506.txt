@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/55506
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/dia2diab
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.05.2015 11:22:43
+
+Summary:
+
+Hello Twitter Security Team, 
+
+###Problem:
+Here is a privacy issue that break your privacy for protected tweets.
+
+###Details:
+I have two accounts on twitter @dia2diab and @Dia2diabTest , from the first one i changed the settings of Tweet privacy to be "Protect my Tweets" and now if you access one of my tweets like this one here twitter.com/dia2diab/status/585987812643708928 Or here mobile.twitter.com/dia2diab/status/585987812643708928 from a private window you will find that "@dia2diab's Tweets are protected.". great !!
+
+Now, i don't wanna @Dia2diabTest to see anything from my tweets, so i decided to block him, i think now this user can't see my tweets by anyway [i blocked him & i made my tweets private].
+
+The amazing thing when i access this url mobile.twitter.com/dia2diab/status/585987812643708928 with my logged in session with the second user i found that i can see the tweet.
+
+This is break your privacy rules there support.twitter.com/articles/14016
+
+###Fixing:
+You must need to protect your users privacy.
+
+@dia2diab

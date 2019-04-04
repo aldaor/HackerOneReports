@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/8996
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/dhaval
+ReportedTo:Respondly(respondly)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.05.2014 21:08:03
+
+Summary:
+
+Hi,
+Your Basic Authentication at http://o1.m.respond.ly:8080/ has no bruteforce protection
+using hydra or some other tool it can be bruteforced

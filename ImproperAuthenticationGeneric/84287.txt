@@ -1,0 +1,88 @@
+ReportLink:https://hackerone.com/reports/84287
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ashesh
+ReportedTo:Gratipay(gratipay)
+BountyAmount:10.0
+Severity:medium
+State:Closed
+DateOfDisclosure:23.09.2015 19:52:19
+
+Summary:
+
+Your SPF record is 
+
+`v=spf1 include:email.freshdesk.com include:spf.mandrillapp.com include:_spf.google.com -all`
+Which very well shows that you don't want **spoofed** email to be sent from your domains, but you just forget one thing: 
+
+DKIM (DomainKeys Identified Mail) is an important authentication mechanism to help protect both email receivers and email senders from forged and phishing email. Forged email is a serious threat to all parties in an email exchange.
+
+DomainKeys Identified Mail (DKIM) is an email validation system designed to detect email spoofing by providing a mechanism to allow receiving mail exchangers to check that incoming mail from a domain is authorized by that domain's administrators and that the email (including attachments) has not been modified during transport. A digital signature included with the message can be validated by the recipient using the signer's public key published in the DNS. In technical term, DKIM is a technique to authorize the domain name which is associated with a message through cryptographic authentication.
+ 
+
+DKIM was aimed at:
+ 
+Reducing false negatives
+Provide authentication reporting
+Apply sender policies at the receiving end
+Reduce phishing
+Be scalable
+
+#Advantages:
+
+1. Use with spam filtering
+
+DKIM is a method of labeling a message, and it does not itself filter or identify spam. However, widespread use of DKIM can prevent spammers from forging the source address of their messages, a technique they commonly employ today. If spammers are forced to show a correct source domain, other filtering techniques can work more effectively. In particular, the source domain can feed into a reputation system to better identify spam. Conversely, DKIM can make it easier to identify mail that is known not to be spam and need not be filtered. If a receiving system has a whitelist of known good sending domains, either locally maintained or from third party certifiers, it can skip the filtering on signed mail from those domains, and perhaps filter the remaining mail more aggressively.
+
+2. Anti-phishing
+
+DKIM can be useful as an anti-phishing technology. Mailers in heavily phished domains can sign their mail to show that it is genuine. Recipients can take the absence of a valid signature on mail from those domains to be an indication that the mail is probably forged. The best way to determine the set of domains that merit this degree of scrutiny remains an open question; DKIM has an optional feature called ADSP that lets authors that sign all their mail self-identify, but the effectiveness of this approach is questionable, and ADSP was demoted to historic status in November 2013
+
+3. Compatibility
+
+Because it is implemented using DNS records and an added RFC 5322 header field, DKIM is compatible with the existing e-mail infrastructure. In particular, it is transparent to existing e-mail systems that lack DKIM support
+
+4. Protocol overhead
+
+DKIM requires cryptographic checksums to be generated for each message sent through a mail server, which results in computational overhead not otherwise required for e-mail delivery. This additional computational overhead is a hallmark of digital postmarks, making sending bulk spam more (computationally) expensive.his facet of DKIM may look similar to hashcash, except that the receiver side verification is not a negligible amount of work.
+ 
+  
+
+ Generate your DKIM easily here: http://dkimcore.org/tools/keys.html
+  
+ 
+
+You can read more about DKIM records and their uses here: http://www.gettingemaildelivered.com/dkim-explained-how-to-set-up-and-use-domainkeys-identified-mail-effectively.
+_________________________________________________________________________________________________
+**Why should you implement this**
+
+When I try to send a spoofed email from your domain to anyone like from `support@gratipay.com to `abcd@example.com`
+
+They get the simple spoofed message which shows no sign of fakeness to any normal user.
+
+Like this : http://ultraimg.com/images/fd74d04ff463.png
+
+
+But when a domain has DKIM record then they get this 
+
+	http://i.gyazo.com/59c6acf761ff010bb16aa93d19c6fc39.png
+
+The main point here is that DKIM prevents spoofing by adding this line:
+
+>It has a from address in mailjet.com but has failed mailjet.com's required tests for authentication.
+
+Now, thats how DKIM comes to rescue
+
+_____________________________________________________________________________________________
+
+The following command "nslookup -querytype=TXT google._domainkey.gratipay.com  8.8.8.8"
+
+Give the follwong detail:
+No DKIM record published.
+
+Which shows that you are missing this security feature.
+
+You should publish a valid DKIM record for your domain to prevent any misunderstanding and to prevent hackers from using your email.
+
+DKIM for `hackerone.com`:
+
+    v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCNUXaBB+MhTVs2lNbWVHC60n2peEysniIKqI90SJDKN6tmZhN4zURif+X7r52lJtvm0aaYJ6IFOgHYteDynOBrLlFicW9LWsiXXHdljElgIFGlzMeHKVxx3qG7xcGxQ3gVMvVL9ibhFQnK+rnttPBlRqSaiqkcTZlHm4cMh3SXuQIDAQAB

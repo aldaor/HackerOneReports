@@ -1,0 +1,56 @@
+ReportLink:https://hackerone.com/reports/90688
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/supernatural
+ReportedTo:Shopify(shopify)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:29.02.2016 17:17:07
+
+Summary:
+
+Hi 
+
+as you mentioned in #56726 
+
+    "Only the the store owner is allowed to create new staff members"
+
+admins can't create new staff members!
+but with this vulnerability admins can use api to create user! 
+
+
+steps:
+
+- get access token for one full access admin (you can send request to xauth or sniff it from mobile device)
+
+- send request with POST method to "https://~ShopName~.myshopify.com/admin/users.json"
+
+data : 
+
+{
+"user": {
+"email": "anyvalidmail@valid.com",
+"first_name":"~fname~",
+"last_name" : "~lname~",
+"pin" : 1234
+}
+}
+
+
+now, a user will be created! this user marked as POS staff member, without any access to admin shop!
+
+-  go to "https://~ShopName~.myshopify.com/admin/auth/recover"
+
+- enter new admin email address
+
+- follow instructions to reset password
+after recovering password user will convert to normal limited access
+
+- open that first full access admin and then select new created admin
+
+- unselect limited access
+
+Done, a new admin will full access created!
+
+
+Regards

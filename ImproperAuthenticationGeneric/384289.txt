@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/384289
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/cablej_dds
+ReportedTo:TTS Bug Bounty(tts)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:06.11.2018 20:53:24
+
+Summary:
+Login.gov had a bug in validating the redirect_uri in the `/openid_connect/authorize` endpoint, which allowed specially crafted subdomains to be incorrectly validated when they began with a valid hostname. For example, a `redirect_uri` with a hostname of `agency.gov.example.com` would validate a URL as if it were presented as `agency.gov`.
+
+This enabled an attacker to compromise user sessions on sites that integrated with login.gov. No user interaction was required other than the user being redirected to a URL.
+
+Login.gov immediately patched this bug by making validation of the `redirect_uri` significantly stricter by enforcing an exact match of the hostname. Shortly after, Login.gov worked with agency partners to identify every full URL that agency service providers (SPs) would need to register, and then implemented exact matching for the entire `redirect_uri` (including the URL path).
+

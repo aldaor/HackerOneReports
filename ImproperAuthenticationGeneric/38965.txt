@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/38965
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/nullsub
+ReportedTo:Phabricator(phabricator)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:09.01.2015 23:26:33
+
+Summary:
+
+I have succesfully reproduced this issue following these steps:
+ 
+- Creating a repository with an administrator user
+ 
+- Checking that my "guest" user hasn't access to the newly created repository:
+ 
+  http://phabricator/diffusion/TEST/edit/
+ 
+- However, the guest user does have access to delete the mirror:
+ 
+  http://phabricator/diffusion/TEST/mirror/delete/1/
+ 
+ You can review the lack of permission-checks in the file: applications/diffusion/controller/DiffusionMirrorDeleteController.php

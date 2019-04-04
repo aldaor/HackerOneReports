@@ -1,0 +1,45 @@
+ReportLink:https://hackerone.com/reports/52646
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/akhil-reni
+ReportedTo:Twitter(twitter)
+BountyAmount:420.0
+Severity:
+State:Closed
+DateOfDisclosure:12.10.2015 4:56:07
+
+Summary:
+
+**Hello**,
+
+The bug is straight and simple, 
+I have access to deleted DM's.
+Once a DM is deleted a user/app will still be able to access the DM's using show DM endpoint
+
+Attack Scenario
+====================
+Their are two accounts Sam and Molly ,
+Sam Dm's Molly something important and both quickly delete the Dm's after the chat,
+Sam has given access to a 3rd party app which can access his DM's.
+When Sam DM's molly every DM gets a unique id like 123456
+and the DM can be accessed using the following API call ,
+https://api.twitter.com/1.1/direct_messages/show.json?id={DM-id}
+Now let's say Sam and Molly both deleted the DM ,
+but the 3rd party app can still access the deleted DM using the above end point.
+
+Steps to reproduce
+==========================
+- Create 2 account's A and B
+- From account A Dm account B
+- Note down the Dm id , and make an api 
+https://api.twitter.com/1.1/direct_messages/show.json?id=[noted-dm-id]
+- Now delete the DM
+- Repeat the api call 
+https://api.twitter.com/1.1/direct_messages/show.json?id=578631102144741376
+- You will still have access to the deleted DM.
+
+*POC: Check for video attached*
+
+
+
+**Regards,
+Wesecureapp**

@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/6697
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/exploitprotocol
+ReportedTo:ReddAPI(reddapi)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:23.04.2014 15:21:13
+
+Summary:
+
+Hello ReddApi Security Team,
+
+#Vulnerability Detail's:- 
+Login page can be brute forced due to lack of captcha or backoff
+
+#Impact:- 
+An attacker can bruteforce for a particular username and can get a possibly a account takeover.
+
+#POC:-
+I have made a proof of concept video of the same:- https://www.youtube.com/watch?v=zX0jXkMqiCo
+The above video is unlisted.
+
+#Countermeasure:- Implement a Captcha
+
+With Regard's
+Aditya Agrawal

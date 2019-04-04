@@ -1,0 +1,73 @@
+ReportLink:https://hackerone.com/reports/44588
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/simon90
+ReportedTo:itBit Exchange(itbit)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:11.10.2015 22:07:11
+
+Summary:
+
+Hello ItBit Security Team!
+
+I am Simone, a sixteen years old Italian Security research, and I just want to share with you one of my finding on your website.
+
+NOTE:I reccomend you to read all this report with attwntion because it's a really particular vulnerability.. at first impact, this issue will not appear at your eyes as critical or something like this, anyway here on Hackerone this issue was paid around 1000$ (And was paid for me too once I report the same issue to Zapier,an other bug bounty site, the bount ywas 200$ but was good giving it was in a subdomain), anyway I have prepared a good report just to explain you this vulnerability fully with some referencs in order to understand more.
+
+NOTE: BOTH VULNERABILITY TESTED AND WORKS!
+
+I don't know how the email address are stored on you website. However, ItBit does not verify the length of an email address upon registration. This allows attackers to bypass the allowed email-domains defined in auth.email-domains.
+ 
+Exploiting this is rather straightforward: get an email address (and replace it with the mail used for register on the website) of 128
+characters long (This StackOverflow answer indicates that the maximum
+length of an email address is 254 characters). You register with an email and then changed it with your
+128 character email address with @allowed-domain.com appended to it.
+The @allowed-domain.com part will be truncated because MySQL and other types of database in general can’t
+store it (This is not a supposition, this is sure based on the RFC3396 mentioned.), and you will receive a verification email on your 128
+character email address.
+
+NOTE 2: The email will truncated like the screenshot here: Obviously, this is the result of your website that allows to register this kind of emails.  (http://grabilla.com/05115-af3c2593-860d-40f0-bed2-abe3bd4e5f48.html)
+
+This is especially easy if you’re using a Gmail address: if you own
+attacker@gmail.com, you’ll also receive any mails sent to
+attacker+aaaaaaaaaaa…aaa@gmail.com.
+
+In Fact, I've tried to register an account on ITBIT with this email:
+morrailgay2+ishiadshdsiuahdiuahdsahduashdisadu@gmail.com and I have received the mail confirmation on morrailgay2@gmail.com because the other part gets truncated.
+
+Here the POC(s) on itbit.com:
+
+1) http://grabilla.com/05115-55adf249-c842-4d58-a064-3cd54daa6e7e.html (Registration email successful done)
+
+and
+
+2) http://grabilla.com/05115-742661e6-5256-465f-8498-830f6499bc00.html (Test email received succcesfully)
+
+Email must obey RFC3696 length limits (< 254 characters in length)
+
+As for reference about Hackerone  just to understand actually this is same as https://hackerone.com/reports/2224, anyway as a proof of concept I reccomend you to see, a part of discussion, of this reporthttps://hackerone.com/reports/4795 where korvin asked a normal question that you can ask me too "Can you explain how this could be used maliciously?"..then, he just see https://secure.phabricator.com/D8308 that explains this issue very good and they got the point.
+
+I recommend you to see both three links.
+
+I have register a video too for Yahoo security team in  two Yahoo Sites vulnerable to this same issue, here is the video link if u want to  watch it andhave the all idea clears about this issue, even the sites are different the steps are the same, you have just to remember about zapier.com to change and register the new  "exploit email" after the signup: 
+
+https://hackerone.com/redirect?signature=76ef4a3c45176c6dfd1b76080b8962d98f8a7666&url=http%3A%2F%2Fyoutu.be%2Fo8-0hwaUB4I
+
+Oh..About the mail stored VARCHAR (64 or 128, I don't know!), even your site have one fo these two values like these mentioned,the site remains vulnerable to this issue..
+
+Reference on hackerone (64 varchar example):https://hackerone.com/reports/4795
+
+Reference on hackerone (128 varchar example):https://hackerone.com/reports/2224
+
+Case for reference in general:https://secure.phabricator.com/D8308 
+
+[You will see that on both sites, I mean hackerone and secure..both types of mails where indicated/used for this vulnerability, I just used on zapier.com the same that Tom and Intrvrtmac used for their accepted bug! ]
+
+In my video you will see like an option where I can choose about two emails to use for this issue, both works on ItBit.
+
+I hope that now you will have all the idea clears about this issue.
+
+Best regards,
+
+Simone

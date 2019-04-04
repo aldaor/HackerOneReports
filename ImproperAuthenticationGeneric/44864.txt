@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/44864
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/4lemon
+ReportedTo:itBit Exchange(itbit)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:27.02.2015 15:32:53
+
+Summary:
+
+After open https://beta.itbit.com/api/user/devices url we got response:
+[{"id":"812873ad-0930-439c-a1f5-7a33c1d49e62","userId":"28d8ce3b-2792-40b6-9e82-0eabe12c819e","name":"device","provider":"google","type":"otp","secretKey":"KVKWOI3YON6UAR2LF4WHORSAMNKG6OLL","createdOn":"0001-01-01T00:00:00.0000000+00:00","updatedOn":"0001-01-01T00:00:00.0000000+00:00","active":1}]
+
+Using "secretKey":"KVKWOI3YON6UAR2LF4WHORSAMNKG6OLL" possible to restore otp in auth app. This key should be shown only one time when otp create.

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/67557
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/supernatural
+ReportedTo:Shopify(shopify)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:18.09.2015 19:44:41
+
+Summary:
+This issue allowed users with limited access to login into a Shopify Mobile application, capture their own access token, and perform queries against Shopify's API in order to create new users with full access, or delete other users.
+
+An additional issue was reported, where users with no access could view the complete list of users in the Shopify store, and although no sensitive information were being shown, we changed the access restriction for the users endpoint  to match that of the web interface.

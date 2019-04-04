@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/55530
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/lccunha
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:02.06.2015 19:26:26
+
+Summary:
+
+1 access shopify.com > login
+2 access your profile > change password 
+
+Insert a new password and select the 'Also log out of your store on Shopify Mobile and / or Shopify POS' field.
+
+In my test session was not closed in mobile version for Android.
+
+Please check it.

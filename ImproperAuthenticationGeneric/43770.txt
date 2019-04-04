@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/43770
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/wkcaj
+ReportedTo:Vimeo(vimeo)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:01.03.2015 23:09:50
+
+Summary:
+
+Hello,
+
+I'm not sure how serious this is to be honest. If you're downloading tracks without paying, then I'm sure you could find a copy somewhere on the internet anyway. But I guess it's still an issue.
+
+When browsing the Music Store (https://vimeo.com/musicstore), some tracks are free. To download these, a `GET` request is sent to `/musicstore/download`, with a query string of `track_id=[track_id]&license_id=4`.
+
+For non-free tracks, the link is replaced with an Add to Cart icon, and you're expected to go through the checkout procedure. This is done by a `POST` request to `/cart/music`with a body of `action=add&license_id=2&license_name=Personal&price=1.99&track_id=110947&track_title=Remind%2BMe&uid=110947_2&&&token=[token]`.
+
+Copying the `track_id` from the Add to Cart request and transplanting it into the `/musicstore/download` successfully redirects you to Amazon S3 to download the track, despite you not having paid for it.
+
+Note: I submitted the `GET` request to `/musicstore/download`, but didn't follow the 302 redirect to S3 to download the track since I didn't pay for it. Because of this I can't 100% verify that the resulting file is the track, but judging by the URL it looks like it is.
+
+### Proof-of-Concept
+**Accounts Needed**
+* User #1 - Standard Vimeo user
+
+**Steps**
+1. Login, and browse to https://vimeo.com/musicstore
+2. Find a **non-free** track, and click the Add to Cart icon
+3. Inside the `POST` request to `/cart/music` copy the `track_id`
+4. Browse to the following URL, replacing `[track_id]` with the one from step 3. You should be redirected to S3 to download the track (without paying): `https://vimeo.com/musicstore/download?track_id=[track_id]&license_id=4`
+
+If you need anymore info just shout,
+Cheers,
+Jack

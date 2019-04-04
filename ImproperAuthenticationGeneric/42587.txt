@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/42587
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/toufik-airane
+ReportedTo:Vimeo(vimeo)
+BountyAmount:5000.0
+Severity:
+State:Closed
+DateOfDisclosure:26.02.2015 0:13:38
+
+Summary:
+
+Hello, my name is Toufik Airane.
+This is Responsible Disclosure and Silent Disclosure.
+
+Thanks you to opened bug bounty program!
+
+Please find a proof of concept for IDOR attack on famous vimeo.com.
+With this IDOR, attacker can reset any password, of any account and take controle of it.
+
+Please, find in attachment a PDF and a MP4 who explains tricks.
+
+Cheers,

@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/43997
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/dotspoted
+ReportedTo:Vimeo(vimeo)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.02.2015 18:46:20
+
+Summary:
+
+Hello , I have found interesting vulnerability and i hope you will like it and fix it soon because it will really cause damage .
+
+I can hijack your email server because there is no protection not even consider spam .
+
+kindly check the POC video :
+https://www.dropbox.com/s/oluc4d2eosc46l9/vimeo.mp4?dl=0
+
+
+Verify it and let me know 
+
+Regards,
+Abdul Haq Khokhar

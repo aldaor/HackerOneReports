@@ -1,0 +1,64 @@
+ReportLink:https://hackerone.com/reports/46109
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ba4fe4ca95021d367f8a574
+ReportedTo:Vimeo(vimeo)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.02.2015 15:59:59
+
+Summary:
+
+I took at "vimeo" cookie ("Vimeo authentication token" https://vimeo.com/cookie_list)
+
+And to show approximately my thought process I did :
+1. compare two generate values from two different sessions of mine
+
+epk9rrdskc70pcdxxmrdmdx7jpcdxxmrdmdx7%2Cpv222v2mfw90w5dcv5wtkmsfffxfsxc2tdruxmcrt
+epk9rrdskc70pcdxxttcrmc7jpcdxxttcrmc7%2C5jjylb%2C_fqq%2C_%2Cf85wpDanqvnh7%2Cpvds5tt9ds9trcvv2mdsf25tx02kc5kkuw9mcf2cs
+
+both started with "epk9rrdskc70pcdxx" 
+
+2. I have Googled part of this common string and found http://www.integernumber.com/305334256 
+It had "epk9rd" as 305334256 in base 29
+
+3. I have played a little and saw that I can create similar strings, but not quite the one as in the cookie value
+
+4. So I decided to take the entire string (separated by ".") and make a python script that tries if it can transform from any base (2,3,4,5,6 .100) to base 10 
+
+def to(s, b):
+    """
+    Converts given number s, from base b to base 10
+
+    s -- string representation of number
+    b -- base of given number
+    """
+    assert(1 < b < 37)
+    return int(s, b)
+
+for i in range(2,200):
+        try:
+                print to("pv222v2mfw90w5dcv5wtkmsfffxfsxc2tdruxmcrt",i),i
+        except:
+                pass
+
+(the script tries to change base, if not tries the next value)
+
+5. Results: for two different values of "vimeo" cookie, I got this: (value,base)
+
+mirko@pc:~/Downloads$ python temp.py 
+200501114734436429736082032703861533263520506562424919919 34
+568430180925165599882998275863273891667173461682477733127 35
+1564967196145999019105609819409570154363830358873721264599 36
+mirko@pc:~/Downloads$ vi temp.py
+mirko@pc:~/Downloads$ python temp.py 
+200501114734436429736082031819180459224932196425002801149 34
+568430180925165599882998274329084292808031730523265871587 35
+1564967196145999019105609816789951113336151685719009724667 36
+
+
+6. So the "vimeo" cookie can be considered encoded in base 34,35 or 36 and the decoded value is similar to other values from my other sessions
+
+7. This means that the cookie value can be guessed and an attack can go like this:
+
+Attacker generates for months cookie values (1 per second I don't think triggers any firewall for example) and finally gets to some account. (the other substring of the vimeo cookie is generated the same)

@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/80936
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/techguynoob
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:31.08.2015 4:10:14
+
+Summary:
+
+Hello Hackerone Team !!!!
+
+Few days ago &#x2588;&#x2588;&#x2588;&#x2588; invited me for Private disclose !!!
+
+Yesterday I saw fix of this report #80597
+
+So,I deepdigger the JSON serach Response 
+
+for example I search this directory 
+
+https://hackerone.com/████
+
+https://hackerone.com/████;
+
+Now I access without authentication and i saw the private Program bounty details disclosed as part of JSON search response !!! ,So I assume its a register as private program in hackerone !!!
+
+Response :
+
+`████base_bounty:████$`
+
+`████base_bounty:████$`

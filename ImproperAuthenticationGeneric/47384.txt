@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/47384
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/4lemon
+ReportedTo:Mobile Vikings(mobilevikings)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.03.2015 14:17:51
+
+Summary:
+
+user A has a sim and send auth request to user B
+user B accepted it and decide to add to shared sim own topup method
+user B goes to https://mobilevikings.be/en/account/easypay/auto-sms-topup/  - select shared sim card and select method in section "Choose a payment method" and submit form.
+User A get an email with link and get a reminder about this request on website.
+
+link from the mail - https://mobilevikings.be/en/account/easypay/request/approve/scQxc0PMTjRF2G7CrWY69nzUcKxPn9/
+
+link from the https://mobilevikings.be/en/account/requests/#easypay -> https://mobilevikings.be/en/account/easypay/request/287740/approve/1036392/
+
+Let's open this link in context of user B session - he sent this method and user A should accept it not user B
+Link from mail - 404 error - good
+Link from request page - Easy Payment authorization request approved - ?????!!!!! ( i tested on absolutely another user - and got 404 error, so this work only in context of sender or recipient) 
+Let's look closer on request which made by user B to sent this method to user A
+POST /en/account/easypay/auto-sms-topup/ HTTP/1.1
+
+csrfmiddlewaretoken=AlEqSERKOXKjZfSdw2WtPY4l7n5b68BM&sim_card=subscription-1036392&payment_method=debtor_287740&name=&birthdate=&iban=&bic=&topup_when_calling_credit_below_treshold_amounts=0
+
+sim_card=subscription-1036392 and payment_method=debtor_287740 - all info for approve request in sender request.

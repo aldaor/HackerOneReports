@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/56119
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/kaito
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:15.05.2015 20:52:30
+
+Summary:
+
+Hi
+When Twitter user account change his privacy settings =>https://twitter.com/settings/security
+and enable "Protect my Tweets " 
+others users "Not in the Follow list" should Not be able to see the user's follower an following list 
+but I just found out away to see any Protected users" follower an following only by visiting a link 
+
+in this case here #53128  "which I still think you should fix it" you gave me this account  https://twitter.com/shpendktester1 and told me to view his Favorites it's a protected account 
+users shouldn't be able to view his followers list or the following list 
+so as the attacker I can view his following using this link 
+
+https://twitter.com/shpendktester1/following/users?cursor_index=&cursor_offset=&include_available_features=1&include_entities=1&is_forward=true
+
+notice that account user name in the link 
+when you visit the link a file  named json.json well be downloaded view the file and ctrl+f lookup for  "data-screen-name"
+so this user following these two accounts 
+@shpendktester
+@NicoleScherzy
+
+to view his followers edit the link to : 
+
+https://twitter.com/shpendktester1/followers/users?cursor_index=&cursor_offset=&include_available_features=1&include_entities=1&is_forward=true
+
+when you visit the link a file  named json.json well be downloaded view the file and ctrl+f lookup for  "data-screen-name"
+so this user followers  these three accounts 
+@shpendk
+@shpendktester
+@lovely_loucks
+
+thanks ,,
+

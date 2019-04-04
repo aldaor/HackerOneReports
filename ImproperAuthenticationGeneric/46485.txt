@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/46485
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/anonymous100928
+ReportedTo:Twitter(twitter)
+BountyAmount:1260.0
+Severity:
+State:Closed
+DateOfDisclosure:14.11.2015 16:50:09
+
+Summary:
+
+There are many website that tracks the unfollowers and all like:
+http://unfollowerstats.com
+[Steps]:
+1. Login with ur twitter account, i.e. abcd@mail.com
+2. Open http://unfollowerstats.com, This will ask you to login with twitter:
+3. you will get a link like this:
+https://api.twitter.com/oauth/authenticate?oauth_token=xpXP21WOzwvsocu7yjQBafl8BKRtKdeH
+
+4.
+Open Another browser and login with some other user i.e. : xyz@mail.com
+5.
+Open this  oAuth link(https://api.twitter.com/oauth/authenticate?oauth_token=xpXP21WOzwvsocu7yjQBafl8BKRtKdeH) on the other browser
+6. 
+Authorize this OAuth with user xyz@mail.com
+
+7. Go to the first browser, and refresh the page and continue to authorize. You will be logged into http://unfollowerstats.com with xyz@mail.com user
+
+
+-- Tested with 2 such websites

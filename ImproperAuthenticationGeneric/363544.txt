@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/363544
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/zeq3ul
+ReportedTo:Dropbox(dropbox)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:13.06.2018 17:38:18
+
+Summary:
+​​This report describes an attack to bypass TouchID in the Dropbox Mobile iOS application on jailbroken iOS devices. Dropbox doesn’t consider jailbroken devices in scope for our bounty program.

@@ -1,0 +1,47 @@
+ReportLink:https://hackerone.com/reports/7041
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/uname
+ReportedTo:IRCCloud(irccloud)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:22.05.2014 22:46:40
+
+Summary:
+
+After a user logs out of the iOS application, the server should be destroying the user's session. However, this is not occurring in the iOS application.
+
+When the log out request is made, the following request and response is sent and received from the server:
+
+REQUEST:
+
+POST /apn-unregister HTTP/1.1
+Host: www.irccloud.com
+Proxy-Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Accept-Encoding: gzip, deflate
+Cookie: session=1.eaf395c450d6ad52023804d9846b7376
+Accept-Language: en-us
+Accept: */*
+Content-Length: 117
+Connection: keep-alive
+User-Agent: IRCCloud/1.8 (iPhone; en; iPhone OS 6.1.6)
+
+device_id=438a32983a261b01464b8c6cebf3630e8d0f5ca5cd004d973ebb40461ab890c9&session=1.eaf395c450d6ad52023804d9846b7376
+
+device_id=438a32983a261b01464b8c6cebf3630e8d0f5ca5cd004d973ebb40461ab890c9&session=2.0b73bfd76e44eae93257c5c33d7c232c
+
+RESPONSE:
+
+HTTP/1.1 200 OK
+X-Frame-Options: SAMEORIGIN
+X-UA-Compatible: chrome=1
+Strict-Transport-Security: max-age=31536000
+server: Cowboy
+date: Fri, 11 Apr 2014 05:29:54 GMT
+content-length: 28
+content-type: application/javascript
+
+{"_reqid":0,"success":true}
+
+The session identifer "1.eaf395c450d6ad52023804d9846b7376"  is not destroyed and can be re-used over an over again. If this cookie is captured or leaked, an attacker would have persistent access to a victim's account.

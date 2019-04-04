@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/479464
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/david993
+ReportedTo:Dropbox(dropbox)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:19.02.2019 17:40:52
+
+Summary:
+This report described a concern with our “Trust this Computer” feature in Dropbox web sign in. 
+
+The way our “Trust this Computer” feature works, at a high level, is that while authenticating using 2FA, the user can request that this device be trusted in the future so they don’t have to use 2FA again. We return a high entropy token, bound to the user’s 2FA settings, as a cookie on the device to verify the device in any future authentication attempts. Lastly, we suggest in the UI that a user only use this feature on devices they trust.
+
+The report suggested that this cookie-based model was insecure for two main reasons:
+
+1. Anyone with the trusted cookie could bypass 2FA.
+2. The trust relationship is not unlinkable via personal settings.
+
+To exploit any insecurity, an attacker would also likely need to be executing code on the device in question because the trusted device cookie is HttpOnly indicating that exfiltration via XSS would likely not be possible. The high entropy nature of the token would make guessing the token infeasible.
+
+To the second point, while we don’t have a way to unlink via the settings, a user can invalidate these tokens by disabling and reenabling 2FA on their account. This will unbind all of the previous tokens linked to the account. A user can also delete the cookie from their device if they don’t want that device trusted any longer.
+

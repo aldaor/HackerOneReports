@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/44492
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/akhil-reni
+ReportedTo:Twitter(twitter)
+BountyAmount:140.0
+Severity:
+State:Closed
+DateOfDisclosure:18.02.2015 18:39:53
+
+Summary:
+
+Hey hi,
+
+Steps to reproduce:
+=============================================
+
+I have been testing the twitter kit in fabric.
+I added login with twitter integration to my application.
+I pushed the application to my android phone , clicked login with twitter.
+entered my username and password.
+
+Searched my logcat for everything with the word "twitter" in it. 
+I found the oauth token getting leaked via login with twitter integration on Fabric.
+So any app that is using fabric's twitter kit ( login with twitter) is vulnerable to it.
+Any other app installed on that particular phone hasaccess to logcat, and can read the logs.
+which results in oauth token stealing.
+
+Regards,
+karthik
+Wesecureapp

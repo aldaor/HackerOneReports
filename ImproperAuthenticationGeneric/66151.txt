@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/66151
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/batman
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:10.07.2015 0:32:32
+
+Summary:
+
+This issue is a little confusing. So, if you are not able to reproduce let me know i will send you a video to help reproduce the issue.
+
+Reproduction Steps :
+1) Let's say you are User A who is inviting a user B to abug report, User A goes to + sign(adding participants) and adds a email address there.
+2) User B gets an email immediately about an invitation, he accepts it and sees the bug report.
+3) User A after few minutes of sending invitations realizes he made a mistake in email, and cancels the invitation which is still showing pending in his side. 
+4) User A is shown a message " The invitation to UserB has been successfully rejected.", he thinks now the User B is not able to see the bug report anymore. But to his expectation, User B can still see the bug report.
+
+So what is happening?
+When User A clicked on the cancel sign to invitation that showed "pending", the cancel signed only made the invitation send to email invalid. But since user B has already accepted the invitation, User A's clicking on him won't remove User B from the bug report.
+
+So what should have actually happened?
+When User A clicked on cancel sign to invitation that was showing "pending", it should check if the user B has already join the bug report or not. And if User B hasn't it should make invitation code invalid, and if User B has already accepted and joined the Bug report, it should revoke the User B's access from Bug report.
+
+I hope this clear enough to understand.

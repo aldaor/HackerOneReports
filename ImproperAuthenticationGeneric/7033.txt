@@ -1,0 +1,54 @@
+ReportLink:https://hackerone.com/reports/7033
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ashesh
+ReportedTo:IRCCloud(irccloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.05.2014 8:17:54
+
+Summary:
+
+Vulnerability description
+This cookie does not have the HTTPOnly flag set. When a cookie is set with the HTTPOnly flag, it instructs the browser that the cookie can only be accessed by the server and not by client-side scripts. This is an important security protection for session cookies.
+This vulnerability affects /. 
+Discovered by: Crawler. 
+Attack details
+Cookie name: "session"
+Cookie domain: "www.irccloud.com"
+
+
+ View HTTP headers 
+Request
+GET / HTTP/1.1
+Pragma: no-cache
+Cache-Control: no-cache
+Acunetix-Aspect: enabled
+Acunetix-Aspect-Password: 082119f75623eb7abd7bf357698ff66c
+Acunetix-Aspect-Queries: filelist;aspectalerts
+Cookie: session=4.6b060b7018904911e5665ffc9685a5a3
+Host: www.irccloud.com
+Connection: Keep-alive
+Accept-Encoding: gzip,deflate
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.63 Safari/537.36
+Accept: */*
+
+Response
+HTTP/1.1 200 OK
+X-Frame-Options: SAMEORIGIN
+X-UA-Compatible: chrome=1
+Strict-Transport-Security: max-age=31536000
+server: Cowboy
+date: Fri, 11 Apr 2014 04:24:23 GMT
+content-length: 80485
+content-type: text/html; charset=UTF-8
+cache-control: no-cache, must-revalidate, max-age=0, no-store
+pragma: no-cache
+expires: 0
+Original-Content-Encoding: gzip
+ 
+
+The impact of this vulnerability
+An attacker can hijack session of victim
+How to fix this vulnerability
+You should set the HTTPOnly flag for this cookie.

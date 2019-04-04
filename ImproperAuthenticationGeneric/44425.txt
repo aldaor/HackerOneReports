@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/44425
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ckmk44
+ReportedTo:Vimeo(vimeo)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.01.2015 15:01:13
+
+Summary:
+
+Hi,
+     vimeo site is using facebook for open authentication . The authentication url is in this way 
+https://www.facebook.com/dialog/oauth?client_id=19884028963&redirect_uri=https://vimeo.com/_facebook/join?ssl=0&iframe=0&popup=0&player=0&product_id=0&scope=email,basic_info,read_stream,publish_actions&state=  
+
+problem is that facebook oauth also looks for sub domains  so your app is open to redirect attacks, an attacker could make a plan like this
+
+1)Attacker makes an app with vimeo api
+2)And register his redirect_uri as www.prashanthvarma.in/code.php?code=
+3)so the redirect_uri for facebook is https://api.vimeo.com/oauth/authorize?response_type=code&client_id=9f3bb9f9186bc825434330567c99283f6dd57586&state=912145450290129&redirect_uri=http://www.prashanthvarma.in/code=
+
+4) the final url for attack is
+
+https://www.facebook.com/dialog/oauth?client_id=19884028963&redirect_uri=https://api.vimeo.com/oauth/authorize%3Fresponse_type%3Dcode%26client_id%3D9f3bb9f9186bc825434330567c99283f6dd57586%26state%3D912145450290129%26redirect_uri%3Dhttp://www.prashanthvarma.in/code=&iframe=0&popup=0&player=0&product_id=0&scope=email,basic_info,read_stream,publish_actions
+
+5) attacker could post ,read stream and do many things with your app ,the above example is just for demonstration .This attack can be done if  an open redirect is found in vimeo domains
+
+solution:
+This issue can be solved by using an option in facebook
+app_settings>Advanced>Valid OAuth redirect URIs>YOUR_REDIRECT_URI
+
+let me know if any info is required from my end
+
+Thank you,
+prashanth varma

@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/77076
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/crab
+ReportedTo:Enter(enter)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:27.11.2015 6:28:47
+
+Summary:
+
+**Host**
+api.romit.io
+
+**Endpoint**
+/v0/cash/auth/login/verify
+
+**Issue**
+The GA Code is not verified on the server side for the users whose "Verification application" has been DENIED by the Romit support Team
+
+**PoC**
+
+1.    Setup an account at app.romit.io, use your apiKey, apiSecret and Location-ID to setup.
+2.   Now click on Send Money, add the Phone Number and PIN of an account whose verification application has been denied once.
+3.   You are prompted for GA code, enter any code. The server reponds with the following message `
+{
+  "success" : true,
+  "error" : null,
+  "response" : {
+    "kioskEnrollmentStatusType" : "DENIED"
+  }
+}`
+and prompted with this message on the UI [see image resubmit.png]
+4. You are prompted to take an image of your ID and your image.
+5. These documents are then saved on the server side.
+
+Thanks
+crab

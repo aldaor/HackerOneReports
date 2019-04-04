@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/493791
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/dhakalananda
+ReportedTo:GitLab(gitlab)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:08.03.2019 18:41:50
+
+Summary:
+
+Hi Gitlab,
+
+**Summary:**
+I have found a inadequate cache control vulnerability in Gitter.
+
+**Description:**
+You can use the backspace button to get the full access to the account. There is no cache control and the browser saves sensitive information of a private chat room.
+This report is influenced by the disclosed report #407763. The impact and attack scenario is also the same.
+
+## Steps To Reproduce:
+
+1. Sign in to Gitter
+2. Go to a private room
+3. Sign-out from the device
+4. Click on backspace
+5. Chat in the private room
+
+You can access the private room without actually being logged in. You can also chat from the logged out account.
+
+## Impact
+
+Sensitive information can get disclosed through a single backspace.

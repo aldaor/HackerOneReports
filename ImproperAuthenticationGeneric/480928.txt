@@ -1,0 +1,116 @@
+ReportLink:https://hackerone.com/reports/480928
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/halfdog
+ReportedTo:Dovecot(dovecot)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:13.02.2019 16:52:00
+
+Summary:
+
+**Summary:**
+
+Dovecot supports enforcing the login user name to be the one encoded in the SSL client certificate, thus restricting the username. Using SSL certificates that do not even contain the relevant field bypasses this restriction, maybe leading to full login bypass under some (luckily rare) conditions.
+
+**Description:**
+
+According to [0] SSL client certificate authentication may be used to force a username, thus a user in posession of a valid client certificate may only authenticate as the user named in the certificate:
+
+"""You may also force the username to be taken from the certificate by setting auth_ssl_username_from_cert = yes.
+....
+You may also want to disable the password checking completely. Doing this currently circumvents Dovecot's security model so it's not recommended to use it, but it is possible by making the passdb allow logins using any password (typically requiring "nopassword" extra field to be returned)."""
+
+While the text suggests, that the user cannot select another user identity, only the one encoded in the certificate is used. Thus
+
+a) only accounts with corresponding valid certificates can be accessed and
+
+b) with "nopassword" a client-certificate only authentication procedure can be established.
+
+By using a client certificate signed by one of the CAs registered in Dovecot (e.g. a stolen webserver certificate or internal system certificate issued by the organisation's own internal CA, or - in my case: an older version of the client SSL certificate issued prior to turning the setting on and only new certificates now containing the additional field) and that other certificate does not contain the required field to encode the username (e.g. "x500UniqueIdentifier"), then the client may submit any username via pop protocol. Together with certificate-only-auth (nopassword) any account can be accessed without password.
+
+## Releases Affected:
+
+The issue described here was reproduced with Debian Buster, "dovecot-pop3d 1:2.3.4-2". If source code was understood correctly, it should also apply to imap-SSL, but that was not tested yet. See [1]. It seems, that the logic checks first if there is any user name to enforce and only if so, assigns it. Certificates without encoded username will always fail the "strcmp(key, "cert_username")" check.
+
+'''
+bool auth_request_import_auth(struct auth_request *request,
+			      const char *key, const char *value)
+{
+	i_assert(value != NULL);
+
+	if (auth_request_import_info(request, key, value))
+		return TRUE;
+
+	/* auth client may set these */
+	if (strcmp(key, "secured") == 0) {
+		if (strcmp(value, "tls") == 0)
+			request->secured = AUTH_REQUEST_SECURED_TLS;
+		else
+			request->secured = AUTH_REQUEST_SECURED;
+	}
+	else if (strcmp(key, "final-resp-ok") == 0)
+		request->final_resp_ok = TRUE;
+	else if (strcmp(key, "no-penalty") == 0)
+		request->no_penalty = TRUE;
+	else if (strcmp(key, "valid-client-cert") == 0)
+		request->valid_client_cert = TRUE; 
+	else if (strcmp(key, "cert_username") == 0) {
+		if (request->set->ssl_username_from_cert) {
+			/* get username from SSL certificate. it overrides
+			   the username given by the auth mechanism. */
+			request->user = p_strdup(request->pool, value);
+			request->cert_username = TRUE;
+		}
+	} else {
+		return FALSE;
+	}
+	return TRUE;
+}'''
+
+## Steps To Reproduce:
+
+Generate certificates with and without the "x500UniqueIdentifier" field.
+
+Following authentication/SSL settings were applied to Dovecot for testing.
+
+```protocols = pop3
+disable_plaintext_auth = yes
+auth_ssl_require_client_cert = yes
+auth_ssl_username_from_cert = yes
+ssl = required
+ssl_cert = <[keydir]/main.cert
+ssl_key = <[keydir]/main.key
+ssl_ca = <[keydir]/ca.certs
+ssl_require_crl = yes
+ssl_verify_client_cert = yes
+ssl_cert_username_field = x500UniqueIdentifier
+passdb {
+  driver = pam
+}
+userdb {
+  driver = passwd
+}
+
+# Replace PAM from above with this setting to test the "nopassword" use case.
+passdb {
+  driver = static
+  args = nopassword=y
+}```                                      
+
+## Supporting Material/References:
+
+* [0] https://wiki.dovecot.org/SSL/DovecotConfiguration
+* [1[ https://raw.githubusercontent.com/dovecot/core/master/src/auth/auth-request.c
+
+## Impact
+
+When attacker gains access to any eligible SSL certificate (and private key) he may bruteforce any login or login as any user (with nopassword). He may then read/delete/modify any messages found on server.
+
+As the attacker has still to be able to access at least one valid client certificate (and private key), following attack cases might be most relevant:
+
+* The owner of the service "upgrades" to enforcing username by use of the SSL client name and reissues client certificates for his userbase. Assuming that enabling the Dovecot setting will tigthen security, he might not revoke the old certificates, e.g. to avoid having large CRLs for certifificates expiring in near future (maybe he even tried but the CRL was not copied to the server) or because users still use the old certificate for other protocols, e.g. SMTP sending, VPN. Thus any of those older but still valid certificates can be used as skeleton key to bypass the username check and maybe authentication (nopassword).
+
+* An attacker stole any non-dovecot-login SSL certificate and key signed by the CA registered in Dovecot, e.g. a webserver certificate, certificates deployed in devices with higher risk of theft, e.g. WLAN routers, smartphone with certificate based WLAN authentication.
+
+* The dovecot maintainer for some reason accidentially (or even on purpose - but that would be security by obscurity) configured an external CA, e.g. Thawte for client certificate checks. Any person who is allowed to purchase such a certificate may now access the service.

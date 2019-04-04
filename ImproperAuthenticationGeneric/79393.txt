@@ -1,0 +1,73 @@
+ReportLink:https://hackerone.com/reports/79393
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/cyberunit
+ReportedTo:QIWI(qiwi)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:02.11.2015 21:33:31
+
+Summary:
+
+Доброе утро.
+Мне удалось получить доступ к большой части документов расположенных на вашем корпоративном портале 
+> mango.qiwi.com
+
+ (фотографии,имена,доб.ID, адреса электронной почты сотрудников компании, презентации, протоколы заседаний правления,счета,товарные накладные и т.д)
+
+1) Отправной точкой стала поисковая выдача Гугл картинок по запросу: mango.qiwi.com
+выдача среди прочих картинок содержит следующий адрес: 
+> https://mango.qiwi.com/media/370e0?filename=1376582549066_history.jpg&type=attachment&width=700&height=449
+
+(иллюстрация прогресса компании с 1999 года)
+
+Манипуляции с GET параметрами в ссылке не дали никаких результатов.
+Интерес вызвал такой запрос без параметров:
+> https://mango.qiwi.com/media/370e0?
+
+С указанием параметра "type=attachment" документ выводится корректно.
+> https://mango.qiwi.com/media/370e0?type=attachment
+
+Таким путём были найдены следующие документы:
+
+( Доверенность !!! Паспортные Данные !!!)
+> https://mango.qiwi.com/media/3a95f?type=attachment
+
+( Протоколы заседания правления  )
+>https://mango.qiwi.com/media/392a6?type=attachment
+https://mango.qiwi.com/media/392a2?type=attachment
+https://mango.qiwi.com/media/392a3?type=attachment
+https://mango.qiwi.com/media/392a4?type=attachment
+https://mango.qiwi.com/media/392a5?type=attachment
+и т.д
+
+(Списки лиц с должностями)
+> https://mango.qiwi.com/media/392a8?type=attachment
+
+( Счёт, товарная накладная, товарно-транспортная накладная с ИНН и номерами счетов )
+> https://mango.qiwi.com/media/3a38c?type=attachment
+https://mango.qiwi.com/media/3a33a?type=attachment
+https://mango.qiwi.com/media/3a51e?type=attachment
+
+( Интересные фотографии сотрудников с корпоративов, с интересными надписями на плакатах на заднем фоне )
+> https://mango.qiwi.com/media/3a32c?type=attachment
+https://mango.qiwi.com/media/3a32f?type=attachment
+
+( Положения о служебных командировках - для внутреннего пользования )
+> https://mango.qiwi.com/media/3a70c?type=attachment
+https://mango.qiwi.com/media/3a75a?type=attachment
+https://mango.qiwi.com/media/3a76a?type=attachment
+https://mango.qiwi.com/media/3a67a?type=attachment
+https://mango.qiwi.com/media/3a66a?type=attachment
+https://mango.qiwi.com/media/3a66c?type=attachment
+
+( Положения о подборе и адаптации персонала - для внутреннего пользования )
+> https://mango.qiwi.com/media/3a68a?type=attachment
+
+( Бланки служебных записок )
+> https://mango.qiwi.com/media/3a76c?type=attachment
+
+( Презентация QIWI SmartPost )
+> https://mango.qiwi.com/media/3a87c?type=attachment
+
+Можно автоматизировать процесс, чтобы быстрее выйти на наиболее интересные документы.

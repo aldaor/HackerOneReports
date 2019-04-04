@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/87561
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/paresh_parmar
+ReportedTo:Coinbase(coinbase)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:01.12.2015 14:26:06
+
+Summary:
+OAuth authorize button in the Coinbase Android App did not have the android:filterTouchesWhenObscured attribute set to true, which may have made it vulnerable to tap-jacking.
+

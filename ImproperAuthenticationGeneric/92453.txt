@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/92453
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/supernatural
+ReportedTo:Shopify(shopify)
+BountyAmount:2500.0
+Severity:
+State:Closed
+DateOfDisclosure:06.10.2015 18:04:12
+
+Summary:
+This issue allowed any merchant to search for users by their ID. The search would retrieve the first name and last name of any registered customer that belonged to any shop in Shopify.

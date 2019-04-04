@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/7909
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/vhssunny1
+ReportedTo:Localize(localize)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.05.2014 1:52:50
+
+Summary:
+
+Vulnerability class: Business logic Failure - Browser cache management and logout vulnerability.
+
+Vulnerability impact: Logging out from an application does not clear the browser cache of any sensitive information that have been stored.
+
+Steps to reproduce: 1. Login to portal. 2.browse few tabs 3. Click Logout 4. Click browser back button 5. you should able to see previous page and not only previous page but also viewed pages in the portal by clicking back back button
+
+Thanks
+Hari

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/66845
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/paramdham
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:20.0
+Severity:
+State:Closed
+DateOfDisclosure:16.09.2016 5:23:51
+
+Summary:
+Security researcher described a method to enumerate emails from the password reset page using brute force techniques. The response messages allowed a user to determine if an account existed. Furthermore, no rate limiting was applied.

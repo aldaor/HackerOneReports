@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/46379
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/m0rph3u5
+ReportedTo:Nearby Live(nearby)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.02.2015 1:41:38
+
+Summary:
+
+There is no check whether the inviting user is allowed to invite a user into a group and through manipulation a user may sent themself and invite to any group.
+
+Example:
+Group A created by User 1 with Owner invitation only with ID x
+User 2 sends malicious himself invite with ID x and receives invite to Group A
+
+
+API Call that needs to be fixed:
+https://www.wnmlive.com/api/groups/invites

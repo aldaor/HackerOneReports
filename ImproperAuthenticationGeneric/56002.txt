@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/56002
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/sukhoi
+ReportedTo:Shopify(shopify)
+BountyAmount:2000.0
+Severity:
+State:Closed
+DateOfDisclosure:04.07.2015 15:45:09
+
+Summary:
+
+Shopify android client all API request's response leakage, including access_token, cookie, response header, response body content and much other information. An attacker can extract cookie and access_token of Shopify android client without any permission needed and user awareness.
+
+#Bug impact:
+
+A malicious android app can extract cookie and access_token and other user sensitive information in Shopify android client, and thus taking control of user's account.
+
+Bug demostration (see two screenshots with stolen cookie in http headers printed in logcat and access_token).
+
+#Bug explaination:
+
+The shopify client use implicit broadcast to communicate intra-app to pass network request's response infromation, with action "com.shopify.service.requestComplete". However this broadcast is not protected by permission, thus any android client can register a broadcast receiver and monitor response information, extracting sensitive account credentials.
+
+The broadcast is send at com/shopify/service/netcomm/NetworkService, recvd at multiple points. including com/shopify/service/BaseRequestDelegate$RequestCompletionBroadcastReceiver$1.
+
+#Steps to reproduce:
+
+- Install the poc apk and shopify client, poc apk registered a receiver and monitor in background
+- Open shopify and login, the poc apk will now receives user's admin_cookie and access_token silently, print them in logcat as demonstrated in screenshots. Of course the attacker can send it to remote control center and fully take control of user's account.
+- As user operates the attacker can receives other response information.
+- logcat command:  adb logcat -s SHOPIFYHACK:V
+
+#Fix recommendations:
+
+Use signature level permission to protect the broadcast, or use a LocalBroadcastManager
+
+POC apk attached, tested on Nexus 5 4.4.4. No special permission or root required. No user interactions and awareness.

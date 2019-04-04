@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/67220
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/nismo
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:15.07.2015 17:38:10
+
+Summary:
+
+If an owner or an administrator clicks "Expire User Sessions" in Admin Site although you get the notification that all users where logged out, but this does not actually happens for the user that is currently logged in using the Shopify Application in IOS
+
+This was tested on the latest Shopify app held in iTunes Store, using latest build of IOS 8.3 in iphone 6 plus
+
+Thanks!

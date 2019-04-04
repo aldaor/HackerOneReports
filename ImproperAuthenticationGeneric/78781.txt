@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/78781
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/vijay_kumar1110
+ReportedTo:ok.ru(ok)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:01.08.2016 14:26:21
+
+Summary:
+Private group videos could be accessed via direct link due to lack of access control checks on mobile site version:
+http://m.ok.ru/dk?st.cmd=altGroupMovieComments&st.ord=off&st.groupId=53605096554748&st.sbj=31115578108

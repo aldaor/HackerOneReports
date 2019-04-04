@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/62827
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/mvcdabra
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.06.2015 22:55:11
+
+Summary:
+
+an email notification should be get while changing paypal email address
+
+when we use hackerone a/c in any team 
+
+there many people in team member 
+
+so when we change paypal email an email notification should be get

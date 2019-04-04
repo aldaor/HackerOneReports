@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/49356
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/faisalahmed
+ReportedTo:Airbnb(airbnb)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.07.2015 22:55:54
+
+Summary:
+
+Hello Team,
+I Noticed a Critical Flow that allows attacker to Delete Any *Airbnb* users Symbol!
+
+ex: **[https://create.airbnb.com/16925230/symbol/delete](https://create.airbnb.com/16925230/symbol/delete)**
+* Just Copy The link and replace victim's profile id with `16925230`.
+* Run the URL.
+* Victims Symbol will be deleted!
+
+Looking Forward!

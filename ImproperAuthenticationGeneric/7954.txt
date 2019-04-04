@@ -1,0 +1,49 @@
+ReportLink:https://hackerone.com/reports/7954
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ashesh
+ReportedTo:Localize(localize)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.04.2014 13:09:30
+
+Summary:
+
+Vulnerability description
+When a new name and password is entered in a form and the form is submitted, the browser asks if the password should be saved. Thereafter when the form is displayed, the name and password are filled in automatically or are completed as the name is entered. An attacker with local access could obtain the cleartext password from the browser cache.
+This vulnerability affects /. 
+Discovered by: MANUAL . 
+Attack details
+Password type input named sign_in[password] from unnamed form with action http://www.localize.io/ has autocomplete enabled.
+
+HTTP headers 
+Request
+GET / HTTP/1.1
+Referer: http://www.localize.io/
+Host: www.localize.io
+Connection: Keep-alive
+Accept-Encoding: gzip,deflate
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.63 Safari/537.36
+Accept: */*
+
+Response
+HTTP/1.1 200 OK
+Date: Fri, 18 Apr 2014 04:24:20 GMT
+Server: Apache
+Pragma: no-cache
+Expires: Mon, 24 Mar 2008 00:00:00 GMT
+Cache-Control: no-cache, no-store
+X-Frame-Options: sameorigin
+Set-Cookie: PHPSESSID=fog330ba62qb2gvn292k4n1q83; path=/; HttpOnly
+Vary: Accept-Encoding
+Content-Length: 5490
+Keep-Alive: timeout=15, max=100
+Connection: Keep-Alive
+Content-Type: text/html; charset=utf-8
+Original-Content-Encoding: gzip
+ View HTML response 
+
+How to fix this vulnerability
+The password auto-complete should be disabled in sensitive applications. 
+To disable auto-complete, you may use a code similar to: 
+<INPUT TYPE="password" AUTOCOMPLETE="off">

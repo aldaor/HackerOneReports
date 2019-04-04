@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/48416
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/siddiki
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:24.03.2015 0:56:05
+
+Summary:
+
+Hackerone's destroys user sessions automatically after signing out,changing password etc.So Old sessions are seems to be worthless for any attacker.But I found something,by exploiting this you can restrict any hackerone user to logging into his account.
+
+**Pre-Requisition**
+I just need one of his old sessions.
+
+**steps to reproduce**
+1. Login to hackerone.
+2. Capture any request.
+3. Send it to burp intruder.
+4. Logout from hackerone.
+5. Now start intruding that captured request,which is carrying the old destroyed session.
+6. Try log in from other device.
+7. Every time burp intruder sends a request,the present logged in account will be logged out automatically.
+So if you keep continue intruding,that user will never be able to login to his own ID.

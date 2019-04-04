@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/74933
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/hussain_0x3c
+ReportedTo:Mapbox(mapbox)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:19.04.2016 21:26:58
+
+Summary:
+In July 2015, @hussain submitted a report where a GET request to an internal API endpoint (`/core/api/Map`) disclosed details of public maps in a Mapbox user's account. The disclosed information included the name, description, map identifier, geographic center, map layers, date created, and date last modified of all of the public maps in a Mapbox user's account.
+
+No private maps were exposed as a result of this report as the private maps feature was not available until February 2016. No Mapbox user account data such as email address or billing information was disclosed. This vulnerability only affected public maps stored on www.mapbox.com. Data dynamically loaded on to a Mapbox map via XHR or other means was not affected.
+
+Hussain reported success with the following requests on www.mapbox.com:
+
+* `GET /core/api/Map?list=1&private=1&_type=composite&account=<username>`
+* `GET /core/api/Map?account=<username>&_object=tm2style&private=1`
+
+To take advantage of this vulnerability, an attacker had to supply a valid Mapbox username. They would then make a request to the `/core/api/Map` endpoint with the query string `&account=<victim username>`.
+
+We patched this vulnerability by requiring the value of the `account` query string parameter to match the account name of the user that authenticated the request to this endpoint.
+
+We have chosen partial disclosure of this report due to the presence of sensitive information in the researcher's original report.

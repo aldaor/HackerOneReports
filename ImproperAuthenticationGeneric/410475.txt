@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/410475
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/k3mlol
+ReportedTo:Starbucks(starbucks)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:01.11.2018 21:55:00
+
+Summary:
+@k3m reported a vulnerability allowing unauthorized access to a system used for CI/CD processes.  Our teams quickly restricted access and fixed the vulnerability. Thank you @k3m for a detailed report. 

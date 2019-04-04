@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/90643
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/outbox
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.09.2015 15:49:01
+
+Summary:
+
+When you register for a new account, there is no verification link sent to the email for confirmation. The account is directly activated and can be used without confirming the email.
+
+This is vulnerable as anyone can use anyone's email without verification. and one with valid email owner cant signup with his own email as someone else already took it before him.

@@ -1,0 +1,78 @@
+ReportLink:https://hackerone.com/reports/93691
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/brakhane
+ReportedTo:Shopify(shopify)
+BountyAmount:2000.0
+Severity:
+State:Closed
+DateOfDisclosure:15.10.2015 18:55:26
+
+Summary:
+
+Short
+====
+The policy used to upload files via the Delivery app is too generic which results in an arbitrary write (and replace) of files in the files/ directory.
+
+Disclaimer: While I was unable to create a second store to fully test this (I can't create new development stores right now, support is researching this), I strongly believe that this vulnerability works as I expect it to work due to the nature of the policy.
+
+Current Policy
+====
+
+    {
+    "expiration": "2015-10-14T15:27:47Z",
+    "conditions": [
+        {
+            "bucket": "shopify-delivery-app-storage"
+        },
+        [
+            "starts-with", "$key", "files/"
+        ],
+        {
+            "acl": "private"
+        },
+        {
+            "success_action_status": "200"
+        },
+        ["content-length-range", 0, 5368709120]
+    ]
+    }
+
+
+What's wrong here
+====
+
+The only (security relevant) limitations we have here are:
+ - Signature + Policy are only valid for one day
+ - The key has to start with files/
+ - ACL has to be set private
+
+So, one can basically write arbitrary files to the S3 bucket as long as those are within the files/ dir. This doesn't hinder anybody as all the 'good stuff to replace' is under that dir. As the ACL is private, files can just be downloaded when the delivery app signed a download request, so the attacker needs to get a hold on a valid link.  
+
+The vector
+====
+ - Find a shop with a downloadable good and purchase it OR get a manual direct link
+ - Grab the bucket key when the file will be downloaded directly from S3 (via signed url)
+ - Go to your own shop, create a product with a downloadable good
+ - Note down the parameters used to POST the file when you upload it
+ - Issue a new request to the key recorded from the data you don't own with the parameters you just grabbed from your own delivery app
+ - Profit
+
+One could do a ton of fun stuff to the files, to my mind come Viruses, Exploits, Illegal Content, etc.
+
+How it should be
+====
+
+The policy should be tailored directly to the upload at hand, especially the key. The app does return the specific path already where the file should be placed by the client, I don't see why the policy doesn't reflect that. The policy should be nailed directly to that key to eliminate this vulnerability.
+
+What I did that you should cleanup
+====
+I did upload 2 files to the bucket which don't belong to anyone, those files are:
+ - files/hackerone/simon/brakhane/kitty.jpg
+ - files/kitty.jpg
+
+You might want to clean them away as they can't be downloaded anyway and just cost you money.
+
+Cheers,
+Simon
+
+PS: I do hope strongly this isn't already known ;)

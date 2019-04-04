@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/90690
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/supernatural
+ReportedTo:Shopify(shopify)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:14.10.2015 19:54:09
+
+Summary:
+A user of the POS app or any other Shopify mobile application could use their api access token to make requests to a specific API endpoint, which would have allowed them to change the "shop" object in a way that bypasses Shopify's permission model. We fixed the issue by adding restrictions to this endpoint, ensuring that only the application owner can make requests, even through the API.
+Hi
+
+in settings -> account owner can set login service for staff members!
+this is only available for owners, and full access admins can't see or change this values!
+
+admin with setting access can send a "POST" request to shop.json and change this settings!
+
+
+steps:
+
+- get access token for one full access admin (you can send request to xauth or sniff it from mobile device)
+- send request with POST method to "https://~ShopName~.myshopify.com/admin/shop.json"
+
+data:
+
+{"shop":{"google_apps_domain":"anydomain","google_apps_login_enabled":true}}
+
+google_apps_login_enabled
+google_apps_domain
+
+
+so any admin just with setting access can modify this option,this must limited to owner!
