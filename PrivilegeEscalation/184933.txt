@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/184933
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/rijalrojan
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:01.06.2017 14:42:45
+
+Summary:
+A Department of Defense website was vulnerable to an insecure direct object reference vulnerability (IDOR) which may allow an attacker to modify web content or certain database parameters. @uranium238 was able to demonstrate this vulnerability by manipulating web objects in a particular way. Very well done. Thank you!

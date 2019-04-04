@@ -1,0 +1,39 @@
+ReportLink:https://hackerone.com/reports/208719
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/ak_1337
+ReportedTo:Udemy(udemy)
+BountyAmount:50.0
+Severity:low
+State:Closed
+DateOfDisclosure:30.03.2017 4:09:01
+
+Summary:
+
+**Target:**  `Landing.udemy.com`
+
+###Details: 
+
+The target subdomain points to _unbounce.com_ service, via a _DNS CNAME_ record. As a result of this, an attacker could potentially initiate a subdomain takeover by registering the subdomain on unbounce.com.
+
+Additionally, 
+
+Unbounce is a custom 404-page hosting service, therefore leveraging its functionality an attacker can host custom HTML/Javascript webpage on the domain which will look very legitimate to the end-user and can be used to conduct large-scale phishing/XSS attacks.
+
+###Proof of Concept:
+
+CNAME Record:
+>**Cname:**	unbouncepages.com
+>**Name:**	landing.udemy.com
+>**Type:**  CNAME
+>**Class:**	IN
+>**TTL:**	300
+
+I did not proceed with the takeover, Contacting the support and confirming from them was more sensible.
+
+{F163493}
+
+###Remediation:
+
+Remove the CNAME entry or claim the domain by signing up on unbounce.com
+
+~Regards

@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/107213
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/ericlaw
+ReportedTo:GlassWire(glasswire)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:04.02.2016 20:46:46
+
+Summary:
+
+GlassWire recently fixed a DLL hijacking attack whereby trojan DLLs would be loaded from the user's \Downloads\ folder.
+
+However, it appears that GlasswireSetup.exe still uses an unqualified path when running CertUtil.exe and as a consequence a trojaned CertUtil.exe will execute from the \Downloads\ folder. Interestingly, it executes without any security warning that Windows would normally show for a downloaded executable run from the shell (suggesting that CreateProcess was used rather than ShellExecute).
+
+To fix this, it might make the most sense to set the current working directory to the System folder early in the Setup process.

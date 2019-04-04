@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/115922
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/s_p_q_r
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.02.2017 12:19:57
+
+Summary:
+
+When we try to open a private folder http://download.newrelic.com/private/ we get a warning:
+
+> This directory contains special-access versions of the New Relic agents.
+If you would like to participate in early access or beta testing programs please
+contact support@newrelic.com and they will forward your request to the
+program managers.
+
+However there's a way to gain access there without request: there's a file called [junk](http://download.newrelic.com/junk) in the root directory (sometimes when you open http://download.newrelic.com it doesn't exist — try again if so until it appears, see the attachement). It contains all the server paths, including the private ones, for example
+
+> ./private/282bd32f9a/pub/newrelic-testing
+
+We can simply open it
+
+> http://download.newrelic.com/private/282bd32f9a/pub/newrelic-testing
+
+and get the stuff we need from there.

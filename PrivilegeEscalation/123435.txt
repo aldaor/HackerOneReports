@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/123435
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/sarwarjahan
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.07.2016 23:15:33
+
+Summary:
+
+A normal user when logs in to "New Relic" and navigates to the "Account Settings" page, can only set his/her own Job title. All other user's Job title selection are not available.
+
+But using a proxy tool like Burp Suite, while changing his own job role, if he replaces his own ID with any other user, then successfully can change Job title of other user which he the normal user was not having privilege to perform.
+
+Steps:
+1. Login to "New Relic" as a normal low privilege user
+2. Navigate to Account Settings page
+Observe that the option to set Job title is not available for any other users except yourself (JobTitle.png)
+3. Inspect element (F12) and note down user ID of other user (InspectElement.png)
+4. Intercept the traffic using proxy tool (Burp Suite)
+5. Set a Job title for yourself
+6. Using proxy tool, edit the request & replace your user ID with ID copied in Step 3 (ActualRequest.png & EditedRequest.png)
+7. Refresh the page
+
+Result: Other user's Job title is set by a normal low privilege user who does not have the option to set Job title for other users. (PoC.png)
+
+PoC video:
+https://drive.google.com/folderview?id=0B3TS39fNVVULM1dwQjVyaGVlYXM&usp=sharing

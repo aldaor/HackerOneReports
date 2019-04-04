@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/196448
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/fransrosen
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:27.04.2017 19:23:17
+
+Summary:
+A misconfigured Department of Defense website may have allowed unauthorized users to remotely download local files, potentially revealing sensitive system or user information. @fransrosen was able to demonstrate this vulnerability by crafting a specially formatted URL.

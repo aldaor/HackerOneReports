@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/174896
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/nickvergessen
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:20.05.2017 21:57:21
+
+Summary:
+
+### Steps
+
+1. Create users "Test 1" and "Test 2", make "Test 1" member of "Group A"
+2. Share a calendar with group "Group A" editable
+3. Share the same calendar with user "Test 2" readonly
+4. As "Test 1" open the calendar app and unshare the calendar from "Test 2" - works
+5. As "Test 1" open the calendar app and remove edit permissions for "Group A" - works
+
+In my opinion steps 4 and 5 should not be possible. The shares should not even be visible in my opinion.

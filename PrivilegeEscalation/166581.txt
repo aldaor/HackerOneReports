@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/166581
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/ayid
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:20.05.2017 14:53:56
+
+Summary:
+@etd reported an issue to us which had already been reported to us an independent party [via our public bug tracker](https://github.com/nextcloud/server/issues/1256). Thus we were not able to qualify this for a monetary reward.
+
+However, we'd like to thank @etd for their report! – On request of the reporter, this issue is only disclosed limitedly. While we usually don't agree to disclose limited in this case the report was submitted prior to our policy change about disclosure.
+
+The original report can be found below.
+
+-------
+
+**Details:**
+Normal user can somehow make admin to delete shared folders
+
+**Scenario:**
+Created two users:
+Admin user - "admin"
+Normal user - "test" 
+
+
+Steps:
+1) Login as admin and create folder "sample_folder" in home and share with user "test" with settings: 
+ --> can share
+
+2) Login as test and goto home and once again share folder "sample_folder" with admin
+3) If suppose admin visits Files --> Shared with you . There he can find shared folder "sample_folder". If he unshares the folder , then the folder "sample_folder" will be deleted completely without his knowledge
+

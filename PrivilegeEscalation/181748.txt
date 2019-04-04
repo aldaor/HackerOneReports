@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/181748
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/kedrisch
+ReportedTo:Twitter(twitter)
+BountyAmount:1120.0
+Severity:low
+State:Closed
+DateOfDisclosure:12.05.2017 20:35:58
+
+Summary:
+
+POC: https://translate.twitter.com/forum/getting-started/topics/7037/posts/43287/edit
+Steps to reproduce:
+1) Go to any forums topic for example: https://translate.twitter.com/forum/getting-started/topics/7037
+2) View source code of the page and take post id (screenshot "idor edit.jpg")
+3) Append "/posts/*post_id*/edit" to url at the first step (screenshot "idor edit 2.jpg")
+4) Make some change at the comment and save it

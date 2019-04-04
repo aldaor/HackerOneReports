@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/124564
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/saeedhashem
+ReportedTo:Vimeo(vimeo)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.03.2016 16:18:07
+
+Summary:
+Missing rate limit on password protected clips.
+
+Rate-limits is a non-qualifying bug at this time. 
+
+We have received multiple reports of this in the past, however, since that time we have implemented a clip password rate limit. 
+
+This was not appropriately applied to all clip password areas, so we've decided to award reputation points for pointing this particular issue out.

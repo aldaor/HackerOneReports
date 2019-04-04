@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/120123
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/itly
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.06.2016 16:06:10
+
+Summary:
+
+Hello Team,
+
+I have found a critical IDOR issue which escalates a user privilege and allows and attacker to delete any venue of any organization remotely through his own account by just changing the venue id in DELETE Request.
+
+This is again similar to previously reported critical IDORs to delete a member and group. Thus, I am not writing steps again as they are same but just to perform under venue section.
+
+Proof of Concept: Please find the attached screenshots.
+
+Best Regards,
+
+Hely H. Shah

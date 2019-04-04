@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/120121
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/itly
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.06.2016 16:06:10
+
+Summary:
+
+Hello Team,
+
+I have found a critical IDOR for deleting any groups of any organization remotely. It means an attacker can easily delete any group of any organization from his account by just chaning the group_id in delete request.
+
+This is similar to previously reported IDOR to delete any members. So I am not writing down steps to reproduce again as it is also similar but jut to perform in Groups section.
+
+Proof of Concept: Please find the attached screenshots.
+
+Do evaluate it and inform me accordingly.
+
+Best Regards,
+
+Hely H. Shah

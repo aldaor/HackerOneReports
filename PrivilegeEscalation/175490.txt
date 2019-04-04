@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/175490
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/clarckowen_
+ReportedTo:Shopify(shopify)
+BountyAmount:2000.0
+Severity:
+State:Closed
+DateOfDisclosure:29.11.2016 13:32:06
+
+Summary:
+
+Hi Shopify,
+
+Deactivated staff account is able to login in shopify mobile app.
+
+__STEPS__
+
+1. Login your owner account
+2. Go to Staff Accounts and deactivate your staff account
+3. Login to your staff account in your shopify mobile app
+
+__As you can see  you were able to login even the staff account was deactivated by the account owner__

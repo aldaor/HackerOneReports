@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/191979
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/makosdel
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:300.0
+Severity:low
+State:Closed
+DateOfDisclosure:08.05.2017 20:20:10
+
+Summary:
+#[Limitation of app specific password scope can be bypassed (NC-SA-2017-009)](https://nextcloud.com/security/advisory/?id=nc-sa-2017-009)
+
+**Risk level:** Low
+**CVSS v3 Base Score:** 3 (AV:N/AC:H/PR:L/UI:R/S:C/C:L/I:N/A:N)
+**CWE:** Improper Authorization (CWE-285)
+
+#Description
+Improper session handling allowed an application specific password without permission to the files access to the users file.
+
+#Affected Software
+- Nextcloud Server < 11.0.3 (CVE-2017-0892)
+
+#Action Taken
+The permission check has been corrected and reviewed.
+
+#Acknowledgements
+The Nextcloud team thanks the following people for their research and responsible disclosure of the above advisory:
+
+- Mmakosdel - Vulnerability discovery and disclosure.
+

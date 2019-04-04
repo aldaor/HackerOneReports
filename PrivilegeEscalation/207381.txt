@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/207381
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/ysx
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:12.10.2017 8:27:49
+
+Summary:
+
+Hi,
+
+While conducting New Relic web property reconnaissance, I came across the unused **docs-ra.newrelic.com** endpoint.
+
+This endpoint allowed an unauthenticated user to progress through the Drupal installation process and activate the site with their own configuration – it appears that valid MySQL credentials have been pre-populated. 
+
+{F161898}
+
+Given that this site is publicly accessible, I have taken care to ensure the content currently being served is active in a discreet manner. As such, the current site (with successful takeover) can be viewed as follows:
+
+{F161899}
+
+### Credentials
+Username: newrelic1
+Password: `ibvmJqqsi9x[kRqe`
+
+Please let me know if you require any additional information regarding this vulnerability, 
+
+Thanks!

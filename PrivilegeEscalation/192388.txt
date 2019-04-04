@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/192388
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/vijay_kumar1110
+ReportedTo:Harvest(harvest)
+BountyAmount:300.0
+Severity:low
+State:Closed
+DateOfDisclosure:12.04.2017 6:23:44
+
+Summary:
+
+Hi Team,
+
+Description : In Timesheet you have option for submitting your expense for the projects you are assigned. But Only Admin can view other user's Expenses and related receipts. But there is a request which gives a full size of expense receipt attached to the expenses. This request is vulnerable to IDOR attack and any user can view any other user's receipts by changing the ID.
+
+POC : 
+Vulnerable link :
+https://[Company_username].harvestapp.com/expenses/[Receipt_ID]/receipt
+
+Change the receipt ID which exist in the company and you will be able to see the expense receipt submitted by any user in the company.
+
+Let me know if you need any other help from my side.
+
+Best Regards !
+Vijay Kumar 

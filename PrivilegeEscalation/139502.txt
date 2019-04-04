@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/139502
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/czd
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.02.2017 14:37:41
+
+Summary:
+
+When one user create an account its data may not be accessible by other user. Links are only opened by a privilege user But What here happens is.
+
+I login from one account & copy a link, it will still accessible two other account with help of burp proxy by traffic stopping.
+
+Reproduce Steps :- 
+(1) create Two different & login to them.
+(2)Click on SYNTHETICS tab & create new Monitor.
+(3) Select a Monitor that You created.
+(4) Now copy Alert notification link & try to access it from other account. 
+(5) Slowly pass traffic through burp proxy & you will access the page.
+(6) like wise All the tabs are accessible by other account. EX:-Overview
+
+SIR I CAN`T ABLE TO ATTACH PoC FILE PLEASE GIVE ME E-MAIL, SO I WILL SENT IT YOU.

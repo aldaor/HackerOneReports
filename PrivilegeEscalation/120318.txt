@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/120318
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/itly
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.06.2016 16:04:23
+
+Summary:
+
+Hello Team,
+
+I have found a critical IDOR vulnerability using which an attacker can make/create a rule for any group and any venue remotely by just changing the group_id and venue_id in the request.
+
+Proof of Concept: Please find the attached screenshots.
+
+Best Regards,
+
+Hely H. Shah

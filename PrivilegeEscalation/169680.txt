@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/169680
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/secator
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:750.0
+Severity:medium
+State:Closed
+DateOfDisclosure:09.02.2017 10:48:26
+
+Summary:
+@secator reported some permission related issues in Nextcloud Server to us. On request of the reporter the issue has only been disclosed limitedly.

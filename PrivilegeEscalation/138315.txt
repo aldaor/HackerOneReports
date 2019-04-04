@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/138315
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/aaditya_purani
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:20.05.2016 14:43:03
+
+Summary:
+##Issue
+
+The reporter found one SMTP-server (secure.lahitapiola.fi) in the LocalTapiola network which had some issues. The SMTP server had some options turned on that could potentially lead to leaking information about email-addresses (using the VRFY-command). The ETRN was also found to be - at least to some extent - abusable. Neither commands lead to a direct exploit. The SMTP-server did not function as an open relay.
+
+##Fix
+
+The issue was investigated and found to be valid although outside of the bug bounty program scope. The service provider responsible for the SMTP-server disable the VRFY-command and limited the use of the ETRN-command.
+
+##Reasoning
+
+Most out of scope reports are closed as informative as they are not part of the bug bounty program but might provide good information (please see the policy for more information). As LocalTapiola does take security seriously, there are cases where actions are warranted also on out of scope reports. In this specific case, the report as such made it very easy to understand and pinpoint the issue, as well as to inform the third party service provider responsible for managing the SMTP-server. As actions were taken to fix the issue, there was a decision to award the reporter and do a public disclosure.

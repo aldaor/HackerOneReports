@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/193056
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/filedeletor1
+ReportedTo:WebSummit(websummit)
+BountyAmount:20.0
+Severity:critical
+State:Closed
+DateOfDisclosure:30.01.2017 12:54:53
+
+Summary:
+
+As i said in the title i found a subdomain takeover vulnerability on the url http://gameday.websummit.net
+The url was trying to find a bucket that didn't exist from a probably forgotten dns entry that was at
+gameday.websummit.net.s3-website-eu-west-1.amazonaws.com
+
+So i created a bucket with the specified name and uploaded a poc.
+POC in the pictures
+
+For more infos please ask...

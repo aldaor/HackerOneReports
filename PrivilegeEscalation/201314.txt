@@ -1,0 +1,45 @@
+ReportLink:https://hackerone.com/reports/201314
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/frankie_xote
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:04.02.2017 19:07:20
+
+Summary:
+##Issue
+
+The reporter found a flaw where it was possible to enumerate users in the unsubscribe -function on one of the apps on viestinta.lahitapiola.fi. 
+
+##Fix
+
+The issue was investigated and found to be valid. Anything differentiating a successful and an unsuccessful "unsubscription" was removed from the application.
+
+##Reasoning
+
+A user enumeration vulnerability means that an attacker can get a list of legal usernames and/or email addresses from the site. Using brute force, means that an attacker can use a list of potential usernames and/or email addresses with which they can verify whether or not each of them is registered with an account in the site.
+
+As this application does not contain a customer register, but rather email-addresses with no direct connection to customers, the impact of the reported vulnerability is quite small.
+Hi,
+I would like to report an issue where malicious user can unsubscribe any customer email subscription from viestinta.lahitapiola.fi. 
+I am not sure if this in scope, but i took the liberty to bring forward to you, so that you can fix the bug.
+
+**Impact**
+Subscribe or unsubscribe is always a personal/customer choice. but what if a malicious user unsubscribe without the knowledge/Authority of the valuable customer who would like to get a regular update from the company? What if an attacker unsubscribe ALL the customer email subscription? I assume finding valid email of customers would not be big deal for an Attacker.
+Hence, this could impact company's business.  
+
+**Step to reproduce**:
+Goto
+http://viestinta.lahitapiola.fi/webApp/omatalousuk?email=
+
+in the ```email=``` param enter any email id
+for example, enter```abcd123@gmail.com``` will get a respond ```No customer found, cannot unsubscribe```
+for a vaild customer email, ```test@gmail.com``` will get a respond ```Unsubscribe```
+
+with this, a malicious user would exploit this vulnerability.
+
+I've attach some screen shot of execution.
+Thank you.
+
+  

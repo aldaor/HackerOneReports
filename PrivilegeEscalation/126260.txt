@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/126260
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/mini
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 22:11:26
+
+Summary:
+
+Hi
+
+
+It is possible for non activated users to login to partner app and use its full features! 
+
+Steps:
+
+1- download uber partner iOS app
+
+2- intercept the login request with burp suite and change “allowNotActivated":false to "allowNotActivated":true
+
+
+3- Login failed because the server responded with isActivated":false
+
+4- Go to burp suite Match and replace from proxy options tab
+
+5- add a match/replace rule ( Type: Response body, Match: false, Replace: true )
+
+6- repeat login process once again and intercept the login request and change allowNotActivated”:false to allowNotActivated”:true
+
+7- you are logged in successfully :)

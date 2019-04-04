@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/120289
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/itly
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.06.2016 16:05:19
+
+Summary:
+
+Hello Team,
+
+I have found a critical IDOR using which an attacker can get anyone's terminal data remotely by just changing the terminal/gatekeeper id.
+
+Proof of Concept: Please find the attached screenshots.
+
+Best Regards,
+
+Hely H. Shah

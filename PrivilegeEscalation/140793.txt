@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/140793
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/mrtuxracer
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:20.12.2017 12:12:54
+
+Summary:
+The UniFi Video Windows installation `v3.7.3` and prior create directories with insecure permission, allowing unprivileged users to modify UniFi Video files and consequently escalate privileges.

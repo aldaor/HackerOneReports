@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/149679
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/rojansec
+ReportedTo:Uber(uber)
+BountyAmount:2250.0
+Severity:
+State:Closed
+DateOfDisclosure:25.07.2016 23:33:07
+
+Summary:
+Limited disclosure at @rojanr's request

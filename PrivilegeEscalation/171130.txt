@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/171130
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/abhijeth
+ReportedTo:Zendesk(zendesk)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:23.02.2017 4:15:50
+
+Summary:
+The issue is mitigated in the full version of the product as an administrator control. 

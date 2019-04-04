@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/175070
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/fransrosen
+ReportedTo:Uber(uber)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:12.12.2016 23:48:13
+
+Summary:
+
+Hi,
+
+3 hours ago, rider.uber.com was responding like this:
+{F127137}
+
+This happened on both HTTP and HTTPS. Now, as our blog post from last week says:
+https://labs.detectify.com/2016/10/05/the-story-of-ev-ssl-aws-and-trailing-dot-domains/
+
+This means that there's a high chance this domain does not have any distribution at all, and that anyone can now claim it.
+
+I've done this as a PoC now, I haven't placed anything on the apex level, howevel if you use this URL:
+http://rider.uber.com/login-poc
+
+There's a PoC there:
+{F127139}
+
+You should immediately remove the DNS RR, or point it elsewhere, or tell me and I'll remove the Alternate CNAME again on my PoC-distribution.
+
+Regards,
+Frans

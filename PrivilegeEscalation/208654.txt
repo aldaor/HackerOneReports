@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/208654
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/shady-r
+ReportedTo:VK.com(vkcom)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:22.04.2017 12:34:13
+
+Summary:
+Обход региональных ограничений на аудиозаписи через аттачи в мобильной версии сайта. 

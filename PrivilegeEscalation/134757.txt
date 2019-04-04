@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/134757
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/abdellahya
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:04.05.2016 22:56:12
+
+Summary:
+
+hey ;
+for example staff member have limit access to orders
+when this memeber want install app (scope read_orders)  ,error message showed :
+
+Oauth error invalid_request: You do not have permission to access the requested scopes
+
+bug:
+-----
+staff memeber can install app even if have limit access to scops
+https://youtu.be/AoFLfiDDUog

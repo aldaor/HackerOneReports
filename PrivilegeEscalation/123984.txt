@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/123984
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/theflofly
+ReportedTo:Trello(trello)
+BountyAmount:768.0
+Severity:
+State:Closed
+DateOfDisclosure:14.07.2016 20:13:11
+
+Summary:
+When a user is a member of a team, they are allowed to connect to an update channel that sends them notifications when the team changes.
+
+There were some cases where a team member might receive an update that included the name of board that was in their team … even if they weren't a member of that board, and wouldn't otherwise have permission to see the board.  (This was limited to the updates that were sent when a private board was added to or removed from a team)
+
+Additionally, the update channel was not immediately terminated when a user was removed from a team.  This meant that a user could theoretically connect an update channel while they were a member of a team, and continue to receive updates on it after being removed.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/129698
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/hamlon
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:07.11.2018 11:54:00
+
+Summary:
+In UniFi Video Server prior to 3.7.0, an attacker with user permissions can download the Backup and Support files.

@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/173811
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/xpathmaster
+ReportedTo:Boozt Fashion AB(boozt)
+BountyAmount:400.0
+Severity:critical
+State:Closed
+DateOfDisclosure:27.07.2017 15:30:22
+
+Summary:
+
+Hi, I've found .git repository available on http://████/.git/
+Using https://github.com/kost/dvcs-ripper you can download source files, even if directory listing is forbidden.
+I've managed to download some object files from repository. 
+One of them http://██████████/.git/objects/db/23e27c516300223034936a7cf274906f6a78f1 contains WP config with CRITICAL sensitive data, including your DB username and PASS.
+define('DB_NAME', '██████████');
+
+/* MySQL database username /
+define('DB_USER', '██████');
+
+/* MySQL database password /
+define('DB_PASSWORD', '████████');
+
+/* MySQL hostname /
+define('DB_HOST', '██████');
+
+Have a look to the screens.

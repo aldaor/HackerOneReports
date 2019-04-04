@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/205920
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/modam3rly
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:50.0
+Severity:low
+State:Closed
+DateOfDisclosure:22.02.2017 21:15:25
+
+Summary:
+##Issue
+
+The reporter found that one error page that could be triggered had an outer "frame" that contained some administrative menus and a logoff-button. The menus were visible but as the user was not logged on, had no real functionality enabled. The logoff-button was mereley misinforming.
+
+##Fix
+
+The unnecessary items were removed from the error page.
+
+##Reasoning
+
+The issue was trivial, namely a confusing error page. The page was nevertheless decided to be fixed, and the reporter awarded with a bounty.
+

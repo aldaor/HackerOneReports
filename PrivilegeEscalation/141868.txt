@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/141868
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/mikkz
+ReportedTo:Pornhub(pornhub)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:25.10.2016 16:30:03
+
+Summary:
+The researcher discovered an endpoint allowing access to private photos.

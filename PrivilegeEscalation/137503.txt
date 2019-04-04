@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/137503
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/apok
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.05.2016 1:44:01
+
+Summary:
+
+Hello there,
+First of all let me congratulate you for including pornhub in the list of bug bounty programs, me and my colleagues will have a lot of fun with it hahahahahah. Awesome...
+
+Anyways, I stumbled upon something whilst testing hackerone's main site. I don't know if it's a feature that it's going to be implemented soon or if it's something internal, I also have no idea if there are any risks involved in this, I'm confident you'll be accurate in your evaluation.
+
+I started just for fun removing every "disabled" from every control on the web page and changing every "false" for a "true" on every json request, just to see what popped up, I've still have to cover the whole page and try everything to see that there are no client-side only reliant validations on the web page and/or info disclosure, but suddenly on the "Hacktivity" page this "vote buttons" appeared, and to my suprise, when I clicked one of them to go through as a request and assign a "vote id". I of course deleted my vote afterwards, I have no idea what I'm affecting.
+
+Anyways, the endpoint seems to be in https://hackerone.com/reports/[Report_ID]/votes, which accepts the POST method and https://hackerone.com/reports/[Report_ID]/votes/[VOTE_ID] which accepts the DELETE method.
+
+The fix would be fairily easy, implement server-side controls in order to prevent unauthorized users from using this feature.
+
+Please let me know if this is something you would be interested in and we'll work together to fix it if necessary. Otherwise, please just mark it as informational.
+
+I'm also including screenshots with both requests and responses.
+
+Kind Regards,
+Apok.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/199644
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/vag_mour
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:15.02.2017 21:38:55
+
+Summary:
+A Department of Defense website was exposed to a privilege escalation vulnerability, which could have allowed remote administrator access to the website. Thanks to @vag_mour for discovering this vulnerability!

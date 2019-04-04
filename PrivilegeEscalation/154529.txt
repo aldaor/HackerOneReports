@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/154529
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/ctee
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.08.2016 9:28:32
+
+Summary:
+
+A logical bug in the bookmark app makes it possible to delete all the existing bookmarks of the user. 
+
+Here are the steps to reproduce: 
+- Create  couple of valid bookmarks
+- Import a bookmark.html file that contains the line **<a href="">Bookmark</a>**. All the bookmarks of the user is replaced with blank url and Bookmark as description. 
+- This is potentially a risk where a user could be sent malicious html file to delete the bookmarks or this could even happen unintentionally if the user uploads a html with blank urls. 
+
+The logical flaw resides in the method **/apps/bookmarks/controller/lib/bookmarks.php** -> **addBookmark**  where SQL query will select all the bookmarks and update them. 

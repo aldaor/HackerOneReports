@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/192611
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/strukt
+ReportedTo:Discourse(discourse)
+BountyAmount:128.0
+Severity:medium
+State:Closed
+DateOfDisclosure:10.01.2017 11:21:11
+
+Summary:
+If you could guess a personal message post ID, you could bookmark it via a specially formatted URL and see the first 200 chars of the personal message in your bookmarks.

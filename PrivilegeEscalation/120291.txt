@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/120291
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/itly
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.06.2016 16:05:26
+
+Summary:
+
+Hello Team,
+
+I have found a critical IDOR using which an attacker can SET anyone's terminal data remotely by just changing a terminal/gatekeeper id in PUT Request.
+
+Proof of Concept: Please find it attached.
+
+Best Regards,
+
+Hely H. Shah

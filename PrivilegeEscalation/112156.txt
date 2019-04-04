@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/112156
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/agarri_fr
+ReportedTo:Bime(bime)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:14.09.2016 4:53:07
+
+Summary:
+Server-Side Request Forgery (SSRF) in BIME connectors disclosed sensitive AWS metadata.

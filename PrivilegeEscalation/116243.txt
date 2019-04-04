@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/116243
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/charliehacks
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.06.2016 23:30:21
+
+Summary:
+
+Hi,
+
+The subdomain "storefront.newrelic.com" is currently pointing to Fastly, but is not registered to a service. Depending on whether Fastly permits it, a subdomain takeover similar to that of https://hackerone.com/reports/32825 could be possible.
+
+If the subdomain is not needed, it's recommended that the record is pulled, or it's tied to a Fastly service.
+
+Cheers

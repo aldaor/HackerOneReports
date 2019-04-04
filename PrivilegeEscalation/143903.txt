@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/143903
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/thisishrsh
+ReportedTo:Slack(slack)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:13.07.2016 23:56:39
+
+Summary:
+
+A team member can upload the files in the private IM chat channel of other members.This can be done by using the IM channel id.
+Please refer to the attached POC's.
+Let me know if any more details are needed.

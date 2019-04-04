@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/126242
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/theflofly
+ReportedTo:Trello(trello)
+BountyAmount:1024.0
+Severity:
+State:Closed
+DateOfDisclosure:14.07.2016 20:13:45
+
+Summary:
+When viewing a public team, users are allowed to connect to an update channel that notifies them of changes made to the team.
+
+When a "team visible" (not public) board was added or removed from a public team, an update with the name of the team would be sent to *all* subscribers, potentially including subscribers that were not members of the team.
+
+This issue was limited to teams that were explicitly set to be public; private teams were not affected.  The disclosed information was limited to the names of "team visible" boards, and was only disclosed if an attacker was connected to the update channel at the time the board was added to or removed from the organization.

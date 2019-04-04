@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/205949
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/haxormad
+ReportedTo:OWOX, Inc.(owox)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:24.03.2017 11:01:25
+
+Summary:
+Subdomain takeover was possible in some of the subdomains. Though you cant claim it and host your page but it compromises them of using certain google services like GMAIL,Calendar,G-Drive,etc on those susbdomains.

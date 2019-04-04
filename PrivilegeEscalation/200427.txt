@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/200427
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/bagipro
+ReportedTo:Slack(slack)
+BountyAmount:1000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:17.07.2017 23:34:56
+
+Summary:
+@bagipro found a vulnerability wherein a malicious and unprivileged app on the victim's phone could interact with any activity in the Slack Android app, allowing manipulation of the app in unintended ways. Thanks for the finding @bagipro!

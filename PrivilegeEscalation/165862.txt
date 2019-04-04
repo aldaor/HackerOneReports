@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/165862
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/eboda
+ReportedTo:Harvest(harvest)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:29.10.2016 16:11:33
+
+Summary:
+
+Summary
+------
+Hey team,
+there is an IDOR bug, which allows me to add an invoice to any retainer I wish, even if the retainer belongs to another app/subdomain.
+
+Steps to reproduce
+---------
+1. Make sure you have two apps __A__ and **B**
+2. In **A** create a retainer, let's say it has id `1234`.
+3. In **B** open this link:
+    https://SUBDOMAIN.harvestapp.com/invoices/new?invoice[client_id]=5678&invoice[kind]=retainer&invoice[retainer_id]=1234
+
+
+    Here _5678_ needs to be a valid client id for account **B**. Then simply fill out the invoice form and save it.
+
+4. Now in account **A** go to `https://[SUBDOMAIN].harvestapp.com/retainers/1234` and you will see that the invoice from account **B** was added to this retainer.

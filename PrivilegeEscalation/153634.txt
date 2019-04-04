@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/153634
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/s_p_q_r
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.02.2017 12:19:59
+
+Summary:
+
+When setting a notification channel an attacker can sumbit a local link as the channel url, which allows him to scan the local network by sending test notifications.
+
+**PoC:**
+
+1. Log into your account
+2. Go to the notification channels page https://alerts.newrelic.com/accounts/%USER_ID%/channels
+3. Create a new one, choosing "Webhook"¹ as a channel type
+4. Then go to the channel page https://alerts.newrelic.com/accounts/%USER_ID%/channels/%CHANNEL_ID% and put some local address in the Base Url field
+5. Click "Send a test notification" or visit the https://alerts.newrelic.com/internal_api/1/accounts/%USER_ID%/channels/%CHANNEL_ID%/test_channel_notification page
+
+**Results:**
+
+|Base Url|Response|Outcome|
+|---|---|---|
+|http://mail|{"code":200,"message":"{\"message\":\"404 Not Found\",\"successful\":\"false\"}"}|Server available|
+|http://test|{"code":200,"message":"{\"message\":\"\u003chtml\u003e\u003cbody\u003eYou are being \u003ca href=\\\"https://test/\\\"\u003eredirected\u003c/a\u003e.\u003c/body\u003e\u003c/html\u003e\",\"successful\":\"false\"}"}|Server available|
+|http://alerts|{"code":200,"message":"{\"message\":\"404 Not Found\",\"successful\":\"false\"}"}|Server available|
+|http://xxx|{"code":200,"message":"{\"message\":\"I/O error on POST request for \\\"http://xxx\\\": xxx; nested exception is java.net.UnknownHostException: xxx\",\"successful\":\"false\"}"}|Server unavailable|
+|http://0xC0A80101|{"error":"Circuit breaker timed out.","global":null,"timeout":"20.0"}|Server unavailable|
+
+ 
+
+¹ Same for "Slack" channel type.
