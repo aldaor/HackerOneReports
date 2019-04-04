@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/222108
+WeaknessName:Stack Overflow
+Reporter:https://hackerone.com/mrr3boot
+ReportedTo:Homebrew(homebrew)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:19.04.2017 14:41:30
+
+Summary:
+
+#221833 is not fully patched. Kindly take a look at https://jenkins.brew.sh/j_acegi_security_check still stack traces are visible.
+
+Let me know if any further info required.
+
+Best Regards,
+Mr_R3boot
