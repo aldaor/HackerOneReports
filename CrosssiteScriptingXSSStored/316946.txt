@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/316946
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/yango
+ReportedTo:VK.com(vkcom)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:04.03.2018 13:00:13
+
+Summary:
+XSS в Wiki. 

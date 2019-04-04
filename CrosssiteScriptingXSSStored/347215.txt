@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/347215
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/danila_xawdxawdx
+ReportedTo:Mail.ru(mailru)
+BountyAmount:550.0
+Severity:high
+State:Closed
+DateOfDisclosure:04.06.2018 9:25:31
+
+Summary:
+Blind XSS in torg.mail.ru admin panel.
+
+torg.mail.ru is not currently covered by bug bounty program.

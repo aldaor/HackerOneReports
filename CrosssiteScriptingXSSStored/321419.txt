@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/321419
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/catferq
+ReportedTo:ICQ(icq)
+BountyAmount:250.0
+Severity:high
+State:Closed
+DateOfDisclosure:16.04.2018 11:49:23
+
+Summary:
+Stored XSS in web.icq.com via livechat name

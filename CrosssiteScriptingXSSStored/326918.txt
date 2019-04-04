@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/326918
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/danila_xawdxawdx
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:12.11.2018 17:39:17
+
+Summary:
+Blind XSS via support.my.com request ticket
+
+kayako.support.my.com is not covered with bug bounty, the bounty was awarded because because lootdog.io users were potentially affected.

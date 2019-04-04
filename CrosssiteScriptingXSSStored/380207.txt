@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/380207
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/sp1d3rs
+ReportedTo:Redtube(redtube)
+BountyAmount:1500.0
+Severity:high
+State:Closed
+DateOfDisclosure:10.10.2018 14:42:49
+
+Summary:
+Researcher successfully closed the image 'alt' attribute and injected javascript by intercepting the album creation request and submitting an XSS payload as the album title. This led to stored cross-site scripting on the user's album page, executed against any users who visited the album.

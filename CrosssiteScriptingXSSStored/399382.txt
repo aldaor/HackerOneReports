@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/399382
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/sql
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:24.09.2018 11:17:32
+
+Summary:
+XSS via external account name on message editor if logged in to e-mail web interface via external account.
+Приветствую! Нашел XSS на e.mail.ru, при написании письма.
+
+Предыстория:
+Для начала я взял аккаунт на Яндексе с готовым xss вектором в имени "><img src=x onerror=alert()>, но возникла некая трудность в плане авторизации, меня не пропускало из за недопустимых символов в имени, тогда я взял смартфон, и авторизовался через приложение Mail.ru почта оттуда. И вуаля! с ПК версии теперь можно авторизоваться через Яндекс.
+
+Шаги для воспроизведения:
+
+1. Логинимся на почту через Яндекс.
+2. Переходим в "написать письмо"
+3. Получаем Alert.
+
+## Impact
+
+Cross-Site Scripting.

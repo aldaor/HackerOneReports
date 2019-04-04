@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/423797
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/skavans
+ReportedTo:Chaturbate(chaturbate)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:06.11.2018 8:11:21
+
+Summary:
+The hacker found that a specially crafted app names could insert a small amount of data into an A tag's href in the "Broadcaster is running these apps: " chat text. Because of the character limit this required multiple successive clicks on different app names, and in the example utilised the room subject. Due to this and that the broadcaster would be required to use specially crafted apps, the scope of attack is limited. We quickly resolved this issue.

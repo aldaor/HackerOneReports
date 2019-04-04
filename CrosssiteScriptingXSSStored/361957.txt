@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/361957
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/mr_r0w07
+ReportedTo:Vanilla(vanilla)
+BountyAmount:300.0
+Severity:high
+State:Closed
+DateOfDisclosure:27.09.2018 7:15:06
+
+Summary:
+
+Users are able to inject javascript payloads in the email field which leads to stored XSS
+
+Steps to produce :
+1. Go to profile and add  "<script>alert(1)</script>"@example.com as your email .
+2. We can see the popup at https://discuss.paytm.com/profile/preferences/profilename
+
+## Impact
+
+Users can store malicious payloads and ask any moderator to review their profile and popup will be executed leading to cookie theft and other attacks.

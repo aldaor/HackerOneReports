@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/311063
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/hack2tools
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:23.05.2018 21:33:09
+
+Summary:
+Stored XSS via saved signature in Mail.Ru Mail mail compose functionality

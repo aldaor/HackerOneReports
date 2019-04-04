@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/329862
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/sandeep_hodkasia
+ReportedTo:Reverb.com(reverb)
+BountyAmount:100.0
+Severity:high
+State:Closed
+DateOfDisclosure:01.10.2018 12:47:19
+
+Summary:
+
+hello team,
+
+There is a stored xss in lp.reverb.com.
+Attacker can inject malicious script into server while adding shop name as `lll"></script><script>alert('xss');</script>`.
+Exploit: https://lp.reverb.com/shops/faniyos-boutique/listings
+
+Steps to reproduce:
+1. Navogate to https://reverb.com/my/lp_shop/edit
+2. Change your lp shop name to this: lll"></script><script>alert('xss')</script>
+3. Save the changes.
+4. View your lp shop.
+
+Fix:
+Sanitise the given input in the backend and encode the special characters.
+
+Thanks,
+Sandeep
+
+## Impact
+
+Attack can save malicious script directly into the server. Malicious script can be used to gain users session.
+
+The hacker selected the **Cross-site Scripting (XSS) - Stored** weakness. This vulnerability type requires contextual information from the hacker. They provided the following answers:
+
+**URL**
+https://lp.reverb.com/shops/faniyos-boutique/listings
+
+**Verified**
+Yes

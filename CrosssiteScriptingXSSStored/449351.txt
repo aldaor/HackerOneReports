@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/449351
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/dagruxxx
+ReportedTo:HackerOne(security)
+BountyAmount:2500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:27.11.2018 12:27:05
+
+Summary:
+
+Hai,
+I've found a stored xss vulnerability via assets but unfortunately its been blocked by CSP.
+
+Steps to reproduce:-
+1) Add a asset like "><img src=x onerror=prompt``>
+{  
+  i) Go to program --> scope --> Add asset --> select 'Others' and give "><img src=x onerror=prompt``>
+  ii) Check your console now.
+}
+2) Then, Go to the created program. (You can check with this https://hackerone.com/script_src_x_img_src_x_onerror)
+3) Click the created asset. [xss will be fired now(1)]
+4) Then submit a report.
+5) Whenever the asset is rendering, xss is firing actually(2).
+6) Then, open the submitted report. (xss will be firing here too[3])
+7) Then click 'edit' in assets, (xss will be firing here too(4))
+
+## Impact
+
+Script can be executing for all.

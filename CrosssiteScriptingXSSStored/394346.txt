@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/394346
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/apfeifer27
+ReportedTo:Zendesk(zendesk)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:12.10.2018 23:39:29
+
+Summary:
+A cross-site scripting vulnerability was found in the Zendesk Support product. The Zendesk Security team validated the report within one day and implemented a remediation into production shortly after. Thank you @apfeifer27 for responsibly disclosing this issue and helping to keep Zendesk secure!

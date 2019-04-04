@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/333507
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/luigigubello
+ReportedTo:Discourse(discourse)
+BountyAmount:256.0
+Severity:high
+State:Closed
+DateOfDisclosure:09.07.2018 16:04:37
+
+Summary:
+
+1. There are two users: **Attacker** and **Victim**.
+2. **Attacker** starts a private talk via private message with the **Victim**.
+3. **Attacker** send a message to **Victim**, then he edits it or deletes it.
+4. **Victim** sees the *yellow pencil*, symbol of the edit.
+5. **Victim** clicks on *yellow pencil* to see the edit and the XSS runs.
+
+Other info: the XSS also runs on topic (video PoC #2). You can find my XSS message on this URL:
+https://try.discourse.org/t/recommended-reading-for-community-and-foss-enthusiasts/278
+It is very dangerous because it can hit many users at the same time.
+
+## Impact
+
+XSS can use to steal cookies, password or to run arbitrary code on victim's browser
+
+The hacker selected the **Cross-site Scripting (XSS) - Stored** weakness. This vulnerability type requires contextual information from the hacker. They provided the following answers:
+
+**URL**
+https://try.discourse.org/t/recommended-reading-for-community-and-foss-enthusiasts/278
+
+**Verified**
+Yes

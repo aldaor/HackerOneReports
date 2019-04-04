@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/353334
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/xpaw
+ReportedTo:Valve(valve)
+BountyAmount:750.0
+Severity:medium
+State:Closed
+DateOfDisclosure:24.05.2018 22:00:09
+
+Summary:
+Enter ">test in any of the 3 fields, save it and reload the page.
+
+Impact
+Stored XSS, could possibly break some internal features too as the stored value is not an integer.
+
+The hacker selected the Cross-site Scripting (XSS) - Stored weakness. This vulnerability type requires contextual information from the hacker. They provided the following answers:
+
+URL
+https://partner.steamgames.com/apps/inventoryservice/[xxx]

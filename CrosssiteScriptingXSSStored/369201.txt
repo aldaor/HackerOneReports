@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/369201
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/maxarr
+ReportedTo:Mail.ru(mailru)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:15.08.2018 10:58:32
+
+Summary:
+DOM clobbering  in new "Octavius" interface beta feature led to stored XSS on message reading.

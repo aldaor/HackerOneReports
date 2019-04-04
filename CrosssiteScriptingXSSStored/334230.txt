@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/334230
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/w2w
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:19.10.2018 16:20:25
+
+Summary:
+Stored XSS in pets.mail.ru (requires manual moderation).
+
+pets.mail.ru is not covered with bug bounty program.

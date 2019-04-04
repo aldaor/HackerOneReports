@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/344228
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/executor
+ReportedTo:ICQ(icq)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:01.10.2018 10:38:12
+
+Summary:
+XSS existed in part of "Forward message" functionality. Fixed via additing encoding.
+
+Здравствуйте! Обнаружил такую особенность пересланных сообщений, что мы можем изменять их содержимое. И тут я вспомнил про свою self xss, когда можно было изменить id стикера к примеру на "><img src=x onerror=prompt()> и воспроизводился js, но стикер не отправлялся из за ошибки, то есть сообщение было видно только нашей стороне. Я подумал провернуть такое с пересыланиями, и о чудо! Это получилось.
+Как воспроизвести по шагам.
+1) Отправляем обычное сообщение со стикером
+2) Пересылаем его, ловим запрос отправки в апи, и редактируем значения параметра stickerId к примеру на ext:843\"><img src=x onerror=prompt(1)>24:sticker:3
+И о чудо! Получаем prompt. 
+Так же если переслать это готовое сообщение то будет срабатывать  XSS без подмены запросов.
+Во общем, все как это выглядит в скринах!
+
+## Impact
+
+XSS
+
+The hacker selected the **Cross-site Scripting (XSS) - Stored** weakness. This vulnerability type requires contextual information from the hacker. They provided the following answers:
+
+**URL**
+web.icq.com
+
+**Verified**
+Yes

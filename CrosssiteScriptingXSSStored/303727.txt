@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/303727
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/maxarr
+ReportedTo:Mail.ru(mailru)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:10.06.2018 14:55:00
+
+Summary:
+XSS via malcrafted HTML "rel" attribute.
+As a temporary workaround rel attribute was disabled on the day of reporting. A final solution fixes parsing algorithm for rel attributes.

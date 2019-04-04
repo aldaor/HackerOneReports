@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/384814
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/nahamsec
+ReportedTo:Chaturbate(chaturbate)
+BountyAmount:750.0
+Severity:medium
+State:Closed
+DateOfDisclosure:19.09.2018 23:37:06
+
+Summary:
+The hacker discovered that the tooltip on the app page did not protect against XSS attack in the application name. We quickly resolved this issue. The impact for a new attacker was limited as they would only appear under new apps.

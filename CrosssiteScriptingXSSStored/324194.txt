@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/324194
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/paresh_parmar
+ReportedTo:Upserve (upserve)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:12.04.2018 15:10:24
+
+Summary:
+Through Upserve's demo request form, @paresh_parmar found a blind XSS in a 3rd party package for Upserve's CRM system. While the CRM system and 3rd party package are out of scope for our program, we decided to reward @paresh_parmar for his work in bringing this issue to our attention.  

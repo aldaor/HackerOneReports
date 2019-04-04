@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/392426
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/pisarenko
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:24.09.2018 11:16:14
+
+Summary:
+Stored XSS in dobro.mail.ru charity crowdfunding service.
+dobro.mail.ru is not currently covered by bug bounty program.

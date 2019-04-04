@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/300812
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/edoverflow
+ReportedTo:Automattic(automattic)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:22.04.2018 20:55:04
+
+Summary:
+
+# Summary
+---
+
+www.learnboost.com is vulnerable to stored XSS via ZIP codes stored alongside school names in the *Network* panel. 
+
+# Browsers Verified In
+---
+
+* Mozilla Firefox 58.0b12 (64-bit)
+
+# PoC
+---
+
+Visit https://www.learnboost.com/settings/network/search and search for `fro`. My entry will trigger the XSS payload.
+
+```html
+"><img src=x onerror=alert(document.domain)>
+```
+
+{F249746}
+
+## Impact
+
+I now have stored XSS that triggers whenever someone searches for `fro`. If I were to map the payload to a very common search term (e.g. `aa`) that would increase the likelihood that my payload would fire.

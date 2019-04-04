@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/361893
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/s3r3n3storm
+ReportedTo:ICQ(icq)
+BountyAmount:150.0
+Severity:medium
+State:Closed
+DateOfDisclosure:16.07.2018 16:02:54
+
+Summary:
+DOM Based XSS existed in old people search subservice icq.com/people. This functionality was removed.

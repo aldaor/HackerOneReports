@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/302253
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/lincoln9932
+ReportedTo:ok.ru(ok)
+BountyAmount:500.0
+Severity:critical
+State:Closed
+DateOfDisclosure:30.06.2018 11:04:05
+
+Summary:
+
+Приветствую.
+
+Нашел багу в личных сообщениях в мобильной версии
+{F251208}
+
+Что нужно, чтоб заюзать:
+
+1. Переходим в группу https://m.ok.ru/group/54904397693159/market
+2. Ищем товар единственный на страничке
+{F251213}
+3. Переходим на него и нажимаем на кнопку "Связаться с продавцом" (https://m.ok.ru/group/54904397693159/market)
+{F251215}
+4. Видим алерт.
+{F251216}
+
+
+Нет фильтрации служебных символов тут -
+<div class="discus_dialogs_topic emphased tx-ellip">"&gt;<img src="x" onerror="alert()"></div>
+
+## Impact
+
+XSS.

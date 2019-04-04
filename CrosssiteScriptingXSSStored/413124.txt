@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/413124
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/dumeelvavvalu
+ReportedTo:Dropbox(dropbox)
+BountyAmount:512.0
+Severity:
+State:Closed
+DateOfDisclosure:19.10.2018 18:13:29
+
+Summary:
+This report described a vulnerability where an attacker could put a specially crafted payload into the reply section of threads on dropboxforum.com to bypass the HTML filter on the site. This enabled a stored XSS attack against anyone viewing the message. This was an issue in Lithium forum.

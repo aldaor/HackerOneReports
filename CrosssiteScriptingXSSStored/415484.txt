@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/415484
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/dr_dragon
+ReportedTo:Shopify(shopify)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:07.11.2018 19:09:57
+
+Summary:
+
+# Description :
+WAF cut html tages but when put <!--> before tages we can bypass it :) .
+
+#Step to reproduce :
+1-Open your store account
+2-Navigate to https://xxx.myshopify.com/admin/settings/general
+3-Put your street address xss payload (xss"><!--><svg/onload=alert(document.domain)>)
+4-Go to https://xxx.myshopify.com/admin/dashboards/live
+5-XSS alert message
+
+## Impact
+
+XSS attack

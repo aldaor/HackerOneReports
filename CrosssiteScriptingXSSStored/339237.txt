@@ -1,0 +1,55 @@
+ReportLink:https://hackerone.com/reports/339237
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/flamezzz
+ReportedTo:ICQ(icq)
+BountyAmount:250.0
+Severity:high
+State:Closed
+DateOfDisclosure:01.10.2018 10:13:13
+
+Summary:
+XSS existed in formatting links in chats functionality. Fixed via additing encoding.
+
+Domain, site, application
+--
+https://web.icq.com/
+
+
+Testing environment
+--
+Chrome
+
+Steps to reproduce
+--
+1) Enter a chat
+2) Send the following message:
+
+``https://www.google.com/"onmouseover="javascript:prompt()"``
+
+3) Hover the link
+
+Actual results
+--
+
+XSS prompt shows.
+
+Expected results, security impact description and recommendations
+--
+
+
+The **"** character should be sanitized.
+
+PoC, exploit code, screenshots, video, references, additional resources
+--
+
+## Impact
+
+If a victim opens a message and hovers this link, the attacker can perform actions on behalf of the victim (modify account info etc).
+
+The hacker selected the **Cross-site Scripting (XSS) - Stored** weakness. This vulnerability type requires contextual information from the hacker. They provided the following answers:
+
+**URL**
+https://web.icq.com/
+
+**Verified**
+Yes

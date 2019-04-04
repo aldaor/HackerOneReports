@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/354262
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/coldd
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:06.11.2018 15:37:42
+
+Summary:
+In this report, the researcher discovered that registering for our Support site using the Zendesk Registration Form allowed for entering an AngularJS Template Injection payload as the Username. This could have allowed an attacker to perform Stored XSS attacks or similar. We deployed a fix for this issue along with a large site update that also resolved other known vulnerabilities.

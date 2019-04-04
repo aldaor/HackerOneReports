@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/419731
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/sandeep_hodkasia
+ReportedTo:Zomato(zomato)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:03.12.2018 7:02:09
+
+Summary:
+@sandeep_hodkasia identified a Blind XSS vulnerability that fired in one of our admin dashboard.
+
+#### POC
+
+- @sandeep_hodkasia added `"><script>alert(0);</script>` [XSS Hunter was used in this case] in address field while placing an order.
+
+- XSS triggered when one of our support agent viewed the order details. 
+
+Thanks @sandeep_hodkasia for helping us keep @zomato secure :)
+
+Best,
+Prateek

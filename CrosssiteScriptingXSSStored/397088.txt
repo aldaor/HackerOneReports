@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/397088
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/tony_tsep
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:29.09.2018 17:31:26
+
+Summary:
+@tony_tsep discovered a cross-site scripting vulnerability in the Buy Button sales channel. Currency amounts were not properly rendered, which could allow an attacker to execute Javascript in the context of the channel.
+I found an XSS vulnerability on buy button.
+**Steps to reproduce**
+Go to Settings > General > Store currency > Change formatting and add on "HTML with currency" the payload `€{{amount}} "><img src=x onerror=prompt(document.domain)>`
+After that go to buy button and you will see that the payload triggers there.
+
+## Impact
+
+A staff member can takeover another account.

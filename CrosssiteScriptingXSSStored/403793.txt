@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/403793
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/keretasenja28
+ReportedTo:Khan Academy(khanacademy)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:05.09.2018 16:26:12
+
+Summary:
+
+Hello KhanAcademy Security Team,
+
+I'm **rootbakar**, I found an XSS bug on 'BIO' in the profile, I used payload XSS **"/><svg/on<script>load=prompt(document.domain);>"/><svg/on<script>load= prompt (document.cookie);>** after I save it appears there is no trigger from the XSS, but when I try to change one of the values in the profile form and when I save it again an XSS trigger appears but with the words '**undefined**'. Every time I want to change both '**REAL NAME**' and '**LOCATION**' and when I press the save button again and after a few seconds an XSS trigger appears with the words '**undefined**'
+
+**PoC**
+This is Video Link
+https://youtu.be/WGeaclSo_5A
+(Not Public Video)
+
+Best Regards,
+
+**RootBakar**
+
+## Impact
+
+**Displayed 'undefined' XSS after user repeated click SAVE button**

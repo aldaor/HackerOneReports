@@ -1,0 +1,47 @@
+ReportLink:https://hackerone.com/reports/403692
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/abdilahrf_
+ReportedTo:Node.js third-party modules(nodejs-ecosystem)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:02.11.2018 10:45:04
+
+Summary:
+
+I would like to report stored xss in tianma-static
+It allows anyone to execute arbitary javascript for doing anything.
+
+# Module
+
+**module name:** tianma-static
+**version:** 1.0.4
+**npm page:** `https://www.npmjs.com/package/tianma-static`
+
+## Module Description
+
+Provide a static file service.
+
+# Vulnerability
+
+## Vulnerability Description
+
+it was possible to embed malicious js code in filename there was no sanitization performed. 
+
+## Steps To Reproduce:
+
+1. create filename `<img src=x onerror=alert(1)>`
+2. start tianma-static
+3. xss fired
+
+F340845
+
+
+# Wrap up
+
+- I contacted the maintainer to let them know: N
+- I opened an issue in the related repository: N
+
+## Impact
+
+It allows anyone to execute arbitary javascript for doing anything.

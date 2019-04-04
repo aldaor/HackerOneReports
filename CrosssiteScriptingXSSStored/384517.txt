@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/384517
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/24nitin
+ReportedTo:Rocket.Chat(rocket_chat)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:27.09.2018 12:46:09
+
+Summary:
+
+issue: xss(stored)
+Stored XSS occurs when a web application gathers input from a user which might be malicious, and then stores that input in a data store for later use. The stored input is not correctly filtered. As a consequence, the malicious data will appear to be part of the web site and run within the user’s browser under the privileges of the web application.
+
+poc:
+url: https://imgsrcxonerrorprompt2.rocket.chat
+
+## Impact
+
+Attackers can execute scripts in a victim’s browser to hijack user sessions, deface web sites, insert hostile content, redirect users, hijack the user’s browser using malware, etc.

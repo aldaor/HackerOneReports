@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/362735
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/pwnisher
+ReportedTo:Y Combinator(ycombinator)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:09.07.2018 5:46:57
+
+Summary:
+XSS was disclosed and was forwarded to our software team.
+A member of the software team fixed fairly quickly and we confirmed no data was exposed.
