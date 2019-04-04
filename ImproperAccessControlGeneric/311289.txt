@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/311289
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/kunal94
+ReportedTo:TTS Bug Bounty(tts)
+BountyAmount:2000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:07.02.2018 1:59:55
+
+Summary:
+When anyone searched a public search engine for `inurl:example.gov` (where `example.gov` was one of the URLs in the TTS Bug Bounty scope), the search results included a CI/CD build results URL. When anyone visited that build results page, they were faced with a login page, but if they clicked "log in", no authentication was required. This exposed the CI/CD interface for a production component, including a set of deployment credentials. It would have been possible to leverage these credentials to get other privileges.

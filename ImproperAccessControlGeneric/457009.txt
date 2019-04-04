@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/457009
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/c0rv4x
+ReportedTo:MariaDB(mariadb)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:10.12.2018 11:43:26
+
+Summary:
+Some of our GitHub repos had default public Wiki editing turned on, which could be used with malicious intent.

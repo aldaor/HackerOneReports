@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/376060
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/yox
+ReportedTo:Cloudflare(cloudflare)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:08.08.2018 17:50:23
+
+Summary:
+
+The lack of access control on the https://mobilesdk.cloudflare.com/api/v1/ api allows for a remote attacker to access and steal a logged in user's private data.
+
+This can be done due to the lack of origin protection. An attacker can embed the config URI "https://mobilesdk.cloudflare.com/api/v1/config" as a hidden iframe on their site, and then access/store the victim's JSON output containing the details.
+
+Reproduce:
+1. Create an account at https://mobilesdk.cloudflare.com
+2. Login
+3. Visit https://yoxall.me.uk/b/cf-testAUTH.html (here you'll see 2 embedded iframe's containing your details and API keys.)
+
+Image: https://i.imgur.com/vR7sq8Y.png
+
+## Impact
+
+The vulnerability could leak a lot of private details, including but not limited to app private API keys, auth keys, e-mail addresses, names, phone number, location, etc.
+
+Given the client key is "hidden" at start and used to initiate the app signup process, it's possible the attacker may be able to impersonate the user and take control of their app in some way? Although can't verify this, as I don't have the SDK downloaded.

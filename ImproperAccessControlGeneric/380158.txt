@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/380158
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/txt3rob
+ReportedTo:Starbucks(starbucks)
+BountyAmount:2000.0
+Severity:high
+State:Closed
+DateOfDisclosure:23.07.2018 17:47:15
+
+Summary:
+
+You have left a dns record pointing to a dead cloudapp vm.
+
+```
+svcardproxydevus.starbucks.com -> s00307ntmp0svcardproxydev0.trafficmanager.net -> s00307dpipsvcardproxy00.eastus.cloudapp.azure.com = Dead
+```
+
+## Impact
+
+```
+1) Attacker takes over subdomain and then puts something like porn or something that shouldn't be on the domain.
+2) hacker then contacts support pretending to be a concerned user.
+3) support click on it to check what is going on
+4) attacker has put responder on the page via a image file using a UNC path (https://github.com/SpiderLabs/Responder)
+5) attacker is then sent supports hash for their windows login.
+6) attacker then cracks hash and uses the VPN to pivot 
+```
+
+They can also use it to phish and other bad activitys

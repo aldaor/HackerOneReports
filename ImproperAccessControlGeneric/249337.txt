@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/249337
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/be6bfca755e616cb69c1a51
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:60.0
+Severity:none
+State:Closed
+DateOfDisclosure:19.07.2017 2:38:48
+
+Summary:
+While going live with additional 2FA options, a security researcher discovered that users that had enabled 2FA were not able to recover their accounts in case of a missing phone or authentication device. The issue was caused by improper error handling on the client during account recovery.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/224904
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/unad
+ReportedTo:Dropbox(dropbox)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:04.05.2017 18:32:12
+
+Summary:
+The report points out that the certificate for https://www.dropboxpartners.com had expired. We closed the issue as informative because we were already working on shutting down the site. The site became unavailable within a few days of the report being filed.

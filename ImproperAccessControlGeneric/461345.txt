@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/461345
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/whitehat_hacker
+ReportedTo:Ian Dunn(iandunn-projects)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:12.12.2018 18:06:50
+
+Summary:
+
+Hello Team,
+
+Github repo's wiki page is publicly editable. This enables an attacker to edit the wiki pages of the affected repo's. Adding content that may link to malicious code libraries that would be installed and used by developers or information that may mislead users.
+
+**POC Links:**
+https://github.com/iandunn/MU-Migration/wiki
+https://github.com/iandunn/wp-hammer/wiki
+https://github.com/iandunn/gutenberg/wiki
+https://github.com/iandunn/dotfiles/wiki
+
+## Impact
+
+This enables an attacker to edit the wiki pages of the affected repo's. Adding content that may link to malicious code libraries that would be installed and used by developers or information that may mislead users.
+
+Thank you.

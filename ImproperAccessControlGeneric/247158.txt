@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/247158
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/madrobot
+ReportedTo:Zomato(zomato)
+BountyAmount:250.0
+Severity:high
+State:Closed
+DateOfDisclosure:09.08.2017 7:20:49
+
+Summary:
+###Description
+Attacker was able to bypass the OTP verification needed while placing an order with a restaurant.

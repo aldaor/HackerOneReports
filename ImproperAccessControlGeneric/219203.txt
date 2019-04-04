@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/219203
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/michiel
+ReportedTo:Harvest(harvest)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:10.04.2017 17:18:11
+
+Summary:
+
+# Introduction
+I stumbled upon http://travel.████. It looks like the portal for Harvest Spring Summit 2017 travel planning and announcement. I was able to gain access to this portal and view the travel itineraries of some of the summit's participants.
+
+**A note on scope**
+I realize this domain is not listed in the scope section, but figured it would be something you want to know about as it discloses some personal information about your employees as well as their travel schedules.
+
+# Steps to reproduce
+* Head over to http://travel.██████
+* Sign in with a random Slack account. I signed in with my test Slack account `hack-test-team.slack.com`.
+* You'll be redirected to the Schedule page. Click on //Everyone// to see everyone's travel schedules. 
+
+# Proof of concept
+Here's a screenshot:
+{F173937}
+
+Note that it was also possible to create a new itinerary for myself:
+{F173938}
+
+# Recommendation
+Ensure that whoever authenticates via Slack is a member of the `harvest.slack.com` team, and not just any random Slack instance.
+
+Finally, I hope y'all had a great time at the summit! I won't be expecting a fast response on this one as it looks like many of you will be on your way back. =P

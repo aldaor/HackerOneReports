@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/403603
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/encrypt
+ReportedTo:Chaturbate(chaturbate)
+BountyAmount:150.0
+Severity:low
+State:Closed
+DateOfDisclosure:27.09.2018 12:16:50
+
+Summary:
+The hacker found that the private and group show rate endpoints where still active when an account was disabled. This was resolved. The endpoints only disclosed the rate for these shows.

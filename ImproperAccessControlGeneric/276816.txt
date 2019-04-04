@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/276816
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/sec_ninja1
+ReportedTo:Inflection(inflection)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:18.10.2017 16:57:27
+
+Summary:
+Users may change the primary email address associated with their account without being required to confirm their password again. The security researcher reporting this proposed that we add a password confirmation field when performing an email change.
+
+After considering the issue, we don't intend to implement the suggestion at this time. This issue falls more into the "best practices" bucket than it does the vulnerability bucket, since this behavior in and of itself does not allow a user's account to be compromised. 

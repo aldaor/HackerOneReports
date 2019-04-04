@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/360825
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/europa
+ReportedTo:Liberapay(liberapay)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:02.06.2018 12:54:49
+
+Summary:
+Although this was a duplicate report of a [GitHub issue](https://github.com/liberapay/liberapay.com/issues/1093) that we had created previously, we decided to close this report as "resolved" to award a couple of points to @europa and all the similar submissions that we received after this report.
+Hello team,
+during the initial assessment of your assets I've come across what seems to be the unprotected origin server for **www.liberapay.com**.
+
+### Description
+The frontend currently resolves to `████` and `███`, both owned by Cloudflare, which act as your reverse proxy and WAF. By correlating your SSL Certificates to other hosts on the internet that serve the same content I was able to determine the current Origin Server as `██████████` and `██████`, both operated by Amazon's AWS services in the **EU-WEST-1** region.
+
+By using these IP address as a resolver instead of the intended addresses I'm able to access the service without going through the WAF, thus I'm able to forward unfiltered payloads to the service, as well as avoiding the common protections offered by Cloudflare, also being able to perform crippling denial-of-services towards the origin.
+
+### Suggestions
+My recommendations fall in line with [Cloudflare's own guidelines](https://support.cloudflare.com/hc/en-us/articles/201897700-Step-4-Recommended-First-Steps-for-all-Cloudflare-users): the Origin server _must_ communicate exclusively with Cloudflare's IP address ranges, otherwise—as reported in [this post on Cloudflare's blog](https://blog.cloudflare.com/ddos-prevention-protecting-the-origin/), the protection offered by having a reverse proxy basically becomes useless.
+
+## Impact
+
+As reported in many other submissions, Cloudflare bypasses can have a significant impact, as any adversary is now able to communicate with the origin server directly, enabling them to perform unfiltered attacks (such as denial-of-service), and data retrieval.

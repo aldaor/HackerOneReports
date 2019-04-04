@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/354660
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/delite
+ReportedTo:Valve(valve)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:02.07.2018 23:46:26
+
+Summary:
+Community-banned users could potentially upload UGC, though not associated with specific Steam games.

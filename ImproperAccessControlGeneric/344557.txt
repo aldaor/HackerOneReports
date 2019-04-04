@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/344557
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/ruvlol
+ReportedTo:ICQ(icq)
+BountyAmount:250.0
+Severity:medium
+State:Closed
+DateOfDisclosure:05.10.2018 14:37:03
+
+Summary:
+Mail.Ru Agent uses [easyXDM](https://github.com/oyvindkinsey/easyXDM) library for crossdomain communication between different mail.ru messaging systems. For modern browsers [postMessage](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage) is used inside. The security issue was because of lacking ACL for domains. So malicious man could in some circumstances (he should know victim's email, force it to use Agent web widget and navigate to malicious site) steal message history of victim. We had fixed it by additing ACL for domains in the library.

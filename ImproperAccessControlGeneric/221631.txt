@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/221631
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Shopify(shopify)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:19.10.2018 13:55:29
+
+Summary:
+
+The subdomain ux.shopify.com points to domains.tumblr.com, but this subdomain is not used by anyone on Tumblr. Any user can register his blog for this subdomain.
+```
+ux.shopify.com.	3600	IN	CNAME	domains.tumblr.com.
+```
+{F176574}
+
+As an PoC, I registered a blog for this subdomain. It is available only with the password **c7gBX6gELPFLhYOeYxQD**.
+
+http://ux.shopify.com/
+
+{F176578}
+
+You need to remove the DNS entry ux.shopify.com. Or I can release this subdomain so that you can register it.

@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/388515
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/born2hack
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:25.09.2018 10:38:15
+
+Summary:
+1. Obtain an App Token
+2. Check that you can access the files with this token and save the cookies
+3. Revoke filesystem access for this token
+4. See that you can still access the files when using the cookies
+
+At step 4 there access to the files should also be forbidden.

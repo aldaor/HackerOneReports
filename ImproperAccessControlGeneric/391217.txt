@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/391217
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/moskowsky
+ReportedTo:Valve(valve)
+BountyAmount:20000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:31.10.2018 18:11:03
+
+Summary:
+Using the `/partnercdkeys/assignkeys/` endpoint on partner.steamgames.com with specific parameters, an authenticated user could download previously-generated CD keys for a game which they would not normally have access. Audit logs were not bypassed using this method, and an investigation of those audit logs did not show any prior or ongoing exploitation of this bug.

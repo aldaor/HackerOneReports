@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/271407
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/prateek_0490
+ReportedTo:Zomato(zomato)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:28.12.2017 13:12:14
+
+Summary:
+@prateek_0490 Was able to find our development server without any authentication. Which leads to leak the user data and some internal dashboards. 

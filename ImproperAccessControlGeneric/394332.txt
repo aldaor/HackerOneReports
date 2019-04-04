@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/394332
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/norver
+ReportedTo:VK.com(vkcom)
+BountyAmount:200.0
+Severity:low
+State:Closed
+DateOfDisclosure:26.10.2018 13:10:11
+
+Summary:
+Небезопасный BroadcastReceiver. 

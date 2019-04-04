@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/220445
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/jigarthakkar39
+ReportedTo:HackerOne(security)
+BountyAmount:750.0
+Severity:low
+State:Closed
+DateOfDisclosure:23.05.2017 7:33:13
+
+Summary:
+@jigarthakkar39 discovered a race condition issue with some recent changes to our payments code that caused him to be able to receive duplicate payouts for some bounties.
+
+A number of variables and timing had to be just right for it to actually allow a malicious actor to exploit this and receive duplicate payouts. Note that the companies were never double-charged for these duplicate payouts, so this monetary loss only affected HackerOne.
+
+We're disclosing this under Limited Visibility due to multiple mentions of private programs, e-mail addresses, specific bounties, and other sensitive information that would be too difficult to accurately redact without distracting from the overall report.
+
+Our bounty for this issue is actually $1000, but @jigarthakkar39 already received $250 of this due to his exploitation of this particular vulnerability. :)

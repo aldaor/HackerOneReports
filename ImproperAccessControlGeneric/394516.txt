@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/394516
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/encrypt
+ReportedTo:Chaturbate(chaturbate)
+BountyAmount:250.0
+Severity:low
+State:Closed
+DateOfDisclosure:27.09.2018 12:18:38
+
+Summary:
+The hacker found that the stats token, that a user can use to access their own account information, does not expire when an account is deactivated. This was resolved so the view could not be used after deactivation.

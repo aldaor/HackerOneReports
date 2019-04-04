@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/473742
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/loxiran
+ReportedTo:Starbucks(starbucks)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:08.03.2019 14:03:53
+
+Summary:
+A modified GraphQL query to fetch a user's address book entries led to a limited disclosure of user address book entries. The modified query resulted in a backend API request with undefined as a parameter. The response contained address lists of accounts with a username of undefined. We were not able to identify any horizontal privilege escalation vulnerabilities as a result of this report, however, the issue was triaged and resolved as a High severity finding.
+
+Many thanks to @loxiran for reporting this issue.

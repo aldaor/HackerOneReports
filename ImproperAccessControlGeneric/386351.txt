@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/386351
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/mikkz
+ReportedTo:Chaturbate(chaturbate)
+BountyAmount:350.0
+Severity:medium
+State:Closed
+DateOfDisclosure:20.09.2018 10:45:43
+
+Summary:
+The hacker found that the chat room panel could be accessed without the user having the room password. This was resolved.

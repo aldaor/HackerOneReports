@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/220864
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/vijay_kumar1110
+ReportedTo:OX App Suite(appsuite)
+BountyAmount:200.0
+Severity:high
+State:Closed
+DateOfDisclosure:17.08.2017 20:45:15
+
+Summary:
+
+Hi Team,
+
+Description : In calendar folder there is a permission settings where user can be assigned as read only user of it's own objects . User with this permission shouldn't be able to  view private appointments and it's attachments  . There is request of getting attachment details from server which is vulnerable to IDOR attack . Which discloses attachment details of private document of appointment in calendar. 
+
+Permission : Member should have read only permission of it's own objects.
+
+Vulnerable HTTP request : 
+
+GET /appsuite/api/attachment?action=all&module=1&attached=[attachment_ID ]&folder=[folder_ID]&columns=1%2C800%2C801%2C802%2C803%2C804%2C805&session=[session_token] HTTP/1.1
+Host: sandbox.open-xchange.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0) Gecko/20100101 Firefox/52.0
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Content-Type: application/x-www-form-urlencoded
+X-Requested-With: XMLHttpRequest
+Referer: https://sandbox.open-xchange.com/appsuite/
+Cookie: [Cookie_Values]
+Connection: close
+
+This request can be captured when you select appointment on calendar.
+
+Let me know if you need any other help from my side.
+
+Best Regards !
+Vijay kumar

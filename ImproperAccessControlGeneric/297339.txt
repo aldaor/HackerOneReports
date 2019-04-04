@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/297339
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/w00tr00t
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:600.0
+Severity:medium
+State:Closed
+DateOfDisclosure:13.12.2017 13:43:53
+
+Summary:
+##Issue
+
+The reporter found an unsecured, bare-naked and open-all-night PHPMyAdmin -application on one out of scope LocalTapiola domain.
+
+##Fix
+
+The issue was investigated and found to be valid. As this could have led to something quite critical, the fix was escalated and fixed very fast. 
+
+##Reasoning
+
+The reported case was valid but outside of the scope of the bug bounty program as such.  The domain is managed and hosted by a third party and does not contain anything related to customers. The finding itself was of high importance, but the third party environment (segregated from any customer environments) and the actual accessible information (mostly public or low value) reduced the business impact very much. The most likely exploitation of the finding would have been to use it as a launchpad for further attacks or phishing. As a result of this reasoning, a decent bounty was decided on.
+
+## Vulnerability Detail
+PhpMyAdmin setup page is accessible over the internet in which it's possible for the user setup the servers with required details.
+
+## Vulnerable Endpoint
+https://lml.lahitapiola.fi/admin/phpMyAdmin/setup/index.php
+
+## Attached screenshots
+{F246247}
+
+{F246248}
+
+## Impact
+
+Its possible for an attacker to configure the servers without information of the application adminstrator.

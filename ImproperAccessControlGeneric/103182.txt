@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/103182
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/bigbear_
+ReportedTo:Mail.ru(mailru)
+BountyAmount:400.0
+Severity:
+State:Closed
+DateOfDisclosure:26.04.2018 15:24:08
+
+Summary:
+Access to babel.mail.ru admin page was not sufficiently filtered, allowing accounts bruteforcing.
+
+bable.mail.ru is not directly listed in the bug bounty scope, but this vulnerability could affect projects in the scope.

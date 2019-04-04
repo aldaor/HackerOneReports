@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/273557
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/flashdisk
+ReportedTo:Shopify(shopify)
+BountyAmount:1000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:16.05.2018 15:10:43
+
+Summary:
+@flashdisk reported that our staging environment for our Theme Store could be used to install Shopify themes for free. When installing a theme from our staging environment, a _test charge_ would be created so the store would not be charged any money for themes installed through our staging environment. We addressed the issue with test charges, they are now used only in development or test environment. We also added authentication in front of the staging environment.
+Hi,
+
+#Discription
+while searching for access control issues on shopify I noticed a subdomain of shopify https://themes.shopify.io which gave me the opportunity to install and download paid 
+themes for free.
+
+#POC
+
+1. go to https://themes.shopify.io/login and login
+2. select one of the paid themes and press on ``buy theme`` button
+3. you will be facing this screen on your shop:
+ {F225469}
+4. press on ``apporve charge`` button and the theme will be installed after getting to this screen:
+{F225470}
+
+#IMPACT
+
+any user can download any paid themes and also can save them and modify them to upload them again 
+
+#FIX
+
+you should limit the access to  https://themes.shopify.io/ since it is for testing only.
+
+thanks.

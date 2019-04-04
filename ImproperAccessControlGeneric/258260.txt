@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/258260
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/geekboy
+ReportedTo:Vanilla(vanilla)
+BountyAmount:150.0
+Severity:medium
+State:Closed
+DateOfDisclosure:23.07.2018 14:31:47
+
+Summary:
+
+
+###Description:
+-----------
+Users can send message to each other as well as attach and share the files as well, and the flow is like once user upload the file on the server, the file get assigned by unique id named **`MediaIDs`** which is vulnerable for IDOR.
+
+
+###Step To Reproduce: 
+-----------
++ Get logged into account!
++ Send text msg with attachment to other test account.
++ Intercept the request which send the msg!
++ Change the value of **`MediaIDs`** and replace with any other id.
++ You will get the accessible url of that file the response which belong to some other users. 
+
+###Exploitability: 
++ Attacker can extract all the private files shared between all the users.
+
+###Possible Fix:
+-----------
++ Maintain the access control properly.
+
+
+Please let me know if any more info needed !
+
+-------------
+
+__*- Geekboy!*__

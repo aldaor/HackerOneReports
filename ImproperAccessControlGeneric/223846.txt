@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/223846
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/footstep
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:18.05.2017 7:58:24
+
+Summary:
+
+Hi!,
+
+This is much of a best practice as it doesn't have much impact on the user. But I believe you may want to know.
+
+After making a registration or on finalizing a password reset, one is redirected to a page, https://demo.weblate.org/accounts/email-sent/. I noticed that even without making any of the two actions stated above, the page is still accessible.
+
+Regards,
+Shuaib

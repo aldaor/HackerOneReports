@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/246838
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/abhiram
+ReportedTo:WakaTime(wakatime)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.07.2017 16:15:13
+
+Summary:
+
+ERROR 429 FOR RATE LIMIT EXCEED to access login page
+when am trying to access  login page after couple of request web server shows 429 error,after refreshing the same page i got an access log in page, this is because of weak rate limit exceed
+THANKING YOU 

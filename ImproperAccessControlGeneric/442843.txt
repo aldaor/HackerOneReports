@@ -1,0 +1,49 @@
+ReportLink:https://hackerone.com/reports/442843
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/npbhatter17
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:04.12.2018 19:51:45
+
+Summary:
+# Summary
+Users that were no longer part of a program were not unsubscribed from reports. Users may have seen an in-app notification of a report being transferred after they were no longer suppose to have access. This vulnerability was introduced on July 17, 2017.
+
+# Timeline (November 16th, all times PDT)
+
+| **Time (PST)** | **Action**                                                                                                                        |
+|----------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| 9:55 AM        | Report submitted to H1 bug bounty program (this report)                                                                           |
+| 10:27 AM       | Root cause was identified                                                                                                         |
+| 10:36 AM       | Notifications that were sent for the two particular reports were deleted for all users                                            |
+| 10:52 AM       | Internal HackerOne announcement went out not to use the "Transfer Report" functionality for the time being                        |
+| 11:10 AM       | "Transfer report" feature was disabled, blocking all usage of the feature, which avoids another occurrence                        |
+| 12:06 PM       | 2110 notifications were identified (affecting 21 programs) that were sent to people who didn't have access to the reports anymore |
+| 12:13 PM       | All 2110 notifications are deleted                                                                                                |
+| 2:26 PM        | Fix was released to production to make sure subscribers are now removed when they're no longer part of a program                  |
+| 2:30 PM        | "Transfer report" feature was re-enabled                                                                                          |
+| 5:09 PM        | Data migration was released to clean up unauthorized subscribers                                                                  |
+| 5:13 PM        | Data migration was completed, 2.91M records deleted                                                                               |  
+
+# Root cause
+When a user was part of a program and they'd automatically be subscribed to incoming reports OR they'd manually subscribe, their `User` object was added to the `subscribers` relationship on a `Report` model. When they'd leave the program / be removed, this relationship wouldn't be deleted. This meant that every time we'd use the `<report instance>.subscribers` relationship, it may have included users who no longer had access to the `<report instance>`. This is what happened with the Notifications that were created when a report was transferred to another program.
+
+This **only** affected notifications that were sent when a report was transferred to another program.
+
+The changes that this would happen were rather slim. However, due to the [SAML JIT incident](/reports/438306), multiple people were added as subscribers to reports of other programs. We didn't clean those up, as this wasn't part of the `TeamMember::Destroy` interactor logic. When one of the affected customers of the SAML JIT incident moved one of their reports, all of the report subscribers received a notification, which included employees of other programs.
+Hi Hackerone team,
+
+I am still able to access other program details etc. when i'm authenticated to HackerOne through SAML .
+I'm not sure if it's the same bug i reported earlier or there is some weak authorization check in place. PFA for more info i can access related to ██████████ etc. See the date it's 16th November .
+
+Quick Note:
+Last time when i reported the issue the H1 team decided not to reward it. https://hackerone.com/reports/438306
+However this time it's happening again. I can stop reaching out to H1 if they don't reward the ethical researchers who are willing to help their platform more secure.
+
+Please consider this as a  valid finding and reward it this time .
+
+## Impact
+
+This could be a serious issue for HackerOne since the program owners will loose trust in the service and might stop using this platform .

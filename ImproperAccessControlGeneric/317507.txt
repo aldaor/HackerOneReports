@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/317507
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/s3cur3
+ReportedTo:Shipt(shipt)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:12.09.2018 14:40:16
+
+Summary:
+A security researcher identified an endpoint that allowed Shipt Members to delete their own account by intercepting an HTTP request, changing the HTTP method to DELETE, and forwarding the request, bypassing the normal membership cancellation protocol. This endpoint did not allow for modifying other members' accounts and was self-exploitable only. However, this issue could have impacted business operations and metrics and Shipt re-opened the report and Shipt engineers implemented a fix. Researcher validated the fix. 

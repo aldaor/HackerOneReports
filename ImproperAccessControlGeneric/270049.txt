@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/270049
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/sp1d3rs
+ReportedTo:Razer US(razer_us)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:08.11.2017 19:20:55
+
+Summary:
+The tester discovered database parameters left around in a YAML file that was publicly visible.  The credentials were for a database that was no longer in use and never stored sensitive data, but we consider this a good find anyway because this was out of bounds of our security practices.

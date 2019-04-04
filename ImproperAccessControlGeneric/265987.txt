@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/265987
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/tungpun
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.10.2017 12:24:43
+
+Summary:
+
+## Introduction
+In the normal case, to link another email address to the Weblate account, users need to own the email address and click the verification link. However, I found an issue, that allows adding another email address without clicking on the verification link.
+
+## Description and PoC:
+* Create a new openSUSE ID. Pick up a new email. In this example, I choose `admin@weblate.org`.
+{F218492}
+Of course, you don't need to verify the email address for this openSUSE ID.
+
+* Then backs to weblate.org, go to Your profile > Authentication `https://demo.weblate.org/accounts/profile/#auth`.
+Add the above openSUSE account as a new association.
+{F218493}
+
+* That all, go to Account tab `https://demo.weblate.org/accounts/profile/#account`, you will see the new email in your account's email field.
+{F218494}
+
+## Mitigation
+Weblate should only accept the association from verified openSUSE ID.

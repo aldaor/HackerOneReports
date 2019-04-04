@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/293470
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/karimrahal
+ReportedTo:Razer US(razer_us)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:04.01.2018 21:08:14
+
+Summary:
+The researcher discovered that the .bash_history on this server had improper permissions, which allowed public viewing of the files.   When a DB admin eventually executed a command involving clear text credentials for the database, this exposed the password for that database (a Kayako DB used for support).

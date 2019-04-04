@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/423286
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/jackds
+ReportedTo:Starbucks(starbucks)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:24.10.2018 17:31:28
+
+Summary:
+
+**Summary:** 
+I found the following URL, which appears to be running an Sidekiq web UI instance that is accessible unauthenticated: https://gift-test.starbucks.co.jp/sidekiq/busy
+
+**Description:**
+Sidekiq is used for Ruby background processing (as I've learned, I'm not really familiar with it). The web UI can be used to stop these processes, as can be seen here:
+
+{F359897}
+
+## Steps To Reproduce:
+
+  1. Go to  https://gift-test.starbucks.co.jp/sidekiq/busy
+
+## Supporting Material/References:
+
+n.a.
+
+## Impact
+
+Unclear. As the domain name suggests it might be a staging/test environment. I cannot determine clearly what these running processes are, but I am able to stop them which might be undesired.
