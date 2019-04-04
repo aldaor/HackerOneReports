@@ -1,0 +1,54 @@
+ReportLink:https://hackerone.com/reports/288638
+WeaknessName:Password in Configuration File
+Reporter:https://hackerone.com/kendoclaw
+ReportedTo:AlienVault (alienvault_security)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:14.11.2017 16:22:39
+
+Summary:
+iam a big fan of fuzzing/bruteforcing after my last submission #288533 on http://data.alienvault.com, i decided to go further, after some bruteforcing i came across this directory which looked kinda interesting for me http://data.alienvault.com/snort/
+when u try to access the directory you will get 403 error, but if u try to go to http://data.alienvault.com/snort/index.php it will ask you for login details.
+
+at this moment i remembered a writeup by @ITSecurityguard ( link at the end of report) he found a public .htpasswd file,cracked it and gained access to company’s development / beta environments. when i tried to browse http://data.alienvault.com/snort/.htpasswd i was shocked that the file got downloaded, it's content was:
+
+YYYYYY:XXXXXXX
+
+i thought that this was a plain text pw so i tried it but no luck, so i ran dirsearch again to find more hidden files on http://data.alienvault.com/snort/ and it found me these:
+http://data.alienvault.com/snort/.htaccess
+http://data.alienvault.com/snort/.claves
+
+.htaccess:
+' ' '
+AuthName "Solo usuarios autorizados"
+AuthType Basic
+require valid-user
+AuthUserFile /var/www/snort/.claves
+
+' ' '
+seems it's checking user input against the cerds located in /var/www/snort/.claves .
+
+.claves:
+
+' ' '
+YYYYYYY:/XXXXXXXXX
+' ' '
+the moment i saw these i realized that these are not plain text passwords after some research i found that these are descrypt, DES(Unix) hashes, so as @ITSecurityguard did i used "john" to crack the hashes.
+it got cracked in less than 1 sec (guess it wasn't secure?)
+
+and the output was :
+
+?:XXXXXX
+?:XXXXXX
+
+for both of the passwords, i ended up with (XXXXX:XXXXXX) as a name and a password,tried it to access http://data.alienvault.com/snort/index.php and it worked.
+even though i found nothing sensitive (until this moment) on /snort/, i decided to report my find because there's a high possibility you're using the same name and pw in other basic Auth end points.
+
+i will continue searching for other endpoints using Basic Authentication, i will keep you updated if i found anything intersting
+
+Supporting Material/References:
+
+writeup mentioned in the report:
+https://blog.it-securityguard.com/bugbounty-decoding-a-%F0%9F%98%B1-00000-htpasswd-bounty/
+

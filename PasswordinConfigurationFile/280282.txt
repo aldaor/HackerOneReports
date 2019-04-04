@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/280282
+WeaknessName:Password in Configuration File
+Reporter:https://hackerone.com/dhiraj-mishra
+ReportedTo:Tor(torproject)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:19.10.2017 10:50:33
+
+Summary:
+
+Hi Team, 
+
+Actual results:
+
+There is no password complexity set for Master password in about:preferences#security , Because I was able to set my password like 123,123456,www, admin etc which is really common, apart from that we can use spaces as well in master password i was able to set space as my master password :/ 
+
+Expected results:
+Recommendation - Provide robust rules including upper lower letters, special characters etc.
+
+Ref: https://bugzilla.mozilla.org/show_bug.cgi?id=1408427 
+
+Regards
+Dhiraj 
