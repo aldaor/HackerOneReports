@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/347850
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/aieti
+ReportedTo:Mail.ru(mailru)
+BountyAmount:800.0
+Severity:medium
+State:Closed
+DateOfDisclosure:16.07.2018 16:22:53
+
+Summary:
+SSRF was potentially possible via request to Sentry (in-app error tracking / debugging system). Problem was mitigated by isolating Sentry installation to restricted network.

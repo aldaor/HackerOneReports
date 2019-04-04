@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/288950
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/edoverflow
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:16.11.2017 20:15:03
+
+Summary:
+
+It turns out there is another bypass in the `private_address_check` gem. The gem does not include 0.0.0.0 in the exclusion list in the first place.
+
+```
+irb(main):001:0> require 'private_address_check'
+=> true
+irb(main):002:0> PrivateAddressCheck.private_address?("0.0.0.0")
+=> false
+```
+
+I was able to bypass your filter by using http://0.0.0.0:22/ as you can see below:
+
+{F238151}
+
+Please find a hotfix for this issue attached to this report: {F238152}. The author of the gem has been notified and should hopefully provide a proper fix very soon.

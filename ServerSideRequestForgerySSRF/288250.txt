@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/288250
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/sp1d3rs
+ReportedTo:AlienVault (alienvault_security)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:14.11.2017 14:48:34
+
+Summary:
+
+##Description
+The latest SSRF fixes can be bypassed, using octal encoding of the AWS IP.
+There is other more general bypass, which can't be fixed using blacklisting - it's reported in the #288183.
+
+##POC
+https://www.threatcrowd.org/domain.php?domain=0251.00376.000251.0000376
+{F237500}
+
+##Suggested fix
+As was mentioned in the #288183,
+there is no 100% way to validate the domains using only string-based checks, the best way to protect yourself - it's resolve domain-to-ip (or get A record), and then check this IP against local ranges (to prevent also localhost/local environment querying).

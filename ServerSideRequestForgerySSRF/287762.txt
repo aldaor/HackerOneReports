@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/287762
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/ramsexy
+ReportedTo:AlienVault (alienvault_security)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:07.11.2017 17:49:56
+
+Summary:
+
+As said in report #285380, using the decimal IP notation is bypassing the fix : https://www.threatcrowd.org/domain.php?domain=2852039166

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/397402
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/putsi
+ReportedTo:MariaDB(mariadb)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:13.10.2018 9:35:54
+
+Summary:
+Vulnerabilities in our publicly available issue and bug tracking Jira instance have been reported and resolved to the best of our abilities by upgrading to the latest available Jira software from Atlassian.

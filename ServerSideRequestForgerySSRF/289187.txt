@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/289187
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/cujanovic
+ReportedTo:AlienVault (alienvault_security)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:16.01.2018 14:10:10
+
+Summary:
+
+Hello there, this is for the otx.alienvault.com domain, but I couldn't mark it in the drop down menu. I saw the note about the 2 weeks so I decide to report this.
+
+**Summary:**
+I've found that you can perform a SSRF attack(with DNS pinning) and read the response from url http://169.254.169.254
+
+## Browsers Verified In:
+* Firefox 56.0
+
+## Steps To Reproduce:
+
+  1. Open URL: https://otx.alienvault.com/otxapi/indicator/hostname/http_scans/lol3.1ynrnhl.xip.io
+or URL: https://otx.alienvault.com/indicator/hostname/lol3.1ynrnhl.xip.io
+  2. You can see the response from the 169.254.169.254
+
+Note: Please change the URL from lo3 to lol4 etc, because the URL needs to be different for every request.
+
+## Supporting Material/References:
+
+{F238411}
+{F238412}

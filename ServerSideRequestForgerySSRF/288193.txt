@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/288193
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/cujanovic
+ReportedTo:AlienVault (alienvault_security)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:14.11.2017 16:15:04
+
+Summary:
+
+**Summary:** this issue is a bypass for this report: https://hackerone.com/reports/285380 . It is a SSRF bypass with DNS pinning.
+
+**Description:** We can bypass the SSRF protection with a simple domain that is resolving to 169.254.169.254 , like: ssrf-cloud.localdomain.pw
+
+## Browsers Verified In:
+
+  * Firefox 56.0
+
+## Steps To Reproduce:
+
+  1. Open URL: https://www.threatcrowd.org/domain.php?domain=ssrf-cloud.localdomain.pw
+  2. You can see the response from the 169.254.169.254
+  
+
+## Supporting Material/References:
+
+F237443

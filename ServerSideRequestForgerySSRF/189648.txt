@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/189648
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/korprit
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:15.08.2017 16:14:19
+
+Summary:
+A Department of Defense webserver was vulnerable to an SSRF attack that could have enabled a remote user to send custom web requests from the vulnerable system. @korprit was able to demonstrate this vulnerability by crafting  specially formatted URLs. Thanks @korprit!

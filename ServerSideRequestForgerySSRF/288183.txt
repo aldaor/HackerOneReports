@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/288183
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/sp1d3rs
+ReportedTo:AlienVault (alienvault_security)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:14.11.2017 15:17:04
+
+Summary:
+
+##Description
+The SSRF fix can be bypassed, using domain, pointed to the AWS IP `	169.254.169.254`, like `metadata.nicob.net`.
+
+##POC
+https://www.threatcrowd.org/domain.php?domain=metadata.nicob.net
+{F237437}
+
+##Suggested fix
+While there is no 100% way to validate the domains using only string-based checks, you should resolve domain-to-ip, and then check IP against local ranges.

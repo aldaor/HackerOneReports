@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/327480
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/0ang3el
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:16.08.2018 9:55:28
+
+Summary:
+Researcher has identified and reported SSRF on Informatica's Sub-domain and helped us in resolving the issue.

@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/180527
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/firex
+ReportedTo:VK.com(vkcom)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:09.02.2017 14:26:46
+
+Summary:
+Потенциальный DoS сервиса share через SSRF. 
+Продемонстрирована возможность проведения атаки через приложения ВК.

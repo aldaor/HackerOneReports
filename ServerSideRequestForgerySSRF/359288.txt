@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/359288
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/keretasenja28
+ReportedTo:GitLab(gitlab)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:16.07.2018 17:22:54
+
+Summary:
+Duplicate: Fixed in 8.17.4, 8.16.8, and 8.15.8
+Original report: https://hackerone.com/reports/135937
+
+SSRF when importing a project from a Repo by URL
+
+GitLab instances that have enabled project imports using "Repo by URL" were vulnerable to Server-Side Request Forgery attacks. By specifying a project import URL of localhost an attacker could target services that are bound to the local interface of the server. These services often do not require authentication. Depending on the service an attacker might be able craft an attack using the project import request URL.
+
+This update blocks all import attempts from localhost and all bound server interfaces other than those assigned as GitLab web or SSH services (Typically ports 22 and 443). This update also blocks all import attempts from TCP ports below 1024 with the exception of ports 22, 80 and 443. 17286
+
+Thanks to Strukt via HackerOne for reporting this vulnerability.
+

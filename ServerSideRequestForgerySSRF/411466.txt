@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/411466
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/truwa
+ReportedTo:Mail.ru(mailru)
+BountyAmount:800.0
+Severity:medium
+State:Closed
+DateOfDisclosure:19.10.2018 16:12:02
+
+Summary:
+It was possible to access some internal addresses and special URI schemes due to lack of URI filteint on page submission.
+
+mediator.media it not in the Bug Bounty scope, the bounty was issued due to problem severity.

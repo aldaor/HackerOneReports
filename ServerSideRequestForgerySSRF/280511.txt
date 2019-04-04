@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/280511
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/mr_r3boot
+ReportedTo:Infogram(infogram)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:06.12.2017 10:18:15
+
+Summary:
+
+Hi Team, I would like to report SSRF issue.
+
+#PoC:
+1. Navigate to ```https://infogram.com/app/[user-project]```.
+2. Click on edit logo fields and click on add JSON Data.
+3. Enter ```[url][openport]``` response is ```Download failed```
+4. Enter ```[url][closedport]``` response is ```Invalid data source```
+
+#Fix:
+Don't give permission to port related connections or use single error message.
+
+Regards,
+Mr.R3boot.

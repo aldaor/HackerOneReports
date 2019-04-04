@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/356765
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/albatraoz
+ReportedTo:Slack(slack)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:12.07.2018 19:00:57
+
+Summary:
+@albatraoz found a bypass to report #61312, allowing information leakage via SSRF in Slash commands. We fixed the vulnerability and performed a through investigation. Thanks @albatraoz!

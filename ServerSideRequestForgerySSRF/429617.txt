@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/429617
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/ruvlol
+ReportedTo:Shopify(shopify)
+BountyAmount:1000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:14.03.2019 10:50:35
+
+Summary:
+@ruvlol discovered that the `/admin/api/graphql` endpoint in Shopify admin was missing host validation, and would proxy to arbitrary hosts when the host header was modified. This could have allowed making POST requests with that path to internal services, or exposing the X-Shopify-Access token for the current user (which the client does not typically have access to). However, this token has the same access level as interacting normally with the graphql endpoint in admin for that session.
+Hello Shopify team! I found out that on /admin/api/graphql endpoint server fetches content of Host header value (${HTTP_Host} + /admin/api/graphql). If my own host was sent to server, request comes from ██████████or ██████████ (your google cloud cluster). Also I can grab all reverse proxy headers including X-Shopify-Access-Token.
+
+example of such request in base64:
+
+```
+███
+```
+
+
+Also it returns response your server got on ${HTTP_Host} + /admin/api/graphql address
+
+
+How to reproduce:
+1. POST /admin/api/graphql with Host pointing to external website
+2. As external website owner grab incoming headers.
+
+## Impact
+
+SSRF, X-Shopify-Access-Token leakage

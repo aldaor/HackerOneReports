@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/385178
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/jaykpatel
+ReportedTo:Chaturbate(chaturbate)
+BountyAmount:800.0
+Severity:medium
+State:Closed
+DateOfDisclosure:20.09.2018 0:05:20
+
+Summary:
+The hacker discovered that our secure image proxy camo.stream.highwebmedia.com could be used to access http(s) endpoints on internal ips. The application was patched to not allow access to internal ips. In this case these servers are in a separate cluster with no access to other services so possible exploitation was limited.

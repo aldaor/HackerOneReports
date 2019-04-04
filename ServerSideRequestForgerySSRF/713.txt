@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/713
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/zurke
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:15.02.2014 3:07:33
+
+Summary:
+
+Using this vulnerability users can upload images from any image URL. 
+Just change upload type using inspect element  (from "type=file" to "type=url") , paste URL in text field and hit enter or click on "Update Profile". Your profile photo will be changed to photo from URL.
+
+P.S  Im sorry for my bad english.

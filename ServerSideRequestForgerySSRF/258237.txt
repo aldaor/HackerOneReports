@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/258237
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/haxta4ok00
+ReportedTo:Mail.ru(mailru)
+BountyAmount:150.0
+Severity:high
+State:Closed
+DateOfDisclosure:28.12.2017 15:31:11
+
+Summary:
+SSRF in et.mail.ru
+et.mail.ru is not currently covered by Bug Bounty program, a bounty was issued as a bonus due to potential problem severity
+Привет, я подождал пока вы решите #251220 Эту багу, да она фикс. Затем я проверил другую и она работает, и видимо она не принадлежит одним и тем же параметрам при исправлении.
+
+Domain, site, application
+--
+https://et.mail.ru/forums/
+
+Steps to reproduce
+--
+1)Заходим например в общий раздел
+https://et.mail.ru/forums/forumdisplay.php?f=1
+2)Нажимаем "+Новая тема".
+3)Чуть ниже есть форма управления вложениями - нажимаем ее
+4)Выбираем загрузить с сайта и вписываем http://localhost:11211/asd.jpg
+5)Так же, где то через 30 секунд  -- Ошибка 504.
+
+PoC, exploit code, screenshots, video, references, additional resources
+--
+F210895

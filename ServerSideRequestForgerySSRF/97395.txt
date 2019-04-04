@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/97395
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/paresh_parmar
+ReportedTo:Mail.ru(mailru)
+BountyAmount:300.0
+Severity:medium
+State:Closed
+DateOfDisclosure:27.03.2017 13:14:03
+
+Summary:
+SSRF in the project outside of bug bounty program's scope. 
+Despite the project is out-of-scope, bounty was rewarded due to problem severity.

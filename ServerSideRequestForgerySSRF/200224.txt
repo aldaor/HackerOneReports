@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/200224
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/lalatina
+ReportedTo:Mail.ru(mailru)
+BountyAmount:800.0
+Severity:medium
+State:Closed
+DateOfDisclosure:07.11.2017 12:34:48
+
+Summary:
+SSRF via submitting URL redirecting to internal resrouce to REST API method of target.my.com.
+
+target.my.com is not currently in the Bug Bounty scope, bounty was issued due to potential impact on different services and infrastructure.

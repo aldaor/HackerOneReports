@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/215105
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/edoverflow
+ReportedTo:GitLab(gitlab)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:09.11.2017 17:51:58
+
+Summary:
+
+Dear GitLab bug bounty team,
+
+# Summary
+---
+
+It appears as though the fix to [!17286](https://gitlab.com/gitlab-org/gitlab-ce/issues/17286) can be easily bypassed. You have blocked the usage of `http://127.0.0.1`, `http://localhost/`, etc., but `http://0177.1/` and `http://0x7f.1/`, for instance, can still be used to scan internal ports.
+
+~~~
+Error importing repository http://0177.1:22/ into {username}/{project} - Cloning into bare repository '[REPOS PATH]/{username}/{project}.git'...
+fatal: unable to access 'http://0177.1:22/': Recv failure: Connection reset by peer
+~~~
+
+Admittedly, you have restricted the use of certain ports, but I still believe this needs to be fixed.
+
+# Fix
+---
+
+Block decimal, octal and hex localhost notation.
+
+Best regards,
+Ed

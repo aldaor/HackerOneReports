@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/271224
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/adibou
+ReportedTo:Zomato(zomato)
+BountyAmount:1000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:28.02.2018 10:18:41
+
+Summary:
+@nbsp found a SSRF vulnerability which leads to read local files from the web server (source code & system files). 
+We have resolved the issue quickly and rewarded the researcher.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/288353
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/alexbirsan
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:1500.0
+Severity:high
+State:Closed
+DateOfDisclosure:12.01.2018 15:55:48
+
+Summary:
+In this report, the researcher found that by submitting crafted SVG files, he was able to establish a listener on our server that enabled SSRF attacks. This potentially could have been pivoted to carry out more damaging attacks as well. We improved our validation of user-submitted SVG files to prevent this from happening in the future.

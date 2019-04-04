@@ -1,0 +1,52 @@
+ReportLink:https://hackerone.com/reports/381129
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/elber
+ReportedTo:Slack(slack)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:22.02.2019 20:58:21
+
+Summary:
+
+Bypassing the reports #61312 and #356765
+
+**Tutorial:**
+
+
+**Go to api.slack.com and create an application with your own slash command.**
+{F320014}
+
+**Enter your own domain:**
+*in your own domain: index.php*
+
+`<?php
+header("location: http://[::]:22/");
+?> `
+
+location: http://[::]:22/
+
+{F320019}
+
+And save.
+
+Go to your Slack and type /youslash
+
+
+Try with my server http://206.189.204.187/
+
+
+Results:
+
+SSH
+{F320015}
+
+SMNTP
+{F320016}
+
+## Impact
+
+In a Server-Side Request Forgery (SSRF) attack, the attacker can abuse functionality on the server to read or update internal resources, and scan for internal ports and get the versions of the services running on the server.
+ 
+Referer: https://www.owasp.org/index.php/Server_Side_Request_Forgery
+https://hackerone.com/reports/61312
