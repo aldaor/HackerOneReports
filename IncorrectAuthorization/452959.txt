@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/452959
+WeaknessName:Incorrect Authorization
+Reporter:https://hackerone.com/haxta4ok00
+ReportedTo:HackerOne(security)
+BountyAmount:2500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:05.12.2018 4:55:40
+
+Summary:
+
+**Summary:**
+Hi team
+**Description:**
+Hacker can request agree-on-going-public publish report
+### Steps To Reproduce
+
+1. Create publish report
+2. 
+
+https://hackerone.com/reports/bulk
+POST
+message=&reference=&add_reporter_to_original=false&reply_action=agree-on-going-public&reports_count=1&report_ids%5B%5D=██████████&bounty_currency=USD
+
+███
+
+## Impact
+
+Hacker can request agree-on-going-public publish report
+Hacker bypasses the check by the moderator
