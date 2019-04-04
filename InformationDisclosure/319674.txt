@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/319674
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/trainzment
+ReportedTo:VK.com(vkcom)
+BountyAmount:300.0
+Severity:medium
+State:Closed
+DateOfDisclosure:02.04.2018 20:12:10
+
+Summary:
+Просмотр некоторых видеозаписей из закрытых групп. 

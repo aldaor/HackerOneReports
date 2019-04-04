@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/360811
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/peuch
+ReportedTo:Starbucks(starbucks)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:16.08.2018 20:12:51
+
+Summary:
+
+Hi,
+
+After some research, I found a leak on GitHub that might lead to accessing sensitive data of employees or clients (not sure based on the code). There is also a SAP S-user to access a cloud based HANA service. I have not confirmed what kind of data is in there to avoid potential legal issues. I will let you guys figure that out ;)
+
+I am not sure who is the owner of the repository, but I can tell you that the SAP credentials are for someone at Starbucks China.
+
+https://github.com/karaskay/personalware
+
+Some interesting files:
+https://github.com/karaskay/personalware/blob/989723f896eec67a50a9b9f59ceefc48a046049b/python/PycharmProjects/JMS36/testhttprequestjson.py
+(SAP Cloud HANA credentials)
+
+https://github.com/karaskay/personalware/blob/989723f896eec67a50a9b9f59ceefc48a046049b/python/PycharmProjects/JMS36/JMSproducerforsurvey.py
+(starbuckstest domain credentials)
+
+Thanks!
+
+## Impact
+
+High potential of an unauthorized access to PII data

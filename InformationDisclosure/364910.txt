@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/364910
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/fr_0_ank
+ReportedTo:Smule(smule)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:03.01.2019 17:24:59
+
+Summary:
+Disclosure of django configuration via debug mode.

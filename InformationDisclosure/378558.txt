@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/378558
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/peuch
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:27.08.2018 19:45:37
+
+Summary:
+@peuch found a publicly available Github repository providing insight about security controls in place on Uber workstations. 
+
+We enjoyed working with @peuch on this issue and look forward to their future submissions to our program. 

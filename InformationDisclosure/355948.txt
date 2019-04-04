@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/355948
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/lincoln9932
+ReportedTo:Mail.ru(mailru)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:04.09.2018 11:49:10
+
+Summary:
+After the deal, service was disclosing some unnecessary counterparty's information (IP address and e-mail) .

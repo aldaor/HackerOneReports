@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/335779
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/d3ad1y_b0073r
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:50.0
+Severity:medium
+State:Closed
+DateOfDisclosure:22.05.2018 16:12:31
+
+Summary:
+#Issue
+The reporter found that user information leaked from www.lahitapiolarahoitus.fi.
+
+##Fix
+
+The issue was resolved during normal and scheduled hardening of Wordpress.
+
+##Reasoning
+
+The issue was valid and the reporter provided enough proof. This is typical Wordpress, what we know as a "feature", that every WP administrator should be aware of. Hardening was already in the pipeline, but as this was found before those were put in place the finding was processed. 
+
+We had several reports on related issues, but as all were carried out differently we decided to award each separately ( #335779, #335341 and #326971).
+User Information Disclosure via Json response on a specific api end point 
+
+POC URL: https://www.lahitapiolarahoitus.fi/wp-json/wp/v2/users/
+
+Refernce: https://wpvulndb.com/wordpresses/462
+
+## Impact
+
+attacker can user those info for advance attack as bruteforce login

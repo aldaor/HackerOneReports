@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/342709
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/1hack0
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:750.0
+Severity:medium
+State:Closed
+DateOfDisclosure:23.10.2018 19:04:52
+
+Summary:
+In this report, the researcher provided a POC in which they were able to combine two issues to create a condition that potentially could have allowed an attacker to obtain OAuth tokens. One of the issues involved allowing external content to load in our Screenshot Viewer tool; we resolved this issue, which rendered the POC inoperable. We are still working on resolving the other issue, but without the ability to exploit the other issue, the impact is minimal.

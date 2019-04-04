@@ -1,0 +1,54 @@
+ReportLink:https://hackerone.com/reports/384782
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/lovepakistan
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:10.09.2018 1:22:37
+
+Summary:
+#Issue
+The reporter found that user information leaked from www.lahitapiolarahoitus.fi.
+
+##Fix
+
+The issue was resolved during normal and scheduled hardening of Wordpress.
+
+##Reasoning
+
+The issue was valid and the reporter provided enough proof. This is typical Wordpress, what we know as a "feature", that every WP administrator should be aware of. 
+
+We've had several reports on related issues, but as all were carried out differently we decided to award each separately.
+## Basic report information
+**Summary:** 
+browser access to www.lahitapiolarahoitus.fi/wp-json is restricted for general public but it is still be accessible through which User information is leaked.
+
+**Description:** 
+By default Wordpress allow public access to Rest API to get information about all users registered on the system but you have restricted it internally. I saw several reports on this issue reported on lahitapiolarahoitus.fi. Now as a fix to those reports, requests to /wp-json/wp/v2/users are blocked and return an error like this:
+> Refer to lahitapiolarahoitus.fi.JPG
+
+It also successfully blocks requests such as /?rest_route=/wp/v2/users.
+> Refer to lahitapiolarahoitus.fi1.JPG
+
+However, the REST API allows simulating different request types. As such, we can perform a POST request with the “users” string in the body of the request, and tell the REST API to act like it’s received a GET request.
+
+## Steps To Reproduce:
+
+   > curl https://lahitapiolarahoitus.fi/?_method=GET -d rest_route=/wp/v2/users
+
+## Browsers / Apps Verified In:
+
+  * It is tested via curl command.
+
+## Additional material
+
+  > Refer to finalPOC.JPG
+
+## Related reports, best practices
+
+  * https://wpvulndb.com/vulnerabilities/8715
+
+## Impact
+
+It allows anonymous access to functionality that allows a hacker to list all users who have published a post on a WordPress site.

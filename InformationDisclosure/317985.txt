@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/317985
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/pisarenko
+ReportedTo:VK.com(vkcom)
+BountyAmount:300.0
+Severity:low
+State:Closed
+DateOfDisclosure:06.07.2018 12:02:26
+
+Summary:
+Просмотр некоторых приватных видеозаписей. 

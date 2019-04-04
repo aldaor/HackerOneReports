@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/414427
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/keretasenja28
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:18.10.2018 22:39:36
+
+Summary:
+@rootbakar identified a previously-reported issue where authors could be viewed from an endpoint within our WordPress blog. As authors are intended to be public, this was closed as not having any security impact to the blog. 

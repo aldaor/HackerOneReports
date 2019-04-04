@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/341372
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/mandark
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:19.06.2018 18:29:37
+
+Summary:
+
+Hello team 
+I found that tat the URL transport the Session token and it's a sentive information so Placing session tokens into the URL increases the risk that they will be captured by an attacker.
+###fix
+Applications should use an alternative mechanism for transmitting session tokens, such as HTTP cookies or hidden fields in forms that are submitted using the POST method.
+
+## Impact
+
+an attacker can capture these tokens

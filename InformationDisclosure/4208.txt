@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/4208
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/0xsaikiran
+ReportedTo:OkCupid(okcupid)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.04.2014 21:51:28
+
+Summary:
+
+Severity: Low 
+
+Summary:  
+The Web Server's banner contains the version number of the server - OKWS/3.1.19.0. The version number found is 3.1.19.0 
+
+at okcupid.com/ HTTP/1.1

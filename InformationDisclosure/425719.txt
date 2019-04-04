@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/425719
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/rijalrojan
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:08.11.2018 14:23:56
+
+Summary:
+
+About 5 mins ago a new website was just registered by Shopify. https://github-issues-tracker.shopifycloud.com/. This contains title of all the internal github issues that Shopify currently has. I wanted to let you know right away of this as soon as I saw it. I am testing this further to get more information in the mean time. 
+
+{F363122}
+
+## Impact
+
+Disclosure of internal github issues such as https://github.com/Shopify/shopify/issues/137396 which is `███`

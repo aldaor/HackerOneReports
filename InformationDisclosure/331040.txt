@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/331040
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/arhimason
+ReportedTo:VK.com(vkcom)
+BountyAmount:5000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:06.05.2018 17:03:44
+
+Summary:
+Недостаточность проверок в определенных запросах. 

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/317391
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/1hack0
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:17.10.2018 15:04:05
+
+Summary:
+In this report, the researcher demonstrated how a CORS misconfiguration was allowing user details, such as email addresses and IDs, to be shared inappropriately. They also provided a POC which showed how an attacker could exploit this remotely. This issue was resolved in a platform update to our Support site; the gateway that was leaking user information was removed entirely.

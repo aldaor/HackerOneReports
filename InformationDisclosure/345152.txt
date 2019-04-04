@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/345152
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/rijalrojan
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:none
+State:Closed
+DateOfDisclosure:15.06.2018 17:37:55
+
+Summary:
+
+During my daily scanning of shopify and shopify's internal domain (Shopify.io), I landed on a personal bookmark of an employee: █████████ who works at `Guru at Shopify`. 
+
+The link for personal bookmark is here: ███
+
+There is a personal bookmark called `██████████`. When going to the link: ████████ it loaded some stats about chat and talks: 
+
+{F292195}
+
+## Impact
+
+Leak of statistics regarding how many calls are waiting in support, how many are handled, average wait time etc.

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/388746
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:06.11.2018 15:51:40
+
+Summary:
+Open Apache Server Status in info.tmgame.mail.ru
+
+tmgame.mail.ru is not currently covered by Bug Bounty program.

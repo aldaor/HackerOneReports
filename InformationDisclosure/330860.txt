@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/330860
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/alyssa_herrera
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:17.04.2018 18:08:02
+
+Summary:
+

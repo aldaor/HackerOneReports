@@ -1,0 +1,107 @@
+ReportLink:https://hackerone.com/reports/356047
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/rootnepal
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:50.0
+Severity:medium
+State:Closed
+DateOfDisclosure:30.07.2018 12:55:51
+
+Summary:
+#Issue
+The reporter found that user information leaked from www.lahitapiolarahoitus.fi.
+
+##Fix
+
+The issue was resolved during normal and scheduled hardening of Wordpress.
+
+##Reasoning
+
+The issue was valid and the reporter provided enough proof. This is typical Wordpress, what we know as a "feature", that every WP administrator should be aware of. Hardening was already in the pipeline, but as this was found before those were put in place the finding was processed. 
+
+We had several reports on related issues, but as all were carried out differently we decided to award each separately ( #335779, #335341, #356047 and #326971).
+# Information
+Using REST API, we can see all the WordPress users/author with some of their information.
+
+### Step TO Reproduce
+You can get user info by entering below url in your browser: 
+https://www.lahitapiolarahoitus.fi/wp-json/wp/v2/users/
+
+
+
+### Result 
+```javascript
+[
+	{
+		"id": 1,
+		"name": "LTR",
+		"url": "",
+		"description": "",
+		"link": "https://www.lahitapiolarahoitus.fi/author/ltr/",
+		"slug": "ltr",
+		"avatar_urls": {
+			"24": "https://secure.gravatar.com/avatar/5afe7216f0e3cd2a501d30a0c16d0a1c?s=24&d=mm&r=g",
+			"48": "https://secure.gravatar.com/avatar/5afe7216f0e3cd2a501d30a0c16d0a1c?s=48&d=mm&r=g",
+			"96": "https://secure.gravatar.com/avatar/5afe7216f0e3cd2a501d30a0c16d0a1c?s=96&d=mm&r=g"
+		},
+		"meta": [],
+		"_links": {
+			"self": [
+				{
+					"href": "https://www.lahitapiolarahoitus.fi/wp-json/wp/v2/users/1"
+				}
+			],
+			"collection": [
+				{
+					"href": "https://www.lahitapiolarahoitus.fi/wp-json/wp/v2/users"
+				}
+			]
+		}
+	},
+	{
+		"id": 2,
+		"name": "LTREditor",
+		"url": "",
+		"description": "",
+		"link": "https://www.lahitapiolarahoitus.fi/author/ltreditor/",
+		"slug": "ltreditor",
+		"avatar_urls": {
+			"24": "https://secure.gravatar.com/avatar/8dbdec1ce9f301e17f889d87c228e0b4?s=24&d=mm&r=g",
+			"48": "https://secure.gravatar.com/avatar/8dbdec1ce9f301e17f889d87c228e0b4?s=48&d=mm&r=g",
+			"96": "https://secure.gravatar.com/avatar/8dbdec1ce9f301e17f889d87c228e0b4?s=96&d=mm&r=g"
+		},
+		"meta": [],
+		"_links": {
+			"self": [
+				{
+					"href": "https://www.lahitapiolarahoitus.fi/wp-json/wp/v2/users/2"
+				}
+			],
+			"collection": [
+				{
+					"href": "https://www.lahitapiolarahoitus.fi/wp-json/wp/v2/users"
+				}
+			]
+		}
+	}
+]
+```
+
+### Fix
+
+Use this code will hide the users list and give 404 as the result, while rest of the api calls keep running as they were.
+```php
+add_filter( 'rest_endpoints', function( $endpoints ){
+    if ( isset( $endpoints['/wp/v2/users'] ) ) {
+        unset( $endpoints['/wp/v2/users'] );
+    }
+    if ( isset( $endpoints['/wp/v2/users/(?P<id>[\d]+)'] ) ) {
+        unset( $endpoints['/wp/v2/users/(?P<id>[\d]+)'] );
+    }
+    return $endpoints;
+});
+```
+
+## Impact
+
+Authors : __LTR__ , __LTREditor__ can be created scenario of doing bruteforce attacks to this users.

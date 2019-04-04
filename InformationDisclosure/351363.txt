@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/351363
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/mobius07
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:29.05.2018 13:00:44
+
+Summary:
+phpinfo was available on agent.mail.ru.
+
+agent.mail.ru is not currently covered with bug bounty program.

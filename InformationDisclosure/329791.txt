@@ -1,0 +1,70 @@
+ReportLink:https://hackerone.com/reports/329791
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/sinusoidal
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:50.0
+Severity:low
+State:Closed
+DateOfDisclosure:28.04.2018 10:03:07
+
+Summary:
+#Issue
+The reporter found that some internal ip-addresses could leak from www.lahitapiolarahoitus.fi.
+
+##Fix
+
+The issue was resolved during normal and scheduled hardening of Wordpress.
+
+##Reasoning
+
+The issue was valid and the reporter provided enough proof. This is typical Wordpress, what we know as a "feature", that every WP administrator should be aware of. Hardening was already in the pipeline, but as this was found before those were put in place the finding was processed. The report had enough information to warrant a small bounty. 
+## Basic report information
+**Summary:** 
+Hello, i found an internal ip address at https://www.lahitapiolarahoitus.fi/wp-json/wp/v2/pages.
+
+**Description:** 
+While digging the path in /wp-json/ directory, i found this url : https://www.lahitapiolarahoitus.fi/wp-json/wp/v2/pages and when i request this using Burp the internal ip address is leak in the response text.
+
+**Impact:**
+This information can help an attacker to identify other vulnerabilities in the future.
+
+## Browsers / Apps Verified In:
+
+  * Firefox ESR
+
+## Steps To Reproduce:
+
+1. Open this https://www.lahitapiolarahoitus.fi/wp-json/wp/v2/pages in your browser.
+2. You will find this response : guid":{"rendered":"http:\/\/192.168.100.13\/?page_id=401"}.
+
+### Request
+
+ ```
+GET /wp-json/wp/v2/pages HTTP/1.1
+Host: www.lahitapiolarahoitus.fi
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Cookie: BIGipServerltr-prod_pool=224700608.20480.0000; TS01974a5b=0147052ac5151e01685567c85592aeda525d438000cfd6900beac37eb4d3ee457dbb9cda10259a7a56ccc6a3d09f0a5070f0a4ffba3fbd67e61eb198dbcb21ebb300f93d29; pll_language=fi
+Connection: close
+```
+
+### Response
+
+```
+[{"id":401,"date":"2018-01-23T11:50:52","date_gmt":"2018-01-23T11:50:52","guid":{"rendered":"http:\/\/192.168.100.13\/?page_id=401"},"modified":"2018-01-23T12:10:19","modified_gmt":"2018-01-23T12:10:19","slug":"allekirjoitus-valmis","status":"publish","type":"page","link":"https:\/\/www.lahitapiolarahoitus.fi\/allekirjoitus-valmis\/","title":{"rendered":"Allekirjoitus valmis"}....
+{"id":236,"date":"2017-12-12T09:08:25","date_gmt":"2017-12-12T09:08:25","guid":{"rendered":"http:\/\/localhost:82\/wordpress\/?page_id=236"},"modified":"2017-12-12T09:08:25","modified_gmt":"2017-12-12T09:08:25","slug":"tietoja-evasteista","status":"publish","type":"page","link":"https:\/\/www.lahitapiolarahoitus.fi\/tietoja-evasteista\/"......
+```
+
+## Additional material
+
+  * {F278603}
+
+## Related reports, best practices
+
+  * https://portswigger.net/kb/issues/00600300_private-ip-addresses-disclosed
+
+## Impact
+
+This information can help an attacker to identify other vulnerabilities in the future.

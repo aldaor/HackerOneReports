@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/335427
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/linkks
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:09.09.2018 22:16:24
+
+Summary:
+#Issue
+The reporter found that user information leaked from www.lahitapiolarahoitus.fi.
+
+##Fix
+
+The issue was resolved during normal and scheduled hardening of Wordpress.
+
+##Reasoning
+
+The issue was valid and the reporter provided enough proof. This is typical Wordpress, what we know as a "feature", that every WP administrator should be aware of. 
+
+We've had several reports on related issues, but as all were carried out differently we decided to award each separately.
+If permalinks are enabled, in many WordPress installations it is possible to enumerate all the WordPress usernames iterating through the author archives. Whenever a post is published, the username or alias is shown as the author. For example, the URL http://site.com/?author=1 will show all the posts from user id 1. Attackers can abuse this functionality to figure out which usernames are available on the site.
+
+List of WordPress users for {'canonicalize': True, 'pass': '', 'scheme': 'https', 'Port': '', 'isEquivalentWithURL': True, 'getVar': '', 'user': '', 'isHTTP': True, 'uri': '/', 'hostPort': 'www.lahitapiolarahoitus.fi', 'path': '/', 'urla': 'https://www.lahitapiolarahoitus.fi/', 'caseInsensitive': False, 'wrappedObject': 81251024, 'url': 'https://www.lahitapiolarahoitus.fi/', 'host': 'www.lahitapiolarahoitus.fi', 'anchor': ''}: 
+['ltr', 'ltreditor']
+
+## Impact
+
+POST //wp-login.php HTTP/1.1
+Content-type: application/x-www-form-urlencoded
+Cookie: pll_language=fi; BIGipServerltr-prod_pool=224700608.20480.0000; TS01974a5b=0147052ac525ffe81834092c3d6606eb09e38905641938d58e5ec0a8f3802ddd93d08a56526393b43c16cef0d0ca1a3219018e95e90fe2d539fd644bb58837e3af5ac9655dcbed2e3fac373b9091748a344d06888483fffb55ac8032bd5fc69720a321337508c9a5581361e68f61e1030144104773986f485806e397d00f4b01e837fd645af25b127b6b3223378fb5d3ddc43a8c2c7397718f89962b1589e3dde99d3feeae9b6edc591af600394d75e54a0447460f4767da25cba16b1fae2db2d01ec9904f1d1b3c732de563142bfdd7f87cf0e4883df3f2a431f6ee7f71f492c625a9d1577b185e53f60cdeb743f046fc0f644d2f53f8cb07f088e563b0705c64049e044c09a0780f6847a31b14f482b554b58c14; wordpress_test_cookie=WP+Cookie+check; TS0149d8d6=0147052ac517e87b37f9cb4628f1992d080ed672681938d58e5ec0a8f3802ddd93d08a56526393b43c16cef0d0ca1a3219018e95e90acf2c96ecf4cba42eb879d0d64e58819b9cb1eac64ae2faced16fc60c1b19cfe25fa53b43e2101f0d29224b8bd197fc; TS011c593e=0147052ac517e87b37f9cb4628f1992d080ed672681938d58e5ec0a8f3802ddd93d08a56526393b43c16cef0d0ca1a3219018e95e90acf2c96ecf4cba42eb879d0d64e58819b9cb1eac64ae2faced16fc60c1b19cfe25fa53b43e2101f0d29224b8bd197fc; _wpfuuid=d725b206-896b-4093-a3b5-2398f4e52f99
+Host: www.lahitapiolarahoitus.fi
+Content-Length: 35
+Connection: Keep-alive
+Accept-Encoding: gzip,deflate
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.21 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.21
+Accept: */*
+
+log=ltreditor&pwd=z&wp-submit=Login

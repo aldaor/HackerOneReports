@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/3432
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/anshuman_bh
+ReportedTo:RelateIQ(relateiq)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.04.2014 1:54:39
+
+Summary:
+
+When a legitimate user authenticates to the RelateIQ application, since it is a GWT based application, a request is sent to the URL https://app.relateiq.com/app/app.nocache.js. This detects the browser and then a corresponding request is sent to the URL https://app.relateiq.com/app/3E21F01ECCFB75FE4838912FCE252FA1.cache.html and the response from the server is the entire RelateIQ application obfuscated in javascript rendered on the client side. As long as the user is authenticated to the website, it is acceptable for the server to return the obfuscated javascript of the RelateIQ application. 
+
+However, it was observed that even an unauthenticated attacker can request for the same URL and receive the same obfuscated JavaScript from the server. Since de-obfuscation of this JavaScript is possible, the attacker will then be able to retrieve information about the application itself like the different RPC calls, pages and data residing within the application, functionality logic, etc. which can then be leveraged to exploit other vulnerabilities.
+
+This requirement is clearly stated on the on the GWT Project website and they have also described some of the ways that this can be done here - http://www.gwtproject.org/articles/dynamic_host_page.html

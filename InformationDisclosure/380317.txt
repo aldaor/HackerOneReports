@@ -1,0 +1,43 @@
+ReportLink:https://hackerone.com/reports/380317
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/kapytein
+ReportedTo:HackerOne(security)
+BountyAmount:5000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:20.07.2018 17:44:07
+
+Summary:
+
+**Summary:**
+Hello.
+
+Similar to other reports, suddenly after the update with ordering users, the GraphQL API is exposing the amount of participants in a private program to non-invited users. This allows an attacker to retrieve the amount of participants in a private program, as well as their details.
+
+**Description:**
+Steps To Reproduce
+
+Query, for example, ██████ via the GraphQL API. ██████ is known to have a private program running on HackerOne, and they do exist in the external directory.
+```
+query {
+    team(handle: "█████") {
+     participants { total_count  }
+     about
+
+}
+}
+```
+You'll get the amount of participants, as well as their details if you query them. 
+```
+...
+{ "data": { "team": {participants": { "total_count": 268 }, "about": "████" } } }
+...
+```
+
+**Impact**
+
+This leads to information disclosure. An attacker can expose the existence of a private program under the external program directory.
+
+## Impact
+
+This will eventually lead to information disclosure.

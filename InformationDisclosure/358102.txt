@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/358102
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/iheb_hamad0x
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:14.06.2018 14:41:15
+
+Summary:
+
+I found Version of ports are disclosed ,But the intersting that SSH port is open and showing his version 
+==> OpenSSH 7.2p2 Ubuntu 4ubuntu2.4 (Ubuntu Linux; protocol 2.0)
+F:302383
+Searching I have found that this version has common vulunrablitie
+https://vuldb.com/?id.89622
+So it's not good to disclose the version of this port(SSH) 
+##Fix
+make sure you have patched version or just by hiding his version
+
+## Impact
+
+Give an attacker the ability to make specific attack

@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/386997
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/japz
+ReportedTo:HackerOne(security)
+BountyAmount:2500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:12.08.2018 4:44:08
+
+Summary:
+
+Hi Team,
+
+**Summary:**
+
+I have found a critical sensitive information disclosure, I'm not sure if this is a result of a new hackerone UI update, I observed that some of the UI has been change such as `Hacktivity` etc.
+
+__BUG:__ Now all private program policy page together with the updates is visible to me despite i already leave to those private program!
+
+__WHOLE POLICY PAGE WAS DISCLOSED:__
+
+Below screenshot is the sample, the private program name is ██████ which i already __LEAVE__ long time ago, but now i can see their policy page!
+
+██████
+
+## Impact
+
+Private program disclcosure.

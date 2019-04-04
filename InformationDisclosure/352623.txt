@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/352623
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/albatraoz
+ReportedTo:Reverb.com(reverb)
+BountyAmount:50.0
+Severity:medium
+State:Closed
+DateOfDisclosure:16.05.2018 20:20:19
+
+Summary:
+An access token of a user account was available in a public github repo. The token was tied to an experimental project, and the account was only used for that project, so no sensitive information was able to be obtained.

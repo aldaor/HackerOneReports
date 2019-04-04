@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/410789
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:06.11.2018 15:38:34
+
+Summary:
+Available SVN files for sj.my.com led to source code disclosure.
+
+sj.my.com is not currently covered by Bug Bounty program.

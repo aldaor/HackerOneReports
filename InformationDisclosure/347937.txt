@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/347937
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/nismo
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:04.07.2018 5:29:18
+
+Summary:
+
+**Summary:**
+
+Hi Team!
+
+On Team object the parameter "i_cannot_create_jira_webhook_reasons" is not NULL and gets the following default states when called for all programs ["CANNOT_VIEW","FEATURE_GATED","PROGRAM_PERMISSION_REQUIRED"]
+
+If a Company Program runs a Private Program or a Public On the "FEATURE_GATED" is missing (Since the feature is not gated anymore) and therefore an attacker can find if a Company is running a private program
+
+##POC
+
+* Company ██████ (not runnig private gives "i_cannot_create_jira_webhook_reasons":["CANNOT_VIEW","FEATURE_GATED","PROGRAM_PERMISSION_REQUIRED"]
+
+* Company █████████ (running private) gives "i_cannot_create_jira_webhook_reasons":["CANNOT_VIEW","PROGRAM_PERMISSION_REQUIRED"]
+
+* Even Company HackerOne  (running public) gives "i_cannot_create_jira_webhook_reasons":["CANNOT_VIEW","PROGRAM_PERMISSION_REQUIRED"]
+
+All private programs and public has an overriden  "FEATURE_GATED" so you get the idea
+
+#Solutiion
+
+NULL the value maybe
+
+PS: Thanks to @jobert who encouraged me to search deeper after the #347383 duplicate!
+
+Thanks
+**nismo**
+
+## Impact
+
+Knowing companies that run private programs on Hackerone

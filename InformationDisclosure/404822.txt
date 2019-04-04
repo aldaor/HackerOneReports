@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/404822
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/kiyell
+ReportedTo:Slack(slack)
+BountyAmount:1500.0
+Severity:critical
+State:Closed
+DateOfDisclosure:23.02.2019 3:02:28
+
+Summary:
+@kiyell discovered an open AWS bucket which hosted the source code of the iOS test application, as well as some configuration information and test data relating to that test build. No customer data was exposed or at risk, and we resolved and investigated this issue. Thank you @kiyell for a neat finding!

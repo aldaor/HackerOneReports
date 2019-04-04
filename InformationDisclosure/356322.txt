@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/356322
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/lincoln9932
+ReportedTo:Mail.ru(mailru)
+BountyAmount:250.0
+Severity:low
+State:Closed
+DateOfDisclosure:12.11.2018 17:40:59
+
+Summary:
+Passport data is reflected back to user and can be accessed in the case of account or session compromisation.
+
+Now passport information is not stored by lootdog.io after validation and can not be accessed by user.

@@ -1,0 +1,46 @@
+ReportLink:https://hackerone.com/reports/335341
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/victorrocha
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:50.0
+Severity:medium
+State:Closed
+DateOfDisclosure:22.05.2018 13:49:32
+
+Summary:
+#Issue
+The reporter found that user information leaked from www.lahitapiolarahoitus.fi.
+
+##Fix
+
+The issue was resolved during normal and scheduled hardening of Wordpress.
+
+##Reasoning
+
+The issue was valid and the reporter provided enough proof. This is typical Wordpress, what we know as a "feature", that every WP administrator should be aware of. Hardening was already in the pipeline, but as this was found before those were put in place the finding was processed. 
+
+We had several reports on related issues, but as all were carried out differently we decided to award each separately ( #335779, #335341 and #326971).
+**Summary:** 
+It's possible to get information about the users registered (such as: id, name, login name, etc.) without authentication in Wordpress via API on www.lahitapiolarahoitus.fi. 
+
+**Description:** 
+By default Wordpress allow public access to Rest API to get informations about all users registered on the system. 
+
+## Steps To Reproduce:
+
+  1. It's possible to reproduce the attack by browsing the URL:
+https://www.lahitapiolarahoitus.fi/?rest_route=/wp/v2/users/1
+https://www.lahitapiolarahoitus.fi/?rest_route=/wp/v2/users/2
+
+  2. Just increase the last number of the Endpoing of API  (/?rest_route=/wp/v2/users/{id}) to get all users registered information on the Wordpress
+
+**Remediation:** 
+There are 2 ways that it's possible to fix this problem.
+**FIX 1** - It's possible to remove this access for anyone by change the source code where when someone request the Rest API and the server send a 404 (Not Found) message for the user who made the request. 
+Reference: https://github.com/WP-API/WP-API/issues/2338
+
+**FIX 2** - It's also possible to create a rewrite rule on .htaccess (if the webserver it's Apache) to redirect any request that contain rest_route (eg.: "^.\*rest_route=/wp/\*") to a Not Found (404) or a Default Page.
+
+## Impact
+
+It's possible to get all the users registered on the system and create a bruteforce directed to these users.

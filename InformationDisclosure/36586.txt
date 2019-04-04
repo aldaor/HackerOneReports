@@ -1,0 +1,58 @@
+ReportLink:https://hackerone.com/reports/36586
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/jmiroche
+ReportedTo:QIWI(qiwi)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.01.2015 15:11:34
+
+Summary:
+
+Hi
+- vulnerable hosts;
+agent.qiwi.com
+static.qiwi.com
+visa.qiwi.com
+w.qiwi.com
+www.qiwi.com
+
+• the type of vulnerability;
+Information disclosure
+
+• where exactly;
+There are multiple locations for documents with valuable metadata attached.
+These are both Qiwi documents and documents uploaded by agents/clients of yours.
+Please see filelocations.txt for a list of locations.
+Please see folders, usernames, software, printers, and emails.txt for a list of metadata retrieved from the documents.
+Separately, these documents possibly should be restricted:
+https://w.qiwi.com/business/agents/files/QIWIPos_Ingenico_AdminGuide.pdf	
+https://w.qiwi.com/business/agents/files/QIWIPos_PAX_AdminGuide.pdf	
+https://w.qiwi.com/business/agents/files/QIWIPos_Nurit_AdminGuide.pdf
+Please note: the folders file contains two usernames as they are entered, which will give an attacker insight into how usernames are formed.
+
+• security impact;
+This information will aid an attacker greatly. 
+The information can be used by a hacker to; 
+- attempt to brute force qiwi employee logins with valid usernames already supplied
+- send phishing emails to valid email addresses
+- target malware to known applications (especially pdf tools)
+- attack printers
+- attack server shares
+- attack potentially cohosted websites
+- discover configuration steps and versions of software installed (such as QIWI POS INGENICO 2.10)
+
+E.g if i know a number of users are using Adobe Distiller 7.0.5 (which is out of date) an attacker could spear-phish users with an exploit pdf targetting this software.
+
+• steps impact;
+When a file is uploaded to the website, metadata is preserved. Metadata in a file can include anything from servernames to passwords.
+Due to the fact that this information is readily available via a google search (inurl:qiwi.com filetype:.pdf for example) this would be easy for an attacker to discover.
+
+• recommendations for fixing.
+Remove all metadata before a file is uploaded.
+Also restrict access to sensitive files such as https://w.qiwi.com/business/agents/files/QIWIPos_Nurit_AdminGuide.pdf)
+
+Any more information required, please let me know.
+
+Thanks!
+Jamie

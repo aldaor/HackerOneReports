@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/34799
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bigbear
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.12.2014 18:51:49
+
+Summary:
+
+Приветствую.
+
+Вариант обхода запрета просмотра админки http://bb.mail.ru/admin через  фишку Drupal http://bb.mail.ru/?q=admin/
+
+На мой взгляд, не критично, но можно и пофиксить =)

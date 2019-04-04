@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/416516
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/apt-mirror
+ReportedTo:Chaturbate(chaturbate)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:01.10.2018 21:03:34
+
+Summary:
+
+##Summary##
+
+A file is 10GB is accessible on the following server: http://edge193.stream.highwebmedia.com:8080/.
+
+## Steps To Reproduce:
+
+  1. Open the following link: http://edge193.stream.highwebmedia.com:8080/download
+
+## Additional notes:
+
+I tried to download the file and analyze  it, but after 20 seconds the server interrupted the connection. However an attacker can download the whole file if he has 1Gb/s or faster internet connection.
+
+To be honest I do not know exactly, what is this file because I was not able to download and analyze it. This require further investigation on the server.
+
+## Impact
+
+An attacker is able to download this file and also could be able to extract sensitive information from it.

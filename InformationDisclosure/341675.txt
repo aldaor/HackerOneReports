@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/341675
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/trainzment
+ReportedTo:VK.com(vkcom)
+BountyAmount:700.0
+Severity:high
+State:Closed
+DateOfDisclosure:18.06.2018 0:14:32
+
+Summary:
+Отсутствие необходимых проверок при создании рекламного объявления. 

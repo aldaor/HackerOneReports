@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/329218
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/s3curityb3ast
+ReportedTo:Upserve (upserve)
+BountyAmount:200.0
+Severity:low
+State:Closed
+DateOfDisclosure:29.03.2018 14:34:55
+
+Summary:
+A directory traversal vulnerability in a third-party ruby gem allowed a remote actor to determine the existence (but not the contents) of files outside of the application root.

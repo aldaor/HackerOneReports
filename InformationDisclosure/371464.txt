@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/371464
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/testingforbugs
+ReportedTo:Brave Software(brave)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.07.2018 21:33:49
+
+Summary:
+
+## Summary:
+Hi Brave team,
+Hope you are good I have found a directory listing vulnerability at https://promo-services-staging.brave.com
+
+## Products affected: 
+* Brave website page.
+
+## Steps To Reproduce:
+
+ * Go to https://promo-services-staging.brave.com/swaggerui/
+
+## Supporting Material/References:
+
+  * Reference: This is similar to https://hackerone.com/reports/175320
+  * See Attached Screenshot
+
+I hope you will fix this as soon as possible.
+
+Best Regards
+Aman Mahendra
+
+## Impact
+
+Information Disclosure Using Directory Listing.

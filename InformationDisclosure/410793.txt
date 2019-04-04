@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/410793
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:12.11.2018 17:42:20
+
+Summary:
+PHP info and fragment of access logs were available

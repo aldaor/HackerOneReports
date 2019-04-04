@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/33153
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/mdlitch1973
+ReportedTo:Uzbey(uzbey)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:31.10.2014 2:40:32
+
+Summary:
+
+a

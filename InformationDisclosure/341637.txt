@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/341637
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/trainzment
+ReportedTo:VK.com(vkcom)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:22.05.2018 17:43:15
+
+Summary:
+Раскрытие старого админ. интерфейса. 

@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/37786
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bitquark
+ReportedTo:OkCupid(okcupid)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.02.2015 19:34:57
+
+Summary:
+
+An ajax script on the main okcupid.com domain allows an attacker to set an arbitrary callback function name, allowing exploitation of the [Rosetta Flash](https://miki.it/blog/2014/7/8/abusing-jsonp-with-rosetta-flash/) vulnerability to steal any data from the victim's account. Note that the vulnerability exploits an issue with Flash which was fixed in 14.0.0.176, however many users have yet to update.
+
+The vulnerable script can be found at:
+https://www.okcupid.com/apitun/clientstats?callback=hello_from_bitquark

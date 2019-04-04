@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/370629
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/executor
+ReportedTo:VK.com(vkcom)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:02.09.2018 13:50:47
+
+Summary:
+Просмотр некоторых закрытых статей FAQ. 

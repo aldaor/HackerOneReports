@@ -1,0 +1,52 @@
+ReportLink:https://hackerone.com/reports/361951
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/kapytein
+ReportedTo:Liberapay(liberapay)
+BountyAmount:50.0
+Severity:medium
+State:Closed
+DateOfDisclosure:05.06.2018 15:46:23
+
+Summary:
+@kapytein submitted a wonderful report describing an XSSI vulnerability in liberapay.com. During the initial review, we thought that the endpoint did not disclose data from profiles that had disabled sharing details on their profiles. However, @kapytein did provide us with additional information that demonstrated leaking private data to a third-party website.
+Hello!
+
+## Vulnerability Details
+The `/username/charts.json` endpoint can return a JSONP callback due to the fact that `jsonp_dump` is used in the file `charts.json.spt`. It appears that the content of the JSONP request depends on the authentication of the user. If the user enabled the privacy setting which hides the receiving donation data of the user,  a 403 error will be returned **unless**  the user is authenticated.
+
+This happens [here](https://github.com/liberapay/liberapay.com/blob/b56172c6a6382595b8cfabccf424ba182820ea0e/www/%25username/charts.json.spt#L19):
+
+```python
+if participant.hide_receiving:
+    if user != participant and not user.is_admin:
+        raise response.error(403)
+```
+
+The vulnerable code is [here](https://github.com/liberapay/liberapay.com/blob/b56172c6a6382595b8cfabccf424ba182820ea0e/www/%25username/charts.json.spt#L85):
+
+```python
+[---] application/json via jsonp_dump
+```
+
+Basically, a `jsonp_dump` is unnecessary in this case (I did not notice a case where cross-domain requests need to be done), and it should be replaced with `json_dump` instead.
+
+## How could this be exploited?
+This would eventually allow any site to call the JSONP callback, and receive the receiving donation data of the user, despite it's privacy settings. This will lead to unwanted information disclosure.
+
+## Proof of Concept
+```html
+<script>
+function rip(a) {
+
+alert(JSON.stringify(a[1]));
+
+}
+</script>
+<script src="https://liberapay.com/~153779/charts.json?callback=rip"></script>
+```
+
+Host this file, visit the site authenticated and it will print out the first row in the JSON Array. If you have not received any donation through LIbrapay so far, an empty JSON array will be returned.
+
+## Impact
+
+This will lead to unwanted information disclosure due to the fact that privacy settings of the user will be ignored.

@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/37862
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/psych0tr1a
+ReportedTo:Eobot(eobotcom)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.12.2014 23:05:47
+
+Summary:
+
+This script can help hackers check leaked email bases on registration with eobot without ban and etc..
+https://www.eobot.com/checkemail2.aspx?email=girlboy44@hotmail.com
+
+
+email disclosure in google 
+google dork: site:eobot.com inurl:"widget.aspx"
+
+in result we see requests with email of your users

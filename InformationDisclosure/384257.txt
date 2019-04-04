@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/384257
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/libcontainer
+ReportedTo:Zomato(zomato)
+BountyAmount:300.0
+Severity:low
+State:Closed
+DateOfDisclosure:11.09.2018 4:57:13
+
+Summary:
+Thanks @shivasurya for helping us keep @zomato secure :)

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/349681
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/xpaw
+ReportedTo:Valve(valve)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:24.05.2018 22:21:12
+
+Summary:
+App name leakage on economy history page
+
+Partners with authorization to view economy logs for their own titles could be presented with a list of all game titles that have used economy features.

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/317980
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/godexmachine
+ReportedTo:Mail.ru(mailru)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:16.01.2019 14:53:41
+
+Summary:
+include files with potentially sensitive configuration information were available via HTTP.
+
+online.games.mail.ru is not covered by bug bounty, an award was issued as a bonus.

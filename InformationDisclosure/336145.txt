@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/336145
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/w2w
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:11.10.2018 14:56:19
+
+Summary:
+Blind XSS in third party shop's admin panel.
+This host and company is not operated or owned by Mail.Ru Group, but it runs an online shop and processes orders for Mail.Ru branded gift shop. It does not have any privileged/additional access to Mail.Ru network or user's data. Gift shop is not advertised to Mail.Ru users and is mostly used by Mail.Ru stuff.
+
+Bug bounty was issued by 3rd party.

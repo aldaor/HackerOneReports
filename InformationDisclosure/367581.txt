@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/367581
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/m7mdharoun
+ReportedTo:Reverb.com(reverb)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:09.08.2018 12:43:46
+
+Summary:
+
+Hi ,
+ Seem report #351555 is not full fixed where `434762629765715:PQlkrSHPqqjhIBc0MmUkdjcqpps` basic auth details are Still work on login 
+
+
+#`Poc :` 
+https://api.cloudinary.com/v1_1/reverb/usage
+
+{F309894}
+
+## Impact
+
+information Disclose

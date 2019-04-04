@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/419655
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/appsecure_in
+ReportedTo:Uber(uber)
+BountyAmount:5000.0
+Severity:
+State:Closed
+DateOfDisclosure:08.02.2019 6:28:47
+
+Summary:
+@appsecure_in identified an internal API for https://riders.uber.com that could return client_secret and server token for applications authorized by the account owner to access their Uber account. We restricted the data returned by this endpoint. 
+
+Thanks for bringing this to our attention, @appsecure_in!

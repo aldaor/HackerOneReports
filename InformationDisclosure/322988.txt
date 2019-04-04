@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/322988
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/nitesculucian
+ReportedTo:Upserve (upserve)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:13.03.2018 18:31:38
+
+Summary:
+A single expired password reset token was found in Google search results. We are unsure of exactly how this occurred, but confident this is not an application issue.
+Search on google for: 
+site:"hq.breadcrumb.com"
+
+Or access this link:
+https://www.google.com/search?q=site%3A%22hq.breadcrumb.com%22&oq=site%3A%22hq.breadcrumb.com%22&aqs=chrome..69i57j69i58.6216j0j7&sourceid=chrome&ie=UTF-8
+
+Note that this vulnerability can be obtain on other search engines.
+
+## Impact
+
+An attacker can obtain an unused password reset token found using google.com in order to get access to an user account. 
+
+In order to better ensure the security of the application do not allow google indexing of the token/password reset controller.

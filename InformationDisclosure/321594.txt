@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/321594
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/executor
+ReportedTo:VK.com(vkcom)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:26.04.2018 5:24:27
+
+Summary:
+Просмотр закрытых фотографий. 
