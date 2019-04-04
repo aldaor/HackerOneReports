@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/311884
+WeaknessName:Use of Externally-Controlled Format String
+Reporter:https://hackerone.com/maxpl0it
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:1500.0
+Severity:high
+State:Closed
+DateOfDisclosure:19.06.2018 12:18:23
+
+Summary:
+In EdgeSwitch 1.7.3 and prior, an user with admin credentials can make use of specially crafted commands to execute arbitrary shell instructions, bypassing the SSH/TELNET CLI interface.
