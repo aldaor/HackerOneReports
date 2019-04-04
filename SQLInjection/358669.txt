@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/358669
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/saltedfish
+ReportedTo:Zomato(zomato)
+BountyAmount:1000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:30.05.2018 3:59:27
+
+Summary:
+@saltedfish found that a parameter `order_id` was vulnerable to SQLi.
+
+###POC 
+(for everyone to learn from this disclosed report)
+
+- There was an endpoint which had `order_id` as one of the parameters.
+- Requesting `'-if(1=2,'0','1')-'`  in `order_id` parameter changed the Response Length and upon further investigation from @saltedfish, he found that the boolean technique could be used to proof data retrieval.
+
+We'd like to thank @saltedfish for helping us in keeping @zomato secure :)
+
+[REQUEST] Also, a small request to everyone reading this report, Burp Suite Free Version offers lot of features to start with and HackerOne has partnered with Burp Suite to offer 3 months free of Burp Suite Pro to Hackers on achieving `500 Reputation Points`. Use that opportunity instead of using Pirated Version.
+
+Cheers.

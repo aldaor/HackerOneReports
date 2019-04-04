@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/216699
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/albinowax
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:05.07.2017 16:05:38
+
+Summary:
+A Department of Defense webserver was vulnerable to a SQL injection attack that could have revealed sensitive information. @albinowax was able to demonstrate this vulnerability by crafting  specially formatted URLs. Thank you!
+

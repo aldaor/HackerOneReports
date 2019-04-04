@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/248037
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/lozsec
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:11.07.2017 11:01:12
+
+Summary:
+
+This is test report

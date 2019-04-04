@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/189332
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/mthirup
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:17.02.2017 15:26:23
+
+Summary:
+A Department of Defense website was vulnerable to a SQL injection attack which may allow an attacker to execute arbitrary SQL commands and expose sensitive data. @mthirup was able to demonstrate this vulnerability by crafting a specially formatted URL. Thanks to @mthirup for discovering this vulnerability!
+
+

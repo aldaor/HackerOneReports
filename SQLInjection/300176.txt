@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/300176
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/samengmg
+ReportedTo:Zomato(zomato)
+BountyAmount:1000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:02.02.2018 7:21:31
+
+Summary:
+@samengmg found an cookie based SQL injection on https://reviews.zomato.com.

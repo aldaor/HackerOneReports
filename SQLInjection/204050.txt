@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/204050
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/lisa122
+ReportedTo:YouPorn(youporn)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:22.04.2017 5:19:49
+
+Summary:
+The researcher discovered a blind SQL injection on the YouPorn Android app download link.

@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/319279
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/securitygab
+ReportedTo:Khan Academy(khanacademy)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:06.03.2018 18:16:20
+
+Summary:
+
+Hey there, after tampering a bit with the values, since I figured out your backend is not php (most likely django or nodejs), I found an SQL injection .
+You can view my steps to reproduce, if you need additional screenshots, please let me know.
+Regards Gabriel Kimiaie
+
+## Impact
+
+If I dig deeper, I may be able to read datas from your database, hopefully I won't do it.
+
+The hacker selected the **SQL Injection** weakness. This vulnerability type requires contextual information from the hacker. They provided the following answers:
+
+**Verified**
+Yes
+
+**What exploitation technique did you utilize?**
+Boolean
+
+**Please describe the results of your verification attempt.**
+After submitting a single quote, I got the 500 error. after few steps, I got rid of the 500 error by forging a valid sql query which is as follows:
+https://www.khanacademy.org/translations/videos/en'%20or'1'=='1_youtube_stats.csv 
+it returns to me all csv since 1 is equal to one
+when changing the boolean condition:
+https://www.khanacademy.org/translations/videos/en'%20AND'1'=='0_youtube_stats.csv
+(and '1'=='0): only the english csvs are shown.

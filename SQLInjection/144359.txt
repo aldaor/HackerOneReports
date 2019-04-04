@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/144359
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/anony-123
+ReportedTo:WebSummit(websummit)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.06.2016 11:36:56
+
+Summary:
+
+There is possibility of inducing some time delay in the "url" parameter of the videos.websummit.com using the Benchmark() and SQL queries, which could result in timeout for application upon huge delay induced into the application .
+
+

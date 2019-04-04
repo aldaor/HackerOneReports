@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/285478
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/hussain_0x3c
+ReportedTo:AlienVault (alienvault_security)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:02.11.2017 20:13:46
+
+Summary:
+SQL Injection in alienvault.com on | AlienVault Product Forums | 
+
+

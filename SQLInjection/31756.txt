@@ -1,0 +1,58 @@
+ReportLink:https://hackerone.com/reports/31756
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/shorst
+ReportedTo:The Internet(internet)
+BountyAmount:3000.0
+Severity:
+State:Closed
+DateOfDisclosure:06.04.2015 9:40:09
+
+Summary:
+
+# Motivation
+I found a SQL Injection bug in Drupal < 7.32. Which can lead to a code execution. 
+
+You need not have any user or knowledge of the targeted site.
+
+Since Drupal is used as they state by "millions of websites and applications" I thought about applying for this bug bounty.
+
+# The Bug
+Drupal uses Prepared Statements to secure the SQL Querys from Injections. To handle IN statements they created a expandArguments function, which uses the Array keys to create names for the placeholders. 
+
+    foreach ($data as $i => $value) {
+          [...]
+          $new_keys[$key . '_' . $i] = $value;
+    }
+
+The function assumes that it is called with an array which has no keys. Example:
+
+    db_query("SELECT * FROM {users} where name IN (:name)", array(':name'=>array('user1','user2')));
+
+Which results in this SQL Statement
+
+    SELECT * from users where name IN (:name_0, :name_1)
+
+with the parameters name_0 = user1 and name_1 = user2.
+
+The Problem occurs, if the array has keys, which are no integers. Example:
+
+    db_query("SELECT * FROM {users} where name IN (:name)", array(':name'=>array('test) -- ' => 'user1','test' => 'user2')));
+
+this results in an exploitable SQL query:
+
+     SELECT * FROM users WHERE name IN (:name_test) -- , :name_test )
+
+with parameters :name_test = user2.
+
+Since Drupal uses PDO, multi-queries are allowed. So this SQL Injection can be used to insert arbitrary data in the database, dump or modify existing data or drop the whole database.
+
+With the possibility to INSERT arbitrary data into the database an attacker can execute any PHP code through a manipulated Session and Drupal features with callbacks.
+
+# Advisory
+https://www.sektioneins.de/advisories/advisory-012014-drupal-pre-auth-sql-injection-vulnerability.html
+
+# CVE Information
+The Common Vulnerabilities and Exposures project (cve.mitre.org) has assigned the name CVE-2014-3704 to this vulnerability.
+
+# Poc
+I included two PoCs. The first creates one request to create a session which has Admin privileges (UserID 1). The second executes code with only one request and destroys the session afterwards to not create a new Database entry. Some parts of the Second PoC were discovered with help of my coworker Stefan Esser.

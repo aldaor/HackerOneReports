@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/197754
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/hassaan
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:15.08.2017 16:06:57
+
+Summary:
+A Department of Defense webserver was vulnerable to a SQL injection attack that could have revealed sensitive information. @hassaan was able to demonstrate this vulnerability by crafting  specially formatted URLs. Thanks @hassaan!
+

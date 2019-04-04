@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/123660
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/super_hack
+ReportedTo:Dropbox(dropbox)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.04.2016 20:45:46
+
+Summary:
+
+Hi there, 
+The https://www.dropbox.com// (Double slash) request returns Internal Server Error( 500 Error) and doesn't returns 404 so i believe it may be an injection. 
+https://www.dropbox.com//shell.php any text added after the double slash will cause the same thing .
+It is a valid bug an should be triggered, please.
+You have overlooked that the hacker can make many half connection to the server and cause a connection flood also can make a denial of service attack on your server . Users will be annoyed if the get  accessed to this link by sharing it in any social media and help the hacker to make half connections .
+I will be very happy if you provide me with the bounty. 
+I will tell you about a new bug  soon,I am working on it. 

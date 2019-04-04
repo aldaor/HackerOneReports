@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/206872
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/kazan71p
+ReportedTo:Uber(uber)
+BountyAmount:2500.0
+Severity:high
+State:Closed
+DateOfDisclosure:21.03.2017 17:22:10
+
+Summary:
+SQLi in Anomali from Threatstream on `ts02.uberinternal.com` -- the server was hosted outside of our infrastructure and any potential data exposure was limited to Uber employees, not Uber users.
+
+It was a pleasure working with @kazan71p and we look forward to more reports in the future.

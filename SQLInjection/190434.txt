@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/190434
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/cyriac
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:1350.0
+Severity:medium
+State:Closed
+DateOfDisclosure:26.12.2016 9:37:05
+
+Summary:
+##Issue
+
+The reporter found a time-based blind SQL Injection attack in an application in viestinta.lahitapiola.fi.
+
+##Fix
+
+The issue was investigated and found to be valid. The fix was to remove the application as it was not needed.
+
+##Reasoning
+
+The reported case was valid and within the scope of the bug bounty program. The issue was fixed and the reporter was awarded with a bounty. The report shows that the whole life cycle of an application must be considered and special care must be taken to ensure that outdated and unnecessary applications are removed in a timely manner.
+

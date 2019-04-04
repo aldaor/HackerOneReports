@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/211988
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/rasiras
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:13.10.2017 18:46:52
+
+Summary:
+
+a Blind Text Injection Differential vulnerablity was found on your site in the url :https://www.legalrobot.com/assets/icons 
+
+a GET request made on GET /assets/icons/?v=9wr1emhXD568%3B'%20UNION%20SELECT%208%2C%20table_name%2C%20'vega'%20FROM%20information_schema.tables%20WHERE%20table_name%20like'%25 result up in vulnerablity

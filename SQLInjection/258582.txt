@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/258582
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/gerben_javado
+ReportedTo:Zomato(zomato)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:19.09.2017 6:12:03
+
+Summary:
+#Summary
+@gerben_javado found a SQL Injection vulnerability in one of our end point and he was able to bypass our WAF.  

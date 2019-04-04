@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/109395
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/meals
+ReportedTo:General Motors(gm)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.08.2016 13:27:16
+
+Summary:
+The site gmmovingparts.com did not validate all user supplied input potentially allowing SQL Injection. The vulnerability has been remediated

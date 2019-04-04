@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/125181
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/laps-forever
+ReportedTo:Uber(uber)
+BountyAmount:3000.0
+Severity:
+State:Closed
+DateOfDisclosure:25.04.2016 17:33:27
+
+Summary:
+@iad found an SQL Injection vulnerability in one of our Wordpress blog's plugins (the website being `love.uber.com`). This blog was hosted at WPEngine and did not contain any of our user's information. However due to our previously vague bug bounty rules we decided to reward the maximum of 3,000$ since we were not previously clear that these were maximums. Opting for limited disclosure as password hashes are disclosed in the report which we need to ensure have been rotated properly.

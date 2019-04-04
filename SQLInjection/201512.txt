@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/201512
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/alyssa_herrera
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:05.07.2017 14:52:08
+
+Summary:
+A Department of Defense webserver was vulnerable to a SQL injection attack that could have revealed sensitive information. @psychomantis was able to demonstrate this vulnerability by crafting a specially formatted URL. Thanks @psychomantis!
+

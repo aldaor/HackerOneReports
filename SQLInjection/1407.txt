@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/1407
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/nahamsec
+ReportedTo:Verizon Media(verizonmedia)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.03.2014 20:10:56
+
+Summary:
+Thank you for your submission to Yahoo’s Bug Bounty program. While we recognize the effort that you put into the research and writing of a report for us to evaluate, but this functionality is working as designed. We appreciate your adherence to responsible disclosure guidelines and look forward to your future participation in the program.

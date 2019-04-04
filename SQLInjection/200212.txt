@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/200212
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/3p1c
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:350.0
+Severity:medium
+State:Closed
+DateOfDisclosure:10.02.2017 20:58:42
+
+Summary:
+##Issue
+
+The reporter found a blind SQL Injection attack in an application in viestinta.lahitapiola.fi.
+
+##Fix
+
+The issue was investigated and found to be valid. The fix was to remove the application as it was not needed.
+
+##Reasoning
+
+The reported case was valid and within the scope of the bug bounty program. The issue was fixed and the reporter was awarded with a bounty. The report shows that the whole life cycle of an application must be considered and special care must be taken to ensure that outdated and unnecessary applications are removed in a timely manner.
+
+We have found that the underlying infrastructure and database contained a limited set of non-public customer related information. For this reason, we have decided to award this report with a one time additional bonus awarded in #200214. Fairness and transparency are key in a successful bug bounty program.

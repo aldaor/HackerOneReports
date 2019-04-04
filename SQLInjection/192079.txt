@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/192079
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/korprit
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:23.06.2017 13:32:25
+
+Summary:
+A Department of Defense webserver was vulnerable to a SQL injection attack that could have revealed sensitive information. @korprit was able to demonstrate this vulnerability by crafting specially formatted URLs. Thanks @korprit!

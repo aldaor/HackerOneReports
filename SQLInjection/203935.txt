@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/203935
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/almaco
+ReportedTo:YouPorn(youporn)
+BountyAmount:2500.0
+Severity:critical
+State:Closed
+DateOfDisclosure:20.04.2017 14:39:48
+
+Summary:
+The researcher discovered a time based blind SQL injection on a POST login parameter.

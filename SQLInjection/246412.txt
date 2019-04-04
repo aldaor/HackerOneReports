@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/246412
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/securitygab
+ReportedTo:Zomato(zomato)
+BountyAmount:300.0
+Severity:critical
+State:Closed
+DateOfDisclosure:19.07.2017 8:47:01
+
+Summary:
+##Issue
+The reporter found a SQL injection in one of the applications in www.zomato.com.
+
+##Fix
+The issue was investigated and found to be valid and fixed.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/196300
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/akaki
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:14.06.2017 18:12:24
+
+Summary:
+A Department of Defense webserver was vulnerable to a SQL injection attack that could have revealed sensitive financial information. @akaki was able to demonstrate this vulnerability by crafting a specially formatted URL. Thank you!

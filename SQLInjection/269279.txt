@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/269279
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/bigbug
+ReportedTo:Starbucks(starbucks)
+BountyAmount:250.0
+Severity:medium
+State:Closed
+DateOfDisclosure:23.01.2018 1:06:00
+
+Summary:
+
+While signing up for "teavana" shopping account on it came to notice that the partner id validation fails and exists SQL injection.
+
+So this is what I did:
+
+1) Visit https://www.teavana.com/us/en/account
+2) Click on signin > create shopping account
+3) In the partnerno, gave an input of "1234" (1.PNG)
+     Result :No issue as expected . Signup fails
+     message: "We are unable to verify starbucks partner id" (2 .PNG)
+4) Changed input to "1234' OR 1=1" (without double qoutes) (3.PNG)
+    Result: This time signup succeeds!!! (4.PNG) 

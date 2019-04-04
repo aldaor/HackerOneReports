@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/202619
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/0xd0m7
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:05.07.2017 14:32:29
+
+Summary:
+A Department of Defense website was vulnerable to a SQL injection attack which may allow an attacker to execute arbitrary SQL commands and expose sensitive data. @0xd0m7 was able to demonstrate this vulnerability by crafting a specially formatted URL. 

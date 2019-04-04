@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/141329
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/xsam
+ReportedTo:Mail.ru(mailru)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:22.06.2016 14:37:52
+
+Summary:
+SQL injection and PHP source code disclosure in out-of-scope project.

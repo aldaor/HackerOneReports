@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/116764
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/nte
+ReportedTo:VK.com(vkcom)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:29.12.2016 19:40:37
+
+Summary:
+
+Выполнив 3 простейших шага, и  Вы столкнётесь с отказом сервера что-либо делать. 
+
+Шаг 1: Перейти по адресу vk.com/login.php 
+Шаг 2: Ввести в поле "логин" символы ( 00 или 000 или 0000,  и так до 17 нулей), пароль указать любой. 
+Шаг 3: Нажать логин и сервер будет сильно недоволен. 
+
+Спасибо,  и исправьте свой Drupal )))
+
+By vk.com/black.hat.hacker ( Николай Пиколаев)

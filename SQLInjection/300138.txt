@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/300138
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/surfrdan
+ReportedTo:Razer US(razer_us)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:04.01.2018 21:03:22
+
+Summary:
+The researcher discovered a SQL Injection vulnerability on our careers.razerzone.com host, which is used to list job openings for Razer worldwide and receive application submissions from potential hires.
+
+This vulnerability could have allowed the exfiltration of admin credentials as well as personal information for job applicants.  As such we appreciate all the hard work and thoroughness performed by the researcher on this issue as well as his outstanding professionalism.

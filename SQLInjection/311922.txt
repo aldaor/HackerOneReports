@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/311922
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/alyssa_herrera
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:17.04.2018 18:15:06
+
+Summary:
+

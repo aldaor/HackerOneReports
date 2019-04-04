@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/170149
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/lalatina
+ReportedTo:Mail.ru(mailru)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:15.11.2016 15:11:13
+
+Summary:
+SQL injection via GET parameter in puzzle.mail.ru. 
+puzzle.mail.ru is out of current bug bounty program's scope, but this report was awarded due to high severity.

