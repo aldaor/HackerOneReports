@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/129808
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/nileshsapariya
+ReportedTo:Dropbox(dropbox)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.04.2016 15:44:01
+
+Summary:
+The original report allows repeatedly giving "not helpful" as feedback for a help article.
+```
+Observation:-
+
+It was observed that there is no rate limiting in placed for all the endpoint which looks like as below:- 
+Vulnerable URL:- 
+https://www.dropbox.com/help_ajax/articles/274/feedback/unhelpful
+
+Repeating this single request multiple times which generates 200 OK with below response:-
+
+{"feedback_id": "718127812c05853f00000000000094df", "success": true}
+{"feedback_id": "718127812c05853f00000000000094e0", "success": true}
+{"feedback_id": "718127812c05853f00000000000094e1", "success": true}
+{"feedback_id": "718127812c05853f00000000000094e2", "success": true} ....and so on.
+
+```
+
+We hadn't explicitly marked such issues that only spam Dropbox analytics as out of scope. We are willing to accept the risk of this happening and closed as "informative" to not affect the reporter's reputation.

@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/127827
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/pisarenko
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.05.2016 3:46:18
+
+Summary:
+
+LOOK rezult
+https://hackerone.com/reports/127809
+
+{F82764}
+
+POC
+
+Copy in {F82766} TXT file (all) and create a new review 
+I warn you , if you do this , then the report cannot open .
+
+You can create a report , attach files and replace my files F82764 and F82765 , paste in the contents of the report and create it
+
+Why is it a security bug ?
+I answer , if I get an invite to report to someone , I may make it available to all
+
+
+P.S EXAMPLE html inside <code> in markdown
+
+` {F82766} `
+
+
+Thanks PISARENKO

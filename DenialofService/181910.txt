@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/181910
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/charliesome
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:10000.0
+Severity:high
+State:Closed
+DateOfDisclosure:17.12.2016 1:03:07
+
+Summary:
+
+It's possible to crash mruby by redefining the `Range` class and then using the range literal syntax:
+
+    Range = Array
+    (1..2).inspect
+
+The `mrb_range_new` function allocates and initializes a range object backed by the `RRange` struct, however it uses runtime constant lookup to find the `Range` class object. Redefining the `Range` constant to point to a different class and calling an instance method causes a segfault, as the `RRange::edges` field is confused for the `iv` field on other structs.
+
+It may be possible to achieve RCE through this vulnerability, but there are significant complicating factors and I have not spent the time trying to develop an RCE PoC.
+
+I have attached a patch which fixes this bug. My patch adds a `range_class` field to `mrb_state`, following the pattern other core classes use to avoid runtime constant lookups.

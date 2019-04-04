@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/170532
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/teemuk
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:18000.0
+Severity:high
+State:Closed
+DateOfDisclosure:15.12.2016 20:34:52
+
+Summary:
+##Issue
+
+The reporter found several severe and highly critical issues in the Oracle Webcenter Sites affecting www.lahitapiola.fi. The reporter used publicly available information for finding out information relevant to performing the research. Default installation paths, URL's and privileged usernames in combination with trial and error, moving throughout the system, and applying occasionally basic but many times well-honed and razor-sharp cyberskillz, the reporter found issues that were chained together. This modus operandi allowed the reporter -  piece by piece and moving forward from one issue to another - to increase the severity of a potential attack. The end result proved to expose a potentially devastating impact on LocalTapiola services.
+
+The consequences of the issues were at least
+* Full admin access to the underlying database (modifying, deleting and dropping)
+* Access to database user information, including administrative and technical users
+* Access to the server filesystem using path traversal (including for instance /etc/passwd)
+* Installation and uninstallation of the complete software
+* Access to a limited amount of sensitive customer data
+
+Using further techniques, the reporter was able to circumvent the initial mitigations done by LocalTapiola during the the fixing process.
+
+##Fix
+
+The issue was investigated and found to be valid and highly critical. The first fixes did not cover the entire set of issues, but working together with the reporter LocalTapiola was able to pinpoint all of the issues and provide mitigations for all vectors that were found. 
+
+##Reasoning
+
+The reported case was valid and right on target for the scope of the bug bounty program. The issues were iterated and eventually fixed in good cooperation with the reporter. The bounty was based on impact-consequence-risk assessment. Several lessons were learned during the process, one of them is to pay attention to non-functional issues (and to set non-functional security requirements) - especially for systems hardening. By leveraging existing knowledge about common vulnerabilities and defaults (which by themselves are not classified as vulnerabilities), systems can and should be made more secure long before reaching production status. This is especially important for off the shelf software where management interfaces rarely are a part of the project scope. 
+
+LocalTapiola would like to thank @teemuk for a very responsible and discrete bug disclosure process including media coverage.
+

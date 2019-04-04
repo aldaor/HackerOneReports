@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/13748
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/idps
+ReportedTo:HackerOne(security)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:20.06.2014 22:39:34
+
+Summary:
+
+While creating a new team, if I set the bounty to a large value (over 1,000,000 digits) and send the request the website hangs for about a minute and a half, then pops up an error page saying there is an error on your end.

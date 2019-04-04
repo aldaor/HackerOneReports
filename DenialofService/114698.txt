@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/114698
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/ahmed_abdalla
+ReportedTo:Keybase(keybase)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:18.06.2016 2:00:05
+
+Summary:
+
+https://keybase.io/_/api/1.0/getsalt.json?uid=36965a2dc9bbd814e8558a77040c5419
+
+Poc:
+
+set wrong uid in this examble i chabge last numbre from 9 to 8
+
+https://keybase.io/_/api/1.0/getsalt.json?uid=36965a2dc9bbd814e8558a77040c5418

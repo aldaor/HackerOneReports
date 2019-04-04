@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/185387
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/haquaman
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:1000.0
+Severity:low
+State:Closed
+DateOfDisclosure:17.12.2016 20:09:00
+
+Summary:
+
+Hi,
+
+Just pulled the latest mruby code, and found that some of my fuzzing test cases now crash. Bisected it to commit `227daa881137d5251e03eea0883b9b574a1f064e`. Reverting this change no longer causes a crash.
+
+The minimised file causing the crash is:
+
+```
+f ()
+```
+
+Also affects mruby-engine.
+
+Cheers,
+
+Hugh

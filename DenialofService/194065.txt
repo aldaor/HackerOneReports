@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/194065
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/danse
+ReportedTo:Apache httpd (IBB)(ibb-apache)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:10.04.2017 16:04:33
+
+Summary:
+
+Malicious input to mod_auth_digest will cause the server to crash, and each instance continues to crash even for subsequently valid requests. 
+
+[http://httpd.apache.org/security/vulnerabilities_24.html](http://httpd.apache.org/security/vulnerabilities_24.html)

@@ -1,0 +1,61 @@
+ReportLink:https://hackerone.com/reports/190863
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/fms
+ReportedTo:PHP (IBB)(ibb-php)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:07.02.2017 17:56:30
+
+Summary:
+
+Upstream Bug
+---
+https://bugs.php.net/bug.php?id=72696
+
+Summary
+--
+Invalid color causes stack exhaustion by recursive call to function gdImageFillToBorder when the image used is truecolor. This was tested on a 64 bits platform.
+
+GDB debugging
+--
+```
+gdb -q --args /home/operac/php-70-sinasan/sapi/cli/php -n poc.php
+Reading symbols from /home/operac/php-70-sinasan/sapi/cli/php...done.
+(gdb) b gd.c:1851
+Breakpoint 1 at 0x54a354: gd.c:1851. (2 locations)
+(gdb) b gd.c:1834
+Breakpoint 2 at 0x54a287: gd.c:1834. (2 locations)
+(gdb) r
+Starting program: /home/operac/php-70-sinasan/sapi/cli/php -n poc.php
+
+Breakpoint 1, php_gd_gdImageFillToBorder (im=0x7ffff2c77000, x=0, y=0, border=1, color=-2) at /home/operac/php-70-sinasan/ext/gd/libgd/gd.c:1851
+1851                                            gdImageFillToBorder(im, i, y + 1, border, color);
+(gdb) c
+Continuing.
+
+Breakpoint 2, php_gd_gdImageFillToBorder (im=0x7ffff2c77000, x=0, y=1, border=1, color=-2) at /home/operac/php-70-sinasan/ext/gd/libgd/gd.c:1834
+1834                                            gdImageFillToBorder(im, i, y - 1, border, color);
+(gdb) c
+Continuing.
+
+Breakpoint 1, php_gd_gdImageFillToBorder (im=0x7ffff2c77000, x=0, y=0, border=1, color=-2) at /home/operac/php-70-sinasan/ext/gd/libgd/gd.c:1851
+1851                                            gdImageFillToBorder(im, i, y + 1, border, color);
+(gdb) c
+Continuing.
+
+Breakpoint 2, php_gd_gdImageFillToBorder (im=0x7ffff2c77000, x=0, y=1, border=1, color=-2) at /home/operac/php-70-sinasan/ext/gd/libgd/gd.c:1834
+1834                                            gdImageFillToBorder(im, i, y - 1, border, color);
+(gdb) p/x color
+$1 = 0xfffffffe
+
+```
+
+Patch
+--
+```
+https://github.com/php/php-src/commit/863d37ea66d5c960db08d6f4a2cbd2518f0f80d1
+```
+
+Fixed for PHP 5.6.28
+--

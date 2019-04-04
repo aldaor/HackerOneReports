@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/147310
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/magnusstubman
+ReportedTo:The Internet(internet)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:12.07.2017 15:21:09
+
+Summary:
+Summary: If ntpd is configured to allow mrulist query requests from a server that sends a crafted malicious packet, ntpd will crash on receipt of that crafted malicious mrulist query packet.
+
+Mitigation:
+  - Only allow `mrulist` query packets from trusted hosts.
+  - Implement BCP-38.
+  - Upgrade to 4.2.8p9, or later, from the [NTP Project Download Page](http://www.ntp.org/downloads.html) or the [NTP Public Services Project Download Page](http://support.ntp.org/download)
+  - Properly monitor your `ntpd` instances, and auto-restart `ntpd` (without `-g`) if it stops running.
+
+Credit: This weakness was discovered by Magnus Stubman.

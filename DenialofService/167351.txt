@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/167351
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/mr_sharma_
+ReportedTo:Eobot(eobotcom)
+BountyAmount:12.0
+Severity:
+State:Closed
+DateOfDisclosure:10.11.2016 7:47:43
+
+Summary:
+
+Hello Eobot,
+I am able to sign up on your web application using a long 100000 characters password which may lead to website becoming unavailable or unresponsive.
+Usually this problem is caused by a vulnerable password hashing implementation. When a long password is sent, the password hashing process will result in CPU and memory exhaustion.
+
+Normally all sites have a password minimum to maximum length like 72 words limit or 48 limit to prevent Denial Of Service attack.
+Please verify and reply me back if you find this a issue a risk threak.
+Thanks,
+Gopesh Sharma

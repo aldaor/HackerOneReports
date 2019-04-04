@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/17785
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/coolboss
+ReportedTo:HackerOne(security)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:28.04.2015 5:46:40
+
+Summary:
+
+Refering to this #13748
+
+Not yet patched fully.
+
+POC video ---> https://www.dropbox.com/s/4i7qun3nuesbc70/hackerone_error.mp4.mp4

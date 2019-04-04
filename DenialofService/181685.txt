@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/181685
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/charliesome
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:10000.0
+Severity:high
+State:Closed
+DateOfDisclosure:17.12.2016 1:03:44
+
+Summary:
+
+Heya!
+
+It's possible to segfault mruby through mruby-engine with the following snippet of code:
+
+    Range.remove_method(:initialize_copy)
+    (1..2).dup.to_s
+
+This can be triggered through mruby-engine like this:
+
+    MRubyEngine.new(512*1024, 1000, 1000).sandbox_eval("/tmp", %{
+      Range.remove_method(:initialize_copy)
+      (1..2).dup.to_s
+    })
+
+The `dup` and `clone` methods allocate a new object and then call `initialize_copy` on the new object with the old object as an argument to copy over internal state.
+
+Removing `Range#initialize_copy` makes it possible to construct an uninitialized `Range` object. Calling (pretty much) any instance method on the uninitialized `Range` object afterwards causes mruby to dereference a null pointer, leading to a segfault.
+
+I've attached a patch that fixes the bug by copying internal range state before calling `initialize_copy`, similar to what mruby already does for classes and modules.

@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/126536
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/anish2good
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 22:22:33
+
+Summary:
+
+SMS will send when user update the profile and keep updating the user profile will result in keep sending the SMS, Step to reproduce 
+1. Login to https://riders.uber.com
+2. Go to https://riders.uber.com/profile
+3. Update the Account Information, any field for Example FirstName
+4. A SMS wil be received in the PHONE, saying that , your account information is updated
+5. Use OWSAP ZAP to replay the packet and UBER will keep sending the SMS

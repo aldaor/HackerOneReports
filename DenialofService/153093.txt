@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/153093
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/dutchgraa
+ReportedTo:WordPress(wordpress)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:16.11.2017 19:21:53
+
+Summary:
+
+Hello,
+
+I've discovered a Denial of Service vulnerability in WordPress. My advisory can be found in the attachment in text format. If there are any questions please let me know, I'm happy to help.
+
+The vulnerability was discovered during a month long security project to find vulnerabilities in WordPress and WordPress plugins. For more information about the project see:
+https://sumofpwn.nl
+
+With kind regards,
+
+Sipke

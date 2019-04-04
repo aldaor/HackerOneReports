@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/112687
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/prince
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:12.02.2016 13:41:33
+
+Summary:
+
+vulnerability i have found!
+
+| http-vuln-cve2011-3192: 
+
+|   VULNERABLE:
+
+|   Apache byterange filter DoS
+
+|     State: VULNERABLE
+
+|     IDs:  CVE:CVE-2011-3192  OSVDB:74721
+
+|       The Apache web server is vulnerable to a denial of service attack when numerous
+
+|       overlapping byte ranges are requested.
+
+|     Disclosure date: 2011-08-19
+
+About Vulnerability
+
+The byterange filter in the Apache HTTP Server 2.0.x through 2.0.64, and 2.2.x through 2.2.19 allows remote attackers to cause a denial of service (memory and CPU consumption) via a Range header that expresses multiple overlapping ranges, exploit called "Apache Killer"
+
+i have tested it using nmap and metasploit and is 100% vulnerable
+when i found it i tested it in metasploit i used  auxiliary/dos/http/apache_range_dos
+
+      

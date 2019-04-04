@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/185041
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/raydot
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:20000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:16.12.2016 20:26:40
+
+Summary:
+
+Similar to #181871, but the bug is more general. The E_*_ERROR macros are not constants, so the exception types can be redefined to not be exceptions:
+
+    #define E_NOTIMP_ERROR              (mrb_class_get(mrb, "NotImplementedError"))
+
+This means that any code calling mrb_raise on an exception macro can instead get a non-exception object, leading to memory corruption and arbitrary code execution. This snippet causes a native crash in mruby-engine:
+
+    NotImplementedError = String
+    Module.constants # mrb_raise(mrb, E_NOTIMP_ERROR, "Module.constants not implemented");
+
+This should be fixed by making mrb_exc_set check that it is an exception type. Attached is a patch to mruby to fix this problem.

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/170151
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/cablej
+ReportedTo:Trello(trello)
+BountyAmount:128.0
+Severity:
+State:Closed
+DateOfDisclosure:27.09.2016 14:48:08
+
+Summary:
+It was possible to create a webhook that pointed to the EC2 metadata address, http://169.254.169.254.  While no data from that address would be returned, the webhook *would* be created successfully (with a `200` status), indicating that proxy used by the webhook requests wasn't blocking access to that address.
+
+The actual vulnerability was low (the only data returned was a status code) and access to all other internal systems was already blocked.  We did however modify the proxy configuration to also block the EC2 metadata address.

@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/126826
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/pwder
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:25.04.2016 17:20:27
+
+Summary:
+
+Hi,
+
+It is the exact issue described here:
+
+https://hackerone.com/reports/390
+
+
+Where uploading lottapixel.jpg it causes your service to time out
+
+
+
+
+HTTP/1.1 504 Gateway Time-out
+Server: nginx
+Date: Wed, 30 Mar 2016 02:29:22 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 13928
+Connection: close
+
+
+
+
+
+Just upload the attached picture as your profile picture and you will get a time out!

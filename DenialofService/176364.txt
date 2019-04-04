@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/176364
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/tushu
+ReportedTo:Brave Software(brave)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.10.2016 2:05:19
+
+Summary:
+
+Open the attached html poc in browser
+
+print window will appear again and again causing dos
+
+

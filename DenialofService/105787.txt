@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/105787
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/yarbabin
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:10.05.2017 4:06:29
+
+Summary:
+The attacker was able to execute XXE in one of the file upload feature. 

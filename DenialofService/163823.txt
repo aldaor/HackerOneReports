@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/163823
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/drosera
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.10.2016 12:51:11
+
+Summary:
+@drosera has reported a slow HTTP attack on nextcloud.com leading to DoS. We've meanwhile mitigated the issue.
+
+On request of the reporter, this issue is only disclosed limitedly.

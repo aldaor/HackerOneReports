@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/181686
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/tikoo_sahil
+ReportedTo:Brave Software(brave)
+BountyAmount:25.0
+Severity:low
+State:Closed
+DateOfDisclosure:06.05.2018 21:02:40
+
+Summary:
+
+## Summary:
+
+Basically the function location.reload() is causing browser to hang as browser is not able to handle multiple reloads but similar issue cannot be seen in Firefox and chrome as i am able to close the current tab.
+
+## Products affected: 
+
+Latest brave browser in linux.
+
+## Steps To Reproduce:
+Use the below code and save it as html file and then open it up on browser :-
+
+<script>
+open("");
+setInterval('location.reload()',1);
+</script>
+
+Or
+
+open up pop.html that i have attached
+
+## Supporting Material/References:
+
+i have attached html file that contains the code causing denial of service,

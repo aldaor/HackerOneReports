@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/118663
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/cyberunit
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.03.2016 23:01:46
+
+Summary:
+
+Hello.
+This comment can cause a failure of any load report
+
+`[This is SPARTAA](/%ff)`

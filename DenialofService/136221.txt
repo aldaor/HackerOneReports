@@ -1,0 +1,42 @@
+ReportLink:https://hackerone.com/reports/136221
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/apok
+ReportedTo:Mapbox(mapbox)
+BountyAmount:400.0
+Severity:
+State:Closed
+DateOfDisclosure:31.05.2016 21:32:00
+
+Summary:
+On May 4th, 2016, [apok](https://hackerone.com/apok) reported a Denial of Service condition on our [user account statistics endpoint](https://www.mapbox.com/studio/stats/), which returns information about a user's map views over a specified period of time.
+
+An attacker could trigger a potential denial of service condition by changing the value of the `interval` query string parameter from `day` to `hour` then requesting a time period of several years. We decided to first remove the `hour` interval option to resolve this issue. After [apok](https://hackerone.com/apok) reported a DoS condition when requesting an early start period of May 1997 with `interval=day`, we then implemented a limit of one year for all requests to the statistics endpoint.
+
+On May 26th, 2016 we closed this report after deploying the fix to our production servers. 
+
+Normally, Mapbox does not issue bounties on DoS related reports as we have rate limiting measures in place as well as automated monitoring alerts for potential DoS and brute force attacks. By contrast, this potential DoS condition would have been caused by a single request and would have evaded our rate limiting and monitoring measures. As a result, we decided to triage, fix, and award a bounty for this report.
+
+Note that [apok](https://hackerone.com/apok) deleted their test accounts in order to invalidate the session cookies in the screenshots included in this report.
+Hi Mapbox,
+I know that your guidelines explicitly say that Denial of Service coinditions are not in scope and should not be attempted, but I maintained the testing between adequate parameters so as to not to create excessive load on your backend. I also sent an email to security@mapbox.com prior to submitting this report and Alex Ulsh and he or she (Sorry, can't know which since Alex is a unisex name hahaha) told me that this could be an exception.
+
+The vulnerability relies on the https://www.mapbox.com/core/statistics/v1/apokh11/account endpoint, it seems that by modifying the "period" parameter to an arbitrary value, the amount of data returned increases probably without any limit, furthermore, if the interval is set to "hour" instead of "day", it is possible to increase the amount of data returned even further. To avoid affecting the availability of the server, I limited my testing to a small period, which still returned around 350 kb of data.
+
+The amount of data can also be increased if the end date of the period requested is set to a point in the future.
+
+To reproduce:
+1) Create an account or login to an existing account.
+2) Access this URL: https://www.mapbox.com/core/statistics/v1/apokh11/account?interval=day&period=1461766083142%2C1462370883143&metrics=countries%2Cbrowsers%2Chosts%2Cmaps%2Cversion&services=mapview%2Ctile%2Cstatic%2Cgeocode%2Cpermanentgeocode%2Cdirections%2Csurface&_=1462370883155
+3) Observe that the amount of data returned is around 2.5 Kb.
+4) Modify the "interval" parameter to "hour" and the "Period" parameter to, for example "1451766083142,1462370883143" 
+5) Observe that the amount of data returned increased to 372 Kb. 
+
+Not tested: If the period is long enough, the amount of time taken to answer the request will probably be increased as well.
+
+Implication: A malicious individual could leverage this feature by asking for extended periods to cause high loads on the backend, which in turn could affect the availiability of the service.
+
+Recommendation: Limit the period length to an amount established by the business logic, so as to mitigate the possibility of using this functionality with malicious intent.
+
+Let me know if you require any additional tests and/or information.
+Kind Regards,
+Apok.

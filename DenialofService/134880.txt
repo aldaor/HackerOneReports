@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/134880
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/geeknik
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:03.05.2016 20:38:06
+
+Summary:
+Severity: Low
+
+When ASN.1 data is read from a BIO using functions such as d2i_CMS_bio() a short invalid encoding can casuse allocation of large amounts of memory potentially consuming excessive resources or exhausting memory.
+
+Any application parsing untrusted data through d2i BIO functions is affected. The memory based functions such as d2i_X509() are *not* affected. Since the memory based functions are used by the TLS library, TLS applications are not affected.
+
+OpenSSL 1.0.2 users should upgrade to 1.0.2h
+OpenSSL 1.0.1 users should upgrade to 1.0.1t
+
+This issue was reported to OpenSSL on 4th April 2016 by Brian Carpenter.
+The fix was developed by Stephen Henson of the OpenSSL development team.
+On 4 April 2016 I reported a bug to the OpenSSL Security Team where I was able to force OpenSSL to use large amounts of cpu time, memory and swap space. They confirmed receipt on 6 April 2016 and on 22 April 2016 I was notified that they were assigning CVE-2016-2109 to this flaw and the fix was committed to git on 22 April 2016. 
+
+```
+The main cause is the way asn1_d2i_read_bio works: it allocates memory depending on the length field. Your test cases looks like this:
+
+30 84 30 30 30 30 30
+
+Which translates to a SEQUENCE with a length of 0x30303030 which explains the huge memory requirements.
+
+In some cases this is intended (for example large CMS messages) so we can't just reject these. Additionally because the input comes from a BIO we may not know the actual length of the data (e.g. from a pipe) so we can't immediately determine if there isn't enough data to read. We can however read the input in
+smaller chunks and determine if there is an unexpected EOF. That would mean that you couldn't have a tiny file allocate huge amounts of memory. We currently have a patch being reviewed that does this: that would reject your test case instead of allocating lots of memory.
+
+If you're calling the memory based ASN.1 decoders this shouldn't happen because they can sanity check length fields.
+```
+
+Fixed in master:
+https://git.openssl.org/?p=openssl.git;a=commit;h=c62981390d6cf9e3d612c489b8b77c2913b25807

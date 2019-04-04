@@ -1,0 +1,69 @@
+ReportLink:https://hackerone.com/reports/166871
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/zephrfish
+ReportedTo:Boozt Fashion AB(boozt)
+BountyAmount:80.0
+Severity:
+State:Closed
+DateOfDisclosure:14.09.2016 8:27:21
+
+Summary:
+Researcher reported a vulnerable HTTPd server which was not even supposed to be there.
+###Issue Description
+The researcher identified that the remote host is vulnerable to several denial of service vulnerabilities, however due to the nature of these issues the researcher did not attempt to generate a proof of concept. The information about these issues is based upon the version of apache that is running on the affected host being outdated.
+Additionally it was noted that the affected host displays the default suse apache test page when visited over http or https as shown:
+
+{F118343}
+
+From the screencap it can clearly be seen that the test page is displayed. It was noted that there are several publicly available exploits for the vulnerabilities in this version of apache.
+
+###Response
+
+     curl -I http://dolph2.booztx.com
+    HTTP/1.1 403 Forbidden
+    Date: Thu, 08 Sep 2016 15:18:14 GMT
+    Server: Apache/2.2.15 (SuSE)
+    Accept-Ranges: bytes
+    Content-Length: 4002
+    Connection: close
+    Content-Type: text/html; charset=UTF-8
+
+From the response it can be seen that the version of apache running on the server is 2.2.15 (SuSE) which on further inspection was found to be vulnerable to the following CVEs based upon the version number:
+
+|CVE ID |	Risk Score|
+| ----- | ------------|
+|[CVE-2013-5704](https://www.cvedetails.com/cve-details.php?t=1&cve_id=CVE-2013-5704)	|5.0  |
+|[CVE-2014-0118](https://www.cvedetails.com/cve-details.php?t=1&cve_id=CVE-2014-0118)	|4.3  |
+|[CVE-2014-0226](https://www.cvedetails.com/cve-details.php?t=1&cve_id=CVE-2014-0226)	|6.8 |
+|[CVE-2014-0231](https://www.cvedetails.com/cve-details.php?t=1&cve_id=CVE-2014-0231)	|5    |
+
+
+From the CVEs in the table the following descriptions
+
+- The  'mod_headers' module contains an issue which could enable a remote attacker to inject arbitrary headers. This can be done by placing a header in the trailer portion of data being sent using chunked transfer encoding. (CVE-2013-5704)
+-  The 'mod_deflate' module has an issue when handling highly compressed bodies. Using a specially crafted request, a remote attacker can exploit this to cause a denial of service by exhausting memory and CPU resources. (CVE-2014-0118)
+- The 'mod_status' module contains a race condition that can be triggered when handling the scoreboard. A remote attacker can exploit this to cause a denial of service, execute arbitrary code, or obtain sensitive credential information. (CVE-2014-0226)
+- The 'mod_cgid' module lacks a timeout mechanism. Using a specially crafted request, a remote attacker can use this flaw to cause a denial of service by causing child processes to linger indefinitely, eventually filling up the scoreboard. (CVE-2014-0231)
+
+These issues were deemed the most high risk from the CVEs that affect the installed version, if Boozt are interested the consultant can provide a full list of CVEs that affect this version. 
+
+###Affected URLs
+- dolph2.booztx.com
+ 
+###Risk Breakdown
+Risk: **High**
+Difficulty to Exploit: **Medium** 
+Authentication: **None**
+
+
+###Recommended Fix 
+Update to the latest version of apache for SUSE which at the time of writing is [2.4](https://doc.opensuse.org/documentation/leap/reference/html/book.opensuse.reference/cha.apache2.html) additionally the server should be hardened to not disclose the version as can be seen in the example below:
+
+Open `httpd.conf` in an editor, and change the following options:
+
+    Header unset Server
+    
+    ServerSignature Off
+    ServerTokens Prod
+
+Also the default index page should be replaced with either a blank page or adapt the permissions of the domain to return 404/403 pages.  For more information please see the apache [docs](http://httpd.apache.org/docs/2.4/mod/core.html#serversignature).

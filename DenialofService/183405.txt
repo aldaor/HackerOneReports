@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/183405
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/charliesome
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:8000.0
+Severity:high
+State:Closed
+DateOfDisclosure:17.12.2016 1:02:59
+
+Summary:
+
+The `Object#instance_exec` method in `mrbgems/mruby-object-ext/src/object.c` executes a block in the context of an object. It sets the VM's `target_class` pointer to the singleton class of this object. `target_class` is used as the definition target for constants and methods.
+
+If a singleton class cannot be created for an object, `target_class` is set to `NULL`. The `OP_CLASS` and `OP_MODULE` opcodes in the VM assume `target_class` is not null when defining new classes and modules.
+
+This causes a null pointer dereference and segfaults the mruby VM.
+
+Sample code:
+
+```
+1.instance_exec { class X; end }
+```

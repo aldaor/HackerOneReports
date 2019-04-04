@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/111676
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/pisarenko
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:16.02.2016 20:00:32
+
+Summary:
+Fabricating a large HackerOne url resulted in a 502 response from CloudFlare as the initial header was too large to process for our load balancer proxied by CloudFlare. If the user requesting the url was signed in it would result in a broken reports page. But if the user was signed out this would result in a CloudFlare page stating "This website is offline" which would persist until a browser restart or cookie removal.
+
+Increasing the load balancer proxy buffer size mitigated the issue.
+example (exit account) go to http://myfuneral.ru/hackerone.php your location https://hackerone.com/users/sign_in and Error 502 Ray ID: ***************** • 2016-01-19 19:31:49 UTC
+Bad gateway
+
+I think this was due to the fact that enrolled in the cookie with an invalid redirection ssesiyami
+(after authorization of the user was redirected to the link which is in hackerone.php, but this site does not do)
+
+короче все в сессию записалась трудная ссылка , которую hackerone.com не может нормально воспринимать , чтобы после авторизации направить  пользователя по пути редикта

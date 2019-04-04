@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/139591
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/koolacac
+ReportedTo:Dovecot(dovecot)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:15.08.2016 11:44:21
+
+Summary:
+
+Apache HTTP Server NULL Pointer Dereference Vulnerability
+
+[CVE 2014-3581](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3583).
+
+>Apache HTTP Server 2.4.10 and earlier is prone to a vulnerability, which can be exploited to cause a DoS   (Denial of Service). The vulnerability exists because the application contains flaw in the cache_merge_headers_out() function which is triggered when handling an empty 'Content-Type' header value.
+
+[CVE-2014-8109](http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-8109).
+
+>mod_lua.c in the mod_lua module in the Apache HTTP Server 2.3.x and 2.4.x through 2.4.10 does not support an httpd configuration in which the same Lua authorization provider is used with different arguments within different contexts, which allows remote attackers to bypass intended access restrictions in opportunistic circumstances by leveraging multiple Require directives, as demonstrated by a configuration that specifies authorization for one group to access a certain directory, and authorization for a second group to access a second directory.
+
+**Apache Server Banner.**
+
+{F94511}
+
+Good Reads:
+1) [ Cve details](https://www.cvedetails.com/vulnerability-list/vendor_id-45/product_id-66/version_id-177881/Apache-Http-Server-2.4.10.html).
+
+Solution: Update to the latest Apache stable version(2.4.20)
+
+[https://httpd.apache.org/download.cgi]

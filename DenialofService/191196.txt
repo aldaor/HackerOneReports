@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/191196
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/rijalrojan
+ReportedTo:Uber(uber)
+BountyAmount:2500.0
+Severity:high
+State:Closed
+DateOfDisclosure:09.02.2017 22:51:27
+
+Summary:
+The combination of an authorization flaw in Google’s G Suite and a misconfiguration on Uber’s behalf, allowed @uranium238 to set up an HTTP redirect for the domain ubereats.com. For some UberEats customers, this resulted in not being able to use the service for a short period of time. 
+
+@uranium238 brought the vulnerability to our attention, was able to demonstrate the security impact, and worked with both Uber and Google to validate the fixes. We look forward to more reports from @uranium238 in the future.

@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/116774
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/anmon
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:16.02.2016 19:44:27
+
+Summary:
+
+SIP(Session Initiation Protocol) udp port 5060 is open in www.gratipay.com  host .
+Bug id -  CSCtj04672
+  Refer (CVE-2011-3280)
+It may be the cause of DDOS  and many other attack

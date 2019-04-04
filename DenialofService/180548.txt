@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/180548
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/arnonymous
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:40.0
+Severity:medium
+State:Closed
+DateOfDisclosure:20.01.2017 3:54:03
+
+Summary:
+Security researcher reported that there was no restriction on the amount of text that could be inserted into a user's profile field. The researcher also demonstrated that when the text size was large enough the service was restarted, resulting in a momentary outage in our non-production environment (not high-availability). An internal reproduction showed isolated disruption but no outage in our production environment.

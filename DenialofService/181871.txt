@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/181871
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/raydot
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:20000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:01.03.2017 21:25:22
+
+Summary:
+
+Overwriting the 'new' method of the NoMethodError singleton to not return an exception object leads to memory corruption and possibly arbitrary code execution.
+
+Running the following code under the mruny-engine sandbox script results in a native crash:
+    NoMethodError.define_singleton_method(:new) do "waat" end
+    Object.q
+
+Attached is a patch to mitigate the issue.

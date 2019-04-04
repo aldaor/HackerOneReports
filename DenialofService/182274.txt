@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/182274
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/raydot
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:10000.0
+Severity:high
+State:Closed
+DateOfDisclosure:15.01.2017 19:56:05
+
+Summary:
+
+mrb_time_initialize sets the data pointer to NULL before parsing function arguments. Parsing function arguments can call out to ruby code to call methods to do type coercion. If the type coercion method tries to access the time object it will dereference a NULL pointer.
+
+The following snippet results in a native crash under mruby-engine:
+```
+$x = Time.new
+class Tmp
+    def to_i
+        $x.mday
+    end
+end
+$x.initialize Tmp.new
+```
+
+Attached is a patch to mruby to fix this issue.

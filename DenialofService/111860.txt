@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/111860
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/geekboy
+ReportedTo:withinsecurity(withinsecurity)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:18.03.2016 19:16:43
+
+Summary:
+
+Hello Team ,
+
+####Description : 
+This report is similar to #106350 , as we can see in report an user or attacker is __able to inject his text__ into error page and can trap to user to visit other site by adding following link  `/test/%2f../It%20has%20been%20changed%20by%20a%20new%20one%20https://www.Attacker.com%20so%20go%20to%20the%20new%20one%20since%20this%20one` after the Domain name , and it got fixed after that report with static 404 error page , 
+
+but i got place where __old fix is not getting apply__ , so i hope u will like to fix this too .
+
+####POC URL : https://withinsecurity.com/wp-admin/test/%2f../It%20has%20been%20changed%20by%20a%20new%20one%20https://www.Attacker.com%20so%20go%20to%20the%20new%20one%20since%20this%20one
+
+Please let me know if any more info needed !
+
+__Thank You
+Geekboy :)__

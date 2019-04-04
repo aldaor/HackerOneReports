@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/126364
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/anish2good
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 22:13:35
+
+Summary:
+
+Step to reproduce Uber password reset link EMAIL FLOOD  POC Video https://youtu.be/PPJkO_Eo6Mw
+
+1. Used OWSAP ZAP Proxy 
+2. Generated the forgotten password Link of my account (anish2good@yahoo.co.in)
+3. Used ZAP to replay the packet
+4. The Number of replay resulting into number of password link email which causing the USER Inbox to flood with UBER SCAM 
+5. Attaching the POC as Video  https://youtu.be/PPJkO_Eo6Mw

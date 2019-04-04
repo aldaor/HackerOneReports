@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/17241
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/rcaire
+ReportedTo:Uzbey(uzbey)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 18:56:38
+
+Summary:
+
+It was possible to identify a XSS vuln. at this address:
+
+https://staging.uzbey.com
+
+parameter: ?q=user

@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/174524
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/secator
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:250.0
+Severity:low
+State:Closed
+DateOfDisclosure:09.02.2017 10:48:07
+
+Summary:
+@secator reported some enumeration and DoS related issue in Nextcloud Server to us. On request of the reporter the issue has only been disclosed limitedly.
+
