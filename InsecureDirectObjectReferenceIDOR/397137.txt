@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/397137
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/jon_bottarini
+ReportedTo:New Relic(newrelic)
+BountyAmount:2500.0
+Severity:high
+State:Closed
+DateOfDisclosure:15.10.2018 19:22:04
+
+Summary:
+@jon_bottarini discovered an issue where a feature within a cloud integration wasn't properly validating account IDs. This report helped us identify a backend issue that could prevent account validation from taking place in certain situations.

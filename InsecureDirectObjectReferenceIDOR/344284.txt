@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/344284
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/bigshaq
+ReportedTo:Instacart(instacart)
+BountyAmount:100.0
+Severity:high
+State:Closed
+DateOfDisclosure:25.05.2018 0:24:38
+
+Summary:
+Access Control vulnerability that would let an attacker order certain items from the API, even though they are missing from the Web catalog

@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/313050
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/harsh13
+ReportedTo:Zomato(zomato)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:25.04.2018 12:25:30
+
+Summary:
+@harsh13 found an IDOR which leaked `Subscription ID`, `Purchased Date`, `Validity of Zomato Treats`. Thanks @harsh13 for helping us in making @zomato secure :)
+
+Cheers.
+The treat subscriptions tab in my profile has an IDOR.
+
+The corresponding api:
+
+POST /php/filter_user_tab_content.php HTTP/1.1
+user_id=██████&tab=treat_subscription&order_history_offset=0&order_history_limit=20
+
+
+You can give any user id and you will be able to see the treat subscriptions of that user.
+
+## Impact
+
+A user can view treat subscriptions of any other user.

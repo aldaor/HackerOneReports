@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/328337
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/w2w
+ReportedTo:Mail.ru(mailru)
+BountyAmount:1000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:26.04.2018 15:02:48
+
+Summary:
+widget.support.my.com IDOR allows to list support tickets for few game projects.
+
+widget.support.my.com is not covered by bug bounty scope, but this vulnerability was agreed to affect lootfog.io project.
+lootdog.io was running preliminary bug bounty program on the time of reporting.
+На lootdog.io можно обратиться в службу поддержки. Когда мы создали тикет и хотим его подгрузить, то выполняется запрос http://widget.support.my.com/ticket/view/2918863?authentication_type=2&project_id=777777783&████████&device_id=undefined&idfa=&locale=ru_RU&format=json&callback=angular.callbacks._5&proxy= .
+После view/ мы можем ввести чужой номер тикета и увидеть переписку между пользователем и службой поддержки. Например http://widget.support.my.com/ticket/view/291886?authentication_type=2&project_id=777777783&█████████&device_id=undefined&idfa=&locale=ru_RU&format=json&callback=angular.callbacks._5&proxy= .
+
+## Impact
+
+Можно просматривать все тикеты support.my.com

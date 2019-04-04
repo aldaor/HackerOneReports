@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/338477
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/flex0geek
+ReportedTo:ExpressionEngine(expressionengine)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:20.04.2018 15:11:49
+
+Summary:
+@flex0geek discovered that users with permission to edit entries in the control panel could manipulate the form or POST submission and set an invalid author as the author of that entry. @flex0geek gave a detailed report with step-by-step instructions for replicating and screen captures of a their results, enabling a speedy resolution to the issue, which was to add additional validation on submission so that the new author would only be accepted if that author is allowed to be an author of the entry.

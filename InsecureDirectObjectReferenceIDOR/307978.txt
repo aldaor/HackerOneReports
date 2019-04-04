@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/307978
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/muon4
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:490.0
+Severity:high
+State:Closed
+DateOfDisclosure:28.04.2018 11:02:30
+
+Summary:
+#Issue
+The reporter found some inconsistencies related to authorizations and access between family members.
+
+##Fix
+
+The application was fixed in a monthly release.
+
+##Reasoning
+
+The issue was valid and the reporter provided a lot of valuable information for us to go on including traces, screenshots and overall "this does not seem right" -commentary here and there.  The bounty was based on the ability to change information without the other party's consent and the related  privacy issues. 
+
+The fact that this is not widely nor wildly exploitable reduces the impact quite much: one needs to be a customer, one has to have a wife (or a similar entity), the aforementioned entity must have shared insurances or shared access to joint insurances and finally one has to have bad intents towards this aforementioned entity.

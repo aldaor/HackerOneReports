@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/245969
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/bountypls
+ReportedTo:Zomato(zomato)
+BountyAmount:50.0
+Severity:low
+State:Closed
+DateOfDisclosure:28.11.2017 9:07:32
+
+Summary:
+@hisham  found the IDOR issue in the user followback action. 

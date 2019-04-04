@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/277377
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/anonymousmian
+ReportedTo:Inflection(inflection)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:01.11.2017 16:41:17
+
+Summary:
+Researcher filed a duplicate report of an issue that had already been identified by another researcher and then requested public disclosure when we closed this as a duplicate. 

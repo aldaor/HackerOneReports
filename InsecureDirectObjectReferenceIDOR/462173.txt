@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/462173
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/karlito
+ReportedTo:Dropbox(dropbox)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:15.01.2019 8:22:46
+
+Summary:
+This report described some of the behavior of the integration between Dropbox and Dropbox Paper. In particular, when embedding a Dropbox file into Dropbox Paper, this implicitly creates a link to that file (see https://www.dropbox.com/help/files-folders/view-only-access) and embeds it within the document. This behavior matches that of the Dropbox Chooser (https://www.dropbox.com/developers/chooser), and is by design.

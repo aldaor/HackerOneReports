@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/215326
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/test_universe
+ReportedTo:VK.com(vkcom)
+BountyAmount:200.0
+Severity:low
+State:Closed
+DateOfDisclosure:07.06.2017 16:27:39
+
+Summary:
+Недостаточная проверка при загрузке SSL-сертификата для Callback API. 

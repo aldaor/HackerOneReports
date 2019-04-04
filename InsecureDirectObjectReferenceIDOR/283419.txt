@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/283419
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/dyoon
+ReportedTo:Mavenlink(mavenlink)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:09.02.2018 17:32:32
+
+Summary:
+The researcher found an IDOR that when exploited would result in an error message that was too verbose. The verbose error message included the title of the workspace that the user was attempting to access and being denied persmission to.

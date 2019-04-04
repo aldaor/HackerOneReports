@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/287378
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/ruvlol
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:20.12.2017 15:16:31
+
+Summary:
+By directly referencing to department ID in biz.mail.ru, it was possible to see the names of departments (without knowledge of which organization this department belongs to)

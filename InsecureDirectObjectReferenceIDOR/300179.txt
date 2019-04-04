@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/300179
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/tolo7010
+ReportedTo:Mavenlink(mavenlink)
+BountyAmount:150.0
+Severity:low
+State:Closed
+DateOfDisclosure:27.02.2019 23:40:35
+
+Summary:
+
+Reproduction:
+=========
+
+1. Login as a user, e.g: user1
+2. Create a portfolio by going to https://app.mavenlink.com/users/1234567-user1/work_samples/new
+note: replace 1234567-user1 with the actual user id/name endpoint.
+3. Uploading any file to the new portfolio and click save. On the right side of profile info, you will see the created portfolio with attached file,
+4. Click on the file, notic the link is https://app.mavenlink.com/attachments/xxxxxxxx Where xxxxxxxx is the file ID in 8 number lenght.
+5. Copy the file link and open it in other browser with different login user, e.g: user2, you will see the file is accessible.
+6. On user1, delete the file/portfolio.
+7. The link is still accessible,
+
+This is my uploaded portfolio file: https://app.mavenlink.com/attachments/79279255 (I've delete all the portfolio on the web interface),
+
+Recommend fix:
+- Provide mechanism to check if the uploaded file link is associated with coresponding account.
+- Delete the uploaded file (in AWS?) with portfolio as user desired.
+
+## Impact
+
+As user profile and portfolio (with files) can only seen if the user is in the same team/group, otherwise the information should be private, as going throgh any profile link (https://app.mavenlink.com/profiles/[user-id]) getting "Private Profile" message

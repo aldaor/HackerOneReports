@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/264919
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/prateek_0490
+ReportedTo:Zomato(zomato)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:28.11.2017 11:44:47
+
+Summary:
+@prateek_0490 was able to delete and deactivate special menu of any restaurant using IDOR

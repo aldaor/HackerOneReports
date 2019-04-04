@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/484339
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/eremeev
+ReportedTo:Mail.ru(mailru)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:11.03.2019 13:14:28
+
+Summary:
+IDOR in deliveryProfiles API of pandao.ru marketplace allowed to change delivery address of arbitrary user
+
+On the time of reporting, pandao.ru runs temporary pre-bug bounty competition program with $1000 bounties for vulnerabilities related to money/points/orders manipulation
+

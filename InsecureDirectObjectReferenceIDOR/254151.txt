@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/254151
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/cablej
+ReportedTo:Uber(uber)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:25.01.2019 17:46:56
+
+Summary:
+Due to an IDOR in the `activateFuelCard` endpoint, an attacker could enumerate driver UUIDs. When given a sequential card ID number, the endpoint returned a driver’s UUID given, allowing an attacker to gather many driver UUIDs for use in a different attack.
+
+Thanks, @cablej!

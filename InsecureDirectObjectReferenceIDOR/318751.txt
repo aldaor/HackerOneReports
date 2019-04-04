@@ -1,0 +1,39 @@
+ReportLink:https://hackerone.com/reports/318751
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/vijay_kumar1110
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:05.03.2018 19:34:35
+
+Summary:
+@vijay_kumar1110 reported an Insecure Direct Object Reference vulnerability on our Exchange app. This issue could have allowed an attacker to iterate over the shops' screenshot IDs in order to enumerate them and obtain a public accessible URL for all the shop screenshots hosted on Exchange, regardless of whether the listings were public or private.
+
+We have fixed the issue by checking whether the shop accessing the screenshots is the owner of them.
+##Bug location :
+ https://[MyShop].myshopify.com/admin/apps
+
+##Description : 
+Previewing the Photo In App section Request is vulnerable to IDOR attack where changing the ID leads to Disclose Link of Private photos. Also It discloses the Shop Domain details also. The request goes through exchange.shopify.com. 
+
+##Vulnerable Request : 
+GET /listings/hackeronevg1110/shop_screenshots/85952 HTTP/1.1
+Host: exchange.shopify.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Cookie: [Cookies]
+Connection: close
+Upgrade-Insecure-Requests: 1
+
+
+Let me know if you need more info.
+
+Regards,
+Vijay Kumar
+
+## Impact
+
+Information disclosure.

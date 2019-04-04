@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/232562
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/b3nac
+ReportedTo:Cuvva(cuvva)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:01.06.2017 21:05:05
+
+Summary:
+
+Good afternoon,
+
+The following url https://cuvva-alternate.app.link/ITHZI8FrKB?__branch_flow_type=deepview_tmta&__branch_flow_id=397220061845644344&__branch_desktop_deepview_type=1 can be used to spam phone numbers remotely.
+
+###Example POC:
+
+```
+<html>
+<form action="https://cuvva-alternate.app.link/ITHZI8FrKB?__branch_flow_type=deepview_tmta&__branch_flow_id=397220061845644344&__branch_desktop_deepview_type=1" method="POST">
+						<input name="phone" id="phone" type="text" class="light" value="+44" />
+						<button id="phone_submit" class="light">Send</button>
+					</form>
+</html>	
+```
+
+After grabbing the form code I can spam numbers from my desktop, I tested this on my number of course. *No cell phone bills were jacked up during the making of this poc.* :]
+
+1. Enter a known cell phone number.
+2. Submit and recieve the download the app text.
+3. Continuously refresh the page to keep spamming the number or create a loop with javascript.
+
+###Steps to fix:
+
+- Set a certain number of post requests per IP.
+- Set a captcha.
+- Set a limit. As of now I don't think there's a limit so this can be a gateway for spamming.
+
+As a side note usually outside source requests are checked by a referrer attribute to make sure It's valid.
+
+ I'm not entirely sure if you have control over this domain but I still wanted Cuvva to be aware of the vulnerability. As being spammed through a Cuvva download link wouldn't sit well with potential customers or their cell phone bill. Please let me know if you have any questions. I'm happy to help!

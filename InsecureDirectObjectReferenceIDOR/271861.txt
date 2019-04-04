@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/271861
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/jon_bottarini
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:07.12.2017 17:35:36
+
+Summary:
+@jon_bottarini discovered an issue where names associated with arbitrary existing email addresses can be revealed in the Alerts Notification Channel UI. As with similar previously-reported issues, this was resolved by obfuscating that information before it's presented.

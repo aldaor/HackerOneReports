@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/264754
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/prateek_0490
+ReportedTo:Zomato(zomato)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:28.12.2017 13:26:58
+
+Summary:
+@prateek_0490 found a IDOR issue which can deactivate any special offer in our platform.

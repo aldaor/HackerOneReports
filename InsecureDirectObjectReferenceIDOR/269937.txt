@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/269937
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/prateek_0490
+ReportedTo:Zomato(zomato)
+BountyAmount:750.0
+Severity:high
+State:Closed
+DateOfDisclosure:27.10.2017 5:17:30
+
+Summary:
+Hacker is able to get the PI(Personal Information) of any Zomato user.

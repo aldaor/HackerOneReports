@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/320173
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/jon_bottarini
+ReportedTo:New Relic(newrelic)
+BountyAmount:1500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:01.05.2018 18:14:30
+
+Summary:
+@jon_bottarini discovered a regression in the way users are shown within the Alerts notification UI. This allowed him to reveal the first and last name of an existing registered user (if their email was known), rather than showing an obfuscated version of that information.

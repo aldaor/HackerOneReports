@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/253929
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/kciredor
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:27.09.2017 7:57:14
+
+Summary:
+A local LetGo webpage was vulnerable to Insecure Data Object Reference issue which could have lead to ad hijack or settings change (price, description, location). @kciredor discovered this vulnerability and notified us about this. We would like to thank you for this report. Please do not hesitate to contact us in future.
+
+Best regards,
+Global Security Infrastructure Team

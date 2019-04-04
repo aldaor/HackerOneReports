@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/227522
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/kieran
+ReportedTo:Maximum(maximum)
+BountyAmount:300.0
+Severity:medium
+State:Closed
+DateOfDisclosure:22.05.2017 17:43:43
+
+Summary:
+
+#Description
+
+This vulnerability consists in :
+https://mijn.werkenbijdefensie.nl/instellingen/gegevens/
+
+This vulnerability allows an attacker to edit courses that do not belong to him and remove them from the users account.
+The edited course ends up in the attackers  account, but gets deleted from the account of the user that made the course.
+
+#Proof of concept
+
+* Create 2 accounts
+* go to https://mijn.werkenbijdefensie.nl/instellingen/gegevens/
+* start intercepting the requests
+* add a course in one account and look at the reponse of the POST request that is made to add this course. It is a number.
+* Now go to the other account also make a course.
+* Edit this course, and capture the POST of the request that is made to edit the course.
+* Repeat the request but change the "id" parameter to the id the course that was made in the other account.
+* reload the page
+* The course got removed from the creator's account and was inserted into the account of the attacker.
+
+#impact
+Attacker can remove all courses of all users by iterating trough all the course id's.

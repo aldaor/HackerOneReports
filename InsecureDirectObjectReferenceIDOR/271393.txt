@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/271393
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/jon_bottarini
+ReportedTo:New Relic(newrelic)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:02.05.2018 21:09:22
+
+Summary:
+@jon_bottarini identified an issue with an API used to populate the UI across different products. This API wasn't properly validating the account ID for certain requests, returning information for any ID presented.

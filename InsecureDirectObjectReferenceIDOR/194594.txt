@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/194594
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/vijay_kumar1110
+ReportedTo:Uber(uber)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:19.12.2018 22:51:49
+
+Summary:
+An IDOR in the `/p3/drivers/uploadDocument` endpoint on `partners.uber.com` allowed a driver to upload (and overwrite) documents for other drivers on a multi-driver account. In addition to this, there was an access control issue where a driver account could also upload (and overwrite) documents for the multi-driver account administrator. As a result, a driver could potentially escalate privilege to an account administrator.
+
+Thanks, @vijay_kumar1110!

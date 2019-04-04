@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/265258
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/darwinks
+ReportedTo:Zomato(zomato)
+BountyAmount:250.0
+Severity:high
+State:Closed
+DateOfDisclosure:22.10.2017 8:49:55
+
+Summary:
+Hacker is able to cancel the other user's table booking, The same request leaked the private information of the user (email & mobile no).
