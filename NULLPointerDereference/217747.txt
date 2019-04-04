@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/217747
+WeaknessName:NULL Pointer Dereference
+Reporter:https://hackerone.com/tcpiplab
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:23.06.2017 14:51:53
+
+Summary:
+A DoD website was misconfigured in a manner that could have allowed an attacker to collect sensitive information about the web application. @tcpiplab was able to demonstrate this vulnerability by crafting a specially formatted URL. Thank you for notifying us of this vulnerability!

