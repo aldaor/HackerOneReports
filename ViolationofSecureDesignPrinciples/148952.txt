@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/148952
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/dr_dragon
+ReportedTo:Coinbase(coinbase)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.01.2017 23:06:36
+
+Summary:
+
+poc url: https://images.coinbase.com/has.been.changed.to.https://images.attacker.com/,so.please.visit.https://images.attacker.com

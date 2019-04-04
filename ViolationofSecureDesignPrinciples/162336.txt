@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/162336
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/karthic
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.07.2017 10:01:10
+
+Summary:
+
+URL : http://inside.gratipay.com/
+
+Description : 
+This header enables the Cross-site scripting (XSS) filter built into most recent web browsers. It's usually enabled by default anyway, so the role of this header is to re-enable the filter for this particular website if it was disabled by the user. This header is supported in IE 8+, and in Chrome (not sure which versions). The anti-XSS filter was added in Chrome 4. Its unknown if that version honored this header.
+
+Solution : Need to set X-XSS-Protection: 1; mode=block in response header

@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/144084
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/malcolmx
+ReportedTo:SecNews(secnews)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.08.2016 8:17:15
+
+Summary:
+The researcher detected a low level issue. Due to the approach of the researcher we decided to disclose it publicly.
+
+The issue detected in https://www.secnews.gr , It's possible to inject text in the not-found message in order to trick the user to make him visit another website or do something an attacker might be interested in
+POC:https://goo.gl/Cuj53g : The link is shortened .

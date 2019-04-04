@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/145612
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/aaron_costello
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.06.2016 12:16:42
+
+Summary:
+
+The lack of a captcah or verificationcodeX (it's empty) in your phplist configuration allows attackers to use this mail for to send as much spam as they like to victims. I did not reach an email sending limit when I had tested this.
+
+PoC images below:
+
+Burp suite automated requests: https://gyazo.com/2b171479a41086057db0f4f2b3f30eea
+Result in inbox: https://i.gyazo.com/347f5cd8c94a5715db72f959640ec7a1.png

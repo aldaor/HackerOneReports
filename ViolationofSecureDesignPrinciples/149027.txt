@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/149027
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/ahsan
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.07.2016 20:41:34
+
+Summary:
+
+Dear Team,
+There is password change issue with bridge.cspr.ng
+
+Issue:
+-------------
+User is not receiving notification when he/she reset password via password reset link.
+when user change his info like password change. User doesn't get email notification for password change etc.
+It will be a good practice to always send email notification for user for any user related info update.
+
+Please let me know if more details required.
+
+I hope you will fix it soon!
+
+Regards,
+Ahsan Tahir

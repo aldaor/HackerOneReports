@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/161299
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/spodermen
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.08.2016 13:20:52
+
+Summary:
+
+Hi there,
+
+The following URL: https://apps.nextcloud.com/.htacess%20Content%20Injection%20test is vulnerable to Content Injection. Reference: https://www.owasp.org/index.php/Content_Spoofing
+You should use a 403 Forbidden page. If you need further information, let me know.
+
+Thanks!

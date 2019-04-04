@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/157996
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/cablej
+ReportedTo:Instacart(instacart)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:12.09.2016 8:40:37
+
+Summary:
+
+Hello,
+
+There exists a race condition in redeeming coupons, allowing a user to redeem the same coupon multiple times, and stacking savings added. This allows for a user to get virtually any discount.
+
+POC:
+
+1. Visit your account and select 'Promo Codes'.
+2. Select redeem promo code, and add any promo code. For example, I found the code 'dallas20'.
+3. Intercept the request using a proxy, and make the request multiple times, asynchronously.
+4. The code will be redeemed multiple times.
+
+For an example, see the screenshot attached.

@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/163467
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/cablej
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:120.0
+Severity:
+State:Closed
+DateOfDisclosure:12.09.2016 18:47:08
+
+Summary:
+
+When a user is logged on, the following is sent:
+
+```
+██████
+```
+
+This contains some sensitive information, most notably the email token. A user can use this to bypass email verification and verify any email.
+
+In addition, the hashed password is leaked, which could present a vulnerability if a user's account is compromised without compromising the password.

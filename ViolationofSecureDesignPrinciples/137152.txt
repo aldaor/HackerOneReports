@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/137152
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/baljeet1337
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.07.2016 23:31:22
+
+Summary:
+
+Hi , 
+
+
+Your domain love.uber.com is vulnerable to Clickjacking.
+
+I'm able to load the domain love.uber.com in an iframe , 
+so an attacker can certainly take advantage of this clickjacking bug in love.uber.com
+
+Click-jacking is a process of “stealing” clicks on your site, redirecting them to other places,  by putting your page in an iframe and placing the attacker’s content over yours. The idea is to make this look as seamless as possible, so the user can’t tell right away that something is wrong.
+
+if someone frames your site and puts login controls directly over yours, then even tools like SiteKey , won’t prevent them from collecting username and password data.
+
+POC Screenshot Attached !

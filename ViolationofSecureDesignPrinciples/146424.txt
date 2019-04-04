@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/146424
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/japz
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.06.2016 11:40:19
+
+Summary:
+
+There is no defenses or any lockout mechanism on stats.nextcloud.com login , a malicious minded user can continue guessing an account password limitless, and this might cause to completely compromised the site.
+
+__Recommendation: Put a rate limit or a any lockout mechanism__
+
+Regards
+Japz

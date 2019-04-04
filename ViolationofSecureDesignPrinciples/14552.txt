@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/14552
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/shahmeer-amir
+ReportedTo:WePay(wepay)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:10.10.2014 22:23:07
+
+Summary:
+
+Hey there i found out that your cookies are actually being fixed before an after login this allows an attacker to perform a sessino fixation attack and hijack the user's session by capturing the cookies before logging in of the user and replaying it afterwars.
+
+Here are my fixed cookies

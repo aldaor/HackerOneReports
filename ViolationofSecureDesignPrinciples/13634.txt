@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/13634
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/harikrishnan_c
+ReportedTo:IRCCloud(irccloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.11.2014 14:30:47
+
+Summary:
+
+In the team adding page , the team name has no restrictions in the input field.
+In the poc i have named the team as !@#$%^&*() which is fully of symbols.

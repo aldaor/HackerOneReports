@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/15785
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/guido
+ReportedTo:HackerOne(security)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:10.06.2014 1:45:10
+
+Summary:
+
+After a password reset link is requested and a user's password is then changed, not all existing sessions are logged out automatically. The automatic removal of existing sessions linked to a user whose password was changed is only the case if the session was initiated with the 'Remember me for a week' box NOT checked at the log-in page; sessions with the 'remember' option enabled will persist after the password change.
+
+Logging in with the new password doesn't invalidate the older session either: I could browse HackerOne using two sessions (in two different browsers) which were initiated using two different passwords.

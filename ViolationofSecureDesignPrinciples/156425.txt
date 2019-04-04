@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/156425
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/cutejoker
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.08.2016 18:40:56
+
+Summary:
+
+Hello there , your site is vulnerable to phishing the users by this vulnerability.
+
+proof of concept 
+https://demo.nextcloud.com///Hello---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------our%20website%20is%20down%20now%20you%20can%20visit%20this%20domain%20mydomain.com%20as%20this%20domain%20doesn't%20exist%20.
+
+Thanks !

@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/145344
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/geekboy
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.06.2016 12:18:52
+
+Summary:
+
+**Hello Team ,**
+
+>> *Request: if u think the reported issues have acceptable risk and u r not going to make changes then kindly request to mark as Informative .*
+
+####Description : 
+>> This report is about how an attacker is able to spoof the content of 404 page and can add thr own Text in way that the Current Website is moved to someone new URL which is Attackers website , yet its not that much effective to make this attacker successful but still this need to fix .
+
+####Vulnerable URL : https://nextcloud.com
+
+####POC URL : https://nextcloud.com/has%2f%20been%20changed%20to%20https://www.ATTACKER.COM.%20so%20please%20visit%20https://www.ATTACKER.COM%20as%20your%20requested%20link
+
+####Reference : https://www.owasp.org/index.php/Content_Spoofing
+
+####POC : http://i.imgur.com/hQuzqvn.jpg
+
+####Mediation : 
++ User Predefined 404 page , with fixed error content !
+
+Please let me know if any more info needed !
+
+__Regard's
+Geekboy :)__ 

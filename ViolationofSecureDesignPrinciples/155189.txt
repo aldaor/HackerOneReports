@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/155189
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/sysecure
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:29.09.2016 19:03:00
+
+Summary:
+
+Hi ,I would like to report report a text injection and a miss-configuration of the 403 page which can be used in phishing.
+
+POC:
+
+https://demo.nextcloud.com//this%20website%20-----------------------------------------------------------------------------------------------------------------------------------------------------------------------%20thanks%20for%20visiting%20our%20website,becase%20we%27re%20having%20some%20problems%20we%20have%20been%20moved%20to%20this%20site%20http:/www.malicious.com%20please%20note%20that%20our%20website%20is%20no%20longer%20exist%20Fix%20:
+
+Just use a 403 page that don't include attacker text just as hackerone do 
+or just as you do in your in other not found pages.
+
+Thanks !

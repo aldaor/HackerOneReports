@@ -1,0 +1,45 @@
+ReportLink:https://hackerone.com/reports/132057
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/paulos_
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.04.2016 23:08:54
+
+Summary:
+A potential abuse of reputation by means of an integer overflow. However, given that the attack would take approximately 4,596 years to execute we opted to close the report as Not Applicable.
+
+Kudos to @paulos_ for his top notch communication and creative thinking!
+Hi,
+
+I really would appreciate if you are transparent with this or does not close the bug quickly as N/A or something similar because of being purely theoretical.
+I am assuming HackerOne runs an x86 System. and the INT_MAX is **2,147,483,648**. (I know this because https://hackerone.com/reports/2147483647 returns 404 but https://hackerone.com/reports/2147483649 returns Error)
+
+While https://hackerone.com/reports/-2147483645 returns 404
+https://hackerone.com/reports/-2147483649 returns Error
+
+To try this bug, I need to have a verified program. because I can't do that (not sandbox to manipulate rep), I am reporting to you about why I think this works.
+
+- Integers can be from -2,147,483,648 to 2,147,483,647 (~ ± 2 billion)
+
+In any programming language, there should be an INT MAX limit. long, short, double... there is. In short:
+```if(INT_MAX+1 > 0)``` is usually true. In your case:
+```if (int(-2147483648) > 0)``` should return **false** which may be a WTF! 
+
+-2147483648 is actually an expression: a positive literal value 2147483648 with unary - operator in front of it. Value 2147483648 is apparently too large for the positive side of int range on your platform.
+
+In short: 2147483647 + 1 is actually -2147483648 and vice versa. **when you pass the MAX in int, it will become negative. and when you pass the negative limit, the number will become posetive**
+
+I am sure by now you are seeing where I am going with this. when an attacker submits too much vulnerabilities and if all are closed by the program as Spam (-10rep) that will give the user a negative reputation. 
+
+If he manages to get enough Spam (can write a script to automate reporting and closing as Spam) he will eventually have enough negative points that pass the int limit and be considered positive.
+
+So if an attacker manages to do -2147483648 (consider his reputation) - 10 (another report closed as spam) = Positive. *My numbers may not be accurate because of a number of factors* 
+
+This is the oldest trick in the hat while stealing money from banks and sometimes even referenced as Integer Overflow (dont confuse it with the popular c++ bug)
+
+Anyway, take a look and there is more you didnt patch this and I may be right, if so: horry! if not: well, it was a fun writing this.
+
+Thanks,
+Paulos

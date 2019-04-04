@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/148911
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/ahsan
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.07.2016 20:44:55
+
+Summary:
+
+Hey, I've found a 'minor' issue in bridge.cspr.ng [CMS Airship]
+
+The issue is 'username enumeration' 
+
+Means, an attacker can know that if a user exists or not; just by noticing the error! So, once the attacker knows that a user exists, he can launch a *brute force* attack against it!
+
+### Steps of replication
+1. Go to password reset page
+2. Enter an username which exists, there would be no error, and it will be redirected to login page
+3. Enter an username which doesn't exists, there would be an error saying something like 'user account doesn't exists etc..'
+
+### Mediation
+- Error should be same in both conditions like, every time it should redirect to login page; or you can also fix by adding this: "If email/username exists in our DB, an email for your password reset will be sent!" etc..
+
+Hope you'll fix this soon! 
+
+Thanks
+-Ahsan

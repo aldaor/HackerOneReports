@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/134388
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/ng1
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:10.11.2016 9:26:50
+
+Summary:
+##Issue
+
+The reporter found that the 404 error pages contained an injection vector. 
+
+##Fix
+
+The error page was changed to a static page. 
+
+##Reasoning
+
+The issue was not critical, as it was only possible to inject plain text, no links or active content, to the error pages. The bounty reflects the criticality. The bounty was paid on on a first come first server basis. 
+Vulnerability Description: Application allows users to inject any content on the 404 not found webpage
+
+Vulnerable Location: https://yrityspalvelu.tapiola.fi/a1/has%20been%20changed%20by%20a%20new%20one%20https://www.attacker.com%20so%20go%20to%20the%20new%20one%20since%20this%20one
+
+Fix : just use a 404 page that don't include attacker text
+
+Reference links: Below are the links which will help you to understand more about this issue including the remediation
+https://hackerone.com/reports/106350
+https://hackerone.com/reports/102327
+https://hackerone.com/reports/111860

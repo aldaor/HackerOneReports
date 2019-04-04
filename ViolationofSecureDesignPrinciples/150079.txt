@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/150079
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/proxynwh
+ReportedTo:Ian Dunn(iandunn-projects)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.08.2016 1:18:08
+
+Summary:
+
+A common threat web developers face is a password-guessing attack known as a brute force attack. A brute-force attack is an attempt to discover a password by systematically trying every possible combination of letters, numbers, and symbols until you discover the one correct combination that works. 
+
+This login page doesn't have any protection against password-guessing attacks (brute force attacks). It's recommended to implement some type of account lockout after a defined number of incorrect password attempts. 
+
+Consult Web references for more information about fixing this problem.
+
+Affected items:
+/wordpress/wp-login.php 
+
+The impact of this vulnerability?
+An attacker may attempt to discover a weak password by systematically trying every possible combination of letters, numbers, and symbols until it discovers the one correct combination that works.
+
+How to fix this vulnerability:
+It's recommended to implement some type of account lockout after a defined number of incorrect password attempts.
+
+Web references:
+https://www.owasp.org/index.php/Blocking_Brute_Force_Attacks

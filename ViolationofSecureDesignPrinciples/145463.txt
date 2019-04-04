@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/145463
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/ishahriyar
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:19.07.2016 10:30:00
+
+Summary:
+The location bar in the files app was not verifying the passed parameters. An attacker could craft an invalid link to a fake directory structure and use this to display an attacker-controlled error message to the user.
+
+A detailed advisory can be found at https://nextcloud.com/security/advisory/?id=nc-sa-2016-003.
+
+------
+Thanks a lot, @ishahriyar   for pointing out this vulnerability!
+In Nextcloud the "dir" parameter is vulnerable to content spoofing attack.
+If anyone puts a valid directory name in dir parameter then it goes that directory other wise it redirects
+to the home directory (/)
+By putting `../../` in dir parameter I was able to stop the redirect then I had put some messages after that and that messages reflected with the same given format.
+
+So here an  attacker can send his messages directly through url.  
+Poc link
+`http://192.168.0.118/nextcloud/index.php/apps/files/?dir=../../Welcome+to+Nexcloud+You+can+get+pro+account+by+navigating+this+example.com`
+
+Thanks.

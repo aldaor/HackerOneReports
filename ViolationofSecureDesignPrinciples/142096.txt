@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/142096
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/yassineaboukir
+ReportedTo:Slack(slack)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:21.01.2017 17:25:56
+
+Summary:
+
+Hi,
+
+I found out some neglected DNS records that can be exploited to takedown the subdomain of Slack's acquisition `feedback.screenhero.com`
+
+The security issue is that you have CNAME record that points `feedback.screenhero.com` to a `screenhero.uservoice.com`, but the problem is that the service is inactive, thus any malicious hacker would simply sign up for the service and claims the username `Screenhero` as his and no verification is done by the Service Provider, besides that the DNS-setup is already correctly set.
+
+{F97017}
+
+**Scenario attack :**
+Attacker can now build a complete clone of the real site, add a login form, redirect the user, steal credentials (e.g. admin accounts), cookies and/or completely destroy business credibility for your company along with along with injecting malicious codes to steal their sensitive cookies, redirect them to malicious web pages etc.
+
+**Mitigation :** To mitigate the threat you should remove CNAME DNS records for the services you don't use anymore.
+
+**Reference:** http://yassineaboukir.com/blog/neglected-dns-records-exploited-to-takeover-subdomains/
+
+Best regards.

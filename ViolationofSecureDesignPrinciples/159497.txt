@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/159497
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/brainspere402
+ReportedTo:bitaccess(bitaccess)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.11.2016 17:12:18
+
+Summary:
+Due to a bug on session management, Rate limit was not properly applied to some functionalities on the website, which let a bad actor to send unlimited password reset emails by bypassing the Recaptcha rate limit. 
+
+This was not a security issue, fixed to prevent spamming users. 

@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/13679
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/shahmeer-amir
+ReportedTo:Factlink(factlink)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 10:00:32
+
+Summary:
+
+You have not filtered control meta characters such as %00 etc on the sign up which allows an attacker to impersonate or hide their real identity within the application

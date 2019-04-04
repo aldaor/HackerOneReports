@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/154425
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/ebrietas
+ReportedTo:Snapchat(snapchat)
+BountyAmount:3000.0
+Severity:
+State:Closed
+DateOfDisclosure:22.08.2016 19:46:06
+
+Summary:
+
+Hey team,
+
+I've found a snapchat cdn domain here which had a test instance of fastly setup but did not remove the dns record when the service was cancelled. This allowed me to create a Fastly instance to take it over. I've confirmed this is a snapchat property via Censys (https://censys.io/certificates/65ba2e172a1eb85eb1071c9fd7a4e8371ef12625409890507c89a54978305558) though the risk here seems minimal at best as this domain does not appear to be used anywhere on any snapchat properties.
+
+Repro steps:
+
+* Visit http://fastly.sc-cdn.net/takeover.html
+
+Recommended fix:
+Removal of this record is recommended.

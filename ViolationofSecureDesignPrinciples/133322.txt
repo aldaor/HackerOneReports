@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/133322
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/siddiki
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.07.2016 18:15:02
+
+Summary:
+@siddiki reported to us that under certain conditions it is possible to make select actions on a report happen but not appear in the report timeline. We reviewed the potential security consequences as a result of this behavior and came to the conclusion this is a low priority functionality bug with no unacceptable security risks. 
+Null bytes are not permitted in report body, or even in report title. But that can be used in the comment section of `self-closing` (for reporter) and `change-status` (for team). When a null byte is used as a comment, that report timeline activity disappears!
+
+For example: 
+https://hackerone.com/reports/133317 report was closed using a null byte in comment.
+
+{F88258}
+
+There is no activity log in the report details for the closing, but the report is closed.

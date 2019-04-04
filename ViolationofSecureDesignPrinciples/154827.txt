@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/154827
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/lmx
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:50.0
+Severity:low
+State:Closed
+DateOfDisclosure:04.11.2016 17:16:25
+
+Summary:
+
+Hi! It's still possible to use an invalid `dir` param to spoof messages in the directory breadcrumbs area.
+
+For example, you can use URL-encoded periods to bypass the directory traversal prevention. By referencing a path that returns a 301, you can add a message in the dir param F108266:
+
+https://demo.nextcloud.com/index.php/apps/files/?dir=%2E%2E/%2E%2E/%2E%2E/.well-known/caldav/Error%20-%20please%20restart%20your%20computer%20to%20continue
+
+Also, in Chrome, the presence of a null byte (%00) in the url causes a CSP error for an ajax request upon pageload, which prevents the redirect to `dir=/` and allows you to put a message in the dir param F108267:
+
+https://demo.nextcloud.com/index.php/apps/files/?dir=%00Error!%20Please%20restart%20your%20computer%20and%20try%20again
+
+Please let me know if you need more info. Thanks!

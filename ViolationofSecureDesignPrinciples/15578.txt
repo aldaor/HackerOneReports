@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/15578
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/jyoti
+ReportedTo:FanFootage(fanfootage)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.07.2014 0:02:31
+
+Summary:
+
+Two things I observe
+1. same user name can be used by number of users. This may create confusion to another user
+2. The uuid parameter using which a user's profile is accessed is also controllable during signup. I can change that value during signup to a value already assigned to user. When I like any video or post any comment. The hyperlink to my userid will be the same as that of an existing user whose uuid value I have used. Depending upon how the values are fetched from database, The link to his user id may lead to my profile page or link to my userid lead to his profile page.
+Screenshots attached. 

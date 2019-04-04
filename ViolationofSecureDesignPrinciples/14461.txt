@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/14461
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/shahriar
+ReportedTo:Factlink(factlink)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.06.2014 10:34:03
+
+Summary:
+
+The password reset link sent by Factlink doesn't expire even after a long period of time. As Factlink account can be created 'without confirming' email id, so, this should be patched for the best practice.

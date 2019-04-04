@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/145374
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/iamashishgeek
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.06.2016 12:03:22
+
+Summary:
+
+Hi i got content spoofing vulnerability .
+
+Content spoofing, also referred to as content injection or virtual defacement, is an attack targeting a user made possible by an injection vulnerability in a web application.
+
+POC Link :- https://nextcloud.com/.htacess%20THIS%20IS%20CONTENT%20SPOOFING
+
+Possible Fix:
+URL Encode spaces to %20 which will convert spoofing content look like link
+
+Cheers!
+
+Ashish Pathak

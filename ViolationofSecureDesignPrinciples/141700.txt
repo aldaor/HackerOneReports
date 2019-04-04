@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/141700
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/xiaoyinl
+ReportedTo:GlassWire(glasswire)
+BountyAmount:25.0
+Severity:
+State:Closed
+DateOfDisclosure:23.07.2016 21:18:11
+
+Summary:
+
+Product version: 1.2.64beta
+OS version: Windows 8.1 Enterprise x86
+
+If a program modifies the Hosts file (C:\Windows\System32\drivers\etc\hosts), GlassWire notifies the user that "system file changed" with the path of the hosts file (see attachment "screenshot_hosts_changed.png"). I discover that a malware (running with admin privilege) can change the content of hosts file without triggering this notification. The method is to use hardlink.
+
+To reproduce:
+Step 1: Open cmd.exe as administrator
+Step 2: execute "fsutil hardlink create c:\ProgramData\hosts.txt c:\windows\system32\drivers\etc\hosts" in cmd.exe
+Step 3: execute "echo ::1 example.local>>c:\ProgramData\hosts.txt" in cmd.exe
+You can see that the notification is not triggered after step3. See "screenshot_modified_via_hardlink_no_notification.png".
+
+Now execute "echo ::1 example2.local>>c:\windows\system32\drivers\etc\hosts" in cmd.exe. You receive a notification that hosts file is modified, prompted by GlassWire. See "screenshot_modified_directly_have_notification.png".

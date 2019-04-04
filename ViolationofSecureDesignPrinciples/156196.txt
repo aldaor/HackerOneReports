@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/156196
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/dhanunjaya
+ReportedTo:Phabricator(phabricator)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:25.08.2016 14:17:42
+
+Summary:
+
+AS we can see in report an user or attacker is able to inject his text into error page and can trap to user to visit other site by adding following link /test/%2f../It%20has%20been%20changed%20by%20a%20new%20one%20https://www.malicious.com%20so%20go%20to%20the%20new%20one%20since%20this%20one
+
+A text injection and a missconfiguration of the 404 page which can be used in phishing.
+
+POC URL: blog.trello.com/test/%2f../It%20has%20been%20changed%20by%20a%20new%20one%20https:
+
+URl:-https://www.phacility.com//test/%2f../It%20has%20been%20changed%20by%20a%20new%20one%20https://www.malicious.com%20so%20go%20to%20the%20new%20one%20since%20this%20one

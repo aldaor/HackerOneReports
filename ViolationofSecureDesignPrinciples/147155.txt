@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/147155
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/maxon_omar_saleh
+ReportedTo:Dropbox(dropbox)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.08.2016 2:47:51
+
+Summary:
+
+Hi there ,I have found a very critical systematic issue that enable a user  to create any number of account with one email .
+It can be resolved by sending a conformation link  to the email of the registerer.
+IF one user has 1 Gigabytes storage he can make any number of gigabytes as he need and this will affect your system badly .
+#POC:
+sign up with email :
+saleh@1.com
+saleh@2.com
+saleh@3.com
+saleh@4.com
+
+all are accepted .
+
+Waiting for your generous bounty .
+Thanks .
+
+ 

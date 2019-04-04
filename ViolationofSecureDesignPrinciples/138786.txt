@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/138786
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/kanwar
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.05.2016 6:23:20
+
+Summary:
+
+Hello i want to report a text injection and a missconfiguration of the 404 page which can be used in phishing
+
+the bug exists at :
+
+http://veris.in/test/%2f../It%20has%20been%20changed%20by%20a%20new%20one%20https://www.crowdcurity.com%20so%20go%20to%20the%20new%20one%20since%20this%20one
+
+As you can see attacker text is included 
+"It has been changed by a new one https://www.crowdcurity.com so go to the new one since this one was not found on this server."
+
+Fix : just use a 404 page that don't include attacker text just as : hackerone do (a 404 page that don't include any external text 
+
+Hope you fix it
+
+Thanks,
+Kanwar

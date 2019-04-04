@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/154921
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/ahsan
+ReportedTo:Gratipay(gratipay)
+BountyAmount:1.0
+Severity:low
+State:Closed
+DateOfDisclosure:07.08.2016 17:12:29
+
+Summary:
+Researcher @ahsantahir reported a content spoofing on the search functionality. The search query was displayed in the page, but without any prefix. We added "Results for:", so nobody can be misinformed.
+
+This has been [fixed in the last version](https://github.com/gratipay/gratipay.com/commit/382483c727a6eca08ad9880c2583437139f01df3) and the fix is now deployed.
+
+Thanks for making Gratipay a safer place!

@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/152925
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/ahsan
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.08.2016 19:03:04
+
+Summary:
+@ahsantahir reported a content spoofing vulnerability in cloud.nextcloud.com caused by it's Apache configuration. This has been changed by adding the following to the Apache config:
+
+```
+ErrorDocument 404 "File not 
+ErrorDocument 403 "Access forbidden."
+```
+
+On request of the reporter, this issue is only disclosed limitedly.

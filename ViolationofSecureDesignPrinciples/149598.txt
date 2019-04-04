@@ -1,0 +1,48 @@
+ReportLink:https://hackerone.com/reports/149598
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/yaworsk
+ReportedTo:GitLab(gitlab)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.10.2016 15:22:28
+
+Summary:
+
+Hi All,
+I believe I've found a vulnerability with regards to your user authentication and 2FA implementation but wasn't sure you'd be interested given the reference to "rate limiting" being out of scope so please bare with me. I also took a quick look at https://gitlab.com/gitlab-org/gitlab-ce/issues?utf8=%E2%9C%93&issue_search=two+factor and noticed there is no reference to this coming up.
+
+#Background Setup
+I've configured my own GitLab server on an AWS EC2 small instance. I'm not overly familiar with your platform so all my settings are default.
+
+#Description
+###2FA
+In short, testing out your 2FA implementation, I noticed that there is limited protection against brute forcing. It appears the only protection is rate limiting and a time limited token from the Google authenticator app. With the time drift, a token is valid for 60 seconds.
+
+Now, that said, if an attacker knows a users password (I address guessing it below), they are able to begin a brute force attack to guess the token (please continue to bare with me). The reason I'm reporting in system design, specifically:
+
+- It appears that initially, an attacker can submit anywhere from 10 - 19 requests to validate a 2FA before rate limiting kicks in. This then stops the attacker for, what appears to be, 30 - 40 seconds (in some tests it was less). Then an attacker can submit the username and password and submit another 9 requests before rate limiting stops them again. While these numbers may be off slightly, for arguments sake, **let's say they can submit 20 request per valid token.**
+
+- Since tokens are 6 digits long, we have a 20 in 1,000,000 chance of being right (or 0.00002). So, on that note, if we made 5,000 attempts (of 20 guesses per minute) at the token, **we'd have a 9.5% chance of finding the right one at least once in 3.5 days (5,000 attempts = 5,000 minutes = 83.3 hours = 3.47 days).** 10,000 attempts would take approximately 7 days and yield an 18% chance (I used this calculator http://stattrek.com/online-calculator/binomial.aspx)
+
+- Compounding the issue, during the attacker, **a victim and admin get no notification / impact on service.** The victim can still log in and use their account while the attacker is guessing a valid token, no email is generated to indicate someone is attempting to compromise their account (at least in the 5 or 6 times I ran the test) and I couldn't find anything in the web based logs for the admin account. That said, because I'm not overly familiar with the platform and didn't run this for the full day, maybe I'm missing some notification system. If so, I apologize.
+
+###Password Guessing
+In addition to the above, I noticed that there is also limited protection against guessing a password. After X number of attempts at guessing a password incorrectly, an account does become locked, an email sent to the victim and the attacker is never notified.
+
+But, while the account is locked, if an attacker guesses a correct password, they are still redirected to the 2FA screen to confirm a token rather than being stopped. **So, while the account is locked, an attacker still is able to confirm a victim's password.**
+
+#Vulnerability
+I'm reporting because 2FA is the second line of defense for victims, especially in light of all the recent password compromises and continued password reuse by users. While this attack would take time, it is likely that once an attacker knows a victim's password, they will be able to bypass GitLab's 2FA implementation within days.
+
+Based on other systems I've tested, potential mitigations include:
+
+###2FA
+- Only allow 3 attempts at a token
+- After 3 different attempts at 3 different tokens, lock the user account and email the victim
+
+###Password Brute Forcing
+- Once an account is locked, do not validate the password of a user
+
+I hope this helps. Please let me know if you have any questions.
+Pete

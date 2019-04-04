@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/139099
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/albinowax
+ReportedTo:Dropbox(dropbox)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.06.2016 12:21:56
+
+Summary:
+
+When I install dropbox on linux via the CLI, I get given a URL containing a token:
+https://www.dropbox.com/cli_link_nonce?nonce=blah
+
+I can give this token to another user and pretend it's a link to a dropbox file. If they aren't logged in when they click it, they will land on the login page. If they log in, my server will instantly be linked to their dropbox account, giving me read/write access all their files. This attack involves a little user interaction but I think faced with a login page on the real dropbox.com, most users will log in. Please review the attached screenshot to see what I mean.
+
+The account linking page that is displayed to users who are already logged in also fails to give an adequate warning, but I think less people would fall for this.

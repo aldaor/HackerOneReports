@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/137288
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/jackds
+ReportedTo:Sucuri(sucuri)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:10.06.2016 18:38:37
+
+Summary:
+
+I would like to report a security vulnerability on www.sucuri.net. The domain appears to be vulnerable for CRLF or HTTP header injection. This allows attackers to construct a URL that injects HTTP headers in the server's response. One of the things an attacker can do is injecting a "Set-Cookie" header. The following URL/request will inject a "Set-Cookie" HTTP header:
+
+http://www.sucuri.net/%0D%0ASet-Cookie:mycookie=myvalue
+
+This will result in the following response:
+
+Connection: keep-alive
+Content-Length: 178
+Content-Type: text/html
+Date: Mon, 09 May 2016 14:47:29 GMT
+Location: https://www.sucuri.net/
+Server: Sucuri/Cloudproxy
+Set-Cookie: mycookie=myvalue
+X-Frame-Options: SAMEORIGIN
+X-Sucuri-ID: 15016
+x-content-type-options: nosniff
+x-xss-protection: 1; mode=block
+
+As you can see a new header set-cookie: mycookie=myvalue was injected in the response. This might lead to CSRF-bypass, session-fixation or even XSS via cookie values. 
+
+What (probably) limits the severity of this issue is the fact that https://www.sucuri.net/ uses HTST (HTTP Strict Transport Security). This will make sure that the browser will automatically redirect to https (if visited before). If the browser supports HTST the above scenario will only work once (when not visited yet). For IE < 11 the scenario will always work as it does not support HTST.
+

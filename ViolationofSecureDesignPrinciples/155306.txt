@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/155306
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/isrsahilmk
+ReportedTo:arxius(arxius)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.06.2017 13:50:11
+
+Summary:
+For some reason he requested to disclose a duplicate report that's n/a anyway, so why not.

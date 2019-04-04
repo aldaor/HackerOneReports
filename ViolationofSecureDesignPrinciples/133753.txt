@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/133753
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/a5tronaut
+ReportedTo:Moneybird(moneybird)
+BountyAmount:25.0
+Severity:
+State:Closed
+DateOfDisclosure:26.08.2016 16:11:39
+
+Summary:
+Reporter found a content spoofing vulnerability in an OAuth related endpoint that reflected custom text present from the URL in the body. We have taken measurements to prevent this problem in the future.

@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/163676
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/punkit07
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:20.0
+Severity:
+State:Closed
+DateOfDisclosure:31.08.2016 6:12:39
+
+Summary:
+
+-Content Security Policy Header used to allow only source code to execute in the application from the domain mentioned in its list. By using this we can restrict code to execute which is written in application either by developer or by Hacker
+
+-Since application contains no such header i am going to  inject an image from third party domain which is not of application domain
+
+<img src="https://s-media-cache-ak0.pinimg.com/564x/ab/2d/bd/ab2dbda0c6c11455527c0dd34d5f5bf6.jpg" height="500" width="500"/>
+
+third party domain
+https://s-media-cache-ak0.pinimg.com/564x/ab/2d/bd/ab2dbda0c6c11455527c0dd34d5f5bf6.jpg
+
+Refer-https://www.owasp.org/index.php/Content_Security_Policy_Cheat_Sheet

@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/155685
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/ak1t4
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.08.2016 17:21:12
+
+Summary:
+
+INTRO:
+
+i want to report a text injection and a missconfiguration of the 404 page which can be used in phishing at faspex.uber.com
+
+EXPLOITABILITY:
+
+PoC link : https://faspex.uber.com/faspex.uber.com/%2f../It%20has%20been%20changed%20by%20a%20new%20one%20http://www.evil.com%20so%20go%20to%20the%20new%20one%20since%20this%20one
+
+IMPACT:
+
+The issue can be used for an attacker to spoof content and phishing purposes
+
+FIX:
+
+Use a Predefined 404 page  will fix the issue,
+
+Please let me know if any more info needed,
+
+Best Regards,
+
+@ak1t4

@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/160498
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/cablej
+ReportedTo:Coinbase(coinbase)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:22.08.2016 19:56:32
+
+Summary:
+Although Coinbase cleared window.opener on external redirects, it was not effective on WebKit-based browsers (Safari) since Safari's cross-origin security prevents the modification of window.opener of a child window if it lies on a different origin, yet still allows the child window to access window.opener.location.
+
+
+The solution, proposed by the reporter, was to add rel="noreferrer noopener" to these external links.
+

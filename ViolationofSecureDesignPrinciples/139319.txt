@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/139319
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/exploitraja
+ReportedTo:ok.ru(ok)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.07.2016 10:25:07
+
+Summary:
+
+Steps to reproduce:
+1.Load the URL: http://ok.ru/ in any browser.
+2.Now goto Browser settings and disable the Cookies.
+3.Try to login using valid credentials .
+4.Observed that user is redirected to login page again without any proper error message .
+
+Technical Impact: This leads user to feel discomfort as user is not aware of the issue which is stopping him from login into his account ,which leads to loss of reputation.
+
+
+Suggested Remediation:Error message like “ For smooth functioning of this site make 
+sure that cookies are enabled on your browser.” should be displayed to make aware the user about the vulnerability.

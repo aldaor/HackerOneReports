@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/147744
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/sudoshekhar
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.07.2016 9:11:10
+
+Summary:
+Prerequisite for scenario is user's browser compromise. This situation is out of application's security profile. There is no reliable way to eliminate all possible security consequences under this condition.
+
+First mitigation supposed by reporter does not eliminate the problem in either way.
+
+Second "mitigation" is a cryptography nonsense:  MD5(password) is both stored by server and is used as a first transformation in (what actually seems to be) challenge-response negotiation. It makes MD5(password) an equivalent of stored cleartext password, because it's both stored and may be used in authentication without the need to bruteforces cleartext password itself. It violates BCPs and recommendations for secure password storing.
+
+The real mitigation here, used by Mail.Ru in most projects is to submit username/password via AJAX request.  It's not applicable to https://m.my.mail.ru/, because this interface is for old mobile browsers and does not rely on browser's JavaScript support.
+
+What's worse, reporters attempts cheating by pointing to OWASP India member's presentation with a nonsense noted above as an official OWASP recommendations.
+About the vulnerability:
+
+The back, forward and refresh buttons of the browser can be used to steal the password of a previous user. In this article we examine the vulnerability and look at ways to solve them.A web browser has the functionality to store the recent pages browsed by the user in its history. The back and forward buttons on the browser make use of this history to display the pages that the user visited recently. The browser also keeps track of the variables that were sent as part of the request to the server for each page. The refresh feature of the browser automates posting of the variables to the server thereby greatly improving the user experience while browsing.These features enhance the user experience but at the same time they expose a high risk vulnerability. This happens due to the application being insecurely designed. Attackers exploit these functionalities of the browser to obtain access to user credentials. Let’s see how this works and the solutions to overcome this problem.
+
+Steps to reproduce: (Attached is the live POC)
+
+ 1.Go to https://m.my.mail.ru/cgi-bin/my/registration
+2. Complete the registration process.
+3. You will be logged in to the application
+4. Logout from the application
+At this point of time the victim will leave the system as he is insure he has already logged out.
+
+Now the attacker comes and do the following activities. 
+5. Pressed the back button twice, 
+6. Now it asks me to resubmit the details.
+7.Credentials got captured in Burpsuite.
+
+How to Fix:
+
+1. use an intermediate page between the login page and the first page displayed after authentication (myhome.asp in this case). This intermediate page should be used to redirect the user via an “HTTP Redirect command” to myhome.asp after successful login. In such a scenario, the login request is redirected immediately by the intermediate page. 
+2, use a salted hash technique for authentication. In this method, the password is hashed before sending it to the server. This hash is made random using a salt (a random value) provided by the server. This salt is added to the hash generated from the password and then hashed again. This salted hash is sent to the server for authentication. This way, even if the attacker uses the refresh button to capture the request, only the salted hash value will be visible. It will not allow the attacker to login by refreshing as the salt would change at the next login.

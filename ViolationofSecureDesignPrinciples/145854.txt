@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/145854
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/testest
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.06.2016 12:53:04
+
+Summary:
+
+Hi there,
+
+PoC URL: https://updates.nextcloud.org/.htacess%20Content%20Injection%20test
+
+If you need more information, let me know.
+
+Thanks!

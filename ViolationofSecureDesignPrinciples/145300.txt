@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/145300
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/lucky1015k
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.06.2016 17:28:24
+
+Summary:
+
+When i click on forgot password i will get a reset link to my account
+when i login with the same email and password it will login to my account
+now if i open the reset link in another web browser and change the password and login to my account the session in the first browser is not expired i am able to use my account in both browsers 

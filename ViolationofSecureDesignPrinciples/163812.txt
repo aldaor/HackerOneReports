@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/163812
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/yodha
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.07.2017 9:58:26
+
+Summary:
+
+Description: Its observed that that insecure transportation security protocol (TLS 1.0) is supported by your web server. TLS 1.0 has several flaws. An attacker can cause connection failures and they can trigger the use of TLS 1.0 to exploit vulnerabilities like BEAST.
+Websites using TLS 1.0 will be considered non-compliant by PCI after 30 June 2018.
+
+Impact: Attackers can perform man-in-the-middle attacks and observe the encryption traffic between your website and its visitors.
+
+Recommended Fix: Configure your web server to disallow using weak ciphers. You need to restart the web server to enable changes.
+
+By fingerprinting server, found that its Nginx Web server. So below is solution for Nginx
+For Nginx, locate any use of the directive ssl_protocols in the nginx.conf file and remove TLSv1.
+ssl_protocols TLSv1.1 TLSv1.2;

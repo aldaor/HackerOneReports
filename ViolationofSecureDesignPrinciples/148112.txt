@@ -1,0 +1,42 @@
+ReportLink:https://hackerone.com/reports/148112
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/mefkan
+ReportedTo:Trello(trello)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.08.2016 19:09:50
+
+Summary:
+
+Hi,
+
+I want to talk about your ESSB plugin.When I was doing a research about it I saw that link
+
+"  http://blog.trello.com/wp-content/plugins/easy-social-share-buttons3/public/essb-mail.php  "
+
+When you navigate that link it says {"message":"Error sending message!"}
+
+But when you put the right parameters to link like this >>
+
+http://blog.trello.com/wp-content/plugins/easy-social-share-buttons3/public/essb-mail.php?from=&to=&sub=&message=
+
+An attacker can send emails to anybody with using your mail accounts.Let's see
+
+I'm going to use a mail from fake mail system >>>   Eall1935@rhyta.com 
+This is trello's support mail address >>> support@trello.com
+
+For subject I would use "Password Change" ,that would be a good example for social engineering 
+For message let's say : Your password is too old.Please send your current password to xxx@mail.com
+
+Finally this is our link : 
+
+http://blog.trello.com/wp-content/plugins/easy-social-share-buttons3/public/essb-mail.php?from=support@trello.com&to=Eall1935@rhyta.com&sub=Password%20Change&message=Your%20password%20is%20too%20old.Please%20send%20your%20current%20password%20to%20xxx@mail.com
+
+When I click that link it will send me that mail from support@trello.com.For proof I am going to add some screenshots please check them out.
+
+So,an attacker can use it for taking member's password,private informations,anything... with using ESSB plugin's mail system and social engineering.
+
+How To Fix:
+
+I think you should update your ESSB plugin.

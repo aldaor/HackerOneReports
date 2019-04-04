@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/163885
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/eterm
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:20.0
+Severity:
+State:Closed
+DateOfDisclosure:05.10.2016 20:18:59
+
+Summary:
+A security researcher found that multiple gTLD permutations of our legalrobot domain names (like legalrobot.co.uk) were allowing access to sensitive ports (22) and disclosing vulnerable server versions. While these other domains are, for the time being, intended to simply redirect to our main legalrobot.com domain, many of them also had extra services and features installed by our super helpful registrar. We were not aware of these services and did not intend to provide, for example, webmail on legalrobot.co.uk. In addition, many of these extra features were not secured properly - in the case of a mail server on legalrobot.co.uk, there were no DMARC or SPF records. Since then, we have removed extraneous services and centralized our domains under CloudFlare DNS, rather than relying on our registrar's DNS.
+
+We are gradually adding DNSSEC and other security features to these other domains. As we start using these domains with internationalized versions of Legal Robot, we will add them to the scope for our HackerOne program - for now, they remain out of scope (mostly). In this case, we decided the report was very useful and worth accepting. Because the researcher helped us uncover some potentially serious issues, we also awarded a bounty. Even seemingly out of scope issues can still be worthwhile sometimes.

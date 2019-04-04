@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/145850
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/ahsan
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.06.2016 12:28:13
+
+Summary:
+
+Issue:
+======
+Hey, I've found content spoofing also known as "Text Injection" in your sub-domain docs.nextcloud.org
+
+URL:
+-------
+Here is the malicious URL:
+https://docs.nextcloud.org/.htacessCONTENT%20SPOOFING%20BY%20AHSAN
+
+Fix:
+Use custom 403 error page which doesn't contain user's text!
+
+I hope you'll fix it soon!
+
+Thanks,
+Ahsan Tahir

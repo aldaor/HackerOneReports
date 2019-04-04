@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/158002
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/cablej
+ReportedTo:Instacart(instacart)
+BountyAmount:75.0
+Severity:
+State:Closed
+DateOfDisclosure:12.09.2016 19:59:15
+
+Summary:
+
+Hi,
+
+When adding links to lists, there is no rel=noreferrer tag present, allowing a linked page to change the url of the currently open tab. This can open the doors for phishing attacks, as users trust the tab that contained instacart.
+
+As an example, see my list at https://inst.cr/t/1QmLPG. Clicking the link, which opens in a new tab, will change the url of the currently open tab to http://example.com.
+
+Thank you for your time, and please let me know if you have any questions.

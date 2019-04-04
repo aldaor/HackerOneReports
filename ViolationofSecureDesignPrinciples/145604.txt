@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/145604
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/dremos
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:15.01.2017 22:07:23
+
+Summary:
+
+Hi
+
+We can bypass Avatar Upload image verification and extension  uploading a php file or any other extension binding a valide  jpeg image  , there is no risk for the moment because the avatar is renamed to avatar_upload on the remote server , but it ll be nice to secure this part of code .
+
+Example  
+---------------
+here is the same file with two different extension : 
+
+http://91.121.108.101/image1.jpg
+http://91.121.108.101/image1.php      <== execute php code inside the image 
+
+1) download image1.jpg
+
+2) as you can see  if you open the file image1.jpg  file on notepad it hide php code ( phpinfo(); function in this case .
+
+3) rename image1.jpg to image1.php  , and try to upload it on the avatar upload form , it pass the verification  .
+
+This verification is not enought in this  file :  /core/controller/avatarcontroller.php  
+
+
+	if ($image->valid()) {
+				$mimeType = $image->mimeType();
+				if ($mimeType !== 'image/jpeg' && $mimeType !== 'image/png') {
+					return new DataResponse(
+						['data' => ['message' => $this->l->t('Unknown filetype')]],
+						Http::STATUS_OK,
+						$headers
+					);
+				}

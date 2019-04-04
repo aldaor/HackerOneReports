@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/155726
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/rajauzairabdullah
+ReportedTo:Coinbase(coinbase)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.08.2016 20:35:27
+
+Summary:
+
+### Multiple Accounts can be created using the similar X-csrf token !
+I have tested and created around 45+ accounts in this way !
+Take a look ! in attachment !
+i have created account range from test1-test27 3 times !
+File is also attached for tested creating accounts !

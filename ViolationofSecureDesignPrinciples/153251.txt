@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/153251
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/ahsan
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.12.2016 15:05:23
+
+Summary:
+@ahsantahir reported a low severity content spoofing vulnerability in an administrative component. We've mitigated the issue as a hardening in our upcoming Nextcloud 11 release and would like to thank @ahsantahir for reporting this issue to us.
+
+On request of the reporter this issue is only disclosed with limited visibility.

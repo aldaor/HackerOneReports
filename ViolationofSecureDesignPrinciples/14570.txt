@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/14570
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/shahmeer-amir
+ReportedTo:Mavenlink(mavenlink)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:22.07.2014 19:19:06
+
+Summary:
+
+I have found out that an attacker can perform brute force attack on your login panel because there is no rate limitation to prevent this attack.

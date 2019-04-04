@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/137756
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/nvolcz
+ReportedTo:Square Open Source(square-open-source)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:31.08.2016 4:05:23
+
+Summary:
+
+If an attacker can control the Host header this can be used to poison the cache. This becomes extra dangerous if the library were to be used to build a caching proxy.

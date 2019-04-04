@@ -1,0 +1,52 @@
+ReportLink:https://hackerone.com/reports/144803
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/mefkan
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.07.2016 22:59:04
+
+Summary:
+
+Hi.
+
+I'm going to talk about brute-force for finding emails in the sign-up page.
+
+Reproduction Steps 
+
+
+1-Send a request like this
+
+POST https://get.uber.com/signup_submit/ HTTP/1.1
+
+email=efkan162%40gmail.com&password=11111111xxxx&first_name=Trial&last_name=Trial&mobile_country=TR&mobile=533+633+4000&language=tr_TR&card_number=%
+
+NOTE:The request body goes like this I deleted de other parts because it's too long but I have to say other parts like card_number or card_bin have to be valid for brute-force.
+
+2-When you did this request response header will be like this "HTTP/1.1 406 NOT ACCEPTABLE" and this is the text view of the response.
+
+{"username":"Kullan\u0131c\u0131 ad\u0131 zaten kaydedilmi\u015f","reason":"username_already_registered","email":"Bu e-posta daha \u00f6nce kaydedilmi\u015f. Mevcut hesab\u0131n\u0131zda oturum a\u00e7\u0131n veya farkl\u0131 bir e-posta ile kay\u0131t olun."}
+
+
+3-efkan162@gmail.com THİS EMAİL İS REGİSTERED FOR MY ANOTHER ACCOUNT.This is why response says"username_already_registered" so we can understand an account with efkan162@gmail.com registered to uber.
+
+4-When you send a request with a not-using email  you'll see the respone header "HTTP/1.1 200 OK" that means this e-mail can usable and nobody has an registered account with this e-mail.
+
+5-We can brute force with post method because there is no errors or request time protection like "Too Many Requests".
+
+
+Finally,an attacker or a  hacker could find the registered e-mails to Uber service with brute-force method.Like using mail lists word lists or creating random mails with some words and some number.
+
+How To Fix:
+
+You need to add request time protection to there "POST https://get.uber.com/signup_submit/"
+
+
+About the attachments:
+
+I sent more than 100 requests in 3 seconds as you can see in the requests.png.There was no error.
+And I used an non-registered mail to Uber in the 200.png
+In 406.png  I used my other account's email and it said "406 Not Acceptable"
+
+I hope you'll fix it as soon as possible you can for security of your members

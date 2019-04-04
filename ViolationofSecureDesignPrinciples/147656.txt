@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/147656
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/japz
+ReportedTo:Moneybird(moneybird)
+BountyAmount:25.0
+Severity:
+State:Closed
+DateOfDisclosure:26.08.2016 16:12:52
+
+Summary:
+Reporter found a minor CSRF vulnerability in the logout functionality. We have taken measurements to prevent this problem in the future.

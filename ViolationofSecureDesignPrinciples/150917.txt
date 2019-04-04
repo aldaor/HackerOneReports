@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/150917
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/thezawad
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:13.07.2016 3:00:25
+
+Summary:
+
+Hi,
+Zawad here.
+
+**Description**
+I recently visited gratipay.com and logged in.
+I found that invalid characters ( *eg. null bytes* ) were accepted in email field, which is obviously not an expected behavior.
+
+**Steps to Reproduce**
+1. Go to https://gratipay.com/~username/emails/
+2. Enter `yourname@domain.com\0` or `you@abc.com%00` or `you@xyz.com$`
+3. Now ***Inspect Element*** the field and change field type to **`text`** from **`email`**
+4. Click on **Add email address**.
+You'll see an error message ***Looks like you've found a bug! Sorry for the inconvenience, we'll get it fixed ASAP!***
+Now reload the page and you'll see the email listed.
+
+It means server side validation of email is not okay.
+Validation should be improved.
+
+For your reference, #3227 and #3991 are same kind of bug which were resolved.
+
+----------------
+Zawad

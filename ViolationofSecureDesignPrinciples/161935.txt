@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/161935
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/karthic
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.07.2017 10:03:36
+
+Summary:
+
+Desciption:
+Username  in *.json   is not restricted.
+
+disallowed *.json is allowed in username  restriction
+
+URL   :  https://gratipay.com/robots.txt
+
+User-agent: *
+Disallow: /*.json
+Disallow: /on/*
+
+POC URL:
+https://gratipay.com/~karthic.json/  and you will end up at my profile page.

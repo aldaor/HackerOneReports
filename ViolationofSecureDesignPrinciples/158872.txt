@@ -1,0 +1,43 @@
+ReportLink:https://hackerone.com/reports/158872
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/exception
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.09.2016 12:33:06
+
+Summary:
+
+Hi Guys
+
+i found a vulnerable endpoint the can deletes any logged in user 
+
+the vulnerable url is 
+olx.com/myaccount/delete/
+
+with only one parameter called removehash
+
+___________
+
+POST /account/register/ HTTP/1.1
+Host: olx.com.eg
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:47.0) Gecko/20100101 Firefox/47.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.
+
+removehash=f4023c8bjgV6Mfulnz00PEJ00ny%2BSo6ga%2BnU7MYC
+___________
+if you deleted it , request will pass with no errors 
+
+so if a user visits a page containing an HTML FOrm with the above request , user account will be deleted
+
+
+see this video 
+https://youtu.be/VrRFmOI_ep0
+
+
+
+FIX
+-implement a csrf token
+- check referer header before processing any action 
+-validate removehash parameter

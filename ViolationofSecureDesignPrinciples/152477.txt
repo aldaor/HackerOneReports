@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/152477
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/sh4dow
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:20.07.2016 13:46:30
+
+Summary:
+
+If I change my username to "**test**" then as in normal case it will send a GET request to **/test/settings** but if I change my username to "**..**" (**double dot** within inverted commas)  then it will send GET request to /settings because /../settings will change to /settings and hence final GET request will be to /settings which will show a 404 page.
+ I have attached a video as POC.
+
+Regards!
