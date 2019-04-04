@@ -1,0 +1,44 @@
+ReportLink:https://hackerone.com/reports/229980
+WeaknessName:XML Entity Expansion
+Reporter:https://hackerone.com/mohammad_obaid
+ReportedTo:Trello(trello)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:19.05.2017 20:06:02
+
+Summary:
+
+Hope you guys are doing great. I  want to report xml entity expansion bug while uploading svg file .
+When adding a card in boards it also allows to upload attachments which can include svg files. Users or admin can then download those attachment but the problem is when svg file is uploaded, website tries to render that file and if that file contain xml entities then it will try to parse each entity which can lead to xml entity expansion bug which results in client browser's hung during that parsing or high memory consumption or  if payloads like these are served in svg files. It can also lead to client side denial of service attacks if complex xml entities are used. This work on chrome browser recommended by https://trello.com/platforms
+```
+<?xml version="1.0"?>
+<!DOCTYPE lolz [
+<!ENTITY lol "lol">
+<!ENTITY lol2 "&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;">
+<!ENTITY lol3 "&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;">
+
+[30000 of entities]
+]>
+<lolz>&lol3;</lolz>
+```
+or 
+```
+<?xml version="1.0"?>
+<!DOCTYPE foobar [<!ENTITY x "AAAAA… [100KB of them] … AAAA">]>
+<root>
+<hi>&x;&x;….[30000 of them] … &x;&x;</hi>
+</root>
+
+```
+##POC:
+1- First create board on https://trello.com/
+2- Then create a list on it.
+3- Next you need to create a card by clicking on "ADD A CARD"
+4-When you click on that card you will be presented with a pop up which gives an option to upload attachments.
+5- Upload svg file which I uploaded here.
+6- When that file is uploaded click on that , it will try to render that image and chrome will hang . I have tested this  with only chrome browser as it is one of the recommended browser by https://trello.com/platforms
+##IMPACT:
+This bug will have most impact when board is public and allow any user to view that board including cards and attachment. When any user tries to view those malicious svg file uploaded to any public board it will cause its browser to crash because browsers like chrome will try to parse each entity and will run out of memory .
+##FIX:
+SVG files should be rendered as a plain text to prevent such attacks.
