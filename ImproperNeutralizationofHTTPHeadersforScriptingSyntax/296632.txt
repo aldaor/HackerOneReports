@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/296632
+WeaknessName:Improper Neutralization of HTTP Headers for Scripting Syntax
+Reporter:https://hackerone.com/mur90210
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:28.08.2018 8:07:11
+
+Summary:
+
+## Issue ##
+For the docker image (git clone https://github.com/WeblateOrg/docker.git weblate-docker), the IP address in the audit log (in the user's profile, and in the administration console) can be forged using the `X-Forwarded-For` header during the login process.
+
+This does not affect http://demo.weblate.org/.
+
+For http://demo.weblate.org/, `User-Agent: '"<b>test` was accepted. This will not lead to XSS issues, but could potentially be an issue if the input is used elsewhere, such as a database query.
+
+## Impact
+
+## Consequence ##
+When using the docker image, it may be possible to spoof audit log entries. If an account were compromised, it may be more difficult to determine this from the audit log entries.
