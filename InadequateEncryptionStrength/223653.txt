@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/223653
+WeaknessName:Inadequate Encryption Strength
+Reporter:https://hackerone.com/d0rkerdevil
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:17.05.2017 14:08:52
+
+Summary:
+
+Cryptographic protocols like TLS, SSH, IPsec, and OpenVPN commonly use block cipher algorithms, such as AES, Triple-DES, and Blowfish, to encrypt data between clients and servers. To use such algorithms, the data is broken into fixed-length chunks, called blocks, and each block is encrypted separately according to a mode of operation. Older block ciphers, such as Triple-DES and Blowfish use a block size of 64 bits, whereas AES uses a block size of 128 bits.
+A attacker can can decrypt victim data using Sweet32 birthday attck vulnerability over wifi or (local network) 
+PoC:
+1. open nmap and type: nmap --script ssl-enum-ciphers demo.weblate.org
+2.and wait until it finishes the scan
+3. here are the results 
+64-bit block cipher 3DES vulnerable to SWEET32 attack
+Key exchange (secp192r1) of lower strength than certificate key
+
+see the attachment please....
