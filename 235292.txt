@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/235292
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/sh3r1
+ReportedTo:Mixmax(mixmax)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:06.06.2017 3:30:26
+
+Summary:
+Thanks @sh3r1 !

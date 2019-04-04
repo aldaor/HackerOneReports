@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/282604
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/alexbirsan
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:1250.0
+Severity:high
+State:Closed
+DateOfDisclosure:10.11.2017 15:12:02
+
+Summary:
+The researcher was able to demonstrate a XSS vulnerability by using their Steam nickname as the payload vector. This was due to insufficient filtering on Linked Account name fields. We pushed out an update that replaces suspicious Linked Account names with a generic string in order to prevent future such attacks.

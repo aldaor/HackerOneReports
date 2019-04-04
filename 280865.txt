@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/280865
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/mksecurity
+ReportedTo:Infogram(infogram)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:12.12.2017 16:22:20
+
+Summary:
+
+Hi Team,
+
+I've found non-critical XSS on map editor. It is not for bounty just for code quality.
+
+This is my url:
+
+https://infogram.com/app/#edit/c024c717-31c2-4c31-8491-1cc9534e9adb
+
+When i added map on form then edit Country name and replace with "<script>alert(1);</script>" it is executed. 
+
+Attached screenshots. 

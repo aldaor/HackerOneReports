@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/283565
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/jarmouz
+ReportedTo:Infogram(infogram)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:01.11.2017 10:02:27
+
+Summary:
+
+Hello,
+
+There is a XSS on Report templates.
+
+Free templates : Report Classic 
+
+When we modify the values of table we can put XSS Payload.
+
+Payload used : 
+
+"><img src=x onerror=prompt(0);>
+"/><svg/onload=alert(0);>

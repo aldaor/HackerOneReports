@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/294505
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/protector47
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:19.12.2017 9:57:02
+
+Summary:
+
+Hi,
+I found HTML Injection Vulnerability while admin contact with customer.
+In this vulnerability admin is attacker whereas customer is victim.
+
+#Steps to Reproduce:
+
+1. Go to **Customers** and Click on **Customer Email Address**.
+2. New Pop-Up window will become open, In **Customer Message** field type this html code
+
+><h1>HTML INJECTION</h1>
+
+3 . Click on **Review Email** Button.
+
+HTML will become execute.
+
+Checkout the POC Video.
+  
+Thanks,
+
+## Impact
+
+Admin of store can redirect any user to any malicious website, and can perform all possible attacks through this vulnerability.

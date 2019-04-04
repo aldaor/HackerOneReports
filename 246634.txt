@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/246634
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/maxarr
+ReportedTo:Mail.ru(mailru)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:27.01.2018 14:59:22
+
+Summary:
+User-assisted XSS in message reading Unsubscribe feature via crafted List-Unsubscribe header in e.mail.ru Web mail interface.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/283539
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/executor
+ReportedTo:VK.com(vkcom)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:28.11.2017 10:51:43
+
+Summary:
+XSS в "Форме сбора заявок". 

@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/263876
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/hackerb0y
+ReportedTo:Shopify(shopify)
+BountyAmount:1000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:08.09.2017 16:40:57
+
+Summary:
+The researcher found that menu titles were being rendered without proper escaping in the admin area. Unlike many other XSS reports we typically receive, this one has its payload excluded in a way that is not excluded in our [program page's exclusion list](https://hackerone.com/shopify).
+Hello Team,
+
+I found a stored xss issue.
+
+PoC (unlisted): https://youtu.be/MjnKyFgqTTo
+
+watch my PoC than you'll understood everything.
+
+Payloads: // # "><svg/onload=prompt(1)>
+
+Looks Like this issue available at " Title in Add menu " and also available at "Title" in " Menu Item "
+
+Mirror: https://azizvai.myshopify.com/
+
+Thanks

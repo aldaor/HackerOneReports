@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/267177
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/coldd
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:03.11.2017 8:12:19
+
+Summary:
+
+Hey there, while testing your program I found a stored XSS vulnerability which can placed by owners or **other staff members who have ability to manage members** and it will triggered by visiting invited team member page (e.g. https://partners.shopify.com/642416/invitations/15406).
+
+### Reproduction Steps
+
+1. login to partners.shopify.com.
+2. navigate to *Team* (e.g. https://partners.shopify.com/642416/memberships).
+3. click on *Invite owner*.
+4. use `<svg/onload=alert(document.cookie)>abcdef@test.com` as email address.
+5. click on *Send invite*.
+6. you'll see a warning: *There was a problem connecting to Shopify*.
+7. navigate to *Team* section again (e.g. https://partners.shopify.com/642416/memberships).
+8. open invited user page (e.g. https://partners.shopify.com/642416/invitations/15411).
+
+note: it does not matter who send the invitation, attack can be triggered by other team members (including owners) by opening invitation page.
+
+also attached two file to show you that this vulnerability can placed by both owners and staff members with *manage members* access.

@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/223906
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/paulos_
+ReportedTo:Dropbox(dropbox)
+BountyAmount:343.0
+Severity:
+State:Closed
+DateOfDisclosure:29.10.2018 12:22:04
+
+Summary:
+
+Hello,
+
+Today I took a look at Dropbox Paper and noticed there is an option to export/download the project as a Markdown or word (docx) document. I noticed it doesn't filter any kind of Markdown escaping, meaning when parsed after download will let us execute client side code. (equivallent to arbritary file read or code execution if executed from file:/// or local scheme)
+
+I think the markdown download should sanitize against these payloads that can generate these security holes. sample paylaod I used was:
+
+`[Here is the demo link we provided you](javascript:doevil(readfileandsenddata))`
+
+I attached a sample .md file I just downloaded from dropbox.
+
+Thanks,
+Paulos
