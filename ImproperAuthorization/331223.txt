@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/331223
+WeaknessName:Improper Authorization
+Reporter:https://hackerone.com/newbie_101
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:12.04.2018 8:20:21
+
+Summary:
+@newbie_101 noticed that order notifications associated with a staff member's account continued to be sent even after that staff account was deactivated. This could result in unintentional disclosure of order details. We addressed the issue by adding logic to automatically disable notifications at the time an account is deactivated.
+Hi,
+
+Steps to reproduce :
+-
+
+- Have a staff account with settings permission
+- The staff account can go to notifications & add himself so as to get new order notifications
+- Now,deactivate the staff account via the admin.
+- Create a new order,you shall see that the staff still receives the order notification via email.
+- This happens because the account still exists,but if staff deleted , then there is no account,hence no email) so no notification.
+
+## Impact
+
+- Info disclosure about a customer of a store the staff account cant have access to.

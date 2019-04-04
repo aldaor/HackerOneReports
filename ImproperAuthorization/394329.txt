@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/394329
+WeaknessName:Improper Authorization
+Reporter:https://hackerone.com/jolteon
+ReportedTo:Chaturbate(chaturbate)
+BountyAmount:8000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:19.09.2018 22:33:17
+
+Summary:
+The hacker found that when subscribing to a fanclub the parameters could be manipulated to purchase a fanclub subscription for another user. This will set the email of the target account if they had no email on file. This could then be used to reset the password for the target user.
+
+The purchasing logic was fixed to not allow modifying of these parameters. The attack could only target accounts with no email on file, and required a purchase.

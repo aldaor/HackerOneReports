@@ -1,0 +1,46 @@
+ReportLink:https://hackerone.com/reports/412988
+WeaknessName:Improper Authorization
+Reporter:https://hackerone.com/haxta4ok00
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:27.11.2018 17:31:27
+
+Summary:
+
+Hi team, @jobert
+
+**Summary:**
+After creating the publish report, we do not have a field to send the requested meditation from HackerOne Support
+
+**Description:**
+
+### Steps To Reproduce
+
+1. Create publish report for any program
+████████
+
+2. Use query
+`https://hackerone.com/reports/`***number_publish_report***`/hacker_help`
+
+My
+`https://hackerone.com/reports/███/hacker_help`
+POST:
+`message=123&mediation_type=unresponsive`
+
+
+3. Next check report
+
+███
+
+
+I understand the degree of low, but this is a disagreement between the web and the end point.
+
+Sorry i bad speak english
+I hope you understand me
+Thank you,haxta4ok00
+
+## Impact
+
+Creating a query `requested meditation from HackerOne Support`  without being able to do so
