@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/116927
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/syedrafi
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.06.2016 1:58:31
+
+Summary:
+
+Vulnerability: spf record 
+
+Vulnerability domine:https://github.com/paragonie
+
+No valid spf record on(https://github.com/paragonie)

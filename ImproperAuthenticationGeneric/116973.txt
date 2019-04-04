@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/116973
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/bugdiscloseguys
+ReportedTo:Gratipay(gratipay)
+BountyAmount:10.0
+Severity:medium
+State:Closed
+DateOfDisclosure:18.02.2016 11:03:24
+
+Summary:
+
+SPF record lookup and validation for: gratipay.com
+SPF records are published in DNS as TXT records.
+
+The TXT records found for your domain are:
+ALIAS for nara-9076.herokussl.com
+
+Checking to see if there is a valid SPF record.
+
+No valid SPF record found of either type TXT or type SPF.
+
+Check here-->http://www.kitterman.com/spf/validate.html

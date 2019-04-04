@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/127085
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/shmoo
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.06.2016 19:42:16
+
+Summary:
+This report is a duplicate of #126260 and allows for someone who is not an activated Driver/Partner to log into the Uber Partner app. As stated in #126260 this doesn't allow you to `Go Online` but does allow you to see how the app functions as if you were a driver/partner.

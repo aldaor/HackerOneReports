@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/116302
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/sl1m
+ReportedTo:WePay(wepay)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:20.04.2016 22:29:50
+
+Summary:
+
+Overview
+--------------
+Value of cookie wepay-device-uid, which allows login without 2-step not linked to used, so an attacker can turn on 2-step verification on his own account, get this cookie and login to victim's account only with password without second step.
+
+Steps to reproduce
+----------------------------
+1. Attacker logins and set up 2-step verification with checked trust to this PC checkbox (wepay-device-uid=10122022ed62291e641e9f73c99bc56ec27ca7535bc567fdd26b2580bc5d6eda-wLLI5RCZcWMTW830i2eZunr6dHlg%2FnVGbML8ZaaZDO37KeosB9Oyxw%3D%3D; cookie like this set up)
+2. Attacker logout
+3. Attacker logins to victim's account with 2-step verification without second step only with password.
+
+Possible mitigation
+----------------------------
+Check if wepay-device-uid was set up to user who try to login without second step. It's also recommended to regenerate value after each successful login.

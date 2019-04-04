@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/135989
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/yaworsk
+ReportedTo:Moneybird(moneybird)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 9:02:43
+
+Summary:
+By changing the POST parameters of an OAuth authentication call, it was possible to get full permissions to an administration for which the user has limited access. With the fix in place, access will be denied when the administration id is changed.

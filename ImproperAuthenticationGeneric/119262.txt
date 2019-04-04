@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/119262
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/vulnh0lic
+ReportedTo:Udemy(udemy)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:13.04.2016 20:07:26
+
+Summary:
+Authentication Data are not Clearing

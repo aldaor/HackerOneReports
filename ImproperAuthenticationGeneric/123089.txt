@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/123089
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/daniyal_nasir
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.08.2016 23:56:19
+
+Summary:
+
+Hello,
+Vulnerable Link: https://rpm.newrelic.com/accounts/XXXXXX/setup
+##POC:
+Login to the Account.
+Visit the Above Link.
+Now, Log Out!
+Visit that Link Again.
+Here you go!!! 
+"Display Name" is leaking in front, and the "first name" and "last name" is leaking on the right side bar.
+
+Thanks!
+regards,
+Daniyal Nasir

@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/125634
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/blueberryinfosec
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.05.2016 22:35:46
+
+Summary:
+
+Issue : 
+
+Session retention is present at partner.uber.com which reveals all senstive data
+
+
+Steps to reproduce :
+
+1)Login to partner.uber.com under any driver profile
+2)navigate to summary page or any page e.g payment page
+3)logout the application
+4)press back button of the application
+
+application reveals the information
+
+
+Impact & real time scenario :
+
+How it affects drivers :
+
+Imagine a driver was logging in at uber in a public system and logsout the application,now another user whom wish to know about the driver,clicks on back button of the browser to reveal the info
+
+Technical info :
+
+session was not cleared which makes the application to reveal all sensitive info

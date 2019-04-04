@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/119454
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/sasi2103
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.05.2016 16:24:03
+
+Summary:
+
+Hello security team,
+
+It is possible to find password(s) of other users by enumerate the login process.
+The scenario is quiet simple:
+1) Go to https://sandbox.veris.in/portal/login/
+2) Fill in 'Email ID' and 'Password' and click 'Log In'
+3) Capture the request via burp suite and send it to intruder.
+4) Set the password field to be enumerate.
+5) Set wordlist and run the request(s).
+
+Analyze the results:
+1) For 'Good password' you'll get Status code of 200 and code length of 573.
+2) For 'Bad password' you'll get Status code of 400 and code length of 507.
+
+Solutions:
+1) Set status code and code length to be the same for all requests/response.
+2) Set captua after X attempts.
+3) Block IP/user
+4) Send reset password email.
+
+I run around ~5K words.
+
+Best regards,
+Sasi
+  

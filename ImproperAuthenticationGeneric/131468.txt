@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/131468
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/dpgribkov
+ReportedTo:Udemy(udemy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.01.2017 1:34:01
+
+Summary:
+
+Hey,
+
+I found an open S3 Amazon bucket udemy-maven. While I can’t confirm if you own it or not, it appears that it is publicly writable using the aws cli.
+
+When I write to udemy-maven, I get:
+move: ./test.txt to s3://udemy-maven/test.txt
+
+And also when I remove file, I get:
+delete: s3://udemy-maven/test.txt
+
+Assuming you own it, the security issue is that someone could delete files or write something malicious into the bucket and someone on your team unknowingly opening it.

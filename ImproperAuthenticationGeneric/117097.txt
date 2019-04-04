@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/117097
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/bugdiscloseguys
+ReportedTo:Gratipay(gratipay)
+BountyAmount:10.0
+Severity:medium
+State:Closed
+DateOfDisclosure:19.03.2016 19:16:58
+
+Summary:
+
+Description :-
+The SPF record of gratipay.com include Mandrillapp which you are not using right now, i'm able to add gratipay.com in my account, although a further verification of domain is required but you should know that Mandrillapp allow to send email from a domain if its SPF records point Mandrill server.
+I have attached a screenshot to proof my concept
+1 SPF record found for the domain gratipay.com :
+""  v=spf1 include:email.freshdesk.com include:spf.mandrillapp.com include:_spf.google.com -all  "
+This is useful in phishing, and this type of vulnerability is news worthy (http://bits.blogs.nytimes.com/2015/04/09/sendgrid-email-breach-was-used-to-attack-coinbase-a-bitcoin-exchange/)
+Vulnerability Impact Scenario :-
+Using my own mandrill account I can send email which appears to originate from @gratipay.com
+Patch :-
+The patch is pretty simple. Complete your mandrill registration process. This will lock out other mandrill users from sending email that originates from *@gratipay.com.
+Let me know if you have any other questions.
+Check Screenshot.
+Thanks.

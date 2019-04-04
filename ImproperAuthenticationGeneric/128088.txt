@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/128088
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/yaworsk
+ReportedTo:HackerOne(security)
+BountyAmount:2500.0
+Severity:
+State:Closed
+DateOfDisclosure:05.04.2016 13:06:28
+
+Summary:
+An ACL misconfiguration issue existed on one of our S3 buckets. This misconfiguration allowed any authenticated AWS user to write to this bucket (no read access was permitted). An attacker could theoretically post a file into that bucket that may at some point be accessed by a HackerOne staff member, thinking it's been uploaded by another staff member or some automated system. We improved the ACLs for that S3 bucket to prevent such a concern.
+
+This issue also led us to audit some of our additional S3 buckets, resulting in changes for some of those buckets as well.
+Hi All,
+I know that hackerone-attachments is used for file uploads on reports and so I did a quick scan for similar buckets and found &#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;. While I can't confirm if you own it or not, it appears that it is publicly writable using the aws cli.
+
+When I tried to write to hackerone-attachments, I get:
+"move failed: ./test.txt to s3://hackerone-attachements/test.txt A client error (AccessDenied) occurred when calling the PutObject operation: Access Denied.
+
+However, when I write to &#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;, I get:
+move: ./test.txt to s3://&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;/test.txt
+
+Hopefully the bucket is yours and this isn't a waste of time. If you do own it, a good thing is the bucket is not publicly readable and the file appears private by default after being written. However, assuming you own it, the security issue would be someone writing something malicious and someone on your team unknowingly opening it.
+
+Pete

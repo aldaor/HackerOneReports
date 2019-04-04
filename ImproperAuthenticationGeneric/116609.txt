@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/116609
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/nullelite
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:20.0
+Severity:
+State:Closed
+DateOfDisclosure:25.09.2016 18:13:33
+
+Summary:
+Researcher found that the root SPF record was configured without include subdomains keyword, and no subdomain SPF record existed.

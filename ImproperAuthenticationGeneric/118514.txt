@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/118514
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/paresh_parmar
+ReportedTo:KIWI.KI GmbH(kiwi-ki)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:25.02.2016 18:08:17
+
+Summary:
+KIWI had been trialing the use of FreshDesk internally, and had left a DNS entry pointed to their services which subsequently was out of control of KIWI. This could have been used to confuse or trick KIWI customers.
+hi,
+
+one of your subdomain is pointing to FRESHDESK but servicce is expire there,
+so i can claim this http://service.kiwi.ki/  subdomain.
+
+Fix: remove dns entry of  this subdomain asap
+
+
+
+
+Thanks

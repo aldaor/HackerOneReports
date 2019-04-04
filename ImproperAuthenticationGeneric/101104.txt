@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/101104
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/hak
+ReportedTo:Twitter(twitter)
+BountyAmount:140.0
+Severity:
+State:Closed
+DateOfDisclosure:15.01.2016 18:55:53
+
+Summary:
+
+Vulnerable domain: `mopub.com`
+Vulnerable SUB-domain: `http://tool.mopub.com`
+
+your subdomain http://tool.mopub.com which is pointing to `hosted-by.myinternetservices.com` and service is expirted at myinternetservices.com 
+
+Remove this entry otherwise attacker can use this one.
+
+thanks

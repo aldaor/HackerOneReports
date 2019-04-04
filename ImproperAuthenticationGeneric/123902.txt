@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/123902
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/s4thi5h
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.03.2016 3:15:43
+
+Summary:
+This issue refers to a token non expiry issue and vulnerable uri patterns for onboarding process. The On Boarding process of Veris was revamped after a few such similar reports.

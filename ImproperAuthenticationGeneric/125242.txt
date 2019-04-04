@@ -1,0 +1,72 @@
+ReportLink:https://hackerone.com/reports/125242
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/blueberryinfosec
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 21:58:22
+
+Summary:
+
+Issue :
+
+We can able to signup new users without filling the signup form /we can easily insert the same record with multiple email id and phone numbers 
+
+Impact : 
+
+Uber have many offers for new signed users,this can be used to spam/create as many users as they want ,uber doesnt validate the parameters properly which helps in creation of account
+
+Proof of concept :
+
+1)Goto get.uber.com
+2)fillup the signup form with the details
+3)note for mobile number and email id fields
+
+now as per the above things ,the following were the data :
+
+
+email 		: test21@gmail.com
+password 	: nothingnew
+name : xx xx
+mobilenumebr : +9195245464549
+
+language : english
+
+payment : choose paytm
+
+Now we will be navigated to the otp request page 
+
+the request would be as follows :
+
+https://get.uber.com/check-otp?phone=9524983153&email=vignesh4303@gmail.com&uuid=4c68986d-b141-4493-a17d-82372619b0cb
+
+
+Note down the url  contains **email=test21@gmail.com phone =+9195245464549** ,
+
+
+Now if we just alter the mobile number and email id parameters we will receive otp
+
+Sample request :
+
+GET /check-otp?phone=95245464549&email=test21@gmail.com&uuid=4c68986d-b141-4493-a17d-82372619b0cb HTTP/1.1
+Host: get.uber.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Cookie: optimizelyEndUserId=oeu1458707304097r0.8684754571574131; optimizelySegments=%7B%22721332882%22%3A%22referral%22%2C%22722032887%22%3A%22false%22%2C%22722042994%22%3A%22ff%22%2C%222192990132%22%3A%22ff%22%2C%222197930142%22%3A%22direct%22%2C%222205330106%22%3A%22false%22%2C%222325660269%22%3A%22none%22%2C%222339510020%22%3A%22none%22%2C%225186761496%22%3A%22true%22%7D; optimizelyBuckets=%7B%224541946614%22%3A%224545784019%22%7D; utag_main=v_id:0153a1bb2418000c2c4953f147480304400150090093c$_sn:1$_ss:0$_pn:9%3Bexp-session$_st:1458710234991$ses_id:1458707309592%3Bexp-session$segment:a; _ga=GA1.2.1665747522.1458707310; __qca=P0-1022595325-1458707310557; mp_mixpanel__c=13; session=9c4c727bd7b462_56f21d19.XgkEXdExPcUbW0ueKOnj-ut__hs; mp_e39a4ba8174726fb79f6a6c77b7a5247_mixpanel=%7B%22distinct_id%22%3A%20%22153a1bb8a2936-074bd2a8d91585-3e6e4647-13c680-153a1bb8a2a9b%22%2C%22__mps%22%3A%20%7B%7D%2C%22__mpso%22%3A%20%7B%7D%2C%22__mpa%22%3A%20%7B%7D%2C%22__mpu%22%3A%20%7B%7D%2C%22__mpap%22%3A%20%5B%5D%2C%22Lead%20Page%22%3A%20%22https%3A%2F%2Flogin.uber.com%2Flogin%22%2C%22%24initial_referrer%22%3A%20%22https%3A%2F%2Fwww.uber.com%2Fsign-in%2F%22%2C%22%24initial_referring_domain%22%3A%20%22www.uber.com%22%7D
+Connection: keep-alive
+
+
+
+Now **send this request to burp repeater and modify just email and phone number which will result in triggering of otp**
+
+
+
+Impact :
+
+It will allow to spam users also its bypassing the creation of new users 
+
+
+Enclosed video proof for this report kindly have a look and let me know in case of any further assistance

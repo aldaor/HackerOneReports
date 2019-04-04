@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/119871
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/zephrfish
+ReportedTo:Pornhub(pornhub)
+BountyAmount:2500.0
+Severity:
+State:Closed
+DateOfDisclosure:26.05.2016 3:53:36
+
+Summary:
+The consultant was able to connect to the stage.pornhub.com subdomain via port 60893, it was determined that the target host was running memcached and required no authentication.

@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/100938
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/rms
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:14.12.2015 18:00:13
+
+Summary:
+
+**Description**
+----
+An administrator who lacks the 'Settings' permission is not able to add notifications through the UI. But the endpoint `shop.myshopify.com/admin/mobile_devices.json` does allow the unprivileged user to add his own device.
+
+
+
+**PoC**
+----
+This PoC simply show how to get & re-use the mobile APNS Token.
+
+. Log in the Shopify phone app with a full access account
+. Intercept the request to `POST /admin/mobile_devices.json`
+. Remove all permissions of that account.
+. Remove the mobile notification added.
+. Replay the request to `POST /admin/mobile_devices.json`
+
+The order notification has been added in `/admin/settings/notifications`
+Make an order, and the mobile will get the notification.

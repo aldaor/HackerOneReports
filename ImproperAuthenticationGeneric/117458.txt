@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/117458
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ashish_r_padelkar
+ReportedTo:Gratipay(gratipay)
+BountyAmount:1.0
+Severity:low
+State:Closed
+DateOfDisclosure:14.07.2016 16:34:39
+
+Summary:
+
+Hi,
+
+server supports weak Diffie-Hellman (DH) key exchange parameters in grtp.co
+
+Poc:https://www.ssllabs.com/ssltest/analyze.html?d=grtp.co
+
+more description about weak Diffie-Hellman (DH) key exchange parameters
+https://weakdh.org/

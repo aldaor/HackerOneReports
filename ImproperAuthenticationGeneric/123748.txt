@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/123748
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/yaworsk
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.03.2016 13:49:12
+
+Summary:
+
+Hi,
+I noticed that your cookies are stored in plain text, without a secure flag option. As a result, if a user is logged and visits http://sandbox.veris.in/portal/, the cookies with the uid and user token are submitted.
+
+If a malicious attacker was on the same network and managed to get a legitimate user to visit the non-secure version of the site, they would be able to intercept the two values which enables them to take over their session.
+
+I've included a POC video, unlisted, on YouTube.  In it, you'll see I am using Chrome on the left, logged in as a legitimate user. I visit the http version of the site and receive the redirect. Using chrome tools, I can see the cookies being sent - this is meant to simulate was a man in the middle attack would accomplish.
+
+Then, with those values, I open up firefox and an existing session I have with another account. I modify my cookies with the stolen values and I am now logged in as the victim.
+
+POC video: https://youtu.be/KiJtsDosGT8
+
+Please let me know if you have any questions.
+Pete

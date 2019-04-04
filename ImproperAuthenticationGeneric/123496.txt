@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/123496
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/zuh4n
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.03.2016 5:59:17
+
+Summary:
+
+Hi guys,
+
+Well, the issue is in authentication process, an attacker able to enumerate registered users on the site via brute forcing the login page, in case when ***user is not exist***, system returns the following error message: "User not exist", in case when ***user exist***, but incorrect password: "Password does not match".
+
+Mitigation: handle the above situation correctly, e.g.: "Login failed. Invalid user ID or password". This doesn't inform the attacker on which credential is wrong and make enumeration more difficult
+
+Thanks

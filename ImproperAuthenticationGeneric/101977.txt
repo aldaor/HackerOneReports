@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/101977
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/vinothkumar
+ReportedTo:Imgur(imgur)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:24.07.2017 4:27:12
+
+Summary:
+
+Vulnerable Url: https://api.imgur.com/generatetoken/thirdpartynativeandroid?type=facebook
+Vulnerable Param: access_token
+
+Attck:
+Hacker can build own facebook app and get victim's facebook access token and use that access token to login into imgur account 
+
+POC: https://drive.google.com/file/d/0B9bnr9ZtF2QsYktlRVFPUDB2SmM/view?usp=sharing
+
+Prevention: Validate access token and check app id is equal to 127621437303857

@@ -1,0 +1,57 @@
+ReportLink:https://hackerone.com/reports/10554
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/michiel
+ReportedTo:Coinbase(coinbase)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:25.09.2014 6:48:37
+
+Summary:
+
+Under advanced settings, users have the ability to protect their wallet by requiring two-factor confirmation when sending bitcoins. Personally, I have configured my account with the most secure option, which requires two factor confirmation when sending any amount of bitcoins. However, a flaw exists that allows an attacker with access to the account to bypass the two-factor authentication step that is required upon sending.
+
+The vulnerability exists in the transfer feature that allows you to transfer funds between all wallets under the same account (internal transfer). This feature is only visually available when you have at least two wallets, but it is not necessary to have two wallets to exploit this vulnerability. Just makes the process a bit easier.
+
+# Easy repro steps
+- Enable the account security setting that requires you to enter a valid two-factor code when transferring *any* amount of bitcoins.
+- Create a second wallet and go to *Manage Accounts* (https://coinbase.com/accounts).
+- Click the *Transfer* button and select the wallet you want to send money from.
+- Under *To* select one of the other wallets on the account (this doesn't actually matter).
+- Pick an amount and hit the *Transfer* button. Make sure to intercept this request! Use Burp Suite for instance. The request should look similar to this:
+
+```
+POST /accounts/transfer_money HTTP/1.1
+Host: coinbase.com
+[...]
+
+----------422668630
+Content-Disposition: form-data; name="transaction[from]"
+
+51cf4e552f31a99ce200001b
+----------422668630
+Content-Disposition: form-data; name="transaction[to]"
+
+53440a8092adb7d95000001d
+----------422668630
+Content-Disposition: form-data; name="transaction[amount]"
+
+0.1
+----------422668630
+Content-Disposition: form-data; name="transaction[notes]"
+
+Bypassin' 2FA.
+----------422668630--
+```
+
+- Change the `transaction[to]` parameter to the Mongo BSON ID of the wallet you want to transfer the BTCs to. This can be any wallet ID outside the account you were initiating an internal transfer for. It is fairly easy to find the ID of a wallet, for example, it can be found in the DOM:
+
+```html
+<li>
+  <a href="" class="account-wallet active" data-wallet-id="53440a8092adb7d95000001d">
+    <strong>My Wallet</strong> <span>1.00 BTC</span>
+  </a>
+</li>
+```
+
+- Forward the request. The money is now transferred to the Coinbase wallet associated with the ID specified under `transaction[to]`. No two-factor code was entered.

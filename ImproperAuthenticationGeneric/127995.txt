@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/127995
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/jaypatel
+ReportedTo:Gratipay(gratipay)
+BountyAmount:1.0
+Severity:low
+State:Closed
+DateOfDisclosure:18.03.2017 4:47:07
+
+Summary:
+
+I can able to add a email address to 255 character or more,as per RFC the maximum length allowed for an email address is 255 characters.
+
+For more info : 
+http://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address/574698#574698
+
+related report:
+https://hackerone.com/reports/28632

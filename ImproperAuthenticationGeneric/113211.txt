@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/113211
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/gamhody_
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.03.2016 18:10:56
+
+Summary:
+@gamho69 reported an issue within the owncloud.com website that allowed an attacker to send a delete request for owncloud.com account for other users if the mail address was known. This issue did not affect ownCloud server and only the marketing related activity on owncloud.com. Furthermore the deletion is a manual process on our side so that suspicious usage would be noticed.
+
+To prevent the leak of private information such as names and mail address of the reporter this issue is only disclosed limitedly.

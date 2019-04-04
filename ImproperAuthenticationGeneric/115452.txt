@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/115452
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/shivathegame
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.06.2016 1:57:30
+
+Summary:
+
+http://emkei.cz/-----> spoofing tool
+
+I tried to send email from security@paragonie.com and scott@paragonie.com, it was successfully sent to the email shivakumarmca12@gmail.com
+
+This can be dangerous because an attacker can send emails with malicious links to gather users personal data ….
+
+Please fix it..

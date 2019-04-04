@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/122050
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/bugs3ra
+ReportedTo:Mapbox(mapbox)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:31.05.2016 22:03:00
+
+Summary:
+On March 10th, 2016, @bugs3ra reported that a public Mapbox API access token with no explicitly declared scopes could read public map styles. This meant that a token with no scopes had the `styles:read` scope. In fact, the no scope token had all three public scopes associated with a user's default public access token - `styles:tiles`, `styles:read`, and `fonts:read`. 
+
+To fix this issue, we updated the UI in Studio to make token scopes more clear. We updated the text "No scopes" to "Public token (all public scopes)" in the token creation modal dialog.
+
+We decided to award a bounty for this report since granting more scopes than expected is unexpected for the user and represents a minor violation of the principle of least privilege. 
+HI 
+I created one api token with 0 scope.
+Then I sent the following request to server
+
+GET /styles/v1/katilthe?access_token=pk.eyJ1Ijoia2F0aWx0aGUiLCJhIjoiY2lsbWJwcWpjNjhmNnZubWNhYXdwZm5obyJ9.2cPnaIiXcFnDRFMfrD1TRw HTTP/1.1
+Host: api.mapbox.com
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: https://www.mapbox.com/studio/styles/fonts/
+Origin: https://www.mapbox.com
+Connection: keep-alive
+
+I Got 200 OK in response and my styles.
+
+[{"version":8,"name":"test\"><svg/onload=alert(2)>-copy-copy","center":[-78.90145050000001,33.70101199999998],"zoom":12,"bearing":0,"pitch":0,"created":"2016-03-10T13:45:51.193Z","id":"cilmbusls00cvc6m23qpi69gg","modified":"2016-03-10T13:45:51.193Z","owner":"katilthe"},{"version":8,"name":"test\"><svg/onload=alert(2)>-copy","center":[0,-1.1368683772161603e-13],"zoom":0.3106126682923422,"bearing":0,"pitch":0,"created":"2016-03-10T13:43:58.005Z","id":"cilmbsd9s00cfc7mcl1m7nnrz","modified":"2016-03-10T13:43:58.005Z","owner":"katilthe"}]
+

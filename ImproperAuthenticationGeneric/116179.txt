@@ -1,0 +1,43 @@
+ReportLink:https://hackerone.com/reports/116179
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/bulba
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.03.2017 1:38:39
+
+Summary:
+
+Summary of Findings
+-------------------------------
+
+The remote server (https://download.newrelic.com) allowed unauthenticated access to special access files that are only intended to be accessible after contacting the New Relic program managers as seen below.
+
+![](http://i.imgur.com/C4O4sln.png)
+
+Exploiting the Vulnerability/Mis-configuration
+-----------------------------------------------------------------
+
+By performing search engine analysis, I was able to identify the name of a child directory `/eclipse-established` which appears to contain various source files related to special access/beta program application testing as seen below: 
+
+![](http://i.imgur.com/fnfKjxz.png)
+
+Concluding Remarks/Remediation Advice
+------------------------------------------------------------
+
+Obviously there is a slight possibility that this was the intended function and that there was not supposed to be any type of access control over these directories - The reason that I may have identified this as a false positive is due to the fact that when a user tries to access the `/android_agent` directory they are provided with the instructions to contact support.
+
+If this *is* the case and it is a mis-configuration, one option would be to enforce http basic authentication with something similar to the below example: 
+
+    server {
+       listen 80;
+       server_name www.example.com example.com;
+       root /var/www/www.example.com/web;
+    [...]
+       location /eclipse-established {
+    auth_basic "Restricted";
+    auth_basic_user_file /var/www/www.example.com/.htpasswd;
+       }
+    [...]
+    }

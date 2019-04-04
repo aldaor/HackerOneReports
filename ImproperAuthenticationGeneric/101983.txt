@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/101983
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/blinkms
+ReportedTo:Binary.com(binary)
+BountyAmount:75.0
+Severity:
+State:Closed
+DateOfDisclosure:16.12.2015 13:45:34
+
+Summary:
+blinkms  reported a bug which allowed some of the blocked trading features to be enabled by manipulating the cookies. 

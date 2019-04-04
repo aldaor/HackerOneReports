@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/101145
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/akshyy
+ReportedTo:Automattic(automattic)
+BountyAmount:75.0
+Severity:
+State:Closed
+DateOfDisclosure:05.06.2016 5:42:50
+
+Summary:
+
+Hi,
+
+There is no csrf token  while removing image
+
+Attacker can Delete Victim's Gravtar Image Just by sending Link 
+
+
+Poc: 
+https://en.gravatar.com/emails/remove-userimage/you_email_image_id here
+
+
+Thanks :) 

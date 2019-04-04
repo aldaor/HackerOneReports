@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/123572
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/temmyscript
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.07.2016 0:11:29
+
+Summary:
+
+In a Team, a user that does not have an admin permission at https://hackerone.com/[team_name]/team_members can view the list of users in the Program by visiting 
+https://hackerone.com/[team_name]/team_members.json
+Although it is only a user with an admin permission that can view the Team members and modify their permission, but other members that do not have such right can view ALL the members in the Team.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/131523
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/dpgribkov
+ReportedTo:Zendesk(zendesk)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:29.11.2016 22:43:37
+
+Summary:
+The researcher reported an AWS S3 bucket exposed with read and write privledges. The S3 bucket was intentionally readable but the write privledges have since been removed. 

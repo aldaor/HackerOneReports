@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/126784
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/atheistoffail
+ReportedTo:Coinbase(coinbase)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:22.04.2016 20:14:06
+
+Summary:
+Coinbase pushed out a feature whereby scanning a QR code inside the Coinbase Mobile app would complete payments under 0.1BTC without further confirmation.
+
+Upon reviewing this report and further consideration of the possible security implications of this feature, it was reverted.
+

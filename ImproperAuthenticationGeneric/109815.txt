@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/109815
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/roshanpty
+ReportedTo:Coinbase(coinbase)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:06.03.2016 0:57:57
+
+Summary:
+
+Access to non-HTML contents such as CSV report is not restricted to authenticated users.
+
+Anyone would be able to access a CSV report by giving the direct URL and downloading it. The URL could be obtained from browser history. The following URL is an example.
+
+https://coinbase-tmp.s3.amazonaws.com/f83af6cee5520796d9876723e59225b772abfd89fff6f5d8fee3069f6e4738b07481896312c41d8bf43413a57b5b19a907fb3729f886c336caac8c49d1d302ae/Coinbase-5692a0b23bda9c599f00033e-Transactions-Report-2016-01-10-21%3A31%3A51.csv

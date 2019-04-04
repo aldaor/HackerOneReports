@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/123120
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/hogarth45
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.11.2016 22:29:50
+
+Summary:
+
+#Recreate Steps
+1) Create Two Accounts
+2) In separate browsers (Firefox and Chrome) log into each account and go to the edit page
+     a) https://rpm.newrelic.com/users/*/edit
+3) Check one of the email or alert boxes and click save. Gather the post.
+a) Should be similar to this:
+```
+utf8=â&authenticity_token=evak6B68Oennzs4xwSpZg7FdwAG83mjhf2PyEiakNV8=
+&email_preference[account_view][id]=2175867
+&email_preference[account_view][send_mobile_crash_emails]=0
+&email_preference[account_view][send_mobile_crash_emails]=1
+&commit=Save+email+preferences
+```
+The email_preference[account_view][id] is the item of interest here:
+
+For the demonstration in out video:
+firefox: 2175859
+chrome: 2175867
+
+A malicious user could cycle through the user base turning off the "Mobile crash reporting" and the "Weekly Emails" The prior being the more important.
+
+A video is attached showing the attack described.

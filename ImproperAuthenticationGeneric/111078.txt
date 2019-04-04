@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/111078
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ketan_patil
+ReportedTo:Gratipay(gratipay)
+BountyAmount:15.0
+Severity:medium
+State:Closed
+DateOfDisclosure:28.02.2016 18:55:19
+
+Summary:
+
+Dear Team,
+
+I find bug in https://gratipay.piwik.pro/ i can take over account https://gratipay.piwik.pro/
+I share with you  setup 
+
+1) https://gratipay.piwik.pro/
+2) Then i see msg like this  ( "THIS SUBDOMAIN IS AVAILABLE!
+gratipay.piwik.pro is available! Use this subdomain for your Piwik Cloud service. To activate this subdomain, simply sign up to Piwik Cloud. ") 
+3)Then i open  http://piwik.pro/cloud
+4)  Put user name ans password 
+5) gratipay.com add  in my account 
+
+I share with you POC for your more information 
+
+Thank you 

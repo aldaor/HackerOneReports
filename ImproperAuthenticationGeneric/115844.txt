@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/115844
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/paramdham
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:16.09.2016 5:23:08
+
+Summary:
+Security researcher discovered a potential issue where no rate limiting was applied to sensitive functions, like password reset links.

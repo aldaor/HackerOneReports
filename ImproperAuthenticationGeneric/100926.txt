@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/100926
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/nahamsec
+ReportedTo:Yelp(yelp)
+BountyAmount:1500.0
+Severity:
+State:Closed
+DateOfDisclosure:07.10.2016 5:09:07
+
+Summary:
+On November 21 2015, @nahamsec reported two Yelp IP addresses that were exposing Uchiwa dashboards on port 8080. In that dashboard, he was also able to find a hardcoded password on a Sensu check that gave him access to a RabbitMQ server running on the same machine. The immediate issue was fixed quickly by updating firewall rules. Additionally, we did a full internal audit of all systems that touched the affected hosts.

@@ -1,0 +1,71 @@
+ReportLink:https://hackerone.com/reports/128085
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/jobert
+ReportedTo:GitLab(gitlab)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.04.2016 6:59:28
+
+Summary:
+
+# Proof of Concept
+When a user has 2FA enabled, it's possible to sign in as that user without the need to know its password. To reproduce this attack, you need two users that both have 2FA enabled. For the sake of this PoC, lets call them Jane and John. Jane is the attacker and wants to get access to John's account. John his username is `john`. Jane knows John's username. Here's how you can reproduce it:
+
+ - as Jane, go to the sign in page and enter your username and password
+ - in the background, it sets Jane's user ID in `session[:otp_user_id]`
+ - you now need to enter Jane's 2FA code in order to get access to the account
+ - now intercept all your network traffic with a tool like Burp Suite and capture the request that is send when you submit the 2FA token - it looks like this:
+
+```
+> POST /users/sign_in HTTP/1.1
+> Host: 159.xxx.xxx.xxx
+> ...
+
+> ----------1881604860
+> Content-Disposition: form-data; name="user[otp_attempt]"
+> 
+> 212421
+> ----------1881604860--
+```
+
+ - now add the `login` header to the request - the request now looks like:
+
+```
+> POST /users/sign_in HTTP/1.1
+> Host: 159.xxx.xxx.xxx
+> ...
+
+> ----------1881604860
+> Content-Disposition: form-data; name="user[otp_attempt]"
+> 
+> 212421
+> ----------1881604860
+> Content-Disposition: form-data; name="user[login]"
+> 
+> john
+> ----------1881604860--
+```
+
+ - now, instead of `212421`, send a valid OTP code for `john` to the server
+ - Jane is now signed in as John by entering her own password and John's OTP code - Jane still doesn't know John's password
+
+# Impact
+The OTP codes are 6 numbers that change every 30 seconds. I haven't looked whether the server allows time drift. This would increase the chance that an attacker guesses the right OTP code for the account. As a PoC, I could run a small attack against GitLab.com, but I haven't been able to reach @sytsem to ask for permission. ;)
+
+# Origin of the issue 
+This issue originates from the `find_user` method in the `SessionsController`. It returns a `User` object in two different ways: the first returns the object based on `params[:login]` parameter. The second one if `sessions[:otp_user_id]`. The `params[:login]` parameter takes precedence over the ID stored in the session. This means that if the `params[:login]` is specified in the request when the 2FA code needs to be verified, a different user can be selected to verify the code against. Here's the method:
+
+```ruby
+# app/controllers/sessions_controller.rb:58
+def find_user
+  if user_params[:login]
+    User.by_login(user_params[:login])
+  elsif user_params[:otp_attempt] && session[:otp_user_id]
+    User.find(session[:otp_user_id])
+  end
+end
+```
+
+# Fix
+Here's a fix (needs specs to proof that it works): F83019.

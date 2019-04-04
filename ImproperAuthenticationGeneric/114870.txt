@@ -1,0 +1,48 @@
+ReportLink:https://hackerone.com/reports/114870
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/hassham
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.09.2016 4:50:25
+
+Summary:
+
+Hi New Relic Team, 
+
+While reviewing your host http://newrelic.com/ it was discovered that you are basic authorization over http , which is not a good practice If an attacker can intercept traffic on the network, he/she might be able to steal the user's credentials.
+
+Request:-
+GET /styleguide-layouts HTTP/1.1
+Cache-Control: no-cache
+Referer: http://newrelic.com/sitemap.xml
+Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.16 Safari/537.36
+Accept-Language: en-us,en;q=0.5
+Cookie: syn_preview_count=BAhpCg%3D%3D--ceb27632ec3515dcaa43ec547fe5cb3389471630
+Host: newrelic.com
+Accept-Encoding: gzip, deflate
+
+======================================
+Response:-
+HTTP/1.1 401 Unauthorized
+X-Runtime: 0.003909
+X-Cache: MISS
+Server: nginx
+Cache-Control: no-cache, private
+Transfer-Encoding: chunked
+X-Served-By: cache-fra1247-FRA
+X-Request-Id: 13df2b74fef6b6642478b3bd05dbbbe1
+Connection: keep-alive
+Accept-Ranges: bytes
+X-Cache-Hits: 0
+Via: 1.1 varnish
+Content-Type: text/html; charset=utf-8
+X-UA-Compatible: IE=Edge,chrome=1
+WWW-Authenticate: Basic realm="Application" <<<<<
+Status: 401 Unauthorized
+X-Rack-Cache: miss
+Date: Fri, 05 Feb 2016 08:40:37 GMT
+
+ Please also find attached screenshot

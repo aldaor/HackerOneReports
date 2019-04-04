@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/119605
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/roshanpty
+ReportedTo:Coinbase(coinbase)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:24.07.2016 3:40:20
+
+Summary:
+
+As Coinbase doesn't use CAPTCHA on publicly available forms such as 'Forgot Password' & 'Sign Up' , the requests can be automated to overwhelm the resources to result in denial of service for CoinBase or mail flooding of customers.
+
+The steps to reproduce the issue are as follows.
+
+Step 1: Browse to https://www.coinbase.com/password_resets/new
+Step 2: Enter a valid user email ID and click on Reset Password
+Step 3: Capture the request in burp and send the request to repeater. Repeat the request several times.
+Step 4: Open the mail client and check the inbox. It can be observed that the several password reset emails are present in the inbox.

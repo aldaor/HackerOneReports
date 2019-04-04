@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/135252
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/billy_blaze
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:400.0
+Severity:
+State:Closed
+DateOfDisclosure:08.06.2016 15:47:05
+
+Summary:
+##Issue
+
+The reporter found a design flaw in a feature where pdf-reports are generated. Pdf-reports were generated using 19-digit random names and the names as well as the reports were persistent and accessible by all authenticated users. 
+
+##Fix
+
+Guessing a random 19-digit name was found to be almost impossible, but still posing a minor risk. To further minimize the risk probablility of customer information disclosure, a 2-minute life span was added to the pdf-reports.
+
+##Reasoning
+
+The report was found to be valid and once verified the fix was very easy. Although not perfect, the fix mitigates the risk probability to near zero. 

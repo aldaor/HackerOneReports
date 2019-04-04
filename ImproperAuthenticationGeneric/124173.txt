@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/124173
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/bugs3ra
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.05.2016 17:59:55
+
+Summary:
+
+HI 
+
+There is captcha bypass, which can lead to login credentials bruteforce attack.
+
+Just remove **&g-recaptcha-response** from request, and the server accepts your request.
+
+Please check the screenshots...

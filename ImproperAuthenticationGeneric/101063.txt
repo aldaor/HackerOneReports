@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/101063
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/rohk
+ReportedTo:Uber(uber)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:12.05.2016 7:11:49
+
+Summary:
+
+Riders are able to change their profile picture whenever they want and they should be allowed to either way.
+
+When a rider becomes a driver they should not be able to change their profile picture due to the fact they can change their pictures to something inappropriate.
+
+Replicate:
+Login into the Uber Rider app with your driver information (which should be the same as rider either way)
+Go to Settings
+Edit Account (Put in password)
+Change Photo - Press Save
+             An error will occur saying "Failed to update account details" but the new picture will be applied

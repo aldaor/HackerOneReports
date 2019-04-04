@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/13567
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/iamthefrogy
+ReportedTo:Factlink(factlink)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 10:00:33
+
+Summary:
+
+There is only one rule which you have set that minimum characters should be 6. But you need to set robust rule for password quality. Because I was able to set my password 123456 which is really common and anyone can hack it.
+
+Recommendation - Provide robust rules including upper lower letters, special characters etc..

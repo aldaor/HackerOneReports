@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/127175
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/ala_arfaoui
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.05.2016 19:12:53
+
+Summary:
+Our e-mail provider at the time had problems where some e-mails would not be sent out over TLS. Based on data from [Google Postmaster Tools](https://postmaster.google.com/), we were seeing as high as 12% of our e-mail from our provider to Google mail servers not encrypted. We opened a case with them on March 31st, 2016, about this issue, as this was something we couldn't directly control or fix.
+
+Based on this issue and some other issues we were having, we made the decision to migrate to a new e-mail provider for our e-mail. Since migrating in April 2016, we haven't seen any problems at all with sending our production e-mail over TLS to other mail servers, with 99.9%+ of our e-mail to Google's mail servers encrypted.
+
+On May 17th, 2016, we received notification that the old provider has corrected the issue, though there are no current plans to migrate back.

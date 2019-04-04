@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/131202
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/paulos_
+ReportedTo:Twitter(twitter)
+BountyAmount:840.0
+Severity:
+State:Closed
+DateOfDisclosure:11.07.2016 18:03:59
+
+Summary:
+
+Hi,
+
+This bug is caused because of the same mis-configuration as #128119. Only this time Microsoft Outlook auth is vulnerable instead of Facebook. this time I will try to be as clear as possible. after sign up of Twitter, Twitter asks users to import contacts (and it only requires on authorization) - or simply going to https://twitter.com/who_to_follow/import will do that.
+
+I believe you have configured your oauth redirect_uri as twitter.com in your app settings. Meaning Microsoft will accept:
+- http://twitter.com as valid
+- http://anything.twitter.com as valid
+- https://twitter.com as valid
+- https://anything.twitter.com/path/?anything as valid
+
+So the forumla of a valid redirect_uri for twitter app is http(s?)://*.twitter.com/*
+
+Okay, so now we make an open redirect. 
+
+https://cards.twitter.com/cards/18ce53y6aap/yyms redirects to http://test.com and qualifies to bypass http(s?)://*.twitter.com/* and we will add ```%2523``` behind it like https://cards.twitter.com/cards/18ce53y6aap/yyms%2523 for microsoft to decode and send as a Hash %2523 -> %23 -> # with our stolen access_token.
+
+We can then obtain this token using ```location.hash``` and all the user had to do is a single click (if already authorized - lots of people have)
+
+To make things more clear, here is *unlisted* YouTube video to demonstrate how this works: https://youtu.be/apwbVpa2r6Y (also attached)
+
+Thanks,
+Paulos

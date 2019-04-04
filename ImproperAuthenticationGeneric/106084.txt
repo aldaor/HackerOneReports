@@ -1,0 +1,50 @@
+ReportLink:https://hackerone.com/reports/106084
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/h13-
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:29.12.2015 1:07:00
+
+Summary:
+
+Hi Team,
+
+Legend
+======
+AppSecBounty => Bug Program(Sandbox Program)
+Hacker1001 => Bug Reporter
+BugAdmin => Program Admin
+BugMember => Team Member associated Program_Management Group 
+Program_Management Group => Custom Group created with "Program Management Permission"
+
+_Steps:_
+1. Hacker1001 reports a Bug to AppSecBounty program.
+2. BugAdmin & BugTeam are notified of the new bug submission.
+3. BugMember navigates to report. BugMember has only permission to post 'Internal Comments' in report
+4. BugMember types some comment and intercepts request with Burp as below
+
+message=TEST COMMENT&substate=&is_internal=true&reference=&add_reporter_to_original=false&reply_action=add-comment&reports_count=1&report_ids%5B%5D=102260
+
+5.BugMember deletes 'true' from parameter "is_internal" and forwards request. 
+
+message=TEST COMMENT&substate=&is_internal=&reference=&add_reporter_to_original=false&reply_action=add-comment&reports_count=1&report_ids%5B%5D=102260
+
+6. Server processes the request and the following response is returned.
+
+{"flash":"Comment was created successfully.","reports":[{"latest_activity":"2015-12-19T14:43:08.244Z","id":102260,"url":"https://hackerone.com/reports/102260","title":"CSV123","state":"open","substate":"new","readable_substate":"New","created_at":"2015-11-27T07:40:28.998Z","reporter":{"username":"h1-","url":"https://hackerone.com/h1-"},"team":{"id":7584,"url":"https://hackerone.com/multicare","handle":"multicare","name":"multicare","profile_picture_urls":{"small":"/assets/global-elements/add-team-72fa1f23b08270406d1149d06f6968ed.png","medium":"/assets/global-elements/add-team-72fa1f23b08270406d1149d06f6968ed.png"},"permissions":["program_management"]}}]}
+
+_Observations:_
+1. BugAdmin receives email notification saying that BugMember posted a comment ie "TEST COMMENT" on BugReport.
+
+2. After BugAdmin signs into Hackerone, there will be 2 notifications indicating that "BugMember commented on BugReport_Name along with bug_ID"
+
+3. If BugAdmin click on notification, then he will be redirected to BugReport but in BugReport, he will not be able to see any comments(ie "TEST COMMENT" which he saw in his email) which was posted by BugMember.
+
+_Conclusion:_
+* The current flaw in UserRole(Program Management) which is associated with  custom groups can be misleading to other members in the team if the above scenario was executed.
+* TeamAdmins, TeamMembers who has permission to review/modify reports will be falsely intimated about comments which are posted by other members who don't have permission to post comments
+* A point to be noted that even though Comments are not actually posted on the BugReport, the email notifications are sent with the exact comments to the TeamAdmin & TeamMembers associated with that report. Seeing the comments via email and not seeing the same comment on the BugReport Page can be soo misleading and confusing.
+* The other fact is that team members with "Program Management" role can only post internal comments on reports and not general comments. This is not true as the comment is actually posted on the server and the server responded with the exact time stamp of comment as below
+

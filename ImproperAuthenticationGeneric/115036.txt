@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/115036
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/mugeesahmed
+ReportedTo:Zomato(zomato)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.03.2016 9:46:11
+
+Summary:
+
+Weak Password Policy :-
+                                      In your Website the user are able to use the same password as their user name for eg. the user name is pentest123@ and user can set their password as pestent123@ these type of passwords  can be easily guessed 
+
+How to Fix this issue ? :-
+                                     prevent users to use their username as their password

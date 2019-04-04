@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/119427
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/haxta4ok00
+ReportedTo:Mail.ru(mailru)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:11.07.2017 13:23:51
+
+Summary:
+An partial information from seminars.mail.ru could be obtained due to invalid access restrictions
+
+seminars.mail.ru is not in Bug Bounty scope, but some reward was issued due to problem significance.

@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/100186
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/shahmeer-amir
+ReportedTo:Coinbase(coinbase)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:11.12.2015 8:20:24
+
+Summary:
+Pusher authentication did not take device confirmation into account.
+
+This would allow an attacker with a valid session but an unconfirmed device to snoop on pusher updates like incoming transactions.
+

@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/116032
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/charfe
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:16.02.2016 20:22:07
+
+Summary:
+Analysis of the researcher's PoC revealed an issue in the HTTP codes returned for the /reports/draft.json endpoint:
+
+`sandboxed` team: https://hackerone.com/[sandboxed team handle]/reports/draft.json
+Returned 401
+
+`EP (external program)`: https://hackerone.com/[external program handle]/reports/draft.json
+Returned 404
+
+`EP + private program`: https://hackerone.com/[invite-only team handle]/reports/draft.json
+Returned 200 (empty response) <-- This is the information disclosure
+
+`private team without EP`: https://hackerone.com/[invite-only team handle]/reports/draft.json
+Returned 401
+
+`public` team: https://hackerone.com/[public team handle]/reports/draft.json
+Returned 200
+
+`user`: https://hackerone.com/[user handle]/reports/draft.json
+Returned 404
+
+We have corrected the issue by ensuring the same HTTP code is returned for both `EP` and `EP + private program` handles.
+ PoC revealed an issue in the HTTP codes returned for the /reports/draft.json endpoint:
+
+
+
+private team: https://hackerone.com/[invite-only team handle]/reports/draft.json
+Returned {"error":"You need to sign in or sign up before continuing."} with Status Code:401 OK
+
+user: https://hackerone.com/[user handle]/reports/draft.json
+Returned 404
+thanks

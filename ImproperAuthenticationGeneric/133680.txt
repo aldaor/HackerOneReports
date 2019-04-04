@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/133680
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/yaworsk
+ReportedTo:Badoo(badoo)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.04.2016 10:22:37
+
+Summary:
+We do not use amazon AWS but @yaworsk wanted to disclose his report anyway.
+Why not, we can do.
+
+----
+
+Hi All,
+Though I'm not 100% sure you own the bucket - and if not, I would appreciate being able to close this myself - I believe you may own the S3 bucket hotornot-images.
+
+If so, using the AWS CLI, I am able to call the actions ls and rm on it to list files and remove them, however, cp/mv calls (PUT calls) result in access denied.
+
+It would appear that there are no files in the root directory but if you were to start using it, files can be deleted by authorized AWS users though these users are not on your AWS account.
+
+While I can't actually write to the bucket to confirm, when access is denied, a (Forbidden) error is returned. However, on the hotornot-images bucket, a (NoSuchKey) error is returned meaning we at least have access to read the bucket.
+
+Please let me know if you have any questions.
+Pete

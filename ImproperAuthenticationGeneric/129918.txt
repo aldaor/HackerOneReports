@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/129918
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/secalert
+ReportedTo:Slack(slack)
+BountyAmount:2000.0
+Severity:
+State:Closed
+DateOfDisclosure:19.10.2016 22:24:21
+
+Summary:
+@secalert discovered an information disclosure on our server which took advantage of an authorization error that allowed the viewing of sensitive information on the server. We mitigated the issue and no longer expose such information, and performed an investigation to verify that no unauthorized access had occurred. Thank you @secalert!

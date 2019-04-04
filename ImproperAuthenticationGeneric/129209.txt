@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/129209
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/lilly
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.08.2017 13:33:08
+
+Summary:
+
+When a user login with facebook 0Auth and then he removes the app from facebook app setting the session is not expiring.
+Poc:-
+
+Step1: Go to gratipay login page.
+Step2: Click on login with facebook 0 auth and login with facebook.
+Step3: Go to facebook then app setting.
+Step4: Now remove the gratipay app from here and go back to gratipay site.
+Step5: You will see that you are still logged in.
+
+Hence session is not expiring so it is vulnerable.
+
+Thanks
+Sushil Saini (Cyber Security Researcher)

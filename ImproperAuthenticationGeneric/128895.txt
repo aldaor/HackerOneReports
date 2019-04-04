@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/128895
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/bugs3ra
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.07.2016 0:30:23
+
+Summary:
+
+I was just trying to login vault.uber.com
+
+I entered email **xx** and password **xx**,  I got loggedin to someones account.
+I entered email **zz** and password **zz**,  I got loggedin to someones account.
+
+It means passowrd complexity and length of username/email is not enforced. This allowed my to access the someones account. Since it contains payment related information, password complexity and email should be there.

@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/109161
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/atom
+ReportedTo:Gratipay(gratipay)
+BountyAmount:10.0
+Severity:medium
+State:Closed
+DateOfDisclosure:01.10.2017 12:39:17
+
+Summary:
+
+Hello,
+
+when we include a link on statement in our profile, it just create an html tag like this:
+``` <a href="http://google.com">http://google.com</a> ```
+^ That's vulnerable. How? Once the owner of the profile added a malicious url it is possible that the link has a referral link thingy that will open a tab that has a phishping page of  gratipay.
+
+Fix:
+``` <a href="http://google.com" rel="nofollow">http://google.com</a> ```
+
+Allan

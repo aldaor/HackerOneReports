@@ -1,0 +1,39 @@
+ReportLink:https://hackerone.com/reports/124929
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/1337coder
+ReportedTo:HackerOne(security)
+BountyAmount:1500.0
+Severity:
+State:Closed
+DateOfDisclosure:01.04.2016 8:44:42
+
+Summary:
+A bug in an authorization check was found by @1337coder on an endpoint that was showing the members of a team, as well as the team member groups that were set up. 
+
+Example output:
+
+```
+[
+  {
+    "id":1,
+    "username":"dirk",
+    "name":"dirk",
+    "bio":"",
+    "url":"https://hackerone.com/dirk"
+  },
+  {
+    "id":2,
+    "name":"Admin",
+    "team_members_count":1
+  }
+]
+```
+This was the case for all pages that have a private or sandboxed program, that also have a public page. Also affected were all public programs.
+
+The fact if a user is a member of a team is not considered secret for most accounts, however for those that have chosen to be "Concealed", this method exposed this data. Also exposed were the team member group names and sizes, which is considered non-public data.
+
+Although this does not directly lead to a disclosure of private programs, the names of the team member groups can be very telling as to what a team is currently doing. A team that has set up a "Triage" and "Bounty" group can be expected to be running a private Bug Bounty. The number of members a team has can also be telling in this regard.
+
+All endpoints that use this authorization method have been checked. Due to additional, more restrictive checks on these endpoints, no other data has been vulnerable. 
+
+Also, due to the mention of semi-private information about several programs on the platform, we have decided to disclose this under a "limited" timeline rather than try to redact every bit of non-public information.

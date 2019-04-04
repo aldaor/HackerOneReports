@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/135631
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/bains
+ReportedTo:Dropbox Acquisitions(dropbox-acquisitions)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.06.2016 15:30:36
+
+Summary:
+
+I hereby want to report a vulnerability i.e. Session hacking.
+
+Summary
+========
+Attacker can still do activities in browser with user's account if user changed his/her password in another browser.
+
+Detail
+=====
+If user logged in account in two or more browsers and he has changed password in one of those browser, then attacker can use user's( his ) account as user account is not logged out in other browsers.
+
+I have attached a link of PoC
+[session hack](https://vimeo.com/164891775)
+
+Thanks
+Happy to help :)

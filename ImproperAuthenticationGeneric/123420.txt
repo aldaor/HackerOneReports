@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/123420
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/kirkj
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:25.04.2016 11:05:38
+
+Summary:
+When a company user requests mediation on a report, a support ticket is created for the HackerOne team to investigate.
+@kirkj found out that the support ticket included an invitation link, and that some support reps may include it inadvertently within email replies. If HackerOne had not accepted the invitation by then, any user with access to the support invitation link would be able to access the report, even if they were not the intended audience. 
+
+Though this traditionally falls under social engineering, we implemented a fix and regarded it as a security issue due to the _high likelihood_ of a support rep replying without thinking about what is attached in the email. 
+
+The fix: 
+For report invitation links, they are now tied to a user if the user exists on the platform. If the invitation link was sent to a user not on HackerOne, they can still consume the invitation with any account they choose. 

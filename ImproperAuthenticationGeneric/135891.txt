@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/135891
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/vijay_kumar
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.07.2016 0:37:14
+
+Summary:
+
+Hi ,
+Notification setting link works without cookies so an attacker can steal link from browser histroy and can change notification setting of victim.
+Notification setting link does not expire even after logout.
+
+Steps to reproduce :-
+1.Log in as uber rider.
+2.Go to profile.
+3.Now go to "Manage your email subscription settings".
+4.Copy link of this page and open this link in another browser , it works perfectly.
+5.It also works after logout.
