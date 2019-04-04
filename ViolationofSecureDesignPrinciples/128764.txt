@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/128764
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/ahmed_abdalla
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:30.04.2016 23:10:29
+
+Summary:
+
+Hi,
+
+I would like to report an incomplete fix of #115284 , text can inject in website title , see attached files.
+
+Regards

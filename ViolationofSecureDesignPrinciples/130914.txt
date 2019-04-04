@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/130914
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/h4rsh4d
+ReportedTo:Vimeo(vimeo)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.08.2016 20:20:02
+
+Summary:
+Error page text injection

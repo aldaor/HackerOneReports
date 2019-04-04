@@ -1,0 +1,46 @@
+ReportLink:https://hackerone.com/reports/126835
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/mohaab007
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:25.04.2016 17:19:37
+
+Summary:
+
+Hi
+
+It is not possible to edit your rating but there is a way to bypass that restriction 
+
+
+Steps:
+
+1- login to your uber account https://riders.uber.com
+
+2- View your trips https://riders.uber.com/trips
+
+3- choose one of your trips 
+
+4- click on resend 
+
+5- check your email
+
+6- you will find a button in email to rate your driver
+
+7- rate it to 4 or 3 (something different than the original rating)
+
+8- you will get a message indicating that you successfully changed it
+
+9- go back to https://riders.uber.com/trips
+
+10- your find that rating changed or may be not changed 
+
+11- you will need to click on filter trips and choose filter by credit card or city
+
+12- you will find that your rating is changed.
+
+
+Note: I tested it on a previous trip since 2015 and i rated the driver 5 stars but i changed it to 4 starts in 2016
+
+here is the tripe:  https://riders.uber.com/trips/2801e5cc-e798-485d-9ca6-d47e8c107568

@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/115230
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/saeedhashem
+ReportedTo:Keybase(keybase)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:08.02.2016 15:37:35
+
+Summary:
+
+Hay ,
+
+At dist.keybase.io , It's possible to inject text in the not-found message in order to trick the user to make him visit website or do something an attacker might be interested in .
+
+PoC :
+https://goo.gl/3WO6iH 
+
+I've shortened this one because it's really long , it's needed to be on google chrome , maximized window , bookmarks bar hidden and screen with 1366 x 768 resolution in order to be displayed like image 1.png 
+
+That was complicated , I know , but it was just to prove the point that it can be modified to be more convincing  .
+
+here's   the simple PoC 
+
+https://dist.keybase.io////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////However,it.has.been.moved.to.our.new.website.at.HTTP://EVIL.ATTACKER.COM////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+I think it's not a very good idea to return the user input in the not-found message body , I also think it's easy to fix .
+
+Happy fixing ,
+Enjoy your weekend ,

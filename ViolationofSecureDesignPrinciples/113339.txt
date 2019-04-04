@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/113339
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/hassham
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.06.2016 1:57:05
+
+Summary:
+
+Hi Paragonie Team, 
+
+While reviewing  your website i discovered that there are Cross-domain AJAX requests being sent, though you are implementing Content-Security-Policy header but Internet Explorer uses experimental X-Content-Security-Policy header according to Wikipedia info (https://en.wikipedia.org/wiki/Content_Security_Policy#Status)
+
+Reference from Hacker one reports:- 
+https://hackerone.com/reports/97191
+https://hackerone.com/reports/97948
+
+Please also find screenshot attached

@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/126377
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/ddworken
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 22:21:38
+
+Summary:
+
+It is possible to completely take over a driver's account with only an authenticated session. If a driver is logged on and wants to change their password, they will be asked for their current password (```changePassword.png```), but when they want to change their email, they are not asked for their current password (```changeEmail.png```).  Once a driver's email has been changed, it is trivial to reset their password through the password reset page (which only requires access to the driver's email account). 
+
+So the steps to take over a driver's account from an authenticated session are: 
+
+1. Change the driver's email to something that is attacker controlled
+2. Log out
+3. Use the forgot your password page to have a reset link sent to the attacker controlled email
+4. Use the link to reset the driver's password
+
+In order to fix this, you have to add password authentication for changing the email associated with the account (or do what you do for riders and not allow changing the email). 
+
+Thanks,
+David Dworken

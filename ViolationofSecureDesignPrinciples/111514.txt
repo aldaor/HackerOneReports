@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/111514
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/bigbear_
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.03.2017 13:13:47
+
+Summary:
+
+Возможно подделывать сообщение ошибки авторизации, тем самым манипулировать дальнейшим поведением пользователя.
+
+https://3k.mail.ru/?error=%CD%E5%E2%E5%F0%ED%E0%FF%20%E0%E2%F2%EE%F0%E8%E7%E0%F6%E8%FF%21%20%C2%E2%E5%E4%E8%F2%E5%20%EB%EE%E3%E8%ED%20%E8%20%EF%E0%F0%EE%EB%FC%20%ED%E0%20%66%61%6B%65%2D%33%6B%2D%6D%61%69%6C%2D%72%75%2E%72%75%2C%20%20%EF%EE%F1%EB%E5%20%FD%F2%EE%E3%EE%20%E2%E5%F0%ED%E8%F2%E5%F1%FC%20%ED%E0%20%FD%F2%EE%F2%20%F0%E5%F1%F3%F0%F1%21
+
+"Неверная авторизация! Введите логин и пароль на fake-3k-mail-ru.ru, после этого вернитесь на этот ресурс!"

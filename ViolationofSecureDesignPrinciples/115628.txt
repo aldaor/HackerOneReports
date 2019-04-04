@@ -1,0 +1,45 @@
+ReportLink:https://hackerone.com/reports/115628
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/kiraak-boy
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.05.2016 4:54:35
+
+Summary:
+
+Hello,
+
+I Already Reported This issue Though #180436 Support Ticket , Which is Fixed Now !
+
+
+Your Subdomain go.newrelic.com is pointing to unbouncepages.com
+You should immediately remove the DNS-entry for go.newrelic.com is
+pointing to unbouncepages.com.. Any One Can Claim That Domain , Please
+Read The Advisory Below.
+
+Remediation
+Please make sure you're always going through your DNS-entries so no
+subdomains are pointing to external services you do not use.
+
+We've written an advisory about this at Detectify:
+http://blog.detectify.com/post/100600514143/hostile-subdomain-takeover-using-heroku-github-desk
+
+Where you can read more about this sort of attack.
+
+I Have Done NSLookup For POC :-
+
+nslookup go.newrelic.com
+Server: 192.168.188.2
+Address: 192.168.188.2#53
+
+Non-authoritative answer:
+go.newrelic.com canonical name = unbouncepages.com.
+Name: unbouncepages.com
+Address: 52.77.9.206
+Name: unbouncepages.com
+Address: 54.169.6.194
+
+
+Thanks!

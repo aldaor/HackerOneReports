@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/128121
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/a5tronaut
+ReportedTo:Gratipay(gratipay)
+BountyAmount:10.0
+Severity:medium
+State:Closed
+DateOfDisclosure:20.08.2016 5:41:10
+
+Summary:
+
+**Desciption:**
+Username `1.0-payout` is not restricted.
+
+**POC URL:**
+Visit https://gratipay.com/1.0-payout/ and you will end up at my profile page.
+
+Regards
+Uttam

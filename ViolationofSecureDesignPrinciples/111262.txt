@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/111262
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/mrsihag
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:25.02.2016 21:13:44
+
+Summary:
+
+As the CSRF token doesn't change after login. Any other user that uses the same workstation is vulnerable. A safer way would be to use dynamic CSRF token or just change the token after login, so attacker doesnt get hold of this.
+
+Details of the attacks scenario in a shared workstation environment
+
+1.The attacker simply copies the authenticity token. This token is the only protection against the CSRF attack.
+
+2.Any other user that uses the workstation after that is vulnerable to CSRF. The attacker simply needs to craft a link with the required GET or POST method as he already have the CSRF token and send it to the victim via email, chat etc.
+
+3.The attacker can trick the victim in doing anything he wants without the user being aware of it.
+
+In the most basic sense the attacker has an authenticity token of another user which he shouldn't have had in the first place.

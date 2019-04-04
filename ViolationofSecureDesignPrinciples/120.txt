@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/120
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/szgru
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:09.01.2014 14:36:47
+
+Summary:
+
+There is no TXT record in DNS zone that defines Sender Policy Framework entry for domain hackerone.com. This makes it easy to spoof your e-mail address.

@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/118948
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/itly
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.06.2016 16:05:03
+
+Summary:
+
+Hello,
+
+According to your policy, reset or change password link should be expired within 30 minutes. But it is not so, link is working even after completion of 30 minutes.
+
+Proof of Concept: Please find it attached.
+
+Do evaluate it and inform me accordingly.
+
+Best Regards,
+
+Hely H. Shah

@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/108928
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/kpr
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:25.04.2016 8:56:37
+
+Summary:
+
+According to your documentation "https://hackerone.com/blog/introducing-signal-and-impact"
+
+#Examples 
+
+Activity(Reputation) 
+
+Report Self close as (N/A) :  0  .  
+
+its means Signals are not  affected . But our case signal affected  by  self-closed reports
+
+Signals doesn't take the 0 baseline into consideration for  self-closed reports
+
+Regards,
+kpr

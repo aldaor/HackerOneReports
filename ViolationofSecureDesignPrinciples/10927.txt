@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/10927
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/mohank
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.12.2014 19:22:18
+
+Summary:
+
+Hi ,
+     I found a content spoofing or content injection vulnerability in m.mail.ru
+URL :https://m.mail.ru/login?email=Content%20spoofing%20vulnerability@mail.ru&fail=1
+
+Paramater email is vulnerable to content injection . The value assigned to parameter email gets reflected in the input field which confirms that web application is vulnerable to content injection .
+
+Thanks for your time .

@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/117325
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/paresh_parmar
+ReportedTo:Gratipay(gratipay)
+BountyAmount:10.0
+Severity:medium
+State:Closed
+DateOfDisclosure:02.04.2016 18:46:08
+
+Summary:
+
+Hi,
+
+in grtp.co ,
+your dmark record  published in the wrong place! !
+, your DMARC record needs to discoverable at _dmarc.grtp.co, and not at grtp.co. The "_dmarc." part is required!
+
+
+Thanks
+Paresh

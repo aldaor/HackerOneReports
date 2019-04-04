@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/130460
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/geekboy
+ReportedTo:bitaccess(bitaccess)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:22.06.2016 19:18:43
+
+Summary:
+OTP was not properly checked on the session so it could have been bypassed by intercepting the server response and changing its value to valid.

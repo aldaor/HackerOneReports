@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/125505
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/r0t
+ReportedTo:Uber(uber)
+BountyAmount:5000.0
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 22:03:05
+
+Summary:
+
+When adding new promotion codes for free rides, one could brute force invitation codes since there is no protection against brute force attacks. 
+
+When going to payment page, it's possible to apply promotion code. If we intercept this request, we can brute force codes, since there is no captcha or limit for tries.
+
+In the pictures bellow, we can see the brute force in question with 3 types of different responses that allow us, to see if the code is valid, expired or invalid.
+
+Responses length:
+* 1951 - Valid code
+* 1931 - Not valid
+* 1921 - Code Expired
+
+Because there is a option to customize codes, and since all the codes that are customized begin with uber, we were able drop the time of the brute force, to a more practical attack.
+
+Finally, we could use a code to get a free ride. An attacker could use this vulnerability to ride in uber for free, creating multiple accounts, each one using one code.

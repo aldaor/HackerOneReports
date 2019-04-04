@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/119354
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/yaworsk
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.04.2016 2:27:42
+
+Summary:
+
+Hi All,
+Further to my last two comments on report #118312 and realizing that tokens are being stored in the DB, I realized there is probably a race condition vulnerability which allows invitation tokens to be consumed at least twice depending on the server/database response time.
+
+I tested it tonight and was able to authenticate two accounts on one invite for my test company, test22 simply by clicking the accept button quickly in two separate browsers with two separately logged in users. I've attached screenshots of the two confirmation emails back to the administrator -- they both show the same receipt time... I know this doesn't prove the race condition so if required, I can try and duplicate it in a video if required. It only took two attempts. I was hoping you might be able to see something in the server logs - it happened at 7:58pm EST
+
+I know this isn't necessarily a huge vulnerability in and of itself but I was thinking, a) an invitation should only be able to be accepted once and b) if I'm right with #118312 and the invitation tokens are vulnerable to a timing attack (which looks more likely given the race condition here), an attacker could accept one multiple times and the confusion for the administrator could give the attacker more time to browse reports...
+
+Thoughts?

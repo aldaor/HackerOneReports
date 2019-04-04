@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/117142
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/jackds
+ReportedTo:Gratipay(gratipay)
+BountyAmount:1.0
+Severity:low
+State:Closed
+DateOfDisclosure:19.07.2016 20:08:50
+
+Summary:
+
+Hi there! I've found out that also one of your subdomains still has HTTP TRACE enabled. This is similar to the issue described in #109054, except that it is for http://inside.gratipay.com.
+
+```
+curl -v -X TRACE http://inside.gratipay.com
+* Rebuilt URL to: http://inside.gratipay.com/
+* Hostname was NOT found in DNS cache
+*   Trying 107.21.92.176...
+* Connected to inside.gratipay.com (107.21.92.176) port 80 (#0)
+> TRACE / HTTP/1.1
+> User-Agent: curl/7.35.0
+> Host: inside.gratipay.com
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Connection: close
+< Date: Thu, 18 Feb 2016 12:26:17 GMT
+* Server WSGIServer/0.1 Python/2.7.6 is not blacklisted
+< Server: WSGIServer/0.1 Python/2.7.6
+< Content-Type: text/html; charset=UTF-8
+< Via: 1.1 vegur
+<  data...
+```

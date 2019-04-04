@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/117573
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/kiraak-boy
+ReportedTo:LeaseWeb(leaseweb)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.07.2016 9:09:20
+
+Summary:
+Directory Listing
+=============
+
+On some of our applications directory listing is configured. This is only allowed on those that do not contain restricted content. If the directory already contains public readable content, we find this not harmful, unless a working PoC can be given for a security threat.
+
+Without working PoC these reports on directory listings are not eligible for a bounty.

@@ -1,0 +1,71 @@
+ReportLink:https://hackerone.com/reports/116214
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/rj01
+ReportedTo:Sucuri(sucuri)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:16.05.2016 16:16:13
+
+Summary:
+
+Hi there team!
+
+I would like to report a *'sneaky', 'weird', but excisting* vulnerability, located at the Sucuri.net domain.
+
+“A vulnerability exists within your website allowing un-sanitized email form field inputs which could lead an attacker to pass malicious (html&script) content masquerading as a Sucuri.net email. (Sent from *info@sucuri.net via mail4.mcsignup.com*  and *info@sucuri.net via mail1.mcsignup.com*)”
+
+First of all, please see the attachments: **sucml1.png** & **sucml2.png** *(preview them before you read futher)*
+
+The problem is that we're just able to 'manipulate' emails sent by *info@sucuri.net*. We can use HTML, Javascript, Flash coding etc. Here's the detailed desciption:
+The Vulnerability Attack
+-
+
+What if we could edit/manipulate emails sent by Sucuri.net to its users/subscribers? We are able to inject & change HTML/Scripting into emails, sent via Sucuri. (as you can see at **sucml1.png** & **sucml2.png**) Normally these emails will be sent to the subscriber, the Sucuri user. What what if an attacker subscibes via Sucuri.net, sets/injects the 'evil' code into the mails, and changes/adds new email accounts? (simply by updating the 'preferences') (see the attachment: **sucml3.png**)
+Yes, the 'victim' recieves the infected/manipulated emails. (with the 'infected' 'First Name')
+
+*After all, a fact is that emails can be 'edited' or 'manipulated' (Sucuri simply doesn't sanatize/filter the 'email template(s)'), well, at least the _First Name of a user_ .*
+
+To be fair, i just didn't know how to report this vulnerabilty, as an **'XSS'** (well, at least, the including of links to external files), **'HTML Injection'** or **'Content Spoofing'** Vulnerability. Well, all can be completed?
+
+Why this Vulnerability
+-
+
+The problem is that we are able to set a First Name during the subscription process (see the attachment: **sucml5.png**), using scripts/html 'manipulated' source code(s).
+
+Your emails are setten to say: Hi <firstname>, but what if this <firstname> isn't filtered/sanatized? 
+(See the attachment: **sucml4.png**)
+As you can see the email reflected the <h1> & <h3> & <font> tag i used. (`<h3>Sorry, but i think Sucuris email services can be edited?</h3><h1>It is recommended to download our virus: <font color="red">http://www.evil.org/virus.exe</font></h1>`)
+Simple example, but hey, i just try to explain it. :)
+
+How to exploit this vulnerability?
+-
+
+Pretty simple.
+While subscribing to the Sucuri Blog,
+- Set an **Email Address** to: Attackers Email (because first we need to Confirm our subscription... later on we can add Victims Email, because there's an option to 'Update our preferences'
+- Set a **First Name** to: *<h3>Sorry, but i think Sucuris email services can be edited?</h3><h1>It is recommended to download our virus: <font color="red">http://www.evil.org/virus.exe</font></h1>*
+
+Yes, they will be saved!
+No problem after all, because Sucuri.net (the website) does its security on reflections/outputs of the First Name very well, all sanatized/filtered. But one thing you forget... The presetten email templates 'echo out' the <firstname>, like it was 'saved' into your database, without even filtering/sanatizing it. Your HTML Based emails, automatically sent by your system, simply do not filter the 'inserted variables'.
+
+How to solve this vulnerability?
+-
+
+Be sure to filter/sanatize the **First Name**, 'subscribed as a Sucuri.net user'.
+Vulnerable input: `<input type="text" id="mce-FNAME" class="" name="FNAME" value="">`
+Let me please exlplain several of possible fixes.
+
+- Why can a **First Name** contain characters like: `<>"';,.()?&`?
+
+Just try to 'ignore' these kinds of 'subscriptions '. (using HTML Charsets)
+Try to trigger an error, for example: **Your Firstname cannot contain HTML characters!** or something like: **Forbidden input**
+(So that even your email templates aren´t able to 'echoo these results', a.k.a 'manipulated inputs'.
+
+- Why not set a Maximum input value? I think it's better to set a max. of 25 characters, for example by using `maxlength="25"` Are there First names with more characters? I don't think so?
+
+*Screenshots attached (poc): sucml1.png  | sucml2.png  | sucml3.png  | sucml4.png & sucml5.png*
+
+Any questions or help? Please let me know, it's a pleasure to help.
+Sincerely,
+*Roy Jansen*

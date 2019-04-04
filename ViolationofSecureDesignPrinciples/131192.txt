@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/131192
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/apok
+ReportedTo:Coinbase(coinbase)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:05.05.2016 21:19:01
+
+Summary:
+Despite the front-end form fields being disabled, a user could still change his/her legal name by manually manipulating the form in developer tools, or by manually creating a POST request with the necessary parameter names and values.
+

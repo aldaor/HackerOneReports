@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/116432
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/adrianomarcmont
+ReportedTo:General Motors(gm)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:23.05.2016 20:44:05
+
+Summary:
+
+Email Spoofing vulnerability 
+
+An email input form existed which may allow email spoofing through a forged sender address. The form has been remediated such that it no longer accepts user input through this field.

@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/114796
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/ashish_r_padelkar
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.08.2016 6:30:24
+
+Summary:
+
+Hi,
+
+
+ Account name text fields have no validation and any characters can be used to save the name. this can be used for malicious purpose. a complete malicious link can be saved in this textboxes and when you send users an invitation to join new relic account, this names will render as valid link in email clients.
+
+for eg if i save account name as some porn site, it will render as link in email client.since the email is from trusted domain like new relic, victim will definitely want to click on the link which will end up him visiting some porn site.
+
+See the attached screen shot. for eg purpose i used http://google.com as name
+
+Thanks & Regards
+Ashish

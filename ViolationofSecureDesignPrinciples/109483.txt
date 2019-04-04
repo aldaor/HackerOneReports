@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/109483
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/aboukir
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:19.02.2016 11:11:36
+
+Summary:
+Team members that only had read-only permissions were able to both request and approve public disclosure. This would also allow read-only team members to post a public comment.
+
+This bug depends on a trusted team member with read-only permissions. Because of that, the consequences are not severe.
+Hi,
+
+I found out that a user who belongs to a group with Read-Only permission can still request and approuve public disclosure when the report is closed by privileged admin although that these permissions are only allowed if the user group has **Report** scope.
+
+Consequently, the team member with limited scope can also post public comment through public dislosure request and that contradicts what was expected.
+
+**Proof Of Concept :**
+1. Create a new user group with Read-Only permission
+2. Add a user to the group.
+3. Log in with that user account and browse a Closed report, you should now be able to request public disclosure.
+
+Kind regards.
+Yassine ABOUKIR

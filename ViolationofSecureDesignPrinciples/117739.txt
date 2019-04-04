@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/117739
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/hogarth45
+ReportedTo:Gratipay(gratipay)
+BountyAmount:1.0
+Severity:medium
+State:Closed
+DateOfDisclosure:16.06.2017 13:55:05
+
+Summary:
+
+Hello
+
+The use of the images in the statements 
+
+`![](http://blackdoorsec.net:80/1    "HTTP") `
+
+There appears to be no limit on how many can be inserted.
+On my own account "https://gratipay.com/~34534534fsfs/" I placed 100
+
+Gratipay users could unknowingly become part of a DDoS attack against another site.
+
+I would recommend limiting the number of images that can be placed.
+
+Attached is a video of just a traffic counter being triggered by the page load.

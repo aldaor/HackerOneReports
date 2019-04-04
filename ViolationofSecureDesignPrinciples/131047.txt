@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/131047
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/drstache
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.08.2017 13:29:04
+
+Summary:
+
+I haven't managed to inject something, but I just want to make sure that this input is filtered.
+
+See the attached screenshot

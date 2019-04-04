@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/123615
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/nismo
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:30.04.2016 12:21:05
+
+Summary:
+
+***Issue***
+New HackerOne exciting addition is the ability to include inline images by using their reference_ID, which is in this case {Fxxxxx}. The reference ID is bind to the its report Context_ID and cant be referenced by others (unique reference
+
+Is seems that if the reference_ID is used in another newest report the attachment is deleted from the original report
+
+Note: Reports must belong to the same reporter
+
+POC
+1. Create a Report with an attachment and file it to any team. Notice the reference_ID (Fxxxxx)
+2. Create a new Report for any team and reference the ID via a POST in draft_Sync
+ `POST /security/reports/draft_sync HTTP/1.1`
+As soon as you do the POST Go to `the https://hackeone/security/reports/new`
+You will see the reference_ID attachment attached.
+3. Go to the report in 1. The reference_ID and attachment is deleted for the original report!
+
+{F79192}
+
+
+Hope it will be fixed!
+
+Thanks!

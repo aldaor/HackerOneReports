@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/10109
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/dawidczagan
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:30.04.2014 22:02:01
+
+Summary:
+
+There seems to be no prevention from sending multiple password reset links to a selected e-mail. As a result mailbox of the user can be flooded with these mails. I would recommend to add CAPTCHA in forgot password functionality.

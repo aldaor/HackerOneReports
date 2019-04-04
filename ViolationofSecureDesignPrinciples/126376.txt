@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/126376
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/bountypls
+ReportedTo:Coinbase(coinbase)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:17.05.2016 13:44:25
+
+Summary:
+When a user received bitcoin from another Coinbase user, it was possible for the recipient to see the sender's email address in the transactions list in the Android app, despite the fact that users are told their emails would not be shown to other users.
+

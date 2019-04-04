@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/129830
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/bugdiscloseguys
+ReportedTo:APITest.IO(apitest)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.06.2016 18:37:14
+
+Summary:
+
+Hy There
+So When A User For Example in my case sign up with email -->iamrudy99@gmail.com
+And Confirm The Email Address So Then If I Logout And MAke sure that the account associated with iamrudy99@gmail.com is logged in on facebook and on apitest.io when i click on sign in via FB it leads me to Registration Page With FB Details Entered Within It.
+So Basically What Usually Happens Is When For Example an account is made from x@x.com and user sign in with fb he must be logged in no matter what.
+You Can Even Check This Same Thing on imgur.com
+And Its Usually The Most Efficient Thing And Found Common On Any Web App.
+Thanks
+For More Info Lemme Know

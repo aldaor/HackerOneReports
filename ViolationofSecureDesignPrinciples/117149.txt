@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/117149
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/kiraak-boy
+ReportedTo:Gratipay(gratipay)
+BountyAmount:2.0
+Severity:medium
+State:Closed
+DateOfDisclosure:18.02.2016 23:47:38
+
+Summary:
+
+Hello Security Team,
+
+I Was Checking The SPF Record For https://grtp.co/  at http://www.kitterman.com/spf/validate.html
+
+
+No valid SPF record found of either type TXT or type SPF.
+
+Kindly Fix it Asap!
+
+Thanks!

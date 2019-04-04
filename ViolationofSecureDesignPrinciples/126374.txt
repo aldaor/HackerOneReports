@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/126374
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/ddworken
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 22:17:31
+
+Summary:
+
+Hi, 
+
+When a new driver is registering on Uber, they have to upload a variety of files (proof of insurance, ID, etc). When these files are being uploaded, Uber.com only checks whether the files have the correct extension. This means that one can upload a plain text file with a ```.png``` extension and it will be rendered as plain text when viewed in Internet Explorer. 
+
+At first I was attempting to get js execution with this (similar to how I did #126197), but that is not possible. When the file extension (```.png``` in our case) and the MIME type (```image/png```) match, Internet Explorer will not render it as HTML, it is only willing to render it as plain text. This still opens up a possibility of a fishing attach by doing something like this: 
+
+```
+https://uber-documents.s3.amazonaws.com/f7e83fb2-a309-4845-a038-8cb3846a0f0d.png?Signature=eQwYlK31HVRqaHN%2FdvaImVEDQuI%3D&Expires=1459110446&AWSAccessKeyId=AKIAIQSUTKT5KJFDBULQ
+```
+
+While this is not as bad as JS execution, I believe that this still qualifies as a vulnerability. In all other image upload forms (e.g. profile picture upload), Uber carefully checks that the image is valid before accepting it and hosting it. In this case, Uber fails to do so. 
+
+Thanks,
+David Dworken

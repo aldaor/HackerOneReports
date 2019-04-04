@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/131053
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/drstache
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.08.2017 13:28:04
+
+Summary:
+
+At https://gratipay.com/USER/emails/ you can submit a non valid email.
+To do it you only need to change `type="email"` in `type="text"` , you are using a filter, but special chars pass though, as you can see in the screenshots.

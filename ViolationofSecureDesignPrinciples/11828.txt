@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/11828
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/shahmeer-amir
+ReportedTo:Cloudflare(cloudflare)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 10:00:31
+
+Summary:
+
+Your web application https://www.cloudflare.com does not have a password reset threshold set. this means that your client and users account can be flooded with password reset emails which can result in spam to the mailer's inbox. You should implement a threshold to prevent this attack

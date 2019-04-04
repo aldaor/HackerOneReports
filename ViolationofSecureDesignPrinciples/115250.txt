@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/115250
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/zh54
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.06.2016 1:57:23
+
+Summary:
+
+Hi , I know you want researchers to focus on bugs with your open source , however , the fix for this issue is pretty simple , moreover you haven't clearly said not to report issues in your website , so reporting this to you ;) 
+this bug can be used to spoof your emails.
+
+#Reproduction steps:
+1.Go to http://www.kitterman.com/spf/validate.html?
+2.Enter `paragonie.com`in the text box.
+3. Click Get SPF Records (if any)
+4.  You will got no records.
+
+Thanks

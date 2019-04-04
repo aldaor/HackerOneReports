@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/131028
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/hackheaven
+ReportedTo:Moneybird(moneybird)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 9:11:57
+
+Summary:
+This researcher found a vulnerability in which it was possible to upload attachments with malicious extensions. We have implemented a security filter to prevent these attachments to be uploaded.

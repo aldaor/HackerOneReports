@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/123380
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/girish_s_pattanashetty
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.06.2016 16:08:06
+
+Summary:
+
+1. Go to the Link for register
+2.Email will be sent to the user - Email id 
+3.Access the same Link in 2 different browser ( Google Chrome , Firefox)
+4.Change the username in each browser !!!!
+5. Still it works !!!
+
+I guess you got to know what the problem is !!!!
+the Link sent to the Email id for registration ( Activation Link) can be miss used !!!

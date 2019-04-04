@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/12425
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/shahmeer-amir
+ReportedTo:Kadira(kadira)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 0:37:30
+
+Summary:
+
+Your API keys are cached on the client side.This will trigger client side attacks

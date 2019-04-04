@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/12042
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/shahmeer-amir
+ReportedTo:joola.io(joola-io)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.05.2014 15:23:50
+
+Summary:
+
+Your joola main login panel does not have rate limiting enabled to prevent brute force attacks on its panel

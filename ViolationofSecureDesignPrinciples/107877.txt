@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/107877
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/pisarenko
+ReportedTo:VK.com(vkcom)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:13.02.2017 17:34:22
+
+Summary:
+Отсутствие flood-контроля в api методе регистрации, что давало возможность отправлять массово смс или звонить на произвольный номер.

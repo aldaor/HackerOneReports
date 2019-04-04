@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/115296
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/kiraak-boy
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:16.10.2017 5:52:14
+
+Summary:
+
+Hello,
+
+You Have All Cacheable SSL Pages in Domain .
+
+It is possible to gather sensitive information about the web application such as usernames, passwords, Contact information , comments or any machine name and/or sensitive file locations.
+
+Sensitive information might have been cached by your browser
+
+Most web browsers are configured by default to cache the user's pages during use. This means that SSL pages are cached as well. 
+
+It is not recommended to enable the web browser to save any SSL information, since this information might be compromised when a vulnerability exists.
+
+Response :-
+
+HTTP/1.1 200 OK
+Server: cloudflare-nginx
+Date: Mon, 08 Feb 2016 01:21:25 GMT
+Content-Type: text/html;charset=UTF-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Pragma: no-cache
+
+Disable caching on all SSL pages or all pages that contain sensitive data.
+
+This can be achieved by using "Cache-Control: no-store" and either "Pragma: no-cache" or "Cache-Control: no-cache" response directives in your SSL page headers.

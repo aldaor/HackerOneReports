@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/116575
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/bountypls
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:120.0
+Severity:
+State:Closed
+DateOfDisclosure:26.08.2016 18:50:25
+
+Summary:
+Any file upload was accepted without filter, which led to RCE vulnerability.

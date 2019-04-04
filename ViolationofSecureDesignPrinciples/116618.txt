@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/116618
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/bulla
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:20.02.2016 12:12:01
+
+Summary:
+
+port 7000 on assets.gratipay.com was found to be open to the public. The port seems to be working on a proxy module of nginx and i was able to connect to ot by configuring my browser to use it as a proxy.
+
+also port 514 is also found to be open and connection to it via rlogin succeeds although no substantial data is revealed.
+
+These ports may reveal internal architecture of application and can be use to communicate to internal d=network of the server, hence should be filtered from direct interation

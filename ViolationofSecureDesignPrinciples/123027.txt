@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/123027
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/rohk
+ReportedTo:HackerOne(security)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:15.03.2016 3:01:18
+
+Summary:
+**Given**
+* a team with an autoresponse comment set up
+* a user submitting a report to said team
+
+**Then**
+* the submitter was able to edit the team's auto-response comment until the edit period timed out.
+
+This was due to the way that permission checks were handled when the commenter was a User versus a Team. This was a recent regression due to a change introduced on 03/11/2016.
+
+Not completely sure if this is by design due to encountering it for the first time.
+
+When a company has `auto response` turned on, the reporter can change the contents of the message without any problems.
+The reporter should not be able to change the contents of the companies auto response in any way due to the fact that they should not have privileges to that feature.
+
+PoC:
+Users can abuse this by changing the contents of the auto response to something else.

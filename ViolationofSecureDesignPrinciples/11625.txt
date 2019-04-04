@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/11625
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/uaenajiawgivegqwuyvegqyuwvyefg
+ReportedTo:Hubdia(hubdia)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 10:00:31
+
+Summary:
+
+Hi Hubdia,
+
+i found a bug in your subscribe page (https://hubdia.com/)
+which this bug can subscribe multiple emails.
+
+__Vulnerable Link:__
+https://hubdia.com/
+
+__Proof of Concept:__
+1. use Live HTTP Headers (firefox addon)
+2. change the email (see in attached photo)
+3. submit the request in many times
+
+__Thanks,__
+Jerold Camacho

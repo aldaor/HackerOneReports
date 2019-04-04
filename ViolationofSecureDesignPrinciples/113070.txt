@@ -1,0 +1,50 @@
+ReportLink:https://hackerone.com/reports/113070
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/pisarenko
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:21.04.2016 4:25:48
+
+Summary:
+This bug encompassed a couple of different issues:
+- A markdown formatting issue that presented no security issue but was definitely kinda ugly. (fixed as a side effect of resolving an unrelated bug  #115205)
+- An issue with how we highlighted the domain of external links, where URLs that included an '@' symbol (but not in such a way that denoted an authentication component) only highlighted domain-like components after the '@', even if the real domain was included in the section before the '@'. This could let a malicious user use our redirect page to give a false impression to another user of where they were being sent. There were several other edge cases discovered during the resolution of this bug that could result in the wrong segment of the URL being highlighted. (Fixed)
+- Another minor issue on profile pages where certain values inputted for the 'website' field would render the 'back to profile' link on the thanks page unclickable (unfixed for the moment. Not a security concern but will get fixed up eventually).
+
+It's worth noting that in the case of the URL highlighting issue, there are still some cases where we don't highlight any domain, particularly in situations where the URL is not valid but is manipulated by certain browsers into a valid url (chrome does some crazy re-interpretation in certain cases). In cases where our users are being redirected to an external page but we cannot highlight the domain of the website to which they are being redirected, we ask that they take extra effort to scrutinize the link and determine its legitimacy, 
+LOOK .
+1) html 
+example:
+`[*<http://myfuneral.ru/>*_<www.hackerone@yandex.ru>_](https://hackerone.com/pisarenko)`
+copy + past 
+look rezult:
+[*<http://myfuneral.ru/>*_<www.hackerone.com@yandex.ru>_](https://hackerone.com/pisarenko)
+mailto:www.hackerone.com@yandex.ru" 
+2) here the situation is more complicated , the fact that I have mail
+`www.hackerone@yandex.ru  address@example.com`  copy past 
+look rezult:
+
+www.hackerone@yandex.ru  address@example.com
+
+(click one link  and two link)
+
+2.1) I don't know correctly or not , but look this (possibly a user visited a malicious link)
+
+www.hackerone.com%2Fbugs%3Fsubject=user&report_id=81070&view=all&substates%5B%5D=new&substates%5B%5D=triaged&substates%5B%5D=needs-more-info&substates%5B%5D=resolved&substates%5B%5D=not-applicable&substates%5B%5D=informative&substates%5B%5D=duplicate&substates%5B%5D=spam&text_query=@myfuneral.ru/&sort_type=latest_activity&sort_direction=descending&limit=25&page=1
+
+ (click and Proceed)
+
+
+
+3) I attached image , the button is not valid if you insert the profile in the WebSite 
+
+`http://vk.com/i.luck?hackerone@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@`
+
+look go to https://hackerone.com/pisarenko/thanks and click "Go back to profile" (not work)
+
+ i think has decided that this report is not eligible for a bounty , but you need to fix
+
+thanks .
+

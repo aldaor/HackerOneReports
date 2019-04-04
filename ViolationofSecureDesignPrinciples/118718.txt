@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/118718
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/techguynoob
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:21.04.2016 1:55:24
+
+Summary:
+
+Hello,
+
+I would like to report an incomplete fix of #109483 this report .manually disclose functionality is not consider for fix that cause read-only team members to post a public comment.
+
+In hackerone public disclose have a three types 
+
+1.Team/User Request a public disclose a bug
+2.Team/user Agree a public disclose a bug
+3.Team member Manually public disclose  a bug
+
+Poc :
+
+1.Login into Program(testbug) as owner account 
+2.Create a new group with "Report" Permission . Add a user to that group
+3.Create a new group with "Read-only" Permission . Add a user to that group
+3.Login into user account Report a bug  to Program (testbug)
+4."Report" Permission User closed a bug to Resolved and ask for "Public disclose" 
+5."Read-only" Permission user able to "Manually public disclose" a bug .
+
+Regards,
+Techguynoob

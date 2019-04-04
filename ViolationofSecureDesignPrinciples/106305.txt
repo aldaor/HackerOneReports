@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/106305
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/ashish_r_padelkar
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:07.01.2016 2:01:00
+
+Summary:
+
+New section has been added recently in reputation where you can see  something called as signal , which says average reputation per report. However, you can improve your signal points by following below steps
+
+Steps:
+create any report in any team
+self close the bug
+see your signal in reputation. it will improve!.

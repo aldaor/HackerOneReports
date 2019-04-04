@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/127620
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/paresh_parmar
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:05.04.2016 1:15:34
+
+Summary:
+The new [Hacktivity](/hacktivity) view unintentionally leaked the report IDs of non-public (undisclosed) reports. While report IDs on their own are not sensitive, the fact that the information was correlated with a specific team and researcher (as well as a bounty/swag action) lead to a metadata information disclosure that could be used to possibly glean information about the report (especially if the report ID was ever mentioned elsewhere, such as commit log or some other context).
+
+
+url: `https://hackerone.com/hacktivity.json`
+
+this url reveals information of reporters  Report id ./ 
+```
+{"id":126242,"url":"https://hackerone.com/reports/126242","reporter":{"id":49613,"username":"theflofly","url":"https://hackerone.com/theflofly"},"team":{"url":"https://hackerone.com/trello","handle":"trello","profile_picture_urls":{"small":"https://profile-photos.hackerone-user-content.com/production/000/000/942/db0d81172c2faaca584ead499f03e90905d7bdec_small.png?1421876138","medium":"https://profile-photos.hackerone-user-content.com/production/000/000/942/ef93799e2cadf97b9283c3def6876560f6d74031_medium.png?1421876138"},"profile":
+```
+
+i guess this is not Intensionally ? 
+
+Regards.

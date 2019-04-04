@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/105953
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/goro
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:19.12.2015 2:02:54
+
+Summary:
+
+Hello! For example we have a link `https://hackerone.com/blog/introducing-signal-and-impact`, and we will change it to `https://hackerone.com/blog/introducing-signal-and-impact?&u=https://vk.com/durov`. If you send a link to the user and he wants to share a link to facebook, the content will change.
+`https://www.facebook.com/sharer.php?u=https://hackerone.com/blog/introducing-signal-and-impact?&u=https://vk.com/durov`

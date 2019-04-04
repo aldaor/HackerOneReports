@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/131065
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/mmyamin
+ReportedTo:Gratipay(gratipay)
+BountyAmount:1.0
+Severity:low
+State:Closed
+DateOfDisclosure:13.08.2016 22:03:09
+
+Summary:
+
+Issues at https://grtp.co/
+reference for Weak SSL Ciphers:https://www.owasp.org/index.php/Testing_for_Weak_SSL/TLS_Ciphers,_Insufficient_Transport_Layer_Protection_(OTG-CRYPST-001)
+Weak SSL Ciphers supported at port 443:
+TLS 1.0:
+ TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA (ec 256) - C
+ TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+ TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 4096) - C
+TLSv1.2: 
+TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA (ec 256) - C
+TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA (dh 1024) - D
+TLS_RSA_WITH_3DES_EDE_CBC_SHA (rsa 4096) - C
+Evidence of Weak SSL ciphers is attached in figure 1
+
+Weak SSH Ciphers supported at port 22:
+Reference :https://www.tenable.com/plugins/index.php?view=single&id=70658
+Supported CBC ciphers
+aes128-cbc
+3des-cbc
+blowfish-cbc
+cast128-cbc
+aes192-cbc
+aes256-cbc
+
+Evidence related to supported CBC ciphers is attached in figure 2

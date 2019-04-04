@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/130521
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/ashish_r_padelkar
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 23:01:27
+
+Summary:
+
+hi,
+
+At url `https://www.uber.com/unsubscribe` you can unsubscribe any email of any user, which is bit of concern for the people who wants to receive emails from uber.
+
+only people who gets email from uber should be allowed to unsubscribe themselves from uber emails rather than anybody unsubscribing anyone
+
+Regards
+Ashish

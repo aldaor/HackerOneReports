@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/131722
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/trabajoduro_2
+ReportedTo:bitaccess(bitaccess)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.05.2016 18:24:22
+
+Summary:
+SPF was not correctly set on domains.

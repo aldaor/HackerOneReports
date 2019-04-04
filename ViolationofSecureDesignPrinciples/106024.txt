@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/106024
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/gorang_joshi
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.03.2016 12:19:11
+
+Summary:
+
+Hello Owncloud ! 
+For Example , We Have a Link :
+```
+https://owncloud.com/blog-you-can-soon-be-fined/
+```
+And We Change It To :-
+```
+https://owncloud.com/blog-you-can-soon-be-fined/?u=https://vk.com&text=another_site:https://hackerone.com/gorang_joshi
+```
+So When You Share It , While Using Your Sharing Buttons Present On Your Page , The Source Code Will Change :
+Facebook : ```https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fowncloud.com%2Fblog-you-can-soon-be-fined%2F%3Fu%3Dhttps%3A%2F%2Fvk.com&text=another_site%3Ahttps%3A%2F%2Fhackerone.com%2Fgorang_joshi```
+
+
+twitter :```https://twitter.com/intent/tweet?text=another_site%3Ahttps%3A%2F%2Fhackerone.com%2Fgorang_joshi&url=https%3A%2F%2Fowncloud.com%2Fblog-you-can-soon-be-fined%2F%3Fu%3Dhttps%3A%2F%2Fvk.com&original_referer=```
+
+Thanks , The Same Report Was Reported By My Friend To Hackerone , You Can Check This Here :
+```
+https://hackerone.com/reports/105953
+```
+Thanks , Hope You'll Response Likewise :)

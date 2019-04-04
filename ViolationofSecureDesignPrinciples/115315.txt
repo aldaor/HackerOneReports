@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/115315
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/sumitcfe
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.04.2016 16:56:01
+
+Summary:
+
+There is no TXT record in DNS zone that defines Sender Policy Framework entry for domain https://paragonie.com/. This makes it easy to spoof your e-mail address.

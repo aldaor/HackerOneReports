@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/115214
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/karthic
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.02.2016 15:56:19
+
+Summary:
+Email is fundamentally insecure. While you can include a SPF record to your DNS records (which themselves are not secure), it's up to the other mail servers and clients to validate these records. If they don't, spoofing is trivial even with these records in place.
+
+An email address's `From:` header is a poor identity verification mechanism. If we send any sensitive information, we always sign and/or encrypt it with GnuPG. Our GnuPG, not our email address, is our identity verification mechanism.
+
+If we experience any loss of reputation because our colleagues trust the `From:` header and don't bother to check the PGP signature, then that's egg on their face. This is an acceptable risk, as we're focused on more important things, like [SMIMP](http://smimp.org/) (a secure-by-default protocol that will, hopefully, replace email). 
+There is no TXT record in DNS zone that defines Sender Policy Framework entry for domain paragonie.com. This makes it easy to spoof your e-mail address.

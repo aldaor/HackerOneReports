@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/123849
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/staytuned
+ReportedTo:Gratipay(gratipay)
+BountyAmount:1.0
+Severity:low
+State:Closed
+DateOfDisclosure:02.04.2016 5:01:51
+
+Summary:
+
+Poc :
+
+https://gratipay.com/ -- optimizelyBuckets=%7B%7D; expires=Sat Mar 14 21:28:25 2026; path=/; domain=.gratipay.com; max-age=315359448,https://gratipay.com/ -- optimizelyEndUserId=oeu1458188905178r0.282567850779742; expires=Sat Mar 14 21:28:25 2026; path=/; domain=.gratipay.com; max-age=315359448,https://gratipay.com/ -- optimizelySegments=%7B%7D; expires=Sat Mar 14 21:28:25 2026; path=/; domain=.gratipay.com; max-age=315359448,https://gratipay.com/ -- optimizelyPendingLogEvents=%5B%5D; expires=Wed Mar 16 21:28:40 2016; path=/; domain=.gratipay.com
+
+
+Impact:
+Cookies with the "secure" attribute are only permitted to be sent via HTTPS. Session cookies sent via HTTP expose an unsuspecting user to sniffing attacks that could lead to user impersonation or compromise of the application account.
+
+Solution:
+If the associated risk of a compromised account is high, apply the "secure" attribute to cookies and force all sensitive requests to be sent via HTTPS.
