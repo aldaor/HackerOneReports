@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/20661
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/mrrm
+ReportedTo:WePay(wepay)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.08.2014 23:25:02
+
+Summary:
+
+according to:
+https://stage.wepay.com/developer/reference/oauth2
+
+"redirect_uri - The uri the user will be redirected to after authorization. Must have the same domain as the application."
+
+your current validation of this domain value is not sufficient.
+
+i setup my app with a website url of http://test1.appspot.com/
+
+then i requested the url:
+https://stage.wepay.com/v2/oauth2/authorize?client_id=101168&redirect_uri=http://nfchunt.appspot.com/&scope=manage_accounts,collect_payments,view_user,send_money,preapprove_payments,manage_subscriptions
+
+when i submitted the authorization, the authorization code was sent to an entirely separate application.
+the response location header was:
+http://nfchunt.appspot.com/?code=1163ec6819f56b4c7ba9d3644b143db1ddf4dc2caf866e2163
+
+this means that wepay.com is not currently safe to be used by any google app engine appplication using the appspot.com domain.
+this likely affects other shared platform as a service hosting services.
+
+the severity of this issue is high. it means that an attacker can craft an authorization url for another application. when the user grants that authorization, wepay gives the user's authorization code to the attacking application. the attacking application can then trade the code for an access token and act on the user's protected resources at wepay. game over.

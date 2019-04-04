@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/123172
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/shailesh4594
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.05.2016 1:40:27
+
+Summary:
+
+Hello,
+Domain : login.newrelic.com
+Endpoint  : https://login.newrelic.com/login?return_to=[URL]
+
+Description : There is a protection against open redirection at this endpoint, so an attacker can't redirect an user to any external website using following  : 
+
+https://login.newrelic.com/login?return_to=http://attacker.com/ [Won't work] 
+
+It won't work due to existing protection. But this protection is very weak and can be bypassed using following payload : 
+
+https://login.newrelic.com/login?return_to=http:///@attacker.com//localhost 
+https://login.newrelic.com/login?return_to=http:///@attacker.com//newrelic.com
+
+Any of above both links will redirect user on http://attacker.com after getting logged in or directly if already logged in.
+
+Impacts : Attacker can redirect user on any malicious website.
+
+Mitigation : Use more stronger protection at this endpoint.
+
+Best regards,
+Shailesh

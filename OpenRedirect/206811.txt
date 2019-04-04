@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/206811
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/jon_bottarini
+ReportedTo:Robinhood(robinhood)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:13.04.2017 17:40:06
+
+Summary:
+Robinhood's OAuth2 authorization endpoint allowed arbitrary redirect URIs to be specified. While the actual OAuth2 code was not sent to the third party URI, the user was still redirected to the URI resulting in an open redirect vulnerability. This has since been fixed to show the proper error responses.

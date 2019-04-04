@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/219447
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/robd4k
+ReportedTo:Shipt(shipt)
+BountyAmount:50.0
+Severity:none
+State:Closed
+DateOfDisclosure:07.08.2018 3:38:42
+
+Summary:
+Security researcher identified an open redirect vulnerability in www.shipt.com. Shipt's security and engineering teams quickly responded and addressed the issue. 

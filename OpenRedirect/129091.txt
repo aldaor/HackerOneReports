@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/129091
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/csanuragjain
+ReportedTo:Automattic(automattic)
+BountyAmount:75.0
+Severity:
+State:Closed
+DateOfDisclosure:23.07.2017 10:30:48
+
+Summary:
+
+**Working POC for making CPU 99% for wordpress user**
++ Login to wordpress account
++ Visit any of the below url's which are sent by attacker to victim (since these are wordpress url so victim will accept & open)
+1.https://wordpress.com/post/20000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+2.https://wordpress.com/design/1000000000000000000000
+3.https://wordpress.com/pages/anurag.wordpress.com/-10000000000000000000000000000000000000000000000
++ Check your CPU usage in task manager. It would go to 99% as shown in attached.
++ This happens since these pages continues to send unlimited requests to https://pixel.wp.com/g.gif?v=wpcom-no-pv&x_newdash_pageviews=route&t=0.1642450245826501
++ Unlimited request are send since I think the variable holding the Post id cannot hold a value as long as 20000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 which throws an exception.
++ **Problem:** User CPU goes 99% causing the browser to go very very slow & unresponsive. Negative impact on customer.
+
+**Working POC for open redirect**
++ Access wordpress using url https://wordpress.com/wp-login.php?redirect_to=https%3A%2F%2Fgoogle.com%2Fsearch?q=myFakeSite&reauth=1
++ After login you will be redirected to https://www.google.co.in/search?q=myFakeSite&gws_rd=cr&ei=WLYGV8fUHIq8uATj56uIBA which is incorrect. Wordpress should not allow redirecting to external websites like google,yahoo.
++ **Problem:** In future if there is any bug in these external site then this open redirect from wordpress could cause harm to users.

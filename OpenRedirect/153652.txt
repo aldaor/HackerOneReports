@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/153652
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/capripio
+ReportedTo:Shopify(shopify)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.07.2016 17:14:12
+
+Summary:
+It was possible to provide a URL starting with `../` and redirect to a page on the same domain. This was not intended so we decided to fix the issue even though it had minimal security implications.
+Hey,
+
+I have noticed and redirect hidden field in admin/staff login page so I though give it a little shot! 
+
+What happened another user create a Shopify page with bad javascript code in it.
+
+and when any user or owner login with following traversal URL he/she will be redirected to bad js containing a page with any intentional.
+
+"https://capripio.myshopify.com/admin/auth/login?redirect=../pages/about-us"
+
+I am well aware of the following description on your bug bounty page.
+"Any issue where a store administrator is able to insert javascript in the storefront area of their own store, including the checkout pages."
+
+But I think security issue is greater here as you were aware of above statement so it might be dangerous to redirect someone to a bad page on a front store, so I submitted.
+
+Please see POC video for more demo. available at private dropbox folder follow link below:
+https://www.dropbox.com/s/49odz7owp1oj53t/poc.zip?dl=0
+
+Sorry for my bad English!

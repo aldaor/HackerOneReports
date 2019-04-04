@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/175779
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/jimeno
+ReportedTo:Brave Software(brave)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:14.10.2016 17:27:06
+
+Summary:
+
+
+## Summary:
+
+All details were provided in the original report. You can read it [here](https://github.com/brave/browser-laptop/issues/2723)
+
+I'm reporting it here because I asked [bcrypt](https://twitter.com/bcrypt) if I should do it and he told me this:
+
+
+{F127893}
+
+
+As she said me, I'm reporting here and indicating it's for a retroactive reward.
+If any identity confirmation or link between my Github account and my H1 account is needed, please, feel free to ask for it.
+
+Kind regards.

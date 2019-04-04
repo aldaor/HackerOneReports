@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/14699
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/eronx
+ReportedTo:WePay(wepay)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 9:25:08
+
+Summary:
+
+Hello, this report is a copy of my previous reports sent to your email ( security@wepay.com) some days ago. Please note that everything written below are copied and pasted from the report. ( Ticket #437224 ):
+
+Here is the affected URL:
+
+https://www.wepay.com/v2/oauth2/authorize?client_id=112736&redirect_uri=http://www.maliciousurl.com&scope=manage_accounts,collect_payments,view_user,send_money,preapprove_payments,manage_subscriptions
+
+When a malicious user tries to modify the oath2 link, instead of providing the legit redirect URL of the application, the malicious user provided a rogue / malicious website the victim may fall into it.
+
+Whilst it is legit when the victim input his credential, he will be redirected to www.maliciousurl.com when he tries to login in the URL above. IF you wanted to try it yourself, kindly change the client_id of your own ID.
+
+Should I say there should be check if the value of redirect_uri parameter matches of what is set by the client_id in its application.
+
+Kindly let me know of your thoughts here sir.
+
+Cheers,
+Clifford Trigo

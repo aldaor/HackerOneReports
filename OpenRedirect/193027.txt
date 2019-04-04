@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/193027
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Cloudflare(cloudflare)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:24.03.2017 19:51:11
+
+Summary:
+
+**PoC**
+```
+https://http2.cloudflare.com/%5cblackfan.ru
+```
+**HTTP Response**
+```http
+HTTP/1.1 301 Moved Permanently
+...
+location: /\blackfan.ru/
+```

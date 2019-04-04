@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/169759
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/zombiehelp54
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:04.12.2016 12:54:10
+
+Summary:
+
+Hi , 
+I have found an open redirection issue when bulk editing resources.
+#PoC:
+Go to `https://<shop>.myshopify.com/admin/bulk?resource_name=Product&return_to=/..//evil.com` then click the **Close** button and you'll go to *evil.com* 
+
+Thanks!

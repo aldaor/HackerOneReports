@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/127741
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/shailesh4594
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 18:12:30
+
+Summary:
+
+Hello,
+
+#123172 is fixed even i found another bypass of open redirection protection at this endpoint.
+
+First get logged in and then open following URL : 
+
+https://login.newrelic.com/login?return_to=///attacker.com
+
+You will be redirected on http://attacker.com
+
+Bes regards,
+Shailesh

@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/103772
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/batman
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:16.12.2015 4:33:41
+
+Summary:
+
+Hi,
+
+Any user after logging into an any myshopify shop can be redirected to other domain.
+
+To reproduce:
+Send this to victim: 
+http://sehyoginfoshop.myshopify.com/account/login?checkout_url=.np
+
+Now when our victim logs in,
+He will be redirected to
+https://sehyoginfoshop.myshopify.com.np/
+
+Which is not a shopify domain.
+
+Fix: While redirecting Use <shop-name>"/"$checkout_url instead of <shop-name>$checkout_url

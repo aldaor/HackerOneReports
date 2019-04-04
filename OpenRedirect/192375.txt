@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/192375
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:02.03.2017 13:17:10
+
+Summary:
+
+**PoC**
+Только для неавторизованных пользователей (без cookie Mpop)
+```
+https://ml.money.mail.ru//blackfan.ru
+```
+
+**HTTP Response**
+```
+HTTP/1.1 302
+...
+Location: //blackfan.ru?dmr_refresh=1
+```

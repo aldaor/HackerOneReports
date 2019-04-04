@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/219599
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/t-pwn
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.05.2017 11:12:02
+
+Summary:
+Open redirection in it.mail.ru. 
+it.mail.ru is not currently in the bug bounty scope.

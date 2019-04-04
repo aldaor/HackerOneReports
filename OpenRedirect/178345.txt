@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/178345
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/shailesh4594
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:26.03.2017 8:34:22
+
+Summary:
+
+Hello,
+
+**Endpoint:** https://hackerone.com/users//saml/sign_in?email=teste@snapchat.com&remember_me=true
+
+Recently, you have patched an open redirection issue which was reported as #171398. 
+I found a bypass of that patch. 
+
+**Steps to reproduce:** 
+1. Add following in comment/report : 
+```https://hackerone.com/users//saml/sign_in?email=teste@snapchat.com&remember_me=true``` 
+2. Click on link. 
+3. You will redirected on SSO URL without going through **External Link Warning** page. 
+4. Done.
+
+PoC  : 
+https://hackerone.com/users/saml/sign_in?email=teste@snapchat.com&remember_me=true (Through external warning page)
+https://hackerone.com/users//saml/sign_in?email=teste@snapchat.com&remember_me=true (Without external warning page)
+
+**Suggested Fix:** Use more stronger regular expression and filtration at this endpoint.
+
+Best regards,
+Shailesh

@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/132251
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/seifelsallamy
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.11.2016 9:03:29
+
+Summary:
+
+Hey
+######To reproduce:
+go to
+
+https://login.newrelic.com/login?return_to=http:/example.com
+https://login.newrelic.com/login?return_to=http:///example.com
+https://login.newrelic.com/login?return_to=http:////example.com
+and login
+
+you will be redirected to `http://example.com`
+
+https://login.newrelic.com/login?return_to=https:///example.com
+https://login.newrelic.com/login?return_to=https:////example.com
+
+you will be redirected to `https://example.com`
+
+And 
+this can be used to form XSS attack but (ONLY ON OLD BROWSERS),
+
+https://login.newrelic.com/login?return_to=javascript:/a/%3Balert(1)
+
+Thank you!

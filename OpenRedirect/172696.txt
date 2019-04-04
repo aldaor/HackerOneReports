@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/172696
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/smit
+ReportedTo:itBit Exchange(itbit)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:28.09.2016 18:29:18
+
+Summary:
+
+Hi there
+
+**Vulnerability Title**: Open Redirect in https://exchange.itbit.com
+
+**Reproduction Steps:**
+[example link](http://exchange.itbit.com//google.com/%2f..)
+
+**HTTP Response:**
+>HTTP/1.1 303 See Other
+>..................................
+>Location: /google.com/%2f../
+
+Regards,
+SMIT

@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/214034
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/eadz
+ReportedTo:GitLab(gitlab)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:06.04.2017 8:06:22
+
+Summary:
+
+POC:
+
+$GITLAB_INSTANCE = gitlab.com
+
+Visit: 
+
+https://$GITLAB_INSTANCE/dashboard/todos?page=99999999&host=www.google.com
+
+Bug is in Dashboard::TodosController line 10
+
+Likey
+Same bug in Projects::IssuesController line 32
+and other places in the codebase where you `redirect_to params.merge(..)` 

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/125003
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Uber(uber)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:20.11.2018 22:22:21
+
+Summary:
+There was an open redirect on `riders.uber.com` which would have made it possible for an attacker to redirect a victim through to another arbitrary site without user interaction.
+
+Thanks, @bobrov!

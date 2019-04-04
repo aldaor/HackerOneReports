@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/223326
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/ysx
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:17.05.2017 14:17:51
+
+Summary:
+
+Hi,
+
+It is currently possible to execute an open redirection attack via the `next` parameter with the inclusion of a triple-slash prefix.
+
+## Proof of Concept
+### Redirect URL
+```
+https://demo.weblate.org/accounts/login/github/?next=///google.com
+```
+
+After authenticating, the user will be immediately redirected to the attacker-specified target.  I believe this affects all third-party authentication providers on the Weblate platform.
+
+Please let me know if you require any additional details regarding this vulnerability.
+
+Thanks!

@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/193478
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/id-is-vulnerable
+ReportedTo:Starbucks(starbucks)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:13.01.2017 0:28:37
+
+Summary:
+
+The website www.teavana.com allows users already logged on to create new account with a very simple url redirect. When an account is created a page is displayed with your account information and what you want to update. By simply refreshing the page allows you to create a new account whilst still logged on. If you try to recreate the same account with the same email but different password, there will be no error message displayed though when you try to login, the password will be incorrect.

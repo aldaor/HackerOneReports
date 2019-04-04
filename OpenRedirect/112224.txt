@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/112224
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/0x8084
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.08.2017 12:13:10
+
+Summary:
+
+Hi Mail.ru,
+
+I was surfing in your website and i was trying to find a Reflected Cross-site Scripting Vulnerability , So i was trying to find a way to inject my payload in a LINK .
+
+While Surfing i've found this link : https://pw.mail.ru/validate/index.html?ref_url=pw.mail.ru 
+> Screenshot : http://i.imgur.com/3GIieDr.png
+
+And i was wondering :
+>How could pw.mail.ru needs a verification from the Captcha BOT ? 
+>If it needs a verification , all of the domains needs verification and  it should be a DESIGN Issue .
+
+So i tried to change the "?ref_udr=" parameter from "?ref_udr=pw.mail.ru"  to "?ref_udr=google.com" , and i was expecting a block for this Parameter but the surprise is it didn't blocked and it gives me the same CAPTCHA interface which i saw in ?ref_udr=pw.mail.ru
+>Screenshot  : http://i.imgur.com/iXWVTfy.png
+
+So i have writed the captcha and redirected with any problem to google.com
+
+POC video : " REDIRECT-POC-MAILRU.webm
+
+Best regards,
+
+Othmane Tamagart

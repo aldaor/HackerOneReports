@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/114529
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/hussain_0x3c
+ReportedTo:Mapbox(mapbox)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:20.04.2016 14:30:49
+
+Summary:
+@hussain reported a content spoofing and local redirect issue in Mapbox Studio in February 2016. Strings passed to the `message` query string parameter on requests to `https://www.mapbox.com/studio/forbidden/` would write text directly to the page. 
+
+@hussain combined the content spoofing issue with a redirect via the `redirect` query string parameter. We were not able to reproduce an open redirect, though a local redirect to other pages within Studio did exist. We were also not able to replicate the injection of CSS in Internet Explorer and Mozilla Firefox that @hussain reported.
+
+Ordinarily we would not award a bounty for separate individual reports about content spoofing, social engineering, or local redirects, but we awarded the minimum bounty in this case due to the following factors:
+
+* effective proof of concept that combined social engineering, content spoofing, and local redirect in a believable exploit
+* relative ease of social engineering via sharing a URL
+* change to our codebase and subsequent deployment
+**Hi**
+
+I'm Found  Bug  It is Possible To Send His message Directly Through URL and Redirect Local .
+
+**Details**
+When you go to :- https://www.mapbox.com/studio/admin/ website redirect to 
+ ~~~
+https://www.mapbox.com/studio/forbidden/?message=Sorry,only admins allowed here.&redirect=/studio/&path=/studio/admin/
+~~~
+You can see  parameter **message** and **redirect** not safe against the manipulation and interference
+
+**# Content Spoofing and Redirect**
+
+**URL POC** 
+~~~
+https://www.mapbox.com/studio/forbidden/?message=Hi%20You%20Are%20%20Not%20%20in%20Mapbox%20Please%20Go%20%20To%20http://evil.com&redirect=/evil.com/&path=%2Fstudio%2Fadmin%2F
+~~~
+Message **Changed** and If Click On **Okay** Redirect on **evil.com**
+
+
+**Regards**
+**Hussain**

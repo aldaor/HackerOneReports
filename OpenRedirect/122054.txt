@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/122054
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/atik-rahman
+ReportedTo:Xero(xero)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.03.2017 11:07:27
+
+Summary:
+
+Here is the poc :█████
+
+It can redirect to any site. An attacker easily trick any user to access his account by phishing. 
+
+An attacker create a  phishing page of https://login.xero.com then He Will replace his fake xero login page link like this: 
+██████
+
+by encoding the redirection URL It will be more easy like this :-
+
+███████ 
+
+By clicking this link User will get redirect to fake login page. But user will think he is on xero.com
+
+Related Topics : https://hackerone.com/reports/57163

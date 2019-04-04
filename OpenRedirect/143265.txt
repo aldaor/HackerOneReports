@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/143265
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/roshanpty
+ReportedTo:Zomato(zomato)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.05.2017 16:55:21
+
+Summary:
+
+The user profile redirect request is not properly validated. The presence of parameter t which is being passed through the request is verified but same value can be reused to any unauthenticated or authenticated user to redirect them to any web site.
+
+Sample link is given below.
+
+https://www.zomato.com/redirect?u=http%3A%2F%2Ftest.com&t=38dc43d5f007f4c5d974f6c74f065158&g=user-profile-website

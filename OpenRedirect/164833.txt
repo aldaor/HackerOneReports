@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/164833
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/corb3nik
+ReportedTo:Algolia(algolia)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:07.10.2016 11:35:54
+
+Summary:
+
+## Description 
+
+A user can change their last name to a URL in order to send email invitations containing malicious hyperlinks.
+
+## Steps to Reproduce
+1. Create a new Algolia account with the last name `http://example.com`.
+2. Navigate to `My Account > Referrral`
+3. Send an invitation to an email address that you control
+
+You will receive a new email with the last name being a link to a potentially malicious site.
+
+## Consequences
+This permits users to send malicious/phishing links to potential clients. It could also have an effect on how spam filters treat algolia.com emails.

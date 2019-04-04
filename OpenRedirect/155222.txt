@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/155222
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/jamesclyde
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:01.09.2016 16:00:50
+
+Summary:
+
+Hi,
+
+The users can be redirected to some other site which is in control of the attacker from http://ecommerce.shopify.com/accounts
+
+Let's say user is attacker asked victim to login from the here :
+https://ecommerce.shopify.com/accounts?return_to=%40evil.com/
+
+When victim enters the password he is redirected to https://evil.com
+
+These can be controlled by the attacker and used in other attacks
+
+Works in all browsers!!
+
+

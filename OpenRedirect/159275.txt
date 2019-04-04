@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/159275
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/yappare
+ReportedTo:Starbucks(starbucks)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:17.01.2017 21:28:00
+
+Summary:
+
+Hi,
+
+It seems ReturnUrl in the Starbucks authentication page have a strict checking on the URL that should be redirected if a user successfully login or cancel the request.
+However, this ReturnUrl parameter can be bypassed to redirect user into another page by using backslash and slash character.
+
+As example, I do this in latest Firefox browser. Where by browsing below URL, when a user click on Cancel, it'll redirect to http://x
+``https://www.starbucks.ca/account/forgot-username?ReturnUrl=/\x``
+
+Attached the animated POC for your reference.
+
+Also it is noted that ReturnUrl does not properly filter the user's input. There's a probability to perform XSS in this parameter such as below code:
+
+``https://www.starbucks.ca/account/signin?returnUrl=//xxxxxx" onclick%0b="prompt(0)``
+
+However, I've not able to show the triggered popup yet as for the time being.

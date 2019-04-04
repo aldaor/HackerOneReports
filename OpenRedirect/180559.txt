@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/180559
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/japz
+ReportedTo:Yelp(yelp)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:09.11.2017 20:41:14
+
+Summary:
+
+Hi Yelp Team,
+
+I'm not sure if this one is out of scope but i want you guys to be aware of it, I have found that content spoofing is possible on yelp onelogin.
+
+__Reference:__ https://www.owasp.org/index.php/Content_Spoofing
+
+__PoC URL:__
+
+https://yelp.onelogin.com/images%20storage%20has%20been%20transfered%20to%20new%20storage%20location,%20please%20go%20to%20www.malicious-site.com/images
+
+Cheers
+Japz

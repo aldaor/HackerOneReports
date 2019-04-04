@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/103546
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/dr_dragon
+ReportedTo:CERT/CC(cert)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.12.2016 17:50:03
+
+Summary:
+Report claims redirection on  http://www.kb.cert.org using Host header, could not reproduce. Host header was used to generate content. Host header removed from all content generating code.

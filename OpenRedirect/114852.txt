@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/114852
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/karthic
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.06.2016 23:30:21
+
+Summary:
+
+payload in monitor name textbox : <img src=x onerror=prompt(40)>
+
+image tag is executed in Monitot failed email
+
+
+fix : Need to done secure parse encode in monitor name textbox to prevent html injection in email

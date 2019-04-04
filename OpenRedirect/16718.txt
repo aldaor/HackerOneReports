@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/16718
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/jaysonzabate
+ReportedTo:Slack(slack)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:25.08.2014 21:58:02
+
+Summary:
+
+An open redirect is an application that takes a parameter and redirects a user to the parameter value without any validation. This vulnerability is used in phishing attacks to get users to visit malicious sites without realizing it.
+
+###Reproduction Instructions 
+
+go to `www.[TEAM].slack.com/?redir=llink?url=https://twitter.com/` log in your account on this link then redirect to twitter,google and any webiste you want.
+
+
+###Proof of concept:
+```
+https://asdasda.slack.com/?redir=llink?url=https://twitter.com/
+```
+
+
+Regards,
+Jayson Zabate

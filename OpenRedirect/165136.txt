@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/165136
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/cha5m
+ReportedTo:Mapbox(mapbox)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.09.2016 19:16:33
+
+Summary:
+On September 1st, 2016, @n0rb3r7 reported a vulnerability in the [Mapbox Classic editor](https://www.mapbox.com/editor/) related to a known `window.opener.location.href` issue with user generated content and cross origin navigation when `target="_blank"` (see [HTML bug report](https://www.w3.org/Bugs/Public/show_bug.cgi?id=28821)). This was addressed via the creation of the `noopener` link attribute (see [whatwg PR](https://github.com/whatwg/html/pull/290)) and browser compatibility efforts are ongoing. As of now it is has [limited support](https://html.spec.whatwg.org/#link-type-noopener), though there are open tickets for adding it to the majority of remaining browsers.
+
+After an internal review of the issue- taking into consideration previous reports similar in nature, browser compatibility progress towards making `noopener` the default, the level of effort necessary to attempt this exploit, the bandwith required for patching it, as well as the fact that Mapbox Classic editor is a legacy product- we decided that we would not move forward with an immediate fix at this time.
+
+This report was well put together and looking into it helped us further our research on this vulnerability type, thank you again @n0rb3r7!
+**Description**
+I have a script running on my server which gives me full control over a visitor's window object. This allows me to replace the user's legitimate mapbox.com session with my own Mapbox phishing form (not live). As you can see from the proof-of-concept video below, this vulnerability works cross-origin. This is an extremely effective phishing vector and should be remediated ASAP. 
+
+**Video PoC:** {F116642}
+
+**Reproduction Steps:**
+1. Navigate to my map at https://www.mapbox.com/editor/?id=chasemiller5.19coghk8#data
+2. Click on my website link in the description (http://chasemiller.me/hax/mapbox_test.html) 
+3. This should open the link and change the user's legitimate mapbox.com session to my malicious Mapbox login phishing page (not active) (behavior may vary slightly between browsers).
+
+**Mitigation:**
+This bug can be easily mitigated by using the 'noopener' link type. This sets the 'window.opener' property to 'null'

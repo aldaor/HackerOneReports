@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/113112
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/hat_mast3r
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:07.02.2016 21:18:33
+
+Summary:
+n.b. This report came in before we restricted the scope of our bounty to our open source software on Github (**explicitly excluding our website**), so we honored it. Please don't use its existence as an invitation to ignore the scope on our HackerOne page or the interstitials. Thanks.
+Hello, 
+
+I would like to report about open-redirect on  paragonie.com
+
+Here is the PoC that redirects to URL. For example::https://paragonie.com//google.com/
+
+Regards,
+
+Hat_Mast3r

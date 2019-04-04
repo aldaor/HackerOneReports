@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/211213
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/todayisnew
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.08.2017 13:32:34
+
+Summary:
+
+
+Good day :)
+
+Hope it goes well, an open redirect exists on the main xmpp.nextcloud.com domain allowing "bad hackers" to do bad things :)
+
+Poc 
+
+https://xmpp.nextcloud.com///;@www.google.com
+
+May you be well on your side of the screen :)
+
+-Eric

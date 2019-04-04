@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/101962
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/blinkms
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:14.12.2015 21:38:41
+
+Summary:
+
+An open redirect is an application that takes a parameter and redirects a user to the parameter value without any validation. This vulnerability is used in phishing attacks to get users to visit malicious sites without realizing it. 
+
+Vulnerable Endpoint - https://app.shopify.com/services/google/themes/preview/supply--blue?domain_name=example.com
+Impact - Medium
+CVSS - 6.5 
+
+Proof of concept :- 
+
+[1] Go to https://app.shopify.com/services/google/themes/preview/supply--blue?domain_name=example.com
+[2] You will be redirected to http://example.com/admin
+[3] I can host a site where /admin is not 404 {not valid page } , This can lead and increase risk of phisiing attacks & so on .

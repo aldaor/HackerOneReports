@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/12949
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/atom
+ReportedTo:Urban Dictionary(urbandictionary)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 10:00:28
+
+Summary:
+
+Try to connect your facebook using this URL
+
+http://www.urbandictionary.com/auth/facebook?origin=http://google.com
+
+after connecting urbandictionary to FB you will be redirected to google.com
+
+and that is bad because hackers can get the auth token

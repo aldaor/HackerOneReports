@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/13553
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/robin
+ReportedTo:Factlink(factlink)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.06.2014 7:56:48
+
+Summary:
+
+Hello,
+
+You can redirect to any url with this-
+
+http://staging.fct.li/?url=www.google.com
+
+You need to Whitelist Domains...

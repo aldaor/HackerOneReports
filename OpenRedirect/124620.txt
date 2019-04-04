@@ -1,0 +1,53 @@
+ReportLink:https://hackerone.com/reports/124620
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/lukasreschke
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.04.2016 10:11:35
+
+Summary:
+
+This is a rather low severity one and a successful exploitation relies on unlikely user interaction as well as the ability to control the HTML output of an remote host. Furthermore it is a kinda new hardening features in some browsers. Though one can work around this using "[noreferrer](https://html.spec.whatwg.org/multipage/semantics.html#link-type-noreferrer)" which is what we use in @ownCloud for this reason since a longer time.
+
+Anyways, I thought I should give you a heads-up about this anyways :-)
+
+---------
+
+[Our program](https://hackerone.com/owncloud) has setup an integration with our internal issue tracker, this allows us to escalate reports directly into our internal tracker:
+
+{F79971}
+
+Once escalated the report will offer a link to our internal issue tracker here, the following markup is used as can be seen in F79972:
+
+{F79972}
+
+```html
+<a class="word-break--all" href="https://██████/███████/█████████/issues/187" target="_blank" data-reactid=".1.1.2.$110655.1.0.1.0.0.2.1.0.1">187</a>
+```
+
+What is missing here seems to be the `rel=noopener` attribute, if this is not given using `target="_blank"` allows the opening side to control the origin of the linking page. See https://mathiasbynens.github.io/rel-noopener/ for more technical details.
+
+The same is actually also valid for the CVE links as can be seen in #110655 for example.
+
+This can behaviour can be verified with Chrome by changing the href of an escalated report to something like https://mathiasbynens.be/demo/opener. Not the coolest exploit obviously since the following pre-requirements are required:
+
+1.  Adversary is able to escalate a report into an external issue tracker
+2. Adversary is able to control the response of the external issue tracker
+
+So one of the only likely exploit scenarios seems to be:
+
+1. User A of organisation Ananas tells HackerOne to configure an external issue tracker pointing to a self-hosted GitLab or whatever.
+2. User A of organisation Ananas modifies their GitLab in a way to return malicious Javascript that would redirect the HackerOne tab to a faked login page. 
+3. User A of organisation Ananas escalates a report to that page.
+4. User B of organisation Banana is invited to organisation Ananas to help out there with triaging.
+5. User B of organisation Banana goes to the report, clicks on the escalation link and the HackerOne tab gets redirected to the faked login page 
+6. User enters credentials into the faked login page assuming that the previously opened tab is still a legit HackerOne tab.
+
+As can be seen the attack scenario is pretty small :-)
+
+------
+*Side remark: I don't expect any actual bounty for this. It's more an hardening and relies on quite some user interaction. I'd however appreciate if you could add the `rel=noopener` link to external links.*
+
+*If you believe this warrants a bounty please donate it to [Médecins Sans Frontières](http://www.msf.org/)*.

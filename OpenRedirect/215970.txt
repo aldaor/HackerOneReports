@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/215970
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/ysx
+ReportedTo:GitLab(gitlab)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:06.04.2017 4:27:32
+
+Summary:
+
+Hi,
+
+While experimenting with Repository Import functionality on a fresh GitLab 9.0 CE install, I noticed that the `continue[to]` parameter can be used to perform an Open Redirect through the inclusion of a double-slash prefix. 
+
+## Proof of Concept
+The following Proof of Concept URL enables a malicious actor to execute this redirect against any user – as long as they have permissions to view a certain repository. 
+
+```
+http://<instance>/<user>/<repository>/import?continue[to]=//google.com
+```
+
+## Observation
+I first noticed the `continue[to]` parameter while receiving the `You're not allowed to make changes to this project directly` message – demonstrating that edit-level access to the repository in question is not required.
+
+Thanks!

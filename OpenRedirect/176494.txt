@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/176494
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/japz
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:02.05.2018 21:30:51
+
+Summary:
+@japz discovered an issue with how some email clients render text. This issue was determined to be very low or no risk and was subsequently removed from our program's scope.

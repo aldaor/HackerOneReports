@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/123078
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/geeknik
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.03.2017 1:40:06
+
+Summary:
+
+It appears that https://rpm.newrelic.com/login is vulnerable to a host header attack flaw whereas the HTTP Host header can be controlled by a malicious user.
+
+POC:
+```
+curl -H "Host: rpm.newrelic.com" -H "X-Forwarded-Host: geeknik.com" https://rpm.newrelic.com/login
+```
+
+Result:
+```
+<html><body>You are being <a href="https://geeknik.com/auth/newrelic?origin=%2Flogin">redirected</a>.</body></html>
+```
+
+As you can see here, if the malicious user controls the HTTP Host header, they can redirect users to a malicious login page where their credentials could potentially be captured. Granted, this is an edge case, but it is still an issue where malicious users can cause your web application(s) to behave in unexpected ways. 
+
+The web application should use the SERVER_NAME instead of the Host header. It should also create a dummy vhost that catches all requests with unrecognized Host headers. This can also be done under Nginx by specifying a non-wildcard SERVER_NAME.

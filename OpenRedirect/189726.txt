@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/189726
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/devil13
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:25.02.2017 11:57:56
+
+Summary:
+
+
+This issue is similar to #124889, but it is only exploitable via MS Edge or Internet Explorer 11
+
+Proof Of Concept:
+Clicking on a link set to "http://d214mfsab.org/same.html" (including this one) will change the still-open report page to http://example.com. This works on current versions of MS Edge and Internet Explorer 11.

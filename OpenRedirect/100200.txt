@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/100200
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/cyberunit
+ReportedTo:QIWI(qiwi)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:06.04.2017 14:16:24
+
+Summary:
+Open redirect in 3rd party software at meeting.qiwi.com

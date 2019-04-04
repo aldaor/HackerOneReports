@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/104896
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Zendesk(zendesk)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:26.10.2016 20:39:03
+
+Summary:
+The reseracher found an open redirect in `status.zopim.com`. 

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/161991
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/jamesclyde
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:31.08.2016 15:02:51
+
+Summary:
+To allow documentation pages to provide convenient links to shops' admin pages, requests to `https://www.shopify.com/admin/*` redirect the user to `https://<shop-name>.myshopify.com/admin/*`, where `<shop-name>` is filled in based on the value of the `last_shop` cookie.
+
+Because input validation was missing, any `last_shop` value would be accepted, thereby allowing an open redirect to any domain.

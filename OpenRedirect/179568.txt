@@ -1,0 +1,49 @@
+ReportLink:https://hackerone.com/reports/179568
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/haquaman
+ReportedTo:OX App Suite(appsuite)
+BountyAmount:666.0
+Severity:
+State:Closed
+DateOfDisclosure:28.12.2016 1:41:57
+
+Summary:
+
+Details:
+When you open a link in a new tab ( target="_blank" ), the page that opens in a new tab can access the initial tab and change it's location using the window.opener property.
+
+POC: 
+Edit your contact details, with the website URL of http://davenport.net.nz/test.html, which has the following html
+```
+
+<html>
+<script>
+if (window.opener) window.opener.parent.location.replace('http://allthethings.co.nz');
+if (window.parent != window) window.parent.location.replace('http://allthethings.co.nz');
+</script>
+blah
+
+</html>
+``` 
+
+Create a document, and add a comment from this user, when you click on that user, you should see the full details (one of many ways to get to the hyperlink), you can then click on the link to my website. This opens in a new tab, and the existing tab is *silently* redirected to my company website *without asking the user*. In a real life example, this would redirect to a phishing site to try gain credentials for users.
+
+The javascript code that does all the magic: 
+`window.opener.location.replace(newURL);`
+
+Ways to solve this:
+
+Don't open links in new tabs using the target="_blank"
+Add attribute rel="noreferrer" which also disables referrer
+Set the window.opener attribute to null on the new tab before redirecting, like this: <script>var w=window.open(url, "target=_blank");w.opener=null;</script>
+I hope you see why this is dangerous: this method has huge potential for tricking users that click on external links from this site to be a victim of a scam page because the redirecting is made in the background, while the user is focused on another tab.
+
+More then that, some browsers like Mozilla for Android don't even display the URL, just the page title, so the user has no way of knowing that he was redirected to a scam page.
+
+Note that the target page doesn't have to be in the same-origin policy, so can be an entirely different domain, and the redirect happens silently while user is viewing another page.
+
+Hope that all helps, let me know if you need more information. I can provide screenshots and/or screencasts if necessary.
+
+Cheers,
+
+Hugh

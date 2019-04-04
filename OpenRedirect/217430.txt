@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/217430
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/rbcafe
+ReportedTo:Starbucks(starbucks)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:27.07.2017 20:17:45
+
+Summary:
+This report highlights an open redirect and abuse on a subdomain of teavana.com. The attacker could create an account with a third party company and use that to create a fake campaign. The attacker could then promote the link using a subdomain of teavana.com/<fake_campaign_name> and send the subdomain of teavana.com/<fake_campaign_name> to the victim. When the victim opens up that subdomain with the fake campaign name attached, the victim is redirected to the fake campaign page and at this point the victim could be susceptible to malicious attacks like identity theft or malware being downloaded onto their system. Such a vulnerability could be remediated by whitelisting certain domains to avoid arbitrary usage of subdomains of teavana.com.

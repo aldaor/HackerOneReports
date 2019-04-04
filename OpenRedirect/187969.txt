@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/187969
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/niwasaki
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:23.06.2017 13:05:17
+
+Summary:
+An open redirect vulnerability was found on a Department of Defense website which may trick a web user into being redirected to fake websites which may steal data or credentials (usernames and passwords), or trick users into installing malware. @niwasaki was able to demonstrate this vulnerability by crafting a specially formatted URL. Thank you for notifying us!
+

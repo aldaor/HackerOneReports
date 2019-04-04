@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/146318
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/zuh4n
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.02.2017 10:38:42
+
+Summary:
+
+Hello guys,
+
+**_Details:_**
+Encoded image tag via HTML-Encoding is executed in Monitot failed email
+
+**_Payload:_**
+Plain text: <img src=x onerror=alert(22)>
+Encoded: &#x26;&#x23;&#x78;&#x33;&#x63;&#x3b;&#x26;&#x23;&#x78;&#x36;&#x39;&#x3b;&#x26;&#x23;&#x78;&#x36;&#x64;&#x3b;&#x26;&#x23;&#x78;&#x36;&#x37;&#x3b;&#x26;&#x23;&#x78;&#x32;&#x30;&#x3b;&#x26;&#x23;&#x78;&#x37;&#x33;&#x3b;&#x26;&#x23;&#x78;&#x37;&#x32;&#x3b;&#x26;&#x23;&#x78;&#x36;&#x33;&#x3b;&#x26;&#x23;&#x78;&#x33;&#x64;&#x3b;&#x26;&#x23;&#x78;&#x37;&#x38;&#x3b;&#x26;&#x23;&#x78;&#x32;&#x30;&#x3b;&#x26;&#x23;&#x78;&#x36;&#x66;&#x3b;&#x26;&#x23;&#x78;&#x36;&#x65;&#x3b;&#x26;&#x23;&#x78;&#x36;&#x35;&#x3b;&#x26;&#x23;&#x78;&#x37;&#x32;&#x3b;&#x26;&#x23;&#x78;&#x37;&#x32;&#x3b;&#x26;&#x23;&#x78;&#x36;&#x66;&#x3b;&#x26;&#x23;&#x78;&#x37;&#x32;&#x3b;&#x26;&#x23;&#x78;&#x33;&#x64;&#x3b;&#x26;&#x23;&#x78;&#x36;&#x31;&#x3b;&#x26;&#x23;&#x78;&#x36;&#x63;&#x3b;&#x26;&#x23;&#x78;&#x36;&#x35;&#x3b;&#x26;&#x23;&#x78;&#x37;&#x32;&#x3b;&#x26;&#x23;&#x78;&#x37;&#x34;&#x3b;&#x26;&#x23;&#x78;&#x32;&#x38;&#x3b;&#x26;&#x23;&#x78;&#x33;&#x32;&#x3b;&#x26;&#x23;&#x78;&#x33;&#x32;&#x3b;&#x26;&#x23;&#x78;&#x32;&#x39;&#x3b;&#x26;&#x23;&#x78;&#x33;&#x65;&#x3b;
+
+**_PoC:_**
+{F100855}
+
+**_Remediation:_**
+Before sending an email - make sanitization / filtering / encoding of whole special characters.
+
+If you have any question, plz let me know
+
+Thanks,
+Stas

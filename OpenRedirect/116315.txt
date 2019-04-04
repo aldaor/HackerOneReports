@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/116315
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/seifelsallamy
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.02.2017 7:37:31
+
+Summary:
+
+Hi guys,
+their is open redirection at login page 
+if the user logged in he will be redirected directly
+if the user not logged in he will be redirected after the login 
+URL : https://login.newrelic.com/login?return_to=http:example.com
+to reproduce 
+go to https://login.newrelic.com/login?return_to=http:example.com
+and login 
+you will be redirected to http://example.com
+thank you!

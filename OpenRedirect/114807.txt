@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/114807
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/karthic
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:25.09.2016 23:24:20
+
+Summary:
+
+Issue :1  did not receive password reset email, although it looks like newrelic delivered it to gmail. On inspection I can see that the email contains unescaped user input (name) that might be interfering with delivery.
+
+Issue 2 :  Account verification in email  is missing in Sign up

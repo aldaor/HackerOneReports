@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/188338
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/securitythinker
+ReportedTo:Zendesk(zendesk)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:16.10.2017 16:34:04
+
+Summary:
+See title.

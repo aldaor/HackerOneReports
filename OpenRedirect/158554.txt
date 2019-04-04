@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/158554
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/corb3nik
+ReportedTo:Instacart(instacart)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:12.09.2016 19:59:24
+
+Summary:
+
+## Description
+
+A user can change their name to a URL in order to send email invitations containing malicious hyperlinks.
+
+# Steps to Reproduce
+
+1. Create a new Instacart account with the first name `http://example.com`
+2. Navigate to [https://www.instacart.com/store/referrals](https://www.instacart.com/store/referrals)
+3. Send an email invitation to an email address that you control
+
+You will receive a new email with the first word being a link to a potentially malicious site.
+
+# Consequences
+
+This permits users to send malicious/phishing links to potential clients. It could also have an effect on how spam filters treat `instacart.com` emails.

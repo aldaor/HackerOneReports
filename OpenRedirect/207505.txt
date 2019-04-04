@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/207505
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/everardo
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.11.2017 22:26:54
+
+Summary:
+
+Affected host: `alerts.newrelic.com`
+Affected resource: `/auth/newrelic`
+Affected GET parameter: `origin`
+
+#### PoC:
+
+1. Go to `https://alerts.newrelic.com/auth/newrelic?origin=.example.com`
+2. If you don't have an active session, you'll need to login with your New Relic credentials
+3. You'll be taken to `https://alerts.newrelic.com.example.com`
+
+
+#### Description:
+
+The `origin`parameter is used by the web application to redirect the user to a specified resource by appending its value to the end of this string: `https://alerts.newrelic.com`. This allows attackers to redirect New Relic users to domains they control (in this case `example.com`). This can be leveraged to phish a customer's sensitive information. Please also note that if the user is already logged-in, he'll be immediately taken to `https://alerts.newrelic.com.example.com`. 

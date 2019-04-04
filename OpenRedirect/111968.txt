@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/111968
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/zombiehelp54
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:24.02.2016 10:55:14
+
+Summary:
+Links with `hackerone.com` domain were treated as trusted links, including those followed by `/zendesk_session`. Anyone can create a custom Zendesk account that redirects to an untrusted website and provide it in `/redirect_to_account?state=` param; and because Zendesk allows redirecting between accounts without interstitial, you'd be taken to the untrusted site without any warning. 
+
+Given that the origin of the issue is within Zendesk, we've chosen to identify the links with `zendesk_session` as external links which would render an external icon and an interstitial warning page when clicked. 
+Hi guys , I have found a way to use the open redirect vulnerability that zendesk refused to fix and we discussed it in #101146 to bypass intristial redirect. 
+in #101146 , @bencode said : 
+> I tend to agree with Zendesk, we don't really see any security issues with it. We use our interstitial to warn the user and it's clear you are on a separate site.
+
+Well , using this issue I could bypass the interstitial redirect.
+#PoC:
+[Clicking here will bypass interistial redirect and get you on evil.com](https://hackerone.com/zendesk_session?locale_id=1&return_to=https://support.hackerone.com/ping/redirect_to_account?state=compayn:/)
+ 
+The link is `https://hackerone.com/zendesk_session?locale_id=1&return_to=https://support.hackerone.com/ping/redirect_to_account?state=compayn:/` which is used to redirect to generate a zendesk session.
+This can be fixed from your end , by detecting the `/ping/redirect_to_account` in the `return_to` parameter. 
+Thanks  

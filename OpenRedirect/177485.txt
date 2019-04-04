@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/177485
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/intricate
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.03.2017 1:42:36
+
+Summary:
+
+This is a near identical issue to [#131552](https://hackerone.com/reports/131552).
+
+Upon going to this URL: https://rpm.newrelic.com/auth/newrelic?origin=///hackerone.com the user will be redirected to https://hackerone.com.
+
+If the user isn't already authorized, they'll be prompted to login, and then end up being redirected to HackerOne.

@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/141355
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/shubham
+ReportedTo:Ubiquiti Networks(ubnt)
+BountyAmount:260.0
+Severity:
+State:Closed
+DateOfDisclosure:01.09.2016 18:42:15
+
+Summary:
+Description :
+
+An open redirect is an application that takes a parameter and redirects a user to the parameter value without any validation. This vulnerability is used in phishing attacks to get users to visit malicious sites without realizing it.
+
+

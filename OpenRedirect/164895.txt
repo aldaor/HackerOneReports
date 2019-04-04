@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/164895
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/shailesh4594
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:400.0
+Severity:medium
+State:Closed
+DateOfDisclosure:10.12.2016 12:13:13
+
+Summary:
+##Issue
+
+The reporter found a vulnerability that allowed open and unvalidated redirects. 
+
+##Fix
+
+A fix was issued for the application.
+
+##Reasoning
+
+*"Unvalidated redirects and forwards are possible when a web application accepts untrusted input that could cause the web application to redirect the request to a URL contained within untrusted input. By modifying untrusted URL input to a malicious site, an attacker may successfully launch a phishing scam and steal user credentials. Because the server name in the modified link is identical to the original site, phishing attempts may have a more trustworthy appearance."* (OWASP)

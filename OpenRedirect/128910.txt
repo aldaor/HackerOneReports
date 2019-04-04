@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/128910
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/007divyachawla
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.08.2017 13:30:11
+
+Summary:
+
+https://gratipay.com%2f@google.com on clicking on this url this link will take to the google.com or any other malicious url. On seeing it will look like the link will take to the gratipay but onclicking the url it will redirect to the malicious site.Attacker with the help social engg. techniques will able to redirect the user to any Ransomware site for they nefarious purpose
+
+POC:- Click on the link it will redirect to google.com
+
+Fix:- The hostname must end in %2f, which gets URL-decoded to /.
+This ensures that the browser only sends the request to the intended host.

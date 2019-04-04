@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/131552
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/pewpew
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.09.2016 19:03:36
+
+Summary:
+
+### The user is not authorized:
+1. Go to the login page https://login.newrelic.com/login?return_to=//////////////////////hackerone.com
+2. Auth
+3. Redirect to hackerone.com did not happen - all is well
+
+
+### The user is authorized:
+1. Again go to the login page  https://login.newrelic.com/login?return_to=//////////////////////hackerone.com
+2. Redirect to hackerone.com!

@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/207285
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/seifelsallamy
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:14.10.2017 12:51:57
+
+Summary:
+
+Hey,
+URL : https://rpm.newrelic.com/auth/newrelic?origin=http:/example.com/
+
+To reproduce:
+1) login
+2) go to https://rpm.newrelic.com/auth/newrelic?origin=http:/example.com/
+
+You will be redirected to http://example.com
+Thank you!

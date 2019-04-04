@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/131728
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/a5tronaut
+ReportedTo:Moneybird(moneybird)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:28.07.2016 7:17:28
+
+Summary:
+Reporter found an unvalidated redirect in our login procedure. We have added validations to make sure the redirection always points to our own software.

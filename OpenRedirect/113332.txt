@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/113332
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/bigbear_
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.03.2017 13:13:09
+
+Summary:
+
+https://api.login.icq.net/auth/cancel?f=1&k=1&supportedIdType=1&succUrl=http://example.com

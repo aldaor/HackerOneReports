@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/126070
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/4lemon
+ReportedTo:Uber(uber)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:13.11.2018 22:49:50
+
+Summary:
+@4lemon reported open redirects on rush.uber.com, business.uber.com, and help.uber.com which would have made it possible for an attacker to redirect a victim through to another arbitrary site without user interaction.

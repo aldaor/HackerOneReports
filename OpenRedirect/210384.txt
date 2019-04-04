@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/210384
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/sup3r-b0y
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.03.2017 13:08:00
+
+Summary:
+
+Hey
+I would like to report an open redirect issue it.mail.ru
+
+Proof of Concept:
+
+1. go to Register page https://it.mail.ru/en/users/register/?next=////www.evil.com/%2e%2e and Register a account
+2.  now open your mail and click the  activation link
+
+This will redirect you to evil.com after click the activation link
+
+Please let me know if you need more information.
+
+Hope You'll fix this one..
+
+Thanks

