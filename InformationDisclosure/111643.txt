@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/111643
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/koenrh
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:01.02.2016 21:55:28
+
+Summary:
+An Amazon S3 bucket used internally by Shopify was misconfigured, allowing external users to read, write and list objects. The excess permissions have been removed.

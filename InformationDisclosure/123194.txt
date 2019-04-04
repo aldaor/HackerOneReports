@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/123194
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bugs3ra
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.05.2016 15:01:02
+
+Summary:
+Server Version and OS Version Disclosure issue.

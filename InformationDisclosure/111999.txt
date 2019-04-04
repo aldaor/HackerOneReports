@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/111999
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/rmashhoon
+ReportedTo:General Motors(gm)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:23.05.2016 20:50:03
+
+Summary:
+Users were able to download website application files as well as identify application path information. Permissions have since been fixed to no longer allow application information disclosure.

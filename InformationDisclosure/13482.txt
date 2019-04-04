@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/13482
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/isox
+ReportedTo:Mail.ru(mailru)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:13.09.2015 10:29:27
+
+Summary:
+Money.mail.ru source code disclosure

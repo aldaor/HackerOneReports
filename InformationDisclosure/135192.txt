@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/135192
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ras-it
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:04.02.2017 20:58:46
+
+Summary:
+##Issue
+
+The reporter found a minor technical issue where an error-application could be used to make the server generate arbitrary error codes. In addition, low impact text injections with no links nor active content could be generated.
+
+##Fix
+
+A fix was issued for the application which prohibited the reported behavior.
+
+##Reasoning
+
+The report did not reveal any serious issues, but it was still decided it warranted a fix.

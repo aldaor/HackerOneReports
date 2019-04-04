@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/128853
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/kusl
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 22:41:00
+
+Summary:
+
+Hello!
+1. At https://lite.uber.com/auth/login I get 302-redirect to https://login.uber.com.
+2. After post my email and password I get callback to https://lite.uber.com/auth/callback?code=efopqUAx2uwMOqJafHGj2OP8yNxXkf#_
+3. At this page we can see trace stack with names of nodejs modules, full path disclose...
+
+File attached.
+
+Best Wishes!

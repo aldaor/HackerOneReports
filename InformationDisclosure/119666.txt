@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/119666
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/secdoor
+ReportedTo:LeaseWeb(leaseweb)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.06.2016 16:14:59
+
+Summary:
+
+Hello Leaseweb
+It's my same report but it's for different web application  http://leasewebnoc.com
+here is sever version disclosure in  http://leasewebnoc.com as when I have request about .htaccess , that returns result of forbidden but following server version publicly disclosure.
+                  Apache/2.2.22 (Debian) Server
+
+So it's important to keep secret of server version.
+
+Thanks,
+cyber warrier

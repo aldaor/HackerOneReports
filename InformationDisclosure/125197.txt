@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/125197
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/firs0v
+ReportedTo:Uber(uber)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:20.11.2018 22:30:04
+
+Summary:
+The page at `track.uber.com` had verbose stack traces enabled, allowing an attacker to learn information about the libraries, technologies and system information used in Uber Rush.
+
+Thanks, @firs0v!

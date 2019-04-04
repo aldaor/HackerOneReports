@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/127158
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/shmoo
+ReportedTo:Uber(uber)
+BountyAmount:5000.0
+Severity:
+State:Closed
+DateOfDisclosure:15.06.2016 16:51:10
+
+Summary:
+Given the UUID of a user it was possible to get their email address by passing in their `UUID` via `POST` to `/support/tickets` inside of the `token` parameter.

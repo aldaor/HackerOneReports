@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/105655
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/zephrfish
+ReportedTo:Pornhub(pornhub)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:12.09.2016 16:42:34
+
+Summary:
+The researcher identified a permissive Flash cross-domain policy allowing access from any domain on a Pornhub-related property. 

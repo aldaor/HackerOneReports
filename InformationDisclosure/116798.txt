@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/116798
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/charfee
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:24.02.2016 23:49:33
+
+Summary:
+
+Hi
+
+&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;&#x2588;==> private externa bb 
+https://hackerone.com/settings/allow_report_submission.json?team_handle=security
+
+when u get False or true thry mean its valide bb
+when u get 404 its invalid 

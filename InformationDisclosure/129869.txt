@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/129869
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/uyga
+ReportedTo:APITest.IO(apitest)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.04.2016 9:45:06
+
+Summary:
+
+Hi guys!
+You should disable error reporting on beta version. It reveals lot of information and even files contents.
+
+How to reproduce:
+1) Navigate to http://beta.apitest.io/newsletter, modify csrf-token "_token" to any data.
+2) input something to "email" and "name" fields.
+3) submit the form. 
+
+As result you will be redirected to exception page with list of files, source code and environment variables.
+Please take a look at screenshot.

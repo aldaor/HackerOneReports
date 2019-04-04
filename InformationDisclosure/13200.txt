@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/13200
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/vineet
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.09.2014 15:35:41
+
+Summary:
+
+Password type input with auto complete enabled
+Vulnerability description:
+When a new name and password is entered in a form and the form is submitted, the browser asks if the password should be saved. Thereafter when the form is displayed, the name and password are filled in automatically or are completed as the name is entered. An attacker with local access could obtain the cleartext password from the browser cache.
+This vulnerability affects     /cgi-bin/login. 
+
+How to fix this vulnerability
+The password auto-complete should be disabled in sensitive applications. 
+To disable auto-complete, you may use a code similar to: 
+
+<INPUT TYPE="password" AUTOCOMPLETE="off">

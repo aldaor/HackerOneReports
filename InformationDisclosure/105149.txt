@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/105149
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ba4fe4ca95021d367f8a574
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.01.2016 8:55:16
+
+Summary:
+
+https://demo.owncloud.org/doc/

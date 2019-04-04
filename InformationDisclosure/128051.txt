@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/128051
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/jobert
+ReportedTo:GitLab(gitlab)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.08.2016 15:17:46
+
+Summary:
+Additional information about our internal communication can be viewed at https://gitlab.com/gitlab-org/gitlab-ce/issues/14899.
+There's a minor information disclosure issue in the Import members feature. It can be abused to get a list of project members that are working on a private project. The following steps require that you're signed in as a user that can create a new project. When someone imports project members from another project, the following code is executed:
+
+```ruby
+# app/controllers/projects/project_members_controller.rb:96
+def apply_import
+  giver = Project.find(params[:source_project_id])
+  
+  # ...
+
+  redirect_to(namespace_project_project_members_path(project.namespace, project),
+                notice: notice)
+end
+```
+
+When an attacker would specify a `source_project_id` that references a private project, it would copy the members of that project and it would add them to your own project. This way, you can check out who has access to which project. This information could be helpful in other attacks and/or could be used for social engineering since the email address of those people are public too.
+
+The fix of this issue depends on if you want to allow projects to be imported the user has access to or only within the team scope.

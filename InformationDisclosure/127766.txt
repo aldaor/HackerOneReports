@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/127766
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/foundstone-kunal
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:25.09.2016 23:30:34
+
+Summary:
+
+New relic provides user's the option to register new accounts. It was observed that during creation of new account process, user's password is displayed in clear text in response.
+
+This leads to disclosure of passwords.
+
+There may be another issue here that user's passwords are not stored in hashed format in database. However, I can not comment on that based on response. As the password may just be reflecting in response.
+
+Affected URL
+
+https://newrelic.com/signups
+
+Response:
+
+HTTP/1.1 200 OK
+Server: nginx
+*/snipped*/
+
+{"html":"<script>NR_SIGNUP.rpmIntegration({Email:\"█████████\",Password:\"Test@1234\",returnTo:\"\"})</script>","base":"","company":"5001-10000","estimate":"1-2","role":"Ops","test":false}
+
+Please refer the screenshot as well.
+
+Recommendation please ensure that user's password is not visible in response.
+Do no store password in clear text, always store the passwords as hash.

@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/136720
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/dotnick
+ReportedTo:Gratipay(gratipay)
+BountyAmount:1.0
+Severity:low
+State:Closed
+DateOfDisclosure:14.07.2016 5:36:47
+
+Summary:
+
+Open the latest Firefox web browser or google chrome.
+
+Navigate to the following URL:
+https://grtp.co/%pa
+
+Note that the Invalid URL Encoded (%pa) has fired. after execution,It gives 404 error with server information and its version.
+
+I’ve tested this in the latest Firefox and Chrome.

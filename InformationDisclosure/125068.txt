@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/125068
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bugme
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:24.03.2016 21:50:08
+
+Summary:
+
+Hope the below link is not for public
+
+Directory/File listing with all  files
+Sample files
+
+http://archive.uber.com/pypi/simple/
+
+
+
+

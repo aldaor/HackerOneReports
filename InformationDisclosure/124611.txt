@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/124611
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/saeedhashem
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:01.04.2016 8:31:28
+
+Summary:
+
+Hay again ,
+
+We know that there are some companies have "external" page on HackerOne :
+https://hackerone.com/directory?query=type%3Aexternal&sort=name%3Aascending&page=1
+
+Some of those companies are hosting private programs as well , (with the same handles)
+
+We can pick up any program from the external programs list , and find out if it hosting a private program or not , by applying this 
+
+https://hackerone.com/<program_handle>/thanks 
+
+If it returned 200 OK statue with the thanks page of demo programs with demo thanked researchers , then it's hosting a private program on HackerOne {F79965} .
+
+I think it's the same as #116029 minus the activities disclosure part , which obviously pumped up his bounty :D
+
+Thanks, 

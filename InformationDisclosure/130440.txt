@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/130440
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/siddiki
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:26.07.2016 0:13:28
+
+Summary:
+Per the policies laid out in [www.hackerone.com/uber](https://www.hackerone.com/uber) social engineering attempts are explicitly out of scope:
+> Social engineering attempts (this includes phishing attacks against Uber employees)
+
+Failure to follow these policies will result in forfeiture of any bounty and a potential ban from the program. In this case, we opted not to ban the reporter at our discretion for his past contributions.

@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/11729
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/jamalcom
+ReportedTo:Ian Dunn(iandunn-projects)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.08.2016 1:18:52
+
+Summary:
+
+Hey , I'm Jamal in this report i want  to show  you a Vulnerability Found It In basic-google-maps-placemarks Pugin
+
+
+Description:
+[#] Title            :  Path Disclosure Vulnerability
+
+[#] Status          : Unfixed
+[#] Tested on    :  Firefox
+[#] Author         :  Jamal Eddine
+[#] Email          :  jamalcome@gmail.com
+[#] Discovered :  2014/05/04
+[#] Report it     :  2014/05/04
+
+
+
+Target :
+http://www.foxyform.com/index.php?step[]=4%27
+
+
+     
+Description:
+      
+Full Path Disclosure (FPD) vulnerability enable the attacker to see the path to the webroot/file. Certain vulnerabilities, such as   using the load_file() (within a SQL Injection) query to view the page source, require the attacker to have the full path to the file they wish to view.
+
+Attack details:
+
+With the Inspect Elemenr of browser , we change the value in the form of any field of the plugin by addin the Empty array []
+
+that's all and thank you so much

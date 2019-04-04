@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/118965
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/nismo
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:25.04.2016 5:03:36
+
+Summary:
+
+Hi! I would like to provide the following matrix in order to distinguish between EP+Private vs Private programs in HackerOne, without the need to login.
+
+I am using two endpoints. These are:
+1. https://hackerone.com/ENTITY/thanks/2012.json and
+2. https://hackerone.com/ENTITY/thanks/2013.json
+
+If ENTITY is SANDBOX the response in 1 is 401 and the response in 2 is 401
+If ENTITY is EP the response in 1 is 500 and the response in 2 is 401
+If ENTITY is EP+Private  the response in 1 is 500 and the response in 2 is 401
+If ENTITY is Private the response in 1 is 401 and the response in 2 is 401
+If ENTITY is Public the response in 1 in 500 and the response in 2 is 200
+If ENTITY is User the response in 1 is 404 and the response in 2 is 404
+
+As you may see from the above matrix, you can distinguish between EP+Private and Private programs based on the Return number.
+
+Thanks!

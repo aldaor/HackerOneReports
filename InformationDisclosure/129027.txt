@@ -1,0 +1,69 @@
+ReportLink:https://hackerone.com/reports/129027
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/cyberunit
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 22:58:34
+
+Summary:
+
+Hello.
+
+Go to this address and you see error with addresses
+> https://trip.uber.com/1%
+
+Request
+```
+GET /1% HTTP/1.1
+Host: trip.uber.com
+Connection: keep-alive
+Cache-Control: max-age=0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.101 Safari/537.36 OPR/25.0.1614.50
+Accept-Encoding: gzip,deflate,lzma
+Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4
+Cookie: marketing_vistor_id=e411da2e-f1ee-43fa-992e-32bd1e92d834; lang=ru-RU
+```
+
+
+
+Respond
+```
+HTTP/1.1 400 Bad Request
+Server: nginx
+Date: Thu, 07 Apr 2016 14:53:18 GMT
+Content-Type: text/html
+Content-Length: 2357
+Connection: keep-alive
+X-Powered-By: Express
+X-Uber-App: share-yo-ride
+X-Varnish: 409568701
+Age: 0
+Via: 1.1 varnish-v4
+Strict-Transport-Security: max-age=0
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+
+Error: Bad Request
+    at SendStream.error (/var/cache/udeploy/r/share-yo-ride/sjc1-produ-0000000260-v1/node_modules/express/node_modules/send/lib/send.js:145:16)
+    at SendStream.pipe (/var/cache/udeploy/r/share-yo-ride/sjc1-produ-0000000260-v1/node_modules/express/node_modules/send/lib/send.js:298:31)
+    at Object.staticMiddleware [as handle] (/var/cache/udeploy/r/share-yo-ride/sjc1-produ-0000000260-v1/node_modules/express/node_modules/connect/lib/middleware/static.js:91:8)
+    at next (/var/cache/udeploy/r/share-yo-ride/sjc1-produ-0000000260-v1/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.urlencoded [as handle] (/var/cache/udeploy/r/share-yo-ride/sjc1-produ-0000000260-v1/node_modules/express/node_modules/connect/lib/middleware/urlencoded.js:49:37)
+    at next (/var/cache/udeploy/r/share-yo-ride/sjc1-produ-0000000260-v1/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.json [as handle] (/var/cache/udeploy/r/share-yo-ride/sjc1-produ-0000000260-v1/node_modules/express/node_modules/connect/lib/middleware/json.js:51:37)
+    at next (/var/cache/udeploy/r/share-yo-ride/sjc1-produ-0000000260-v1/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.expressInit [as handle] (/var/cache/udeploy/r/share-yo-ride/sjc1-produ-0000000260-v1/node_modules/express/lib/middleware.js:30:5)
+    at next (/var/cache/udeploy/r/share-yo-ride/sjc1-produ-0000000260-v1/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.query [as handle] (/var/cache/udeploy/r/share-yo-ride/sjc1-produ-0000000260-v1/node_modules/express/node_modules/connect/lib/middleware/query.js:44:5)
+    at next (/var/cache/udeploy/r/share-yo-ride/sjc1-produ-0000000260-v1/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Function.app.handle (/var/cache/udeploy/r/share-yo-ride/sjc1-produ-0000000260-v1/node_modules/express/node_modules/connect/lib/proto.js:201:3)
+    at Server.app (/var/cache/udeploy/r/share-yo-ride/sjc1-produ-0000000260-v1/node_modules/express/node_modules/connect/lib/connect.js:65:37)
+    at Server.emit (events.js:98:17)
+    at HTTPParser.parser.onIncoming (http.js:2112:12)
+    at HTTPParser.parserOnHeadersComplete [as onHeadersComplete] (http.js:121:23)
+    at Socket.socket.ondata (http.js:1970:22)
+    at TCP.onread (net.js:527:27)
+```

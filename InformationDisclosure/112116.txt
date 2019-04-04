@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/112116
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/agarri_fr
+ReportedTo:Bime(bime)
+BountyAmount:750.0
+Severity:
+State:Closed
+DateOfDisclosure:14.09.2016 4:50:55
+
+Summary:
+A XML External Entity (XXE) vulnerability allowed an attacker to read arbitrary files on the server.

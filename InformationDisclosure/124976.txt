@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/124976
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ashesh
+ReportedTo:Gratipay(gratipay)
+BountyAmount:1.0
+Severity:low
+State:Closed
+DateOfDisclosure:01.04.2016 16:34:06
+
+Summary:
+
+I found that the domain images.gratipay.com is just a reverse proxy for gratipay.com and **HTTPS** works throughtout the site flawlessly except in one case, that it when we try to open user's profile:
+
+POC: https://images.gratipay.com/~asdlfz/
+
+Https Warning Page: http://i.imgur.com/XHsXJEvr.png?1
+
+
+**Risks**
+
+Any user browsing the page is under direct man-in-middle attack, as Https is being not implemented properly, The session data can be easily decrepted via any end point.
+
+For new user's it might result like first impression of the site is an invalid https certificate and plus the warning Chrome gives is way more horrifying:
+
+>Attackers might be trying to steal your information from images.gratipay.com (for example, passwords, messages, or credit cards).
+
+The user might never dare to open even gratipay.com ever.
+
+
+**Fix**
+Add a valid Certificate across `images.gratipay.com` or remove the domain at all.

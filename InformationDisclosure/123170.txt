@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/123170
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/mikkz
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:31.03.2016 4:07:40
+
+Summary:
+
+Hello,
+
+I have found out that when a team invites a team member via username, the email address of the invited user is being disclosed after he accepted it. 
+
+This can be abused since we all know that the email address is not publicly visible through hackerone profile. One team can abuse its function by inviting a user to join the team with a permission of read-only on the team in exchange of exposing the invited users email without his knowing of it.
+
+In the https://hackerone.com/[program-handle]/groups you can create a group that has a read only privilege. F78875
+
+To reproduce
+
+Just go to https://hackerone.com/[program-handle]/team_members
+
+Invite a user via their username with and select the group with a read-only permission.
+
+After the user has accepted it since he dont know that it is a read-only permission. the email address of the user will be disclosed. F78874
+
+Thanks!
+Mikko

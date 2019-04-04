@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/117593
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bugs3ra
+ReportedTo:LeaseWeb(leaseweb)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.05.2016 15:03:32
+
+Summary:
+
+HI
+
+For URL "http://developer.leaseweb.com/asdfadsf" apache version is disclosed in response header "Server"
+
+Connection: keep-alive
+Content-Encoding: gzip
+Content-Length: 174
+Content-Type: text/html; charset=iso-8859-1
+Date: Sat, 20 Feb 2016 05:11:18 GMT
+Server: Apache/2.4.7
+Vary: User-Agent
+
+This information may help attacker in vulnerability research
+https://www.cvedetails.com/vulnerability-list/vendor_id-45/product_id-66/version_id-161847/year-2014/Apache-Http-Server-2.4.7.html

@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/135756
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/vijay_kumar
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:01.09.2016 6:10:03
+
+Summary:
+
+Hi ,
+Deleted comments and rating of any app can be viewed by following url -
+
+https://apps.shopify.com/<app>/reviews/<review-id>/edit
+
+for example review with review id 47935 is deleted but still can be view by following link -
+https://apps.shopify.com/swell/reviews/47935/edit 
+
+As review id is incremental id so all reveiw of app can be collected easily.
+
+It is not a big issue but deleted comment should not be allowed to view . Please let me know what you think about this .
+Thanks

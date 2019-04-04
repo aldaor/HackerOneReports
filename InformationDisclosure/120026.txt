@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/120026
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/jsshen
+ReportedTo:Gratipay(gratipay)
+BountyAmount:1.0
+Severity:low
+State:Closed
+DateOfDisclosure:13.07.2016 2:32:04
+
+Summary:
+
+Hi Gratipay team,
+
+I noticed that your nginx setting is not secure.
+
+When you input https://grtp.co/.gitignore in your browser, it will download this hidden file. Even though this file does not contain some sensitive files, we still need to change nginx settings like bellow to forbid future hidden files being downloaded.
+
+**The following code would deny any request to hidden files**
+
+```
+location ~* .*/\..* {
+               return 403;
+       }
+
+```
+ **The following code can block sensitive files using nginx**
+```
+
+location ~ /(\.ht|\.git|_cron|_setup|_data|_tpl|_tmp|_log|_library|\.idea) {
+        deny all;
+   }
+```
+
+Hope you do your business well. Have a good day.
+
+Rds
+jsshen

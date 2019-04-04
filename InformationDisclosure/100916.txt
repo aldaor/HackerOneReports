@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/100916
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/nathonsecurity
+ReportedTo:Imgur(imgur)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:08.01.2016 23:23:25
+
+Summary:
+A security group configuration error allowed Imgur development environments to face the public internet. Typically these environments were protected behind a special endpoint which would open access to authenticated Imgur employees for a short time window. Since the development environments were configured in such a manner to make development easier, some keys and environment variables were exposed. While most of these pieces of sensitive information were limited to the development environments, some production information was also exposed. Since this report was published, security around development environments has been completely re-worked and they now reside behind a VPN.

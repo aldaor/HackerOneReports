@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/135782
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/dotnick
+ReportedTo:Moneybird(moneybird)
+BountyAmount:25.0
+Severity:
+State:Closed
+DateOfDisclosure:06.07.2016 14:58:46
+
+Summary:
+Researcher found a disclosure of the server version of our website. We have removed this information from our webserver responses.

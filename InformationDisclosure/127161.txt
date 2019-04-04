@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/127161
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/maluko
+ReportedTo:Uber(uber)
+BountyAmount:5000.0
+Severity:
+State:Closed
+DateOfDisclosure:12.07.2016 17:19:30
+
+Summary:
+Limited Disclosure at @maluko's request

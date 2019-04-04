@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/125118
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/jutsuce
+ReportedTo:Uber(uber)
+BountyAmount:1500.0
+Severity:
+State:Closed
+DateOfDisclosure:13.07.2016 16:40:14
+
+Summary:
+Limited disclosure at @jutsuce's request

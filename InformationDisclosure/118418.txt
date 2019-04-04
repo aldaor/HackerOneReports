@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/118418
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/cyberpunkych
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.06.2016 13:32:13
+
+Summary:
+Information disclosure for logged-in user in out-of-scope service

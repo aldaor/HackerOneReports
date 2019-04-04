@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/115337
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/supernatural
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:09.03.2016 14:41:24
+
+Summary:
+
+Hi
+
+as reported in email,
+there is a full path disclosure in EasyDB
+
+you fixed some of them in last commit
+add this code before and "execute($params)" function call!
+
+    if(count($params) != count($params,COUNT_RECURSIVE)){
+                throw new \InvalidArgumentException("Invalid params");
+    }
+
+this will check $params to be 1d array,
+
+
+Regards

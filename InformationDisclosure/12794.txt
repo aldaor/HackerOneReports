@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/12794
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bigbear
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.09.2014 12:57:13
+
+Summary:
+
+Web-ресурс - http://berserk.mail.ru/
+PoC - http://berserk.mail.ru/forum/index.php?action=profile&u=45083
+
+Раскрытие полного серверного пути до скриптов. 
+
+В рамках участия в PHDAYS 2014.
+
+(c) BigBear

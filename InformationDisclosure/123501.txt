@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/123501
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/zuh4n
+ReportedTo:Veris(veris)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.03.2016 5:57:10
+
+Summary:
+The particular issue was related to Insecure Direct Object Reference vulnerability where a particular API was not included in the main permission sets. So the enumeration attacks could be executed.

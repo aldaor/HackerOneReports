@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/115817
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/niwasaki
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.01.2019 22:19:18
+
+Summary:
+Reporter was able to find an endpoint with the output of all authors. As this is publicly accessible information anyway, we don't consider this to be a security threat.

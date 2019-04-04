@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/117158
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/cyberpunkych
+ReportedTo:Mail.ru(mailru)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:24.02.2016 10:46:02
+
+Summary:
+Server Side Request Forgery in out-of-csope partner project outside of company's network.

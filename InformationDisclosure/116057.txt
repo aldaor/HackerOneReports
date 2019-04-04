@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/116057
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/acc_122
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.06.2016 1:58:31
+
+Summary:
+
+Hi,
+Paragonie security team i found one directory browsing vulnerability in php-encryption-master where the user input will not been filtered from any security layer.
+let me show you.
+there is a autoload.php page in the php-encryption-master. where the input src will b used to browse the directory so this input will not been tested and fetch the file from directory and return to user.
+this attack will highly affect your product and may invite for other attack to.
+
+so i hope you will protch it as soon as possible.
+
+thank you,
+security researcher,
+lucky sen

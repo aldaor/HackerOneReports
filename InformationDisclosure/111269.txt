@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/111269
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/agarri_fr
+ReportedTo:Pornhub(pornhub)
+BountyAmount:1500.0
+Severity:
+State:Closed
+DateOfDisclosure:15.08.2016 20:36:57
+
+Summary:
+Researcher was successful in exploiting a vulnerability in the libav (ffmpeg) encoder in order to execute SSRF attacks.

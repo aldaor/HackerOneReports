@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/121382
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/cjusten
+ReportedTo:ownCloud(owncloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.04.2016 13:22:15
+
+Summary:
+
+When visiting the following URL
+https://doc.owncloud.org/server/8.2/go.php?to=admin-backup
+the web server does interpret the php code but delivers the php code itself.
+This might expose internal information to anyone visiting the website.

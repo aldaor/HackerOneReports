@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/122898
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/daveysec
+ReportedTo:Xero(xero)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.05.2016 6:53:14
+
+Summary:
+A Web server Configuration error was reported, which displayed a default installation file with an internal IP address. This was rated low-risk and was fixed in days.

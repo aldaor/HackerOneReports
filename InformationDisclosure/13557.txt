@@ -1,0 +1,46 @@
+ReportLink:https://hackerone.com/reports/13557
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/robin
+ReportedTo:Factlink(factlink)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 10:00:32
+
+Summary:
+
+When we request a password reset link, after that before Writing a new password, Going to an External link would cause Referer leakage...
+
+Remote Address:74.125.68.95:443
+Request URL:https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700
+Request Method:GET
+Status Code:200 OK
+Request Headers
+:host:fonts.googleapis.com
+:method:GET
+:path:/css?family=Open+Sans:400italic,700italic,400,700
+:scheme:https
+:version:HTTP/1.1
+accept:text/css,*/*;q=0.1
+accept-encoding:gzip,deflate,sdch
+accept-language:en-US,en;q=0.8
+cache-control:max-age=0
+referer:https://factlink-staging.herokuapp.com/users/password/edit?reset_password_token=8GbCsdRTX3yx3wZzwPuy
+user-agent:Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36
+Query String Parametersview sourceview URL encoded
+family:Open Sans:400italic,700italic,400,700
+Response Headers
+alternate-protocol:443:quic
+cache-control:private, max-age=86400
+content-encoding:gzip
+content-length:387
+content-type:text/css
+date:Tue, 27 May 2014 08:08:05 GMT
+expires:Tue, 27 May 2014 08:08:05 GMT
+server:GSE
+status:200 OK
+timing-allow-origin:*
+version:HTTP/1.1
+x-content-type-options:nosniff
+x-frame-options:SAMEORIGIN
+x-xss-protection:1; mode=block

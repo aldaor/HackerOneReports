@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/116621
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bulla
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:20.02.2016 12:12:30
+
+Summary:
+
+It was found that a calendar containing information about various tasks to be performed by the server admin can be viewed by any user.
+
+link: http://inside.gratipay.com/appendices/calendar
+
+it reveals stuff link data of expiration of ssl certificate, lastpass accounts, etc
+
+further important entries that might entered in the future may contain critical data and hence access to this link should only be to concerned personnel
+
+Server status - server load, bandwidth, database connections, etc revealed via public link
+
+link: http://inside.gratipay.com/appendices/health
+
+This link reveals important information about the server load and other information and can aid an attacker for other atacks
+
+These links belong to the inside.fratiplay.com which says that t is for the internal employees only yet the domain is accessible publically.
+
+Access to this domain should be restricted to the internal employees only. 

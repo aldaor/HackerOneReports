@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/127087
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/shmoo
+ReportedTo:Uber(uber)
+BountyAmount:3000.0
+Severity:
+State:Closed
+DateOfDisclosure:14.06.2016 16:45:45
+
+Summary:
+Due to an access control vulnerability it was possible to view the waybill of an arbitrary driver/partner by supplying their UUID to the `/rt/drivers/[DRIVER_PARTNER_UUID]/waybill` endpoint.

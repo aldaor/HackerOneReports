@@ -1,0 +1,51 @@
+ReportLink:https://hackerone.com/reports/132835
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/geekboy
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.02.2017 1:47:58
+
+Summary:
+
+Hi,
+
+This is a issue related with cache and information disclosure. Generally when a user is logged out, the session gets terminated and no data is of the previous session is accessible. But when cache control is not configured correctly, Sensitive data leak over browser even after user have logged out. 
+
+Newrelic is not completely vulnerable to this issue and there are pages where cache-control is marked as no-store, however there were several pages containing sensitive info (EG: API KEYS, Billing Info) which are not secured against this vulnerability.
+
+Reproduction Steps: (POC Attached)
+
+1) Login to Newrelic main-site 
+2) Navigate to Any Vulnerable Page Containing Sensitive Info
+3) For Instance, these are some pages I could collect to easily explain you the issue,
+
+i) https://rpm.newrelic.com/accounts/1311363/integrations?page=api_keys
+ii) https://rpm.newrelic.com/accounts/1311363/payments
+iii) https://rpm.newrelic.com/accounts/1311363/integrations?page=data_sharing
+iv) many more pages are vulnerable
+
+Note: After you're done, just log out directly from this page
+4) Once logged out, hit the 'Back' Button in browser
+
+Note: This issue supports all modern browsers
+
+Observation: You will notice you are landed back to the authenticated page, although it will look authenticated, it wont actually be but you will still be able to read/copy the sensitive info that page contains. This is just about sensitive data leakage as any attacker / malicious-user could do the same with the victim's account.
+
+Although the exploitation involves physical access to the victim's PC, I have several scenarios where you will find that this issue can't be left as the responsibility of the user to be taken care of.
+
+1) In a office scenario it is not very difficult to access someone's PC 
+2) In a laptop case, someone can get their hands on to it quite easily
+
+As Newrelic is all about data and analytics, I believe this this is a issue which definitely needs to be fixed. I'd like to help you to fix it so below are the remediation details.
+
+Remediation :
+
+Your devops can implement these headers to mitigate this issue, however there could be better alternatives also which they might want to fit instead of this one. This is just a suggestion :)
+
+header("Cache-Control: no-store, no-cache, must-revalidate");
+
+Here, "no-store" is most important to be implemented.
+
+Request Note: Even after my explanation, if you believe this issue is not important to be addressed then please mark the report as 'Informative' and not 'N/A'.

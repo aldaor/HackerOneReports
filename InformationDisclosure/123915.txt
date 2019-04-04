@@ -1,0 +1,65 @@
+ReportLink:https://hackerone.com/reports/123915
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/d0rkerdevil
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.10.2017 22:19:21
+
+Summary:
+
+Vulnerability description:-
+This form is served from an insecure page (http) page. This page could be hijacked using a Man-in-the-middle attack and an attacker can replace the form target.
+This vulnerability affects:-   /selfies/submit. 
+
+attack details:-
+Form name: "form144"
+Form action: "https://newrelic.wufoo.com/forms/z1r1xkt80i1lvd6/#public"
+
+Request:--------------
+GET /selfies/submit HTTP/1.1
+Pragma: no-cache
+Cache-Control: no-cache
+Referer: http://newrelic.com/selfies
+Acunetix-Aspect: enabled
+Acunetix-Aspect-Password: 082119f75623eb7abd7bf357698ff66c
+Acunetix-Aspect-Queries: filelist;aspectalerts
+Cookie: syn_preview_count=BAhpCg%3D%3D--ceb27632ec3515dcaa43ec547fe5cb3389471630; _storefront_session=f48a92bb766124706d1967d1de1153e4
+Host: newrelic.com
+Connection: Keep-alive
+Accept-Encoding: gzip,deflate
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.63 Safari/537.36
+Acunetix-Product: WVS/9.0 (Acunetix Web Vulnerability Scanner - Free Edition)
+Acunetix-Scanning-agreement: Third Party Scanning PROHIBITED
+Acunetix-User-agreement: http://www.acunetix.com/wvs/disc.htm
+Accept: */*
+
+Response:---------------------------------
+HTTP/1.1 200 OK
+Server: nginx
+Content-Type: text/html; charset=utf-8
+Status: 200 OK
+X-UA-Compatible: IE=Edge,chrome=1
+ETag: "b922f0389dd00ae528c23df3a7535f77"
+Cache-Control: must-revalidate, private, max-age=0
+X-Request-Id: 1b791d3c49fac8c578e46eb1a23cf9aa
+X-Runtime: 0.024433
+X-Rack-Cache: miss
+Content-Length: 54939
+Accept-Ranges: bytes
+Date: Thu, 17 Mar 2016 07:50:58 GMT
+Via: 1.1 varnish
+Age: 0
+Connection: keep-alive
+X-Served-By: cache-sin6923-SIN
+X-Cache: MISS
+X-Cache-Hits: 0
+
+The impact of this vulnerability
+Possible information disclosure.
+
+How to fix this vulnerability
+The form should be served from a secure (https) page
+
+classification taken from CWE-200

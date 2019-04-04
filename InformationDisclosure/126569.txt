@@ -1,0 +1,44 @@
+ReportLink:https://hackerone.com/reports/126569
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/laps-forever
+ReportedTo:Uber(uber)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:13.06.2016 22:22:56
+
+Summary:
+
+Hi, i have found several DNS records at Google DNS server 8.8.8.8 pointing to Uber local servers:
+
+```
+▶ nslookup logs.uber.com
+Server:		8.8.8.8
+Address:	8.8.8.8#53
+
+Non-authoritative answer:
+Name:	logs.uber.com
+Address: 10.6.0.1
+```
+
+```
+▶ nslookup kerberos.uber.com
+Server:		8.8.8.8
+Address:	8.8.8.8#53
+
+Non-authoritative answer:
+Name:	kerberos.uber.com
+Address: 10.6.0.74
+```
+
+```
+▶ nslookup ldap.uber.com
+Server:		8.8.8.8
+Address:	8.8.8.8#53
+
+Non-authoritative answer:
+Name:	ldap.uber.com
+Address: 10.30.14.3
+```
+
+This information could be used, if attacker gets SSRF,XXE,LFI etc in order to address local network of Uber.

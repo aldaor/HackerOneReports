@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/128388
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/theflofly
+ReportedTo:Trello(trello)
+BountyAmount:1536.0
+Severity:
+State:Closed
+DateOfDisclosure:07.04.2016 14:33:57
+
+Summary:
+If an attacker installed a webhook on an team, and the team subsequently changed it's visibility from `private` to `public`, the payload sent to the webhook to notify it of the visibility change could potentially have disclosed some information that the attacker shouldn't have had access to.
+
+For paid accounts, this could have included some limited information related to the payment account for the team:
+
+- The name and email of the billing contact
+- The type of card being used, and the last four digits of the card number
+
+**We audited the webhooks that existed at the time that this bug existed, and determined that there were not any configured that could have received additional unauthorized information about a team** (other than the webhooks created by @theflofly to demonstrate the issue)  That said, the potential severity of the issue was high and warranted an immediate fix.
+
+### Timeline:
+
+#### April 5, 2016
+
+6:49 Issue reported by @theflofly
+13:49 Issue reproduced, began working on a fix
+15:30 **Issue resolved for all teams**
+16:01 Fix confirmed by @theflofly
+
+#### April 6, 2016
+
+13:56 Internal audit completed, bounty awarded
+

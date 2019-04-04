@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/116692
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bugs3ra
+ReportedTo:Algolia(algolia)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.06.2016 10:17:55
+
+Summary:
+
+Hi 
+
+ON BLOG.ALGOLIA.COM 
+PHP application version is disclosed in response header "X-Powered-By"
+
+POC is attached.

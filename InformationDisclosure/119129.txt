@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/119129
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/codequick
+ReportedTo:Coinbase(coinbase)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:04.03.2016 0:47:17
+
+Summary:
+For some users, Coinbase was accidentally revealing the last 8 digits of a user's phone number on the 2FA modal instead of the last 4 digits.
+

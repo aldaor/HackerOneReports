@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/115219
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/imbecile
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:29.04.2016 13:38:51
+
+Summary:
+
+Hello,
+
+Here's an crafted URL which discloses web server used and version of same. 
+> https://paragonie.com/%PI  
+
+Even-though most error pages are handled by generic pages in paragonie.com, above given ```400 Bad Request``` sample is not handled. 
+It seems this error page is because of Invalid URL Encoded (%PI) Value given in the request. 

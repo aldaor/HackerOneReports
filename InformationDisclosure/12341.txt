@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/12341
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/atom
+ReportedTo:Kadira(kadira)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.07.2014 10:00:30
+
+Summary:
+
+Missing SPF in meteorapm.com
+this bug can spoof your email.
+
+Reproduce:
+Go Here http://www.kitterman.com/spf/validate.html?
+Then Put meteorapm.com
+Then Click Get SPF Records (if any)
+then you will got nothing or no records.
+
+Proof: http://prntscr.com/3jygev

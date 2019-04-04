@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/121919
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/tomash
+ReportedTo:Vimeo(vimeo)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:21.05.2016 20:13:58
+
+Summary:
+Clip meta-data disclosed to thrid-party crawlers.

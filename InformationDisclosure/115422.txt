@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/115422
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/supernatural
+ReportedTo:Paragon Initiative Enterprises(paragonie)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:16.10.2017 5:51:57
+
+Summary:
+
+Hi,
+
+Password input must be string but not checked in PasswordLock lib,
+It will throw an exception on `hash` function call
+
+    Warning: hash() expects parameter 2 to be string
+
+So you must validate it in `hashAndEncrypt` and `decryptAndVerify`
+
+Regards

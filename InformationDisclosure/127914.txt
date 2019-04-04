@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/127914
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/meals
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.04.2016 4:20:06
+
+Summary:
+
+Hey guys,
+
+So this isn't really a security bug or a big information disclosure. However, I noticed that if a user removes their name "Eric Angeles" from their account page (https://hackerone.com/exodia_forbidden_one) it will still be visible by mousing over the users handle on a disclosed report (https://hackerone.com/reports/124975). So essentially this person has removed their name for whatever reason, *winks*, their name will still be displayed via this method.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/1066
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/agarri_fr
+ReportedTo:Verizon Media(verizonmedia)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.08.2015 20:05:51
+
+Summary:
+Thank you for your submission to Yahoo’s Bug Bounty program. There were similar reports submitted, this report is marked as closed as the other reports will be triaged. We appreciate your adherence to responsible disclosure guidelines and look forward to your future participation in the program.

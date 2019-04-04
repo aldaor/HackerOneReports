@@ -1,0 +1,42 @@
+ReportLink:https://hackerone.com/reports/122697
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/aiacobelli
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:27.08.2016 12:18:08
+
+Summary:
+
+Hi again to all,
+
+I've found that is possible to scan all the open ports and network information of internal instances of your amazon DC that are related with synthetics monitors.
+
+NOTE:  I do not have a pro account so I can use the more advanced synthetics functions or the Insights db query to get more information but I think that this PoC could be more dangerous if I had one. 
+
+1) Log in and go to the synthetics section: "https://synthetics.newrelic.com/accounts/<yourId>/synthetics".
+2) Create a new monitor: internalScan
+3) On the "Choose your monitor type" use the simple browser and on the url use "http://127.0.0.1".
+4) Change the "Set the schedule" to 1 minute so the tests are faster and save. 
+5) On "settings->General" of that monitor you can set the "bypass head request" and disable "VerifySsl". 
+
+So in this first try, when you want to try to scan a localhost adress the next message arrives:
+
+"BlockedRequestError: 127.0.0.1"
+Image: Image1
+
+I've tried a second way to reference localhost : 0.0.0.0 but the same error pops Out. 
+
+Then i've thought, theres another way to reference localhost if you are on a /8 (127.x.x.x) internal network, and that adress is 127.127.127.127:
+
+"HTTPError: Server Replied with a 403 FORBBIDEN response code". So, I've established the HTTP connection bypassing your protection. Now the next step is to find an open port, so I've tried  web common ports and I've found the 8080 or 8081. The 8081 was close but the 8080 was open. 
+
+Image2
+Image3
+
+So i'ts important for you to block the "127.127.127.127" adress and all the related ways to access localhost. 
+
+So an attacker could know not only that you have a 127/ network block but all the ports that this instance has open. An attacker with a pro version could scan the 8080 in order to get more info about the server version. 
+
+For next reports I will try to scan other computers on the network and check SSL certificates. 

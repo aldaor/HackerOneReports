@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/117902
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/linkks
+ReportedTo:VK.com(vkcom)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:18.11.2016 15:29:47
+
+Summary:
+
+Привет команда ВК 
+
+вводим в гугл site:api.vk.com
+
+получаем список ссылок 
+
+сужаем запрос site:api.vk.com access_token 
+
+Получаем ссылки с access_token  
+
+https://api.vk.com/method/audio.getPopular.xml?access_token=73e0a5e18bb491249705e60ff352df91bd34a55ee634c9448b187feee9a8bcffde7eefb9000ea03d845a2&sort=&count=11&only_eng=0
+
+Получаем список друзей 
+
+https://api.vk.com/method/friends.get.xml?&access_token=73e0a5e18bb491249705e60ff352df91bd34a55ee634c9448b187feee9a8bcffde7eefb9000ea03d845a2&sort=&count=11&only_eng=0
+
+Дальше экспериментировать не стал.
+
+Спасибо заранее 

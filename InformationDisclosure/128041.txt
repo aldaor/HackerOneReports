@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/128041
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/niputiwari
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:05.04.2016 19:36:41
+
+Summary:
+
+Getting Error Message and in use python version 2.7 is exposed.
+
+Application is unnecessarily exposing the following response headers and message
+which divulge its choice of web platform:
+Request is undecodable. (/app/.heroku/python/lib/python2.7/encodings/utf_8.py:16)

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/124578
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/signalchaos
+ReportedTo:General Motors(gm)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.06.2017 18:34:05
+
+Summary:
+My GMC website contained a parameter that allowed XSS injection. The vulnerable input parameter has been identified and remediated. 

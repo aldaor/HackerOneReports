@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/119860
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/zephrfish
+ReportedTo:Pornhub(pornhub)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:17.08.2016 13:46:21
+
+Summary:
+Researcher identified that HTTP TRACE method was enabled.
