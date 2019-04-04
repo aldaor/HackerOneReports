@@ -1,0 +1,42 @@
+ReportLink:https://hackerone.com/reports/218342
+WeaknessName:Remote File Inclusion
+Reporter:https://hackerone.com/cloudyvirus
+ReportedTo:Ruby(ruby)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:05.04.2017 8:20:50
+
+Summary:
+
+Hi Ruby,
+
+Here is Shaifullah Shaon (Black_EyE), An Ethical Hacker.
+a white hat cyber security researcher from Bangladesh reporting a serious
+[3'rd ranking in OWASP] security vulnerability on your system.
+
+I faced a technical security bug called RCE (Remote Code Execution) Vulnerability on Ruby.
+
+
+
+Let's follow me...
+
+1. Find any online execution site for ruby. CZ I didn't enough Speach for install ruby in my HDD. ;p
+2. Input this code only. 
+Code: 
+# Hello World Program in Ruby
+
+system "clear;ls;uname -a;echo RCE in Ruby Language By Black_EyE";
+
+
+3. As you see, Here have RCE using your Language.
+
+ 
+Please See my Video Poc for understand clearly. Hopefully Those are Very critical issue.
+Resolve those issue as soon as possible.
+
+Here is proof as video concept: https://youtu.be/XTdSzAbNQ9Q
+
+Thank you
+Shaifullah Shaon (Black_EyE)
+shaon.durjoy@gmail.com

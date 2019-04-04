@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/346575
+WeaknessName:Remote File Inclusion
+Reporter:https://hackerone.com/grampae
+ReportedTo:Cloudflare(cloudflare)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:15.08.2018 16:37:08
+
+Summary:
+Grampae was able to load arbitrary resources into an HTML response form.
+The following header parameters provided an HTTP request back although sometimes 30 minutes later:
+X-Forwarded-For
+Client-IP
+Referer
+Contact
+X-Wap-Profile
+Forwarded
+X-Originated-IP
+X-Client-IP
+From
+User Agent
+
+The resource injection is shown in the attached screenshots:
+1: OOB Request and Response to initiate OOB.jpg: This shows the initial request to ---redacted-- with the collaborator hostname I used within the "/cdn-CGI/pe/bag2?r[]=" parameter. It also shows the final response including data injected by my collaborator host.
+
+2: OOB IP Address.jpg: This shows the IP address that contacted my collaborator host, this is a Cloudflare host I believe.
+
+3: OOB Request.jpg: Request to my Collaborator host.
+
+4: OOB Colab Response.jpg: My collaborator's response which gets copied back in the response in the initial screenshot from item 1 above.
+
+Reported - May 2nd
+Verified & Triaged - May 10th
+Patched for rollout - Jul 6th
+Patched Verified - Jul 6th
+Resolved - Aug 15th
+

@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/384882
+WeaknessName:Remote File Inclusion
+Reporter:https://hackerone.com/scrszy
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:24.07.2018 23:09:29
+
+Summary:
+
+Hi security team member,
+
+On stamp2-azure-ext.newrelic.com, there is running Windows Server 2008, which is vulnerable to MS12-020.
+{F322944}
+
+#Step to reproduce
+To show exploit, the server will shut down.
+1- Download the attached file with the name MS12-020.rb
+2- Run the below command on terminal
+`ruby MS12-020.rb stamp2-azure-ext.newrelic.com`
+
+The above command will shut down the server. So keep in mind before doing anything.
+Let me know if more information is needed to my end.
+Thanks
+
+## Impact
+
+An attacker is able to shut down the server. Also he/she can get access of server after restart.
