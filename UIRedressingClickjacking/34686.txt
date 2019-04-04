@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/34686
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/cyberunit
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:02.11.2015 21:32:07
+
+Summary:
+
+Ошибка позволяет принудительно переадресовать целевого пользователя на заранее подготовленную фейковую страницу , для ввода авторизационных данных или же на загрузку вредоносного П.О.
+

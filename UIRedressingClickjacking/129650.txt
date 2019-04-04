@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/129650
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/white_hat_0003
+ReportedTo:APITest.IO(apitest)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.05.2016 18:43:19
+
+Summary:
+
+same as this report https://hackerone.com/reports/7492
+vulnerable :- sign in ,sign up ,and main domain 
+poc attached

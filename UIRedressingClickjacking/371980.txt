@@ -1,0 +1,56 @@
+ReportLink:https://hackerone.com/reports/371980
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/ibrahimd
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:23.09.2018 10:02:27
+
+Summary:
+
+Hi,
+
+[olx.co.za](https://www.olx.co.za/) and [olx.com.gh](https://www.olx.com.gh/) both of them restrict framing by using this CSP rule:
+
+```
+content-security-policy: frame-ancestors 'self' https://*.mod-tools.com:*
+```
+olx.co.za:
+
+{F313178}
+
+olx.com.gh:
+
+{F313179}
+
+If we take a look at `mod-tools.com` we can see that the domain is not claimed:
+```
+$ dig mod-tools.com 
+
+; <<>> DiG 9.10.3-P4-Ubuntu <<>> mod-tools.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 11998
+;; flags: qr rd ra ad; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 0
+
+;; QUESTION SECTION:
+;mod-tools.com.			IN	A
+
+;; Query time: 1 msec
+;; SERVER: 127.0.1.1#53(127.0.1.1)
+;; WHEN: Thu Jun 28 10:34:33 CEST 2018
+;; MSG SIZE  rcvd: 31
+
+```
+Or an image as a POC:
+{F313189}
+
+## Impact
+
+An attacker could claim [mod-tools.com](https://mod-tools.com/)  and from there he/she could perform clickjacking attack against `olx.co.za`, `olx.com.gh`.
+
+{F313177}
+
+Best,
+Taha Ibrahim DRAIDIA

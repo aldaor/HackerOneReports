@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/267075
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/sameull
+ReportedTo:WordPress(wordpress)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:12.10.2017 18:59:56
+
+Summary:
+
+Hello! @wordpress security team,
+I'm Md Sameull Soykot ( @sameull ). Recently I have tested you all sub-domain and got a domain which is vulnerable named as clickjacking. I have attached my video Poc for details. Hope you will fix this issue as soon as possible.
+
+Reference: https://blogs.msdn.microsoft.com/ieinternals/2010/03/30/combating-clickjacking-with-x-frame-options/
+
+{F219474}
+
+Thank you

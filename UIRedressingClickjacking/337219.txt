@@ -1,0 +1,50 @@
+ReportLink:https://hackerone.com/reports/337219
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/hacker_one_one
+ReportedTo:Zomato(zomato)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.04.2018 12:52:07
+
+Summary:
+
+##The browser has verified the identity:
+Successfully implemented in IE browser
+
+##Reproduce steps:
+URLs do not have X-FRAME-OPTIONS set to DENY or SAMEORIGIN, and they are vulnerable to clickjacking.
+Run under the browser's code and you will see that the listed links are vulnerable to clickjacking attacks
+```
+<html>
+	<frameset cols="25%,25%,25%">
+		<frame src="https://www.zomato.com/robots.txt" />
+		<frame src="https://www.zomato.com/users/fan-feng-52680914" />
+		<frame src="https://www.zomato.com/cairns-qld" />
+	</frameset>
+</html>
+```
+{F285366}
+
+## Impact
+
+Most of the zomato.com urls were tested and found that most basic urls support iframe display in IE.
+
+E.g:
+* https://www.zomato.com/users/fan-feng-52680914/edit
+* https://www.zomato.com/invite
+* https://www.zomato.com/cairns-qld
+* https://www.zomato.com/cairns-qld/caffiend-cairns?zrp_bid=0&zrp_pid=14
+* https://www.zomato.com/users/fan-feng-52680914/bookmarks
+* https://www.zomato.com/users/fan-feng-52680914/managewallets
+
+The hacker selected the **UI Redressing (Clickjacking)** weakness. This vulnerability type requires contextual information from the hacker. They provided the following answers:
+
+**URL**
+*.zomato.com
+
+**Can a victim be tricked into unknowingly initiating a specific action?**
+Yes
+
+**What specific action can the user be tricked into?**
+E.g: Hackers can lure users into the personal settings page, change data that is useful to hackers, delete accounts...

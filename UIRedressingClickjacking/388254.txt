@@ -1,0 +1,84 @@
+ReportLink:https://hackerone.com/reports/388254
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/rewanth_cool
+ReportedTo:WordPress(wordpress)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:03.09.2018 12:27:11
+
+Summary:
+
+####Vulnerability -
+Editor role privileged users are able to hack into other's account by exploiting clickjacking vulnerability.
+
+####Version-
+4.9.7
+
+####Issue-
+https://make.wordpress.org/core/handbook/testing/reporting-security-vulnerabilities/#why-are-some-users-allowed-to-post-unfiltered-html
+As mentioned per the above link, the editor and admin roles are given permissions to inject arbitary javascript in the posts. Though its a severe vulnerability we can't report about injecting javascript to steal cookies.
+**But only the admin roles/users have the permissions to change the details of other users. Due to this vulnerability editor privileged users are even able to do account takeover of other users account.**
+Allowing the editor role privileged users to use unfiltered HTML (https://en.support.wordpress.com/code/) exposed a new vulnerability via clickjacking. Impact has been explained clearly in the below section. This attack expects the wordpress user to be logged in before he opens the malicious post link sent by the editor privileged user.
+
+####Reproduction steps-
+1. Create two user accounts, one with author/subscriber privileges and other with editor privileges.
+2. Get logged in using the editor privileged account and create a new post with the following code.
+Replace `159.65.157.23:9080` with your IP address.
+
+```
+<iframe src="http://159.65.157.23:9080/wp-admin/profile.php" id="frame" onload="loaded()" style="visibility:hidden"></iframe>
+
+<script>
+var MyIFrame = document.getElementById("frame");
+var MyIFrameDoc = (MyIFrame.contentWindow || MyIFrame.contentDocument || MyIFrame.document);
+function loaded(){
+MyIFrameDoc.document.getElementById("your-profile").first_name.value="hacked by rewanthcool"
+MyIFrameDoc.document.getElementById("your-profile").submit.click();
+alert("Your first name has been changed to " + MyIFrameDoc.document.getElementById("your-profile").first_name.value + ". Visit http://159.65.157.23:9080/wp-admin/profile.php for confirmation");
+}
+</script>
+```
+
+3. Now click on `publish` button to publish the URL. Copy the URL to the malicious post.
+4. Now get logged in as another user with author/subscriber privileged roles in another browser/incognito tab.
+5. Now paste the malicious URL (copied in step 3) in this browser and press enter.
+6. Boom !! Now the open the profile page of the author/subscriber privileged user `http://159.65.157.23:9080/wp-admin/profile.php` and you can see his firstname got changed to rewanthcool.
+
+**Similarly you can change the email of the user** by changing `first_name` parameter in above payload to `email`. So, now your payload becomes, `MyIFrameDoc.document.getElementById("your-profile").email.value="attacker_rewanthcool@gmail.com"`. By submitting this payload, you will get a confirmation email link to your profile and you can takeover the victim's account.
+
+###NOTE-
+CSRF protection adds `_wpnonce` to prevent these kind of CSRF attacks but since we are handling everything in an iframe bypasses this CSRF protection as it generates a new valid `_wpnonce` while it gets loaded in the iframe.
+
+In the above payload, the attacker was able to change the firstname of the victim. That's just a sample. In worst cases, there are two main fields in the same page. They are
+1. Email-id
+2. New Password which generates new password by click on a button.
+3. Sessions: Logout everywhere else.
+
+By using the combination of hidden iframe and javascript, the attacker can craft a similar payload and takeover a wordpress users account.
+
+####Mitigation-
+Disallow editor privileged users from injecting iframes into the pages/posts by changing the `X-Frame-Options` header to `DENY`.
+
+## Impact
+
+Editor role users can access other users account and change his personal information, change this settings, etc just by making the user to visit a nicely crafted page post.
+
+###Worst-case attack scenario
+Most dangerous impact can be **account takeover** by changing the email-id and password of the victim by injecting an iframe.
+
+###Detailed explanation of vulnerability-
+CSRF on edit-profile has been smartly handled by wordpress developers by adding `_wpnonce` to it. But allowing the editor privileged users to inject iframes into the posts bypasses this CSRF protection.
+
+A hidden iframe can be put in a post and its URL can be sent to the victim(lower privileged user like author, subscriber, etc). Once the victim clicks on the URL sent by the attacker, the hidden iframe will be submitting a javascript request to change the victim's firstname and lastname. In worst cases, the attacker can submit two requests via iframe using javascript to make account takeover.
+1. First request, to generate new password via hidden iframe.. This disabled the victim from using old password.
+2. Second request, to change the victim's email id to attacker's email id via hidden iframe. This completely disables to user to use the `forgot-password` option as the email id has been changed.
+3. Attacker now clicks on `forgot-password` and a reset email will be sent to the attackers email id.
+4. Account takeover completed and editor privileged user hacked the other wordpress users with other privileges.
+
+###Bonus feature/exploit to lock the victim-
+There's an option to logout from everywhere in the edit-profile page, by clicking on that the attacker can make sure that the victim is not logged into any other accounts after he changed the password.
+
+Only admin privileged users should be having the abilities to change the personal information like usernames, email-id, etc of other accounts but due to this vulnerability the editor privileged user is also getting the same amount of privileges as admin privileged user which definitely is a bad practice.
+
+Considering the high severity of the issue, I'm sure this will be considered as an exceptional report with immediate fix.

@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/299009
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/r0p3
+ReportedTo:SEMrush(semrush)
+BountyAmount:150.0
+Severity:low
+State:Closed
+DateOfDisclosure:21.02.2018 15:27:13
+
+Summary:
+
+**Description:** 
+Clickjacking (User Interface redress attack, UI redress attack, UI redressing) is a malicious technique of tricking a Web user into clicking on something different from what the user perceives they are clicking on.
+**Browsers Verified In:**
+Any
+
+**Steps To Reproduce:** 
+Create HTML file containg following code:
+` <iframe src="https://sso.semrush.com/"></iframe> `
+Execute the HTML file & you will see Single Sing On login page present trough the iframe.
+
+
+**Supporting Material/References:**
+
+## Impact
+
+Revealing confidential information(credentials) AND/OR taking control of their computer/account while clicking on seemingly innocuous web pages.

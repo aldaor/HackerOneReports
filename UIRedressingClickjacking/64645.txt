@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/64645
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/paramdham
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:20.0
+Severity:
+State:Closed
+DateOfDisclosure:06.09.2016 17:28:57
+
+Summary:
+Security researcher discovered missing headers, including x-frame-options and content-security-policy.

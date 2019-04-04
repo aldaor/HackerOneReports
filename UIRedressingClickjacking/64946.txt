@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/64946
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/paramdham
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:40.0
+Severity:
+State:Closed
+DateOfDisclosure:06.09.2016 17:27:30
+
+Summary:
+Security researcher discovered that OAuth login bypassed the intended registration/waitlist process  during the private beta.

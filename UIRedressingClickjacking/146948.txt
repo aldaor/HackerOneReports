@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/146948
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/benoculars
+ReportedTo:Zomato(zomato)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.05.2017 16:55:58
+
+Summary:
+
+The login page on book.zomato.com (http://book.zomato.com/account/login.aspx) is vulnerable to a clickjacking attack.
+
+### Reproduction steps:
+
+1. Paste the following HTML into a text editor and save the file as .html
+
+```
+<html>
+<body>
+<iframe src="http://book.zomato.com/account/login.aspx" width="500" height="500">
+</body>
+</html>
+```
+
+2. Open the file in a web browser
+3. Note that the iframe appears with the login page inside
+
+### Remediation:
+Using the X-Frame-Options header.
+
+OWASP: https://www.owasp.org/index.php/Clickjacking_Defense_Cheat_Sheet

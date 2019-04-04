@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/21110
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/eronx
+ReportedTo:Mavenlink(mavenlink)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:21.08.2014 17:13:49
+
+Summary:
+
+Hi,
+
+You have no implementation of Clickjacking attacks on your mobile version. I have set up a user agent switcher and tried to support my claim with regards to the mobile website.
+
+For proof of concept: <iframe src="https://m.mavenlink.com/#/workspaces/new"></iframe>
+
+For mitigation, you may want to add the HTTP header XFRAMEOPTIONS and set it to DENY.
+
+Attached below is a screenshot. Thanks!

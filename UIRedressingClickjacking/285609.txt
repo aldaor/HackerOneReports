@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/285609
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/na5ne3t
+ReportedTo:Khan Academy(khanacademy)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:14.02.2018 16:36:31
+
+Summary:
+
+Hello Sir/Mam ,
+I was using the html editor in computer programming section , which allowed me to design a webpage. When i use the iframe tag , object tag and embed tag it show me the message that these tags are not allowed for security reasons(may be cause of clickjacking attack or something) but when i used frameset n frame tag it does not showed any message and allows them. 
+The  X-frame option is set to same-origin. So, it allowed to load the user setting page in a frameset tag , (i also recorded the video too)which can lead to clickjacking attack. If there is restriction on iframe , object n embed tag then there should also be restriction on frameset(frame). 
+P.S:The poc video is also attached below.

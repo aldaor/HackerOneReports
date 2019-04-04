@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/213114
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/edoverflow
+ReportedTo:GitLab(gitlab)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:09.05.2017 19:11:56
+
+Summary:
+
+Dear GitLab bug bounty team,
+
+# Summary
+---
+Gitlab.com is vulnerable to reverse tabnabbing in AsciiDoc files. 
+
+# Why does this vulnerability exist?
+---
+
+In AsciiDoc the following `http://example.com[Reverse Tabnabbing^]` is equivalent to `<a href="http://example.com" target="_blank">Reverse Tabnabbing</a>`.
+
+# How can this exploited?
+---
+
+Same scenario as https://hackerone.com/reports/211065. ;)
+
+Best regards,
+Ed

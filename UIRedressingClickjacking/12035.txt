@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/12035
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/rickgeex
+ReportedTo:Verizon Media(verizonmedia)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.08.2015 21:59:09
+
+Summary:
+Thank you for your submission to Yahoo’s Bug Bounty program. While we recognize the effort that you put into the research and writing of a report for us to evaluate, we will take your report into consideration for any future releases. We appreciate your adherence to responsible disclosure guidelines and look forward to your future participation in the program.

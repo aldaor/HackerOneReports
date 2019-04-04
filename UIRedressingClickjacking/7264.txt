@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/7264
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/joserabal
+ReportedTo:Verizon Media(verizonmedia)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:06.06.2014 18:18:46
+
+Summary:
+Thank you for your submission to the Yahoo Bug Bounty program. We were able to reproduce the issue you reported and have implemented appropriate fixes. We appreciate your adherence to responsible disclosure guidelines and look forward to your future participation in the program.

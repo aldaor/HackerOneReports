@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/267189
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/nihaddl
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.09.2017 13:55:11
+
+Summary:
+
+hi team .. 
+
+i found clickjacking URL on https://gratipay.com/on/npm/[here]  this clickjacking must be 3 characturs and must be 5 number this entered endpoint of URL .. please fixed soon 
+
+                       https://gratipay.com/on/npm/[text]
+
+** step respond 
+1- go to https://gratipay.com/on/npm/[text]
+2 - check name or number endpoint URL e.g https://gratipay.com/on/npm/wow
+3- look this text on the picture 
+
+poc 
+screen onder .. :)
+
+thanks 
+nihad

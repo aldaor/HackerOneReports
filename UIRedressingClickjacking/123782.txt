@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/123782
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/trabajoduro
+ReportedTo:Gratipay(gratipay)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:13.05.2016 9:24:41
+
+Summary:
+
+Reproduction steps:
+
+1.Open URL :https://grtp.co/
+2.put the url in the below code of iframe
+<html>
+   <head>
+     <title>Clickjacking GRTP</title>
+   </head>
+   <body>
+     <p>Website is vulnerable to clickjacking!</p>
+     <iframe src="https://grtp.co/" width="500" height="500"></iframe>
+   </body>
+</html>
+3.Observe that site is getting displayed in Iframe
+
+Impact:
+By using Clickjacking technique, an attacker hijack's click's
+meant for one page and route them to another page, most likely
+for another application, domain, or both.
+
+Standard:
+SANS CWE-693
+
+Remediation:
+Frame busting technique is the better framing protection
+technique.
+Sending the proper X-Frame-Options HTTP response headers
+that instruct the browser to not allow framing from other
+domains

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/355774
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/zishanadthandar
+ReportedTo:Mail.ru(mailru)
+BountyAmount:150.0
+Severity:low
+State:Closed
+DateOfDisclosure:08.06.2018 10:01:24
+
+Summary:
+It was possible to edit application information or delete application via clickjacking on o2.mail.ru

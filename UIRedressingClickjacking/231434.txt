@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/231434
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/shepard
+ReportedTo:Cuvva(cuvva)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:24.05.2017 19:55:13
+
+Summary:
+
+**Description:**
+I found the resource on https://admin.corp.cuvva.co/, which can be vulnerable to the Clickjacking.
+
+**Impact**
+The resource without X-Frame-Options potentially vulnerable to the Clickjacking. The vulnerability exist only for authenticated users (possible UI redressing in the Dashboard).
+
+**Step-by-step Reproduction Instructions**
+1. Go to the https://admin.corp.cuvva.co/
+2. Look to the response headers.
+{F187682}
+or
+Create .html file with next content:
+```
+<iframe src="https://admin.corp.cuvva.co/"></iframe>
+```
+
+**Suggested Mitigation/Remediation Actions**
+Adding `X-Frame-Options: DENY` header will solve this problem.

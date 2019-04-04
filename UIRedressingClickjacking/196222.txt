@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/196222
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/kontez
+ReportedTo:Snapchat(snapchat)
+BountyAmount:250.0
+Severity:medium
+State:Closed
+DateOfDisclosure:28.02.2017 19:44:57
+
+Summary:
+
+Hey all,
+
+There seems to be no filtering of strange unicode characters such as U+202E which is an Right-To-Left-Override.
+I can send messages like "Hey check out my new song at example.com/song[rtlo]3pm.exe" and everyone would see the link as "example.com/songexe.mp3". 
+Links that end with .exe are very suspicious but everyone would click on a link that ends with .mp3, filtering those characters would prevent clickjacking.
+I tested this on the latest version of the Android App.
+
+Thanks,
+Marvin

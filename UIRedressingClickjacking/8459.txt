@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/8459
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/chandrakant
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:14.07.2014 19:12:30
+
+Summary:
+
+i am able to run on frame which lead to click jacking,
+
+Find Details on screen shot

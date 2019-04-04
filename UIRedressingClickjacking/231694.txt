@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/231694
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/d0rkerdevil
+ReportedTo:Cuvva(cuvva)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:25.05.2017 10:48:31
+
+Summary:
+
+Hi 
+i found a clickjacking vulnerability in the subdomain of cuvva.com i.e, support-dashboard.corp.cuvva.co
+
+Impact:
+The resource without X-Frame-Options potentially vulnerable to the Clickjacking. The vulnerability exist only for authenticated users (possible UI redressing in the Dashboard)
+
+PoC:
+1. go to https://support-dashboard.corp.cuvva.co login
+2.and now you can see the following response headers in the attached image file (att.jpg), as there is a X-Frame-options Header is missing
+3.now create a simple html file and insert this 
+<iFrame src=https://support-dashboard.corp.cuvva.co/oauth/callback██████████>
+
+<&code=> will be different in yours
+
+and save it to test.html
+
+4.and run you will see it will run in the iframe
+5.now see attached image file (att1.jpg)
+
+Remedy:
+Adding x-frame-options = DENY will solve the problem
+
+ 

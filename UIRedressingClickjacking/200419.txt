@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/200419
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/b1b62e8d81ce1e3993ad913
+ReportedTo:Pushwoosh(pushwoosh)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:02.02.2017 11:32:17
+
+Summary:
+
+Steps to reproduce:
+
+create index.html file with following content:
+<iframe sandbox="allow-scripts allow-forms" src="https://go.pushwoosh.com/register" width="1000" height="600"></iframe>
+
+Open index.html in browser
+
+Actual result: Pushwoosh viewed in iframe.
+Expected result: do not allow clickjacking
+Root cause:
+
+```
+var isInIFrame = (function () {
+			try {
+				return window.self !== window.top;
+			} catch (e) {
+				return true;
+			}
+		})();
+```

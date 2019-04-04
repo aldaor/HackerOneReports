@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/97510
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/ericr
+ReportedTo:Twitter(twitter)
+BountyAmount:280.0
+Severity:
+State:Closed
+DateOfDisclosure:02.12.2015 17:42:20
+
+Summary:
+
+Hi,
+
+There appears to be a bug similar to #95243 which affects following a user after favoriting one of their tweets via an Intent dialog.
+
+The following is a proof of concept:
+
+https://twitter.com/intent/favorite/?tweet_id=661625230297821184&screen_name=ericrtest3
+
+The screen_name param submits with the favorite form and ends up getting injected into the follow param on the resulting page.
+
+This isn't quite as bad as the previous vulnerability I found, since it requires an additional step (favoriting a tweet) to exploit. However, the impact is exactly the same as the last vulnerability, in that the user has no idea that they're actually following a completely different user.
+
+Please let me know if you have any other questions.

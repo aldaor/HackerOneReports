@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/149572
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/null00null00
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:40.0
+Severity:
+State:Closed
+DateOfDisclosure:28.09.2016 7:18:20
+
+Summary:
+Security researcher discovered that our AWS S3 website was not serving some basic security headers like X-Frame-Options. We resolved the issue by putting nginx in front of our AWS S3 website and adding header directives.
+
+Fixed security headers can be verified here:  https://schd.io/zt

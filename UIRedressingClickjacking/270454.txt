@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/270454
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/9itrsec
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.11.2017 11:36:03
+
+Summary:
+
+Dear Team,
+
+#POC
+Please find attached screenshots
+
+#Steps to reproduce:
+
+create index.html file with following content:
+<iframe sandbox="allow-scripts allow-forms" src="https://app.legalrobot-uat.com/pending-verification" width="1000" height="600"></iframe>
+
+Open index.html in browser
+
+Actual result: Legalrobot email verification page is viewed in iframe.
+
+#Remediation:
+Frame busting technique is the better framing protection technique.
+Sending the proper X-Frame-Options HTTP response headers that instruct the browser to not allow raming from other domains.
+
+Same issue found in https://app.legalrobot.com/pending-verification as well.

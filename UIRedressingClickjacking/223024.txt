@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/223024
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/5ecurity5roker
+ReportedTo:WordPress(wordpress)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:22.08.2018 14:40:11
+
+Summary:
+
+Hi wordpress,
+
+This Is Zeeshan,An Ethical Hacker, I Have Found A Security Issue In Your Site
+
+I Hope You R Fine I Am Also Good And Want To Report You Some Security Problem's
+
+Clickjacking In jobs.wordpress.net
+
+Here Is The Iframe Code You Can make .html and see
+
+now put this Iframe code in html and see
+
+<html>
+   <head>
+
+   <body>
+     <p>Website is vulnerable to clickjacking!</p>
+     <iframe src="https://jobs.wordpress.net/" width="500" height="500"></iframe>
+
+   </body>
+</html>
+
+Please Fix It As Soon As Possible
+
+Best Regards,
+
+Zeeshan Waheed
+xsszeeshan@gmail.com
+https://www.facebook.com/tomking786786

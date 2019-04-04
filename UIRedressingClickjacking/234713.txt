@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/234713
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/mrr3boot
+ReportedTo:Mixmax(mixmax)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:13.06.2017 5:54:44
+
+Summary:
+mixmax.com was vulnerable to clickjacking.

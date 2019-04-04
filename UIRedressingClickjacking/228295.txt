@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/228295
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/na5ne3t
+ReportedTo:Yelp(yelp)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:09.11.2017 19:58:23
+
+Summary:
+
+In this report  https://hackerone.com/reports/214087 you people said the clickjacking issue is fixed but i have found another issue of clickjacking. Using clickjacking attacker can fooled an user to bookmark n numbers of restuarants. I am attaching a PoC video , watch the video.

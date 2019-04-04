@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/298028
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/tolo7010
+ReportedTo:Inflection(inflection)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:10.05.2018 1:12:02
+
+Summary:
+Researcher discovered x-frame options missing.

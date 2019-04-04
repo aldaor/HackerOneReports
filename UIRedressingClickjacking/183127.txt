@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/183127
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/blablaa
+ReportedTo:OWOX, Inc.(owox)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.05.2017 9:52:50
+
+Summary:
+hi there !
+i have found clickjacking vulnerability in your website
+you should set the frames to fix the issue

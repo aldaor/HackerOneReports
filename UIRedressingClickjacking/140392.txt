@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/140392
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/0x0ameer
+ReportedTo:Binary.com(binary)
+BountyAmount:50.0
+Severity:
+State:Closed
+DateOfDisclosure:09.06.2016 5:23:38
+
+Summary:
+Ameer Assadi  pointed out at one of our subdomain did not have clickjacking protection which had dynamic contents.

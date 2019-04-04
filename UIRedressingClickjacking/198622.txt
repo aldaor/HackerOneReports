@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/198622
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/mishre
+ReportedTo:Twitter(twitter)
+BountyAmount:560.0
+Severity:medium
+State:Closed
+DateOfDisclosure:06.02.2017 22:08:58
+
+Summary:
+
+Hi,
+
+The X-FRAME-OPTIONS header returned from https://www.periscope.tv is:
+```
+X-Frame-Options: ALLOW-FROM https://twitter.com/
+```
+But Chrome doesn't support this value for the header: https://www.owasp.org/index.php/Clickjacking_Defense_Cheat_Sheet.
+Because of that, no value for X-FRAME-OPTIONS is set and all of the periscope.tv pages are vulnerable to Clickjacking. You can see for example my attached poc (Make sure you test it on chrome) that I am framing my own user on periscope. I can use regular Clickjacking tricks to make the user follow other users and do practically any action on the site.

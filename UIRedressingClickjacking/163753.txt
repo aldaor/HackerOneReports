@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/163753
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/babayaga_
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:29.08.2016 16:03:25
+
+Summary:
+
+I found that There is a Form for Submitting User Information for applying for Beta Program. 
+But this has NO Protection against Clickjacking Issue & also this form needs the following inputs that can b somewhat useful for an attacker.
+
+#Information Like: 
+Name: 
+Email: 
+Company 
+
+Following is HTML code i used to test it!
+
+<html>
+	<--Clickjacking Test by KHizer--> 
+	<style>
+		iframe { 
+		width: 800px; 
+		height: 500px; 
+		position: absolute; 
+		top: 0; left: 0; 
+		filter: alpha(opacity=50); 
+		opacity: 0.5; 
+		}  
+	</style>
+	<iframe src="https://www.legalrobot.com/">
+</html>
+
+Screen shots attached :D
+
+Thanks,
+KHIZER JAVED

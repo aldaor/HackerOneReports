@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/106362
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/xsserboiii
+ReportedTo:Cloudflare(cloudflare)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:06.03.2016 18:06:09
+
+Summary:
+
+Hey,
+The title of submission defines the issue very clearly which is clickjacking at https://partners.cloudflare.com/ this subdomain missing x frame headers.
+As this subdomain contain a partner login then it is dangerous to have this type of issue. You understand better what i mean ;) 
+Attached a screenshot kf mobilr showing framing that subdomain in local html file.
+I hope you will fix it soon.
+Thanks 
+Harsh jaiswal

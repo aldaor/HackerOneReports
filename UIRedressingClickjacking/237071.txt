@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/237071
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/dark_heaven
+ReportedTo:Coinbase(coinbase)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:22.06.2017 17:07:14
+
+Summary:
+Report noted that status.coinbase.com is embed-able due to its current X-Frame-Options. As there was not a demonstrated link susceptible to clickjacking, this was not a security issue, but notification of the lack of this header was considered Informative.
+
+Note: per our policy, reports for status.coinbase.com will not be eligible for bounty.

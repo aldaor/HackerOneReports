@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/316290
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/cablej
+ReportedTo:Coinbase(coinbase)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:02.04.2018 16:27:40
+
+Summary:
+Users of the commerce widget that have entered their name and email into the widget and moved to the currency selection step were vulnerable to a clickjacking attack that revealed name and email to an attacker due to pre-population of the widget's fields.
+
+After a user filled out the name / email fields and continued on to the currency selection step, these fields were pre-populated when another instance of the commerce widget was opened in other tabs.  Thus, an attacker can set up a malicious website that frames the widget with 0 opacity, and the widget will be prepopulated when a victim that has previously entered name / email in the widget on another page navigates to the attacking page. If the victim clicks on the invisible widget in the attacking page, those pre-populated fields will be used in a new charge sent to whichever merchant the attacking page configured when deploying the widget.
+
+The severity of this issue is low, because the small window of vulnerability (user must be on a specific step during the flow of the commerce widget) and the sensitivity of the information revealed (name and email address).

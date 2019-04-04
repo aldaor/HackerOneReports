@@ -1,0 +1,57 @@
+ReportLink:https://hackerone.com/reports/137230
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/thalaivarsubu
+ReportedTo:Dovecot(dovecot)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.05.2016 16:08:56
+
+Summary:
+
+1)
+Vulnerability:	Clickjacking
+Vulnerable Domain:	lists.dovecot.fi
+Vulnerable URL:	http://lists.dovecot.fi/?C=N;O=D%3Cscript%3Ealert(%22Thalaivarsubu%22)%3C/script%3E
+Browser version:	Google Chrome 50.0.2661.94
+Operating system:	Windows 7
+Steps to Reproduce:
+<html>
+	<style>
+		iframe { 
+		width: 800px; 
+		height: 500px; 
+		position: absolute; 
+		top: 0; left: 0; 
+		filter: alpha(opacity=50); 
+		opacity: 0.5; 
+		}  
+	</style>
+	<iframe src="http://lists.dovecot.fi/?C=N;O=D%3Cscript%3Ealert(%22Thalaivarsubu%22)%3C/script%3E">
+</html>
+
+2)Virtual hosting and Directory listing
+Vulnerable Domain:	lists.dovecot.fi
+VirtualHost: ufhM8zMT
+Pattern found: 
+Last modified</a>
+3)Options method Enabled:
+Vulnerable Domain:	lists.dovecot.fi
+Methods allowed: GET,HEAD,POST,OPTIONS,TRACE
+
+HTTP/1.1 200 OK
+Date: Mon, 09 May 2016 06:54:29 GMT
+Server: Apache/2.4.6 (CentOS) OpenSSL/1.0.1e-fips
+Allow: GET,HEAD,POST,OPTIONS,TRACE
+Keep-Alive: timeout=5, max=91
+Content-Type: httpd/unix-directory
+ 
+4)nginx SPDY heap buffer overflow
+Vulnerable URL: https://licenses.dovecot.fi/
+Current version is : nginx/1.4.6
+An attacker can cause a heap memory buffer overflow in a worker process by using a specially crafted request, potentially resulting in arbitrary code execution 
+
+5)This SSL certificate is not valid.
+Vulnerable URL: https://licenses.dovecot.fi/
+The SSL certificate (serial: 0a0d45) is expired.
+The cerificate validity period is between Sun Jan 13 09:47:46 UTC+0530 2013 and Sat Jan 16 12:10:12 UTC+0530 2016

