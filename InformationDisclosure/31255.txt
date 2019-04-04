@@ -1,0 +1,105 @@
+ReportLink:https://hackerone.com/reports/31255
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/pulkit_pandey
+ReportedTo:Localize(localize)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.02.2015 20:28:45
+
+Summary:
+
+A readme (or read me) file contains information about other files in a directory or archive and is commonly distributed with computersoftware. Such a file is usually a text file called README.TXT, README.md, README.1ST, READ.ME, or simply README, although someMicrosoft Windows software may occasionally include a README.WRI, README.RTF, or README.DOC. The name is chosen so that users unaware of the existence of this type of file would be drawn to read it. It is traditionally written in upper case so that on case-preserving environments using an ASCIIbetical ordering, the name will appear near the beginning of a directory listing (since upper-case letters sort before lower-case letters in ASCIIbetical ordering)..
+
+for more see 
+http://en.wikipedia.org/wiki/README
+
+
+content of README.md
+
+# Localize
+
+We believe that everybody should be able to use software in their own language.
+
+Localize takes care of all the background work. You can concentrate on great apps and perfect translations.
+
+Invite staff members to collaborate with assigned roles, let users contribute and export translations in seconds.
+
+> If you talk to a man in a language he understands, that goes to his head. If you talk to him in his language, that goes to his heart.
+> â€” *Nelson Mandela*
+
+**Live website:** [www.localize.im](https://www.localize.im/)
+
+## Configuration
+
+All configuration is done in `config.php` in the root directory.
+
+## Contributing
+
+We welcome any contribution, no matter how small or large. Please fork this repository, apply your changes, and submit your contributions by sending a pull request.
+
+## Security
+
+[Disclose bugs and vulnerabilities](http://security.localize.im/) or read more about [security](SECURITY.md).
+
+## License
+
+```
+Copyright (C) 2013 www.delight.im <info@delight.im>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see {http://www.gnu.org/licenses/}.
+```
+
+
+and one thing more 
+https://www.localize.im/.htaccess
+
+it is showing Forbidden
+
+You don't have permission to access /.htaccess on this server.
+
+
+
+The error is generated when there is no index file in the requested
+directory and the server or application is not configured to reveal
+the directory contents. This, however, indicates that the directory
+exists.
+For Further Reading: en.wikipedia.org
+ 
+ 
+http://en.m.wikipedia.org/wiki/Webserver_directory_index
+ 
+ 
+ 
+If the server is unable to find a file with any of the names listed in
+its configuration, it may either return an error (generally 404 Not
+Found) or generate its own index page listing the files in the
+directory. It may also return a 403 Index Listing Forbidden. Usually
+this option is also configurable
+ 
+
+solution:-
+
+To  resolve  this  error  you  have to  Edit .htaccess file
+
+Please clean  the  file  and  add the  following  code
+
+RewriteEngine on
+
+<IfModule mod_rewrite.c>
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>

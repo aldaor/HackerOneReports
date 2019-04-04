@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/308355
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/linkks
+ReportedTo:VK.com(vkcom)
+BountyAmount:300.0
+Severity:high
+State:Closed
+DateOfDisclosure:22.02.2018 21:49:39
+
+Summary:
+Раскрытие имен некоторых файлов. 

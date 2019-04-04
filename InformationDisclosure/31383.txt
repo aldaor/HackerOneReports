@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/31383
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/prakharprasad
+ReportedTo:HackerOne(security)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:15.10.2014 14:14:10
+
+Summary:
+
+Hello guys,
+
+Not sure what's happening exactly but when I go to my team (program) dashboard add a new Trigger and then tamper the request and change JSON variable `common_response_id` to say **24** and after trigger gets added I see a title of ████████ which is not in my default team template nor added by someone else of the team. Similarly if I set `common_response_id` to **18**, I get a trigger title of ████████ in the trigger (refer screenshots).This certainly seems to be of some other team.
+
+**JSON (which gives trigger title as ████████):**
+`{"title":"hackerone","criteria":[{"field":"any","type":"inclusion","inverse":false,"data":"agfagasga"}],"actions":[{"type":"request-needs-more-info","common_response_id":24}],"disabled":false}`
+
+**Steps to Reproduce**
+
+1. Login to Program/Team Dashboard 
+2. Goto https://hackerone.com/<team-name>/triggers/new
+3. Leave all options default and add text to criteria and select any common response.
+4. Start the intercepting proxy and configure it to intercept the request
+5. Now add title and enable the trigger then hit **Save**
+6. Modify `common_response_id` to 24 for ████████ title or 18 for ████████ title
+
+Kindly refer to screenshots as well.Revert back if you have any further query.
+
+Thanks,
+Prakhar Prasad

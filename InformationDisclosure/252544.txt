@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/252544
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/myster
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:20.0
+Severity:
+State:Closed
+DateOfDisclosure:30.07.2017 6:11:17
+
+Summary:
+A security researcher discovered that sensitive information, like password reset tokens could still be leaked to analytics services like Google Analytics or via the Referer [sic] header. Even though tokens were immediately invalidated, we decided to re-engineer the process to eliminate any possibility of token leakage.

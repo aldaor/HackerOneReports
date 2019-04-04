@@ -1,0 +1,48 @@
+ReportLink:https://hackerone.com/reports/26825
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/internetwache
+ReportedTo:Twitter(twitter)
+BountyAmount:140.0
+Severity:
+State:Closed
+DateOfDisclosure:17.11.2014 14:30:50
+
+Summary:
+
+Hi there,
+
+I noticed a small information disclosure (full path disclosure) on ads.twitter.com.
+
+#Steps to reproduce
+
+- 1. Login to ads.twitter.com
+- 2. Start to create a new twitter-follower campaign
+- 3. Choose to upload a new picture
+- 4. Turn on your intercepting proxy
+- 5. Upload a file 
+- 6. You should notice a request to your log facility.
+
+```
+GET /accounts/18ce53wparq/log?v=0.9&u=https%3A%2F%2Fads.twitter.com%2Faccounts%2Fxxxx%2Fcampaigns%2Fnew_objective%2Ffollowers%3Fsource%3Dobjective_picker&rt.start=cookie&r=https%3A%2F%2Fads.twitter.com%2Faccounts%2Fxxxxx%2Fcampaigns%2Fnew&timers=&events=ads%3Afollowers%3Acreative%3A%3A%3Aenter HTTP/1.1
+Host: ads.twitter.com
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:32.0) Gecko/20100101 Firefox/32.0
+Accept: image/png,image/*;q=0.8,*/*;q=0.5
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: https://ads.twitter.com/accounts/xxxxx/campaigns/new_objective/followers?source=objective_picker
+Cookie: [COOKIES]
+Connection: keep-alive
+```
+
+The response will contain something like this:
+
+```
+x-sendfile: /var/lib/mesos/slaves/201403042312-2230002186-5050-50082-705/frameworks/201104070004-0000002563-0000/executors/thermos-1409696851527-revenue_web-prod-ads-36-d76baad3-5634-4141-ab52-478be9ecab97/runs/e09cc5ea-77f8-4729-afd1-0045b2a772c5/sandbox/app/assets/images/blank.gif
+```
+
+As you can see, this discloses a full path to a resource. This information could be used in furhter attack scenarios like LFI or RCE. 
+
+Please let me know what you think about it.
+
+Best regards,
+Sebastian

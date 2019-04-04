@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/27166
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/surgent10cross
+ReportedTo:Twitter(twitter)
+BountyAmount:140.0
+Severity:
+State:Closed
+DateOfDisclosure:10.11.2014 20:10:50
+
+Summary:
+
+The following link is missing rate limiting 
+https://twitter.com/account/complete
+
+by which an attacker can get all the valid phone no. on twitters account.
+
+##POC :- Screenshot attached

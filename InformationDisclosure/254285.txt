@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/254285
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/3c75
+ReportedTo:ICQ(icq)
+BountyAmount:1000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:01.10.2018 14:48:09
+
+Summary:
+This cool issue was about the memory leak. We mitigated it on July, 28 by limiting the size of "About" field.
+
+Vulnerability based on unfiltered size of data in "about" field.
+In case when data length stored in "about" field is more than 2^16 (for example payload is 65537*"A") server will return payload with additional suffix with random information. The size of suffix is increase with size of payload. Unfortunately I haven't detected the origin of the bug, but it`s look like chunks of memory. I hope, you will disclosure it for me in future.	
+
+1. Request example:
+
+POST / HTTP/1.1
+Host: rapi.icq.net
+Connection: close
+Accept: */*
+User-Agent: random
+Content-type: application/x-www-form-urlencoded
+
+{"method":"modChatAlpha","authToken":"[auth_token]=","clientId":6,"reqId":"[random]","params":{"sn":"000000000@chat.agent","about":"[payload with more than x^16 symbols]"}}
+
+2. Suffix appears in Firefox/Chrome/Opera/Desktop client
+3. Vectors:
+	- gathering information from suffix, wich potentialy can disclosure critical service information or other clients private information.
+	- stored xss, if intruder would have understand regularity of suffix appearing
+4. Steps:
+	1) Send request
+	2) Suffix will automatically render itself in client(Firefox/Chrome/Opera/Desktop client - it return with updates). 
+
+Exploit synopsis:
+python expl.py [token] [payload size] [payload symbol] [client id] [chat_agent number]
+Example:
+python expl.py HU2YFuwNSxwSURrkPHKNXe7XY2qreCzxk9FZdXKSBmQ= 500000 - 2 677950968

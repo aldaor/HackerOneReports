@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/29331
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/shahmeer-amir
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:17.11.2014 14:30:53
+
+Summary:
+
+Hello Hackerone People
+This is an issue that i discovered in the username change option. Basically anyone can ask your system to change anyone's username on hackerone. I tested this by mailing at support@hackerone.com to change the username of my friend's account from yhunterz to yahoohuntz whose email address associated was yhunterz00@gmail.com, But i mailed from the email tamannazaidy2@gmail.com (screenshot attached)
+
+I was asked for a confirmation from the same address without even verifying that the mail associated is of the original account or not. Moreover no email confirmation was sent to the original email to verify that the change has been made. I have also attached a screenshot of my friend's email account that shows no mail regarding username change. The screenshot showing the username change has also been attached
+
+You can also internally check that the username of the account with the email yhunterz00@gmail.com was yhunterz which was changed to yahoohuntz afterwards
+
+The attack scenario here is
+1. Victim has an account victim@gmail.com with the username victim
+2. Attacker mails from attacker@gmail.com to change the username of the account (Usernames are visible to everyone on hackerone)
+3. Attacker confirms the change from his own email without any prompt to the original user
+
+And the username is changed
+
+I hope this is not a low hanging fruit here. Because it beats the concept of anyone changing anyone's username
+
+Awaiting your reply

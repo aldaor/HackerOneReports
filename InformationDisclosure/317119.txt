@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/317119
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/todayisnew
+ReportedTo:Dropbox(dropbox)
+BountyAmount:1024.0
+Severity:low
+State:Closed
+DateOfDisclosure:14.09.2018 1:20:08
+
+Summary:
+The report revealed an exposed git repository on a vendor that Dropbox uses. This endpoint could allow an attacker to retrieve much of the source code and git history for this service which could potentially reveal sensitive information like application secrets. Thankfully, after performing an investigation, no particularly sensitive information was exposed and risk was minimized as a result.

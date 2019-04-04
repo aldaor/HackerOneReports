@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/311380
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/tyagiji
+ReportedTo:Urban Dictionary(urbandictionary)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:12.02.2018 22:15:49
+
+Summary:
+
+https://www.urbandictionary.com/remove.form.php?reconsider%5Bdefid_to_remove%5D=$id$
+
+Example Word : 
+https://www.urbandictionary.com/remove.form.php?reconsider%5Bdefid_to_remove%5D=12504202
+
+## Impact
+
+Its is minor information disclosure in which any one see details of an unpublished word

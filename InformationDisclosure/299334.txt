@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/299334
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/aroly
+ReportedTo:Mavenlink(mavenlink)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:20.01.2018 22:11:07
+
+Summary:
+There was an information disclosure vulnerability in a particular error message on the mobile site. Using this vulnerability, it was possible to gain access to the filename of certain un-owned attachments.

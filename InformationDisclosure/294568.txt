@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/294568
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bhenner__
+ReportedTo:RBKmoney(rbkmoney)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:29.01.2018 10:44:09
+
+Summary:
+Non-sensitive information disclosure via composer.lock

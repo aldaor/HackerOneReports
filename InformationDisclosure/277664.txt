@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/277664
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:06.11.2018 15:39:40
+
+Summary:
+APC UPS status monitoring script was available from outside on lk-cdn.3igames.mail.ru
+
+3igames.mail.ru is not currently covered with bug bounty program.

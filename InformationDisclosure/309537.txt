@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/309537
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/linkks
+ReportedTo:VK.com(vkcom)
+BountyAmount:500.0
+Severity:critical
+State:Closed
+DateOfDisclosure:24.02.2018 19:02:08
+
+Summary:
+Старый сборщик логов. 

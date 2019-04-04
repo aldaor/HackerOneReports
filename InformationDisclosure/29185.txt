@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/29185
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/d4d1a179c0f3
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.01.2015 17:48:01
+
+Summary:
+
+Hi,
+
+There is a really small issue, but I think it should be fixed.
+
+If you open https://hackerone.com/facebook as guest user (not logged), you will be redirected to https://hackerone.com/users/sign_in, so it shows that facebook page exists and it's private.
+
+Correct redirection should be to #404 page like eg. https://hackerone.com/privateprogram
+
+Cheers,
+Kacper.

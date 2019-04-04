@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/283309
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/vulnh0lic
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:16.11.2017 13:27:28
+
+Summary:
+After receiving an invite to a private program, it was possible to view all of its team members:
+
+```
+https://hackerone.com/invitations/{invitation code}.json
+```
+
+```
+"team_members":[{"username":"<censored>"},{"username":"<censored>"},{"username":"<censored>"},{"username":"<censored>"},{"username":"<censored>"},{"username":"<censored>"}]}}
+```

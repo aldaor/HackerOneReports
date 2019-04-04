@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/292761
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/heeeeen
+ReportedTo:VK.com(vkcom)
+BountyAmount:700.0
+Severity:critical
+State:Closed
+DateOfDisclosure:02.09.2018 14:04:39
+
+Summary:
+Incorrect interaction with the network. 

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/294548
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/hudmi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:300.0
+Severity:high
+State:Closed
+DateOfDisclosure:26.01.2018 14:10:42
+
+Summary:
+It was possible to disclosure the part of server memory from uncontrolled location on the server belonging to "Moi Mir" (my.mail.ru) project via uploaded GIF image header manipulation.
+
+my.mail.ru is not currently in the Bug Bounty scope, reward was paid as a bonus due to potential severity.

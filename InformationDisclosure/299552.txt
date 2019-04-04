@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/299552
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/tikoo_sahil
+ReportedTo:QIWI(qiwi)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:20.01.2018 12:20:14
+
+Summary:
+
+Hello,
+
+I would like to report information disclosure on one of your sub-domains due to some files that might contain some useful information.
+
+Basically i have found 3 files that might giveaway some information about the infrastructure :
+1 composer.json
+2 composer.lock
+3 package.json
+
+I found all the 3 files using dirsearch tool and location where these files can be found are :-
+https://paycard.rapida.ru/composer.json , https://paycard.rapida.ru/composer.lock , https://paycard.rapida.ru/package.json 
+
+If the subdomain is no longer in use then these files must be removed.
+
+regards
+sahil tikoo
+
+## Impact
+
+Some juicy information that might help an attacker in information gathering about organization and might also contain some sensitive data.

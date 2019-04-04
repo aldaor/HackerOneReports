@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/311058
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/modam3r5
+ReportedTo:Informatica(informatica)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:26.02.2018 5:03:00
+
+Summary:
+Researcher has identified and reported an sensitive information leakage in one of our domain. He helped us in resolving the issue.

@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/251732
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/neex
+ReportedTo:Mail.ru(mailru)
+BountyAmount:750.0
+Severity:
+State:Closed
+DateOfDisclosure:11.09.2017 11:10:35
+
+Summary:
+0-day Image Magic application / library vulnerability led to process's uninitialized memory region disclosure via converted image file. Region's address was not directly controlled by attacker.
+
+Vulnerability was reported for 2 projects:
+cloud.mail.ru (is in bug bounty scope, but, as a mitigation factor, no sensitive data were found in a leaked memory region)
+my.mail.ru (not in a bug bounty scope)
+

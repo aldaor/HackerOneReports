@@ -1,0 +1,62 @@
+ReportLink:https://hackerone.com/reports/302885
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/kunal94
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:07.02.2018 19:02:34
+
+Summary:
+
+Hello Hackerone Security Team,
+
+Well,we are aware of Imagemagick Gif parsor method to collect the pixels and then we can recover it to gain server information.
+
+https://github.com/neex/gifoeb
+
+However,it has no impact on hackerone since it's immune to gif files uploading functionality.
+So, ,gif exploit will not work at all using this method.
+
+Today,I Bypassed that method and modified new files and well, server disclose the many information.
+
+Hackerone profile picture uploading functionality supports .gif, .png, .bmp, ,.tiff and .tif.
+
+
+Step to reproduce:-
+
+1)Creating exploitable files
+
+In the terminal, as we have to run
+./gifoeb gen 512x512 dump.gif  in order to create exploitable dump.gif file where 512x512 is pixel dimension and dump.gif is an gif file.
+
+In order to bypass, You can modify the commands like this
+E.g
+
+a)    ./gifoeb gen 1123x987 dump.jpg
+b)    ./gifoeb gen 1123x987 dump.png
+c)    ./gifoeb gen 1123x987 dump.bmp
+d)   ./gifoeb gen 1123x987 dump.tiff
+e)    ./gifoeb gen 1123x987 dump.tif
+
+It will create the dump files with different extensions.
+(Note: you can change the pixel dimension and file extension)
+
+2) After creation of exploitable files, just upload in the profile settings. using modified Image files.
+
+3) Server will return different pixel files.
+
+4) Save and  recover the pixel files.
+
+In my case, I uploaded dump files with different extensions and after recovery, server disclose the linux version As well as Server path directory.
+
+This exploit was successful since whenever We upload the files,if we try to save an image, the webpage will automatically give .gif extension to save profile pictures.
+
+Attaching with Screenshot and previews.rar 
+
+With Regards
+Kunal Pandey
+
+## Impact
+
+An attacker can collect Server info related to O/s and path directory and many more.

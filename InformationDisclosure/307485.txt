@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/307485
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/mostafamamdoh
+ReportedTo:Showmax(showmax)
+BountyAmount:256.0
+Severity:none
+State:Closed
+DateOfDisclosure:09.04.2018 8:31:11
+
+Summary:
+This report describes a phishing attack. It was performed through `html` injection into 3rd party chat application and a bit of social engineering.
+
+The merit of the attack was in providing `html` code which was then executed on the support agent side. The code was able to retrieve some cookies and lure agent into sharing additional data.

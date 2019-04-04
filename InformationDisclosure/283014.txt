@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/283014
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/nickcas
+ReportedTo:HackerOne(security)
+BountyAmount:1000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:01.11.2017 21:45:31
+
+Summary:
+@nickcas discovered that it was possible to view all the team members of a program through a JSON response that is sent when a user is invited to collaborate on a report (via the `/invitations/<token>` endpoint). He was able to provide a very clear PoC, which consisted of a list showing all the members of the HackerOne security program. We resolved the issue by removing the unneeded information from the response in the case of collaboration requests.

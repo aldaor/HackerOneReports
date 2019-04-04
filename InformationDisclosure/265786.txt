@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/265786
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/linkks
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.12.2017 13:05:00
+
+Summary:
+Design prototype of internal Ground War admin inteface (without actual functionality) was available from external network.
+Game projects are not currently covered by bug bounty program.
+Здравствуйте обнаружил GWT Monitor http://185.5.139.198:8086/index.html
+Whois говорит ваше 
+
+
+inetnum:        185.5.138.0 - 185.5.139.255
+netname:        MAILRU-SRV-15
+descr:          Mail.Ru
+country:        RU
+admin-c:        MAIL-RU
+tech-c:         MAIL-RU
+status:         ASSIGNED PA
+mnt-by:         MNT-NETBRIDGE
+created:        2012-10-11T14:40:11Z
+last-modified:  2012-10-11T14:40:11Z
+source:         RIPE
+
+
+Если это не ваше закройте плз ка кинф

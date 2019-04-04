@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/272982
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/rey_7
+ReportedTo:Aspen(aspen)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:29.09.2017 15:15:44
+
+Summary:
+
+Hi Team,
+
+I got a error message that disclose the version of nginx with OS detail, since The version of nginx is vulnerable to integer overflow.
+Impact:
+By seeing this information attacker can throw only interger overflow attack in order to get sensitive information 
+Finally Request you to remove those Information while throwing an error.
+
+Note: I attached POC in the attachment.
+
+Thank you.

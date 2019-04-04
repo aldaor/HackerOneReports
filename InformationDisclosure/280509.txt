@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/280509
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/saikiran-10098
+ReportedTo:Infogram(infogram)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:27.10.2017 11:27:45
+
+Summary:
+
+Vulnerability:-
+->User enumeration is possible through forgot password feature.
+
+steps to reproduce:-
+->Go to the above selected domain and go to forgot password.
+->You can submit a mail address and check whether it is existing in your database or not.
+
+Remediation:-
+->It should display like "if that mail address exists in our system, then we will send password reset link."
+
+I hope that you will consider this issue as you also welcome the reports of best practices.
+
+Thank you

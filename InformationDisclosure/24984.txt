@@ -1,0 +1,59 @@
+ReportLink:https://hackerone.com/reports/24984
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/simon90
+ReportedTo:Greenhouse.io(greenhouse)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:10.10.2014 8:41:03
+
+Summary:
+
+Summary of the issue:
+
+
+The auth_parse_options function in auth-options.c in sshd in OpenSSH before 5.7 provides debug messages containing
+
+authorized_keys command options, which allows remote authenticated users to obtain potentially sensitive information
+
+by reading these messages, as demonstrated by the shared user account required by Gitolite. NOTE: this can cross
+
+privilege boundaries because a user account may intentionally have no shell or filesystem access, and therefore may
+
+have no supported way to read an authorized_keys file in its own home directory.
+
+OpenSSH before 5.7 is affected.
+
+Attack details..:
+
+According to its banner, the version of OpenSSH installed on the remote
+
+host is older than 5.7:
+
+ssh-2.0-openssh_5.5p1 debian-6+squeeze5
+
+Summary:
+
+The auth_parse_options function in auth-options.c in sshd in OpenSSH before 5.7
+
+provides debug messages containing authorized_keys command options, which allows
+
+remote authenticated users to obtain potentially sensitive information by
+
+reading these messages, as demonstrated by the shared user account required by
+
+Gitolite. NOTE: this can cross privilege boundaries because a user account may
+
+intentionally have no shell or filesystem access, and therefore may have no
+
+supported way to read an authorized_keys file in its own home directory.
+
+OpenSSH before 5.7 is affected;
+
+Solution/Fix: Updates are available.
+
+References: CVE: CVE-2012-0814 (http://www.securityfocus.com/bid/51702, etc..)
+
+Br,
+
+Simone

@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/27651
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/kinine
+ReportedTo:Flash (IBB)(ibb-flash)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:07.10.2014 22:55:38
+
+Summary:
+
+Vulnerability already reported to adobe (issue 2833) and patched (CVE-2014-0554)
+
+http://helpx.adobe.com/security/products/flash-player/apsb14-21.html
+
+First of all, note that the Adobe Security Bulletin notes: 'Bas Venis and Masato Kinugawa' for the acknowledgement of this CVE. The poc I have reported to Adobe was my own work.
+
+My poc (issue 2833) exploited a security vulnerability which enabled an attacker to read files on the user's local disk. Adobe's patch involved adding a user confirmation step when navigating the page with navigateToURL. Although this doesn't really fix the underlying cause of this issue. It does provide a pretty solid protection to a whole plethora of exploits using the same kind of attack vector (relying on network requests to transfer data). My exploit could only leak a small amount of the targeted data per request, and thus required lots of requests to be made (poc implemented this in parallel, using iframes and a script to reconstruct the pieces into the original data.) 
+
+Before this patch this was a realistic attack vector. But it is unlikely the user will accept 10 confirmation dialogs per second, without suspecting malicious intent. This pretty much protects the user from this and other similar vectors.
+
+I haven't talked to Masato's about his research on this. It is most likely that his reported vulnerability also relies on network requests/page navigation, and thus mitigated with this patch. But I doubt his technique was the same.

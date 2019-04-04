@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/274594
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ruvlol
+ReportedTo:Mail.ru(mailru)
+BountyAmount:150.0
+Severity:medium
+State:Closed
+DateOfDisclosure:27.12.2017 14:36:05
+
+Summary:
+It was possible to disclosure the part of server memory from uncontrolled location on account.my.com project via uploaded GIF image header manipulation.
+
+account.my.com is not currently in the Bug Bounty scope, reward was paid as a bonus due to potential severity.
+

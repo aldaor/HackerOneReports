@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/269831
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ashishag29
+ReportedTo:Kaspersky Lab(kaspersky)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:02.02.2018 8:33:42
+
+Summary:
+
+Check the attachment.

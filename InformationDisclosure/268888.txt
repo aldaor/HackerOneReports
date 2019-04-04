@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/268888
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/hassham
+ReportedTo:Twitter(twitter)
+BountyAmount:280.0
+Severity:medium
+State:Closed
+DateOfDisclosure:29.09.2017 23:07:06
+
+Summary:
+
+Dear Twitter Team, 
+
+While researching through one of your domain cards-dev.twitter.com i discovered that the host is disclosing sensitive information when a user browses to a specific directory  
+https://cards-dev.twitter.com:443/keys/.
+
+The application downloads a file json.json which discloses the following information
+`"customer_key":"████"` 
+`"customer_secret":"█████████"`
+`"jira_password":"██████"`
+
+I am checking that can this information be used to further escalate any vulnerability. 
+
+Regards, 

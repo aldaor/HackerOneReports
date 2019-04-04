@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/301831
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/xsam
+ReportedTo:Starbucks(starbucks)
+BountyAmount:4000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:17.05.2018 21:19:10
+
+Summary:
+@samidrif discovered a source repository containing sensitive and internal development information including Starbucks code and documentation.  @samidrif delivered a quality report detailing his find, suspected impact, and suggestions for remediation.  The repository was removed and necessary remediations performed quickly, however the ticket remained open while we completed additional work.  Thank you @samidrif for the solid research!

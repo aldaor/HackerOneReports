@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/247002
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/linkks
+ReportedTo:ICQ(icq)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:17.07.2017 12:46:10
+
+Summary:
+prosieben.icq.com was delegated to a partner site as a part of a partner program and this site exposes Apache server-status.
+An issue is related to partner host outside of ICQ control, does not affect ICQ users and was accepted outside of bug bounty scope.

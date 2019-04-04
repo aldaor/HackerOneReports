@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/2582
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/xtross1
+ReportedTo:Slack(slack)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:31.03.2014 20:20:52
+
+Summary:
+
+Desc:
+Session fixation occurs due to SessionID in URL. A valid session-URL should be only a one time use. In this case a valid session-URL remains active for infinite time. The browser/cache may store this unique Session-URL and disclose EMAIL address of the user.
+
+Working:
+1>Register
+2>One registering, you will redirected to unique URL: https://slack.com/go/x-2xxxxx-f8xx7#signup
+3>This link remains useable and valid and doesn't have an expiry.
+4>Anyone having access to the browser history can access the link and hence the email is disclosed.
+
+Fix:
+One time use of the URL
+Use of Expiry time (for ex: 10 mins) or so

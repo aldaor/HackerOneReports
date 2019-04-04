@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/315256
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/alyssa_herrera
+ReportedTo:Valve(valve)
+BountyAmount:1000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:02.07.2018 23:44:08
+
+Summary:
+Due to CVE-2017-15277, portions of server memory on some steamcommunity web servers could be leaked via image updates. An attacker would not be able to control what memory would be returned, but system information could be obtained.

@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/294464
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/muon4
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:50.0
+Severity:medium
+State:Closed
+DateOfDisclosure:22.02.2018 7:05:26
+
+Summary:
+##Issue
+
+The reporter found an error page that contained a reference to a server name + port in the internal network. No actual vulnerability or weakness was reported.
+
+##Fix
+
+The error page was changed to a static page.
+
+##Reasoning
+
+Trivial error page injection reports will not be accepted for this domain due to low risk and (almost) nonexistent business impact. It is noteworthy to understand, that every error page and every detail is not a serious information leak - for readers of this report we would like to emphasize that not every error page will be awarded separately and that most of the "nonperfect" error pages in our domains are already well known issues on our backlog.
+

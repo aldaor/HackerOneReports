@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/263
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/janpaul123
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.06.2015 0:30:09
+
+Summary:
+
+Scenario:
+1. Researcher uses a shared computer.
+2. Researcher submits a report.
+3. Researcher logs out.
+4. Another person logs in, on another account.
+5. Another person submits a report.
+6. When entering a title, the title of the previous report submitted by the researcher is shown in autocompletion box.
+
+This gives away the title of the bug to other users of the web browser, even though the researcher logged out properly.

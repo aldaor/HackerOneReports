@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/268970
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/0xsyndr0me
+ReportedTo:Razer US(razer_us)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:04.01.2018 21:14:19
+
+Summary:
+The researcher discovered that the SSO endpoint for oauth2.razerzone.com, which is a web API server for our Razer ID architecture, did not properly validate the origin header of the caller.  This would allow any caller to obtain a user's access token, which combined with other techniques, could allow the takeover a user's account.
+
+The report was clear and thorough and included a solid PoC.  We appreciate the efforts of the researcher and look forward to working with him again in the future.

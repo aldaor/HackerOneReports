@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/266766
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/vinothkumar
+ReportedTo:Grabtaxi Holdings Pte Ltd(grab)
+BountyAmount:5000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:30.11.2017 3:54:22
+
+Summary:
+A publicly accessible analytics database instance was identified, due to a firewall misconfiguration.
+
+The instance contained booking related information but did not contained any passenger or driver personal information. This vulnerability was discovered using Shodan search engine by **Vinoth Kumar**. Grab security team quickly resolved the issue and awarded the researcher based on the impact. 
+
+Once again we would like to thanks @vinothkumar. It was a pleasure to work with and we look forward to see more of his reports in the future.

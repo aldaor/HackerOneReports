@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/270993
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/flashdisk
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:13.10.2017 22:00:30
+
+Summary:
+This researcher reported this issue to us on another account, and while the bug was valid, the researcher then asked for the bounty to paid to another account than the one used to report the issue originally. This was clearly an attempt to bypass our reputation system and is a direct abuse of our multiple account policy. While HackerOne does allow you to have multiple accounts, we do not allow you to submit reports on behalf of other accounts that you own to manipulate reputation. 
+
+We originally determined that we would not award a bounty for this type of behavior, but then retracted this decision in favor of rewarding the researcher for the bug because it was determined to be valid. Let it be clear that this was a one time exception, and we do not condone this type of behavior. The researcher has deactivated the other duplicate account that was used. 
+
+Please review our multiple account policy here: https://support.hackerone.com/hc/en-us/articles/208135543
+**Summary:**
+
+when navigating to https://hackerone.com/YOUR_PROGRAM_HANDLE/display_options
+and unchecking the **Reports resolved** checkbox, the resolved bugs number won't be public at the program page, but going to https://hackerone.com/directory?query=YOUR_PROGRAM_HANDLE , the number of the resolved bug will bo shown although it was set no to be visible.
+
+if this is intended behavior then I don't under stand why this settings option does exist!
+
+thanks you!  

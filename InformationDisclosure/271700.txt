@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/271700
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/h1danilabs
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:150.0
+Severity:low
+State:Closed
+DateOfDisclosure:05.02.2018 15:34:34
+
+Summary:
+The researcher found an old marketing web application for one of our previous titles that was not properly decommissioned. As a result, an internal IP address and a set of DB credentials were being exposed. Fortunately, the database in question had already been decommissioned so the credentials being exposed were not able to be used anywhere.

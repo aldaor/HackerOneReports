@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/276041
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/luckydivino
+ReportedTo:Zendesk(zendesk)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:20.12.2017 21:46:23
+
+Summary:
+See title.

@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/255978
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/moritz30
+ReportedTo:Unikrn(unikrn)
+BountyAmount:50.0
+Severity:medium
+State:Closed
+DateOfDisclosure:07.02.2018 21:43:45
+
+Summary:
+
+**Summary:** Non-Cloudflare IPs allowed to access origin servers
+
+**Description:** Your origin servers are not blocking access from non-Cloudflare servers. This way crawlers can find your origin servers' IPs by checking random IPs until they found your origin server(s).
+
+What makes this especially easy are tools like censys.io (which can find your origin servers).
+
+One of the origin server IPs I found is ███████ but there were quite a few others, too.
+
+This attack vector can be extremely bad because with the IP found out an attacker could attack the servers by DDoS or other attacks without being stopped by CloudFlare.]

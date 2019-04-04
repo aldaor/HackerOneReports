@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/283696
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/gdinar
+ReportedTo:Razer US(razer_us)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:07.08.2018 17:19:49
+
+Summary:
+It was found that sharing saved cart to Facebook leaks the user e-mail, thus the audience can retrieve it from the link. We appreciate the contribution by @gdinar in helping keep Razer's online properties secure.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/284155
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ruvlol
+ReportedTo:Mavenlink(mavenlink)
+BountyAmount:1500.0
+Severity:high
+State:Closed
+DateOfDisclosure:30.12.2017 13:15:30
+
+Summary:
+A CVE in ImageMagick allowed an attacker to recover random server memory via GIF upload. GIF processing has since been disabled.

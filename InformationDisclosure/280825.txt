@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/280825
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/alifathi
+ReportedTo:Razer US(razer_us)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:09.07.2018 1:28:34
+
+Summary:
+
+
+**Summary:** 
+Upon doing penetration testing on the Rezar domains, I have found that on of the domains is vulnerable to the heartbleed vulnerability, but I am not sure that careers.razerzone.com is in scope. Because of the dangerous of the vulnerability, I took further step to report. 
+
+The Heartbleed Bug is a serious vulnerability in the popular OpenSSL cryptographic software library. This weakness allows stealing the information protected, under normal conditions, by the SSL/TLS encryption used to secure the Internet. The Heartbleed bug allows anyone on the Internet to read the memory of the systems protected by the vulnerable versions of the OpenSSL software.
+
+**Description:** Here is a link for more details : - http://heartbleed.com/ 
+
+## Steps To Reproduce:
+I have tested and verified  this vulnerability using Metastasis framework . I was able to read the date. 
+The module that I have used is "auxiliary/scanner/ssl/openssl_heartbleed"
+  1. First we open Metasploit framework on Kali Linux. 
+  2. we choose this module "use auxiliary/scanner/ssl/openssl_heartbleed"
+  3. "set Rhost careers.razerzone.com
+  4. "run"
+  5. I have attached screenshot of the data that I was able to read them. 
+

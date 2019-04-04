@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/276976
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/hackedbrain
+ReportedTo:Inflection(inflection)
+BountyAmount:750.0
+Severity:high
+State:Closed
+DateOfDisclosure:18.01.2018 20:20:29
+
+Summary:
+Researcher reported a missing authorization check when purchasing a report. As a result, any valid user with ordering privileges could place an order on behalf of any other account (although would not be able to receive the results of the order). We added an authorization check to ensure that users can only place orders for their own account. 
