@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/260468
+WeaknessName:Incorrect Calculation of Buffer Size
+Reporter:https://hackerone.com/flashdisk
+ReportedTo:Legal Robot(legalrobot)
+BountyAmount:20.0
+Severity:none
+State:Closed
+DateOfDisclosure:05.09.2017 9:21:50
+
+Summary:
+A security researcher discovered that the maximum lengths of the first name and last name fields were set to 32 characters at registration and 50 characters when using the profile update form. There was no security impact and no sensitive data was compromised. Thanks to @flashdisk for pointing out this inconsistency!
