@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/329397
+WeaknessName:Deserialization of Untrusted Data
+Reporter:https://hackerone.com/joaomatosf
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:17.04.2018 18:22:00
+
+Summary:
+An application deserialization vulnerability was found in a misconfigured Department of Defense (DoD) website by @joaomatosf via POST/GET request. Impressive work. This showcases your skills!
+
+Thank you for supporting the DoD Vulnerability Disclosure Program!

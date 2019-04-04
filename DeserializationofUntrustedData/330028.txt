@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/330028
+WeaknessName:Deserialization of Untrusted Data
+Reporter:https://hackerone.com/joaomatosf
+ReportedTo:Sony(sony)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:23.01.2019 17:35:45
+
+Summary:
+⠀

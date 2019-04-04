@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/415275
+WeaknessName:Deserialization of Untrusted Data
+Reporter:https://hackerone.com/den1al
+ReportedTo:h1-5411-CTF(h1-5411-ctf)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:21.11.2018 16:01:43
+
+Summary:
+
+We have attached the writeup, the CTF was solved by me and Chapuka.
+
+We would like to publish our writeup for the CTF in our blog, when can we do that?
+
+It was a great CTF, it's a shame we are not @Buenos Aires right now :/
+
+## Impact
+
+.

