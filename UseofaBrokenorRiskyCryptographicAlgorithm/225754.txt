@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/225754
+WeaknessName:Use of a Broken or Risky Cryptographic Algorithm
+Reporter:https://hackerone.com/evanricafort
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.06.2017 23:52:04
+
+Summary:
+
+Hello, 
+
+I just found some minor issue with RSA 2048 bits (SHA1withRSA) in b5s.hackerone-ext-content.com and a4l.hackerone-ext-content.com thru Qualys SSL Labs and wanted to report it.
+
+Proof of Concept
+
+https://www.ssllabs.com/ssltest/analyze.html?d=b5s.hackerone-ext-content.com
+Result: SHA1withRSA   INSECURE
+https://www.ssllabs.com/ssltest/analyze.html?d=a4l.hackerone-ext-content.com
+Result: SHA1withRSA   INSECURE
+
+I hope you will fix this issue.
+
+Cheers,
+Evan

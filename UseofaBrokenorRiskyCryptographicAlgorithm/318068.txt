@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/318068
+WeaknessName:Use of a Broken or Risky Cryptographic Algorithm
+Reporter:https://hackerone.com/northivanastan
+ReportedTo:TTS Bug Bounty(tts)
+BountyAmount:300.0
+Severity:medium
+State:Closed
+DateOfDisclosure:02.03.2018 20:44:31
+
+Summary:
+
+An ssh-audit scan found that ssh.fr.cloud.gov supports sha1 for various purposes(including exclusively for MAC addresses), as well as arcfour. Both of these are outdated and known vulnerable.
+
+The algorithms used are also indicative of an outdated SSH version (OpenSSH 6 or Dropbear 2013). It's probably a good idea to upgrade.
+
+The output of ssh-audit is attached.
+
+## Impact
+
+A man-in-the-middle attack may expose data encrypted with arcfour and/or hashed with sha1, which can then be decrypted to find things like passwords or payloads sent over SSH.
