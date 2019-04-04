@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/5437
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/appsecure_in
+ReportedTo:MS-DOS(msdos)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:02.04.2014 7:30:03
+
+Summary:
+
+
+I found all these issues in MS-DOS. Please increase the reward amount. Then i will report :D :D
+
+
+Best regards,
+Anand

@@ -1,0 +1,44 @@
+ReportLink:https://hackerone.com/reports/55716
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/4lemon
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:09.06.2015 23:43:40
+
+Summary:
+
+There is very strange behavior. If user open urls like below:
+- https://whashp.myshopify.com/?preview_theme_id[]=11288717 
+- or https://lmfshp.myshopify.com/?preview_theme_id[]=11290937
+He got redirect to shop (https://whashp.myshopify.com/) and  500 Internal Server Error response, and reload does not help in this issue. Let's look closer. And change https to http:
+- http://whashp.myshopify.com/ - works
+- or http://lmfshp.myshopify.com/ - works
+Ok. Let's open payload with http:
+- http://whashp.myshopify.com/?preview_theme_id[]=11288717 
+- or http://lmfshp.myshopify.com/?preview_theme_id[]=11290937
+The same 500 error on shop frontend. And this affected on any url, for example:
+http://whashp.myshopify.com/blogs/news
+I found two urls that not affected to this issue on shop frontend:
+https://whashp.myshopify.com/opening_soon
+https://whashp.myshopify.com/admin
+But open of any of it not remove error from frontend
+
+There is way to remove error -  delete _secure_session_id (for https) and _session_id cookies on shop's domain name.
+
+Interesting restriction is in theme id. Before next test we should remove error and test that frontend works (https://whashp.myshopify.com). If all good:
+- let's try to open https://whashp.myshopify.com/?preview_theme_id[]=11290937 - we got "Can't preview theme" response. So, to proper attack we need some theme id. How can we get it?
+- open source of https://whashp.myshopify.com/ (before shops is not active it can be done only after login, but any active shops have no problem to access front page). So, open source code and findline like this:
+Shopify.theme = {"name":"launchpad-star","id":11288717,"theme_store_id":null,"role":"main"};
+"id":11288717 - is proper id which will work in payload - https://whashp.myshopify.com/?preview_theme_id[]=11288717 
+
+As i said in begin - very strange behavior affected only user whom opened malicios url. But:
+- attacker can retrieve proper theme id for any active shop from source code
+- this url request is not protected for CSRF
+
+So, attack vector is:
+1. Open source code of victim.myshopify.com (some famous shop) and find theme id
+2. Create malicious urls (both for http and https)  https://victim.myshopify.com/?preview_theme_id[]=%ID_FROM_SOURCE_CODE%
+3.  Place this urls in place where as many as possible users open it. It may be image in shop layout (for example some xss issue) or just buy cheap iframed traffic and so on.
+As a result any users that opened this urls will have problem with work with victim.myshopify.com shop.

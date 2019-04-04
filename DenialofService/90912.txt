@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/90912
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/mantis
+ReportedTo:IRCCloud(irccloud)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:12.10.2015 17:45:20
+
+Summary:
+## Summary
+
+A security researcher discovered an API payload that would send invalid data to their own user process, which would repeatedly fail to be handled correctly. This error handling loop prevented further access to their user account.
+
+## Details
+
+The payload was a JSON object containing an empty string wrapped in an array as the value of the `to` key, sent to the [say](https://github.com/irccloud/irccloud-tools/wiki/API-RPC-Reference#post-say) API endpoint via a websocket.
+
+e.g. ```{"to": [""]}```
+
+## Severity
+
+The severity was limited to their own account, and was not replicable to other users or vulnerable to CSRF/redirection attacks. However, the looping error state also added increased load to the system, and unchecked, could have had knock on effects that would impact other users of the service.
+
+## Cause and resolution
+
+The error was caused by inadequate input validation. A fix was released and verified by the researcher, who tested all other API endpoints for vulnerability in the process.
+
+## Credit
+
+We're very grateful to Richard Clifford of [Pentura](http://www.pentura.com/) for the extra effort put into researching this issue and confirming the fix, and for following responsible disclosure practices in reporting it to us.
+
+This class of issue would normally be eligible for a smaller bounty, but we're increasing the amount to reward the extra effort put into researching the issue and verifying the fix across multiple endpoints.

