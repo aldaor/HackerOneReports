@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/8873
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/shahmeer-amir
+ReportedTo:Cloudflare(cloudflare)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.05.2014 23:29:33
+
+Summary:
+
+You have enabled Apache Multiviews on your server that pose a potential risk. Turn this feature off

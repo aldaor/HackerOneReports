@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/98083
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/thedestroyershiva
+ReportedTo:itBit Exchange(itbit)
+BountyAmount:100.0
+Severity:
+State:Closed
+DateOfDisclosure:04.12.2015 17:05:06
+
+Summary:
+
+Hello , i am able to create a password with 1000000 words which fully leads to MySQL or server side Denial Of Service attack.
+
+You need to decrease password length :There are two reasons for limiting the password size. For one, hashing a large amount of data can cause significant resource consumption on behalf of the server and would be an easy target for Denial Of Service attack.
+
+Normally all sites have a password minimum to maximum length like 72 words limit or 48 limit to prevent Denial Of Service attack. in my sql but in itbit website there are no limitation.
+
+Thanks,
+
+Ashish Pathak

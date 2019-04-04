@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/412673
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/tiran
+ReportedTo:Python (IBB)(ibb-python)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:31.10.2018 23:39:22
+
+Summary:
+
+Python's standard library uses libexpat to parse XML. Internally the expat library has a hash table implementation to efficiently store and lookup DTD elements like entities, elements, attributes, etc. Hash tables are potentially vulnerable to hash collision Denial-of-Service attacks, which turns a hash insert or lookup from O(1) best case scenario to O(n) worst case scenario. To mitigate hash collision attacks, expat introduced hash randomization.
+
+Hash randomization depends on a good, unpredictable seed. The expat library either uses the operating systems CSPRNG or expects the application to set a good hash seed with ``XML_SetHashSalt()`` call. Python's standard library decided to go for ``XML_SetHashSalt()``. Due to an oversight, ``XML_SetHashSalt()`` was only used in the ``pyexpat`` module, but not in the C-accelerator module ``_elementtree`` for ``xml.etree`` subpackage. As a consequence, the ``xml.etree`` parser used a low entropy and potentially predictable RNG on all platforms except Windows and very recent Linux versions with ``getrandom()`` syscall in libc. Since Python's autoconf system doesn't define ``XML_DEV_URANDOM``, ``/dev/urandom`` wasn't used either. Further more expat's internal error check was disabled with ``XML_POOR_ENTROPY=1``, too.
+
+## Bug report
+Red Hat Product Security has assigned CVE-2018-14647 for this issue. The bug is tracked in upstream ticket https://bugs.python.org/issue34623 and will be fixed in the next releases of Python
+
+## Resources 
+* https://bugs.python.org/issue14234
+* https://bugs.python.org/issue30947
+* https://bugs.python.org/issue34623
+* https://libexpat.github.io/doc/expat-internals-the-hash-tables/
+
+## Impact
+
+An attack can abuse the vulnerability to mount a hash collision Denial-of-Service attack with carefully crafted XML data with a large DTD. Any server or client that parses XML, is potentially vulnerable.

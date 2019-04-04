@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/90671
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/marhvhelous
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:14.10.2015 20:38:55
+
+Summary:
+Normally a full-access administrator of a shop (other than the account owner) should not be able to see the account owner's user profile. But a missing authorization check allowed the account owner's profile to be viewed if requested directly by URL.
