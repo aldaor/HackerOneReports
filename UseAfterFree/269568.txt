@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/269568
+WeaknessName:Use After Free
+Reporter:https://hackerone.com/hanno
+ReportedTo:Apache httpd (IBB)(ibb-apache)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:03.05.2018 14:45:58
+
+Summary:
+
+Bug has been disclosed here:
+https://blog.fuzzing-project.org/60-Optionsbleed-HTTP-OPTIONS-method-can-leak-Apaches-server-memory.html
+
+poc code:
+https://github.com/hannob/optionsbleed
+
+Apache is currently preparing 2.4.28, which will contain the fix, a patch is available in their svn repo.

