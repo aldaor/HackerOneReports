@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/244721
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/0xradi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:14.08.2017 10:27:59
+
+Summary:
+
+Hi Team,
+I have discovered an Open Redirect vulnerability affects logged-in users within the following parameter:
+https://account.my.com/login_continue/?continue=
+
+It seems like you allow only the URLs end with ```my.com``` which can be obviously bypassed using the listed methods :- 
+- https://account.my.com/login_continue/?continue=http://3xr.me%5Cmy.com/
+- https://account.my.com/login_continue/?continue=//notmy.com *any Domain ends with my.com*
+
+Regards,
+@exr

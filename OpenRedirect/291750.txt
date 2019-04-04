@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/291750
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/ramsexy
+ReportedTo:Valve(valve)
+BountyAmount:750.0
+Severity:medium
+State:Closed
+DateOfDisclosure:09.05.2018 22:24:05
+
+Summary:
+
+## Description
+Hi, there is a protection bypass in the linkfilter function. By using the character 。 (%E3%80%82 url encoded) instead of a normal dot in urls, it is possible to bypass the blocking.
+
+## PoC
+Normal request : https://steamcommunity.com/linkfilter/?url=pornhub.com
+
+{F240919}
+
+Bypass : https://steamcommunity.com/linkfilter/?url=pornhub%E3%80%82com
+
+{F240920}

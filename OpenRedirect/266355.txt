@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/266355
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/edoverflow
+ReportedTo:Razer US(razer_us)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:20.12.2017 21:02:03
+
+Summary:
+
+# Summary
+---
+
+razer-id.razerzone.com is vulnerable to Open redirects via the `redirect` parameter.
+
+# Browsers Verified In
+---
+
+* Google Chrome 60.0.3112.113 (Official Build) (64-bit)
+* Mozilla Firefox 55.0.2 (64-bit)
+
+# PoC
+---
+
+The following URL will redirect your users to https://google.com.
+
+https://razer-id.razerzone.com/?theme=light&blogin=1&redirect=https://google.com
+
+# Fix
+---
+
+Validate the `redirect` parameter.

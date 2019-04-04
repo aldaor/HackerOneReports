@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/266688
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/edoverflow
+ReportedTo:Razer US(razer_us)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:08.11.2017 19:55:46
+
+Summary:
+The tester discovered the deals.razerzone.com website was vulnerable to open redirect via the rurl parameter (e.g. https://deals.razerzone.com/user/sso_login?rurl=<some-other-URL>) and that the parameter was also vulnerable DOM-based XSS.
+
+Also, the initial fix for this was a little too specific and edio was able to clarify for the team that the issue was not fixed in full.
+
+We would like to acknowledge edio's hard work - edio really deserves twice the reputation on this one.

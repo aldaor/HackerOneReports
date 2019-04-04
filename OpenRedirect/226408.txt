@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/226408
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/pappan
+ReportedTo:Shopify(shopify)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:21.07.2017 12:17:59
+
+Summary:
+
+Hi,
+
+The Amazon Alexa app when installing calls a URL https://assistant-client.meteorapp.com/shopify/callback?code=6aae881ab9c4f12d5b264e6c871a108a&hmac=6109806a12b0439d6a2dce2d547344eb1c2c53e9691259f39eefbb93b9c9c97b&shop=pappuza-2.myshopify.com&timestamp=1494008598
+
+The **shop** parameter will accept any domain and redirects. 
+Don't know whether meteorapp.com is controlled by you but reporting this as this found as made by shopify in the app store.
+
+If not going to resolve this, please do not mark as NA. I will do the needful.

@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/235281
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/saidon_1015
+ReportedTo:ToyTalk(toytalk)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:13.07.2017 17:08:14
+
+Summary:
+
+The website toytalk.com is vulnerable to host header injection.
+Whenever i change the host to something like google.com, it is getting redirected to google.com.
+
+Steps To Reproduce:
+1) While navigating to toytalk.com intercept the request and change the host to google.com.
+2) you will see that you are redirected to google.com.
+
+Consequences:
+Now whenever i am opening toytalk,com i am going to google.com instead of going to toytalk.com.

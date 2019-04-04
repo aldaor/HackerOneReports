@@ -1,0 +1,47 @@
+ReportLink:https://hackerone.com/reports/26962
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/asanso
+ReportedTo:The Internet(internet)
+BountyAmount:3000.0
+Severity:
+State:Closed
+DateOfDisclosure:06.04.2015 17:40:18
+
+Summary:
+
+OAuth Providers (servers) that strictly follow rfc6749 are vulnerable to open redirect.
+Let me explain, reading [0]
+
+If the request fails due to a missing, invalid, or mismatching
+   redirection URI, or if the client identifier is missing or invalid,
+   the authorization server SHOULD inform the resource owner of the
+   error and MUST NOT automatically redirect the user-agent to the
+   invalid redirection URI.
+
+   If the resource owner denies the access request or if the request
+   fails for reasons other than a missing or invalid redirection URI,
+   the authorization server informs the client by adding the following
+   parameters to the query component of the redirection URI using the
+   "application/x-www-form-urlencoded" format, per Appendix B:
+
+Now let’s assume this.
+I am registering a new client to the victim.com provider. 
+I register redirect uri attacker.com.
+
+According to [0] if I pass e.g. the wrong scope I am redirected back to attacker.com.
+Namely I prepare a url that is in this form:
+
+http://victim.com/authorize?response_type=code&client_id=bc88FitX1298KPj2WS259BBMa9_KCfL3&scope=WRONG_SCOPE&redirect_uri=http://attacker.com
+
+and this is works as an open redirector.
+Of course in the positive case if all the parameters are fine this doesn’t apply since the resource owner MUST approve the app via the consent screen (at least once).
+
+I have notified also this issue to the OAuth mailing list.
+
+See also http://www.ietf.org/mail-archive/web/oauth/current/msg13367.html
+and http://www.ietf.org/mail-archive/web/oauth/current/maillist.html.
+The consensus seems to be that some of the OAuth family spec should be updated... (currently under discussion)
+
+A solution would be to return error 400 rather than redirect to the redirect URI or always show the consent screen (at least once until the app is accepted by the user) even in case of wrong parameter rather than redirect...
+
+[0] https://tools.ietf.org/html/rfc6749#section-4.1.2.1

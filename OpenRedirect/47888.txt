@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/47888
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/hussein98d
+ReportedTo:Twitter(twitter)
+BountyAmount:140.0
+Severity:
+State:Closed
+DateOfDisclosure:11.06.2015 18:19:31
+
+Summary:
+
+Hello , 
+I'm Hussein .. 
+Here is the video of the POC : https://www.youtube.com/watch?v=1UQmGRfDoYE
+The link I used in the video : https://twitter.com/safety/report_story?source=reportprofile&reported_user_id=[ID TO REPORT]&reporter_user_id=[REPORTER's ID] 
+
+Please fix this fastly :))
+Thanks,
+Good day :)

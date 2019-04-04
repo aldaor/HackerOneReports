@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/311330
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/ankit_singh
+ReportedTo:SEMrush(semrush)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:07.12.2018 13:56:06
+
+Summary:
+
+Open Redirect on  https://www.semrush.com/
+
+User can be redirect to malicious site 
+POC:  https://www.semrush.com/redirect?url=http://bing.com
+
+I hope you know the impact of open redirect and more info refer
+
+https://cwe.mitre.org/data/definitions/601.html
+
+## Impact
+
+User can be redirect to malicious site.

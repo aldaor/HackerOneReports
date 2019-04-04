@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/39631
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/avicoder_
+ReportedTo:Twitter(twitter)
+BountyAmount:280.0
+Severity:
+State:Closed
+DateOfDisclosure:18.12.2014 18:17:22
+
+Summary:
+
+Hi dear, 
+Once the person is logged into his account he can be redirected to any website .
+
+https://www.fabric.io/login?redirect_url=@<payload>
+
+for example : https://www.fabric.io/login?redirect_url=@google.com
+
+Tested on updated firefox and chrome.

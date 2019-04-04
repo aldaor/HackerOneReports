@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/241484
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/pisarenko
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:13.03.2018 13:16:58
+
+Summary:
+Open redirect in http://openid.mail.ru/login.
+openid.mail.ru is a part of "Moi Mir" (my.mail.ru) project.
+Neither Moi Mir nor open redirects without additional impact are currently covered by bug bounty program.

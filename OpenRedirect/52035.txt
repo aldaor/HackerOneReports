@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/52035
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/seifelsallamy
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:19.06.2015 21:03:20
+
+Summary:
+This report turned out to equate to three different issues:
+
+- The language chooser not stripping excess slashes correctly.
+- Our web server responding to internal requests from other "FQDNs", which caused the unwanted redirect.
+- CloudFlare returning error 523 when attempting to access one of those URLs.
+
+We awarded a single bounty for the first two issues since they require each other to do anything possibly unwanted/malicious. As the last issue (the incorrect CloudFlare error pages) was solely at the CloudFlare level (and outside any of our control), it is not eligible for a bounty on its own. 
+Hi guys!
+Urls:
+https://hackerone.com//example.com/ru/faq
+and
+https://hackerone.com//example.com/faq
+or 
+https://hackerone.com//example.com/disclosure-guidelines
+and
+https://hackerone.com//example.com/ru/disclosure-guidelines
+scroll down > at the right side 
+change the language to English
+you will go to http://example.com
+Thank you.

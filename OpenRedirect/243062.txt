@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/243062
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/strukt
+ReportedTo:arxius(arxius)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:27.06.2017 4:13:37
+
+Summary:
+
+Hello,
+
+The regular expression that you are using to validate the `redirect` GET parameter for the /signup and /login endpoints is not complete, which allows an attacker to bypass your open redirects protection in order to redirect victims to malicious pages. The following are two PoCs, one for each of the endpoints mentioned above:
+
+https://arxius.io/login?redirect=//google.com\@arxius.io
+https://arxius.io/signup?redirect=//google.com\@arxius.io
+
+Visiting any of the above links will cause a redirect to https://google.com/@arxius.io, which is a non-existing page on Google's main domain.
+
+Regards,

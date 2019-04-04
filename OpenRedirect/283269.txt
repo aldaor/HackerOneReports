@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/283269
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/romanshyadav
+ReportedTo:Infogram(infogram)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:09.11.2017 13:08:19
+
+Summary:
+
+https://infogram.com/login
+
+Web applications frequently redirect and forward users to other pages and websites, and use untrusted data to determine the destination pages. Without proper validation.
+when i intercept the twitter request and change it to the google then it will redirect you to the google.
+application should also verify the original request from the browser.

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/270031
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/sp1d3rs
+ReportedTo:Razer US(razer_us)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:08.11.2017 19:49:12
+
+Summary:
+Thanks to SP1D3RS for a great report.   Although there was some initial difficulty verifying this vulnerability in triage, he was very professional and helpful working with the team to make sure this was understood.
+
+This was fixed in production on 10/16.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/401940
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/bagipro
+ReportedTo:PayPal(paypal)
+BountyAmount:10000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:07.02.2019 23:05:45
+
+Summary:
+A URL activity in the Venmo application used the built-in android.net.Uri parser, which has a known logic problem with certain characters. If an external URL were passed from a website or other app on the device to the application activity, the app would open the URL without properly validating the destination. This could expose some session data to a third party. 

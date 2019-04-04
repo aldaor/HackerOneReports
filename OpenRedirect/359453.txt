@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/359453
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/kevinhwang
+ReportedTo:Passit(passit)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:11.08.2018 14:19:19
+
+Summary:
+
+## Description
+
+[https://app.passit.io/list](https://app.passit.io/list) renders external links under attacker control that open in a new tab such that the opened tab has access to the opening tab (where the user was just browsing on [app.passit.io](https://app.passit.io)) via `window.opener`. This is likely due to the lack of specifying a `rel="noopener"` attribute for anchor tags (or whatever the Angular equivalent).
+
+Following user-interaction (e.g., a user clicking on a vulnerable link), this allows for [reverse tab-nabbing](https://www.owasp.org/index.php/Reverse_Tabnabbing), where the destination page can access and rewrite the tab that opened it.
+
+## Steps To Reproduce
+
+1. Go to [https://app.passit.io/list](https://app.passit.io/list).
+2. Click "Add New Password".
+3. In the "Name" form field, enter anything.
+4. In the "URL" form field, enter `https://kevinhwang.github.io/reverse-tabnab/redirect/` (the trailing slash is important for my demo app).
+5. (Optional) In the "Group(s)" form field, enter a group so you can share this password with other users (victims) and entice them to click the link.
+6. Click "Save Changes".
+7. Either on your current account, or that of a user who is part of a group you shared the password with, navigate to [https://app.passit.io/list](https://app.passit.io/list) and view the password entry you just saved.
+8. In the "URL" section, click on the square with the arrow coming out of it to open the URL. It should open [https://kevinhwang.github.io/reverse-tabnab/redirect/](https://kevinhwang.github.io/reverse-tabnab/redirect/) in a *new tab*.
+5. Close this newly opened tab.
+4. Observe that the previous tab (in which you were viewing your passwords on [app.passit.io](https://app.passit.io)) was redirected to [https://kevinhwang.github.io/reverse-tabnab/fake-login](https://kevinhwang.github.io/reverse-tabnab/fake-login).
+
+## Impact
+
+Since an attacker can share their "passwords" with other users using the "Groups" feature of Passit, if a user clicks on any of the links present in their shared password, their browser will open up a new tab which obscures the tab they were using to browse their passwords on [app.passit.io](https://app.passit.io). The attacker can then, as in my demo, redirect the opening tab to a site of their choosing, ideally one that looks exactly like the Passit login page (as a bonus, combine with a [homoglyph attack](https://en.wikipedia.org/wiki/IDN_homograph_attack)).
+
+This would happen in the background while the new tab opened to the external site was in focus. When the user closes the opened tab, they will see "Passit" asking them to re-login, and will likely do so, because they know this tab was just on [app.passit.io](https://app.passit.io), and have no reason to suspect it should have randomly redirected while the tab wasn't visible. This is known as [reverse tab-nabbing](https://www.owasp.org/index.php/Reverse_Tabnabbing).
+
+Thus, with user-interaction, an attacker could reasonably target others and phish their Passit credentials.

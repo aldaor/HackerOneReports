@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/4549
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/prakharprasad
+ReportedTo:Slack(slack)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:21.05.2014 15:06:37
+
+Summary:
+
+This link shall redirect to google.co.in: http://prakhar.slack.com/link?url=http%3A%2F%2Fgoogle.co.in
+
+Straight, open redirection!
+
+Thanks!

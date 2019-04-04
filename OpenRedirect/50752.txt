@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/50752
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/seifelsallamy
+ReportedTo:Twitter(twitter)
+BountyAmount:560.0
+Severity:
+State:Closed
+DateOfDisclosure:14.03.2015 2:05:46
+
+Summary:
+
+Hi,
+URL: https://mobile.twitter.com//example/messages (there is double slash before "example" word)
+when you click "send" after writing a message the authenticity_token will send to https://example
+this URL doesn't allow any dots in it, so i can not write //example.com 
+but when i write a number it will redirect me to an ip, 
+EG:
+https://mobile.twitter.com//0/messages
+>> 0.0.0.0
+when i write a longer number it will redirect me to another ip
+i fount this website that can change server or a website to ip
+https://www.site24x7.com/find-ip-address-of-web-site.html
+then i fount this website that can change any ip to a single number (without dots)
+http://www.smartconversion.com/unit_conversion/IP_Address_Converter.aspx
+so i'll change http://example.com to an ip by the first website
+http://example.com = 93.184.216.34
+now i'll change 93.184.216.34 to a single number without dots by the second website
+93.184.216.34 = 1572395042
+now to redirect from twitter to example.com
+https://mobile.twitter.com//1572395042/messages
+Thank you!

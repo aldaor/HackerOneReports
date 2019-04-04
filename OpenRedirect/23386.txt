@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/23386
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/thetime
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:12.09.2014 22:26:42
+
+Summary:
+
+Hello HackerOne,
+
+I'd like to report to you a nice little bug about opening links in new tabs.
+
+When you open a link in a new tab ( target="_blank" ), the page that opens in a new tab can access the initial tab and change it's location using the window.opener property.
+
+POC: 
+http://daniel-tomescu.com/hackerone/landpage.php (just click on the link, don't worry, no harm will be done). 
+
+Don't right-click it and open it in new tab, don't use the mouse wheel to open it, don't Ctrl+Click, just do a normal click on the link.
+
+The javascript code that does all the magic:
+window.opener.location.replace(newURL);
+
+Ways to solve this:
+1. Don't open links from hackerone.com in new tabs using the  target="_blank";
+2. Set the window.opener attribute to null on the new tab before redirecting to the landing page, like this:
+a) open in a new tab hackerone.com/redirect?link=landingpage
+b) use a javascript code: <script>window.opener = null; </script>
+c) redirect to the landing page: <script>window.location.reload(landingpage)</script>
+
+I hope you see why this is dangerous: this method has huge potential for tricking hackerone.com that click on external links from this site to be a victim of a scam page because the redirecting is made in the background, while the user is focused on another tab.
+
+More then that, some browsers like Mozilla for Android don't even display the URL, just the page title, so the user has no way of knowing that he was redirected to a scam page.
+
+If an attacker uses this trick while submitting a bug on hackerone.com/someTarget, he may obtain the logon credentials for a representative of "someTarget" and gain access to his account, private reports submitted by other researchers etc.
+
+Tested on Chrome version 36 (latest version), Firefox for Windows and Android (latest versions). Websites that protect themselves against this kind of attack: google.com websites, twitter.com (they open links in new tabs, but the window.opener property is set to null)
+
+Thank you!

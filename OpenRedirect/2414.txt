@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/2414
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/niks
+ReportedTo:RelateIQ(relateiq)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.05.2014 8:37:33
+
+Summary:
+
+1. go to https://www.relateiq.com/sign-up
+2. Fill the form and click on signup free button.
+3. Intercept the request using tamper data and change the 'retURL' parameter to any value like https://google.com (any evil url) and submit the request.
+4. The web app redirect to any evil website.

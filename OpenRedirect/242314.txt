@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/242314
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/kuton
+ReportedTo:Maximum(maximum)
+BountyAmount:50.0
+Severity:medium
+State:Closed
+DateOfDisclosure:27.07.2017 8:14:12
+
+Summary:
+
+**Domain and URL:**
+https://werkenbijdefensie.nl/ajax/contrast.php?contrast=1
+
+**Description:** 
+By adding "?contrast=1" after every url, it wil be redirect to the path after https://werkenbijdefensie.nl/
+So I can redirect it to another website by adding one more slash 
+{F196351}
+## Browsers Verified In:
+Any browser
+
+## Steps To Reproduce:
+https://werkenbijdefensie.nl//codechoi.com/POC/Maximum/i.php?contrast=1
+
+By visit this link you will be redirected to fake login.

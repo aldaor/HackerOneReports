@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/224317
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/gsecure
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:08.06.2017 16:43:46
+
+Summary:
+
+Hi team, 
+there is a open redirect end point when any account owner disconnect authenticated accounts say
+google. He is redirected to some other domain.
+
+Vulnerable URL
+---
+[demo.weblate.org/accounts/disconnect/google-oauth2/2335/?next=](demo.weblate.org/accounts/disconnect/google-oauth2/2335/?next=)
+
+POC 
+1. Go to authentication tab.
+2. Disconnect Google account and capture the request.
+3. Now, after next= write https://evil.com.
+4. You are redirected to evil.com
+
+video POC is attached.
+
+Best Regards
+Gurwinder

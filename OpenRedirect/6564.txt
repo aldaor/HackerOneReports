@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/6564
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/atom
+ReportedTo:Khan Academy(khanacademy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.04.2014 7:44:18
+
+Summary:
+
+Proof: 
+http://smarthistory.khanacademy.org/assets/images/media/player.swf?displayclick=link&link=http://google.com&file=1.jpg
+
+STEPS:
+Click the link after clicking click the SCREEN and you will be redirected to http://google.com

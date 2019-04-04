@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/57163
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/r0x33d
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:23.04.2015 15:38:54
+
+Summary:
+
+Hello!
+
+I would like to report about open-redirect on hackerone.com
+
+Here is the PoC that redirects to example.com IP address: https://hackerone.com/%2F1572395042
+
+There is one more strange behavior in URL. For example:
+https://hackerone.com//hackerone.com - works
+https://hackerone.com//hackerone1.com - doesn't work
+
+I will investigate it further and get back with details if I find something more.
+
+Thanks!

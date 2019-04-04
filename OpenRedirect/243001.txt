@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/243001
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/malcolmx
+ReportedTo:Inflection(inflection)
+BountyAmount:350.0
+Severity:medium
+State:Closed
+DateOfDisclosure:20.10.2017 22:37:23
+
+Summary:
+Researcher discovered an issue in the Identity.com OAuth flow, where crafting an /authorize URL with certain parameters missing would enable an attacker to redirect the end user to an arbitrary URL if the redirect_uri variable was included. 

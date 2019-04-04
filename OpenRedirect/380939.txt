@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/380939
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/jtjisgod
+ReportedTo:Starbucks(starbucks)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:20.03.2019 16:49:58
+
+Summary:
+
+Summary:
+Open Redirection is performed in Korean Starbucks login page.
+An attacker can redirect victim to other site such as fishing.
+
+Description:
+When victim visit https://www.istarbucks.co.kr/login/login.do?redirect_url=//www.bughunting.net this site, and login, he/she is redirected to www.bughunting.net page.
+
+PoC 
+https://www.istarbucks.co.kr/login/login.do?redirect_url=//www.bughunting.net
+
+Etc
+I attached a PoC video.
+
+## Impact
+
+Fishing

@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/288219
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/prial261
+ReportedTo:Moneybird(moneybird)
+BountyAmount:50.0
+Severity:medium
+State:Closed
+DateOfDisclosure:15.11.2017 9:05:40
+
+Summary:
+
+Hi team ,
+I got a Open redirection while saving account setting . This could lead to serious issues .
+
+**Endpoint :-** https://moneybird.com/user/edit?return_to=//evil.com
+
+##Reproduce :-
+* Visit https://moneybird.com/user/edit?return_to=//evil.com and click on `Save` .
+* You will be take to evil.com .
+
+##Impact :-
+Attacker can redirect a user to a fake login page easily to get his login and other sensitive infos .
+
+Thanks .

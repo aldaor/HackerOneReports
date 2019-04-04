@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/77221
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/bugs3ra
+ReportedTo:Mavenlink(mavenlink)
+BountyAmount:25.0
+Severity:
+State:Closed
+DateOfDisclosure:06.08.2015 20:24:08
+
+Summary:
+
+HI
+
+User can be redirect to malicious site 
+POC:
+https://app.mavenlink.com/logout?from_mobile=true&return_path=//google.com

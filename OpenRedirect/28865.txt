@@ -1,0 +1,85 @@
+ReportLink:https://hackerone.com/reports/28865
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/coolboss
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:19.10.2014 9:00:10
+
+Summary:
+
+Hello,
+
+I made few reports recently. But, I guess you did not understand my perspective. As my video recorder is not working, I am explaining everything in written. 
+
+Lately, I reported about 'External Link Warning Bypass to open redirect users' and @michiel attended the report. Actually, the report is combined using 2 bugs to exploit against 'ANY RANDOM VICTIM' against web. It became confusing henceforth. So, I am writing this again and explaining comprehensively.
+
+Strictly FOLLOW the instructions mentioned below.
+==========================================
+
+First :
+=====
+Whenever, user posts a external link on HackerOne via report/comment then the link is passed through 'REDIRECT FILTER'. This 'REDIRECT FILTER' is supposed to prevent victims from getting open redirected. It presents a page with 'Proceed Button', when pressed redirects to external link. It verifies safety of the user clicking the link and give a nice message.
+
+eg. http://www.google.com (Click this link. This link is external so it will passed through 'REDIRECT FILTER' and a 'Proceed button will be presented.')
+
+
+Second:
+=======
+Whenever user posts an internal link. It is trusted and it is not passed through 'REDIRECT FILTER'.
+
+eg. https://hackerone.com (Click this link. This link is not passed through 'REDIRECT FILTER' and will not present a 'Proceed button'.)
+
+
+Third:
+=====
+1. When you will click 1st link(i.e http://google.com) then a page with url='https://hackerone.com/redirect?signature=43cd652c2f1835df993825d00bed0660f498fc42&url=http%3A%2F%2Fwww.google.com'
+will be presented with a 'Proceed button'.
+
+2. Modifying the url in THAT TAB will redirect you to that site. 
+
+eg. Modify the url in the tab to ---> https://hackerone.com/redirect/secure?signature=43cd652c2f1835df993825d00bed0660f498fc42&url=http%3A%2F%2Fwww.google.com
+
+3. This will redirect showing a message.
+
+4. But, WHEN YOU CLICK THE ABOVE LINK. You will be shocked to see that it doesn't get exploited as we expect it to be. It just works when we change the url in the tab.
+
+5. This is because the link is passed through 'REDIRECT FILTER'.
+
+
+
+Fourth:
+======
+Let''s bypass the 'REDIRECT FILTER'.
+
+1. Now, https://hackerone.com is trusted. And is not passed through redirect filter. (Right click and inspect this link, this is not passed through 'REDIRECT FILTER')
+
+2. Now, https://hackerone.com/redirect/secure?signature=43cd652c2f1835df993825d00bed0660f498fc42&url=http%3A%2F%2Fwww.google.com
+This is passed through 'REDIRECT FILTER' as it contains '/redirect'.
+
+3. Bypassing 'REDIRECT FILTER' now.
+
+https://hackerone.com/../redirect/?signature=43cd652c2f1835df993825d00bed0660f498fc42&url=http%3A%2F%2Fwww.google.com
+(Right Click this link and Inspect. You will be shocked to see it bypassed 'REDIRECT FILTER')
+
+Fifth :
+======
+Combining 'Bypassing REDIRECT FILTER' and "Duplicate report 'adding /secure to redirect'" to make an exploit working against any random user of HackerOne.
+
+eg. https://hackerone.com/../redirect/secure?signature=43cd652c2f1835df993825d00bed0660f498fc42&url=http%3A%2F%2Fwww.google.com
+
+(Click this link. And see BOOM ...!)
+This link bypasses 'REDIRECT FILTER' and also have some more impact then all.
+
+
+Once again, STRICTLY FOLLOW THE INSTRUCTIONS TO REPRODUCE.
+Have a good day. :)
+
+I will be happy to hear reply soon on this. :)
+
+Regards,
+Pranav
+
+
+ 

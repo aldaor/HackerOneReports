@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/55525
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/coolboss
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:03.07.2015 17:17:57
+
+Summary:
+
+Hello,
+
+When we specify an `invalid` scope then the authorize url redirects to the site mentioned in `redirect_uri`. So, attacker can create an app and use it as open redirector to redirect victims to fake sites.
+eg. Attacker can host same phishing page and hack the victims.
+
+Proof Of Concept :
+===============
+1. I created an app 
+
+<https://prans.myshopify.com/admin/oauth/authorize?client_id=616ce3efcd495007438000ad958a6629&scope=read_customers&redirect_uri=http://www.facebook.com/abc/>
+
+2. Now, visit this ...
+
+This will redirect ...
+
+<https://prans.myshopify.com/admin/oauth/authorize?client_id=616ce3efcd495007438000ad958a6629&scope=a&redirect_uri=https://www.facebook.com/abc>
+
+3. This will redirect with an error to ...
+<https://www.facebook.com/abc?error=invalid_scope&hmac=07657fedf1815f84248dfc6c372ba002e3ea5041df849080269786ae732aed99&shop=prans.myshopify.com&signature=6ecc20da3eb66500d9245635ead45315&timestamp=1428607537>
+
+
+Simple patch :
+===========
+Only a error should be shown and no redirection should take place so as to protect users.
+
+Thanks,
+Pranav

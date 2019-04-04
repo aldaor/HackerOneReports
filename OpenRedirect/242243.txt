@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/242243
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/malcolmx
+ReportedTo:Inflection(inflection)
+BountyAmount:350.0
+Severity:medium
+State:Closed
+DateOfDisclosure:16.10.2017 18:15:18
+
+Summary:
+The HTTP POST request to /oauth/authorize could be tampered with to allow an attacker to maliciously redirect the user to an arbitrary URL after failed authentication. Due to how the OAuth protocol works, the attacker would need to MITM or otherwise tamper with the request from a local network, as the OAuth URL in question was not directly accessible from a link. This means that this vulnerability could only be exploited in a limited set of circumstances. 

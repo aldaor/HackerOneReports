@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/277078
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/protector47
+ReportedTo:Inflection(inflection)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:20.12.2017 14:00:44
+
+Summary:
+Researcher reported a duplicate issue.

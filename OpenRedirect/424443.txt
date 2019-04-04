@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/424443
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/bagipro
+ReportedTo:PayPal(paypal)
+BountyAmount:6800.0
+Severity:medium
+State:Closed
+DateOfDisclosure:07.02.2019 23:03:05
+
+Summary:
+A deeplink feature built into the PayPal Android application failed to validate the requested endpoint. A specifically crafted request from a website or separate app on the device could call the deeplink and direct traffic to any destination. While the impact was limited by compensating controls, headers containing sensitive data could be collected by a malicious actor.

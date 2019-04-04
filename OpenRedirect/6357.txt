@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/6357
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/smiegles
+ReportedTo:Khan Academy(khanacademy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:09.04.2014 20:54:49
+
+Summary:
+
+Hi,
+
+I found a bypass in the redirects :
+`https://www.khanacademy.org/login?continue=http://www.olivierbeg.nl` won't work.
+`https://www.khanacademy.org/login?continue=http:/www.olivierbeg.nl` will work :-)
+
+Best regards,
+
+Olivier Beg

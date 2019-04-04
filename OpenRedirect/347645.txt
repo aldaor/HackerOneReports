@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/347645
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/shad0walk3rtn
+ReportedTo:VK.com(vkcom)
+BountyAmount:300.0
+Severity:low
+State:Closed
+DateOfDisclosure:29.06.2018 20:25:20
+
+Summary:
+Open Redirect. 

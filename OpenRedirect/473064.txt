@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/473064
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/postmatelabs
+ReportedTo:Zomato(zomato)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:14.02.2019 17:14:26
+
+Summary:
+
+**Summery**
+Hey There are a open Redirect on your login panel
+
+**Platform(s) Affected:** Website
+
+## Browsers Verified In [If Applicable]:
+
+  * Chrome For Android
+  * Firefox For Android
+
+## Steps To Reproduce:
+
+  1. Go To This Url :- https://www.zomato.com/login?redirect_url=https://askdcodes.org
+  2. Then login there
+  3. boom you got Redirected to askdcodes.org
+
+## Supporting Materials ##
+Attaching A Video Poc
+
+## Impact
+
+Any Attacker can Redirect your users to malicious website

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/295865
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/abartan
+ReportedTo:RBKmoney(rbkmoney)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:26.01.2018 17:03:32
+
+Summary:
+An open redirect vulnerability was found in KeyCloak.

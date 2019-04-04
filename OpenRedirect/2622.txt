@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/2622
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/appsecure_in
+ReportedTo:Slack(slack)
+BountyAmount:200.0
+Severity:
+State:Closed
+DateOfDisclosure:30.08.2014 7:20:16
+
+Summary:
+
+An open redirect is an application that takes a parameter and redirects a user to the parameter value without any validation. This vulnerability is used in phishing attacks to get users to visit malicious sites without realizing it.
+
+Steps to reproduce:
+
+1) Go to this URL:
+
+https://slack.com/checkcookie?redir=http://www.likelo.com
+
+Proper checks should be there on the redir parameter that should only allow to redirect on slack.com URL.
+
+Please have a look.
+
+Best regards,
+Anand

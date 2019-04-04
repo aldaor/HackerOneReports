@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/231760
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/dark_heaven
+ReportedTo:Coinbase(coinbase)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:23.06.2017 17:07:06
+
+Summary:
+
+Sir I make a video for clear understand. Watch that video. 
+Thanks 
+Best Regards
+Anirban Singha

@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/299835
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/albinowax
+ReportedTo:TTS Bug Bounty(tts)
+BountyAmount:150.0
+Severity:low
+State:Closed
+DateOfDisclosure:25.03.2019 18:06:44
+
+Summary:
+
+This link leads to the genuine secure.login.gov login page, in French: 
+https://secure.login.gov/fr?host=portswigger.net
+
+However, if you try to change the language to English using the bar at the bottom you'll end up an external website of my choice. As users won't expect changing their language to place them on an external website, the attacker could launch a highly effective phishing attack from there by impersonating secure.login.gov
+
+## Impact
+
+This vulnerability makes it possible to launch phishing attacks originating from secure.login.gov

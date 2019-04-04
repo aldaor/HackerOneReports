@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/66384
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Envoy(envoy)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.10.2016 20:30:32
+
+Summary:
+Open redirect in dashboard.
+Open redirect via Request-URI
+
+PoC:
+``` https://dashboard.signwithenvoy.com//www.google.com/%2e%2e%2f ```
+
+HTTP Response:
+``` HTTP/1.1 303 See Other
+...
+Location: //www.google.com/%2e%2e%2f/ ```

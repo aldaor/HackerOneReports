@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/238117
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/atruba
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.06.2017 19:10:55
+
+Summary:
+
+Hi team, 
+there is a open redirect end point when any account owner disconnect email accounts. He is redirected to some other domain.
+
+Vulnerable URL
+
+https://demo.weblate.org/accounts/disconnect/email/2354/?next=http://google.com
+POC
+
+Steps:
+Go to authentication tab.
+Disconnect Email account and capture the request.
+Now, after next= write https://evil.com.
+You are redirected to evil.com
+
+Thanks,

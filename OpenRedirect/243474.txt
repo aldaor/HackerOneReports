@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/243474
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/malcolmx
+ReportedTo:Inflection(inflection)
+BountyAmount:750.0
+Severity:high
+State:Closed
+DateOfDisclosure:13.10.2017 16:15:29
+
+Summary:
+The Identity.com login page could be manipulated to redirect the user to an arbitrary URL after a successful authentication.
+
+# Researcher POC
+
+* I used this request to try login https://www.identity.com/signin?redirect_url=%2Foauth%2Fauthorize%3Fclient_id%3D241f887e145f09298fc7f3459cefa080cd7abd30b7b0192977b5bb72965e0583%26redirect_uri%3D%252Ftest-callback%26response_type%3Dcode%26scope%3Dname%2Bemail%2Bdob%26state%3DAPPLICATION_TEST
+* I put %40google.com after redirect_url= so the endpoint was like this &redirect_url=%40google.com%2Fclient_id%253D241f887e145f09298fc7f3459cefa080cd7abd30b7b0192977b5bb72965e0583%2526redirect_uri%253D%25252Ftest-callback%2526response_type%253Dcode%2526scope%253Dname%252Bemail%252Bdob%2526state%253DAPPLICATION_TEST
+* After a successfully login i redirect to google.com

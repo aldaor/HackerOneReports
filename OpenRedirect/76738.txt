@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/76738
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/jayden
+ReportedTo:Zaption(zaption)
+BountyAmount:25.0
+Severity:
+State:Closed
+DateOfDisclosure:24.08.2015 16:58:58
+
+Summary:
+
+Hi  , 
+
+An open redirect is an application that takes a parameter and redirects a user to the parameter value without any validation. This vulnerability is used in phishing attacks to get users to visit malicious sites without realizing it.
+
+its possible to bypass your redirect filter using : 
+https://www.zaption.com/logout?returnTo=///evil.com/
+
+`HTTP/1.1 302 Moved Temporarily
+Access-Control-Allow-Origin: 
+Cache-Control: private, must-revalidate
+Content-Type: text/html; charset=utf-8
+Date: Sun, 19 Jul 2015 10:55:48 GMT
+Location: ///evil.com
+P3P: CP="Zaption does not have a P3P policy. See privacy policy at http://zapt.io/privacy"
+Pragma: no-cache
+Vary: Accept, Accept-Encoding
+Content-Length: 78
+Connection: keep-alive
+
+<p>Moved Temporarily. Redirecting to <a href="///evil.com">///evil.com</a></p>`

@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/223718
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/rajauzairabdullah
+ReportedTo:Weblate(weblate)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:17.05.2017 14:09:01
+
+Summary:
+
+Weak **Authentication** Leads to the **Open redirection** to **_Malicios Sites_** :
+
+### Signing in via Facebook :
++ https://hosted.weblate.org/accounts/login/facebook/?next=///evil.com
+
+### Signing in via Gmail :
++ https://hosted.weblate.org/accounts/login/google-oauth2/?next=///evil.com
+
+### Signing in via Github:
+
++ https://hosted.weblate.org/accounts/login/github/?next=///evil.com
+
+### Signing in via Bitbucket:
+
++ https://hosted.weblate.org/accounts/login/bitbucket/?next=///evil.com
+
+### Signing in via Gitlab:
+
++ https://hosted.weblate.org/accounts/login/gitlab/?next=///evil.com
+
+### Vulnarable Parameter: 
+
+**" next  "**
+
+Greets
+**Raja Uzair Abdullah**

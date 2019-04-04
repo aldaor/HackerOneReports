@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/283460
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/avinash_
+ReportedTo:Twitter(twitter)
+BountyAmount:280.0
+Severity:
+State:Closed
+DateOfDisclosure:23.12.2017 7:48:36
+
+Summary:
+
+Hi
+
+Report #281538 is fixed but Attacker can Bypass this Open Redirect Protection.
+
+Give this link ``` https://twitter.com/teams/authorize?target_screen_name=&authorize_callback=//www.facebook.com``` to authorized victim.Twitter will say him to authorize a different account for create team.After authorization victim will be redirected to ```www.facebook.com```
+
+Vulnerable point ```//www.facebook.com``` (You can use //www.example.com )
+
+Open Redirection Protection Bypassed.
+
+PoC video attached
+
+With Best Regards

@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/339987
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/flex0geek
+ReportedTo:ExpressionEngine(expressionengine)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:20.04.2018 15:10:58
+
+Summary:
+The original report was not a security issue, but that did lead the reporter to discovering that a user could potentially be tricked by nesting redirects so that they first redirected to the site itself, which would allow the second redirect to occur without warning the user that they were being taken off-site.
+
+```
+https://example.com/?URL=https://example.com/?URL=http://evil.com
+```

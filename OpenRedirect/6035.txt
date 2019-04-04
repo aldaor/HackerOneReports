@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/6035
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/kadaba
+ReportedTo:Slack(slack)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:31.05.2014 18:42:06
+
+Summary:
+
+Navigate to Https://slack.com
+append "/link?url=url=http://bing.com" or enter any website of your choice with http://
+vulnerable link https://slack.com/link?url=http://bing.com
+notice that user is redirected to bing.com without being validated or notified

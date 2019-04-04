@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/4570
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/redshark1802
+ReportedTo:Verizon Media(verizonmedia)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:29.04.2014 21:12:03
+
+Summary:
+Thank you for your submission to the Yahoo Bug Bounty program. We were able to reproduce the issue you reported and have implemented appropriate fixes. We appreciate your adherence to responsible disclosure guidelines and look forward to your future participation in the program.

@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/384029
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/leetboi
+ReportedTo:Node.js third-party modules(nodejs-ecosystem)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:30.07.2018 8:57:13
+
+Summary:
+Jul 19th 2018 -  lolwaleet submitted a report to Node.js third-party modules.
+I would like to report url-parse package return wrong hostname in url-parse.
+
+# Module
+module name: url-parse
+version: 1.4.1
+npm page: https://www.npmjs.com/package/url-parse
+
+## Module Description
+The url-parse method exposes two different API interfaces. The url interface that you know from Node.js and the new URL interface that is available in the latest browsers.
+
+In version 0.1 we moved from a DOM based parsing solution, using the <a> element, to a full Regular Expression solution. The main reason for this was to make the URL parser available in different JavaScript environments as you don't always have access to the DOM. An example of such environment is the Worker interface. The RegExp based solution didn't work well as it required a lot of lookups causing major problems in FireFox. In version 1.0.0 we ditched the RegExp based solution in favor of a pure string parsing solution which chops up the URL into smaller pieces. This module still has a really small footprint as it has been designed to be used on the client side.
+
+# Vulnerability
+## Vulnerability Description
+url-parse returns wrong hostname which leads to multiple vulnerabilities such as SSRF, Open Redirect, Bypass Authentication Protocol.
+
+# Fix
+Fixes applied to version 1.4.3
+## Resources:
+* Patch landed in master, including tests to prevent regression: https://github.com/unshiftio/url-parse/commit/53b1794e54d0711ceb52505e0f74145270570d5a
+* A SECURITY.md file has been added to the repo to make it easier to report bugs, and reach me in the future, including history of the previous security reports and their fix version. https://github.com/unshiftio/url-parse/commit/d7b582ec1243e8024e60ac0b62d2569c939ef5de
+* http://0xahmed.ninja/

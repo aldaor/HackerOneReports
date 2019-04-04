@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/2731
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/appsecure_in
+ReportedTo:Slack(slack)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:06.04.2014 19:36:52
+
+Summary:
+
+Hi,
+
+Open redirect issue:
+
+1) Go to this URL:
+
+https://sehacure.slack.com/link?url=http://www.likelo.com
+
+The victim will be redirected.
+
+Impacts:
+
+The attacker can force the user to install trojans,malwares, etc. into his system.
+And can conduct phishing attacks.
+
+Please have a check.
+
+Best regards,
+Anand

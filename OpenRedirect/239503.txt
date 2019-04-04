@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/239503
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/0xradi
+ReportedTo:Maximum(maximum)
+BountyAmount:350.0
+Severity:
+State:Closed
+DateOfDisclosure:21.06.2017 14:34:29
+
+Summary:
+
+Hi Team,
+I've Found an After-Login Open Redirect Vulnerability which can lead to information disclosure like an authentication token and user_id
+
+###Steps To Reproduce:
+ 1. Go to https://mijn.werkenbijdefensie.nl/login?redirect_url=https://google.com
+ 2. Login using your valid Email & Password
+ 3. You will be redirected to :
+```
+https://www.google.com/?user=████&token=████&channel=mijnwerkenbijdefensie
+```

@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/49759
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/seifelsallamy
+ReportedTo:Twitter(twitter)
+BountyAmount:1400.0
+Severity:
+State:Closed
+DateOfDisclosure:03.04.2015 21:20:11
+
+Summary:
+
+Hey guys
+URL: https://mobile.twitter.com/messages/follow?recipient=/example.com
+when I click 'Follow'
+I will send my POST request to https://example.com
+witch contains my authenticity_token
+that can be used for anything like tweeting, following, sending messages, changing username.,.,.etc
+it can be used too to Add a mobile number, and then steal the account by recovering it by the mobile number.
+Thank You.

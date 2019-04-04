@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/38157
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/bobrov
+ReportedTo:QIWI(qiwi)
+BountyAmount:150.0
+Severity:
+State:Closed
+DateOfDisclosure:24.10.2016 22:23:03
+
+Summary:
+
+PoC (Chrome):
+https://qiwi.com/main.action#/\google.com/
+
+Уязвимый фрагмент кода:
+https://static.qiwi.com/js/qiwi_com/qiwi.min.js?v=3.3.9
+if(this.wc.hash&&Aa(this.wc.hash,"#/"))return this.wc.href=this.wc.hash.substring(1).replace(/^\/+/,"/"),this;

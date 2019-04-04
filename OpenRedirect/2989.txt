@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/2989
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/smiegles
+ReportedTo:OkCupid(okcupid)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.05.2014 23:02:22
+
+Summary:
+
+Hi,,
+
+I found an open redirection vulnerability, it works when you are signed IN :
+http://www.okcupid.com/login?dest=http://www.google.com/
+
+Best regards,
+
+Olivier Beg

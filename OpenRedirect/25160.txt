@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/25160
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/appsecure_in
+ReportedTo:Phabricator(phabricator)
+BountyAmount:400.0
+Severity:
+State:Closed
+DateOfDisclosure:17.09.2014 21:28:51
+
+Summary:
+
+Hi,
+
+It is possible to redirect users to malicious websites and steal their Disqus access token (not possible in case of Facebook).
+
+Please have a look at POC video: 
+https://www.dropbox.com/s/41qm7lbj6rg53td/phabricator.mov
+
+Please fix this and let me know if you need any information.  It would be great if you can please copy the vulnerable link from the video.
+
+Best Regards,
+Anand Prakash

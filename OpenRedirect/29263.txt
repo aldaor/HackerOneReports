@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/29263
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/niyaax
+ReportedTo:Square(square)
+BountyAmount:250.0
+Severity:
+State:Closed
+DateOfDisclosure:19.02.2015 21:51:26
+
+Summary:
+
+Description and Impact
+This bug has huge potential for tricking squareup.com that click on external links from this site to be a victim of a scam page because the redirecting is made in the background, while the user is focused on another tab. More then that, some browsers like Mozilla for Android don't even display the URL, just the page title, so the user has no way of knowing that he was redirected to a scam page.
+
+Impact of Vulnerability:
+1. The user may be redirected to an untrusted page that contains malware which may then compromise the user's machine.
+2. The user may be subjected to phishing attacks by being redirected to an untrusted page.
+Reproduction Instructions / Proof of Concept
+When you open a link in a new tab ( target="_blank" ), the page that opens in a new tab can access the initial tab and change it's location using the window.opener property.
+
+POC:
+1. Paste this url on anywhere on square: http://cirrusholidays.com/landing.php 
+2. Just click the link and the link will be open in a new page ( Don't right-click it and open it in new tab, don't use the mouse wheel to open it, don't Ctrl+Click, just do a normal click on the link.) And the page in which the link was posted, in this case its on this report will be redirected to the malicious site which the attacker wants. Here it goes to http://cirrusholidays.com/facebookphish.php 
+
+The javascript code that does all this redirect is:
+window.opener.location.replace(newURL);
+POC i have created:
+1. Go to this link: https://squareup.com/market/6MY3JPCR0CBAX
+2. Click the link given on my contact information.

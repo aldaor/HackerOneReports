@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/294124
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/s_p_q_r
+ReportedTo:Razer US(razer_us)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:24.01.2018 18:09:43
+
+Summary:
+The researcher discovered that a page on our zVault that intended to perform redirection which allowed a URL bypass due to a coding flaw.  The flaw was an attempt at sanitation that could actually be leveraged to redirect to a URL string useful for phishing.  He provided an analysis of the code and how it could be exploited.
+
+This was reported 11/3 and a fix deployed to production 12/14.
+
+Great report, and we look forward to working with this researcher in the future. 

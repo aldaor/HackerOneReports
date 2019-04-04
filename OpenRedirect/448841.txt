@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/448841
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/m00hdi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:27.12.2018 15:30:28
+
+Summary:
+Open redirect on passport.maps.me page

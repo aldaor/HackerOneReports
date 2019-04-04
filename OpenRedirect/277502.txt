@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/277502
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/ysx
+ReportedTo:WordPress(wordpress)
+BountyAmount:275.0
+Severity:low
+State:Closed
+DateOfDisclosure:02.11.2017 16:56:46
+
+Summary:
+
+Hi,
+
+In a similar manner to #228569, it is currently possible to execute authenticated open redirections via the `wp_http_referer` parameter used in the [BuddyPress](https://wordpress.org/plugins/buddypress/) extended user edit screen.
+
+## Proof of concept
+
+Upon accessing the below URL, please select the "Update Profile" button, then select the "**←Back to Users**" link. This will redirect a target to the attacker-specified address (in this case, "google.com").
+
+
+```
+http://instance/wp-admin/users.php?page=bp-profile-edit&wp_http_referer=https://google.com
+```
+
+### Supporting evidence
+
+{F229538}
+
+Thanks,
+
+Yasin
