@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/483774
+WeaknessName:XML External Entities (XXE)
+Reporter:https://hackerone.com/mik317
+ReportedTo:DuckDuckGo(duckduckgo)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:31.01.2019 15:44:25
+
+Summary:
+An XML External Entity (XXE) injection vulnerability was discovered in the `x.js` endpoint on https://duckduckgo.com via `u` parameter. This was due to improper sanitation of external XML entities. The results was a leak of certain world readable files on the system.
+
+This issue was patched. Additionally, we intend to retire the endpoint in the very near future.
+
+Big thanks to @mik317 for reporting this issue!

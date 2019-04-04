@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/277341
+WeaknessName:XML External Entities (XXE)
+Reporter:https://hackerone.com/ruvlol
+ReportedTo:Mail.ru(mailru)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:12.02.2018 16:28:08
+
+Summary:
+Blind XML external ENTITY / DTD injection via avatar upload feature in My.Com's MyMail backend results in potential SSRF

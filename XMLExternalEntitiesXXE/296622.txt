@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/296622
+WeaknessName:XML External Entities (XXE)
+Reporter:https://hackerone.com/barracuda_
+ReportedTo:VK.com(vkcom)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:04.03.2018 13:15:15
+
+Summary:
+Blind XXE vulnerability in processing of uploaded documents. 

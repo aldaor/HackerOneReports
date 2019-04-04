@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/276276
+WeaknessName:XML External Entities (XXE)
+Reporter:https://hackerone.com/ruvlol
+ReportedTo:Mail.ru(mailru)
+BountyAmount:800.0
+Severity:high
+State:Closed
+DateOfDisclosure:06.02.2018 12:41:08
+
+Summary:
+Blind XXE in my.mail.ru (Moi Mir) avatar upload feature.
+Moi Mir is not covered by regular Bug Bounty program, a bounty was awarded as a bones due to high potential impact.
+

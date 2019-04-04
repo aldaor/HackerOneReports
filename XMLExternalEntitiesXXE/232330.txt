@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/232330
+WeaknessName:XML External Entities (XXE)
+Reporter:https://hackerone.com/peuch
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:15.08.2017 15:58:20
+
+Summary:
+A remote code execution (RCE) vulnerability was found on a DoD website which could have enabled an attacker to execute remote commands on the web server. Thank you @peuch for notifying us of this vulnerability!
+

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/433996
+WeaknessName:XML External Entities (XXE)
+Reporter:https://hackerone.com/honoki
+ReportedTo:QIWI(qiwi)
+BountyAmount:5000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:27.11.2018 12:08:41
+
+Summary:
+XXE on ■■■■■■.qiwi.com with WAF bypass

