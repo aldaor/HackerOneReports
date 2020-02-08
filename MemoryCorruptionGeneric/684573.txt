@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/684573
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/xairy
+ReportedTo:The Internet(internet)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:11.09.2019 0:19:48
+
+Summary:
+
+Hi!
+
+[CVE-2017-1000112](https://nvd.nist.gov/vuln/detail/CVE-2017-1000112) is a vulnerability I found in the Linux kernel caused by a UFO to non-UFO path switch for UFO packets. It can be exploited to gain kernel code execution from an unprivileged process.
+
+This vulnerability was reported to security@kernel.org and linux-distros@ following the coordinated disclosure process and then [announced](https://www.openwall.com/lists/oss-security/2017/08/13/1) on oss-security@. The fix was [committed](https://git.kernel.org/pub/scm/linux/kernel/git/davem/net.git/commit/?id=85f1bd9a7b5a79d5baa8bf44af19658f7bf77bfa) on Aug 10, 2017.
+
+I wrote a proof-of-concept exploit for a range of Ubuntu kernels Ubuntu kernel which gains root from an unprivileged user, which can be found [here](https://github.com/xairy/kernel-exploits/tree/master/CVE-2017-1000112). More details about the vulnerability and exploitation can be found in the oss-security [announcement](https://www.openwall.com/lists/oss-security/2017/08/13/1).
+
+The reason I'm reporting this now is that a [similar bug](https://hackerone.com/reports/347282) that I've reported a while ago has recently been triaged and addressed, so it seems that LPE Linux kernel bugs are within the scope of this IBB program.
+
+Thanks!
+
+## Impact
+
+This vulnerability allows a local attacker to elevate privileges to root on a machine with vulnerable Linux kernel version.

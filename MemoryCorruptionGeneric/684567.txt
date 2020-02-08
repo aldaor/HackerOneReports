@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/684567
+WeaknessName:Memory Corruption - Generic
+Reporter:https://hackerone.com/xairy
+ReportedTo:The Internet(internet)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:11.09.2019 0:19:43
+
+Summary:
+
+Hi!
+
+[CVE-2017-7308](https://nvd.nist.gov/vuln/detail/CVE-2017-7308) is a vulnerability I found in the Linux kernel caused by a signedness issue in AF_PACKET sockets. It can be exploited to gain kernel code execution from an unprivileged process. The kernel has to be built with CONFIG_PACKET for the vulnerability to be present. A lot of modern distributions enable this option by default.
+
+I initially reported this vulnerability to security@kernel.org following the coordinated disclosure process. As advised by them I've developed a fix for this vulnerability and sent it upstream. The fix was [committed](https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/commit/?id=2b6867c2ce76c596676bec7d2d525af525fdc6e2) on Mar 30, 2017.
+
+I wrote a proof-of-concept exploit for the 4.8.0-41-generic Ubuntu kernel which gains root from an unprivileged user, which can be found [here](https://github.com/xairy/kernel-exploits/tree/master/CVE-2017-7308). More details about the vulnerability and exploitation can be found [here](https://googleprojectzero.blogspot.com/2017/05/exploiting-linux-kernel-via-packet.html).
+
+The reason I'm reporting this now is that a [similar bug](https://hackerone.com/reports/347282) that I've reported a while ago has recently been triaged and addressed, so it seems that LPE Linux kernel bugs are within the scope of this IBB program.
+
+Thanks!
+
+## Impact
+
+This vulnerability allows a local attacker to elevate privileges to root on a machine with vulnerable Linux kernel version.
