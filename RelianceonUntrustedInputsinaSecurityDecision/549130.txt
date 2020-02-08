@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/549130
+WeaknessName:Reliance on Untrusted Inputs in a Security Decision
+Reporter:https://hackerone.com/nstikhomirov
+ReportedTo:Mail.ru(mailru)
+BountyAmount:250.0
+Severity:none
+State:Closed
+DateOfDisclosure:23.07.2019 15:40:16
+
+Summary:
+Client IP address could be spoofed via X-Forwarded-For headers in authdl.mail.ru. While no direct impact were identified, this issue could potentially lead to issues with logging, limitations or ABF protection.

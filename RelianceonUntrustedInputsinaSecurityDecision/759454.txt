@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/759454
+WeaknessName:Reliance on Untrusted Inputs in a Security Decision
+Reporter:https://hackerone.com/priyanshuxo
+ReportedTo:DataStax(datastax)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:15.01.2020 17:49:43
+
+Summary:
+
+## Summary:
+DNS record [dmc.datastax.com](dmc.datastax.com) is pointing to stale [dmc-support.zendesk.com](dmc-support.zendesk.com) domain on Zendesk which is available for takeover.
+
+DNS Stale Records: {F661014}
+
+
+## Proof of Concept:
+There was no helpdesk configured at this address, which means that the address was available and anyone could claim it. I was able to claim dmc-support.zendesk.com.
+
+On this page, https://dmc.datastax.com/hc/en-us I haven't made the page public, I'm attaching a screenshot of the webpage:
+{F661004} 
+
+## Supporting Material/References:
+Login page:
+{F661021}
+
+## Impact
+
+Subdomain takeover
