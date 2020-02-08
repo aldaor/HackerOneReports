@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/726765
+WeaknessName:HTTP Response Splitting
+Reporter:https://hackerone.com/flawwan
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:01.01.2020 20:46:34
+
+Summary:
+CRLF injection via GET paramaters in tz.mail.ru
+
+Clientside vulnerabilities in tz.mail.ru is not currently covered by Bug Bounty program.
