@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/519367
+WeaknessName:Plaintext Storage of a Password
+Reporter:https://hackerone.com/kingamir
+ReportedTo:Midpoint (European Commission - DIGIT)(midpoint_h1c)
+BountyAmount:168.68
+Severity:low
+State:Closed
+DateOfDisclosure:15.06.2019 12:47:55
+
+Summary:
+
+## Summary:
+Attacker can read plain text password from log data.
+
+## Steps To Reproduce:
+
+  1. From application dashboard choose Users section, I simultaneously ran process hacker to see the process disk write and read behavior.
+  2. change the password of one of the users, and you see in process hacker window the place for log data creation.
+  3. Open the file in favorite editor in that place:
+%UserProfile%\AppData\Local\Temp\tomcat.1470616378544174392.8080\work\Tomcat\localhost\midpoint 
+
+## Supporting Material/References:
+I have uploaded a video for POC.
+
+## Impact
+
+Attacker can read plain text password from log data.

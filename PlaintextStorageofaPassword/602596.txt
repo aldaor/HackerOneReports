@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/602596
+WeaknessName:Plaintext Storage of a Password
+Reporter:https://hackerone.com/exadmin
+ReportedTo:ok.ru(ok)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:17.06.2019 15:25:55
+
+Summary:
+
+Documentation at https://api.mail.ru/docs/guides/billing/ 
+has a link to http://apiok.ru/jira/documents/ 
+which redirects to https://jira.apiok.ru/secure/CreateIssue.jspa?pid=-2&os_username=unknown&os_password=X7:1OEh3
+
+This pair of username & password - is effective login & password to JIRA system and allows to create new tickets/save filters/upload attachments (which can be used to provide malicious content)
+
+
+I admit it can be incorrect realization of anonymouse tickets submission (which is possible at least since Fbe, 2016 https://confluence.atlassian.com/jirakb/how-to-allow-users-to-create-issues-anonymously-192551.html)
+
+## Impact
+
+Plain password text can help to undestand pattern of password generation for other accounts
+Fishing is posible using official link to apiok.ru subdomain, i.e. http://jira.apiok.ru/secure/temporaryattachment/1585b6ba1084b134047a663dd8e698efc3a87e21/temp236609509878930861_test.png (and here can be png-bob for example which is accessible for everyone)
