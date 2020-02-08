@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/681468
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/guilhermecruzdev
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:22.11.2019 17:51:03
+
+Summary:
+
+URL: https://apps.nextcloud.com/password/reset/
+
+I have tried to recover the password for some emails:
+
+test@test.com (exists)
+teste@teste.com.br (does not exists)
+
+After I clicked the "reset my password"'s button, the website informed that the email did not exist.
+
+## Impact
+
+This is a bad practice, and it is an invitation to brute force emails that possibly exist in the domain @nextcloud.com.
+
+By using a wordlist of common passwords, it is possible to guess a combination of email/password of an administrator account.

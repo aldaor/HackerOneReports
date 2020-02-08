@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/708013
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/clew
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:07.10.2019 20:12:54
+
+Summary:
+@clew noticed that the [`customerAccessTokenCreate` mutation](https://help.shopify.com/en/api/storefront-api/reference/mutation/customeraccesstokencreate) in the [Storefront API](https://help.shopify.com/en/api/storefront-api) did not correctly throttle login attempts. The throttle failed to prevent brute force attacks because its counter was only checked & incremented when an invalid password was submitted. We've corrected the problem by applying the throttle to all login attempts, whether the password is valid or invalid.
+It seems that the service used for login purposes could be brute forced. the system fails when the password is incorrect, after some unsuccessful attempts the following message is shown:
+
+ 
+{"data":{"customerAccessTokenCreate":null},"errors":[{"message":"Login attempt limit exceeded. Please try again later.","locations":[{"line":1,"column":10}],"path":["customerAccessTokenCreate"]}]}
+
+ 
+However, it still possible to continue brute forcing and if you try with the real password it will work again. So in our case, we have been able to perform brute force attack.  
+
+We feel Shopify should enforce the "limit exceeded" error for BOTH valid and invalid passwords.
+
+## Impact
+
+If the brute force attack succeeds, the attacker will then gain access to that user's shopify account, including contact information and order history.

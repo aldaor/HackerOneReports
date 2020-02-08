@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/744692
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/oo7hacker3
+ReportedTo:Badoo(badoo)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:23.01.2020 18:16:56
+
+Summary:
+
+I was able to validate that The Login of HotorNot is Vulnerable to BruteForcing .
+
+Steps to reproduce:
+1. https://hotornot.com/signin
+2.Use Burp intruder attack for BruteForcing 
+3.Send as many requests you want.
+
+Fix:
+Proper mitigation of BruteForcing should be done using Ratelimitng etc implementation.
+
+## Impact
+
+If attacker successfully Bruteforces the he/she might takeover it.Which might lead in users Privacy Violation

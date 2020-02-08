@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/773519
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/r0hack
+ReportedTo:Mail.ru(mailru)
+BountyAmount:1500.0
+Severity:high
+State:Closed
+DateOfDisclosure:04.02.2020 14:14:52
+
+Summary:
+Logon via SMS code validation was not sufficiently protected against bruteforce in my.33slona.ru

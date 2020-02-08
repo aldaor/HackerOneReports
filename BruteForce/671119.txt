@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/671119
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/iframe
+ReportedTo:Mail.ru(mailru)
+BountyAmount:1500.0
+Severity:high
+State:Closed
+DateOfDisclosure:11.10.2019 13:28:58
+
+Summary:
+It was possible to bruteforce mobile recovery code

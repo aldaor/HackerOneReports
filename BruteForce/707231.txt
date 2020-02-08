@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/707231
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/r0hack
+ReportedTo:Mail.ru(mailru)
+BountyAmount:2000.0
+Severity:high
+State:Closed
+DateOfDisclosure:02.12.2019 15:11:04
+
+Summary:
+Insufficient protection against SMS code bruteforcing allowed account takeover in vseapteki.ru

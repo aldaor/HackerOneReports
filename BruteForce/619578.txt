@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/619578
+WeaknessName:Brute Force
+Reporter:https://hackerone.com/dr_akm
+ReportedTo:Unikrn(unikrn)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:26.07.2019 13:50:44
+
+Summary:
+There was a to more or less trivial workaround to the SMS resend rate limit.
+
+Thx @dr_akm !
