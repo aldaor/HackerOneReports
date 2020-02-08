@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/769998
+WeaknessName:Unrestricted Upload of File with Dangerous Type
+Reporter:https://hackerone.com/godofdarkness_msf
+ReportedTo:Automattic(automattic)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:14.01.2020 18:51:00
+
+Summary:
+The reporter submitted a report highlighting that specially formatted yet valid HTML files were able to be uploaded as theme assets. Even though we allow for JavaScript on our blog network, we don't allow HTML files to be uploaded here so that we can restrict JavaScript execution to the blog network. Our fix involved whitelisting the specific files & mimetypes that are able to be uploaded as theme assets.
