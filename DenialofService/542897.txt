@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/542897
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/davidrenardy
+ReportedTo:Dropbox(dropbox)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:08.08.2019 19:35:44
+
+Summary:
+@davidrenardy discovered that the ZXCVBN algorithm is quadratic in time complexity, which implies that the user can submit an arbitrarily long password to the library, leading to a potential denial of service attack if performed at scale.
+
+Given how ZXCVBN is used at Dropbox, we accept the Denial of Service risk that this represents.
+
+As released, zxcvbn is intended to be implemented client side. Dropbox recommends that any organizations using our open sourced libraries server side consider and implement controls to prevent these types of attacks.

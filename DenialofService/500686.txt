@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/500686
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/seifelsallamy
+ReportedTo:Twitter(twitter)
+BountyAmount:1120.0
+Severity:low
+State:Closed
+DateOfDisclosure:19.03.2019 21:44:36
+
+Summary:
+
+**Summary:** 
+A url that twitter mobile site can not load, crushes any page containing this url
+
+**Description:** 
+Invalid hex characters crushes twitter mobile site as example go to ```https://mobile.twitter.com/?%xx``` 
+twitter won't load.
+
+1) Sending such url on a direct message, twitter will no longer be able to load the conversation,
+F429765
+2) Tweet such url, anyone following you won't be able to load any tweets
+F429766
+
+I think Twitter on the client side trying to find a value for %xx which is not possible so it raises an error
+
+## Steps To Reproduce:
+
+  1. Go to https://mobile.twitter.com/
+  2. Send or tweet this url ```https://mobile.twitter.com/?%xx```
+  3. You and your followers won't be able to see any tweets on the mobile site
+
+## Impact
+
+This issue works only on https://mobile.twitter.com/
+(not working on IOS, Android and https://twitter.com/ )
+however, all twitter mobile users with no twitter app should be affected

@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/649533
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/rioncool22
+ReportedTo:Moneybird(moneybird)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:25.10.2019 8:13:30
+
+Summary:
+
+# Description : 
+I able to add 2FA to my account without verifying my email
+
+# Attack scenario : 
+1. Attacker sign up with victim email (Email verification will be sent to victim email).
+2. Attacker able to login without verifying email.
+3. Attacker add 2FA.
+
+## Impact
+
+the victim can't register an account with victim email. If the victim reset the password, the password will change, but the victim can't login because 2FA.

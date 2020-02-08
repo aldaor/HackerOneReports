@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/622122
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/albinowax
+ReportedTo:PayPal(paypal)
+BountyAmount:9700.0
+Severity:medium
+State:Closed
+DateOfDisclosure:23.10.2019 16:47:25
+
+Summary:
+On https://paypal.com/, you could impact core functionality by using an invalid Transfer-Encoding header to replace JavaScript files from www.paypalobjects.com with the message '501 Not Implemented'. This was patched and awarded a $9,700 bounty.

@@ -1,0 +1,50 @@
+ReportLink:https://hackerone.com/reports/549040
+WeaknessName:Denial of Service
+Reporter:https://hackerone.com/abdilahrf_
+ReportedTo:GitLab(gitlab)
+BountyAmount:1000.0
+Severity:low
+State:Closed
+DateOfDisclosure:01.10.2019 11:21:19
+
+Summary:
+
+### Summary
+based on the documentation gitlab markdown is supporting math expresion rendering using `KaTex` and able to run subset syntax from `LaTex` this could be achieved by using 2 ways in the markdown for inline and for multiline.
+
+{F476662}
+
+### Steps to reproduce
+
+Step-by-step guide to reproduce the issue, including:
+
+1. Pick any repositories that you want to attack
+2. Create new issue and use payload [1.md](https://gist.github.com/abdilahrf/959d75c5d39034ebc411844316a7ce4c#file-1-md) or [2.md](https://gist.github.com/abdilahrf/959d75c5d39034ebc411844316a7ce4c#file-2-md)
+3. Everyone trying to open the issue will get hang since this generate tons of resources
+
+Or check out this video :
+{F476663}
+
+### Impact
+
+Project owner/everyone that trying to view the issue is got hang by the `KaTex` trying to render nested `sqrt` function without any limitation and making the owner unable to close the issue.
+
+### What is the current *bug* behavior?
+
+I was able to using nested sqrt and rules function without any limitation and making the website unresponsive
+
+### What is the expected *correct* behavior?
+
+The nested function should be limited using fixed normal amount, and should use `maxSize` to limit the visual width/height
+
+### Output of checks
+
+https://gitlab.com/abdilah.pb/testing-project/issues/2
+
+### Remediation
+
+Use maxSize option for preventing large width/height visual affronts, use maxExpand for preventing infinite macro loop attacks, and use allowedProtocols for preventing certain protocols in \href. Please refer to Options for more details. [https://katex.org/docs/security.html](https://katex.org/docs/security.html)
+
+## Impact
+
+Project owner/everyone that trying to view the issue is got hang by the `KaTex` trying to render nested `sqrt` function without any limitation and making the owner unable to close the issue.
