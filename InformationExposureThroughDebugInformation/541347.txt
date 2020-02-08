@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/541347
+WeaknessName:Information Exposure Through Debug Information
+Reporter:https://hackerone.com/vijay922
+ReportedTo:TomTom(tomtom)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:27.06.2019 13:34:44
+
+Summary:
+
+Description
+It is possible to obtain an overview of the remote Apache web server's activity and performance by requesting the URL '/server-status'. This overview includes information such as current hosts and requests being processed, the number of workers idle and service requests, and CPU utilization.
+
+Steps to Reproduce
+
+1) Navigate to URL http://mail.tomtom.com/server-status and click on enter 
+2) It can be observed the server logs can be seen clearly
+
+## Impact
+
+Impact
+An attacker can gather information about the internals of the target web server, such as:
+• Server uptime
+• Individual request-response statistics and CPU usage of the working processes
+• Current HTTP requests, client IP addresses, requested paths, and processed virtual hosts
+This type of information can help the attacker gain a greater understanding of the system in use and the other potential avenues of attack available.
