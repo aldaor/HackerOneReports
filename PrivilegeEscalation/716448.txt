@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/716448
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/adr
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:750.0
+Severity:medium
+State:Closed
+DateOfDisclosure:02.12.2019 14:27:34
+
+Summary:
+In this report, the researcher discovered a flaw in a Registry entry created by the `Rockstar Service`, which is used to install, update, and uninstall Rockstar Games titles on Windows PCs. Specifically, the ImagePath setting used by the entry was not enclosed in quotation marks. Using quotation marks tells Windows to look at the literal path provided in the setting. Without the quotation marks, Windows will attempt to find the binary it is looking for in every folder along the path, and not just at the literal file path provided in the ImagePath setting. This behavior could be abused by a skilled attacker to perform a local privilege escalation attack.
+
+We have since pushed out an update for the Rockstar Service, enclosing the ImagePath setting in quotes, which solves this issue and prevents this potential attack.

@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/583184
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/b0yd
+ReportedTo:Valve(valve)
+BountyAmount:1250.0
+Severity:high
+State:Closed
+DateOfDisclosure:15.01.2020 19:35:12
+
+Summary:
+### Note: This report was reviewed and updated after a correction to program scope.
+ 
+ 
+ 
+Vulnerability
+========
+
+The Steam Client installs a "Steam Client Service" that runs as SYSTEM to update the steam application. This service executes from C:\Program Files (x86)\Common\Steam where permissions are properly set to only allow modification from SYSTEM or the Administrators group.
+
+If the service encounters an error, it writes to the log file C:\Program Files (x86)\Steam\logs\service_log.txt. This is a problem because this particular folder, and the parent folder, have permissions set to "Full Control" to any unprivileged user. A regular user can also trigger an error when the service starts by modifying or deleting the "C:\Program Files (x86)\Steam\bin\steamservice.dll"
+file that an unprivileged user also has "Full Control" of.
+
+It also just so happens that the permissions for the "Steam Client Service" allow for starting and stopping by unprivileged users, which facilitates for easy triggering of the exploit.
+
+To exploit this vulnerability, an unprivileged user can create a [symlink](https://github.com/googleprojectzero/symboliclink-testing-tools/tree/master/CreateSymlink) between the "C:\Program Files (x86)\Steam\logs\service_log.txt" file and any destination file that SYSTEM can write to. Next they would modify, move, or delete the "C:\Program Files (x86)\Steam\bin\steamservice.dll" to trigger an error message to be written. Finally they would start the "Steam Client Service" service to force the file write. The following video demonstrates writing to C:\Windows\System32\evil.dll and also C:\Windows\System32\drivers\pci.sys
+to break the box.
+
+Fix
+===
+
+The primary fix for this vulnerability would be to move the log file for the "Steam Client Service" to a directory with proper permissions set, C:\Program Files (x86)\Common\Steam, would be a viable option. If the service is making any other privileged writes in the C:\Program Files (x86)\Steam folder, they would need to be addressed as well.
+
+References
+=======
+
+https://offsec.provadys.com/intro-to-file-operation-abuse-on-Windows.html
+
+Impact
+=====
+
+A unprivileged user can write to any file on the file system with SYSTEM privileges.

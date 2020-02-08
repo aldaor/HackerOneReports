@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/508493
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/leonklingele
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:150.0
+Severity:high
+State:Closed
+DateOfDisclosure:12.08.2019 15:15:22
+
+Summary:
+
+Steps to reproduce:
+
+1. Create a new user and make him an admin of an arbitrary group
+2. Log in as this new user
+3. Create a new user "files_external", "appdata_{random-data}", ..
+4. Delete this user
+
+Result: The data/files_external / data/appdata{..} folder is removed.
+
+Solution: Prevent creation of users if data/{new-user-uid} is either
+a file or a folder. In addition, prevent deletion of users where the
+user data directory (data/{user}) contains other files and folders
+than "files" (where the user data is stored).
+
+## Impact
+
+Group admin can remove arbitrary data from "data" directory

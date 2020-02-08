@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/593926
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/hi_ztz
+ReportedTo:Homebrew(homebrew)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:27.06.2019 8:33:44
+
+Summary:
+Additional symlinks/directories that were not `chown`d by `brew services` needed to be added to avoid the replacement of the `opt` prefix link.

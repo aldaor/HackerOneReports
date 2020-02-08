@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/511025
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/fr33rh
+ReportedTo:Ubiquiti Inc.(ui)
+BountyAmount:1604.0
+Severity:high
+State:Closed
+DateOfDisclosure:31.03.2019 12:56:07
+
+Summary:
+In EdgeSwitch X v1.1.0 and prior, an authenticated user can execute arbitrary shell commands over the SSH interface bypassing the CLI interface, which allow them to escalate privileges to root.

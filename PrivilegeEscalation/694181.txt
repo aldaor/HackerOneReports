@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/694181
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/testanull
+ReportedTo:Semmle(semmle)
+BountyAmount:2000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:16.10.2019 12:34:13
+
+Summary:
+
+## Summary:
+Because lack of security, attacker will be able to remove original log file and replace it will a symlink to other file, 
+After finishing job, host machine copy file from docker container.
+Because the original log file has been removed, the host machine will copy the symlink file.
+But the problem is it doesn't copy the linked file in container, it copys the linked file in the HOST MACHINE.
+
+## Steps To Reproduce:
+The attack is very simple, just remove the original build.log file and replace with a symlink file,
+I used this configuration to read the ``/etc/passwd``:
+```extraction:
+  cpp:
+    after_prepare:
+      - rm -rf /opt/out/snapshot/log/build.log && ln -s /etc/passwd /opt/out/snapshot/log/build.log
+```
+
+## PoC
+Content of ``/etc/passwd`` is attached below
+
+## Impact
+
+Give attacker ability to explore the host machine, expose more sensitive informations from it.

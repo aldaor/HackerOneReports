@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/664044
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/m7mdharoun
+ReportedTo:Maker Ecosystem Growth Holdings, Inc(makerdao_bbp)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:15.01.2020 10:57:28
+
+Summary:
+Takeover of an old app that is no longer used by the company.

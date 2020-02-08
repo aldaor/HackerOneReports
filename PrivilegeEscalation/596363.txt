@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/596363
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/cheatboss
+ReportedTo:VK.com(vkcom)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:11.07.2019 18:07:13
+
+Summary:
+Временная возможность продлить сессию после получения полного доступа к странице. 

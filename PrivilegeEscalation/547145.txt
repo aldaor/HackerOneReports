@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/547145
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/iframe
+ReportedTo:ok.ru(ok)
+BountyAmount:500.0
+Severity:critical
+State:Closed
+DateOfDisclosure:23.07.2019 15:20:53
+
+Summary:
+@iframe reported insufficient authorization at okl.lt which allowed regular users to perform actions intended to be accessible to administrators only.
+This vulnerability was aggravated by the fact that administrators-only API could be reversed-engineered from the HTML code.

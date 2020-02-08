@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/781614
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/hackthetime
+ReportedTo:Stripo Inc(stripo)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:30.01.2020 10:14:21
+
+Summary:
+
+The subdomain status-stage0.stripo.email was pointed at uptimerobot.com
+whereas it was not being used , but having Cname record as stats.uptimerobot.com .
+Hence anyone can takeover it.
+
+I have parked it with an account on uptimerobot.com
+note : 
+this issue is similar to [report](https://hackerone.com/reports/737695)
+but with another subdomain
+
+## Impact
+
+Subdomain takeover can be abused to do several things like :
+
+Malware distribution
+Phishing / Spear phishing
+XSS
+Authentication bypass
+Legitimate mail sending and receiving on behalf of ford subdomain
+...
+List goes on and on

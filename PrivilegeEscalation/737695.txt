@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/737695
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/haxorpunk
+ReportedTo:Stripo Inc(stripo)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:23.12.2019 9:03:35
+
+Summary:
+
+Hi ,
+
+The subdomain status0.stripo.email was pointed at uptimerobot.com
+whereas it was not being used , but having Cname record as stats.uptimerobot.com .
+Hence anyone can takeover it.
+
+I have parked it with atest account on uptimerobot.com
+
+{F634639}
+
+{F634636}
+
+thanks
+
+## Impact
+
+Anyone can use this subdomain on uptimerobot.com with a false message.

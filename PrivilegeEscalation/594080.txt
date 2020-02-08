@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/594080
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/muon4
+ReportedTo:Infogram(infogram)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:05.06.2019 8:03:55
+
+Summary:
+
+Hello team!
+
+I've found a privilege escalation issue which allows to set iframes to the projects w/o upgrading.
+
+### Steps to reproduce
+- Login
+- Navigate to the project
+- Choose `integrations` and click the `IFrame`
+- See that you'll get `upgrade now` notification
+{F501019}
+- Inspect the page with developer tool and choose the `upgrade` from `IFrame` icon
+- Delete the `data-upgrade="true"` part
+{F501023}
+- Click the `IFrame` and see that you are able to add iframe to the page w/o upgrade
+{F501024}
+
+
+If you need any information please let me know.
+
+Cheers!
+
+## Impact
+
+Users can use functionalities without paying

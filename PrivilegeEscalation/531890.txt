@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/531890
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/h1ch3ro
+ReportedTo:Twitter(twitter)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:28.05.2019 18:00:55
+
+Summary:
+
+Subdomain takeover on dev-admin.periscope.tv
+I takeover the subdomain and upload the index file : index.html
+
+## Impact
+
+Subdomain takeover on dev-admin.periscope.tv
+Subdomain takeover on dev-admin.periscope.tv/index.html
+http://dev-admin.periscope.tv.s3-website-us-west-2.amazonaws.com/index.html

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/736863
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/nukedx
+ReportedTo:Starbucks(starbucks)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:12.12.2019 21:33:20
+
+Summary:
+nukedx discovered that the mail.starbucks.bg domain was pointing to a mail service from icn.bg and confirmed that icn.bg did not host this domain. nukedx successfully claimed the subdomain from icn.bg, configured login credentials through the web panel and setup a valid email server. nukedx then sent a successful test from an @mail.starbucks.bg email address as a valid POC.
+
+@nukedx — thank you for reporting this vulnerability and confirming the resolution.

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/740989
+WeaknessName:Privilege Escalation
+Reporter:https://hackerone.com/vulnh0lic
+ReportedTo:Shopify(shopify)
+BountyAmount:5000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:11.12.2019 15:25:41
+
+Summary:
+@vulnh0lic noticed that a staff member without Apps permission was able to access the Stocky app. We determined that this was because of a bug in Stocky's OAuth authentication code, which allowed the user to be granted access to Stocky at the start of the OAuth process rather than the end. This resulted in a full authentication bypass. Within an hour of validating the report, we deployed a fix for this vulnerability.
+
+After fixing the vulnerability, we analyzed our server logs and did not find any evidence that the authentication bypass had been exploited.
