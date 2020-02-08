@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/529367
+WeaknessName:Privacy Violation
+Reporter:https://hackerone.com/povargek
+ReportedTo:VK.com(vkcom)
+BountyAmount:300.0
+Severity:
+State:Closed
+DateOfDisclosure:17.10.2019 11:22:45
+
+Summary:
+Отображение почты или части номера у приглашенных нами страниц. 

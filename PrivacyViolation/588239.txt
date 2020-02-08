@@ -1,0 +1,52 @@
+ReportLink:https://hackerone.com/reports/588239
+WeaknessName:Privacy Violation
+Reporter:https://hackerone.com/ryotak
+ReportedTo:Tor(torproject)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:29.05.2019 9:58:51
+
+Summary:
+
+#Summary
+Some error pages uses Tor Browser's language based text, and iframe can steal it.
+
+#Details
+Since the language of Tor Browser is used for the title of the link tag on 404 error page, an attacker can obtain the language of Tor Browser even if the user has set privacy.spoof_english to 2.
+I attached a PoC and a video for this.
+
+If the server returns empty response, Tor Browser will show this page in iframe:
+```html
+<html class="mozwebext">
+    <head>
+        <link rel="alternate stylesheet" type="text/css" href="resource://content-accessible/plaintext.css" title="Wrap Long Lines">
+    </head>
+    <body>
+        <pre></pre>
+    </body>
+</html>
+```
+
+but if user uses Japanese (This is example, it can be used in other languages) version of Tor Browser, it'll show this page:
+```html
+<html class="mozwebext">
+    <head>
+        <link rel="alternate stylesheet" type="text/css" href="resource://content-accessible/plaintext.css" title="長い行を折り返す">
+    </head>
+    <body>
+        <pre></pre>
+    </body>
+</html>
+```
+
+so parent window can steal it:
+``` 
+title="長い行を折り返す"
+```
+
+Maybe there are similar vulnerability in other error page.
+
+## Impact
+
+Attacker can steal language of Tor Browser even if the user has set privacy.spoof_english to 2.
