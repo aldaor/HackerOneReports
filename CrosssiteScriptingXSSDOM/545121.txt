@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/545121
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/elmahdi
+ReportedTo:ZEIT(zeit)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:16.05.2019 20:00:35
+
+Summary:
+
+## Summary:
+####Hello I found that the parameter next lacks filtering, allowing the attacker to exploit this vulnerability to redirect users to a malicious site + The Attacker Can Exploit this bug to redirect the user to Malcious Site + The attacker can execute JavaScript code in the user browser
+####Because the user redirected by Javascript, The Attacker Can Exploit This Bug To Execute JavaScript By Use javascript: protocol
+
+## Steps To Reproduce:
+####1. Go To https://zeit.co/setup-github?next=javascript:alert(document.domain)//
+####2. And Click On Profile And Continue
+####3. And The Payload Will Executed !
+{F473684}
+
+## Impact
+
+####The attacker can execute javascript on browser of any user !

@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/507139
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/wild0ni0n
+ReportedTo:Automattic(automattic)
+BountyAmount:275.0
+Severity:medium
+State:Closed
+DateOfDisclosure:05.05.2019 3:09:04
+
+Summary:
+
+I have found a stored DOM based XSS in the order page at WooCommerce 3.5.6.
+
+The Data input from HTML element name `_shipping_state` and `_billing_state` in order page outputs data without escaping.When the victim read the page containing the payload, it executes the script.
+
+# Steps to reproduce
+
+1. From a Wordpress admin menu, naavigate to WooCommerce page.
+2. Click to `Add order` (Or select to the exist order data, navigate to edit page.)
+3. Click to pencil icon of  `Billing` or `Shipping` items, and expand input form.
+4. Select to  `Select a country...` by Country item.
+5. Input following value in State / Country item.
+
+> "><img src=/ onerror="alert(location.host)"
+
+6. Click Create button.(If navigated from the exist order, click update.)
+7. Navigate to edit page, after then an alert displayed.
+See also attached screenshot.
+
+The security impact is the same as any typical XSS.
+
+## Impact
+
+The security impact is the same as any typical XSS.

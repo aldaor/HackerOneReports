@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/702981
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/enesdexh1
+ReportedTo:Razer(razer)
+BountyAmount:250.0
+Severity:medium
+State:Closed
+DateOfDisclosure:23.11.2019 15:59:51
+
+Summary:
+
+## Summary:
+I just recently found easy exploitable DOM XSS vulnerability because of https://www.thx.com/assets/plugins/ultimate-social-media-icons/js/custom.js?ver=5.2.3 js file
+
+## Steps To Reproduce:
+First i want to say this is vulnerable code
+
+`function sfsi_mobile_wechat_share(url) {
+    if (jQuery('.sfsi_wechat_follow_overlay').length == 0) {
+        jQuery('body').append("<div class='sfsi_wechat_follow_overlay sfsi_overlay show'><div class='sfsi_inner_display'><a class='close_btn' href='' onclick=\"event.preventDefault();close_overlay(\'.sfsi_wechat_follow_overlay\')\" >Ã—</a><div style='width:95%; min-height:80%;background-color:#fff;margin:0 auto;margin:30% auto;padding: 20px 0;'><div style='width:90%;margin: 0 auto;'><input type='text' value='" + window.location.href + "' style='width:100%;padding:7px 0;text-align:center' /></div><div style='width:80%;margin:10px auto 0 auto'><div  class='sfsi_upload_butt_container' ><button onclick='sfsi_copy_text_parent_input(event)' class='upload_butt' >Copy</button></div><div class='sfsi_upload_butt_container' ><a href='weixin://' class='upload_butt'>Open WeChat</a></div></div></div></div>");`
+
+As you can see ==window.location.href== is vulnerable for dom xss because there is no encode 
+
+First go this homepage https://www.thx.com
+Then add #'><img src=x onerror=alert(document.domain)>
+Like this 
+https://www.thx.com/#'><img src=x onerror=alert(document.domain)>
+
+But will not work Chrome and Firefox beucase they have default encode for location.href
+This will work on Microsoft Edge and IE
+
+Also I have an picture to show you
+
+## Impact
+
+--Hacker execute malicious code victim's browsers
+--Redirect malicious sites
+--Arbitrary code can be executed on victim's browser

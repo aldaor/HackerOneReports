@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/508228
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/stealthy
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:13.05.2019 15:24:03
+
+Summary:
+DOM based XSS in tz.mail.ru
+
+tz.mail.ru belongs to extended scope

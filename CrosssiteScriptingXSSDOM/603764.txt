@@ -1,0 +1,45 @@
+ReportLink:https://hackerone.com/reports/603764
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/gamer7112
+ReportedTo:Upserve (upserve)
+BountyAmount:2500.0
+Severity:high
+State:Closed
+DateOfDisclosure:25.06.2019 13:56:46
+
+Summary:
+Due to incomplete origin validation, DOM-based XSS was possible at https://inventory.upserve.com/login/ when receiving a postMessage.
+#Description
+DOM based XSS is possible at https://inventory.upserve.com/login/ due to insecure origin checking when receiving a postMessage.
+
+#POC
+1. Visit https://hq.upserve.com.████████/upserve_xss.html
+2. Click link
+3. View alert on https://inventory.upserve.com
+
+#Vulnerable Code
+```javascript
+window.addEventListener("message", function(e) {
+  if (~e.origin.indexOf("https://hq.upserve.com")) {
+    if (e.data && typeof e.data == "object") {
+      try {
+        if (e.data["exec"]) {
+          eval(e.data["exec"]);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      console.log("Non-object passed");
+    }
+  } else {
+    console.log("Incorrect origin: " + e.origin.toString());
+    return;
+  }
+});
+```
+The origin check simply determines if "https://hq.upserve.com" is anywhere in the origin so an origin like "https://hq.upserve.com.mydomain.com" will pass this check just fine.
+
+## Impact
+
+Due to the page being a login page, login credentials could be logged and stolen when a victim goes to login.

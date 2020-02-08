@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/503707
+WeaknessName:Cross-site Scripting (XSS) - DOM
+Reporter:https://hackerone.com/secator
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:28.10.2019 10:42:03
+
+Summary:
+XSS via postMessage handler in o2.mail.ru
