@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/665722
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/l1nkworld
+ReportedTo:Grammarly(grammarly)
+BountyAmount:2500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:12.08.2019 18:19:39
+
+Summary:
+A vulnerability was reported in scope of the Grammarly MFA challenge. No users were affected.
+@linkworld identified a vulnerability that allowed bypassing MFA if specific conditions were met:
+- Attacker has access to `httponly;secure` `tdi` cookie of the victim's particular device.
+- Attacker knows `UserAgent` of the victim's device.
+- Attacker can issue a crafted request during a fixed timeframe after the victim has signed in from the particular device.
+
+You can discover additional details about this vulnerability in [this comment](https://hackerone.com/reports/665722#activity-5540323).
+
+Thanks, @linkworld!
+**Summary:**
+It is possible bypass MFA without the need to have the phone code.
+
+**Description:** 
+When we turn on the MFA and we have the user and password of the user, it is possible bypass the MFA only changing some values the endpoint POST `auth.grammarly.com//v3/api/login`
+
+## Steps To Reproduce:
+Note: 
+- Use burp suite or another tool to intercept the requests
+
+  1. Turn on and configure your MFA
+  2. Login with your email and password
+  3. The page of MFA is going to appear
+  4. Enter any random number
+  5. when you press the button "sign in securely" intercept the request POST `auth.grammarly.com/v3/api/login` and in the POST message change the fields:
+- `"mode":"sms"` by `"mode":"email"`
+-  `"secureLogin":true` by `"secureLogin":false`
+ 6. send the modification and check, you are in your account! It was not necessary to enter the phone code.
+
+## Impact
+
+The attacker can bypass the experimental MFA, If the attacker has the email and password, the attacker can login in the account without the need of the phone code.

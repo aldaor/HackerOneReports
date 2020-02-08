@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/775531
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/cybersera
+ReportedTo:Kubernetes(kubernetes)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:04.02.2020 1:59:12
+
+Summary:
+
+Desciprition :
+
+There is a email spoofing vulnerability.Email spoofing is the forgery of an email header so that the message appears to have originated from someone or somewhere other than the actual source. Email spoofing is a tactic used in phishing and spam campaigns because people are more likely to open an email when they think it has been sent by a legitimate source. The goal of email spoofing is to get recipients to open, and possibly even respond to, a solicitation.
+
+I found :
+
+SPF record lookup and validation for: prow.k8s.io
+SPF records are published in DNS as TXT records.
+
+The TXT records found for your domain are:
+
+
+Checking to see if there is a valid SPF record.
+
+No valid SPF record found of either type TXT or type SPF.
+
+Remediation :
+
+Replace ~all with -all to prevent fake email.
+
+## Impact
+
+An attacker would send a Fake email. The results can be more dangerous. Email spoofing is a tactic used in phishing and spam campaigns because people are more likely to open an email when they think it has been sent by a legitimate source. The goal of email spoofing is to get recipients to open, and possibly even respond to, a solicitation

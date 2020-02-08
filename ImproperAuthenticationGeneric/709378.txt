@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/709378
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/saqib_arif_mohummadi
+ReportedTo:OWOX, Inc.(owox)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:08.11.2019 13:12:23
+
+Summary:
+
+Reproduction:
+
+step no 1:Open URL:https://www.owox.com/products/ or open your user account 
+
+step no 2: copy URL or paste another tab
+
+step no 3:Go back again first tab or logout your account
+
+step no 4: And check the copied URL section is working properly 
+
+Reference From :#244875
+Reference From :#263873
+Reference From :#249798
+
+Hope you fix this soon ;)
+
+Best Regards,
+SAQIB_ARIF
+
+## Impact
+
+An attacker can get the user's session cookies by using Session Spoofer, Cookie Staler, etc. and thus, can get access to the user account.
+
+Perform action:
+Changes profile
+Delete account

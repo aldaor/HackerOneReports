@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/685007
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/alishah
+ReportedTo:Imgur(imgur)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:03.12.2019 15:30:01
+
+Summary:
+
+###Vulnerability:
+Password Reset Link not expiring after changing the email
+
+###Proof Of Concept:
+
+1.Send the password reset link to your email.
+2.Don`t open the password link just copy it and paste into any editor.
+3.Open your account.
+4.Go to your account settings.
+5.Under account, you will see Account Overview.
+6.Go to the Email and password Option and change the email and verify it.
+7.After changing the email go to your password reset link which you copied.
+8.Change your password.
+
+
+BooM password Changed.
+
+#####Thanks
+
+## Impact
+
+The attacker can still change the password if victim thinks his/her account is compromised and decided to change his/her email.

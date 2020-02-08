@@ -1,0 +1,39 @@
+ReportLink:https://hackerone.com/reports/504600
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/the_arch_angel
+ReportedTo:Augur(augurproject)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:26.03.2019 20:49:13
+
+Summary:
+
+**Summary:**
+
+The bucket `nasacso` which is used in your `augur-app` repo README is publicly write-able
+
+**Description:**
+
+Hi team - 
+
+I noticed that in the `augur-app` readme, you pull an image from a bucket called `nasacso`:
+
+{F434871}
+
+This bucket allows for public upload:
+
+{F434872}
+
+If this bucket belongs to you, please restrict write-access to only authorized users.
+
+If this bucket is NOT yours, an attacker is still able to replace the image you reference with a malicious one, which will be served up in your README. In which case, you should source your image from somewhere else.
+
+Best regards,
+@the_arch_angel
+
+## Impact
+
+If this bucket belongs to augur, then an attacker can exfiltrate data and upload malicious data.
+
+If this bucket does not belong augur, then an attacker can replace the image file that the readme is referencing with a malicious file (obviously less severe, but still a minor risk).

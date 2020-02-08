@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/661402
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/zsbappa
+ReportedTo:LifeOmic(lifeomic)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:06.01.2020 16:53:11
+
+Summary:
+# Original Report from @zsbappa
+
+Summary:
+From the signup option I can able to signup differently using google and facebook account where i am using same email address.
+
+Description:
+I have account in facebook and gmail(Google) both. Both account i opened using same email account.When i goes to signup and from google its just sign up and login in the account.
+
+From another browser i clicked signup with facebook, It also signup and goes to login page.
+
+This should be restricted for next time signup.
+
+Steps To Reproduce:
+Create facebook and google account using same email account. And signup from two separated browser from two separated platform(Google and facebook)
+
+Impact:
+If any attacker got user email or facebook access they can misuse the login system
+
+Impact
+Attacker can signup and login system without any validation

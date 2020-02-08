@@ -1,0 +1,212 @@
+ReportLink:https://hackerone.com/reports/745324
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/haxta4ok00
+ReportedTo:HackerOne(security)
+BountyAmount:20000.0
+Severity:high
+State:Closed
+DateOfDisclosure:03.12.2019 17:00:22
+
+Summary:
+# Incident Report | 2019-11-24 Account Takeover via Disclosed Session Cookie
+*Last updated: 2019-11-27*
+
+## Issue Summary
+On November 24, 2019 at 13:08 UTC, HackerOne was notified through the HackerOne Bug Bounty Program by a HackerOne community member (“hacker”) that they had accessed a HackerOne Security Analyst’s HackerOne account. A session cookie was disclosed due to a human error, which led to the hacker being able to access the account. The session cookie was revoked at 15:11 UTC, blocking all unauthorized access to the account.
+
+The technical investigation finished at 21:27 UTC, concluding that there was no malicious intent and that all copies of potentially sensitive information were deleted.
+
+## Timeline
+
+| Date | Time (UTC)| Action |
+|---|---|---|
+| 2019-11-24 | 12:48 | HackerOne Security Analyst’s session cookie was posted on a HackerOne report. |
+| 2019-11-24 | 13:08 | HackerOne received a report through its bug bounty program that the session cookie could be used to access sensitive information. |
+| 2019-11-24 | 15:08 | A HackerOne Security Analyst began triaging the report.  |
+| 2019-11-24 | 15:11 | The session cookie was revoked. |
+| 2019-11-24 | 16:07 | HackerOne’s Incident Response team started an investigation. |
+| 2019-11-24 | 21:27 | HackerOne concluded technical investigation. |
+| 2019-11-25 | 08:49 | Impacted customers were alerted that their information was viewable to the hacker who submitted the vulnerability. |
+| 2019-11-26 | 01:58 | A change was deployed restricting HackerOne employee and HackerOne Security Analyst sessions to only be accessible from the originating IP address. This mitigates similar incidents in the future. |
+
+## Root Cause
+HackerOne triages incoming reports for HackerOne’s own bug bounty program. On November 24, 2019, a Security Analyst tried to reproduce a submission to HackerOne’s program, which failed. The Security Analyst replied to the hacker, accidentally including one of their own valid session cookies.
+
+*Why was a cookie included?*
+When a Security Analyst fails to reproduce a potentially valid security vulnerability, they go back and forth with the hacker to better understand the report. During this dialogue, Security Analysts may include steps they’ve taken in their response to the report, including HTTP requests that they made to reproduce. In this particular case, parts of a cURL command, copied from a browser console, were not removed before posting it to the report, disclosing the session cookie.
+
+*Why was the hacker able to access the account?*
+Session cookies are tied to a particular application, in this case hackerone.com. The application won’t block access when a session cookie gets reused in another location. This was a known risk. As many of HackerOne’s users work from mobile connections and through proxies, blocking access would degrade the user experience for those users. Due to the entropy of session cookies and in-depth defenses such as HackerOne’s strict [Content Security Policy](https://en.wikipedia.org/wiki/Content_Security_Policy), HackerOne had not prioritized any additional defenses that limit a session cookie’s ability to be used in a separate browser.
+
+*Why does a session cookie grant access to reports?*
+HackerOne offers a number of additional tools on the platform for Security Analysts to work through security reports. In a normal situation, the Security Analysts go through multi-factor Single Sign-On (SSO) to obtain a valid session cookie for their work. Because a live session cookie was obtained, all platform features were available, which therefore granted access to a number of customers’ reports. This was limited to the customer programs that this particular Security Analyst supports.
+
+*Why were reports exposed for programs that don’t use HackerOne Triage?*
+HackerOne offers an optional service called [Human-Augmented Signal](https://docs.hackerone.com/programs/human-augmented-signal.html) (HAS). HackerOne Security Analysts have access to a separate HAS Inbox on their account where reports can be inspected before they’re forwarded to the customer. A number of reports from this particular Inbox were accessed.
+
+*Why did it take two hours to notice the report?*
+HackerOne aims to reply within 24 hours to any submission, including over the weekend. For high and critical severity vulnerabilities, HackerOne tries to respond within a couple of hours. The report to HackerOne’s bug bounty program was submitted on Sunday morning at 05:00am PST (where the majority of HackerOne’s security team resides). For critical submissions, HackerOne’s security team automatically receives a notification on Slack. This works during business hours but is unreliable over the weekend. Security Analysts who work over the weekend noticed the report two hours after the submission, after which they immediately followed Incident Response procedures.
+
+## Resolution and Recovery
+
+The session cookie was revoked by HackerOne on November 24, 2019 at 15:11 UTC, two hours after it was shared, three minutes after the report was opened for triage. Revoking the session cookie rendered it useless to anyone using it. The subsequent investigation focused on affected customers, vulnerability data, intent, communication, and preventative measures, which concluded on November 26, 2019.
+
+HackerOne audited existing comments to see if other session cookies were leaked in the past. This did not yield any results.
+
+The severity of the report was determined to be high based on HackerOne’s environmental score for the selected asset and CVSS 3.0 base metrics (*CVSS:3.0/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:H/CR:H/IR:H/AR:H*). The minimum bounty award for a high severity vulnerability (based on CVSS) on hackerone.com is currently set to $7,500. A $7,500 reward for disclosing this to HackerOne would mean that HackerOne would award the same amount regardless of which user’s account was compromised. The team looked into the amount of sensitive information that could have been accessed by the account and took that under advisement when deciding on the bounty amount. This led to the decision to treat the submission as a critical vulnerability and award a $20,000 bounty.
+
+## Vulnerability Impact on Data
+
+Sensitive information of multiple objects was exposed. During the timeframe the hacker had access, three different features were used to access sensitive information. By default, all inboxes only download the minimal amount of data, such as title, state, severity, and assignee, so the user can view the user interface. Vulnerability information is only disclosed when the user selects a report from the user interface.
+
+In an effort to simplify what data was accessed, HackerOne mapped the access of features to the information disclosed as follows:
+
+ - If the hacker accessed their report via HAS Inbox, Triage Inbox, or Inbox features, the *report titles and limited metadata were viewable*
+ - If the hacker used the Report View feature, the *report contents were viewable*
+
+Below is an overview of the features and the data that was exposed in each of them. 
+
+### Human-Augmented Signal (HAS) Inbox
+
+This Inbox is used by a number of Security Analysts to block or forward submissions that are flagged by HackerOne’s backend of having a high-likelihood being noise. When the hacker accessed the page, the default view loaded up to 25 reports to show the user interface. Reports are sorted by oldest report first. The following information was loaded and displayed:
+
+| Information | Note |
+|---|---|
+| latest_activity_at | ISO 8601 formatted date/time when the last activity (internal or external) was posted to the report. |
+| created_at | ISO 8601 formatted date/time when the report was submitted.|
+| title | The title of the report. |
+| state | Indicates whether the report is open or closed.|
+| substate | Indicates the report’s state (new, triaged, needs-more-info, resolved, informative, spam, not-applicable, duplicate). |
+| assignee (group name, username) | The group’s name or user’s username who is currently assigned to the report. |
+|reporter (username) | The reporter’s username.|
+| program (handle, name) | The program’s handle and name the report was submitted to. |
+
+### Triage Inbox
+
+This is the Security Analyst’s main Inbox to interact with reports. When the hacker accessed the page, the default view loaded up to 100 reports to show the user interface. Reports are sorted by oldest report first. The following information was loaded and displayed:
+
+| Information | Note |
+|---|---|
+|title| The title of the report.|
+|substate|Indicates the report’s state (new, triaged, needs-more-info, resolved, informative, spam, not-applicable, duplicate).|
+| assignee (group name, username) | The group’s name or user’s username who is currently assigned to the report.|
+|triage blockers (reasons, blocked by) | An object that contains the reason why a report is currently blocked on something other than the Security Analysts. |
+| program (handle, triage notes) | The program’s handle and name the report was submitted to.|
+
+### Inbox
+
+This is the main Inbox hackers and customers use to interact with reports they’ve submitted and received. When the hacker accessed the page, the default view loaded up to 25 reports to show the user interface. Reports are sorted depending on the view that was selected. The following information was loaded and displayed:
+
+| Information | Note |
+|---|---|
+| latest_activity_at | ISO 8601 formatted date/time when the last activity (internal or external) was posted to the report.|
+|created_at | ISO 8601 formatted date/time when the report was submitted. |
+| title | The title of the report.|
+| state | Indicates whether the report is open or closed. |
+|substate | Indicates the report’s state (new, triaged, needs-more-info, resolved, informative, spam, not-applicable, duplicate).|
+|reference | Any issue tracker reference that was set on the report.|
+|reference_url|The full URL to any issue tracker’s task when set.|
+|severity_rating|Indicates the report’s severity (null, none, low, medium, high, critical).|
+|assignee (group name, username)|The group’s name or user’s username who is currently assigned to the report.|
+|reporter (username)|The reporter’s username.|
+|program (handle, name)|The program’s handle and name the report was submitted to.|
+|custom_field_attributes (name)|All custom field attributes that reports can be filtered on.|
+|assets (identifier)|All asset identifiers that reports can be filtered on.|
+|groups (name)|All team member groups associated with the program the report was submitted to.|
+|members (name, username)|All team members associated with the program the report was submitted to.|
+
+### Report View
+
+Reports are viewable in all of the inboxes in order to help customers, security analysts, and hackers communicate over a vulnerability. Only a single report can be viewed in the same window at any given time. When the hacker viewed the report, the following information was loaded and displayed:
+
+| Information | Note |
+|---|---|
+| vulnerability_information|The initial description of the vulnerability provided by the reporter.|
+|comments (text, internal and to the reporter)|The comments between the reporter and the security team as well as internal comments.|
+|latest_activity_at|ISO 8601 formatted date/time when the last activity (internal or external) was posted to the report.|
+|created_at|ISO 8601 formatted date/time when the report was submitted.|
+|title|The title of the report.|
+|state|Indicates whether the report is open or closed.|
+|substate|Indicates the report’s state (new, triaged, needs-more-info, resolved, informative, spam, not-applicable, duplicate).|
+|reference|Any issue tracker reference that was set on the report.|
+|reference_url|The full URL to any issue tracker’s task when set.|
+|severity_rating|Indicates the report’s severity (null, none, low, medium, high, critical).|
+|assignee (group name, username)|The group’s name or user’s username who is currently assigned to the report.|
+|reporter (username)|The reporter’s username.|
+|program (handle, name)|The program’s handle and name the report was submitted to.|
+|custom_field_attributes (name)|All custom field attributes that reports can be filtered on.|
+|assets (identifier)|All asset identifiers that reports can be filtered on.|
+|groups (name)|All team member groups associated with the program the report was submitted to.|
+|members (name, username)|All team members associated with the program the report was submitted to.|
+|weakness|The category of vulnerability.|
+
+**Data access was limited to the access the HackerOne Security Analyst had, which does not cover HackerOne’s entire customer base. If your data was accessed during this incident, you have received a separate notification from HackerOne.**
+
+## Preventative Measures
+
+As part of HackerOne Incident Response process, HackerOne is conducting an internal review and analysis of the incident. HackerOne is taking the following actions to address the underlying causes of issues and to help prevent future occurrence:
+
+### Short-term (completed)
+
+These are the short term actions identified. All items have already been addressed and deployed to hackerone.com.
+
+#### Bind Sessions to IP Addresses
+The session cookie is able to be reused on different devices. A short term mitigation of this vulnerability is to bind the user’s session to the IP address used at initial sign-in. If an attempt is made to utilize the session from a different IP address, the session is terminated.
+
+This change was rolled out for HackerOne employees (including all HackerOne Security Analysts) on November 25, 2019.
+
+#### Block Sessions from Restricted Countries
+HackerOne restricts its employees from accessing resources from specific countries. To mitigate account takeovers, the user sessions are prevented from being used from specific restricted list of countries.
+
+This change was rolled out for HackerOne employees (including all HackerOne Security Analysts) on November 26, 2019.
+
+#### Page on Critical Reports
+In order to further reduce the time to notify the security team, the team has decided to move from a Slack notification to paging the on-call security person when a critical report gets submitted to the bug bounty program.
+
+This change was implemented on November 25, 2019.
+
+#### Update Program Policy regarding Sensitive Information Access
+HackerOne has updated their bug bounty program policy to include specific actions on when a hacker may have access to a HackerOne account, sensitive keys, or sensitive data.
+
+This change was [implemented on November 26, 2019](https://hackerone.com/security/policy_versions?change=3624684).
+
+### Mid-term (next three months)
+
+#### Detect & Redact Sensitive Data in Comments
+When a user is making a comment, detect possible sensitive information, such as session cookies and authentication tokens, and block submission of the comment until confirmation. Additionally, offer the user the ability to redact the sensitive from the comment automatically.
+
+This change was implemented on December 2, 2019.
+
+#### Add Additional Logging Context
+
+While HackerOne was able to determine which reports were access based on the executed GraphQL queries, HackerOne is planning to improve their logging of information around data access. This will support Incident Response capabilities and allow the incident response to be performed faster.
+
+#### Bind Sessions to Devices
+
+A limitation of binding to IPs is that they change for legitimate reasons and will unauthenticate the user, creating a poor user experience. Additionally, IP addresses do not uniquely identify a user (such as with NAT), allowing malicious users to utilize the session, even if it is IP bound. To improve usability and security, HackerOne will investigate binding the session to a specific device that the user is using. Sessions bound to the device will only be usable on that device and using the session elsewhere will terminate the session.
+
+#### Improve Education for Employees
+
+In addition to HackerOne’s current employee education programs, HackerOne will expand the security training for those who handle vulnerability reports. The training will include additional details on how to share technical reproductions and specifically avoid sharing keys, tokens, and session information.
+
+### Long-term (next twelve months)
+
+#### Overhaul Security Analyst Permission Model
+The HackerOne Security Analysts have access to HackerOne customers’ sensitive data in order to triage incoming vulnerability reports. HackerOne has identified that HackerOne can restrict security analyst access in programs, as well as overhaul the allocation of security analysts to a more restrictive list of programs to keep these users to the least privilege required. 
+
+#### Improve Education for Hackers
+
+As the community grows, HackerOne needs to ensure that HackerOne is reinforcing the best practices in bug bounty hunting. The HackerOne Community team will look to increase hacker education around delivering proof of critical severity vulnerabilities in case sensitive information has been accessed by the hacker.
+
+**Summary:**
+You are disclose for me you session
+**Description:**
+you are gevi me your session on last report
+I am can use your session(sorry)
+███
+████████
+█████████
+
+## Impact
+
+HackerOneStaff Access, i can read all reports @security and more program

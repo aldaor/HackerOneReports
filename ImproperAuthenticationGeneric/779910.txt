@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/779910
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/003random
+ReportedTo:h1-415-ctf(h1-415-ctf)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:03.02.2020 21:30:09
+
+Summary:
+
+1. add { or } chars behind Joberts email, which leaks on the login page
+2. register a new account using that email
+3. sign out and use the recover feature with the just generated qr code. this will get you into Joberts account
+3. head to /support and submit a blind XSS payload which extracts the document.location
+4. submit the form on this feedback review page
+5. change the user id to your own account you created at step 2
+6. place an XSS payload in the user's name field and generate a pdf. payload: 
+<iframe src="http://localhost:9222/json/list" style="width: 100%; height: 1000px"></iframe>
+7. view the pdf. (chromium debugger port)
+8. copy the id in the URL which contains "secret"
+9. profit
+
+thanks for reading this far!! I hope you like my writeup, and may I be the winner.
+lmao, I'm kidding, I'm only submitting this because it took me like 40 hours to finish this CTF.
+(from which a lot consisted of frustration and depression because of the 80% downtime or the core functions not working :( )
+
+Not doing an actual write-up since I got some hints from 2 friends of mine, so I didn't 100% do this on my own.
+may Bayo and Jllis be the winners.
+BBAC represent :muscle:
+
+
+Flag: https://h1-415.h1ctf.com/documents/1327fe21a19e8f7fefc83bbbaaace3ccb329eb9e4cd2df66ef6e0cf84dd7401e
+
+## Impact
+
+Big impact. Bounty pls

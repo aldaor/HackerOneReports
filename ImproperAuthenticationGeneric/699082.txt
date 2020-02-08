@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/699082
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/dhakal_ananda
+ReportedTo:Razer(razer)
+BountyAmount:1000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:05.12.2019 6:30:52
+
+Summary:
+The tester was able to determine that the OTP token used by Razer ID was not being properly verified against the specific user which would allow an adversary to replay their own OTP token against a different user.  If the adversary also had been able to obtain the user's login and password through other means, this would have allowed access to that user's Razer ID account.

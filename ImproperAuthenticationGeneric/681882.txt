@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/681882
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/caesareg
+ReportedTo:ZEIT(zeit)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:23.11.2019 1:34:39
+
+Summary:
+
+step no.1:
+open : https://zeit.co/teams/invite/ `{XXXX}`
+and this is a code `"CzKyCgbB"` of joining in  a team called  `"maxhacker"`
+if we generate a list consists of  `8`  capital and small letters * with any generate tools *
+
+{F565462}
+
+knowing that the invitation code  of any team is constant
+-------------------------------------------------------
+
+if i guess the invitation codes that exists in the big list instead of `{XXXX}` 
+by using any tool loke burpsuite inruder
+
+{F565463}
+
+ step no.2 :  
+
+if the invitation code is valid then the status will appear `"302"`
+if the invitation code is invalid then the status will appear `"404"`
+
+{F565464}
+
+## Impact
+
+an unauthorized admission to any team in zeit.co

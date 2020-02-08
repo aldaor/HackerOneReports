@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/764335
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/4m4n
+ReportedTo:Infogram(infogram)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:07.02.2020 18:44:36
+
+Summary:
+
+Please see the report https://hackerone.com/reports/280389. There it was mentioned that it is resolved but the fact is that I tried with 5000 and it flooded my email. I think the issue is not solved. Please look into this.
+{F668239}
+
+## Impact
+
+Please fix as rate limit on the password reset functionality should be present to avoid email flooding.

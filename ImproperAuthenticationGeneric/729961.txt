@@ -1,0 +1,54 @@
+ReportLink:https://hackerone.com/reports/729961
+WeaknessName:Improper Authentication - Generic
+Reporter:https://hackerone.com/roottusk
+ReportedTo:Genasys Technologies(genasys)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:28.11.2019 11:37:17
+
+Summary:
+
+Summary:
+If an attacker gets access to the victim's username or know the email used for logging in to the application.He can bypass the login by enumeration og One Time Password.
+
+Steps To Reproduce:
+1.Go to https://staging.genasystech.co.uk/d2c/
+2.Create an account ,Enter the relevant pin for activation of the account.
+3.Now for logging in to the account check the option of "Sign in with One Time Pin"
+
+It sends request to /dc2-api
+
+Observe the request in Burp Suite it is as follows :
+
+```
+POST /d2c-api/v1/account/login/token HTTP/1.1
+Host: staging.genasystech.co.uk
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101 Firefox/69.0
+Accept: application/json
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: https://staging.genasystech.co.uk/d2c/
+Content-Type: application/json-patch+json
+Content-Length: 76
+Connection: close
+
+{"useOtp":true,"email":"<email>","password":"","token":"376315"}
+```
+
+and the respone is 204 No Content to show
+
+4.Send this request to Intruder and Run a Iteration of the number (Since Rate Limit is not there ,We get a 200 OK Response when the OTP is correct) 
+5.Use the same OTP for Login.
+
+Supporting Material/References:
+Screenshot of Intruder is attached.
+
+
+References:
+
+https://cwe.mitre.org/data/definitions/287.html
+
+## Impact
+
+An attacker could login to any user he wants as long as he knows the email of the victim.Which is basically owning all accounts .
