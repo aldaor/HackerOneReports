@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/673384
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/ayan_saha
+ReportedTo:TTS Bug Bounty(tts)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:19.08.2019 17:02:17
+
+Summary:
+
+Wordpress that have xmlrpc.php enabled for pingbacks, trackbacks, etc. can be made as a part of a huge botnet causing a major DDOS.  this website www.data.gov has the xmlrpc.php file enabled.
+
+## Impact
+
+This can be automated from multiple hosts and be used to cause a mass DDOS attack on the victim.

@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/507172
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/blackdex
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:26.07.2019 7:47:28
+
+Summary:
+
+## Prepare
+1. Enable "Device credentials" lock via the settings. (I'm using fingerprint in my case)
+2. Test if this works by closing the app and open it again.
+3.  If this works close the app again, do a force close to make sure the application is closed.
+
+## The next steps need to be done quickly right after each other.
+1. Make sure you are able to quickly start the Nextcloud app, i put mine on the homescreen.
+2. Now quickly open the app and press backspace and open the app and press backspace, do this a few times right after each other until you see a flash of the folder list.
+3. After you have seen this folder tree flash, you can start the application without any credentials.
+
+Note: This only happens when doing this fast, else this won't work.
+I added a adb logcat output of the nextcloud process i started during my test.
+
+## Impact
+
+The impact is that someone without the correct credentials but an unlocked phone is still able to login to the Nextcloud app and see all the files of the user.

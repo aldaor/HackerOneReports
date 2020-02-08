@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/512973
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/ruvlol
+ReportedTo:Mail.ru(mailru)
+BountyAmount:6000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:18.07.2019 9:33:11
+
+Summary:
+Externally accessible Selenoid instance in Mail.Ru Games network was vulnerable to LFR and SSRF via URI injection.

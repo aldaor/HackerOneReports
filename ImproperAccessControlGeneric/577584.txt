@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/577584
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/njbooher
+ReportedTo:Valve(valve)
+BountyAmount:5000.0
+Severity:high
+State:Closed
+DateOfDisclosure:23.05.2019 22:17:37
+
+Summary:
+ISteamAssets APIs would check that the key parameter used was a partner key with access to the appid specified, but then would ignore the passed in appid and would operate on app 753 regardless. This allowed anyone with a partner key to make changes to Steam economy items, like trading cards, and also could be used to reverse wallet fund spending on the Steam Community Market.

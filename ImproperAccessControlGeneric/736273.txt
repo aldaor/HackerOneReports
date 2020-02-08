@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/736273
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/st00rm
+ReportedTo:Razer(razer)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:16.01.2020 14:03:23
+
+Summary:
+The rsa3027.razersynapse.com server suffered a SQLi vulnerability which allowed write access to the server in the context of Cortex Deals.  This allowed access to game key information from giveaways and emails of users who claimed these giveaways.
+
+This vulnerability was reported 11/12 and closed by 11/19.
+
+We thank the tester for bring this to our attention.

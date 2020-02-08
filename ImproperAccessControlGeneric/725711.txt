@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/725711
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/bounty-
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:09.01.2020 12:04:47
+
+Summary:
+Access to static page within media-poll.mail.ru admin interface was not restricted. Access to static page does not grant attacker the ability to perform any actions or access any sensitive information.
+

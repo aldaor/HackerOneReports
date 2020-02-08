@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/700051
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/namunah
+ReportedTo:Razer(razer)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:12.01.2020 8:57:01
+
+Summary:
+
+Found a s3 bucket that belongs to razer and properly not configured.
+
+#bucket name:- http://rzimageupload.s3.amazonaws.com/
+#Bucket Source:- https://api.razer.com
+
+#Steps To reproduce:-
+1. Go to https://api.razer.com and create a project .
+2. In the project icon select an image from your computer.
+3. Upload the image and monitor the request and response .
+4. In response you will get the bucket like this:-
+
+{"url":"https://rzimageupload.s3.amazonaws.com/ef1492c02137470d9b09aa9f2012dde67dd8e8fb14b5f75bsdfsdf224bc1b41f1f1.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=****&X-Amz-Date=20190922T190427Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=****"}
+
+#What Can I Do:- 
+1. I can see every files present in the bucket .  ( F589226 )
+2. I can upload any files .  ( F589225 )
+3. I can delete any file .
+
+#NOTE:-
+I have only uploaded 2 files => l20173074.txt  and namunahl20173074.txt
+I have deleted l20173074.txt file  but namunahl20173074.txt still present for poc purpose. You can check this. ( F589224 ) , ( F589227 )
+
+## Impact
+
+#

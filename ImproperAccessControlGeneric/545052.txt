@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/545052
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/ronb1996
+ReportedTo:curl(curl)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:25.05.2019 21:13:37
+
+Summary:
+
+Hey Curl,
+
+Github wiki on the following project,
+
+https://github.com/curl/curl/wiki
+
+can be edited by any logged in user in the system. This poses security and reputation risk for the company.
+As your policy i doesnot edited any of the wiki :-)
+
+
+Regards,
+@MSRC29
+
+## Impact
+
+As wikis listed above can be edited by any person on the internet, a malicious actor can accurately craft a message or a note which would lead a user to download a malicious component in a natural way.
+
+The user would surely trust the code (of course if he trusts the company itself), so he will extrapolate this trust to the wiki and consider it being safe enough to follow the instructions and downloading himself a malware.

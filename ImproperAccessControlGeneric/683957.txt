@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/683957
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/elmahdi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:4000.0
+Severity:high
+State:Closed
+DateOfDisclosure:23.10.2019 16:01:33
+
+Summary:
+Combination of improper access control and unrestricted files upload in non-production service led to RCE possibility. 
+

@@ -1,0 +1,49 @@
+ReportLink:https://hackerone.com/reports/535436
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/fisher
+ReportedTo:Coda(coda_bbp)
+BountyAmount:800.0
+Severity:high
+State:Closed
+DateOfDisclosure:04.01.2020 0:48:46
+
+Summary:
+# Summary
+
+@fisher discovered a CSRF-related vulnerability in Coda docs by which an attacked could craft a convincing page that would make modifications to a specific document without the victim knowing. This is due to the inherent nature of Websockets not being secure by default. Although a fully-working proof of concept was not provided, the Coda security team swiftly patched the vulnerability and rewarded a bounty for the creative attack.
+
+# Original Report from Researcher
+
+## Summary:
+
+It was discovered that when opening a WebSocket channel the Origin header is not checked by the server, leaving the application exposed to a Cross-Site Websocket Hijacking attack (CSWSH).
+
+## Background
+
+The problem was first dubbed by Christian Schneider in his blog. Because WebSockets are not restricted by the browser's Same Origin Policy (SOP), if no defensive mechanisms are in place, an attacker can initiate a WebSocket communication from a malicious page targeting the vulnerable wss endpoint - ending up with the ability to communicate two-way with the server.
+
+The most common defensive mechanisms are:
+
+- Checking the Origin header in the first/handshake request (where the Cookie is sent), before issuing a 101 Switching Protocols
+- Sending a CSRF token in every WS message
+
+
+## Steps To Reproduce:
+
+We can check this very easily by using a custom extension e.g. Simple Websocket Client
+
+1. After installing an extension like the above, login in https://coda.io and open or create a new document while proxying requests through Burp
+2. Burp has a WebSocket history under Proxy, next to HTTP History. Select any of the URL's used, e.g: https://coda.io/documentsCollab/<docId>/collab/?params=PARAMS&connectionId=CONNECTIONID&EIO=3&transport=websocket
+3. Open the extension and use this URL(substitute https for wss) and press open:Immediately we connect and receive a message from the server, which confirms the lack of Origin check.
+Although the URL might first look like undecipherable to an attacker, the params parameter just holds a base64 value of the document ID:
+{"documentId":"DOCID"}
+
+Since the document ID is sufficiently long, an attack scenario is:
+
+- User (admin) invites attacker to collaborate on a document (view only)
+- Attacker now knows the document ID. He prepares a CSWSH payload and embeds it in a malicious webpage and sends the link to the victim
+- Victim opens the malicious page and is Cross Site Websocket Hijacked. The payload could e.g. delete or alter the contents of the document, introducing fake content
+
+## Impact
+
+The most serious impact scenario is the attacker forcing the victim to do any operation available within the WebSockets communication (basically a CSRF). He can also read sensitive information (since the WS communication is full duplex).

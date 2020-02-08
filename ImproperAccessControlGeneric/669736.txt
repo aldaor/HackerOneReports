@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/669736
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/kishoretrommer
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:11.12.2019 20:05:14
+
+Summary:
+A logic error allowed creating chats from ads that were still pending moderation or were rejected.

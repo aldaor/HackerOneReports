@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/665791
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/l33tcyberops
+ReportedTo:Mail.ru(mailru)
+BountyAmount:300.0
+Severity:medium
+State:Closed
+DateOfDisclosure:25.09.2019 4:10:22
+
+Summary:
+Consul interface was available from outside on one of my.com subdomains.

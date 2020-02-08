@@ -1,0 +1,93 @@
+ReportLink:https://hackerone.com/reports/761726
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/aaron_costello
+ReportedTo:Keybase(keybase)
+BountyAmount:1500.0
+Severity:low
+State:Closed
+DateOfDisclosure:24.12.2019 16:42:33
+
+Summary:
+
+### Summary
+
+An attacker has the ability to extract sensitive information from user's accounts, due to a CORS issue. On a minor note, this also is a cross-site leak as we can fingerprint what exact keybase user has accessed the attacker's website. 
+
+Information disclosed:
+
+```
+"passphrase_generation":4,"random_pw":false},
+"invitation_stats":{"available":60,"used":40,"power":100,"open":0},
+"profile":"emails":{"emails":[{"email":"x86sec@yahoo.ie","is_primary":1,"is_verified":1,"when_verified":"2016-03-08T22:44:39.000Z","visibility":1,"last_verify_email_date":null}],"primary":{"email":"x86sec@yahoo.ie","is_primary":1,"is_verified":1,"when_verified":"2016-03-08T22:44:39.000Z","visibility":1,"last_verify_email_date":null}},"billing_and_quotas":{"plan":{"plan_id":"b40ff8cf58afb4fa7e8dd4dc2c5f651a","plan_name":"BASIC","price_pennies":0,"gigabytes":250,"num_groups":0,"folders_with_writes":500,"billing_status":0,"test_mode":null},"usage","lks_server_half":"a42d3be100454cc98df58d90acd402af57e40119d6a02580edc47128454a47dc","passphrase_generation":4,"last_used_time":1566400369},"private_keys":{"all":{}}
+```
+
+I tested this on my own account, and while there is some serious information disclosure here, I am most concerned by "private_keys" field. I do not believe I have a private key stored on keybase.io however if it turns out that a private key is disclosed here for people that do, I believe this is near critical impact.
+
+### Issue Overview
+
+Users can interact with the following endpoint: https://keybase.io/_/api/1.0/user/lookup.json?username={username} to find information about other users such as public key etc. However, if they are signed in and lookup their own username, they are given some private data on themselves which is shown in the summary section (Email, stats, etc et al).
+
+The CORS policy implemented here looks like this:
+
+```
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET
+Access-Control-Allow-Headers: Content-Type, Authorization, Content-Length, X-Requested-With
+Access-Control-Allow-Credentials: false
+```
+
+What we can do here:
+1. Use JS cross origin requests to read from the response, from any origin
+2. We cannot use credentials however, which means that even if we set up a payload to steal data from a victim that navigates to it, the sensitive data in the summary isn't available since they are technically 'not signed in' when the request is made.
+
+However, the only authentication used in this request is a session cookie which is what leads to this issue. An attacker can force the javascript fetch API to fetch an authenticated response from the browser cache, meaning we can access this sensitive data since the cache will include the cookies!
+
+### PoC
+
+Prior to this, it's important to know that an attacker can easily host a page that makes hundreds of these requests with different usernames in order to fingerprint (and then disclose sensitive info) the keybase user, but for simplicity it will use one username (yours) .
+
+Also, this issue was reproduced on Chrome on Linux. Windows should work also. I am unsure of other browsers however. Please monitor all requests with burp suite.
+
+1) Create the following payload locally (You don't have to host it anywhere for the sake of the PoC, since the server accepts a null origin). Replace the parameter value with your username and remove the braces.
+
+```
+<html>
+<script>  
+var url = "https://keybase.io/_/api/1.0/user/lookup.json?username={YOUR_USERNAME}";  
+fetch(url, {    
+	method: 'GET',    
+	cache: 'force-cache'
+	});
+</script>
+</html>
+```
+
+2) Login to your keybase account and perform some functionality such as encrypting a message to yourself etc. This will get cause the browser to cache this search endpoint
+
+3)  Notice in burp suite, the authenticated request with cookies to https://keybase.io/_/api/1.0/user/lookup.json?username={YOUR_USERNAME} after performing the previous step. It will contain the sensitive information as mentioned in the summary. Now, remove those cookies in Burp's repeater and re-submit. You will notice this sensitive information is gone, since you're no longer authenticated to your own account. The content-length is reduced in the unauthenticated request. This is shown below.
+
+Authenticated (My account is nopesled):
+
+{F663852}
+
+Unauthenticated:
+
+{F663854}
+
+
+4) Now, simulate navigating to an attackers payload by opening the fetch.html file in Chrome with the developer console open (An attacker will log the response, this is for payload simplicity that I'm instructing use of the dev-console). Navigate to the network tab of the developer console and you will see the that the sensitive information such as email, stats, and such was disclosed to the attacker's page (So he can steal it by logging it). You will notice that the request was fetched as 'authenticated' via abusing the disk cache (Network tab -> Headers -> General info -> "Status Code 200 OK (from disk cache)"). This is demonstrated in the below screenshots.
+
+{F663846}
+{F663847}
+
+For further proof, modify the fetch.html payload by removing the 'cache: force-cache' line, and reload the page. You will see that it will not request from the cache but from the server, resulting in the request being performed unauthenticated and disclosing no sensitive info.
+
+### Wrap Up and Remediation
+
+An attacker can simulate an 'authenticated' request by forcing the browser to retrieve the response from the cache, stealing sensitive information and bypassing the fact that requests with credentials should be blocked. It also fingerprints which keybase user is accessing the attacker's website through what is known as an [XS Leak](https://portswigger.net/daily-swig/new-xs-leak-techniques-reveal-fresh-ways-to-expose-user-information)
+
+In order to prevent this issue of browser caching, I suggest the implementation of the Cache-control: no-store header in responses to instruct browsers not to cache it.
+
+## Impact
+
+Attacker can steal sensitive information from (and identify) keybase users through a CORS bypass + XS Leak

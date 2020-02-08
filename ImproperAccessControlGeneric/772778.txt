@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/772778
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/0xelkomy
+ReportedTo:8x8(8x8)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:23.01.2020 1:02:40
+
+Summary:
+Jitsi was running a default WordPress site that had not yet been hardened to prevent user enumeration via the API.

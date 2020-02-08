@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/777099
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/jllis
+ReportedTo:h1-415-ctf(h1-415-ctf)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:03.02.2020 20:44:21
+
+Summary:
+
+Hey guys,
+
+The flag is: `h1ctf{y3s_1m_c0sm1c_n0w}`
+
+I'll submit a well written writeup later today or tomorrow. I now have a lot of work to catch up thanks to this devilish ctf hehehe.
+
+Thanks Ben and the rest of the team for this awesome challenge.
+
+## Impact
+
+Getting the flag

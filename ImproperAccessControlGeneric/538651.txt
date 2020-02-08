@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/538651
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/drstache
+ReportedTo:Ed(ed)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:15.04.2019 15:38:29
+
+Summary:
+
+Hi,
+
+# Security-template
+I realized that your [security-template project](https://github.com/EdOverflow/security-template) domain name seems to have expired, http://securitytemplate.site doesn't serve your content.
+
+# Penultimate
+I also found that it's possible to takeover the PenultimateIO's Twitter account. It seems that you have deleted the account, but it is possible to recreate it, as you can see on the screenshot ([https://twitter.com/settings/account](https://twitter.com/settings/account)):
+
+{F469141}
+{F469142}
+
+I didn't change my username, but knowing that Twitter indicates it as available, I consider it achievable.
+
+There are several references to the penultimateIO Twitter account, on your Twitter and on the Penultimate Github. 
+
+- https://twitter.com/EdOverflow/status/965559093476954112
+- https://github.com/Penultimate/challenges/wiki
+- https://github.com/Penultimate/challenges/blob/master/XSS/000000-xss.html
+- https://github.com/Penultimate/challenges/blob/master/XSS/000001-xss.html
+
+Your Twitter and the Penultimate's Github are out of scope, as well as social engineering, but due to the ease of implementation I prefer to report it.
+
+
+
+Have a nice day,
+Florian
+
+## Impact
+
+This can be used by an attacker to conduct social enginerring attacks.

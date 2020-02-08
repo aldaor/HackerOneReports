@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/736283
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/kickino
+ReportedTo:MobiSystems Ltd.(mobisystems_ltd)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:20.01.2020 11:47:59
+
+Summary:
+
+## Summary:
+publicly available Firebase Database (msdict-dev.firebaseio.com)
+
+## Steps To Reproduce:
+Version: `Oxford Dictionary of English Free_v11.1.511`
+in `res/values/strings.xml`
+```
+<string name="firebase_database_url">https://msdict-dev.firebaseio.com</string>
+```
+
+Accessing your Firebase Database via https://msdict-dev.firebaseio.com/.json returns
+`null` instead of the usual `{ "error" : "Permission denied" }`
+
+## Supporting Material/References:
+
+https://medium.com/@danangtriatmaja/firebase-database-takover-b7929bbb62e1 describes how a firebase database can be taken over with similar conditions.
+
+## Impact
+
+```The above application doesn’t need any acces_token to insert data to the firebase database it’s completely open and anybody can access it without any access credentials.```
+
+There are guidelines available by Firebase to resolve the insecurities and misconfiguration, please follow this link:
+https://firebase.google.com/docs/database/security/resolve-insecurities

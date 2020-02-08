@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/667740
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/chackmate
+ReportedTo:Grammarly(grammarly)
+BountyAmount:750.0
+Severity:low
+State:Closed
+DateOfDisclosure:15.08.2019 17:10:49
+
+Summary:
+@chackmate identified a vulnerability that allows a user to connect arbitrary phone numbers with their account.
+No users affected.
+

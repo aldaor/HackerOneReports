@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/540698
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/sbakhour
+ReportedTo:TomTom(tomtom)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:01.10.2019 14:43:56
+
+Summary:
+
+Hello,
+
+By default the Nexus Repository Manager has two login users one is admin and the other is anonymous.
+
+The default password for the user "admin" is admin123
+The default password for the user "anonymous" is anonymous
+
+On your Nexus Repository Manager the password for the user admin has been changed but the user anonymous was left with the same default password.
+
+For security reasons, please disable the user anonymous or change its password as soon as possible.
+
+Steps To Reproduce:
+
+  1. Go to https://repo.tomtom.com/
+  2. Click on the "Sign In" button at the top right of the page
+  3. Enter anonymous in the user field 
+  4. Enter anonymous in the password field
+  5. Click on the "Sign In" button
+
+Proof of concept: 
+Kindly check the attached video for proof of concept.
+
+## Impact
+
+Access to the repositories and the ability to change the details (email) for the user anonymous.

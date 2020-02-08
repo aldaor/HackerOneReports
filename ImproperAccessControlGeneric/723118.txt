@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/723118
+WeaknessName:Improper Access Control - Generic
+Reporter:https://hackerone.com/t4kemyh4nd
+ReportedTo:Razer(razer)
+BountyAmount:375.0
+Severity:medium
+State:Closed
+DateOfDisclosure:09.01.2020 3:25:47
+
+Summary:
+
+## Summary:
+
+Hi, the backend on the insider.razer.com website seems to be using XenForo. Some actions on the api.php have been left misconfigured by the developers, which lead to leaking of sensitive information.
+
+## Steps To Reproduce:
+
+1. Go to a random user's profile, say, ttps://insider.razer.com/index.php?members/kajira.714/
+2. Look at all the information that can be accessed publicly.
+3. Now go to https://insider.razer.com/api.php?action=getuserprofile&user_id=714, and as you can see, a lot of user metadata is getting leaked, like the email ID, FB and Twitter ID, RZR_ID, CSRF token etc.
+
+## Impact
+
+Since the endpoint https://insider.razer.com/api.php?action=getuserprofile&user_id=714 has a simple numeric ID for users, attacker can easily brute-force it and by exploiting the IDOR, get sensitive information of all the users on insider.razer.com.
+
+I'm self -closing out report #723035 which is the same bug, as it was also found by me along with a friend.
