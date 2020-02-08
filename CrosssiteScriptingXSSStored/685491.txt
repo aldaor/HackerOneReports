@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/685491
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/foobar7
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:12.12.2019 9:42:51
+
+Summary:
+
+CVSS
+----
+
+Medium 6.4 [CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N](https://www.first.org/cvss/calculator/3.0#CVSS:3.0/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N)
+
+Description
+-----------
+
+The name of a file is echoed without encoding when favoring the file, leading to persistent XSS. 
+
+POC
+---
+
+To place the payload:
+
+- Create a file called `test'"><img src=x onerror=alert(document.location)>.pdf` and upload it. 
+
+To trigger the payload:
+
+- click on ... next to the file followed by "add to favorites". The payload will trigger here.
+
+## Impact
+
+With a successful attack, an attacker can access all data the attacked user has access to, as well as perform arbitrary requests in the name of the attacked user.

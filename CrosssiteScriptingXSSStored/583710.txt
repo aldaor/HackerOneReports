@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/583710
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/rioncool22
+ReportedTo:Imgur(imgur)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:18.07.2019 16:44:48
+
+Summary:
+
+I want to report bug XSS in "ADD IMAGES" 
+
+How To Produce it : 
+1. Login to your Account
+2. Then Add Images With XSS Payload In filename (example : "><img src=x onerror=prompt(document.domain)>.png)
+3. Click on Image that you upload
+4. in the name of picture XSS will fired
+
+## Impact
+
+https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)

@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/538632
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/zee_shan
+ReportedTo:Open-Xchange(open_xchange)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:15.08.2019 8:19:09
+
+Summary:
+Vulnerability Details:
+When replying to a HTML E-Mail with specific payload, that payload could be executed as script code. The user would have to have HTML composing enabled to exploit this vulnerability. This vulnerability could happen as browsers incorrectly "fix" HTML content as demonstrated by @kinugawamasato for Google Search.
+
+Risk:
+Malicious script code can be executed within a users context. This can lead to session hijacking or triggering unwanted actions via the web interface (sending mail, deleting data etc.).
+
+Steps to reproduce:
+1. Create an E-Mail with malicious content and deliver it to the user
+2. Make the user "reply" to the E-Mail
+
+Proof of concept:
+Test
+<noscript><p class="xss">Another XSS!
+<!-- --!
+> <img src=x onerror=alert(document.domain)>
+
+Solution:
+We improved our filter and whitelisting mechanisms to block this kind of code from entering the browsers rendering engine.

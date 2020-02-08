@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/541737
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/sbakhour
+ReportedTo:ZEIT(zeit)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:01.10.2019 14:42:49
+
+Summary:
+
+Hello team,
+
+There is a possibility to have a stored XSS in user profile.
+
+Steps to reproduce:
+
+  1. Go to zeit.co
+  2. Click on "Join for free" at the top right side of the page to go to https://zeit.co/signup
+  3. Select "Continue with GITLAB" (note that you must have your Gitlab account logged in)
+  4. Click on "Authorize" to authorize connecting your Gitlab account.
+  5. You will be asked to enter your Full Name and username
+  6. In the "Full Name" field type this payload <audio src onloadstart=alert(1)>
+  7. In the "Username" field type whatever username of your choice.
+  8. Click on "Continue" then continue again.
+  9. Click on your profile icon at the top right of the page and then select "Edit profile" and the XSS will fire up.
+
+Kindly check the attached video for more details and for proof of concept.
+
+## Impact
+
+XSS can lead to user's Session Hijacking, and if used in conjunction with a social engineering attack it can also lead to disclosure of sensitive data, CSRF attacks and other security vulnerabilities.

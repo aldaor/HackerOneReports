@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/754352
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/md15ev
+ReportedTo:WordPress(wordpress)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:10.12.2019 9:58:14
+
+Summary:
+
+I have identified a WordPress security vulnerability , a Stored XSS vulnerability that affects latest version of WordPress (5.3)
+
+POC:
+1) Login to wordpress website
+2) Make a post with title payload xss like example <script>alert(document.domain);</script>
+3) Publish then open the post, XSS Will trigger
+
+## Impact
+
+Can stealing cookie user

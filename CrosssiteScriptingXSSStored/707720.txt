@@ -1,0 +1,48 @@
+ReportLink:https://hackerone.com/reports/707720
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/poutine_hero
+ReportedTo:Automattic(automattic)
+BountyAmount:350.0
+Severity:medium
+State:Closed
+DateOfDisclosure:21.10.2019 14:58:56
+
+Summary:
+
+## Summary:
+
+The SyntaxHighlighter plugin used in the comments section of *.wordpress.com sites is vulnerable to stored XSS via a crafted payload.
+
+## Platform(s) Affected:
+
+*.wordpress.com
+
+SyntaxHighlighter is also an open source plugin which is affected by this vulnerability:
+
+https://wordpress.org/plugins/syntaxhighlighter/
+
+Automattic is listed as a developer/contributor to this plugin, so I'm hoping that this is the right place to pass along this vulnerability report in order to get a fix implemented within the plugin as well. Please let me know if it is not.
+
+## Proof of Concept:
+
+	[code]javascript://%0dalert%28document.cookie%29[/code]
+
+This creates a link with the `javascript:` pseudo-protocol that can be used to execute arbitrary JavaScript when clicked. The vulnerability is actually with the regular expression used to match and auto-link URLs within the code block:
+
+	/\w+:\/\/[\w-.\/?%&=:@;#]*/g
+
+In the version of SyntaxHighlighter that comes bundled in the open-source plugin, the regex is:
+
+	/&lt;\w+:\/\/[\w-.\/?%&=@:;]*&gt;|\w+:\/\/[\w-.\/?%&=@:;]*/g
+
+The `\w+` character class part of `\w+:\/\/` is too loose IMO. I would recommend modifying the regex to match a whitelist of protocols similar to what KSES does within WordPress, or disable auto-linking within SyntaxHighlighter.
+
+## Steps To Reproduce:
+
+1. Visit https://mattstestsite128160580.wordpress.com/2019/10/03/test-post/ in Firefox or Chrome.
+1. Submit `[code]javascript://%0dalert%28document.cookie%29[/code]` as a comment.
+1. Click the `javascript://` portion of the rendered highlighted code.
+
+## Impact
+
+The attacker can execute arbitrary JavaScript as the victim user's account with the security context of the <site>.wordpress.com domain.

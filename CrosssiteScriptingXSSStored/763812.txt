@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/763812
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/renekroka
+ReportedTo:Mapbox(mapbox)
+BountyAmount:600.0
+Severity:medium
+State:Closed
+DateOfDisclosure:21.01.2020 15:09:30
+
+Summary:
+On December 24, 2019, user @renekroka reported a stored XSS injection vulnerability on api.mapbox.com that affected users in Internet Explorer 11. An attacker could store XSS injections on Mapbox servers, and then exploit them in IE11 due to JSON responses not including the `X-Content-Type-Options: nosniff`  header.
+
+Using the information provided by the researcher, we deployed a patch to Mapbox servers on January 8, 2020. This patch added the `X-Content-Type-Options: nosniff` and `X-Frame-Options: deny` to Styles API JSON responses.

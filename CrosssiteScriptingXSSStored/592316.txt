@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/592316
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/wxy7174
+ReportedTo:WordPress(wordpress)
+BountyAmount:450.0
+Severity:low
+State:Closed
+DateOfDisclosure:27.07.2019 0:35:51
+
+Summary:
+
+Hi, I found that there is a storage xss in another output group name, but this xss needs to press the key combination to trigger. Just create or modify the group information, set the group name to the following payload, 
+```
+<a href="accesskey=x onclick=alert(document .domain)//"></a>
+```
+and then access Group page, 
+if you are macos need to press, 
+shift+control+option+x,
+if you are windows, 
+you need to press shift+alt+x, 
+then it will trigger xss
+{F498582}
+
+Don't forget to enable the group feature
+
+## Impact
+
+Rce via xss

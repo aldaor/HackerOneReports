@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/564196
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/3rd4l
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:12.05.2019 17:36:09
+
+Summary:
+
+Hello Security Team. 
+
+Tested windows 10 and edge (Microsoft Edge 44.17763.1.0) , internet explorer
+
+Test Url : https://help.shopify.com/it/partners/resources/marketing-pack-for-accountants
+
+Payload: ?v0sjx'-alert(1)-'uyvvr=1
+
+Proof Url: <https://help.shopify.com/it/partners/resources/marketing-pack-for-accountants?v0sjx'-alert(1)-'uyvvr=1>
+
+Open Url: edge , internet explorer , click me "Condividi il tuo feedback. "
+
+## Impact
+
+https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)

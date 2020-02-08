@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/534297
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/linkks
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:25.09.2019 10:10:30
+
+Summary:
+Reverse proxy cache poisoning via host header content could lead to stored XSS in uxui.geekbrains.ru

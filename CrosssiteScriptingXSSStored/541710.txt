@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/541710
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/caesareg
+ReportedTo:ZEIT(zeit)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:16.05.2019 19:46:45
+
+Summary:
+
+Stored Cross-site Scripting in 
+https://zeit.co 
+the steps in the video
+
+## Impact
+
+steal an accounts cookies and more ..

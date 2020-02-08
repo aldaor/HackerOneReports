@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/690072
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/mase289
+ReportedTo:Mail.ru(mailru)
+BountyAmount:1000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:11.10.2019 13:40:45
+
+Summary:
+Unfiltered cookie content was used in DOM manipulation, leading to XSS possibility.

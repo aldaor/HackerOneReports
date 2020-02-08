@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/759131
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/renekroka
+ReportedTo:Stripo Inc(stripo)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:31.01.2020 8:11:26
+
+Summary:
+Stored XSS - template comments on stripo.email

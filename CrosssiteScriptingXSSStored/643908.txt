@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/643908
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/mygf
+ReportedTo:WordPress(wordpress)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:18.07.2019 20:25:18
+
+Summary:
+Ali found a stored XSS vulnerability in the JavaScript implementation of workflow keywords on our Trac instance. The issue was caused by using unescaped user input to generate a delete button. [A fix has been implemented](https://meta.trac.wordpress.org/changeset/9048) to use the safe jQuery method `.attr()` instead.
+
+---
+
+Important: As mentioned in our [policy](https://hackerone.com/wordpress), **do not pentest our Trac instances**, it's very annoying to clean up after. Setup a local environment instead; the custom source code is available via Git (`git clone git://meta.git.wordpress.org/`), in the trac.wordpress.org subfolder. **If you ignore this you'll forfeit any bounty.**
+Hi there,
+I found a stored xss @ https://core.trac.wordpress.org/
+
+Steps:
+1. Go to https://core.trac.wordpress.org/ and login. (open new private window and login with another account)
+2. Go to https://core.trac.wordpress.org/newticket and set a summary and description.
+3. Select a Workflow Keyword and click manual. Paste the payload: "><svg/onload=alert(document.domain)>
+4. Click enter button and click Create Ticket button. Now, you will see xss alert.
+Copy the url and go to private window. Go to url and you will see xss alert.
+
+PoC: https://youtu.be/Nyt1op_73vs
+
+## Impact
+
+Stealing cookies

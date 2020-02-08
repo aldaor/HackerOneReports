@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/550266
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/iframe
+ReportedTo:ok.ru(ok)
+BountyAmount:300.0
+Severity:high
+State:Closed
+DateOfDisclosure:23.07.2019 14:56:25
+
+Summary:
+XSS and Web Cache Poisoning at *.insideok.ru via X-Forwarded-Host header

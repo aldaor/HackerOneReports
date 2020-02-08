@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/546220
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/n4sty
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:29.06.2019 13:21:19
+
+Summary:
+XSS on message reply via double click functionality in web.icq.com

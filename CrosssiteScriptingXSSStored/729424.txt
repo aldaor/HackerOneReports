@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/729424
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/mosuan
+ReportedTo:Shopify(shopify)
+BountyAmount:1000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:08.11.2019 0:02:45
+
+Summary:
+We recently deployed changes to email previews in our Timeline feature, and @mosuan identified that the `<iframe>` used to display email contents was no longer sandboxed. This resulted in a stored XSS vulnerability. This was a valid XSS within the scope of our program because it executed outside of the rich text and theme editors on `/admin` of the store. It was awarded $1000 because exploitation would require access to a staff account with Customers permission.
+1.Open customer function `https://mosuan-img-src-x.myshopify.com/admin/customers`
+2.Click on the customer's email address
+F625957
+3.Click the sent message on the current page
+F625959
+
+## Impact
+
+admin

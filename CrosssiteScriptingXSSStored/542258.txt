@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/542258
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/masterhackor
+ReportedTo:Shopify(shopify)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:26.05.2019 22:25:25
+
+Summary:
+
+1- create an account from **https://app.oberlo.com/**
+
+2- path to https://app.oberlo.com/settings/account/profile
+
+3- inject javascript code or xss payload at **Name** form
+
+4- it will be printed at page and executed
+
+payload that i used it **"><img src=x onerror=alert(document.domain)>**
+
+## Impact
+
+This vulnerability can be used by attacker to serve malicious JavaScript against any user.

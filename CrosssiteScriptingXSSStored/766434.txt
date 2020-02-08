@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/766434
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/elmahdi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:250.0
+Severity:high
+State:Closed
+DateOfDisclosure:04.02.2020 14:00:17
+
+Summary:
+Blind XSS via username in admin panel of technoatom.mail.ru

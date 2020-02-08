@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/547683
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/n4sty
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:29.06.2019 13:20:45
+
+Summary:
+Stored XSS via contact info in web.icq.com

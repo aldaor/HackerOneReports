@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/623834
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/xaleraf4ra
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:24.07.2019 15:36:25
+
+Summary:
+Stored XSS via data URI in messages on geekbrains.ru.
+
+geekbrains.ru is in extended (Ext.B) scope, XSS reports for this scope are accepted without bounty.

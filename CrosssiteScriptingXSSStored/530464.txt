@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/530464
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/klmunday
+ReportedTo:Vanilla(vanilla)
+BountyAmount:300.0
+Severity:high
+State:Closed
+DateOfDisclosure:17.07.2019 20:14:14
+
+Summary:
+
+**Summary:**
+The Profile Comments page which is responsible for listing a profile's recent comments is vulnerable to stored XSS as it renders the contents of recent comments without sanitizing them.
+
+## Steps to reproduce:
+
+1. Ensure you are logged in to a user account (no special permissions are needed)
+2. Go to any forum post
+3. Comment any valid javascript markup (e.g. `<script>alert(1)</script>`)
+4. From any account go to your users `Comments` page (`localhost/profile/comments/YOURUSER`)
+5. XSS should trigger
+
+## Video example:
+#F463844
+
+To verify the comments listing contains the script, the page source can be viewed:
+#F463843
+
+## Anything else we should know?
+The same root issue might also be causing a self-xss in `My drafts` if you create a post with the same contents (`<script>alert(1)</script>`) and save it as a draft, although this is out-of-scope since it only affects the original user.
+
+## Impact
+
+An attacker could create a post or comment containing a payload and then send the link to their comments page to their victim. This if clicked would result in the victim triggering the payload without any other interaction other than loading the `comments` page. This is especially dangerous if an admin is targeted since the payload could trigger/read nearly anything the admin can do/read.

@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/756729
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/mosuan
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:23.12.2019 14:45:28
+
+Summary:
+
+1.install app `Shopify Chat`
+2.Click chat on the shop homepage or Shopify Ping to send poc `javascript:alert(1)//https://dqdqdqdqdq.myshopify.com`
+3.Click url, alert
+{F657395}
+
+## Impact
+
+1.Front end user Self-XSS
+2.Administrator XSS foreground user

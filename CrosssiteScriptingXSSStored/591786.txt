@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/591786
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/encryptsaan123
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:14.06.2019 18:39:04
+
+Summary:
+
+Hy security,
+ i Got a stored xss in one of your sub-domain "services.shopify.com"
+
+steps:
+1- Go to https://(your_store).myshopify.com/admin/apps/experts_marketplace/services_marketplace
+2- Then Go to  All services>Marketing and sales>email marketing> Design custom email templates >click select
+3- fill al the data, there will be an option for "attach file"
+4: selcet a html file where the xss payloads are got stored.
+5. write click on the attached file and go to that location, you will see the pop-up
+
+## Impact
+
+can steal cookies

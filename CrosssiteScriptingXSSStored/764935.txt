@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/764935
+WeaknessName:Cross-site Scripting (XSS) - Stored
+Reporter:https://hackerone.com/sicksec
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:04.02.2020 14:20:50
+
+Summary:
+Stored XSS via malcrafted link bbcode in review editor
