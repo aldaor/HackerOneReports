@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/762121
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/godofdarkness_msf
+ReportedTo:Automattic(automattic)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:14.01.2020 17:15:08
+
+Summary:
+The initial report outlined being able to add any email to a Tumblr account without verifying it first which is expected behavior that does not pose a security risk. However, the reporter also reported that these unverified emails were able to be used in our “follow by email” feature which we did consider to be a security risk. Our fix was to disallow follow by email for unverified emails.

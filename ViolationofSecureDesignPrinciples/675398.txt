@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/675398
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/tkd8
+ReportedTo:WakaTime(wakatime)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:20.08.2019 7:32:21
+
+Summary:
+When testing csrf tokens on WakaTime's website, there are 2 ways we pass the csrf token in requests:
+
+1. form post-data `csrftoken`, for HTML form submits
+2. the `X-CSRFToken` header, for AJAX requests
+
+The `csrftoken` cookie is only used to pass the token to JavaScript, it's not used for validating the request.
+
+Closing this as not applicable since csrf tokens are working correctly.
+step of reproduce-
+1. Go to https://wakatime.com and create account.
+2. login account after that go public profile.
+3. after that change the full name and intercept brup suite and delete csrftoken.
+4. After forward then you see name was changed.
+
+## Impact
+
+Violation of Secure Design Principles

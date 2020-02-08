@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/577969
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/muon4
+ReportedTo:LocalTapiola(localtapiola)
+BountyAmount:2100.0
+Severity:critical
+State:Closed
+DateOfDisclosure:21.11.2019 8:29:43
+
+Summary:
+##Issue
+The reporter found an issue with CORS configurations in one of our applications. The misconfiguration allowed the hacker to leak and steal a logged on users information. Leaking much data would take quite some time, but it would also be a question of waiting for as many customets to log on without having to have any interaction on the hackers behalf, hence leaking a noticeable amount of data was found to be a reasonable threat.
+
+##Fix
+
+The CORS configuration was modified.
+
+##Reasoning
+
+The PoC provided was nice and we were easily able to verify the width and breadth of the issue. 
+
+CORS allows for some neat things to be implemented, but also carries quite a few caveats. We have added CORS as one of our topics for our internal SDLC security training to avoid these issues as much as possible. Curious to see more about what we do internally? Have a peek at what we have made public: http://public.egate.fi/lahitapiola/lahitapiola/en/tiedostot/227331/

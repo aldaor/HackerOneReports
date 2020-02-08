@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/737042
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/aishkendle
+ReportedTo:Stripo Inc(stripo)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:19.12.2019 13:01:38
+
+Summary:
+
+#Password token leak via Host header
+--------------
+
+##Vulnerability Description:
+Token will be leaked by the Server to that third party site and that token can be used by third parties to reset the password and take over the account & directly login in your account
+
+##Steps To Reproduce:
+
+1) Send reset password link to your email address.
+2)Now go to email, turn burp suite intercept on and click on reset password link. Check for the requests having the token in referrer and host as third party website. And copy the link
+3)Now turn intercept off and reset the password.(with that link)
+4)Now reset the password.
+
+#POC:
+Images Uploaded
+
+## Impact
+
+#Impact
+
+It allows the person who has control of particular site to change the user's password (CSRF attack), because this person knows reset password token of the user.

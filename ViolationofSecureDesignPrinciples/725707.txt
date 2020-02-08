@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/725707
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/r0hack
+ReportedTo:Mail.ru(mailru)
+BountyAmount:1500.0
+Severity:critical
+State:Closed
+DateOfDisclosure:17.12.2019 15:36:55
+
+Summary:
+One time code reuse between registration and authentication in combination with insufficient bruterofce protection allowed account access via verification code bruteforce for worki.ru.

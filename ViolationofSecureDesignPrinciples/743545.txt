@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/743545
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/0x3c3e
+ReportedTo:Bumble(bumble)
+BountyAmount:1000.0
+Severity:
+State:Closed
+DateOfDisclosure:18.01.2020 17:45:58
+
+Summary:
+
+## Summary
+It's possible to bruteforce recovery code from SMS as iOS application doesn't have limits for incorrect inputs. I have tried 50+ different combinations until I reached code from SMS.
+
+## Steps To Reproduce
+1. Click "Use another option" on application startup view
+1. Enter your phone number
+1. Click "Forgotten number"
+1. Click "OK" on pop-up window
+1. Bruteforce 4 digits code 
+
+## PoC video
+https://youtu.be/QV80pD0wZsE
+
+## Mitigation
+1. Limit quantity of attempts to enter recovery code
+1. Don't store recovery code on target device to compare it with user's input
+
+## Details
+Devices: Iphone SE (13.2), Iphone 6s (12.4)
+App: Bumble (5.140.0)
+
+## Impact
+
+Account takeover.

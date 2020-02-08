@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/653214
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/c00lbugs
+ReportedTo:Kartpay(kartpay)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:01.08.2019 10:25:02
+
+Summary:
+VPN URL is accessible to the Public which is a misconfiguration of VPN Setup. So the Setup has been fixed and only internal network can access the VPN systems, 

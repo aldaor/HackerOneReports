@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/514293
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/testingforbugs
+ReportedTo:Chaturbate(chaturbate)
+BountyAmount:200.0
+Severity:low
+State:Closed
+DateOfDisclosure:01.05.2019 18:16:45
+
+Summary:
+The hacker found that a form on the billing site had a high post size limit that could cause increased load. This was lowered to a reasonable amount.
+
+This had no effect on any stored data.

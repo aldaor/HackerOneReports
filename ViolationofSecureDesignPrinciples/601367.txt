@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/601367
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/badcracker
+ReportedTo:Cuvva(cuvva)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:25.06.2019 23:22:27
+
+Summary:
+
+## Description: 
+Hello sir, while I was surfing your website I found unclaimed facebook page at www.cuvva.com/about
+{F503171}
+when you click this button you will be redirected to https://www.facebook.com/getcuvvad which was unclaimed but I claimed it as poc
+##steps to reproduce:
+1. go to www.cuvva.com/about
+2. scroll down and click the highlighted button
+3. see that you are redirected to https://www.facebook.com/getcuvvad which is claimed by me
+
+##poc :
+{F503172}
+
+## Impact
+
+Attacker were able to claim this page before I do and post unsafe details or also phishing links

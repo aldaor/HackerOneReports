@@ -1,0 +1,44 @@
+ReportLink:https://hackerone.com/reports/617896
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/ngalog
+ReportedTo:GitLab(gitlab)
+BountyAmount:1500.0
+Severity:high
+State:Closed
+DateOfDisclosure:13.12.2019 21:00:19
+
+Summary:
+
+### Summary
+The salesforce login integration allows attacker to bypass email verification -- user is able to signup with any email domain they want, effectively bypass all email domain whitelist/blacklist restriction or any other 3rd party using gitlab instance's email address.
+
+It is possible because salesforce allow admin to create user with arbitrary email, and I believe this is what gitlab engineer forgot to consider while implementing salesforce integration.
+
+Please follow along to see how I was able to create an account `ronworkingitlab@gitlab.com` in gitlab.com
+
+### Steps to reproduce
+- Visit https://bugcrowd-ngalog-3.oktapreview.com/
+- Enter creds `ronworkingitlab@gitlab.com`:`P@ssw0rd!`
+- Click salesforce to login salesforce
+- Open new tab and visit https://gitlab.com/users/sign_in
+- Click login with salesforce
+- you will be logged in as `ronworkingitlab@gitlab.com` by visiting `https://gitlab.com/profile/emails`
+
+
+
+### Impact
+Bypass email domain restriction and able to signup with arbitrary email domain
+
+### What is the current *bug* behavior?
+Able to signup with any email domain
+
+### What is the expected *correct* behavior?
+should need email verification
+
+
+### Relevant logs and/or screenshots
+{F511255}
+
+## Impact
+
+described above

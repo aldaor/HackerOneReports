@@ -1,0 +1,45 @@
+ReportLink:https://hackerone.com/reports/537564
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/f_m
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:22.09.2019 14:37:54
+
+Summary:
+
+__summary__
+
+Hi OLX team, i found a web cache deception vulnerability in https://tradus.com.
+With this vulnerability an attacker can gain access to the name of the victim user, the user_id and other  informations.
+
+__Attack scenario__
+
+1) an attacker send to the victim a link to the malicious page (like the PoC that i've attached)
+2) the victim click on the link, the link request a special page on tradus.com
+3) now the victim name, user_id and the other info in the page are in the cache server
+4) the attacker reach the page as unauthenticated user
+
+I've attached some pics of the data that can be stolen and a PoC.
+for the proof of concept you got to enable the pop-up in your browser.
+
+__step to reproduce (first way)__
+1) once you are authenticated open the PoC
+2) now you can see the cached URL, follow the URL in a private browser window (like unauthenticated user).
+3) the HTML with the info will be returned by the cache server
+
+__step to reproduce (second way)__
+1) once you are authenticated follow this: https://www.tradus.com/en/search/q/%22&.js?sort=price-asc&query=%26%2334%3B%26
+2) follow the same URL in a private browser window (like unauthenticated user).
+3) the HTML with the info will be returned by the cache server
+
+NOTE: the .js extension before the query string made this possible. it's possible that it work with other extension and in other path or domain in scope i will test once you have triage that(if this will be triaged).
+
+I know that information disclosure are out of scope, so please if you reputed this n/a please don't do it, i can self close this as n/a without lost reputation points.
+
+thanks
+
+## Impact
+
+An attacker can gain access to the name of the victim user, the user_id and other  informations.

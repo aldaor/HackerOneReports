@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/666557
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/pamper
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:05.09.2019 6:08:16
+
+Summary:
+
+Hello Team,
+I have found a Content Spoofing / Text Injection on this domain https://docs.nextcloud.com
+
+Go to https://docs.nextcloud.com/!!!ATENTION!%20This%20server%20is%20on%20Maintenance%20please%20go%20to%20WWW.EVIL.COM%20%20%20%20%20%20% 20% 20% 20% 20% 20% 20% 20% 20% 20% 20% 20% 20% 20% 20% 20% 20% 20
+
+Referense:
+https://hackerone.com/reports/222058
+https://hackerone.com/reports/171497
+https://hackerone.com/reports/179073
+
+Cheers!
+@pamper
+
+## Impact
+
+.

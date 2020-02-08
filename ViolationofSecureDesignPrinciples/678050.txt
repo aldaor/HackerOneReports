@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/678050
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/nikhil786
+ReportedTo:Liberapay(liberapay)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:05.11.2019 8:37:11
+
+Summary:
+
+Website doesn't invalidate session after the password is reset which can enable attacker to continue using the compromised session.
+
+Steps:
+1) Open same accounts in two different browsers
+2) Change password in one browser and you will see that another browser still validate the session after password change (even after refresh the page ).
+
+Recommendation:
+
+As per OWASP, it is recommended to terminate all the active sessions when a password is changed and force the user to re-login.
+
+## Impact
+
+Logging in with the new password doesn't invalidate the older session either: I could browse Liberapay using two sessions (in two different browsers) which were initiated using two different passwords.

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/759133
+WeaknessName:Violation of Secure Design Principles
+Reporter:https://hackerone.com/renekroka
+ReportedTo:Stripo Inc(stripo)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:31.01.2020 8:11:35
+
+Summary:
+Tabnabbing - template comments on stripo.email
