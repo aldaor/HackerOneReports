@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/601192
+WeaknessName:Resource Injection
+Reporter:https://hackerone.com/pklfpklf
+ReportedTo:Shopify(shopify)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:04.07.2019 17:23:00
+
+Summary:
+@pklfpklf reported to us that it was possible to inject HTML into our Interviewing at Shopify site in a parameter meant for the user's name. After changing the site to properly insert this text, we closed the report as resolved. This issue was in a domain on `*.shopify.com` and did not impact our core product, so a bounty was not awarded.
+`https://interviewing.shopify.com/index.php?candidate=` is inserting the value of `candidate` into the DOM without any filtering (except that the equal sign can't appear in the payload), this allows attacker to injection any html in the DOM. Of course reflected XSS payloads like `<script>[...something...]</script>` will be blocked by browsers' protection, but we can still play with CSS injection:
+
+`https://interviewing.shopify.com/index.php?candidate=z%3Cstyle%3E%20*%20{%20background:%20url(https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png);%20}`
+
+{F503108}
+
+## Impact
+
+HTML injection, mostly CSS injection.
