@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/690295
+WeaknessName:XML External Entities (XXE)
+Reporter:https://hackerone.com/johndoe1492
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:11.10.2019 14:09:02
+
+Summary:
+Limited XXE on XML request processing led to blind SSRF possibility

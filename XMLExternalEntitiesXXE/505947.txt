@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/505947
+WeaknessName:XML External Entities (XXE)
+Reporter:https://hackerone.com/ruvlol
+ReportedTo:Mail.ru(mailru)
+BountyAmount:6000.0
+Severity:low
+State:Closed
+DateOfDisclosure:02.04.2019 9:10:37
+
+Summary:
+XML External Entity injection (XXE) in RSS/Atom feed parsing code in pulse.mail.ru allowed access to local files.
+
+All Mail.Ru projects are covered by extended scope bug bounty program.
