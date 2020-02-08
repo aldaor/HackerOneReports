@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/757095
+WeaknessName:Improper Authorization
+Reporter:https://hackerone.com/sambal0x
+ReportedTo:Razer(razer)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:16.01.2020 14:08:27
+
+Summary:
+The Razer Pay MY backend API had an access control vulnerability which would allow a client to delete the account of other users by varying the ID.  Although an adversary could not target a specific individual by name, they could affect the integrity of the Razer Pay system.
+
+This was fixed in production on 12/19.  We thank the tester for his report.

@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/701901
+WeaknessName:Improper Authorization
+Reporter:https://hackerone.com/anshuman_pattnaik
+ReportedTo:Razer(razer)
+BountyAmount:200.0
+Severity:low
+State:Closed
+DateOfDisclosure:07.11.2019 5:00:09
+
+Summary:
+
+Hello,
+
+I found 2FA bypass vulnerability in `https://insider.razer.com` and I found this feature not at all working after enabled 2FA.
+
+Please follow the below steps to reproduce the issue
+
+###Steps to reproduce
+1. Login to `https://insider.razer.com` with your credentials.
+2. Next, go to `Two-Step Verification` and set up your 2FA
+3. Now logout from the application and Login again
+4. You will observe it won't the ask the victim for the 2FA code it will simply log in to the dashboard
+5. I have tried login with different network and still, the issue can be reproduced.
+
+## Impact
+
+###Security Impact
+The attacker always more curious about to bypass the victim's 2FA and by this vulnerability, if the victim's account got compromised then the attacker could able to easily bypass this security.
+
+###References
+1. https://shahmeeramir.com/4-methods-to-bypass-two-factor-authentication-2b0075d9eb5f
+2. https://www.youtube.com/watch?v=4Y_NQbNQLg8&t=556s
+
+Thanks
+Anshuman Pattnaik
