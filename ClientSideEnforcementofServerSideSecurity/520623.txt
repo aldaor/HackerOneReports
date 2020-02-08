@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/520623
+WeaknessName:Client-Side Enforcement of Server-Side Security
+Reporter:https://hackerone.com/jon_bottarini
+ReportedTo:New Relic(newrelic)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:17.06.2019 21:35:06
+
+Summary:
+@jon_bottarini discovered a way to access the NR1 UI prior to it being generally available. This allowed him to test against and evaluate NR1 while it was still in a prerelease state. He describes the techniques used in [this blog post](https://www.jonbottarini.com/2019/06/17/using-burp-suite-match-and-replace-settings-to-escalate-your-user-privileges-and-find-hidden-features/).

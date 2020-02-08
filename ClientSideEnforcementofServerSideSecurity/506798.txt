@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/506798
+WeaknessName:Client-Side Enforcement of Server-Side Security
+Reporter:https://hackerone.com/itay658
+ReportedTo:Dropbox(dropbox)
+BountyAmount:216.0
+Severity:low
+State:Closed
+DateOfDisclosure:07.05.2019 19:04:34
+
+Summary:
+@itay658 discovered that adding "?dl=1" allows files to be downloaded, even if they were blocked with error 429.
+
+The bug has been fixed and pushed out.
+
