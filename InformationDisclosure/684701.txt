@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/684701
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ardi4x
+ReportedTo:Maker Ecosystem Growth Holdings, Inc(makerdao_bbp)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:15.01.2020 11:52:22
+
+Summary:
+Wordpress users disclosure on blog.makerdao.con

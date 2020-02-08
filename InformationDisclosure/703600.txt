@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/703600
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/mickey01
+ReportedTo:Mail.ru(mailru)
+BountyAmount:1500.0
+Severity:
+State:Closed
+DateOfDisclosure:14.01.2020 12:15:29
+
+Summary:
+Apache server status was available at touch.mail.ru, leaking some requests information

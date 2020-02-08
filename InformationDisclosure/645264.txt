@@ -1,0 +1,48 @@
+ReportLink:https://hackerone.com/reports/645264
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/the_arch_angel
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:07.08.2019 23:01:26
+
+Summary:
+
+**Summary:**
+
+When being added as an external contributor to a report, the report title are displayed in the email notification despite the program email notification settings being set to `No Content`
+
+**Description:**
+
+Hey team!
+
+I noticed that programs have the ability to set their Email Notification settings, to `No Content`, which masks the report title:
+
+{F530569}
+
+This causes the hackers emails notifications to look like this:
+
+███████
+
+HOWEVER, if another hacker gets added as an external contributor to the report, the report title and activity are shown in the report:
+
+
+{F530572}
+
+
+### Steps To Reproduce
+
+1. As a Program admin, navigate to `Program Settings`
+2. Click `Program`
+3. Click `Email Notifications`
+4. Click `No Content`
+5. Go to any report in your program and invite any hacker to the report.
+6. Check the hackers email, they will see the report title in the invitation email
+
+
+Hope that helps!
+
+## Impact
+
+Information Disclosure bypassing a program setting

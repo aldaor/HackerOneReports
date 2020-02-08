@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/520883
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/bobrov
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:25.09.2019 7:00:32
+
+Summary:
+special.mail.ru was running misconfigured Laravel in debug mode, disclosing some sensitive information

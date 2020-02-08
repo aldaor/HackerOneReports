@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/540301
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ajay_saycure
+ReportedTo:Automattic(automattic)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:28.05.2019 3:46:03
+
+Summary:
+
+i was testing learn.fb.com and i came to known that its wp-json is open and when i saw all the routes of the websites than i got to known that one end-point is leaking their internal email address 
+the endpoint is as follow
+https://learn.fb.com/wp-json/th/v1/user_generation
+The issue has been fixed by fb but they told me to report the bug here for the bounty. So, i reported the issue here
+
+==========================================
+This is what facebook security engineer told me. So, am reporting this issue here and before this i have not tested wordpress VIP.
+We've been in touch with the WordPress.com VIP team regarding this issue, and it looks like they consider this issue to have potentially affected a wider set of sites on their platform than just ours. Because of this, we ask that you submit the full details of this report to their HackerOne program so it can be reviewed and considered for a bounty from their end.
+=====================================
+
+## Impact
+
+Email disclosure

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/569350
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/circuit
+ReportedTo:QIWI(qiwi)
+BountyAmount:150.0
+Severity:medium
+State:Closed
+DateOfDisclosure:05.11.2019 11:36:02
+
+Summary:
+Nickname disclosure through web-chat

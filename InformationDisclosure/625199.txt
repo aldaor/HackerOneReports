@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/625199
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/abay
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:01.07.2019 9:32:11
+
+Summary:
+
+**Information**
+Using REST API, we can see all the WordPress users/author with some of their information.
+
+**Step to Reproduce**
+You can get user info by entering below url in your browser: 
+https://nextcloud.com/wp-json/wp/v2/users
+
+Reference: [#356047](https://hackerone.com/reports/356047)
+
+## Impact
+
+Authors : LTR , LTREditor can be created scenario of doing bruteforce attacks to this users.

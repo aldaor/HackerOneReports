@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/636560
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/uzsunny9
+ReportedTo:GitLab(gitlab)
+BountyAmount:1000.0
+Severity:low
+State:Closed
+DateOfDisclosure:13.12.2019 13:28:37
+
+Summary:
+
+##Reproduction steps:
+
+
+Create a public group and public project.
+
+
+Go to public project settings and disable the project settings to members only.
+
+{F522796}
+
+
+If the attacker visits milestones via projects then may see 404 not found page.
+
+
+https://gitlab.com/victim-waka-waka/test-group-for-sharing/-/milestones/1
+
+{F522797}
+
+
+But the attacker will view the project mile stones via groups.
+
+
+{F522798}
+
+## Impact
+
+Attacker will view the project milestones which are disabled by the admin in project settings.

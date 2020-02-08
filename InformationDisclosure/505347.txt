@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/505347
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/pisarenko
+ReportedTo:VK.com(vkcom)
+BountyAmount:200.0
+Severity:low
+State:Closed
+DateOfDisclosure:10.05.2019 23:20:23
+
+Summary:
+Недостаточные проверки ЧС при доступе к открытой стене. 

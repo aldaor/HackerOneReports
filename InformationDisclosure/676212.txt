@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/676212
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/farmsec_alice
+ReportedTo:SEMrush(semrush)
+BountyAmount:3000.0
+Severity:high
+State:Closed
+DateOfDisclosure:25.09.2019 12:50:17
+
+Summary:
+Researcher has found the third-party repository with test data for internal services development.

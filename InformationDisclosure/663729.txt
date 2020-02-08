@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/663729
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/xiaoyinl
+ReportedTo:Brave Software(brave)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:16.10.2019 18:33:02
+
+Summary:
+
+## Summary:
+Brave browser has built-in WebTorrent extension. After it finishes downloading a torrent, it serves the downloaded files on a local HTTP server listening on a random port. The problem is that the local HTTP server doesn't check for the hostname of the requesters, so a malicious remote website can discover what files the user has downloaded using DNS rebinding attack.
+
+## Products affected: 
+
+ * OS: Windows 10 x64 Build 10.0.18362.10005
+ * Brave: Version 0.66.101 Chromium: 75.0.3770.142 (Official Build) (64-bit)
+
+## Steps To Reproduce:
+
+An actual attack would do a port scanning and DNS rebinding on server side, but for simplicity, the following steps just simulate such attack locally with a single port.
+
+ * Download poc.html
+ * Open Fiddler. In AutoResponder, enter: If request matches `regex:http://example.org:\d+/test.html`, then respond with `[path to poc.html]`
+ * In your system's hosts file, add `127.0.0.1  example.org`
+ * Open Brave browser, navigate to any magnet link. Then start torrent.
+ * After the torrent is fully downloaded, hover your pointer on the download icon in "Save file" column. The URL should be http://127.0.0.1:50210/0. The port number may be different.
+ * Open a new tab, navigate to http://example.org:50210/test.html (you may need to change the port number). Click "Start testing" button. You should see the first downloaded file content on the page.
+
+## Supporting Material/References:
+
+  * poc.html and screenshots
+
+## Impact
+
+Malicious websites can discover what files users have downloaded using WebTorrent.

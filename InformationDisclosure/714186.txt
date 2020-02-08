@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/714186
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/pisarenko
+ReportedTo:QIWI(qiwi)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:26.11.2019 10:19:58
+
+Summary:
+Sensitive information disclosure in composer.lock and docker-compose.yml 

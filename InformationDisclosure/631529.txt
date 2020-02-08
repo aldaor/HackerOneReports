@@ -1,0 +1,39 @@
+ReportLink:https://hackerone.com/reports/631529
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/zer0ttl
+ReportedTo:TomTom(tomtom)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:09.08.2019 12:38:31
+
+Summary:
+
+## Summary:
+It's possible to get a listing of every files in the S3 bucket `vector-maps-e457472599`
+
+# Description:
+The problem is using the AWS command line, it's possible to get a listing of files in the Amazon S3 Bucket with an AWS authentication. See screenshot `vector-maps-e457472599_public_s3_bucket.png`
+
+This user authentication is easy to get and it's free from Amazon.
+
+The good news is that the ACL on the files are set the way that's impossible at moment to create any file from the bucket using my authentication. I did not test removing any file from the bucket.
+
+A secure amazon S3 bucket would show Access Denied like your other bucket named `brda-vector-maps` in screenshot `brda-vector-maps_access_denied_s3_bucket.png`
+
+## Step-by-step Reproduction Instructions
+
+With the aws-cli tool installed and configured :
+
+aws s3 ls s3://vector-maps-e457472599
+
+## Attached screenshots & videos.
+
+1. brda-vector-maps_access_denied_s3_bucket.png
+2. vector-maps-e457472599_public_s3_bucket.png
+
+## Impact
+
+This give more information about your buckets to an attacker that are looking to attack you.
+
+Also, considering that it's possible to set the wrong ACL on a file that you may upload and may be confidential in the bucket, a secure bucket will remove the possibly to access it without a proper authentication.

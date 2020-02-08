@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/593712
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ronr
+ReportedTo:Vanilla(vanilla)
+BountyAmount:150.0
+Severity:medium
+State:Closed
+DateOfDisclosure:01.12.2019 9:07:54
+
+Summary:
+
+I have found a Vulnerability in vanilla forums which called Web cache deception attack.
+
+#Web Cache Deception Attack
+Websites often tend to use web cache functionality to store files that are often retrieved, to reduce latency from the web server.
+
+Websites often tend to use web cache functionality (for example over a CDN, a load balancer, or simply a reverse proxy). The purpose is simple: store files that are often retrieved, to reduce latency from the web server.
+When accessing a URL like http://www.example.com/home.php/non-existent.css
+A GET request to that URL will be produced by the browser.  The server returns the content of http://www.example.com/home.php. And yes, the URL remains http://www.example.com/home.php/non-existent.css. The HTTP headers will be the same as for accessing http://www.example.com/home.php directly: same caching headers and same content type (text/html, in this case).
+The web cache servre saves the returned page in the server's cache. Then the attacker can go to the url: http://www.example.com/home.php/non-existent.css and the page of the victim will be presented with the victim's sensitive information (The page content).
+
+The dangerous part in this attack, unlike phishing attacks, is that the url isn't looks suspicious at all.  It looks like a normal url from the original website, so the victim thinks that it is ok to click on the link.
+
+Steps:
+1. The attacker sends the following link to the victim: https://open.vanillaforums.com/messages/all/non-existent.css
+2. The victim opens the link and the inbox page will be loaded normally. (The web cache server then saves this page)
+3. The attacker open the same link (https://open.vanillaforums.com/messages/all/non-existent.css), and the inbox page of the victim with all his private contant is loaded.
+
+If you need a video to understand it better, ask me and I will send you one.
+
+## Impact
+
+The attacker can achieve all the private content of a specific victim, without the victim knowing about it.

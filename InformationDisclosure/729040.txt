@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/729040
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ehsahil
+ReportedTo:Shopify(shopify)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:06.11.2019 13:12:10
+
+Summary:
+
+Hi Team, 
+
+During my recon process, I found a public gist containing the Internal Information of the Shopify offices of LA and SF. 
+
+The gist belongs to the Shopify employee - https://gist.github.com/runmad (He is currently - Engineering Manager at Shopify)
+
+LA Office Dashboard - https://gist.github.com/runmad/333bc33095f6f40ee8fb606fff94fbdb/revisions
+
+SF Office  Dashboard - https://gist.github.com/runmad/1e820c6b02d6279914d9bcb8a2a3b9cc/revisions
+
+
+The disclosed information contains the Shopify employee email addresses and calendar details. 
+
+█████████
+
+There are more than 300 revisions on both the gists.
+
+## Impact
+
+The gist disclosing the Internal information regarding the Shopify employees. 
+
+Please let me know if you need more information from my side. 
+
+Thanks 
+@ehsahill

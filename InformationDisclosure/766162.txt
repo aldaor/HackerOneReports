@@ -1,0 +1,50 @@
+ReportLink:https://hackerone.com/reports/766162
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/rreiss
+ReportedTo:Genasys Technologies(genasys)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:31.12.2019 8:42:39
+
+Summary:
+
+Hi team,
+
+I wasn't sure if this worth a report, but I thought that you should be aware and HackerOne's support referred me to submit a report.
+
+I ran into a diclosed report where the reporter asked to redact his email but we can still extract his email and more info about his google account from the JWT token.
+
+The report: https://hackerone.com/reports/729960
+
+The data from the JWT:
+```
+{
+  "name": "Herald Big Deck",
+  "picture": "https://lh3.googleusercontent.com/-mPrAtw3rhXQ/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rdj1gqwV2ceXlY-7Ztz_RUQ-YcQ_A/photo.jpg",
+  "iss": "https://securetoken.google.com/genasys-staging",
+  "aud": "genasys-staging",
+  "auth_time": 1572972711,
+  "user_id": "VGKMK0fDRZOYSw14IpwHZPOQ4Ol2",
+  "sub": "VGKMK0fDRZOYSw14IpwHZPOQ4Ol2",
+  "iat": 1572972712,
+  "exp": 1572976312,
+  "email": "██████████",
+  "email_verified": true,
+  "firebase": {
+    "identities": {
+      "google.com": [
+        "████████"
+      ],
+      "email": [
+        "████"
+      ]
+    },
+    "sign_in_provider": "google.com"
+  }
+}
+```
+
+## Impact
+
+Private information on the researcher was disclosed.

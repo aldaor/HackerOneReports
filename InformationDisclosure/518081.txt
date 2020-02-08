@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/518081
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/linkks
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:25.09.2019 10:10:22
+
+Summary:
+gitlab repository with opensource projects was available from external network on geekbrains.ru subdomain.
+
+While no sensitive information was leaked, decision was made to limit the access to eliminate possible risks in future.

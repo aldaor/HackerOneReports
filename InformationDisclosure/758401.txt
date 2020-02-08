@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/758401
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/mobius07
+ReportedTo:Mail.ru(mailru)
+BountyAmount:400.0
+Severity:medium
+State:Closed
+DateOfDisclosure:14.01.2020 12:09:59
+
+Summary:
+API method which allowed to enumerate emails at  https://api.my.games/ was not sufficiently protected.

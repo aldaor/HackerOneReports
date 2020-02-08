@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/666065
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/iframe
+ReportedTo:Mail.ru(mailru)
+BountyAmount:400.0
+Severity:low
+State:Closed
+DateOfDisclosure:11.10.2019 13:24:07
+
+Summary:
+Sensitive configuration information was disclosed via verbose stack trace in web application

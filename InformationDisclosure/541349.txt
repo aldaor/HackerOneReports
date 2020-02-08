@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/541349
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/daniel_v
+ReportedTo:TomTom(tomtom)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:26.05.2019 19:26:55
+
+Summary:
+
+Dear Security team,
+
+I found a git repository on http://betaforum.tomtom.com/.git. This endpoint allows an attacker to retrieve much of the source code and git history for this service which could potentially reveal sensitive information, it all depends what is stored there.
+
+###Example:
+1. http://betaforum.tomtom.com/.git/logs/HEAD
+2. http://betaforum.tomtom.com/.git/config
+
+###Mitigation
+The restrict access (403 forbidden) are enabled only on /.git and not their subfolders. You just need to add all the git subfolders to the same rule. 
+
+Best Regards,
+Daniel
+
+## Impact
+
+An attacker can get information just dumping data using .git repository.

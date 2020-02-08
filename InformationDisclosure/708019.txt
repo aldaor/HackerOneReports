@@ -1,0 +1,36 @@
+ReportLink:https://hackerone.com/reports/708019
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/pirateducky
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:02.12.2019 20:02:16
+
+Summary:
+
+**Description:**
+
+Looking at some subdomains using `aquatone` I noticed ` http://█████/` I clicked it and then started navigating the page, if I go to this link: `https://█████████/██████████wireframes/admin/round12/tsp_0-awarded.html` it is completely valid and shows some information that I'm unsure it should be online, it also shows me logged in as a user `Pat` and `Janelle`
+
+## Impact
+
+Information disclosure
+
+## Step-by-step Reproduction Instructions
+
+1. Navigate to ` http://████/`
+2. Click `Main Index Page` 
+3. Click ` Office & TSP` or use this link `https://███████/██████index-admin.html#` 
+
+## Suggested Mitigation/Remediation Actions
+
+If this is sensitive data - it should be restricted to only people who need to access it no the whole internet, there are certain action where it prompts for a password.
+
+Thanks - 
+
+If this is somehow *supposed* to be up I would like to self-close as to not affect my current profile
+
+## Impact
+
+Information disclosure, possibly a dev environment left open but unsure.

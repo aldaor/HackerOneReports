@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/785866
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/tefa_
+ReportedTo:Showmax(showmax)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:03.02.2020 17:04:44
+
+Summary:
+A misconfiguration caused two directories being listable in our marketing blog that's running on wordpress. As the domain is out-of-scope of our program and the uploaded files include marketing material, it had no serious impact.

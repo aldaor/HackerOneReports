@@ -1,0 +1,54 @@
+ReportLink:https://hackerone.com/reports/689997
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/kunal94
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:11.10.2019 18:12:19
+
+Summary:
+
+Hello H1 Security Team
+
+#Description
+In report #645264 and #669776, email title disclosure has been fixed in no content settings.
+However, there is one more area which needs to be fix - "Instant bounty Award Email".
+In this email, even though email settings have been set as "No content", still it's displaying Report Title.
+
+
+#Step to Reproduce
++ Go to Program Email settings `/program_name/email_settings` and set email Settings as "no content".
+{F576922}
+
++ Now, Reward someone with quick Bounty Payout API.
+```
+curl "https://api.hackerone.com/v1/programs/42738/bounties" \
+  -X POST \
+  -u "dummy:xxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d @- <<EOD
+    {
+      "data": {
+        "type": "bounty",
+        "attributes": {
+          "amount": 100,
+          "reference": "aaaaa",
+          "title": "SQL injection in example.com",
+          "recipient": "example@example.com",
+          "currency": "USD",
+          "severity_rating": "high"
+        }
+      }
+    }
+EOD
+```
++ In email, it's disclosing the Report Title even though Email settings has been set to "no content".
+{F576923}
+
+Thanks
+Kunal
+
+## Impact
+
++ Email report Title is been leaked in the settings as Email-notification: No content.

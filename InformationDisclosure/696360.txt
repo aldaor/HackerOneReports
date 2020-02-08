@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/696360
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/sohelahmed786
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:17.10.2019 12:50:54
+
+Summary:
+
+At the following address i have found debug.log file disclose the application full path on the server.
+https://nextcloud.com/wp-content/debug.log
+
+## Impact
+
+The server should not expose this log file as it could help an attacker to understand the environment that may lead to further attacks.

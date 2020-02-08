@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/640488
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/asad0x01_
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:02.08.2019 22:45:28
+
+Summary:
+
+Description: On July 2 Hackerone redesigned the [Program Profiles](https://twitter.com/jobertabma/status/11460679483536834570).After the new program page design, I noticed that it is disclosing total bounties paid amount. For some program total bounties paid amount was hidden (████). It used to show like <$4000 if the bounty was $3990.But after the redesign, it is disclosing total bounty paid amount.
+
+
+Steps to reproduce:
+
+Go to any program page which used to hide total bounty amount (████████)
+
+
+Now you should be able to see total bounties paid amount.
+
+
+Please note that even if those above changed are made intentionally, this would allow others to know exact bounty amount paid to someone. For example, ███ does not disclose bounty awarded to a particular researcher. Since their total bounty amount is public one can determine how much they rewarded a particular researcher by **New Total bounty paid Amount - Old Total Bounty Paid Amount**. I see that there is a similar [report] (https://hackerone.com/reports/148050)
+
+## Impact
+
+This could disclose total bounty paid amount and bounty amount paid to a particular researcher in spite of program settings.

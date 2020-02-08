@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/589400
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/cheatboss
+ReportedTo:VK.com(vkcom)
+BountyAmount:200.0
+Severity:high
+State:Closed
+DateOfDisclosure:11.07.2019 18:04:55
+
+Summary:
+Просмотр статей. 

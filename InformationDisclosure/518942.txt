@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/518942
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/ghostin
+ReportedTo:Lob(lob)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:15.04.2019 19:01:41
+
+Summary:
+
+##### Vulnerability : Internal Ip address Discloser.
+##### I have founded a similar report https://hackerone.com/reports/329791
+#### Steps to Check.
+
+1. Copy the link https://wp.lob.com/wp-json/wp/v2/pages.
+2. You will get a Json-Response.
+3. In Json Response, you will see a link `{"rendered":"http:\/\/198.199.104.226\/?page_id=584"}`.
+4. Done !!
+
+## Impact
+
+The attacker can do further scanning on the internal IP address to attack, internal components.

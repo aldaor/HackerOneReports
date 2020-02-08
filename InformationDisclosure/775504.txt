@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/775504
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/md15ev
+ReportedTo:MariaDB(mariadb)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:15.01.2020 22:53:37
+
+Summary:
+
+At the following address i have found debug.log file disclose the application full path on the server. And there is database username too in debug.log
+
+http://mariadb.org/wp-content/debug.log
+
+## Impact
+
+Information disclosure

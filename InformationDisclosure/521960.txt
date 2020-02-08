@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/521960
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/linkks
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:03.06.2019 15:50:48
+
+Summary:
+PHP configuration file was available for download on few terrhq.ru subdomains

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/702784
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/0xklaue
+ReportedTo:Razer(razer)
+BountyAmount:1500.0
+Severity:critical
+State:Closed
+DateOfDisclosure:05.12.2019 6:24:41
+
+Summary:
+The tester discovered a monitoring application was available on a remotely accessible administrative console in the Razer Pay staging environment, which could have been used to leverage information that could have compromised the server.  The Razer Pay team removed this and other similar servers from public access.

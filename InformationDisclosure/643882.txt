@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/643882
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/sicarius
+ReportedTo:Maximum(maximum)
+BountyAmount:300.0
+Severity:low
+State:Closed
+DateOfDisclosure:18.07.2019 15:50:29
+
+Summary:
+The authentication of an staging environment wasn't working properly, allowing any combination of username and password to access the environment. Causing the leakage of a emailaddress-list.
+**Domain and URL:**
+[*.devmaximum.com]
+[███████████.acc.devmaximum.com]
+
+Hello,
+
+I've found a couple hundred of devmaximum websites with personal datas. 
+
+I know this subdomains are out of scope, i've discovered them with [devmaximum.maximum.nl]'s SSL certificate. But in less than 30 minutes of testing i've discovered 116 uniques ███.ln emails addresses, here is a sample:
+████████
+
+Maximum's developers are using admin:admin as main password to access the websites.
+
+## Impact
+
+There are many impacts possible, attackers can use this massive email record (there are ██████
+active users according to the statistics) to forge user:password combinaisons, and login in in █████████.nl website.
+
+And that's only the first developper's website, i have 344 record only with Sublist3r (subdomain enumeration tool).
+
+So I have a question, do you want me to keep digging into this, or should I stop my tests ? If you want me to dig in further, can you please add the devmaximum.com domain in the scope ?
+
+Thanks,
+
+Best regards,
+
+Sicarius.

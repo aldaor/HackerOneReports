@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/671939
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/iframe
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:11.09.2019 10:54:44
+
+Summary:
+Researcher found a publicly accessible `.bash_history` file on one of servers. File contained commands without sensitive data in them.

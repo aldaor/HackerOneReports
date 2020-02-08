@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/520871
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/linkks
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:16.05.2019 9:09:46
+
+Summary:
+SQL injection in gifts.mail.ru
+
+gifts.mail.ru is Mail.Ru branded partner project

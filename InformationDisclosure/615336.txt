@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/615336
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/the_predator
+ReportedTo:Blockstack(blockstack)
+BountyAmount:50.0
+Severity:low
+State:Closed
+DateOfDisclosure:03.09.2019 14:27:08
+
+Summary:
+The Blockstack Browser does not strip EXIF data on avatar uploads.

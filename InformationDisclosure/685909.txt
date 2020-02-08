@@ -1,0 +1,213 @@
+ReportLink:https://hackerone.com/reports/685909
+WeaknessName:Information Disclosure
+Reporter:https://hackerone.com/nathand
+ReportedTo:HackerOne(security)
+BountyAmount:2500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:08.11.2019 21:27:56
+
+Summary:
+@nathand reported a security vulnerability to HackerOne that allowed a user to determine redacted or private information through search results in very specific cases. We applaud @nathand's thoroughness and effort for disclosing this security vulnerability to us. HackerOne conducted a root cause analysis of the vulnerability and determined that it affected a few publicly disclosed reports. No signs of exploitation were found.
+
+# Root cause analysis
+To analyze the root cause, it is important to understand the timeline first of the security vulnerability that was reported.
+
+| **Date** | **Item** |
+| ------ | ------ |
+| September 24, 2018 | `glc` submits a [security vulnerability](https://hackerone.com/reports/413412) with `██████` in the title. |
+| September 24, 2018 | `williammmllc` (team member) requests limited disclosure of [#413412](https://hackerone.com/reports/413412). | 
+| October 17, 2018 | `glc` (reporter) agrees to disclosure of [#413412](https://hackerone.com/reports/413412). | 
+| November, 2018 | HackerOne engineering team rolls out a data migration to backfill the search vector that would be used when Hacktivity Search would be launched (somewhere in the future). At this point, `██████` was stored in the search vector because it was part of the report title. |
+| May 1, 2019| `williammmllc` updates the title and removes the word `██████`. The search vectors are **expected** to be updated, but aren't. |
+| September 1, 2019 | `nathand` submits a security vulnerability to HackerOne that the report shows up in the search results when they search for `██████`. |
+
+The engineering team that implemented the search functionality designed the feature in a way that the backfill should get the search vectors in the exact same state as when the report would be submitted after the backfill. The backfill ran before Hacktivity Search was released to the public. One of the architectural decisions the team made to keep search vectors up to date, was by hooking into the `after_commit` hook in the `Report` model. This hook would then validate whether the vector had to be updated. Below is an excerpt of that code.
+
+```ruby
+class Report < ActiveRecord::Base
+  # ...
+  after_commit do
+    update_hacktivity_search_content_async
+  end
+
+  # ...
+
+  def update_hacktivity_search_content_async
+    return unless should_update_hacktivity_search_content?
+
+    # schedule a job to update the vector
+  end
+
+  def should_update_hacktivity_search_content?
+    new? ||
+      previous_changes.keys.include?('title') ||
+      previous_changes.keys.include?('vulnerability_information') ||
+      previous_changes.keys.include?('weakness_id') ||
+      previous_changes.keys.include?('structured_scope_id') ||
+      previous_changes.keys.include?('team_id') ||
+      previous_changes.keys.include?('public_view') ||
+      previous_changes.keys.include?('disclosed_at')
+  end
+
+  # ...
+end
+```
+
+As can be seen in the code, whenever one of the attributes mentioned in the `should_update_hacktivity_search_content` method would be changed, an asynchronous job would be scheduled to update the vector. This meant that the team didn't have to go through every code path and make sure they triggered the correct job to update the vector. At HackerOne, usage of ActiveRecord hooks is generally discouraged due to the complexity it adds to a request or transaction lifecycle.
+
+The team looked into the behaviors of the `previous_changes` hash in combination with the `after_commit` hook. Small code snippets were used to track down the exact behavior. Some of those code examples are shared below. 
+
+Running the code below invokes an update of the vector, as expected:
+
+```ruby
+report = Report.find 123
+report.update title: 'new title'
+```
+
+Because the `after_commit` hook is used, it'll execute the code after the transaction has been completed OR immediately when the SQL query is not ran in a transaction block. The following code, when run on a Rails console, will call the hook twice:
+
+```ruby
+report = Report.find 123
+report.update title: 'new title'
+report.update vulnerability_information: 'new information'
+```
+
+However, when the code is ran in a transaction block, the Postgres state and Ruby memory state start to diverge. This means that the following code will only trigger the hook once:
+
+```ruby
+ActiveRecord::Base.transaction do
+  report = Report.find 123
+  report.update title: 'new title'
+  report.update vulnerability_information: 'new information'
+end
+```
+
+It is important to know that *every* request (except `show` and `index` actions) is automatically wrapped in a transaction. Subsequently, a number of service objects explicitly create transactions. The behavior described above does *not* change with nested transactions.
+
+This all matters because a code path that updates a single `Report` object multiple times in a single transaction may cause the `after_commit` hook to miss columns that the engineers expected it to be stored in the `previous_changes` hash. This is especially confusing because in integration tests for some interactions, individual service object are tested, which are not necessarily wrapped in a transaction. This means the behavior in the test suite was not representative of the behavior of other environments.
+
+When conducting the root cause analysis, HackerOne established a code pattern that could be used to identify code paths that update `Report` models multiple times during a request lifecycle. A number of code paths were identified, including the scenario where a team member requested disclosure, the reported agreed, and then the team member would update the title of the report. Below is an excerpt of that code path.
+
+**app/controllers/reports_controller.rb**
+```ruby
+class ReportsController < ApplicationController
+  # ...
+
+  def update
+    report = Report.find_by(id: params[:id])
+
+    # ...
+        interact Interactors::Reports::UpdateTitle, report: report, title: params[:title]
+
+    # ...
+  end
+
+  # ...
+end
+```
+
+The controller dispatches the interaction to the `UpdateTitle` service object. Because it's called through a controller action, the interaction is automatically wrapped in a transaction.
+
+**app/backend/interactors/reports/update_title.rb**
+```ruby
+module Interactors
+  module Reports
+    class UpdateTitle < HackeroneInteractor
+      # ...
+
+      def execute
+        old_title = report.title
+
+        return unless report.update(title: title) # <-- FIRST UPDATE CALL
+
+        interact ::Interactors::Activities::Create, # <-- LOGGING THE TITLE CHANGE
+          # ...
+      end
+
+      # ...
+    end
+  end
+end
+```
+
+The interaction above contains the first `update` call. If the title is updated, an activity will be created to track the change.
+
+**app/backend/interactors/activities/create.rb**
+```ruby
+module Interactors
+  module Activities
+    class Create < HackeroneInteractor
+      # ...
+
+      def execute
+        activity = nil
+
+        ActiveRecord::Base.transaction do # <-- NESTED TRANSACTION
+          activity = interact Commands::Activities::Create,
+            # ...
+
+          if activity.persisted?
+            if subject.is_a? Report
+              # ...
+
+              if !activity.internal? &&
+                  current_user.is_a?(User) &&
+                  current_user.member_of_team?(subject.team) &&
+                  !activity.is_a?(::Activities::BugFiled)
+                subject.stop_timer Report::TIMER_FIRST_PROGRAM_RESPONSE
+                subject.save! # <-- SECOND UPDATE
+        # ...
+      end
+    end
+  end
+end
+```
+
+Following the logic above, `subject.save!` is called when the program member updates the title. The `TIMER_FIRST_PROGRAM_RESPONSE` had already stopped for report #413412, but calling `save!` on a model without changes will still clear out the `previous_changes` hash. This means that when the transaction block is committed, `previous_changes` will be an empty hash -- resulting in the job to update the vector **not** to be scheduled. This proved the security vulnerability as reported by @nathand.
+
+When going through other code paths, a functional error was discovered, too. After every created activity in the backend of HackerOne, a side effect is called that updates a cache on the `Report` model to track certain dates; for example, when the last public activity was posted and when the last internal activity was posted. Because this was called every time the `Interactors::Activities::Create` service object was invoked, the `previous_changes` hash would typically only contain those attributes and disregard any other attribute that was updated in the request. This resulted in a functional bug where the vector wouldn't be updated at all and default to the name of the program, handle of the program, and the username of the reporter.
+
+# Remediation
+The engineering team wrote a regression spec to prove the security vulnerability and functional bug. It turned out that [a number of other engineers outside of HackerOne have run into similar problems](https://medium.com/ruby-on-rails/activerecord-transaction-gotchas-277c048dc3ca), letting them to develop a [library that solves this problem](https://github.com/dylanahsmith/ar_transaction_changes). They have proposed to merge this change back into ActiveRecord and [make it a first class citizen of the Rails / ActiveRecord family](http://github.com/dylanahsmith/ar_transaction_changes/issues/16). HackerOne has leveraged this library to mitigate the reported security vulnerability.
+**Summary:**
+
+It appears I'm able to discover words used in limited disclosed reports, that are not publicly visible, by using the search function available from the Hactivity page.
+
+**Description:**
+
+Recently I was investigating a finding for another program which involved exploiting XSS ████. I wondered how relevant exploiting ████ was to programs these days, so I set about searching Hackerone for relevant reports. Normally I'd just use Google for this, but this time I decided to use the Hackerone search in the Hacktivity stream page. To find relevant reports, I first searched for:
+
+```
+xss ███████
+```
+
+Or in URL form: ██████
+
+This returned a lot of clearly relevant reports. However, when I came across the report #413412 in the search results, entitled "Reflected XSS on secure.chaturbate.com", I noticed something a bit odd - it doesn't mention ███████ anywhere in the report that is publicly visible (and in fact that string is nowhere to be found in its markup such as keyword meta data):
+
+https://hackerone.com/reports/413412
+
+However, in the results, Chaturbate does have a report ██████████ involving XSS ████, so it seems probable this limited report is referencing ██████████, even though what's publicly available does not mention this.
+
+This had me wondering if I stumbled across a bug in Hackerone report searching, where by I am able to reveal words contained within the hacker's description and/or comments of limited disclosed reports. To test this theory, I wrote a script to perform this search, but while also adding other words, and seeing if this report still gets returned in the results, and try and reveal more content that is not available in the limited public report. For which words to add I used a list of the 'top 3000 English words' and ignored words that are 3 characters or shorter in length, or are very common (than, that, your etc).
+
+The results proved successful, in the sense I was able to build a lengthy search query that only returns this report, of words that are not found in the limited report (but still seem fairly likely to be matches, given the context). This search string was:
+
+```
+xss ████████ against application attack dangerous detect convince deliver direct mail mechanism occur publicly reference remove request responsible scheme script security supply themselves under victim vulnerable
+```
+
+Or in URL form: ███████
+
+While this particular example did not reveal any sensitive information for this specific report, I thought this worth reporting due to the obvious potential here to find details in reports that the program may not want to be public.
+
+### Steps To Reproduce
+
+1. Go to the Hacktivity page.
+2. Search for `xss ███ against application attack dangerous detect convince deliver direct mail mechanism occur publicly reference remove request responsible scheme script security supply themselves under victim vulnerable`
+3. Note the single result as report #413412, and other than "XSS", none of these words appear in the limited disclosed public report.
+
+## Impact
+
+By abusing this, an attacker could reveal content hidden in a limited disclosed report.
