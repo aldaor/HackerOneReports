@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/508256
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/fr33rh
+ReportedTo:Ubiquiti Inc.(ui)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:31.03.2019 12:55:51
+
+Summary:
+In EdgeSwitch X v1.1.0 and prior, a privileged user can execute arbitrary shell commands over the SSH CLI interface. This allows to execute shell commands under the root user.

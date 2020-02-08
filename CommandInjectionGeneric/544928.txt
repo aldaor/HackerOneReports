@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/544928
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/b0yd
+ReportedTo:Ubiquiti Inc.(ui)
+BountyAmount:16109.0
+Severity:critical
+State:Closed
+DateOfDisclosure:08.11.2019 16:37:35
+
+Summary:
+
+The vulnerability, or feature depending how you look at it, is the ability to execute commands using the 
+evostream API interface that is exposed on localhost:7440. Since the evostream service is running as SYSTEM a user can use the launchprocess command,  http://docs.evostream.com/2.0/launchProcess.html, to execute any binary with supplied arguments. The only thing that is keeping this "feature" from allowing remote code execution is the fact that it listens on localhost only. However, if it were couple with an SSRF, an attacker could achieve full remote code execution.
+
+## Impact
+
+The ability to run arbitrary commands as SYSTEM from any user.

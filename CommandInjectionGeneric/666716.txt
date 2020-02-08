@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/666716
+WeaknessName:Command Injection - Generic
+Reporter:https://hackerone.com/iframe
+ReportedTo:ok.ru(ok)
+BountyAmount:500.0
+Severity:critical
+State:Closed
+DateOfDisclosure:20.09.2019 16:20:26
+
+Summary:
+Incorrect configuration of the insideok.ru web server allowed PHP execution in the directory with user-generated files, which could be used for RCE.
