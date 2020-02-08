@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/674774
+WeaknessName:Cleartext Storage of Sensitive Information
+Reporter:https://hackerone.com/anshuman_pattnaik
+ReportedTo:Twitter(twitter)
+BountyAmount:280.0
+Severity:high
+State:Closed
+DateOfDisclosure:18.09.2019 22:01:53
+
+Summary:
+
+Hello,
+I found a Sensitive Data Exposure in github/mopub-android-mediation project, the AppLovin UI API key is hardcoded in source code. 
+
+And in the comment it's mentioned that 
+##"This is a unique SDK Key from AppLovin. Get yours from the AppLovin UI".
+
+Github Link:- https://github.com/mopub/mopub-android-mediation/blob/72804166ec9f3b79cc0dcfa96bd8c813f3252794/Testing/src/main/AndroidManifest.xml#L60
+
+Google Ads SDK reference link:- https://developers.google.com/admob/android/mediation/applovin
+
+Thanks
+Anshuman Pattnaik
+
+## Impact
+
+So if it's a production API key then it shouldn't be shown publicly in Github repo otherwise it can be used by other developers as it's a company property the API key should be secure as it's a monetize API key.

