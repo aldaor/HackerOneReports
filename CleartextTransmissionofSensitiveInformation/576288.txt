@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/576288
+WeaknessName:Cleartext Transmission of Sensitive Information
+Reporter:https://hackerone.com/jaisharma
+ReportedTo:Chainlink(chainlink)
+BountyAmount:250.0
+Severity:low
+State:Closed
+DateOfDisclosure:17.07.2019 20:49:08
+
+Summary:
+
+**Summary:** SSL certificate missing for page: http://rinkeby.chain.link/ which is letting an attacker to sniff sensitive information, in this case, user's testnet address as it is being transmitted unencrypted in clear text
+
+**Description:** http://rinkeby.chain.link/ missing SSL encryption, data sent over this address is leaking information to any malicious user and be utilized in any malicious manner, also redirection to correct HTTPS link is missing which is making more vulnerable to sniffing or MiMT attacks.
+
+## Steps To Reproduce:
+
+  1. Go to: http://rinkeby.chain.link/ and submit your personal testnet address
+  1. Setup Wireshark and you will get the User's testnet address
+
+## Supporting Material/References:
+
+  * Please see the attached POC doc
+
+## Impact
+
+Pages missing SSL certifications send data in clear text, if the data include sensitive information that can be exposed to anyone who is using any traffic sniffer over the local or wireless network (take Wireshark application as an example)
