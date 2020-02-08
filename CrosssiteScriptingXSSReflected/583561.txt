@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/583561
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/ba89af06bed666d134754de
+ReportedTo:TomTom(tomtom)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:13.06.2019 22:31:40
+
+Summary:
+
+Hi guys,
+
+According to the attached prints, I found an XSS at https://www.tomtom.com/en/search/?q=%3C%2Fscript%3E link.
+
+Here is the payload used: https://www.tomtom.com/en/search/?q=%3C%2Fscript%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E
+
+Any questions, I'm available!
+
+Regards,
+
+z3xdd
+
+## Impact
+
+An attacker can use XSS to send a malicious script to an unsuspecting user.

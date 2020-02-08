@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/782764
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/kelotex
+ReportedTo:RATELIMITED(ratelimited)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:25.01.2020 7:27:32
+
+Summary:
+
+## Summary:
+[add summary of the vulnerability]
+Hello there ! I found an XSS since you forgot to add the json content-type response header right there:
+https://github.com/gtsatsis/RLAPI-v3-OOP/blob/508d3c610ccc9076753bdc81151a5e8d76871a3e/src/Controller/UserController.php#L93
+The tier parameter is therefore returned with the wrong Content-Type (text/html).
+I have been able to verify the existance of the XSS.
+Note that you can bypass the '\' added to both " & / by using comments such as:
+## Steps To Reproduce:
+[add details for how we can reproduce the issue]
+
+  1. Deploy to a test instance
+  2. Create one admin user with correct api key filled in the database
+  3. the /users/[id]/set_tier "tier" POST parameter is vulnerable to XSS injection.
+
+## Supporting Material/References:
+
+
+  * Selection_033.png =>burp capture attached
+
+## Impact
+
+Reflected cross site scripting should be fixed, as an user might be able to steal cookies/escalate privileges.

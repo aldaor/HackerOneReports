@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/739601
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/nazmul7462
+ReportedTo:Badoo(badoo)
+BountyAmount:1000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:21.11.2019 11:39:36
+
+Summary:
+The researcher has found an XSS when sending messages through our service.

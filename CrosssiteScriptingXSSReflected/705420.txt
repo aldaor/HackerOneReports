@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/705420
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/longwenzhang
+ReportedTo:Python (IBB)(ibb-python)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:19.10.2019 2:34:25
+
+Summary:
+
+I have report this issue to PSRT and it has been resolved now.
+Details about this issue is at https://bugs.python.org/issue38243 and http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2019-16935
+
+## Impact
+
+It's the same with other xss.

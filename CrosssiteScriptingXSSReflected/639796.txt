@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/639796
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/nullcod3r
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:19.09.2019 9:26:47
+
+Summary:
+
+Vulnerability :  Reflected XSS in www.olx.co.id
+Steps to Reproduce :
+1) Go to (https://www.olx.co.id/iklan/di-jual-t120ss-habis-kena-php-IDA4JSB.html?ad_type=OR).
+2) Inject this payload ("><script>alert(1)<%2fscript>l43ax) in ad_type get parameter.
+https://www.olx.co.id/iklan/di-jual-t120ss-habis-kena-php-IDA4JSB.html?ad_type=ORrxhtm%22%3E%3Cscript%3Ealert(1)%3C%2fscript%3El43ax
+3) Then see the response in browser and constantly three popup will appear.
+
+## Impact
+
+With the help of xss a hacker or attacker can perform social engineering on users by redirecting them from real website to fake one. hacker can steal their cookies and download a malware on their system, and there are many more attacking scenarios a skilled attacker can perform with xss.

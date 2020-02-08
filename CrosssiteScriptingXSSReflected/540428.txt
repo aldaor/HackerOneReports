@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/540428
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/sneakerz
+ReportedTo:TomTom(tomtom)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:13.06.2019 22:37:25
+
+Summary:
+
+Hello Tomtom security team
+
+I found a reflected cross site scripting security vulnerability in tomtom.com 
+https://www.tomtom.com/nl_nl/search/?q=27%22--%3E%3CDetails%20Open%20OnToggle=confirm(document.domain)%3E
+
+This payload when loaded displays the domain the XSS vulnerability occurs in www.tomtom.com
+
+in the q= param here, 
+
+Welcome to Hackerone, 
+
+Ben
+
+## Impact
+
+An attacker could use this to load malicious scripts in a users browser or control the browser with malicious code.

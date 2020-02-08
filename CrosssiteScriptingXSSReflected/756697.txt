@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/756697
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/renekroka
+ReportedTo:PUBG(pubg)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:02.01.2020 17:04:20
+
+Summary:
+René Kroka found a Reflected XSS vulnerability that could be chained to a Stored XSS attack in the Invision Community forums software used by PUBG.
+
+By crafting a malicious URL the attacker is able to trigger Javascript to execute on their own page; known as Reflected XSS. The attacker then creates a new forum post, or modifies their forum profile. When a link is pasted into a forum post, or profile, the Invision software tries to embed the content into an iFrame to provide an enhanced user experience. An attacker can use a proxy to intercept the iframe as it loads, redirect it to their malicious URL, and trick the forums software into storing their XSS payload and displaying it to other users.
+
+Invision Community fixed this issue in release 4.4.9.1 (https://invisioncommunity.com/release-notes/4491-r91/).
+PUBG has upgraded to the latest version which resolved the issue for our installation.

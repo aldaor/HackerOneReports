@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/504261
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/testingforbugs
+ReportedTo:Algolia(algolia)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:22.03.2019 17:13:55
+
+Summary:
+@testingforbugs identified an issue related to web caching which could lead to XSS attacks.

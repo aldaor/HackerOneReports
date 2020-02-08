@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/771110
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/0x496
+ReportedTo:8x8(8x8)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:15.01.2020 17:54:43
+
+Summary:
+A reflected cross-site scripting issue was discovered within the account setup workflow of 8x8.vc.

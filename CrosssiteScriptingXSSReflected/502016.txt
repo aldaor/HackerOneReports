@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/502016
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/harisec
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:25.10.2019 16:29:32
+
+Summary:
+Reflected XSS via GET parameter in light.mail.ru

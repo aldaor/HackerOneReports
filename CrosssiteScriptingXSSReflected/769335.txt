@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/769335
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/mobius07
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:04.02.2020 14:09:04
+
+Summary:
+Reflected XSS via GET parameter in  https://warofdragons.my.games

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/772116
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/nnez
+ReportedTo:Razer(razer)
+BountyAmount:250.0
+Severity:medium
+State:Closed
+DateOfDisclosure:05.02.2020 4:48:04
+
+Summary:
+The tester discovered a reflected XSS vulnerability on https://easytopup.in.th related to a URL parameter.  This issue affected the Firefox browser.
+
+Razer thanks the tester for the report and the clear proof of concept.

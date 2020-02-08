@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/643442
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/arcturian
+ReportedTo:concrete5(concrete5)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:06.12.2019 15:48:41
+
+Summary:
+
+An unauthenticated, reflected cross-site-scripting attack is possible due to the unsanitised `cID` parameter in the preview_as_user functionality.
+
+Example URL: `https://LOCAL-CONCRETE-INSTALL/ccm/system/panels/page/preview_as_user/preview?cID=%22%3E%3C/iframe%3E%3Cscript%3Ealert(1)%3C/script%3E%3C!--`
+
+The error is in the `concrete/views/panels/page/preview_as/frame.php` file, line 4:
+```
+[..]
+src="<?= URL::to('/ccm/system/panels/page/preview_as_user/render') . '?&cID=' . Request::request('cID') ?>
+[..]
+```
+
+Solutions would be to either cast this value to an int with `intval()`, or pass the value through `htmlentities()` before rendering it. Or both!
+
+## Impact
+
+An attacker could steal cookies or perform actions on other users behalf.

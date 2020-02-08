@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/541199
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/gnux
+ReportedTo:Starbucks(starbucks)
+BountyAmount:250.0
+Severity:medium
+State:Closed
+DateOfDisclosure:12.12.2019 21:45:17
+
+Summary:
+gnux discovered a reflected XSS in https://card.starbucks.com.sg/unsubRevert.php due to an unsanitized user-input via the ct parameter.
+
+@gnux— thank you for reporting this vulnerability and confirming the resolution.

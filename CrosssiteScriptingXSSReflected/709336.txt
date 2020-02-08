@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/709336
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/dostoevskylabs
+ReportedTo:Shopify(shopify)
+BountyAmount:2000.0
+Severity:high
+State:Closed
+DateOfDisclosure:11.10.2019 17:38:59
+
+Summary:
+
+*.myshopify.com is vulnerable to a reflective cross-site scripting attack in the newsletter form. This can be crafted to trigger on a page load without any further user interaction.
+
+The following example url shows this vulnerability:
+```
+https://testbuguser.myshopify.com/?contact[email]%20onfocus%3djavascript:alert(%27xss%27)%20autofocus%20a=a&form_type[a]aaa
+```
+
+This was tested on a newly registered store "testbuguser.myshopify.com"
+
+If you require any additional details, please do not hesitate to bump.
+
+## Impact
+
+This attack could be leveraged to compromise administrative sessions or perform actions on behalf of users with the same level of privilege as the user.

@@ -1,0 +1,25 @@
+ReportLink:https://hackerone.com/reports/723060
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/corraldev
+ReportedTo:Razer(razer)
+BountyAmount:750.0
+Severity:high
+State:Closed
+DateOfDisclosure:10.01.2020 8:57:00
+
+Summary:
+
+## Summary:
+Due to the **parameter err is injected to the body** of the page without any sanitization a victim could be tricked to visit the page and get his account stolen.
+
+## Steps To Reproduce:
+  1.Visit the specially crafted url (Firefox | IE11) https://pay.gold.razer.com/Error/Uyt2ZXF0UjZLM0dvMHA4eUFHMDVoZEtrdWxjdzNTeTlYMnpLR0NiOVRmND0?err=%3Csvg%20onpointerenter=z=alert,z`corraldev`%3E
+
+ 2.Move your pointer around the center of the page, near of continue button. An alert should appears
+
+## Supporting Material/References:
+  {F618130}
+
+## Impact
+
+Fortunately the WAF can evade most of the XSS payloads but with the bypass that i have used an attacker can execute scripts at a victim's session and take over his account, start a phising campaign and steal ( paypal accounts or credit card numbers ), force users to download malware, and a lot of advanced attacks.

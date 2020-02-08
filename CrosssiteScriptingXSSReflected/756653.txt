@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/756653
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/renekroka
+ReportedTo:Polymail, Inc.(polymail_inc)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:18.12.2019 16:06:22
+
+Summary:
+@renekroka Discovered a potential reflected XSS by changing url parameters on the user invite onboarding links.

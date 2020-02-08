@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/582360
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/elmahdi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:750.0
+Severity:medium
+State:Closed
+DateOfDisclosure:16.09.2019 23:20:57
+
+Summary:
+Researcher found Reflected XSS and Blind SSRF via the same GET parameter. Bounty was awarded for SSRF.

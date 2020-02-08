@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/722977
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/pss_xss
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:25.11.2019 16:39:37
+
+Summary:
+Reflected XSS via GET arguments in go.mail.ru

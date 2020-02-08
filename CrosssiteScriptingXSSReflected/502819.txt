@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/502819
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/randbug101
+ReportedTo:VK.com(vkcom)
+BountyAmount:200.0
+Severity:low
+State:Closed
+DateOfDisclosure:10.05.2019 23:11:24
+
+Summary:
+XSS в старых версиях IE на мобильной версии сайта, доступной некоторым операторам. 

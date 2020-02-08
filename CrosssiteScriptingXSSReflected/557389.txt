@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/557389
+WeaknessName:Cross-site Scripting (XSS) - Reflected
+Reporter:https://hackerone.com/kawaiinee
+ReportedTo:TomTom(tomtom)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:13.06.2019 22:30:50
+
+Summary:
+
+## Summary:
+XSS on www.tomtom.com is very dangerous, if this vulnerability misused by Attacker to steal cookie it will be fatal for other users.
+
+## Proof of Concept:
+- I tried to visit https://www.tomtom.com/en_au/search/
+- Then, search using keyword: `TEST"`
+- I realized double quote (") is reflected
+- So, I try to search with keyword: `SAD" onmouseover="alert(document.cookie)" x="`
+- And then:
+F481420
+- Or you can visit this url: https://www.tomtom.com/en_au/search/?q=SAD%22%20onmouseover=%22alert(document.cookie)%22%20%20x=%22 , then mouse over to the "SAD" word
+
+## Other Attachment:
+F481424
+
+## Patch Suggestion:
+- Filter each displayed input character, especially: `" ' < > / \`
+
+## Impact
+
+Impact of XSS on www.tomtom.com, Attackers can use it to steal other users' cookies. besides that the attacker can also change www.tomtom.com to a scam site by entering the malicious script on the payload.
