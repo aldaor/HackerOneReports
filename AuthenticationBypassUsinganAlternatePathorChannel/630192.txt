@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/630192
+WeaknessName:Authentication Bypass Using an Alternate Path or Channel
+Reporter:https://hackerone.com/morax
+ReportedTo:ZEIT(zeit)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:04.07.2019 8:02:31
+
+Summary:
+
+## Summary:
+By leveraging the domain verification endpoint I can obtain sensitive information about the user who registered the domain within the zeit UI including username, email address, userId, and customerId. In addition, some high level information about the domain is included as well such as when it was registered or if its CDN enabled.
+
+Upon testing the various API endpoints it became clear to me that these details were not intended to be disclosed due to the fact that you have implemented access controls to prevent me from pulling these very details from the /api/v4/domains/now.systems endpoint by returning an HTTP 403 containing a response body indicating that I do not have permission to access the resource.
+
+## Steps To Reproduce:
+1. Configure your browser to use an intercepting proxy such as Burp Suite (used here)
+2. Authenticate as a normal user and capture the HTTP request payload including token and authorization headers
+3. Execute an HTTP POST request using these values against /api/v4/domains/now.systems/verify
+4. Examine the HTTP response body which includes the same information as the /api/v4/domains/now.systems response body (if you have access to it)
+
+## Supporting Material/References:
+Attached are the HTTP requests and corresponding responses I received from your endpoint in Burp Suite repeater. Included in the output are the following attributes associated with the domain now.systems.
+
+Customer ID: ██████████
+Email address of registrant:████████
+User ID:██████
+Username: ██████
+
+## Impact
+
+There are a few things here. 
+
+1. Domain enumeration - What domains are registered with Zeist?
+2. Who registered the domains and what is their username and email address? These can be used for spearphishing attacks to impersonate Zeist staff.
+3. User ID and CustomerID could be leveraged against other API endpoints to obtain more information such as team IDs.
+4. Various attacks against Zeit staff including phishing and brute forcing which could lead to account takeover of critical production resources (such as domains)

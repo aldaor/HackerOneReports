@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/708303
+WeaknessName:Authentication Bypass Using an Alternate Path or Channel
+Reporter:https://hackerone.com/offensive-security
+ReportedTo:Maker Ecosystem Growth Holdings, Inc(makerdao_bbp)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:15.01.2020 10:59:14
+
+Summary:
+Bypassing 2FA after activating it on the company forum.
