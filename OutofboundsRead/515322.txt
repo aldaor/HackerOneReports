@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/515322
+WeaknessName:Out-of-bounds Read
+Reporter:https://hackerone.com/jplopezy
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:06.07.2019 13:13:56
+
+Summary:
+Out-of-bounds read in ICQ descktop on FLV format parsing could lead to application crash.
