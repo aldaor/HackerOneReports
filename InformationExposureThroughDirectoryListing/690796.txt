@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/690796
+WeaknessName:Information Exposure Through Directory Listing
+Reporter:https://hackerone.com/tibin_sunny
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:01.02.2020 4:39:52
+
+Summary:
+
+Directory Listing is enabled on https://try.nextcloud.com and it shows out a few files on the server + The server version.
+
+POC: https://try.nextcloud.com/assets/
+        https://try.nextcloud.com/css/
+        https://try.nextcloud.com/js/
+
+## Impact
+
+This could leak sensitive information on the server and it also allows an attacker to gain knowledge about the web-technology used by the website

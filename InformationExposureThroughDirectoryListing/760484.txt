@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/760484
+WeaknessName:Information Exposure Through Directory Listing
+Reporter:https://hackerone.com/juni19
+ReportedTo:MTN Group(mtn_group)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:05.02.2020 11:11:10
+
+Summary:
+
+## Summary:
+There are some exposed files accessible for anyone
+
+## Steps To Reproduce:
+Go to http://www.mtn.co.sz/wp-content/uploads/ and navigate between available folders
+
+## Impact
+
+Every uploaded data can be  accessible through this directory listing vulnerability
+This might include several private/confidential data

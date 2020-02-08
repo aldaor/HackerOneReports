@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/762118
+WeaknessName:Information Exposure Through Directory Listing
+Reporter:https://hackerone.com/juni19
+ReportedTo:MTN Group(mtn_group)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:05.02.2020 11:10:54
+
+Summary:
+
+## Summary:
+Upload directory of Mtn.co.sz has listing enabled
+
+## Steps To Reproduce:
+
+  1. Just go to https://www.mtn.ci/wp-content/uploads/ and navigate between available folders
+
+## Impact
+
+Every data uploaded by the webmaster can be accessible through this directory listing vulnerability
+This might include several private/confidential data
