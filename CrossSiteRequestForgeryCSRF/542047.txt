@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/542047
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/elmahdi
+ReportedTo:ZEIT(zeit)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:19.05.2019 14:51:15
+
+Summary:
+
+## Summary:
+####Hi I found it as the endpoint of Connecting the account with the github account vulnerable to CSRF attack because of the lack of endpoint protection against CSRF attack
+
+####The attacker Can exploit this vulnerability to force users to link their account with his or her github account, which is Lead To To Account takeover
+
+
+##Steps To Reproduce : 
+####1. Create 2 Account With Email 
+####Account X-1 : Attacker
+####Account X-2 : Victim
+####2. Sign In To Account X-1 And Go To https://zeit.co/account And Click On Connect with Github And click on authorize ... ( On github )
+####3. And Intercept The Request And Copy The Value Of Parameter `code`
+https://zeit.co/api/now/registration/github-callback?code=Value&state=
+####4. Sign In To Account X-2 And Go To https://zeit.co/api/now/registration/github-callback?code=Value&state=
+####5. And You Can ( Attacker X-1 ) sign in to `Account x-2 ( victim )` via Sign in with Github
+
+##Proof of Concept : 
+{F471542:}
+
+## Impact
+
+####Account Takeover !
