@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/762707
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/0xskull
+ReportedTo:Polymail, Inc.(polymail_inc)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:22.01.2020 0:57:05
+
+Summary:
+Inbox metadata leakage via Insecure Direct Object Reference on one endpoint.

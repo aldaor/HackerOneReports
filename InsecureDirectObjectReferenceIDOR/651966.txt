@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/651966
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/penlab
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:28.08.2019 11:52:32
+
+Summary:
+IDOR allowed to edit arbitrary posts in auto.mail.ru
+
+auto.mail.ru belongs to Extended scope

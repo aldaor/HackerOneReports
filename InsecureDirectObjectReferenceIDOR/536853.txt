@@ -1,0 +1,29 @@
+ReportLink:https://hackerone.com/reports/536853
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/spaceraccoon
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:23.04.2019 0:31:38
+
+Summary:
+
+**Summary:**
+At this moment, the two new upcoming CTF levels for https://ctf.hacker101.com/ctf have not been revealed. However, an IDOR at the https://ctf.hacker101.com/group/user/ID1?user=USERID endpoint reveals them (see attached screenshot)
+
+**Description:**
+
+### Steps To Reproduce
+
+1. Create a group.
+2. At the group index page (https://ctf.hacker101.com/group/groupIndex/GROUPID), click on the "details" button for yourself.
+3. At the bottom, you should see the unreleased CTF levels.
+
+### Optional: Supporting Material/References (Screenshots)
+
+ * Attached screenshot with unreleased CTF at bottom
+
+## Impact
+
+Low level, but the user could get ahead of others by knowing upcoming levels, especially if there are prizes for being the first to complete them. Plus it reveals an interesting IDOR endpoint linked to the database.

@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/701160
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/mr_intrusionist
+ReportedTo:Starbucks(starbucks)
+BountyAmount:250.0
+Severity:medium
+State:Closed
+DateOfDisclosure:12.12.2019 21:28:57
+
+Summary:
+mr_intrusionist discovered an Insecure Direct Object Reference (IDOR) which affects the https://card.starbucks.in/StarbucksMSRModule/starbucksGetCardData.do endpoint through the cardId parameter. This allowed an authenticated, but unauthorized user to iterate cards and view the balance.
+
+@mr_intrusionist — thank you for reporting this vulnerability and confirming the resolution.

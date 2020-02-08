@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/739752
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/agametov
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:17.12.2019 15:32:14
+
+Summary:
+IDOR in relap.io allowed users enumeration for domain

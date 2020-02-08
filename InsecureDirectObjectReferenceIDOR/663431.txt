@@ -1,0 +1,20 @@
+ReportLink:https://hackerone.com/reports/663431
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/jobert
+ReportedTo:HackerOne(security)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:13.12.2019 17:53:35
+
+Summary:
+
+A minor Insecure Direct Object Reference (IDOR) vulnerability is present in the `/bugs` endpoint. One of the Bugs overview filters enables a program member to filter by Hackathon that their program was a part of. This filter is applied when hackathon IDs are provided in the `hackathons` parameter, like https://hackerone.com/bugs?subject=security&hackathons[]=28.
+
+The parameter takes an array of IDs and is vulnerable to an IDOR. When a hackathon ID is given that belongs to a private hackathon, a date range will be applied. Based on the extremes of the returned reports submission date, a user could determine the date range of the hackathon.
+
+This vulnerability is easier to exploit for a program that has a lot of reports submitted on different days.
+
+## Impact
+
+The date range of a private hackathon could be determined. At the moment, there aren't any real hackathon objects that are marked as private, so no sensitive information is disclosed.

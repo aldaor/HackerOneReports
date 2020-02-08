@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/681473
+WeaknessName:Insecure Direct Object Reference (IDOR)
+Reporter:https://hackerone.com/zerody
+ReportedTo:YouPorn(youporn)
+BountyAmount:1500.0
+Severity:high
+State:Closed
+DateOfDisclosure:11.11.2019 7:36:32
+
+Summary:
+The researcher was able to change the password of private videos, edit other videos data such as title and description, publish private videos by successfully exploiting an IDOR. 
