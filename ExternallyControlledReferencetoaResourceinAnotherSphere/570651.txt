@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/570651
+WeaknessName:Externally Controlled Reference to a Resource in Another Sphere
+Reporter:https://hackerone.com/0xpatrik
+ReportedTo:Starbucks(starbucks)
+BountyAmount:2000.0
+Severity:high
+State:Closed
+DateOfDisclosure:22.05.2019 16:25:42
+
+Summary:
+A subdomain of `starbucks.com` had a CNAME record pointing to an Azure Traffic Manager profile that @0xpatrik was able to claim. 

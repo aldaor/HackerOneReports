@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/514451
+WeaknessName:Externally Controlled Reference to a Resource in Another Sphere
+Reporter:https://hackerone.com/m7mdharoun
+ReportedTo:HackerOne(security)
+BountyAmount:500.0
+Severity:none
+State:Closed
+DateOfDisclosure:04.04.2019 19:41:54
+
+Summary:
+
+Hi ,
+I'm sure this repo on GitHub `https://github.com/Hacker0x01` belong to `Hackerone,inc`. I've found that your docs on it mention a Heroku app `breaker101.herokuapp.com
+` which is no longer work and I could takeover it via HeroKu.
+
+>Suggested Fix : 
+Remove this app name from your docs or I can remove it from my apps to added it back to your account 
+
+#`Poc :` 
+http://breaker101.herokuapp.com
+
+
+>Repo https://github.com/Hacker0x01/Hacker101Coursework/blob/master/gae/static/report47.md
+{F450943}
+
+## Impact
+
+>New Researchers can be scammed by this app
