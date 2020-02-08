@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/643446
+WeaknessName:Forced Browsing
+Reporter:https://hackerone.com/sicarius
+ReportedTo:Maximum(maximum)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:16.07.2019 12:12:11
+
+Summary:
+
+**Domain and URL:**
+[corne.maximum.nl]
+
+
+Hello,
+
+I noticed that your subdomain corne.maximum.nl links to the website "maximum.com" instead of "maximum.nl" ("maximum.com" is in control of a Chinese organization as you said in your description).
+
+I think you've made a little mistake, but there is no impact :)
+
+Have a nice day !
+
+Best regards,
+
+Sicarius.
+
+## Impact
+
+Nothing really fancy, just improper redirection !
