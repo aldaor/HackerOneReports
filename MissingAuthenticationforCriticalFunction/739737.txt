@@ -1,0 +1,15 @@
+ReportLink:https://hackerone.com/reports/739737
+WeaknessName:Missing Authentication for Critical Function
+Reporter:https://hackerone.com/alexbirsan
+ReportedTo:PayPal(paypal)
+BountyAmount:15300.0
+Severity:high
+State:Closed
+DateOfDisclosure:08.01.2020 16:31:37
+
+Summary:
+A bug was identified whereby sensitive, unique tokens were being leaked in a JS file used by the recaptcha implementation. In certain cases, a user must solve a CAPTCHA challenge after authenticating. When the security challenge is completed, the authentication request is replayed to log in. The exposed tokens were used in the POST request to solve the CAPTCHA.
+
+The researcher identified a method by which a user, starting from a malicious site, could expose the security challenge token to a third party via a cross-site script inclusion (XSSI) attack. If the user then followed a login link from the malicious site and entered their credentials, the malicious third party could complete the security challenge, triggering the authentication request replay and exposing the user's password. This exposure only occurred if a user followed a login link from a malicious site, similar to a phishing page. 
+
+PayPal implemented additional controls on the security challenge request to prevent token reuse, which resolved the issue, and no evidence of abuse was found. 
