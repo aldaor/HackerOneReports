@@ -1,0 +1,12 @@
+ReportLink:https://hackerone.com/reports/596368
+WeaknessName:File and Directory Information Exposure
+Reporter:https://hackerone.com/xaleraf4ra
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:23.07.2019 15:30:47
+
+Summary:
+.htaccess file was available for reading via Web request on cookery.zakazaka.ru due to invalid configuration. While this misconfiguration could potentially lead to information disclosure, no sensitive information was actually leaked.
+

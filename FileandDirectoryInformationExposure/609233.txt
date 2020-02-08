@@ -1,0 +1,46 @@
+ReportLink:https://hackerone.com/reports/609233
+WeaknessName:File and Directory Information Exposure
+Reporter:https://hackerone.com/prinsfrank
+ReportedTo:ecobee(ecobee)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:21.06.2019 19:00:15
+
+Summary:
+
+## Summary:
+AWS S3 GET Bucket (List Objects) Version 1 API accesible
+
+## Steps To Reproduce:
+navigate to: 
+https://www.ecobee.com/wp-content/uploads/
+
+Observe that you get a listbucketresponse (https://docs.aws.amazon.com/AmazonS3/latest/API/RESTBucketGET.html#RESTBucketGET-requests)
+The truncated param is set to true, so there are more pages available. we can go te the next page by using the marker parameter and setting it to the NextMarker value.
+
+https://www.ecobee.com/wp-content/uploads/?marker=2013/08/tell-logo_white-207x119.jpg
+https://www.ecobee.com/wp-content/uploads/?marker=2013/10/careers7-651x500.jpg
+https://www.ecobee.com/wp-content/uploads/?marker=2013/11/13-1127_Ecobee_Remote_Sensor_jpegs-11-1000x600.png
+https://www.ecobee.com/wp-content/uploads/?marker=2013/11/controlonthego-retina-1024x256.jpg
+https://www.ecobee.com/wp-content/uploads/?marker=2013/11/ecobee3_webportal-3-150x150.png
+https://www.ecobee.com/wp-content/uploads/?marker=2013/11/savings-retina-500x500.jpg
+https://www.ecobee.com/wp-content/uploads/?marker=2013/12/EcobeeAthenafront-150x150.jpg
+https://www.ecobee.com/wp-content/uploads/?marker=2013/12/ems_2b1-250x250.png
+https://www.ecobee.com/wp-content/uploads/?marker=2014/02/Screen-Shot-2014-02-05-at-5.40.55-PM-1400x478.png
+https://www.ecobee.com/wp-content/uploads/?marker=2014/04/ecobee_EMS_phoneapp-1024x672.jpg
+https://www.ecobee.com/wp-content/uploads/?marker=2014/05/ecobeeContractorPortal_laptopB-250x250.png
+https://www.ecobee.com/wp-content/uploads/?marker=2014/07/ecobee3_1.png
+https://www.ecobee.com/wp-content/uploads/?marker=2014/09/2stage_heatpump_airhandler_si1-300x287.jpg
+https://www.ecobee.com/wp-content/uploads/?marker=2015/01/Austin-Energy-300x233.jpg
+https://www.ecobee.com/wp-content/uploads/?marker=2015/07/blog-image-InTheNews-350x87.png
+https://www.ecobee.com/wp-content/uploads/?marker=2015/12/XL.Hz_.k1-956x366.jpg
+https://www.ecobee.com/wp-content/uploads/?marker=2016/03/Margaret_Hamilton-500x500.jpg
+https://www.ecobee.com/wp-content/uploads/?marker=2016/11/Contest_LARGE-350x200.jpeg
+https://www.ecobee.com/wp-content/uploads/?marker=2019/06/chronos-faq-active@3x-1275x320.png
+
+One of the resources that can be discovered is for example: https://www.ecobee.com/wp-content/uploads/2014/09/advanced-custom-field-export_new.xml_.txt
+
+## Impact
+
+An attacker can gather info about all items in the bucket, including sensitive data like https://www.ecobee.com/wp-content/uploads/2014/09/advanced-custom-field-export_new.xml_.txt
