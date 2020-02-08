@@ -1,0 +1,68 @@
+ReportLink:https://hackerone.com/reports/683318
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/mirchr
+ReportedTo:OpenSSL (IBB)(ibb-openssl)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:24.09.2019 20:16:50
+
+Summary:
+
+Advisory: https://www.openssl.org/news/secadv/20190730.txt
+
+```
+Severity: Low
+
+OpenSSL has internal defaults for a directory tree where it can find a
+configuration file as well as certificates used for verification in
+TLS.  This directory is most commonly referred to as OPENSSLDIR, and
+is configurable with the --prefix / --openssldir configuration options.
+
+For OpenSSL versions 1.1.0 and 1.1.1, the mingw configuration targets
+assume that resulting programs and libraries are installed in a
+Unix-like environment and the default prefix for program installation
+as well as for OPENSSLDIR should be '/usr/local'.
+
+However, mingw programs are Windows programs, and as such, find
+themselves looking at sub-directories of 'C:/usr/local', which may be
+world writable, which enables untrusted users to modify OpenSSL's
+default configuration, insert CA certificates, modify (or even
+replace) existing engine modules, etc.
+
+For OpenSSL 1.0.2, '/usr/local/ssl' is used as default for OPENSSLDIR
+on all Unix and Windows targets, including Visual C builds.  However,
+some build instructions for the diverse Windows targets on 1.0.2
+encourage you to specify your own --prefix.
+
+OpenSSL versions 1.1.1, 1.1.0 and 1.0.2 are affected by this issue.
+Due to the limited scope of affected deployments this has been
+assessed as low severity and therefore we are not creating new
+releases at this time.
+
+The mitigations are found in these commits:
+- For 1.1.1, commit 54aa9d51b09d67e90db443f682cface795f5af9e
+- For 1.1.0, commit e32bc855a81a2d48d215c506bdeb4f598045f7e9 and
+  b15a19c148384e73338aa7c5b12652138e35ed28
+- For 1.0.2, commit d333ebaf9c77332754a9d5e111e2f53e1de54fdd
+
+The 1.1.1 and 1.1.0 mitigation set more appropriate defaults for
+mingw, while the 1.0.2 mitigation documents the issue and provides
+enhanced examples.
+
+This issue was reported by Rich Mirch.  The fix was developed by
+Richard Levitte from the OpenSSL development team.  It was reported to
+OpenSSL on 9th Jun 2019.
+```
+## Summary:
+I have confirmed this vulnerability in over a dozen Windows applications. A few public links have been included below. While the OpenSSL project rated this a low, most projects/vendors that I have worked with have rated it a high due to the ability to inject arbitrary code into the calling process from a low privileged user.
+
+## Supporting Material/References:
+* curl/libcurl - Windows OpenSSL engine code injection https://curl.haxx.se/docs/CVE-2019-5443.html
+* CVE-2019-12572 PIA Windows Privilege Escalation: Malicious OpenSSL Engine https://blog.mirch.io/2019/06/10/cve-2019-12572-pia-windows-privilege-escalation-malicious-openssl-engine/
+* Stunnel Windows local privilege escalation vulnerability https://www.stunnel.org/pipermail/stunnel-users/2019-June/006417.html
+* CVE-2019-10211: EnterpriseDB Windows installer bundled OpenSSL executes code from unprotected directory https://www.postgresql.org/about/news/1960/
+
+## Impact
+
+This can result in the elevation of privileges for the vulnerable application. Low privileged accounts on Windows allow authenticated low privileged users the ability to create directories under the top level root directory c:\\. A malicious user could create this path and add a custom openssl.cnf file to load a OpenSSL engine library. When this library is loaded, arbitrary code would be executed with the full authority of the calling process. In some cases this is a service running with SYSTEM privileges - the highest authority on Windows systems.

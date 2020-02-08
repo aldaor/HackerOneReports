@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/702252
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/cccaaasser
+ReportedTo:Razer(razer)
+BountyAmount:750.0
+Severity:high
+State:Closed
+DateOfDisclosure:05.12.2019 6:21:28
+
+Summary:
+The tester determined that the Synapse 2 installed executable CrashSender1402.exe was subject to a DLL hijacking vulnerability.  As this was no longer supported by the third party provider, Razer decided to remove this executable from future versions of Synapse 2.

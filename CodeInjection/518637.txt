@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/518637
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/ruvlol
+ReportedTo:Mail.ru(mailru)
+BountyAmount:10000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:02.12.2019 15:22:35
+
+Summary:
+Confluence widget connector vulnerable to CVE-2019-3396 was available on shared.mail.ru

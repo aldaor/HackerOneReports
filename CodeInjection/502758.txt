@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/502758
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/spaceraccoon
+ReportedTo:Starbucks(starbucks)
+BountyAmount:4000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:10.04.2019 19:29:08
+
+Summary:
+This report from @spaceraccoon demonstrated a valid attack resulting in RCE and full compromise of the target. The detailed and thorough report was especially helpful throughout the triage process, and ultimately helped us reproduce and resolve the issue as quickly as possible. The vulnerable site has been taken offline.
+
+We'd like to thank @spaceraccoon for the submission, and hope to continue to see reports like this in the future.

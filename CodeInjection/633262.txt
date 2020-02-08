@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/633262
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/protex0r
+ReportedTo:Mail.ru(mailru)
+BountyAmount:100.0
+Severity:medium
+State:Closed
+DateOfDisclosure:20.09.2019 9:22:05
+
+Summary:
+DYLD Environment Variables were not disabled In MacOS desktop ICQ client. Disabling DYLD Environment Variables is BCP for MacOS application to prevent code injection vector into local process.

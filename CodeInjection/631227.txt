@@ -1,0 +1,31 @@
+ReportLink:https://hackerone.com/reports/631227
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/ctulhu
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:50.0
+Severity:none
+State:Closed
+DateOfDisclosure:26.07.2019 8:02:14
+
+Summary:
+
+###What is the Vulnerability? 
+HTML Tags such as <h1> , <small> , <href> and <img> are Getting Executed in Next Cloud Client Mobile Application for Android which can then Results to Code Injection.
+
+###Reproduction Steps
+
+1.) Using Next Cloud Client Mobile App on Android, Rename a Folder to ```<a href="google.com">test```
+Our HTML tag Was Executed
+{F518303}
+
+2.)Rename the folder to ```small<h1>BIG```
+Our HTML tag Was Executed
+{F518304}
+
+3.) Rename the Folder to ```normal<small>small<h1>BIG```
+Our HTML tag Was Executed
+{F518305}
+
+## Impact
+
+If successfully exploited, impact could cover loss of confidentiality, loss of integrity, loss of availability, and/or loss of accountability

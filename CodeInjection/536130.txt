@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/536130
+WeaknessName:Code Injection
+Reporter:https://hackerone.com/0xc0ffee
+ReportedTo:Mail.ru(mailru)
+BountyAmount:2000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:08.07.2019 15:24:57
+
+Summary:
+Unpatched CVE-2019-3396 (and few more) in publicly accessible Atlassian Confluence instance in ESForce domain.
