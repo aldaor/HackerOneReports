@@ -1,0 +1,41 @@
+ReportLink:https://hackerone.com/reports/550696
+WeaknessName:Heap Overflow
+Reporter:https://hackerone.com/l00p3r
+ReportedTo:curl(curl)
+BountyAmount:200.0
+Severity:low
+State:Closed
+DateOfDisclosure:31.05.2019 20:35:44
+
+Summary:
+
+## Summary:
+A heap buffer overflow can occur at line 1114 in file `lib/tftp.c` due to the fact of `state->blksize` containing the default size instead of containing the one specified in the `--tftp-blksize` parameter.
+
+This bug could lead to a **crash** or maybe to **RCE** in the case the attacker also had a memory leak.
+
+
+### Vulnerable line:
+```
+state->rbytes = (int)recvfrom(state->sockfd,
+                                (void *)state->rpacket.data,
+                                state->blksize + 4,
+                                0,
+                                (struct sockaddr *)&fromaddr,
+                                &fromlen);
+```
+
+
+## Steps To Reproduce:
+
+  1. Download the server script
+  1. Run it and bind to an address: `$ python evil-server.py IP PORT`
+  1. Connect to that server with curl: `$ curl --tftp-blksize N tftp://IP:PORT`
+Where **N** should be a number lower than 293.
+
+## Impact
+
+* An attacker would also need a memory leak in order to gain full RCE.
+* The victim should explicitly set the `--blksize` argument to a value inferior to 293.
+
+Thus, the impact is not very high but it's still quite dangerous to not release a patch.

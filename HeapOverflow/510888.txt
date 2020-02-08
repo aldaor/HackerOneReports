@@ -1,0 +1,17 @@
+ReportLink:https://hackerone.com/reports/510888
+WeaknessName:Heap Overflow
+Reporter:https://hackerone.com/etsukata
+ReportedTo:Perl (IBB)(ibb-perl)
+BountyAmount:500.0
+Severity:critical
+State:Closed
+DateOfDisclosure:25.09.2019 1:03:52
+
+Summary:
+
+See: https://rt.perl.org/Public/Bug/Display.html?id=133192
+CVE ID: CVE-2018-18313
+
+## Impact
+
+Potential information leak(ex: secret variables or source codes)
