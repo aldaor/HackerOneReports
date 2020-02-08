@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/512076
+WeaknessName:Deserialization of Untrusted Data
+Reporter:https://hackerone.com/mbeccati
+ReportedTo:Revive Adserver(revive_adserver)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:23.04.2019 13:08:01
+
+Summary:
+
+An attacker could send a specifically crafted payload to the XML-RPC invocation script and trigger the unserialize() call on the "what" parameter in the "openads.spc" RPC method.
+
+## Impact
+
+Such vulnerability could be used to perform various types of attacks, e.g. exploit serialize-related PHP vulnerabilities or PHP object injection.
+
+It is possible, although unconfirmed, that the vulnerability has been used by some attackers in order to gain access to some Revive Adserver instances and deliver malware through them to third party websites.

@@ -1,0 +1,16 @@
+ReportLink:https://hackerone.com/reports/542670
+WeaknessName:Deserialization of Untrusted Data
+Reporter:https://hackerone.com/mbeccati
+ReportedTo:Revive Adserver(revive_adserver)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:23.04.2019 13:06:06
+
+Summary:
+
+An attacker could send a specifically crafted payload to the XML-RPC invocation script and trigger the unserialize() call on the first parameter in the "pluginExecute" RPC method.
+
+## Impact
+
+Such vulnerability could be used to perform various types of attacks, e.g. exploit serialize-related PHP vulnerabilities or PHP object injection.
