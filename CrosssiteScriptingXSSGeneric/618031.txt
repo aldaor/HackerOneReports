@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/618031
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/mosuan
+ReportedTo:Shopify(shopify)
+BountyAmount:1000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:27.06.2019 15:00:15
+
+Summary:
+We recently deployed changes to our discount timelines and @mosuan identified that product names were no longer being properly escaped. This resulted in a stored XSS vulnerability when a product with an XSS payload was referenced in the comments for a discount code. This was a valid XSS within the scope of our program because it executed outside of the rich text and theme editors on `/admin` of the store. It was awarded $1000 because exploitation would require access to a staff account with `discounts` permission.
+self-xss
+
+## Impact
+
+1.add `Products`, shop name is '"'><img src=x onerror=alert(domain.domain)>'
+2.click `Discounts->code`, https://mosuan-img-src-x.myshopify.com/admin/discounts/367541518396
+3.add comments, Choose the goods just now.
+4.alert

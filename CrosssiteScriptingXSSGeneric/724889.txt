@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/724889
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/pandaaaa
+ReportedTo:Zomato(zomato)
+BountyAmount:750.0
+Severity:high
+State:Closed
+DateOfDisclosure:19.11.2019 4:59:11
+
+Summary:
+Thanks for the report @pandaaaa.

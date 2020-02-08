@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/614441
+WeaknessName:Cross-site Scripting (XSS) - Generic
+Reporter:https://hackerone.com/xaleraf4ra
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:08.07.2019 15:33:43
+
+Summary:
+Do-it-yourself XSS (self-XSS) via crafted file name in support request on games.mail.ru
