@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/692360
+WeaknessName:Insecure Temporary File
+Reporter:https://hackerone.com/0xbugger
+ReportedTo:Maker Ecosystem Growth Holdings, Inc(makerdao_bbp)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:15.01.2020 11:05:01
+
+Summary:
+Uploading any file types to the company chat.
