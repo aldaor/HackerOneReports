@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/700624
+WeaknessName:Insecure Storage of Sensitive Information
+Reporter:https://hackerone.com/iamsahana
+ReportedTo:Razer(razer)
+BountyAmount:400.0
+Severity:medium
+State:Closed
+DateOfDisclosure:05.12.2019 6:26:51
+
+Summary:
+The tester discovered that the Razer Pay Android application was storing user data locally on the phone in the clear.  An adversary would need access to the phone to obtain this information.  The application was patched to avoid storing this information in version 2.10.

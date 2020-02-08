@@ -1,0 +1,28 @@
+ReportLink:https://hackerone.com/reports/644358
+WeaknessName:Insecure Storage of Sensitive Information
+Reporter:https://hackerone.com/alyssa_herrera
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:10.10.2019 19:14:46
+
+Summary:
+
+**Summary:**
+I discovered a pdf file on ████████ that outlines various information corresponding to military members. It reveals information on date of birth, where they were born, marriage status, race, children/dependents, etc
+**Description:**
+I discovered what looks to be an internal file that outlines sensitive information on various service member and looks to be publicly accessible
+## Impact
+High
+## Step-by-step Reproduction Instructions
+Visit: https://█████/wp-content/uploads/2018/12/██████████
+
+## Product, Version, and Configuration (If applicable)
+N/A
+## Suggested Mitigation/Remediation Actions
+Remove immedietly
+
+## Impact
+
+An attacker can gleam highly personal information on military members.

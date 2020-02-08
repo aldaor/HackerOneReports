@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/665144
+WeaknessName:Insecure Storage of Sensitive Information
+Reporter:https://hackerone.com/alyssa_herrera
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:10.10.2019 19:14:00
+
+Summary:
+
+**Summary:**
+During a search of ████████ I discovered that one of the slides ina presentation contained a screen shot of live data. 
+**Description:**
+The slides describe testing and using military application to organize and aggregate data on users. On one of the slides it does show a screen shot of actual data. I'm assuming it's live due to the fact that part of it was blocked out like the previous report where it showed XXXX and 4 digits.
+## Impact
+Critical
+## Step-by-step Reproduction Instructions
+████
+## Product, Version, and Configuration (If applicable)
+N/A
+## Suggested Mitigation/Remediation Actions
+Purge the file
+
+## Impact
+
+Last 4  digits of an SSN can be used on various web portals along with knowing the full name of the soldier can give us access to sensitive portals
