@@ -1,0 +1,53 @@
+ReportLink:https://hackerone.com/reports/700091
+WeaknessName:Man-in-the-Middle
+Reporter:https://hackerone.com/reformedot
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:23.09.2019 14:42:06
+
+Summary:
+
+Hi guys,
+I have found Mixed Content on https://newrelic.com/*:
+* Insecure endpoint ```http://newrelic.com/ ``` that should be served over HTTPS.
+
+##Description:
+Passive mixed content is content sent over HTTP that is contained on the HTTPS page, but which can not change other parts of the page. For example, an attacker can replace a picture sent via HTTP with obscene content or a message to the user. The attacker can also view the activity of the user, observing which images are sent to the user. Knowing which pictures the user downloads, an attacker can figure out which pages the user is visiting.
+
+In this case, mixed content is affecting some endpoints on:
+https://newrelic.com/products/*
+https://newrelic.com/platform/*
+https://newrelic.com/integrations/*
+
+
+##Steps To Reproduce:
+1. Open https://newrelic.com/products (Using Chrome, Opera, etc.)
+2. View Developer Tools ```Ctrl + Shift+ I``` (Besides Internet Explorer - ```F12```)
+3. Open the Console tab - there will be a warning that there are mixed content on the page.
+4. The mixed content will appear.
+
+##Risk:
+This mixed content (that is loaded on the main site) is susceptible to a Man-in-the-middle attack.
+Using this non-secured endpoints, an attacker could be able to redirect users to attacker sites.
+
+This vulnerability have a low severity, but is in scope on this program, and should be fixed.
+
+##How to fix:
+All vulnerable endpoints should be served using https.
+The fix is easy, just change all ```http://newrelic.com/ ``` to ```https://newrelic.com/ ``` .
+
+##Supporting Material/References:
+* Screenshots attached 
+* https://resources.infosecinstitute.com/https-mixed-content-vulnerability/ (Reference)
+* Test on https://newrelic.com/platform url using https://www.whynopadlock.com.  
+https://www.whynopadlock.com/results/2145f4bc-47a1-4bf9-8d91-948d534a693d
+
+## Impact
+
+HTTP connection is only partially encrypted. The unencrypted content is accessible to sniffers and can be intercepted by an attacker.
+
+A man-in-the-middle attacker can intercept the request and also rewrite the response to include malicious or deceptive content. This content can be used to steal the user's credentials, acquire sensitive data about the user, or attempt to install malware on the user's system (by leveraging vulnerabilities in the browser or its plugins, for example), and therefore the connection is not safeguarded anymore.
+
+Mixed content on endpoints are easily exploitable by attackers to redirect users to their own sites.

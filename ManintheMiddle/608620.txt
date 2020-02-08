@@ -1,0 +1,79 @@
+ReportLink:https://hackerone.com/reports/608620
+WeaknessName:Man-in-the-Middle
+Reporter:https://hackerone.com/jlleitschuh
+ReportedTo:The Internet(internet)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:10.09.2019 23:33:05
+
+Summary:
+
+I've been exploring the industry-wide scope of the use of HTTP to resolve dependencies in build infrastructure across the industry. What I unearthed was that some of the most popular libraries and two compilers were impacted by this vulnerability.
+
+## Vulnerability
+
+[CWE-829: Inclusion of Functionality from Untrusted Control Sphere](https://cwe.mitre.org/data/definitions/829.html)
+[CWE-494: Download of Code Without Integrity Check](https://cwe.mitre.org/data/definitions/494.html)
+
+The full scope of this vulnerability is captured in my blog post here:
+[Want to take over the Java ecosystem? All you need is a MITM!](https://medium.com/@jonathan.leitschuh/want-to-take-over-the-java-ecosystem-all-you-need-is-a-mitm-1fc329d898fb?source=friends_link&sk=3c99970c55a899ad9ef41f126efcde0e)
+
+This vulnerability impacted the following organizations:
+
+ - Apache Foundation (including the Groovy compiler)
+ - Eclipse Foundation
+ - Pivotal (including many of the Spring projects)
+ - RedHat
+ - Jenkins
+ - JetBrains (including the Kotlin compiler)
+ - Gradle
+ - PayPal
+ - Netflix
+ - Twitter
+ - PortSwigger
+ - Elastic
+- Grails
+
+It also impacted some of the most popular JVM libraries including: 
+ - TestNG
+ - PowerMock
+ - Spock
+ - Ehcache
+ - Hibernate
+
+The list of projects I publicly disclosed the details of this vulnerability to on GitHub during my research can be found here:
+https://docs.google.com/spreadsheets/d/1zemxj8QdIp0saqvwJx6Po1KnyEmJXl2KC_0j0SLd_2E/edit?usp=sharing
+
+## Resolution
+
+As a part of resolving this issue, I also reached out to Sonatype (Maven Central), JFrog (JCenter), Pivotal (Spring Source), RedHat and the Eclipse Foundation to make a plea to them to completely block port 80 (HTTP) download of dependencies by 2020.
+
+As a direct result of my research [HTTP access to repo1.maven.org and repo.maven.apache.org is being deprecated](https://central.sonatype.org/articles/2019/Apr/30/http-access-to-repo1mavenorg-and-repomavenapacheorg-is-being-deprecated/). That article will be updated shortly with attribution.
+
+# Criteria
+> In addition, vulnerabilities should meet most of the following criteria:
+
+##  Be widespread: vulnerability manifests itself across a wide range of products, or impacts a large number of end users.
+
+This impacted some of the most popular and most used open source projects across the JVM ecosystem.
+
+## Have critical impact: vulnerability has extreme negative consequences for the general public.
+
+Absolutely! This vulnerability impacted the supply chain for incredibly popular JVM libraries and 2 compilers. It was incredibly widespread and if it was exploited could have been used to backdoor applications around the world.
+
+## Be novel: vulnerability is new or unusual in an interesting way.
+
+It's really not novel. That's part of what's sad about this. It's such a simple vulnerability and that it impacted so many projects across the industry was just so disturbing.
+
+# Closing
+
+If you have any questions or want additional information, please don't hesitate to ask. There's more information about the scope of this vulnerability than what I was fully able to capture in the blog post.
+
+## Impact
+
+MITM of dependencies could allow a malicious actor to worm the releases of that artifact so they would infect downstream consumers.
+
+A theoretical example of the worst case of this attack can be found in my addendum titled [Let’s write a (theoretical) Java Library Worm](https://medium.com/@jonathan.leitschuh/lets-write-a-theoretical-java-library-worm-9a6edff87cf5).
+
+Besides that, this could be leveraged to infect developers machines around the world.

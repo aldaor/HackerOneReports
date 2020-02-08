@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/519582
+WeaknessName:Man-in-the-Middle
+Reporter:https://hackerone.com/smartnoob
+ReportedTo:Ubiquiti Inc.(ui)
+BountyAmount:1604.0
+Severity:high
+State:Closed
+DateOfDisclosure:22.08.2019 16:34:57
+
+Summary:
+A malicious actor setting up an SMTP proxy server between the UniFi Controller and their actual SMTP server can record their SMTP credentials for malicious use.
