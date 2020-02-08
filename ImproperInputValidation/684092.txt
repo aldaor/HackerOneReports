@@ -1,0 +1,46 @@
+ReportLink:https://hackerone.com/reports/684092
+WeaknessName:Improper Input Validation
+Reporter:https://hackerone.com/lucash-dev
+ReportedTo:Maker Ecosystem Growth Holdings, Inc(makerdao_bbp)
+BountyAmount:50000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:01.10.2019 16:51:29
+
+Summary:
+
+## Summary:
+The `flip` contract allows for the MCD system to auction collateral in exchange for DAI.
+A lack of validation in the method `flip.kick` allows an attacker to create an auction with a fake
+bid value. Since the `end` contract trusts that value, it can be exploited to issue any amount of free
+DAI during liquidation. That DAI can then be immediately used to obtain all collateral stored in the
+`end` contract.
+
+## Detailed Description:
+
+The `flipper` contract (`flip.sol`) is intended to offer a way for the MCD contracts to obtain DAI by auctioning gems. An auction is initiated by calling the `flip.kick` method, which is normally done by the `cat` contract when it grabs collateral from a CDP.
+
+The implementation of that method, however, completely lacks access control and has very little validation -- in particular, it's possible to execute the method even during the liquidation phase.
+On top of that, all values stored in the auction are accepted as parameters of the method, including the bid amount. By directly calling the method, a malicious user can create a "fake" auction, with an arbitrary initial bid value, without spending the corresponding DAI.
+
+Though that technique could be used to cause other damage, I will focus this report on the maximum-impact effect by exploiting it during the liquidation phase, in an attack vector that leads to transferring all collateral to the attacker.
+
+First, the system must be in the liquidation phase, after `end.flow` is called to fix the exchange rate for redeeming collateral. Then the attacker performs three actions as follows:
+
+1. Create a "fake" auction, by calling `flip.kick`. The bid parameter of the method can be set to any arbitrarily large value, in special a value at least equal to the total supply of DAI. The `lot` parameter, on the other hand, can be arbitrarily small, as long as it's not zero.
+
+2. The attacker calls `end.skip`. The `end` contract will try to return the `bid` amount to the attacker. This will result in the issuance -- for free -- of DAI to the attacker, in any amount entered during step 1.
+
+3. The attacker calls `end.pack` and `end.cash` thus converting the DAI into collateral. If the amount entered in step 1 is the total supply of DAI, the attacker will obtain ALL collateral stored in the `end` contract.
+
+## Steps To Reproduce:
+I've attached to this report a modified version of `end.t.sol` which contains a test (`test_steal_all_collateral_using_flipper`) that reproduces the attack.
+
+Please don't hesitate to contact me if you need help understanding the test or reproducing the issue.
+
+## Impact
+
+The issue described in this report allows an attacker to steal ALL collateral stored in the MCD system during the liquidation phase -- possibly within a single transaction. This would result in a complete loss of funds for all users.
+The cost of performing the attack is almost zero -- just the minimal denomination of each type of gem stolen plus gas.
+
+Given the above I understand the issue has Critical severity, and fully qualifies for the corresponding bounty.

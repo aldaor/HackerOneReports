@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/753547
+WeaknessName:Improper Input Validation
+Reporter:https://hackerone.com/bluebert
+ReportedTo:Polymail, Inc.(polymail_inc)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:13.12.2019 21:49:56
+
+Summary:
+@bluebert discovered a bug on the OAuth login endpoint that allows creation of OAuth login urls with Polymail as the subdomain on external domains. This has now been fixed.

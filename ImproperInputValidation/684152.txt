@@ -1,0 +1,42 @@
+ReportLink:https://hackerone.com/reports/684152
+WeaknessName:Improper Input Validation
+Reporter:https://hackerone.com/lucash-dev
+ReportedTo:Maker Ecosystem Growth Holdings, Inc(makerdao_bbp)
+BountyAmount:10000.0
+Severity:high
+State:Closed
+DateOfDisclosure:26.09.2019 15:34:59
+
+Summary:
+
+## Summary:
+The `flap` contract provides the ability to auction DAI for MKR. That's a fundamental functionality of the MCD system, invoked usually from the `vow` contract.
+A flaw in the validation of calls to `flap.kick`, however, allows a malicious user to create "fake' auctions that can be later used to steal MKR from `flap` during the liquidation (`end`) phase.
+
+## Detailed description
+
+The method `flap.kick`, used to start an auction of DAI (for MKR) in the `flap` contract, lacks any validation of the `bid` parameter. Since the method is public, a malicious user can directly invoke it, passing an arbitrary `bid` parameter -- affecting other contracts that assume this value represents the highest bid in the auction.
+
+While it's possible that this issue will cause other problems, in this report I'll focus on what seems to be the highest severity attack enabled by it.
+
+The attack consists of two parts:
+
+1 - During the normal operation of the MCD system (contracts not "caged"), the attacker will create one or more "fake" auctions by calling `flap.kick`. The `bid` parameter can be arbitrarily large, and won't be validated in any way. On the other hand, the `lot` parameter can be arbitrarily small, as long as it's not zero, which means the auction can be placed with almost zero cost.
+
+2 - After governance calls `end.cage`, the auctions are stopped -- but any MKR deposited in the `flap` contract for any outstanding auction will still be there until someone calls `yank` for each one.
+At this point, the attacker can call `flap.yank` for his own "fake" auctions, and that will result in him getting MKR transferred from the `flap` contract to himself -- in whatever amount was specified as `bid` in step 1.
+
+Since the attacker might no know beforehand, it would be wise for them to create multiple "fake" auctions. In particular, an exponential series of auctions, with `bid` values 1, 2, 4, 8, 16... will allow the attacker to extract any exact amount of MKR from the `flap` contract.
+
+
+## Steps To Reproduce:
+I've attached to this report a modified version of `end.t.sol` which contains a test (the last one, `test_steal_mkr_from_flapper`) that reproduces this attack.
+
+Please don't hesitate to contact me if you have any trouble understanding or reproducing this issue.
+
+## Impact
+
+This issue allows an attacker to steal arbitrary amounts of MKR deposited for auction.
+That impact is particularly troubling, as MKR tokens are used to govern the platform, and anyone maliciously obtaining large quantities of these tokens might use them to further affect other core functionalities, potentially leading to stealing collateral, DAI etc. Also, because the same MKR token might be used for governance of future versions of the contracts, the damage might be much more enduring and harder to mitigate.
+
+Given the above, and the minimal cost for perpetrating the attack, this issue would normally be classified as Critical. The specific policies for this program, though, won't allow for that, since this attack doesn't steal collateral directly. So, I classified the severity as High.
