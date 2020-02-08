@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/514421
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/rudrahacks007
+ReportedTo:MariaDB(mariadb)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:11.05.2019 7:47:30
+
+Summary:
+One of our package servers had an old smtpd service linked with openssl 1.0.1i, which uses nondeterministic CBC padding, making it easy for man-in-the-middle attackers to obtain cleartext data via a padding-oracle attack, aka the "POODLE" issue. The service has been disabled for the internet, as it was not necessary to begin with.

@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/669440
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/padpao
+ReportedTo:Brave Software(brave)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:12.08.2019 17:20:24
+
+Summary:
+
+## Summary:
+Link preview in the left bottom of Brave Browser will show the link where the user will be redirected after clicking it, but after clicking the link, the affected user will be redirected to other website.
+
+## Products affected: 
+Latest Version of Brave browser
+
+## Steps To Reproduce:
+1. Open poc.html
+2. Hover your mouse to a hyperlink named https://brave.com
+3. You will see in the link preview in the bottom of the browser that the user should be redirected.
+4. Click the hyperlink and you will be redirected to another domain.
+
+## Supporting Material/References:
+
+  * List any additional material (e.g. screenshots, logs, etc.)
+
+## Impact
+
+The attacker can trick a user to go to an evil domain.

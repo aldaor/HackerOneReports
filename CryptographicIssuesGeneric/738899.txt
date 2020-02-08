@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/738899
+WeaknessName:Cryptographic Issues - Generic
+Reporter:https://hackerone.com/rutik346
+ReportedTo:Stripo Inc(stripo)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:18.12.2019 10:23:47
+
+Summary:
+
+Vulnerability Name: Able to change password by entering wrong old password.
+
+
+Description:
+The password change mechanism which is located at https://my.stripo.email/cabinet/#/profile is insecure as the password can be changed without knowing the old password. Any unauthorized user can access the account and can change the password directly without knowing the old password. 
+
+
+Vulnerable Domain: https://my.stripo.email/cabinet/#/profile
+
+
+Steps to Reproduce:
+1.Go to the show profile menu.
+2. There is an option to change the password by entering old and new password.
+3. Enter anything in old password field and the new password.
+4. Intercept this request of changing password in burp.
+5. Intercept the response to this request.
+6. In the response the HTTP status would be 400 or 401.
+7. Just change it to 200 and forward it.
+8 Now you can see that the password has been changed without the old password
+
+## Impact
+
+Lack of protection on the Password change mechanism of the user account which could lead to account compromise once accessed by unauthorized user.
