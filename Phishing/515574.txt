@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/515574
+WeaknessName:Phishing
+Reporter:https://hackerone.com/noobzombie
+ReportedTo:TTS Bug Bounty(tts)
+BountyAmount:150.0
+Severity:low
+State:Closed
+DateOfDisclosure:29.07.2019 16:54:50
+
+Summary:
+
+Hello Security Team,
+
+I found a Vulnerability in your website where in one of your domain https://www.data.gov/labs
+there was Description about Simple API in which two links were pointing to https://simple-api.github.io/api-offices/ but after visiting this URL i got an 404 error where it shown like page not found.
+
+Steps were used to claim these repository :-
+1. this domain was available to claim.
+2. registered for new github account
+3. used username "simple-api"
+4. created a master-branch of repository with "api-offices"
+5. created a simple index.html file.
+
+## Impact
+
+There is impact where when victim visitor's visit the website they see "Simple API" section for information if they click on below options 
+1) Source Code and Documentation
+2) Remote Hosted Tool
+
+they will get into attackers repository, and attacker can upload any malicious content on it which can harm your organisation.
