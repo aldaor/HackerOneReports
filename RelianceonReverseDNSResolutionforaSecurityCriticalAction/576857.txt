@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/576857
+WeaknessName:Reliance on Reverse DNS Resolution for a Security-Critical Action
+Reporter:https://hackerone.com/mubassirpatel
+ReportedTo:Shipt(shipt)
+BountyAmount:900.0
+Severity:medium
+State:Closed
+DateOfDisclosure:17.06.2019 0:15:33
+
+Summary:
+A researcher identified 3 different abandoned subdomain CNAME records that pointed to a 3rd party service (fly.io) that Shipt had recently stopped using. Upon receiving the report, the Shipt information security team responded quickly and resolved the issue by removing the stale DNS records.
