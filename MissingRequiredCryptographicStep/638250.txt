@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/638250
+WeaknessName:Missing Required Cryptographic Step
+Reporter:https://hackerone.com/hanno
+ReportedTo:Dropbox(dropbox)
+BountyAmount:216.0
+Severity:low
+State:Closed
+DateOfDisclosure:10.07.2019 20:43:54
+
+Summary:
+The reporter noted that our installation instructions for our [Linux Desktop Client for Fedora](https://help.dropbox.com/installs-integrations/desktop/linux-repository) specified HTTP urls instead of HTTPS. This could allow an attacker, with a privileged network position, the ability to swap the GPG key during installation allowing them to install a rogue signing key on the victim's machine.
+
+We updated the instructions in our help center to use HTTPS urls.  
