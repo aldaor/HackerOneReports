@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/683925
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/aslanemre
+ReportedTo:Kartpay(kartpay)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:28.10.2019 11:58:41
+
+Summary:
+on https://Kartpay.com. The Issue of Referer was Fixed earlier before reporting this issue again but on finding the root cause it was found that the Code is perfect but the Sequence of code / Priority of code has changed which leads to Referer issue again. So The Sequence of Code has changed to overcome this issue. 

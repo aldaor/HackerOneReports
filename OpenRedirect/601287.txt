@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/601287
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/jatingupta
+ReportedTo:WakaTime(wakatime)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:02.09.2019 21:10:11
+
+Summary:
+
+Vulnerability Description: 
+Open redirection is sometimes used as a part of phishing attacks that confuse visitors about which web site they are visiting.
+
+Remediation:
+If possible, the application should avoid incorporating user-controllable data into redirection targets. In many cases, this behavior can be avoided in two ways:
+Remove the redirection function from the application, and replace links to it with direct links to the relevant target URLs.
+Maintain a server-side list of all URLs that are permitted for redirection. Instead of passing the target URL as a parameter to the redirector, pass an index into this list.
+
+Vulnerable URL:
+ https://wakatime.com/settings/account?apikeyrefresh=true
+
+Payload: " X-Forwarded-Host: bing.com "
+
+How to reproduce this vulnerability:
+1.	Open this URL " https://wakatime.com/settings/account?apikeyrefresh=true " and send it to the repeater in burp suite.
+2.	add the payload to the header request and forward the request.
+3.	It will directly redirect to bing.com
+
+## Impact
+
+Impact:
+Whenever a user visits this URL, it will redirect them to site.com. It is used in phishing attacks.

@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/618214
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/caesareg
+ReportedTo:ZEIT(zeit)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:02.07.2019 16:03:59
+
+Summary:
+
+you have a open redirection bug in https://zeit.co/login?next=
+
+now i want to redirect the victem to https://www.google.com 
+https://zeit.co/login?next=\\www.google.com
+
+done !! it will redirected 
+{F511594}
+
+## Impact
+
+redirect the victems to any page and it can be xss bug

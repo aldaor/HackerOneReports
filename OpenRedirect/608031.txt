@@ -1,0 +1,24 @@
+ReportLink:https://hackerone.com/reports/608031
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/kaunghtetzaw
+ReportedTo:ZEIT(zeit)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:18.06.2019 10:04:13
+
+Summary:
+
+## Summary:
+An attacker can redirect vicitm on an external website using https://zeit.co/login endpoint because next parameter
+## Steps To Reproduce:
+[add details for how we can reproduce the issue]
+
+1 .Go To https://zeit.co and login there
+2 .after login go to https://zeit.co/login?next=%09/zeit.co%09@google.com&gh=1
+3 .You will be redirected on google.com instead of a zeit.co website
+
+## Impact
+
+Simplifies phishing attacks
+Reflected File Download

@@ -1,0 +1,22 @@
+ReportLink:https://hackerone.com/reports/727368
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/dangkhai
+ReportedTo:New Relic(newrelic)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:02.11.2019 1:36:07
+
+Summary:
+
+##INTRODUCES:
+Overcoming mechanism of controlling url insertion, redirecting users to fake pages
+
+##STEPS:
+Payload: <https://evil.com>
+Add dashboard note and insert code malicious.
+Code : Click link to view note detail : <https://evil.com>
+
+## Impact
+
+Redirecting users to malicious pages, stealing user information such as fake scripts and user password to view note.

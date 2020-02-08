@@ -1,0 +1,26 @@
+ReportLink:https://hackerone.com/reports/753399
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/nickelheck
+ReportedTo:NordVPN(nordvpn)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:18.01.2020 19:32:46
+
+Summary:
+
+The following URL is vulnerable to an open redirect (it will redirect to google.com):
+https://support.nordvpn.com/#/path///google.com
+vulnerable code:
+```
+<script>
+			if (window.location.href.indexOf('#/path') !== -1) {
+				console.log("document.URL", document.URL)
+				window.location.href = document.URL.slice(window.location.href.indexOf('#/path') + 6);
+			}
+		</script>
+```
+
+## Impact
+
+Users could get redirected to malicious domain.

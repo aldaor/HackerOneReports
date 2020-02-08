@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/765227
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/damn007
+ReportedTo:Ian Dunn(iandunn-projects)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:27.12.2019 20:54:00
+
+Summary:
+
+Steps To Reproduce:
+=====================
+>1_ visit : [Normal Link](https://iandunn.name/wordpress/wp-login.php?redirect_to=https%3A%2F%2Fiandunn.name%2Fwordpress%2Fwp-admin%2F&reauth=1).
+>2_ Sign-in with your wordpress account and you will directed to [This](https://iandunn.name/wordpress/wp-admin/)
+>3_Change the value of the **Parameter** : redirect_to .. To the attacker website let's say : (https://vul-example.com)
+>4_**NOTE THAT** : you must URL-encode the vulnerable link first
+
+## Impact
+
+**Phishing** attacks to get Users to visit malicious sites without realizing it.

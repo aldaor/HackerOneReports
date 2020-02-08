@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/698416
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/masterhackor
+ReportedTo:New Relic(newrelic)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:27.01.2020 16:13:52
+
+Summary:
+
+Reproduction
+
+1- open reset link https://login.newrelic.com/passwords/forgot
+
+2- Enter the victim's email address and click Reset and Email Password
+
+3- Intercept the HTTP request in Burp Suite & add X-Forwarded Host Header and write 
+attacker.com/.newrelic.com
+
+link will be like 
+
+https://testing-now.000webhostapp.com/.newrelic.com/passwords/reset/a248d8b06e7b25a116859729cbc0e07e180d9fb197dadc04f30185512eecc811
+
+## Impact
+
+The victim will receive the malicious link in their email, and, when clicked, will leak the user's password reset link / token to the attacker, leading to full account takeover.

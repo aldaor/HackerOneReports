@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/541948
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/mik317
+ReportedTo:ZEIT(zeit)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:16.05.2019 20:14:48
+
+Summary:
+Some signup and login paths did not verify the `?next=` query param properly and allowed an open redirect with a carefully crafted invalid URL. It is standard practise to use a redirect query param in login and signup endpoints but the value should be carefully validated before accepting to redirect.

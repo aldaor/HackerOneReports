@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/603196
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/winst0n13
+ReportedTo:ExpressionEngine(expressionengine)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:18.07.2019 16:58:52
+
+Summary:
+@winst0n13 discovered that the URL you are redirected to after successfully submitting a comment could be modified in certain circumstances. @winst0n13 gave a detailed report with step-by-step instructions for replicating, enabling a speedy resolution to the issue.

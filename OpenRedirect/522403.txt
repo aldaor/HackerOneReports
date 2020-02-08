@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/522403
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/linkks
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:16.05.2019 9:09:59
+
+Summary:
+Open redirection in loot.my.com

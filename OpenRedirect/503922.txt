@@ -1,0 +1,32 @@
+ReportLink:https://hackerone.com/reports/503922
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/zophi
+ReportedTo:Hanno's projects(hannob)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:03.03.2019 16:24:37
+
+Summary:
+Reporter discovered an open redirect in an installation of tt-rss (Tiny Tiny RSS).
+
+While low impact, it was a valid issue. It's been reported to the tt-rss project and fixed there:
+https://git.tt-rss.org/fox/tt-rss/commit/c68ac04020d85a296c784de18f8def3f365f9f6a
+Hi Team!
+
+Testing request:
+`POST /public.php?return=%2F HTTP/1.1
+Host: tt.hboeck.de
+...........
+op=login&login={….}&password={...}&profile=0`
+
+Vulnerable parameter: `return`
+
+Method: `POST` -> `GET` -> OK
+
+POC:
+`https://tt.hboeck.de/public.php?return=http%3a%2f%2fevil.com%2f&op=login&login=password=&profile=0`
+
+## Impact
+
+User can be redirect to malicious site.

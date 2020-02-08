@@ -1,0 +1,44 @@
+ReportLink:https://hackerone.com/reports/692154
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/zoidsec
+ReportedTo:Vend VDP(vend_vdp)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:31.10.2019 0:23:42
+
+Summary:
+
+**Summary:** 
+There is an open redirection vulnerability in the path of 
+```
+https://www.vendhq.com/
+```
+
+**Description:**
+An attacker can redirect anyone to malicious sites.
+
+## Steps To Reproduce:
+
+Type in this URL:
+
+```
+https://www.vendhq.com//evil.com/
+```
+
+As, you can see it redirects to that website when you inject this payload:
+ ```
+//evil.com/
+```
+
+evil.com was used as an example but this could be any website note, the `//` is the bypass.
+
+
+
+## Supporting Material/References:
+
+  * https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html
+
+## Impact
+
+* Attackers can serve malicious websites that steal passwords or download ransomware to their victims machine due to a redirect and there are a heap of other attack vectors.

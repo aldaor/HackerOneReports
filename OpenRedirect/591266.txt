@@ -1,0 +1,34 @@
+ReportLink:https://hackerone.com/reports/591266
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/base_64
+ReportedTo:LifeOmic(lifeomic)
+BountyAmount:350.0
+Severity:medium
+State:Closed
+DateOfDisclosure:06.01.2020 19:23:05
+
+Summary:
+# LifeOmic Comments
+
+@base_64 found an open redirect bug in our auth flow. After review, we determined that due to design the exploit would only work in our dev environment. Though we determined mitigating controls were already in place for this attack in prod, we valued @base_64 's efforts and awarded a bounty on this. Further reports for this issue will be marked as informational.
+
+# Original Report from @base_64 
+
+There is open redirect at https://apps.dev.jupiterone.io.
+███
+
+Here you can see that it will redirect the user to http://apps.dev.jupiterone.io.new which doesn't exist.
+
+POC:
+1)Sent the vicim this link https://jupiterone-dev.auth.us-east-1.amazoncognito.com/login?client_id=be0t99sni156bvkn1ebl9nh4m&redirect_uri=https://apps.dev.jupiterone.io/auth/v1/app-redirect&response_type=code&state=eyJhcHAiOiJob21lIiwicmVkaXJlY3REb21haW4iOiJodHRwOiUyRiUyRmFwcHMuZGV2Lmp1cGl0ZXJvbmUuaW8lMjUlMzIlNjVuZXciLCJjbGllbnRJZCI6ImJlMHQ5OXNuaTE1NmJ2a24xZWJsOW5oNG0ifQ==
+
+2)when victim log in to his account he will be redirect to http://apps.dev.jupiterone.io.new with code in url.
+████
+
+How this works? So here the vulnerable parameter is state, it's base_64 encoded and it's use to redirect.
+value of state param: {"app":"home","redirectDomain":"http:%2F%2Fapps.dev.jupiterone.io%25%32%65new","clientId":"be0t99sni156bvkn1ebl9nh4m"}
+
+here i double url encode the character . to bypass the validation.
+
+Impact
+Attacker can steal other users access token.

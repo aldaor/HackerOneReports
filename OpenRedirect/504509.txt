@@ -1,0 +1,23 @@
+ReportLink:https://hackerone.com/reports/504509
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/anonym0us_py
+ReportedTo:Hanno's projects(hannob)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:04.03.2019 7:47:35
+
+Summary:
+
+Hi,
+
+Just bypassed the fix of open redirect.
+
+See comments for more details.
+
+ Best Regards,
+-MO
+
+## Impact
+
+Open redirection

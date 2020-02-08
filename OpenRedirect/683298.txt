@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/683298
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/jackb898
+ReportedTo:Twitter(twitter)
+BountyAmount:1540.0
+Severity:
+State:Closed
+DateOfDisclosure:24.09.2019 23:18:02
+
+Summary:
+
+**Summary:** I found open redirect at the MoPub login page, https://app.mopub.com/login?next=https://google.com. It also allows javascript URIs, leading to XSS.
+
+
+**Description:** You can modify the "next" URL parameter to redirect to any website upon logging in on MoPub. 
+
+## Steps To Reproduce:
+
+1. Take this URL: https://app.mopub.com/login?next=https://google.com
+2. Change "https://google.com" to whatever URL you want to redirect to.
+3. Visit the URL and login
+4. You will be redirected to that site
+
+## Impact: Outlined in Impact section below
+
+## Supporting Material/References:
+
+Here's a proof of concept using the URL javascript:alert("proof of concept"):
+{F568245}
+
+## Impact
+
+An attacker could use this for phishing, cookie jacking, etc. since it allows javascript URIs and therefore XSS vectors. Additionally, they could use URL encoding to hide the URL that the victim is being redirected to.

