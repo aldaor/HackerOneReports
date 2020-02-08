@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/671605
+WeaknessName:Path Traversal
+Reporter:https://hackerone.com/taraszelyk
+ReportedTo:Mail.ru(mailru)
+BountyAmount:750.0
+Severity:medium
+State:Closed
+DateOfDisclosure:28.09.2019 15:21:40
+
+Summary:
+Directory traversal via filename extension for avatar upload allowed to overwrite arbitrary files in S3-compatible bucket for static files in pandao.ru.
+
+Pandao.ru belongs to extended scope.

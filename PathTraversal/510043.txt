@@ -1,0 +1,74 @@
+ReportLink:https://hackerone.com/reports/510043
+WeaknessName:Path Traversal
+Reporter:https://hackerone.com/johnssimon007
+ReportedTo:ZEIT(zeit)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:03.05.2019 16:55:25
+
+Summary:
+
+I would like to report path traversal vulnerability in serve module
+It allows an attacker to read system files via path traversal vulnerability
+
+# Module
+
+**module name:** serve
+**version:** 10.1.2
+**npm page:** `https://www.npmjs.com/package/serve`
+
+## Module Description
+Assuming you would like to serve a static site, single page application or just a static file (no matter if on your device or on the local network), this package is just the right choice for you.
+
+It behaves exactly like static deployments on Now, so it's perfect for developing your static project. Then, when it's time to push it into production, you deploy it.
+
+Furthermore, it provides a neat interface for listing the directory's contents:
+
+
+# Vulnerability
+
+## Vulnerability Description
+
+with a symlink file on the working dir ,it was possible to fetch files outside of the web root dir
+
+## Steps To Reproduce:
+1.make a directory
+$mkdir test
+
+2.got test dir
+$cd test
+
+3.create a symlink file
+$ln -s ../../ symdir
+
+4.now install serve module:
+$yarn global add serve
+
+5.run serve module
+$serve
+
+## Patch
+
+> If you're able to provide a patch with the fix please post it in this section
+
+## Supporting Material/References:
+
+> State all technical information about the stack where the vulnerability was found
+
+- [OPERATING SYSTEM VERSION] kali linux
+- [NODEJS VERSION] 11.8.0
+- [NPM VERSION] 6.5.0
+
+# Wrap up
+
+> Select Y or N for the following statements:
+
+- I contacted the maintainer to let them know: [N] 
+- I opened an issue in the related repository: [N] 
+
+> Hunter's comments and funny memes goes here
+
+## Impact
+
+This could have enabled an attacker to view system files and leverage attacks like remote code execution and so on

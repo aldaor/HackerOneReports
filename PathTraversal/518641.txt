@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/518641
+WeaknessName:Path Traversal
+Reporter:https://hackerone.com/ruvlol
+ReportedTo:Mail.ru(mailru)
+BountyAmount:6000.0
+Severity:high
+State:Closed
+DateOfDisclosure:18.07.2019 9:40:26
+
+Summary:
+Markdown plugin in Atlassian Jira instance for external contractors was vulnerable to LFR vulnerability.
