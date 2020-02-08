@@ -1,0 +1,137 @@
+ReportLink:https://hackerone.com/reports/680415
+WeaknessName:Use After Free
+Reporter:https://hackerone.com/cy1337
+ReportedTo:Apache httpd (IBB)(ibb-apache)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:15.10.2019 18:00:52
+
+Summary:
+
+Using fuzzed network input, the http/2 session handling could be made to read memory after being freed, during connection shutdown. This is made possible by a race condition in which nghttp2 maintains a reference to a stream after mod_http2 has destroyed it.
+
+This vulnerability has been fixed in 2.4.41 and affects versions as far back as 2.4.18.
+
+Using [http2fuzz](https://github.com/c0nrad/http2fuzz) against an ASAN build of httpd with `MaxMemFree 1` will quickly reproduce crashes like this:
+```
+=================================================================
+==22097==ERROR: AddressSanitizer: heap-use-after-free on address 0x6250042609b8 at pc 0x0000008d63f3 bp 0x7fd8c39f9420 sp 0x7fd8c39f9410
+READ of size 4 at 0x6250042609b8 thread T1044
+    #0 0x8d63f2 in h2_stream_send_frame /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_stream.c:377
+    #1 0x8b04be in on_frame_send_cb /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_session.c:593
+    #2 0x7fdade4b14c4 in session_call_on_frame_send /home/cyoung/http2_fuzz/nghttp2-1.36.0/lib/nghttp2_session.c:2396
+    #3 0x7fdade4b20bf in session_after_frame_sent1 /home/cyoung/http2_fuzz/nghttp2-1.36.0/lib/nghttp2_session.c:2593
+    #4 0x7fdade4b3b0b in nghttp2_session_mem_send_internal /home/cyoung/http2_fuzz/nghttp2-1.36.0/lib/nghttp2_session.c:3088
+    #5 0x7fdade4b4232 in nghttp2_session_send /home/cyoung/http2_fuzz/nghttp2-1.36.0/lib/nghttp2_session.c:3239
+    #6 0x8bca05 in h2_session_send /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_session.c:1318
+    #7 0x8ce194 in h2_session_process /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_session.c:2269
+    #8 0x873b76 in h2_conn_run /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_conn.c:208
+    #9 0x883731 in h2_h2_process_conn /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_h2.c:657
+    #10 0x4f4c90 in ap_run_process_connection /home/cyoung/http2_fuzz/httpd-2.4.39/server/connection.c:42
+    #11 0x9d7e74 in process_socket /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:1050
+    #12 0x9de78f in worker_thread /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:2083
+    #13 0x7fdadd58b92d in dummy_worker threadproc/unix/thread.c:142
+    #14 0x7fdadd0c36b9 in start_thread (/lib/x86_64-linux-gnu/libpthread.so.0+0x76b9)
+    #15 0x7fdadcdf941c in clone (/lib/x86_64-linux-gnu/libc.so.6+0x10741c)
+
+0x6250042609b8 is located 184 bytes inside of 8192-byte region [0x625004260900,0x625004262900)
+freed by thread T1044 here:
+    #0 0x7fdadee3d2ca in __interceptor_free (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x982ca)
+    #1 0x7fdadd55cf3e in allocator_free memory/unix/apr_pools.c:507
+    #2 0x7fdadd55e19c in apr_pool_destroy memory/unix/apr_pools.c:1043
+    #3 0x8dc458 in h2_stream_destroy /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_stream.c:584
+    #4 0x88926d in stream_destroy_iter /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_mplx.c:320
+    #5 0x8f92ac in ihash_iter /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_util.c:275
+    #6 0x7fdadd53c246 in apr_hash_do tables/apr_hash.c:542
+    #7 0x8f939d in h2_ihash_iter /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_util.c:283
+    #8 0x88933f in purge_streams /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_mplx.c:328
+    #9 0x899ac4 in h2_mplx_dispatch_master_events /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_mplx.c:1066
+    #10 0x8c8c6f in dispatch_master /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_session.c:2070
+    #11 0x8ce0b7 in h2_session_process /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_session.c:2262
+    #12 0x873b76 in h2_conn_run /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_conn.c:208
+    #13 0x883731 in h2_h2_process_conn /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_h2.c:657
+    #14 0x4f4c90 in ap_run_process_connection /home/cyoung/http2_fuzz/httpd-2.4.39/server/connection.c:42
+    #15 0x9d7e74 in process_socket /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:1050
+    #16 0x9de78f in worker_thread /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:2083
+    #17 0x7fdadd58b92d in dummy_worker threadproc/unix/thread.c:142
+    #18 0x7fdadd0c36b9 in start_thread (/lib/x86_64-linux-gnu/libpthread.so.0+0x76b9)
+    #19 0x7fdadcdf941c in clone (/lib/x86_64-linux-gnu/libc.so.6+0x10741c)
+
+previously allocated by thread T1044 here:
+    #0 0x7fdadee3d602 in malloc (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x98602)
+    #1 0x7fdadd55ca2e in allocator_alloc memory/unix/apr_pools.c:411
+    #2 0x7fdadd55e29b in apr_pool_create_ex memory/unix/apr_pools.c:1079
+    #3 0x8a37eb in h2_session_open_stream /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_session.c:118
+    #4 0x8ba270 in h2_session_push /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_session.c:1174
+    #5 0x8e53f5 in h2_stream_submit_pushes /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_stream.c:967
+    #6 0x8bf070 in on_stream_headers /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_session.c:1417
+    #7 0x8c11b3 in on_stream_resume /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_session.c:1516
+    #8 0x899b7d in h2_mplx_dispatch_master_events /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_mplx.c:1074
+    #9 0x8c8c6f in dispatch_master /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_session.c:2070
+    #10 0x8ce0b7 in h2_session_process /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_session.c:2262
+    #11 0x873b76 in h2_conn_run /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_conn.c:208
+    #12 0x883731 in h2_h2_process_conn /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_h2.c:657
+    #13 0x4f4c90 in ap_run_process_connection /home/cyoung/http2_fuzz/httpd-2.4.39/server/connection.c:42
+    #14 0x9d7e74 in process_socket /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:1050
+    #15 0x9de78f in worker_thread /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:2083
+    #16 0x7fdadd58b92d in dummy_worker threadproc/unix/thread.c:142
+    #17 0x7fdadd0c36b9 in start_thread (/lib/x86_64-linux-gnu/libpthread.so.0+0x76b9)
+    #18 0x7fdadcdf941c in clone (/lib/x86_64-linux-gnu/libc.so.6+0x10741c)
+
+Thread T1044 created by T1026 here:
+    #0 0x7fdadeddb253 in pthread_create (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x36253)
+    #1 0x7fdadd58bbd7 in apr_thread_create threadproc/unix/thread.c:179
+    #2 0x9dfee6 in start_threads /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:2337
+    #3 0x7fdadd58b92d in dummy_worker threadproc/unix/thread.c:142
+    #4 0x7fdadd0c36b9 in start_thread (/lib/x86_64-linux-gnu/libpthread.so.0+0x76b9)
+
+Thread T1026 created by T0 here:
+    #0 0x7fdadeddb253 in pthread_create (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x36253)
+    #1 0x7fdadd58bbd7 in apr_thread_create threadproc/unix/thread.c:179
+    #2 0x9e1368 in child_main /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:2542
+    #3 0x9e1a61 in make_child /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:2691
+    #4 0x9e38d7 in perform_idle_server_maintenance /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:2886
+    #5 0x9e440a in server_main_loop /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:3015
+    #6 0x9e4e1d in event_run /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:3092
+    #7 0x45e3ad in ap_run_mpm /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm_common.c:94
+    #8 0x445d2b in main /home/cyoung/http2_fuzz/httpd-2.4.39/server/main.c:819
+    #9 0x7fdadcd1282f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
+
+SUMMARY: AddressSanitizer: heap-use-after-free /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_stream.c:377 h2_stream_send_frame
+Shadow bytes around the buggy address:
+  0x0c4a808440e0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c4a808440f0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c4a80844100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c4a80844110: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c4a80844120: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+=>0x0c4a80844130: fd fd fd fd fd fd fd[fd]fd fd fd fd fd fd fd fd
+  0x0c4a80844140: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c4a80844150: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c4a80844160: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c4a80844170: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+  0x0c4a80844180: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:       fa
+  Heap right redzone:      fb
+  Freed heap region:       fd
+  Stack left redzone:      f1
+  Stack mid redzone:       f2
+  Stack right redzone:     f3
+  Stack partial redzone:   f4
+  Stack after return:      f5
+  Stack use after scope:   f8
+  Global redzone:          f9
+  Global init order:       f6
+  Poisoned by user:        f7
+  Container overflow:      fc
+  Array cookie:            ac
+  Intra object redzone:    bb
+  ASan internal:           fe
+```
+
+## Impact
+
+A remote unauthenticated attacker can trigger memory faults in httpd worker threads. This can deny service to legitimate users. As with other memory safety issues, there is a possibility for other implications such as code execution or information leakage. I have not thoroughly investigated these possibilities.

@@ -1,0 +1,140 @@
+ReportLink:https://hackerone.com/reports/677557
+WeaknessName:Use After Free
+Reporter:https://hackerone.com/cy1337
+ReportedTo:Apache httpd (IBB)(ibb-apache)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:15.10.2019 18:00:26
+
+Summary:
+
+HTTP/2 very early pushes, for example configured with `H2PushResource`, could lead to an overwrite of memory in the pushing request's pool, leading to crashes. The memory copied is that of the configured push link header values, not data supplied by the client. Scenarios where an attacker may be able to influence response header values could potentially lead to controlled code execution. (Code execution has not been demonstrated and is unlikely with the config included here.) This issue affects versions 2.4.20 through 2.4.39.
+
+This CVE is noted on the [Apache HTTPD advisory list](https://httpd.apache.org/security/vulnerabilities_24.html) as of August 14, 2019.
+
+Reproduction is possible under ASAN builds of HTTPD with `MaxMemFree 1` and `H2Push On`
+
+The following supplement to the default configuration is used:
+```
+Protocols h2c http/1.1
+MaxMemFree 1
+H2Push On
+H2EarlyHints On
+H2MaxSessionStreams 65535
+H2WindowSize 65535
+H2MinWorkers 5
+H2MaxWorkers 32
+H2MaxWorkerIdleSeconds 3
+H2StreamMaxMemSize 1024
+H2SerializeHeaders on
+H2CopyFiles on
+H2Padding 7
+<Location />
+    Header add Link "</xxx.css>;rel=preload"
+    Header add Link "</xxx.js>;rel=preload"
+    H2PushResource /xxx2.css
+    H2PushResource /xxx3.css
+    H2PushResource /
+</Location> 
+```
+
+Under this configuration, the UAF is easily observed when handling traffic from [http2fuzz](https://github.com/c0nrad/http2fuzz). The behavior is affected by the size of responses and frequency of requests.
+
+ASAN reports for these crashes are interesting because the faulting address tends to be an ASCII string. 
+
+Here is a report where it manifested as a SEGV on an address which is actually an ASCII string (`0x44415445 == "DATE"`):
+```
+=================================================================
+==7224==ERROR: AddressSanitizer: SEGV on unknown address 0x000044415445 (pc 0x00000068a8a3 bp 0x7fd8cf572a30 sp 0x7fd8cf5728d0 T1021)
+    #0 0x68a8a2 in ap_http_filter /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http/http_filters.c:497
+    #1 0x464232 in ap_get_brigade /home/cyoung/http2_fuzz/httpd-2.4.39/server/util_filter.c:553
+    #2 0x696781 in ap_discard_request_body /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http/http_filters.c:1637
+    #3 0x47f9d5 in ap_finalize_request_protocol /home/cyoung/http2_fuzz/httpd-2.4.39/server/protocol.c:1589
+    #4 0x67d037 in ap_die_r /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http/http_request.c:82
+    #5 0x680ad3 in ap_process_async_request /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http/http_request.c:476
+    #6 0x680bc0 in ap_process_request /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http/http_request.c:488
+    #7 0x67648d in ap_process_http_sync_connection /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http/http_core.c:210
+    #8 0x676702 in ap_process_http_connection /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http/http_core.c:251
+    #9 0x4f4c90 in ap_run_process_connection /home/cyoung/http2_fuzz/httpd-2.4.39/server/connection.c:42
+    #10 0x8f488d in h2_task_do /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_task.c:615
+    #11 0x904388 in slot_run /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_workers.c:231
+    #12 0x7fdadd58b92d in dummy_worker threadproc/unix/thread.c:142
+    #13 0x7fdadd0c36b9 in start_thread (/lib/x86_64-linux-gnu/libpthread.so.0+0x76b9)
+    #14 0x7fdadcdf941c in clone (/lib/x86_64-linux-gnu/libc.so.6+0x10741c)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http/http_filters.c:497 ap_http_filter
+Thread T1021 created by T0 here:
+    #0 0x7fdadeddb253 in pthread_create (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x36253)
+    #1 0x7fdadd58bbd7 in apr_thread_create threadproc/unix/thread.c:179
+    #2 0x903a7e in activate_slot /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_workers.c:106
+    #3 0x9051de in h2_workers_create /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_workers.c:358
+    #4 0x8735fb in h2_conn_child_init /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_conn.c:136
+    #5 0x86b62f in h2_child_init /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/mod_http2.c:186
+    #6 0x4cff5c in ap_run_child_init /home/cyoung/http2_fuzz/httpd-2.4.39/server/config.c:166
+    #7 0x9e104c in child_main /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:2502
+    #8 0x9e1a61 in make_child /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:2691
+    #9 0x9e38d7 in perform_idle_server_maintenance /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:2886
+    #10 0x9e440a in server_main_loop /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:3015
+    #11 0x9e4e1d in event_run /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:3092
+    #12 0x45e3ad in ap_run_mpm /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm_common.c:94
+    #13 0x445d2b in main /home/cyoung/http2_fuzz/httpd-2.4.39/server/main.c:819
+    #14 0x7fdadcd1282f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
+
+==7224==ABORTING
+```
+
+And another trace shows `bPPUSP` as the fault address:
+```
+=================================================================
+==16301==ERROR: AddressSanitizer: SEGV on unknown address 0x625050555350 (pc 0x7fb7144ffa1f bp 0x7fb4f3775530 sp 0x7fb4f3775500 T1058)
+    #0 0x7fb7144ffa1e in apr_pool_cleanup_kill memory/unix/apr_pools.c:2553
+    #1 0x907d6f in pool_kill /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_bucket_beam.c:491
+    #2 0x90877a in beam_cleanup /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_bucket_beam.c:601
+    #3 0x908965 in h2_beam_destroy /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_bucket_beam.c:622
+    #4 0x8f352e in h2_task_destroy /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_task.c:530
+    #5 0x889186 in stream_destroy_iter /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_mplx.c:310
+    #6 0x8f9325 in ihash_iter /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_util.c:275
+    #7 0x7fb7144db246 in apr_hash_do tables/apr_hash.c:542
+    #8 0x8f9416 in h2_ihash_iter /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_util.c:283
+    #9 0x88933f in purge_streams /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_mplx.c:328
+    #10 0x899ac4 in h2_mplx_dispatch_master_events /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_mplx.c:1066
+    #11 0x8c8ce8 in dispatch_master /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_session.c:2072
+    #12 0x8ce130 in h2_session_process /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_session.c:2264
+    #13 0x873b76 in h2_conn_run /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_conn.c:208
+    #14 0x883731 in h2_h2_process_conn /home/cyoung/http2_fuzz/httpd-2.4.39/modules/http2/h2_h2.c:657
+    #15 0x4f4c90 in ap_run_process_connection /home/cyoung/http2_fuzz/httpd-2.4.39/server/connection.c:42
+    #16 0x9d7eed in process_socket /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:1050
+    #17 0x9de808 in worker_thread /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:2083
+    #18 0x7fb71452a92d in dummy_worker threadproc/unix/thread.c:142
+    #19 0x7fb7140626b9 in start_thread (/lib/x86_64-linux-gnu/libpthread.so.0+0x76b9)
+    #20 0x7fb713d9841c in clone (/lib/x86_64-linux-gnu/libc.so.6+0x10741c)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV memory/unix/apr_pools.c:2553 apr_pool_cleanup_kill
+Thread T1058 created by T1042 here:
+    #0 0x7fb715d7a253 in pthread_create (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x36253)
+    #1 0x7fb71452abd7 in apr_thread_create threadproc/unix/thread.c:179
+    #2 0x9dff5f in start_threads /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:2337
+    #3 0x7fb71452a92d in dummy_worker threadproc/unix/thread.c:142
+    #4 0x7fb7140626b9 in start_thread (/lib/x86_64-linux-gnu/libpthread.so.0+0x76b9)
+
+Thread T1042 created by T0 here:
+    #0 0x7fb715d7a253 in pthread_create (/usr/lib/x86_64-linux-gnu/libasan.so.2+0x36253)
+    #1 0x7fb71452abd7 in apr_thread_create threadproc/unix/thread.c:179
+    #2 0x9e13e1 in child_main /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:2542
+    #3 0x9e1ada in make_child /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:2691
+    #4 0x9e3950 in perform_idle_server_maintenance /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:2886
+    #5 0x9e4483 in server_main_loop /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:3015
+    #6 0x9e4e96 in event_run /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm/event/event.c:3092
+    #7 0x45e3ad in ap_run_mpm /home/cyoung/http2_fuzz/httpd-2.4.39/server/mpm_common.c:94
+    #8 0x445d2b in main /home/cyoung/http2_fuzz/httpd-2.4.39/server/main.c:819
+    #9 0x7fb713cb182f in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2082f)
+
+==16301==ABORTING
+```
+
+## Impact
+
+At a minimum, a remote unauthenticated attacker can DoS the server. The maximum risk, code execution, would be highly context dependent since an attacker generally cannot control the values being written improperly.

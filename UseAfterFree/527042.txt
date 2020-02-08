@@ -1,0 +1,19 @@
+ReportLink:https://hackerone.com/reports/527042
+WeaknessName:Use After Free
+Reporter:https://hackerone.com/cy1337
+ReportedTo:Apache httpd (IBB)(ibb-apache)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:10.09.2019 21:05:51
+
+Summary:
+
+A crafted HTTP2 request can trigger reference to request data from a memory pool after its destruction. This memory is subsequently used as input to an sprintf type function for constructing a string value. This unsafe memory access ultimately means that the 
+r->the_request string is poisoned with unintended data. 
+
+To reproduce the problem, I have attached a script that will download/compile Apache httpd and reproduce the behavior with ASAN enabled. The archive also contains a nice ASAN output from the event.
+
+## Impact
+
+This is an unsafe memory access. It could lead to process crashes, assist in other exploits, or reveal confidential data through unexplored interactions with other httpd modules.

