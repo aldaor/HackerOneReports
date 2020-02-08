@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/712103
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/johndoe1492
+ReportedTo:Mail.ru(mailru)
+BountyAmount:1500.0
+Severity:high
+State:Closed
+DateOfDisclosure:29.01.2020 15:14:27
+
+Summary:
+Limited non-blind SSRF in clients.city-mobil.ru
+
+(the report was submitted before the launch of dedicated bug bounty scope for Citymobil)

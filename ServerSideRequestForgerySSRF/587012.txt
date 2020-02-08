@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/587012
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/elmahdi
+ReportedTo:Mail.ru(mailru)
+BountyAmount:250.0
+Severity:low
+State:Closed
+DateOfDisclosure:27.09.2019 23:55:19
+
+Summary:
+Researcher found Blind SSRF via Sentry misconfiguration. This report received smaller bounty since server located in dedicated hosting (colocation) network separated from production servers

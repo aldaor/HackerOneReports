@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/771465
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/so_h1
+ReportedTo:Smule(smule)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:17.01.2020 19:08:50
+
+Summary:
+Open redirect issue.

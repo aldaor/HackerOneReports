@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/751625
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/kunal94
+ReportedTo:Polymail, Inc.(polymail_inc)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:07.12.2019 1:59:54
+
+Summary:
+Batch endpoint on the api was vulnerable to XSPA due to incorrect validation of url parameter in the request body.

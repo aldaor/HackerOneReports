@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/574134
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/tony_tsep
+ReportedTo:YouPorn(youporn)
+BountyAmount:500.0
+Severity:
+State:Closed
+DateOfDisclosure:24.06.2019 6:16:07
+
+Summary:
+The researcher was successful in exploiting a vulnerability in 3rd encoding party library resulting in the execution of SSRF attacks and Local File Disclosure.
+
+

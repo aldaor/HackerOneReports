@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/549882
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/dphoeniixx
+ReportedTo:Vimeo(vimeo)
+BountyAmount:5000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:13.12.2019 18:54:51
+
+Summary:
+Using our upload feature, the user was able to force an SSRF to occur.

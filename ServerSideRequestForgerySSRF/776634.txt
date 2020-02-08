@@ -1,0 +1,18 @@
+ReportLink:https://hackerone.com/reports/776634
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/manoelt
+ReportedTo:h1-415-ctf(h1-415-ctf)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:03.02.2020 21:16:18
+
+Summary:
+
+As there is a bonus for the first solver, I am sending only the flag for now.
+
+{F687111}
+
+## Impact
+
+.

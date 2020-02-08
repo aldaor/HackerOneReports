@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/686363
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/kiriknik
+ReportedTo:Mail.ru(mailru)
+BountyAmount:500.0
+Severity:low
+State:Closed
+DateOfDisclosure:11.10.2019 13:32:20
+
+Summary:
+Insufficient isolation of Sentry installation could potentially lead to blind SSRF

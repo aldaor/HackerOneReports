@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/500468
+WeaknessName:Server-Side Request Forgery (SSRF)
+Reporter:https://hackerone.com/damian89
+ReportedTo:Starbucks(starbucks)
+BountyAmount:1000.0
+Severity:high
+State:Closed
+DateOfDisclosure:03.04.2019 23:48:38
+
+Summary:
+In this report, @damian89 identified a Server Side Request Forgery (SSRF) vulnerability on ideas.starbucks.com that allowed sending arbitrary HTTP requests and returned response bodies. The report went on to demonstrate how this flaw could be leveraged to use the vulnerable host as a proxy and identify, enumerate, and communicate with internal applications and infrastructure. @damian89's report was clear, thorough, and provided plenty of detail to help reproduce the issue as well as convey the potential impact of the finding. The high quality of the report ultimately helped make it possible to resolve the issue quickly. We hope to receive more reports from @damian89 in the future!
