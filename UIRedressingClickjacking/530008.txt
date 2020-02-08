@@ -1,0 +1,39 @@
+ReportLink:https://hackerone.com/reports/530008
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/whitehacker18
+ReportedTo:Passit(passit)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:10.05.2019 8:19:05
+
+Summary:
+
+URLs do not have X-FRAME-OPTIONS set to DENY or SAMEORIGIN, and they are vulnerable to clickjacking.
+
+
+Reproduce steps:
+1. enter your credentials and click on stay logged into this device then login
+2. Run under the browser's code and you will see that the listed links are vulnerable to clickjacking attacks
+
+ ``` <frameset cols="25%,25%,25%">
+		<frame src="https://app.passit.io/account"/>
+                <frame src="https://app.passit.io/list"/>
+		<frame src="https://app.passit.io/groups"/>
+    </frameset> ```
+
+##Mitigation and fix:
+implement X-FRAME-OPTIONS set to DENY or SAMEORIGIN
+
+##Supporting materials and references :
+https://hackerone.com/reports/337219
+
+
+##it's the first time for me to submit this vulnerability , i've decided to try my luck and report it to you , kindly if you see that i'm mistaken in something or you don't accept please close the report as informative ...thanks in advance 
+
+
+i've attached a screenshot as a poc
+
+## Impact
+
+E.g: Hackers can lure users into the personal settings page, change data that is useful to hackers, delete accounts...

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/675614
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/chajer
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:09.09.2019 22:20:27
+
+Summary:
+Researcher found site-wide Clickjacking on https://pw.mail.ru which potentially could be used to trick user to delete avatar or change his/her profile data.

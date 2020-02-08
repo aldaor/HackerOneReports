@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/667400
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/obayda
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:18.09.2019 14:20:47
+
+Summary:
+Researcher found that settings page on `support.my.com` was vulnerable to clickjacking.

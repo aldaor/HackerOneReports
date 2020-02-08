@@ -1,0 +1,33 @@
+ReportLink:https://hackerone.com/reports/658011
+WeaknessName:UI Redressing (Clickjacking)
+Reporter:https://hackerone.com/bibek1
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:11.11.2019 15:24:09
+
+Summary:
+
+This page is vulnerable to clickjacking https://download.nextcloud.com
+
+Steps to Reproduce:
+
+1. Copy the following code and save it as clickjacking.html
+<html>
+   <head>
+     <title>Clickjack test page</title>
+   </head>
+   <body>
+     <p>Website is vulnerable to clickjacking!</p>
+     <iframe src="https://download.nextcloud.com" width="500" height="500"></iframe>
+   </body>
+</html>
+
+2. Open it in browser
+
+You can see the website is vulnerable to clickjacking
+
+## Impact
+
+Anyone can be tricked to download files without their intention
