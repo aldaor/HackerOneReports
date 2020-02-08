@@ -1,0 +1,77 @@
+ReportLink:https://hackerone.com/reports/503208
+WeaknessName:Double Free
+Reporter:https://hackerone.com/biewuxz
+ReportedTo:VLC (European Commission - DIGIT)(vlc_h1c)
+BountyAmount:1135.32
+Severity:medium
+State:Closed
+DateOfDisclosure:24.07.2019 0:13:12
+
+Summary:
+
+1	Basic info of application
+1.1	Info of application
+Application NamevVLC media player for Windows
+Application Versionv4.0.0-dev Otto Chriek
+Download Address:  http://nightlies.videolan.org/
+Testing OS:  Windows 8
+
+2	Info of test file
+2.1	Test file info
+Normal file name:	normal.mkv
+Normal file type:  	MKV(Matroska file)
+Normal file MD5:  	46D9C3E247FF3C528EBDF18C19F3458B
+Crash file name:  	crash.mkv
+Crash file type:  	MKV(Matroska file)
+Crash file MD5:  	5CF35EEF33C024BF49A039A17D85A3AA
+
+2.2	Crash file info
+Replace a piece of data with 0x00 padding, from offset 0xfd41 to offset 0xfda4, the comparison of two files: diff.png.
+ 
+Description of crash file:
+Using MKVToolNix tool to parse the crash file, the mutation data triggering crash is located at:
+Segment->Cluster->Simple Block->Frame section.
+The Track Number equal to 2, indicating that this SimpleBlock is audio. And matroska does not have a detailed description of the mutated Frame data. (https://www.matroska.org/technical/specs/index.html#simpleblock_structure)。
+ You can see it here: block.png, block-data.png.
+ 
+
+3	Info of test
+3.1	Description of test
+Run VLC media player, try to play crash.mkv file, program crash and an error pop-up. 
+3.2	Description of debug
+Loading VLC debugging with WinDbg, below is the debug info and stack backtrace.
+The key point to crash may be: libfaad_plugin+0x2b9d.
+First chance exceptions are reported before any exception handling.
+This exception may be expected and handled.
+*** ERROR: Symbol file could not be found.  Defaulted to export symbols for C:\Program Files\VideoLAN\VLC\plugins\codec\libfaad_plugin.dll - 
+*** ERROR: Symbol file could not be found.  Defaulted to export symbols for C:\Program Files\VideoLAN\VLC\libvlccore.dll - 
+libfaad_plugin+0x2b9d:
+000007f9`0fbf2b9d 47893499        mov     dword ptr [r9+r11*4],r14d ds:00000000`51d6c048=????????
+0:030> kP
+Child-SP          RetAddr           Call Site
+00000000`5eebfb30 000007f9`12a0ca94 libfaad_plugin+0x2b9d
+00000000`5eebfcc0 000007f9`12a0c888 libvlccore!input_Control+0x34a4
+00000000`5eebfd10 000007f9`12a0cc94 libvlccore!input_Control+0x3298
+00000000`5eebfdd0 000007f9`12a7acf6 libvlccore!input_Control+0x36a4
+*** ERROR: Symbol file could not be found.  Defaulted to export symbols for C:\Windows\system32\msvcrt.dll - 
+00000000`5eebfec0 000007f9`2810707b libvlccore!vlc_rand_bytes+0xa46
+00000000`5eebff00 000007f9`28125e6d msvcrt!isspace+0x5b
+*** ERROR: Symbol file could not be found.  Defaulted to export symbols for C:\Windows\system32\KERNEL32.DLL - 
+00000000`5eebff30 000007f9`261b167e msvcrt!beginthreadex+0x13d
+00000000`5eebff60 000007f9`28cfc3f1 KERNEL32!BaseThreadInitThunk+0x1a
+00000000`5eebff90 00000000`00000000 ntdll!RtlUserThreadStart+0x21
+
+4	File list
+4.1	File list
+Normal file:	normal.mkv
+Crash file:	crash.mkv
+comparison of two files:	diff.png
+MKVToolNix:	block.png, block_data.png
+Whole Windbg log:	 x64dug_info.txt
+
+
+All files, logs are in the attachment, and the decompression password is：vL(@BwX2#ozZB
+
+## Impact
+
+This is not just a simple crash, it's possible to read or write memory data.
