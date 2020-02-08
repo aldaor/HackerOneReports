@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/536134
+WeaknessName:OS Command Injection
+Reporter:https://hackerone.com/l00ph0le
+ReportedTo:Starbucks(starbucks)
+BountyAmount:4000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:12.12.2019 21:52:55
+
+Summary:
+l00ph0le discovered an endpoint on the Store Development Resource Center site at https://sdrc.starbucks.com/_layouts/15/picker.aspx was vulnerable to a deserialization RCE in Microsoft Sharepoint per CVE-2019-0604.
+
+@l00ph0le — thank you for reporting this vulnerability, your patience while we applied the patch and for confirming the resolution.

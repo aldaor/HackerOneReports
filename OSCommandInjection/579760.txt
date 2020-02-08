@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/579760
+WeaknessName:OS Command Injection
+Reporter:https://hackerone.com/j3ssie
+ReportedTo:Django(django)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:16.05.2019 2:05:17
+
+Summary:
+This report discloses an RCE issue on djangoci.com as outlined in https://www.djangoproject.com/weblog/2019/may/15/rce-djangoci/
+
+While technically a valid issue, it is out of scope for bounty, please see https://hackerone.com/django for details on which issues qualify for bounties.
