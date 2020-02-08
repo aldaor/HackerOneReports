@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/718852
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/moonlight323
+ReportedTo:Starbucks(starbucks)
+BountyAmount:
+Severity:high
+State:Closed
+DateOfDisclosure:23.01.2020 22:16:11
+
+Summary:
+moonlight323 discovered a Cross-Site Request Forgery (CSRF) vulnerability on store.starbucks.no. This vulnerability affected the functionality that allows a customer to change the email address associated with their account. By abusing this functionality, an attacker could potentially change the victim's email on the account if they were successfully able to lure the victim to trigger the CSRF payload while they were logged in.
+
+@moonlight323— thank you for reporting this vulnerability and confirming the resolution.

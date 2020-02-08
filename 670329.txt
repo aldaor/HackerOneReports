@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/670329
+WeaknessName:Cross-Site Request Forgery (CSRF)
+Reporter:https://hackerone.com/the_predator
+ReportedTo:Mail.ru(mailru)
+BountyAmount:
+Severity:low
+State:Closed
+DateOfDisclosure:21.09.2019 5:40:48
+
+Summary:
+CSRF vulnerability in pandao.ru allowed to disable 2FA.
+
+pandao.ru belongs to extended scope
