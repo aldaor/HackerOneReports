@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/702677
+WeaknessName:Improper Privilege Management
+Reporter:https://hackerone.com/smalien
+ReportedTo:Razer(razer)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:29.10.2019 4:02:50
+
+Summary:
+The tester discovered that a THX server known primarily to THX employees was exposing several hundred records containing customer email addresses and in very few cases, a personal name.   No other information was revealed. This issue was fixed shortly after the report.
+
+We appreciate @smalien's diligence in helping THX protect its customer data.
+
