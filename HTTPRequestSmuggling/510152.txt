@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/510152
+WeaknessName:HTTP Request Smuggling
+Reporter:https://hackerone.com/albinowax
+ReportedTo:PayPal(paypal)
+BountyAmount:20000.0
+Severity:high
+State:Closed
+DateOfDisclosure:07.08.2019 21:55:24
+
+Summary:
+Due to a configuration in frontend, caching servers, it was possible for a researcher to use request smuggling to convert a page request into a cached redirect. If the cached redirect were accessed by a legitimate user, an attacker's content would be rendered instead of the requested page. While this would not impact any back-end data, this could interfere with the integrity of certain pages, including potential interference with the sign-in page. PayPal worked with the researcher and our technical teams to remediate the issue and confirm there was no evidence of real-world attacks.
