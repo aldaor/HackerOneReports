@@ -1,0 +1,14 @@
+ReportLink:https://hackerone.com/reports/549355
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/d3417_
+ReportedTo:Starbucks(starbucks)
+BountyAmount:500.0
+Severity:high
+State:Closed
+DateOfDisclosure:19.06.2019 16:55:24
+
+Summary:
+Starting with a blind SQL Injection on http://www.starbucks.com.gt/menu/beverage/detail, @d3417_ was able to dump schema on several database tables.
+Initially closed as N/A because of our exclusion on automated tools, reopened to investigate the data reported in the tables, and because the casual use of an sqlmap command doesn't meet our usual definition of an automated scan.
+Downgraded from Critical to High, and awarded $500 bounty, because of the limited nature of the data exposed in these tables.
+Disclosure requested, but since much of the ticket would need to be redacted in order to remove database/table/schema/field names, we're releasing the summary and timeline only. Thanks to @d3417_ for reporting this.

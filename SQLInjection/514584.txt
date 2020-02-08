@@ -1,0 +1,155 @@
+ReportLink:https://hackerone.com/reports/514584
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/rabbidbyte
+ReportedTo:50m-ctf(50m-ctf)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:08.04.2019 15:57:25
+
+Summary:
+
+Summary:
+
+Discovery of the application:
+The h1Thermostat application was discovered by extracting the bit.do URL from the image at https://pbs.twimg.com/media/D0XoThpW0AE2r8S.png:large. The URL https://bit.do/h1therm then led to a Google Drive where the Android application file (h1thermostat.apk) could be downloaded (https://drive.google.com/file/d/1u5Mg1xKJMrW4DMGaWtBZ1TJKPdvqCWdJ/view).
+
+Disassembly of the APK
+The file h1thermostat.apk was loaded into the Android SDK for analysis.  The thermostat application requested a username and password to access the services.  The APK code was extracted and it was found that the system would proceed past the login screen if the server responded with ”success”:true in a JSON object.
+
+Use of default/weak administrative credentials:
+The thermostat application was loaded into the Android SDK and executed.  When the application started it requested a username and password to access the services.  The application accepted the credentials:
+
+Username: admin
+Password: password
+
+Although some luck is involved in guessing this username and password combination it can easily be automated as there is no rate limiting or account lockout enabled on the application.
+
+SQL Injection Vulnerability
+Looking into the APK code further using jadx-gui the LoginActivity class calls the PayloadRequest class when a user signs in. The process takes the username and password and combines it with a command field in a JSON object.  The login JSON object contains the username, password, and command field ({“password”:”password”, “username”:”admin”,”cmd”:”getTemp”}).  This text string is then encrypted with AES/CBC/PKCS5 and then ran through a base64 encoder.  The server (35.243.186.41) then checks the credentials and replies with an encrypted JSON object ({“success”:true,”temperature”:73}).
+
+It was found that the field “username” in the JSON object was vulnerable to an SQLi attack.  A custom Java application was written that would create a JSON object with the desired fields filled in and parse the server’s response.  The SQLi vulnerability was blind, meaning that inference was needed to determine what was happening on the server side.  It was found that when the success field in the JSON object was true the SQL query completed successfully.  When the query was incorrect and failed the sever responded with success as false and the error was “Unknown”.  Finally, if the query completed successfully but it returned 0 rows, success would be false and the error that was returned is “Invalid username or password”.
+
+Using the different error messages returned by the server the SQLi vulnerability could be exploited to dump contents from the database.  A custom Java application was written to pull the information out of the database using the following queries with the password of “password”:
+
+•	admin' AND user() LIKE ‘%’;--
+•	admin' AND (database()) LIKE ‘%’;--
+•	admin' AND (SELECT table_name FROM information_schema.tables WHERE table_schema=database() LIMIT 1 OFFSET 1") LIKE '%’;--
+•	admin' AND (SELECT column_name FROM information_schema.columns WHERE table_schema=database() AND table_name='users' LIMIT 1 OFFSET 1) LIKE '%’;--
+•	admin' AND (SELECT password FROM users LIMIT 1 OFFSET 0) LIKE '%’;--
+
+The Java application would cycle through every printable character until a right answer was found.  Once the first character was found the next character would be attacked.  This would continue until the end of the string.
+
+Information Disclosure:
+The users table holds a single record.  The id is 1, the username is admin, and the password is 5f4dcc3b5aa765d61d8327deb882cf99.  It was found that the data stored in the password field is an md5 hash of the word “password”.  If there were more accounts stored in the table these could easily be reversed using various methods.
+
+Once the devices table was dumped it was found that all IP addresses in the devices table were in reserved blocks and unrouteable.  These addresses fell within the following ranges except for the record with the id 85.
+
+•	10.0.0.0–10.255.255.255
+•	100.64.0.0–100.127.255.255
+•	127.0.0.0–127.255.255.255
+•	169.254.0.0–169.254.255.255
+•	172.16.0.0–172.31.255.255
+•	192.0.0.0–192.0.0.255
+•	192.0.2.0–192.0.2.255
+•	192.88.99.0–192.88.99.255
+•	192.168.0.0–192.168.255.255
+•	198.18.0.0–198.19.255.255
+•	198.51.100.0–198.51.100.255
+•	203.0.113.0–203.0.113.255
+•	224.0.0.0–239.255.255.255
+•	240.0.0.0–255.255.255.254
+•	255.255.255.255
+
+The record with the id “85” in the devices table had an IP address of 104.196.12.98.  This was the only accessible IP address in the table.  When the address was visited with a web browser it displayed an administrative login page for “FliteThermostat”.
+
+Timing Attack:
+The JavaScript used to send the username and password from the webpage to the server took the user inputted values and combined them with the hex characters ‘\x05\x00\x06’ between the two values.  Once this string was created it was ran through a custom “hashing” function and sent off to the server for authentication.
+
+It was found through running a dictionary type attack that some responses from the server were much slower than others.  This indicated that the hash could be cracked using a timing attack.  
+The hash was broken by brute forcing the string by two hexadecimal characters at a time and observing response times from the server.  The longer response time that was received it was determined that the more likely the two characters were the next in the series of the string.  The attack started with a series of 64 “0”’s and was brought down to the actual string using the response times from the server.  After all 255 possible combinations were sent to the server the top 10 – 15 strings were replayed to eliminate false positives.  When the string was found to replicate the same response time the process was started again on the next two characters.  
+
+The best results were found to be from a virtual machine replaying the POST with Burp.  Settings were configured to only a single thread with 25 milliseconds for throttle.  Once again this could be made more difficult by adding a rate limiting or account lockout control within the system.
+
+f9865a4952a4f5d74b43f3558fed6a0225c6877fba60a250bcbde753f5db13d8
+
+The hash was then sent to the server and the response gave a redirect and a Session ID.  The session ID was added to a browser with the console command “javascript:void(document.cookie=-“SessionID=valuereturnedbyserver”);” and this enabled access to the web application showing the pages: control, main, update, and diagnostics.
+
+Thermostat Update Page:
+The thermostat page was intended to download and install updates for the application.  It was found that the port where the server was sending requests to could be changed by sending the parameter PORT=[port#] in the URL.  After a portscan of 65,535 ports on the system and multiple other attempts I ran out of time here.
+
+This CtF was amazing and I would like to thank everyone who helped build it!  I learnt so much in this experience including probably the most important lesson of not jumping on the first vulnerability and thinking it is the end.  This will help me in future CtF’s and more importantly in bounty hunting.  Although the report is incomplete I do hope that I will be considered for a “n00b invite” to h1-702 if there are any.
+
+Steps To Reproduce:
+Extract URL from PNG Image
+1.	From a Linux machine
+2.	Open a web browser and navigate to https://pbs.twimg.com/media/D0XoThpW0AE2r8S.png:large
+3.	Right click the image and save to the local system
+4.	Open a terminal
+5.	Navigate to the location where the PNG was saved
+6.	Rename the file to D0XoThpW0AE2r8S.png
+7.	Run the command “zsteg -a D0XoThpW0AE2r8S.png”
+8.	The line “b1,rgb,lsb,yx .. zlib: data="https://bit.do/h1therm", offset=5, size=22” gives the url
+9.	Navigate to https://bit.do/h1therm which redirects to a Google Drive
+10.	Download the android application h1thermostat.apk
+
+Weak Username/Password
+1.	Start the android sdk
+2.	Load the APK
+3.	Start the application
+4.	Enter commonly known username and password combinations
+
+H1Thermostat SQLi
+1.	Load h1-head-sqli.jar in eclipse
+2.	Edit the values “ops” and “argVar1” according to the function that you wish to perform
+3.	Run the jar file
+
+Timing Attack
+1.	Start Burp Suite
+2.	Disable proxy intercept
+3.	Load the burp extension “Request Timer”
+4.	Start a web browser and configure it to run through the Burp proxy
+5.	Navigate to http://104.196.12.98 
+6.	Submit random data in the form and click login
+7.	In the Burp proxy tab, http history, send the POST that was just submitted to intruder
+8.	Replace the “hash” string with 64 0’s
+9.	Configure burp to brute force the first two characters with all characters in the hexadecimal character set
+10.	Change the options to a single string and 25 milliseconds for the throttle value
+11.	Start the Request Timer extension
+12.	Start the intruder attack
+13.	When the intruder attack has completed sort the requests in request timer by response time
+14.	Take the top 10 or so longest results and replay them to ensure that you have the result that continually gives the longest response
+15.	Enter the two characters from the intruder attack to the place holder where you were attacking
+16.	Remove two 0’s from the string and move the attack to the first two 0’s in the string
+17.	Reset the request timer extension
+18.	Repeat steps 11 – 17 until there are no 0’s left in the string and you get a session id returned by the server
+
+Thermostat update page
+1.	Start Burp Suite
+2.	Disable proxy intercept
+3.	Start a web browser and configure it to run through the Burp proxy
+4.	Navigate to http://104.196.12.98 
+5.	Submit random data in the form and click login
+6.	In the Burp proxy tab, http history, send the POST that was just submitted to repeater
+7.	Remove the hash that was initially sent and replace it with the hash that was received from the timing attack
+8.	Send the request and copy the session id that was sent from the server
+9.	In Firefox open the Web developer, web console and enter “javascript:void(document.cookie=-“SessionID=valuereturnedbyserver”);”
+10.	Navigate to http://104.196.12.98/update
+11.	To change the port number to port 80 navigate to http://104.196.12.98/update?port=80 
+
+Supporting Material/References:
+•	Png_steg.png – screenshot of getting URL from the image
+•	Apk_download.png – screenshot of downloading the APK from a google drive
+•	Weak_creds.png – screenshot of user logged into application with weak credentials
+•	H1heat-sqli.jar – java application that was used to extract information from the database
+•	Db.xlsx – file containing information pulled from the database
+•	Sqli.png – screenshot of java application extracting information from the database
+•	Hash.png – screenshot of the timing attack
+•	Login.jpg – screenshot of the web admin login page
+•	Loggedin.jpg – screenshot of the user logged into the web admin page
+
+## Impact
+
+•	The attacker has access to the thermostat application
+•	The attacker has read access to the entire MariaDB instance
+•	The attacker has access to the thermostat admin web console

@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/665688
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/linkks
+ReportedTo:VK.com(vkcom)
+BountyAmount:
+Severity:none
+State:Closed
+DateOfDisclosure:18.09.2019 19:35:00
+
+Summary:
+Out-of-scope. 

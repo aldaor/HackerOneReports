@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/592400
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/geek_jeremy
+ReportedTo:Starbucks(starbucks)
+BountyAmount:4000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:22.07.2019 23:24:57
+
+Summary:
+@geek_jeremy, at the same time as other hackers who submitted their own reports, discovered a browsable WSDL service on an API endpoint under the starbucks.com.cn domain, running on a non-standard port.
+@geek_jeremy demonstrated that the service had several functions that executed without any authentication at all, allowing the listing of users, passwords and other personal information. Fortunately, this was a test service, executing on test data, and as a result, this alone did not constitute a vulnerability worth rewarding.
+@geek_jeremy also demonstrated that the service had at least one blind SQLi vulnerability, allowing him to not only access the database behind the service, but also to execute commands through the xp_cmdshell function. The "ping" command was used to demonstrate this safely without causing bad effects to the service. Because this was a Remote Code Execution (RCE) on a production server, even though it was reached through a test instance, this was awarded as a Critical vulnerability.

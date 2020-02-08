@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/745938
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/agametov
+ReportedTo:Mail.ru(mailru)
+BountyAmount:2000.0
+Severity:critical
+State:Closed
+DateOfDisclosure:22.01.2020 15:19:08
+
+Summary:
+Boolean/error based SQLi in relap.io due to insecure use of GET parameters.

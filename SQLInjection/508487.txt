@@ -1,0 +1,11 @@
+ReportLink:https://hackerone.com/reports/508487
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/leonklingele
+ReportedTo:Nextcloud(nextcloud)
+BountyAmount:500.0
+Severity:critical
+State:Closed
+DateOfDisclosure:21.07.2019 19:23:50
+
+Summary:
+When querying for users on the lookup server any unauthenticated user could perform an SQL Injection.

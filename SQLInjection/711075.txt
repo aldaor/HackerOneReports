@@ -1,0 +1,13 @@
+ReportLink:https://hackerone.com/reports/711075
+WeaknessName:SQL Injection
+Reporter:https://hackerone.com/kiriknik
+ReportedTo:Mail.ru(mailru)
+BountyAmount:2000.0
+Severity:medium
+State:Closed
+DateOfDisclosure:29.01.2020 14:44:54
+
+Summary:
+Error-based SQLi due to insecure use of POST paramter in city-mobil.ru 
+
+(the report was submitted before the launch of dedicated bug bounty scope for Citymobil)
